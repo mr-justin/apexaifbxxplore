@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry path="src" kind="src"/>
+	<classpathentry path="lib/FontBox-0.1.0.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/jgrapht-jdk1.5.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/lucene-core-2.0.0.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/prefuse.jar" exported="true" kind="lib"/>
+	<classpathentry path="lib/PDFBox-0.7.3.jar" exported="true" kind="lib"/>
+	<classpathentry path="org.eclipse.jdt.launching.JRE_CONTAINER" kind="con"/>
+	<classpathentry path="org.eclipse.pde.core.requiredPlugins" kind="con"/>
+	<classpathentry path="build" kind="output"/>
+</classpath>

@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+<plugin>
+   <extension
+         id="explore"
+         name="XMedia Explore"
+         point="org.eclipse.core.runtime.applications">
+      <application>
+         <run
+               class="org.aifb.xxplore.ExploreApplication">
+         </run>
+      </application>
+   </extension>
+   <extension
+         point="org.eclipse.ui.perspectives">
+      <perspective
+         name="XXploreFact"
+         class="org.aifb.xxplore.ExploreFactPerspective"
+         id="org.aifb.xxplore.explorefactperspective">
+   	  </perspective>
+   	  <perspective
+         name="XXploreDoc"
+         class="org.aifb.xxplore.ExploreDocPerspective"
+         id="org.aifb.xxplore.exploredocperspective">
+   	  </perspective>
+   	  <perspective
+         name="XXploreStandard"
+         class="org.aifb.xxplore.ExploreStandardPerspective"
+         id="org.aifb.xxplore.explorestandardperspective">
+   	  </perspective>
+   </extension>
+   <extension
+         point="org.eclipse.ui.views">
+      <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.DefinitionView"
+            id="org.aifb.xxplore.definitionview"
+            name="DefinitionView"/>
+      <category
+            id="org.aifb.xxplore.category"
+            name="Explore"/>
+      <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.DocumentResultView"
+            icon="icons/document_view.gif"
+            id="org.aifb.xxplore.documentresultview"
+            name="DocumentView"/>
+      <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.FactResultView"
+            id="org.aifb.xxplore.factresultview"
+            name="FactResultView"/>
+      <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.MergedResultView"
+            icon="icons/document_view.gif"
+            id="org.aifb.xxplore.mergedresultview"
+            name="MergedResultView"/>
+      <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.ConceptHierarchyView"
+            id="org.aifb.xxplore.concepthierarchyview"
+            name="ConceptHierarchyView"/>
+      <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.SparqlQueryView"
+            id="org.aifb.xxplore.sparqlqueryview"
+            name="SparqlQueryView"/>  
+	  <view
+        	allowMultiple="true"
+       	  	category="org.aifb.xxplore.category"
+         	class="org.aifb.xxplore.TaskListView"
+         	icon="icons/task-list.gif"
+         	id="org.aifb.xxplore.tasklistview"
+         	name="TaskListView"/>   
+      <view
+        	allowMultiple="true"
+       	  	category="org.aifb.xxplore.category"
+         	class="org.aifb.xxplore.StoredQueryView"
+         	icon="icons/task-list.gif"
+         	id="org.aifb.xxplore.storedqueryview"
+         	name="StoredQueryView"/>     	 
+   </extension>
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            categoryId="org.aifb.xxplore.commands"
+            description="Opens a Data Source"
+            id="org.aifb.xxplore.open"
+            name="Open Data Source"/>
+      <command
+            categoryId="org.aifb.xxplore.commands"
+            description="Close the current Data Source"
+            id="org.aifb.xxplore.closeDataSource"
+            name="Close Data Source"/>
+      <category
+            id="org.aifb.xxplore.category"
+            name="Explore"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.bindings">
+      <key
+            commandId="org.aifb.xxplore.open"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+O"/>
+      <key
+            commandId="org.aifb.xxplore.exit"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="CTRL+Q"/>
+      <key
+            commandId="org.aifb.xxplore.close"
+            contextId="org.eclipse.ui.contexts.window"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+            sequence="org.aifb.xxplore.close"/>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors">
+      <editor
+            class="org.aifb.xxplore.ExploreEditor"
+            default="true"
+            extensions="def"
+            icon="icons/sample.gif"
+            id="org.aifb.xxplore.exploreeditor"
+            name="explore editor"/>
+      <editor
+            class="org.aifb.xxplore.TaskEditor"
+           	icon="icons/task.gif"
+           	id="org.aifb.xxplore.taskeditor"
+           	name="Task Editor"/>
+      <editor
+            class="org.aifb.xxplore.StoredQueryEditor"
+           	icon="icons/task.gif"
+           	id="org.aifb.xxplore.storedqueryeditor"
+           	name="StoredQuery Editor"/>     	
+   </extension>
+    <extension
+      point="org.eclipse.core.resources.natures"
+      id="ExploreNature"
+      name="Explore Nature">
+      <runtime>
+         <run class="org.aifb.xxplore.builder.ExploreNature">
+         </run>
+      </runtime>
+        <builder id="org.aifb.xxplore..DataSourceBuilder"/> 
+   </extension>
+    <extension
+          id="DataSourceBuilder"
+          name="DataSourceBuilder"
+          point="org.eclipse.core.resources.builders">
+       <builder hasNature="true">
+          <run class="org.aifb.xxplore.builder.ExploreDataSourceBuilder"/>
+       </builder>
+    </extension>
+    <extension
+          id="org.aifb.xxplore.newWizards"
+          name="xxplore.newWizards"
+          point="org.eclipse.ui.newWizards">
+       <wizard
+             category="org.aifb.xxplore.category"
+             class="org.aifb.xxplore.wizards.ExploreProjectWizard"
+             id="org.aifb.xxplore.newprojectwizard"
+             name="Explore Project"
+             preferredPerspectives="org.aifb.xxplore.exploreperspective"
+             project="true">
+          <description/>
+       </wizard>
+       <wizard
+             category="org.aifb.xxplore.category"
+             class="org.aifb.xxplore.wizards.DataSourceWizard"
+             id="explore.newDataSourceWizard"
+             name="DataSourceWizard"
+             preferredPerspectives="org.aifb.xxplore.exploreperspective"
+             project="true"/>
+       <wizard
+             category="org.aifb.xxplore.category"
+             class="org.aifb.xxplore.wizards.NewModelDefinitionWizard"
+             id="explore.newModelDefinitionWizard"
+             name="ModelDefinitionWizard"
+             project="false"/>
+       <wizard
+             category="org.aifb.xxplore.category"
+             class="org.aifb.xxplore.wizards.NewDefinitionElementWizard"
+             id="explore.newDefinitionElementWizard"
+             name="DefinitionElementWizard"
+             project="false"/>
+       <category
+             id="org.aifb.xxplore.category"
+             name="Explore"/>
+    </extension>
+    <extension
+          id="org.aifb.xxplore.preferences"
+          name="Explore Preferences"
+          point="org.eclipse.ui.preferencePages">
+       <page
+             category="org.aifb.xxplore.category"
+             class="org.aifb.xxplore.ExplorePreferencePage"
+             id="XXplore explore.page1"
+             name="XXplore explore.page1"/>
+    </extension>
+    <extension
+          point="org.eclipse.ui.editorActions">
+       <editorContribution
+             id="org.aifb.xxplore.exploreeditor.actionsID"
+             targetID="org.aifb.xxplore.exploreeditor">
+          <!--
+          <action
+                class="org.aifb.xxplore.action.ChangeViewModeAction"
+                icon="icons/sample.gif"
+                id="org.aifb.xxplore.exploreeditor.actions.changeViewModeActionID"
+                label="Change view mode"
+                style="push"
+                toolbarPath="ExploreEditor"/>
+          -->
+          <action
+                class="org.aifb.xxplore.action.ChangeLayoutAction"
+                icon="icons/lattice.png"
+                id="org.aifb.xxplore.exploreeditor.actions.changeLayoutActionID"
+                label="Change layout"
+                style="push"
+                toolbarPath="ExploreEditor"/>
+       </editorContribution>
+    </extension>
+
+</plugin>
