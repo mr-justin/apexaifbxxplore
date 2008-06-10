@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:fiat="http://www.x-media-project.org/fiat#"
+    xmlns:performances="http://www.x-media-project.org/fiat/performances#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+    xmlns="http://www.x-media-project.org/fiat/functions#"
+  xml:base="http://www.x-media-project.org/fiat/functions">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.x-media-project.org/fiat/performances"/>
+    <owl:imports rdf:resource="http://www.x-media-project.org/fiat"/>
+  </owl:Ontology>
+  <fiat:FunctionalGroup rdf:ID="cristalloPortaAnteriore">
+    <fiat:pfId rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >392</fiat:pfId>
+    <rdfs:label xml:lang="it">Cristallo porta anteriore</rdfs:label>
+    <fiat:partOfSubSystem>
+      <fiat:SubSystem rdf:ID="cristalli">
+        <fiat:partOfSystem>
+          <fiat:System rdf:ID="finizioniEsterne">
+            <fiat:pfId rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+            >FIE</fiat:pfId>
+            <rdfs:label xml:lang="it">Finizioni esterne</rdfs:label>
+          </fiat:System>
+        </fiat:partOfSystem>
+        <rdfs:label xml:lang="it">Cristalli</rdfs:label>
+		    <fiat:pfId rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >FIE1</fiat:pfId>
+        <fiat:correlation>
+          <fiat:CorrelationMeasurement rdf:ID="corrCristalliIsolAcustico">
+            <fiat:value rdf:datatype="http://www.w3.org/2001/XMLSchema#float"
+            >3.0</fiat:value>
+            <fiat:corrMeasUnit rdf:resource="http://www.x-media-project.org/fiat#theCorrelationUnit"/>
+            <fiat:corrMeasAddresses rdf:resource="http://www.x-media-project.org/fiat/performances#isolamentoAcustico"/>
+          </fiat:CorrelationMeasurement>
+        </fiat:correlation>
+      </fiat:SubSystem>
+    </fiat:partOfSubSystem>
+  </fiat:FunctionalGroup>
+  <fiat:PerformanceMeasurementUnit rdf:ID="Db"/>
+  <fiat:System rdf:ID="climatizzatore">
+    <fiat:pfId rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >CLI</fiat:pfId>
+    <rdfs:label xml:lang="it">Climatizzatore</rdfs:label>
+  </fiat:System>
+  <fiat:PerformanceMeasurmentInstrument rdf:ID="windTunnelTest">
+    <fiat:performanceMeasurmentInstrumentAddresses rdf:resource="http://www.x-media-project.org/fiat/performances#isolamentoAcustico"/>
+  </fiat:PerformanceMeasurmentInstrument>
+  <fiat:SubSystem rdf:ID="vanoAbitacolo">
+    <fiat:pfId rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >CLI1</fiat:pfId>
+    <fiat:partOfSystem rdf:resource="#climatizzatore"/>
+    <rdfs:label xml:lang="it">Vano abitacolo</rdfs:label>
+  </fiat:SubSystem>
+  <fiat:FunctionalGroup rdf:ID="impiantoCondizionatore">
+    <fiat:partOfSubSystem rdf:resource="#vanoAbitacolo"/>
+    <rdfs:label xml:lang="it">Impianto condizionatore</rdfs:label>
+    <fiat:pfId rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >322</fiat:pfId>
+  </fiat:FunctionalGroup>
+  <fiat:PerformanceMeasurement rdf:ID="NoiseSpectra">
+    <fiat:perfMeasInstrument rdf:resource="#windTunnelTest"/>
+    <fiat:perfMeasUnit rdf:resource="#Db"/>
+  </fiat:PerformanceMeasurement>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.2.1, Build 365)  http://protege.stanford.edu -->
