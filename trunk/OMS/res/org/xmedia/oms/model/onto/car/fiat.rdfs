@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns="http://www.x-media-project.org/fiat#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xml:base="http://www.x-media-project.org/fiat">
+  <owl:Ontology rdf:about="">
+    <owl:versionInfo rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >0.1</owl:versionInfo>
+    <rdfs:comment rdf:datatype="http://www.w3.org/2001/XMLSchema#string"
+    >Quinary Spa and Centro Ricerche Fiat (CRF)</rdfs:comment>
+  </owl:Ontology>
+  <rdfs:Class rdf:ID="Measurement"/>
+  <rdfs:Class rdf:ID="MotorShow">
+    <rdfs:label xml:lang="it">Salone</rdfs:label>
+    <rdfs:label xml:lang="en">Motor show</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="ComponentPart">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="Part"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="PerformanceMeasurmentInstrument">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="MeasurementInstrument"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="News">
+    <rdfs:label xml:lang="it">Notizia</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="Function"/>
+  <rdfs:Class rdf:ID="SubSystem">
+    <rdfs:subClassOf rdf:resource="#Function"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="Segment"/>
+  <rdfs:Class rdf:ID="Performance"/>
+  <rdfs:Class rdf:ID="DoubleWishbone">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="Suspension"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="WeightMeasurementUnit">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="MeasurementUnit"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="ModelForecasted">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="VehicleModel"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="TLR1">
+    <rdfs:subClassOf rdf:resource="#Performance"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="TrimReleased">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:ID="VehicleTrim"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="TrimForecasted">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#VehicleTrim"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="PerformanceMeasurementUnit">
+    <rdfs:subClassOf rdf:resource="#MeasurementUnit"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="SubSystemPart">
+    <rdfs:subClassOf rdf:resource="#Part"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="#VehicleTrim">
+    <rdfs:label xml:lang="it">Allestimento</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="VehicleMake">
+    <rdfs:label xml:lang="it">Costruttore</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="Vehicle">
+    <rdfs:label xml:lang="it">Veicolo</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="CorrelationMeasurement">
+    <rdfs:subClassOf rdf:resource="#Measurement"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="Technology"/>
+  <rdfs:Class rdf:ID="ModelReleased">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#VehicleModel"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="McPherson">
+    <rdfs:subClassOf>
+      <rdfs:Class rdf:about="#Suspension"/>
+    </rdfs:subClassOf>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="System">
+    <rdfs:subClassOf rdf:resource="#Function"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="CorrelationMeasurementUnit">
+    <rdfs:subClassOf rdf:resource="#MeasurementUnit"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="CCP">
+    <rdfs:subClassOf rdf:resource="#Performance"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="PerformanceMeasurement">
+    <rdfs:subClassOf rdf:resource="#Measurement"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="FunctionalGroup">
+    <rdfs:subClassOf rdf:resource="#Function"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="#VehicleModel">
+    <rdfs:label xml:lang="it">Modello</rdfs:label>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="WeightMeasurement">
+    <rdfs:subClassOf rdf:resource="#Measurement"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:about="#Suspension">
+    <rdfs:subClassOf rdf:resource="#ComponentPart"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="SystemPart">
+    <rdfs:subClassOf rdf:resource="#Part"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="TLR2">
+    <rdfs:subClassOf rdf:resource="#Performance"/>
+  </rdfs:Class>
+  <rdfs:Class rdf:ID="Market"/>
+  <rdf:Property rdf:ID="hasPart">
+    <rdfs:range rdf:resource="#Part"/>
+    <rdfs:domain rdf:resource="#Vehicle"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trimPerformance">
+    <rdfs:domain rdf:resource="#VehicleTrim"/>
+    <rdfs:range rdf:resource="#PerformanceMeasurement"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="subsystemRealizesFunction">
+    <rdfs:range rdf:resource="#SubSystem"/>
+    <rdfs:domain rdf:resource="#SubSystemPart"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="newsCites">
+    <rdfs:domain rdf:resource="#News"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="componentBelongsToSubSystemPart">
+    <rdfs:domain rdf:resource="#ComponentPart"/>
+    <rdfs:range rdf:resource="#SubSystemPart"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="instrument">
+    <rdfs:domain rdf:resource="#Measurement"/>
+    <rdfs:range rdf:resource="#MeasurementInstrument"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="partEmploysTechnology">
+    <rdfs:range rdf:resource="#Technology"/>
+    <rdfs:domain rdf:resource="#Part"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trimForecastedModel">
+    <rdfs:domain rdf:resource="#TrimForecasted"/>
+    <rdfs:range rdf:resource="#VehicleModel"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="correlation">
+    <rdfs:domain rdf:resource="#SubSystem"/>
+    <rdfs:range rdf:resource="#CorrelationMeasurement"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="corrMeasAddresses">
+    <rdfs:range rdf:resource="#CCP"/>
+    <rdfs:domain rdf:resource="#CorrelationMeasurement"/>
+    <rdfs:subPropertyOf>
+      <rdf:Property rdf:ID="measurementAddresses"/>
+    </rdfs:subPropertyOf>
+  </rdf:Property>
+  <rdf:Property rdf:ID="modelBelongsToSegment">
+    <rdfs:domain rdf:resource="#VehicleModel"/>
+    <rdfs:range rdf:resource="#Segment"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trimForecastedReleaseDate">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <rdfs:domain rdf:resource="#TrimForecasted"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="#measurementAddresses">
+    <rdfs:domain rdf:resource="#Measurement"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="subSystemBelongsToSystemPart">
+    <rdfs:range rdf:resource="#SystemPart"/>
+    <rdfs:domain rdf:resource="#SubSystemPart"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trim">
+    <rdfs:range rdf:resource="#TrimReleased"/>
+    <rdfs:domain rdf:resource="#Vehicle"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="modelPerformance">
+    <rdfs:range rdf:resource="#PerformanceMeasurement"/>
+    <rdfs:domain rdf:resource="#VehicleModel"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="perfMeasInstrument">
+    <rdfs:range rdf:resource="#PerformanceMeasurmentInstrument"/>
+    <rdfs:domain rdf:resource="#PerformanceMeasurement"/>
+    <rdfs:subPropertyOf rdf:resource="#instrument"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="partOfSubSystem">
+    <rdfs:range rdf:resource="#SubSystem"/>
+    <rdfs:domain rdf:resource="#FunctionalGroup"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trimSoldIntoMarket">
+    <rdfs:range rdf:resource="#Market"/>
+    <rdfs:domain rdf:resource="#VehicleTrim"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trimReleaseDate">
+    <rdfs:domain rdf:resource="#TrimReleased"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="newsMainSubject">
+    <rdfs:domain rdf:resource="#News"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="partOfTLR2">
+    <rdfs:range rdf:resource="#TLR2"/>
+    <rdfs:domain rdf:resource="#CCP"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="partWeight">
+    <rdfs:range rdf:resource="#WeightMeasurement"/>
+    <rdfs:domain rdf:resource="#Part"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="value">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#float"/>
+    <rdfs:domain rdf:resource="#Measurement"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="partOfSystem">
+    <rdfs:range rdf:resource="#System"/>
+    <rdfs:domain rdf:resource="#SubSystem"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="partOfTLR1">
+    <rdfs:domain rdf:resource="#TLR2"/>
+    <rdfs:range rdf:resource="#TLR1"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="vehicleOmologationCode">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#int"/>
+    <rdfs:domain rdf:resource="#Vehicle"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="perfMeasUnit">
+    <rdfs:range rdf:resource="#PerformanceMeasurementUnit"/>
+    <rdfs:subPropertyOf>
+      <rdf:Property rdf:ID="unit"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#PerformanceMeasurement"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="systemRealizesFunction">
+    <rdfs:range rdf:resource="#System"/>
+    <rdfs:domain rdf:resource="#SystemPart"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="modelReleaseDate">
+    <rdfs:domain rdf:resource="#ModelReleased"/>
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="weightUnit">
+    <rdfs:range rdf:resource="#WeightMeasurementUnit"/>
+    <rdfs:subPropertyOf>
+      <rdf:Property rdf:about="#unit"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#WeightMeasurement"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="trimReleasedModel">
+    <rdfs:range rdf:resource="#ModelReleased"/>
+    <rdfs:domain rdf:resource="#TrimReleased"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="performanceMeasurmentInstrumentAddresses">
+    <rdfs:range rdf:resource="#Performance"/>
+    <rdfs:domain rdf:resource="#PerformanceMeasurmentInstrument"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="modelCarryOver">
+    <rdfs:domain rdf:resource="#VehicleModel"/>
+    <rdfs:range rdf:resource="#ModelReleased"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="pfId">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    <rdfs:domain rdf:resource="#Function"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="corrMeasUnit">
+    <rdfs:subPropertyOf>
+      <rdf:Property rdf:about="#unit"/>
+    </rdfs:subPropertyOf>
+    <rdfs:domain rdf:resource="#CorrelationMeasurement"/>
+    <rdfs:range rdf:resource="#CorrelationMeasurementUnit"/>
+  </rdf:Property>
+  <rdf:Property rdf:about="#unit">
+    <rdfs:domain rdf:resource="#Measurement"/>
+    <rdfs:range rdf:resource="#MeasurementUnit"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="vehiclePerformance">
+    <rdfs:range rdf:resource="#PerformanceMeasurement"/>
+    <rdfs:domain rdf:resource="#Vehicle"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="make">
+    <rdfs:domain rdf:resource="#VehicleModel"/>
+    <rdfs:range rdf:resource="#VehicleMake"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="componentRealizesFunction">
+    <rdfs:range rdf:resource="#FunctionalGroup"/>
+    <rdfs:domain rdf:resource="#ComponentPart"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="modelForecastedReleaseDate">
+    <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#date"/>
+    <rdfs:domain rdf:resource="#ModelForecasted"/>
+  </rdf:Property>
+  <rdf:Property rdf:ID="perfMeasAddresses">
+    <rdfs:domain rdf:resource="#PerformanceMeasurement"/>
+    <rdfs:subPropertyOf rdf:resource="#measurementAddresses"/>
+    <rdfs:range rdf:resource="#Performance"/>
+  </rdf:Property>
+  <WeightMeasurementUnit rdf:ID="grammes"/>
+  <CorrelationMeasurementUnit rdf:ID="theCorrelationUnit"/>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.2.1, Build 365)  http://protege.stanford.edu -->

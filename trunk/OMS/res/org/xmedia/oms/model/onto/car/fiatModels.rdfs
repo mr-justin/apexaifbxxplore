@@ -1,0 +1,1647 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:fiat="http://www.x-media-project.org/fiat#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xml:base="http://www.x-media-project.org/fiat/vehicles/models">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes"/>
+    <owl:imports rdf:resource="http://www.x-media-project.org/fiat"/>
+  </owl:Ontology>
+  <fiat:ModelReleased rdf:ID="f550">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">F550</rdfs:label>
+    <rdfs:label xml:lang="en">F550</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="at-7">
+    <rdfs:label xml:lang="it">AT-7</rdfs:label>
+    <rdfs:label xml:lang="en">AT-7</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tl">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <rdfs:label xml:lang="it">TL</rdfs:label>
+    <rdfs:label xml:lang="en">TL</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="dakota">
+    <rdfs:label xml:lang="it">Dakota</rdfs:label>
+    <rdfs:label xml:lang="en">Dakota</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="f350">
+    <rdfs:label xml:lang="it">F350</rdfs:label>
+    <rdfs:label xml:lang="en">F350</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="element">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Element</rdfs:label>
+    <rdfs:label xml:lang="en">Element</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="edix">
+    <rdfs:label xml:lang="it">Edix</rdfs:label>
+    <rdfs:label xml:lang="en">Edix</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fd">
+    <rdfs:label xml:lang="it">FD</rdfs:label>
+    <rdfs:label xml:lang="en">FD</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ccs">
+    <rdfs:label xml:lang="it">CCS</rdfs:label>
+    <rdfs:label xml:lang="en">CCS</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_360">
+    <rdfs:label xml:lang="it">_360</rdfs:label>
+    <rdfs:label xml:lang="en">_360</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="atos">
+    <rdfs:label xml:lang="it">Atos</rdfs:label>
+    <rdfs:label xml:lang="en">Atos</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tq">
+    <rdfs:label xml:lang="it">TQ</rdfs:label>
+    <rdfs:label xml:lang="en">TQ</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="silverado">
+    <rdfs:label xml:lang="it">Silverado</rdfs:label>
+    <rdfs:label xml:lang="en">Silverado</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="multipla">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Multipla</rdfs:label>
+    <rdfs:label xml:lang="en">Multipla</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="h200">
+    <rdfs:label xml:lang="it">H200</rdfs:label>
+    <rdfs:label xml:lang="en">H200</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="equinox">
+    <rdfs:label xml:lang="it">Equinox</rdfs:label>
+    <rdfs:label xml:lang="en">Equinox</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="trajet">
+    <rdfs:label xml:lang="it">Trajet</rdfs:label>
+    <rdfs:label xml:lang="en">Trajet</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="five_hundred">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Five Hundred</rdfs:label>
+    <rdfs:label xml:lang="en">Five Hundred</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="opti">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Opti</rdfs:label>
+    <rdfs:label xml:lang="en">Opti</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="musso">
+    <rdfs:label xml:lang="it">Musso</rdfs:label>
+    <rdfs:label xml:lang="en">Musso</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="express_cargo_van">
+    <rdfs:label xml:lang="it">Express Cargo Van</rdfs:label>
+    <rdfs:label xml:lang="en">Express Cargo Van</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="thunderbird">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Thunderbird</rdfs:label>
+    <rdfs:label xml:lang="en">Thunderbird</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="muscle">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Muscle</rdfs:label>
+    <rdfs:label xml:lang="en">Muscle</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="galloper">
+    <rdfs:label xml:lang="it">Galloper</rdfs:label>
+    <rdfs:label xml:lang="en">Galloper</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="prelude">
+    <rdfs:label xml:lang="it">Prelude</rdfs:label>
+    <rdfs:label xml:lang="en">Prelude</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="f100">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">F100</rdfs:label>
+    <rdfs:label xml:lang="en">F100</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="db7">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+    <rdfs:label xml:lang="it">DB7</rdfs:label>
+    <rdfs:label xml:lang="en">DB7</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="excursion">
+    <rdfs:label xml:lang="it">Excursion</rdfs:label>
+    <rdfs:label xml:lang="en">Excursion</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="marea">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Marea</rdfs:label>
+    <rdfs:label xml:lang="en">Marea</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="belair">
+    <rdfs:label xml:lang="it">Belair</rdfs:label>
+    <rdfs:label xml:lang="en">Belair</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="u100">
+    <rdfs:label xml:lang="it">U 100</rdfs:label>
+    <rdfs:label xml:lang="en">U 100</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="pilot">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Pilot</rdfs:label>
+    <rdfs:label xml:lang="en">Pilot</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tsx">
+    <rdfs:label xml:lang="it">TSX</rdfs:label>
+    <rdfs:label xml:lang="en">TSX</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="zafira">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Zafira</rdfs:label>
+    <rdfs:label xml:lang="en">Zafira</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tiburon">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Tiburon</rdfs:label>
+    <rdfs:label xml:lang="en">Tiburon</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ecosport">
+    <rdfs:label xml:lang="it">Ecosport</rdfs:label>
+    <rdfs:label xml:lang="en">Ecosport</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="focus">
+    <rdfs:label xml:lang="it">Focus</rdfs:label>
+    <rdfs:label xml:lang="en">Focus</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="engine">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Engine</rdfs:label>
+    <rdfs:label xml:lang="en">Engine</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="epica">
+    <rdfs:label xml:lang="it">Epica</rdfs:label>
+    <rdfs:label xml:lang="en">Epica</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="xg">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Xg</rdfs:label>
+    <rdfs:label xml:lang="en">Xg</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ram_3500">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">RAM 3500</rdfs:label>
+    <rdfs:label xml:lang="en">RAM 3500</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="maverick">
+    <rdfs:label xml:lang="it">Maverick</rdfs:label>
+    <rdfs:label xml:lang="en">Maverick</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="sonoma">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+    <rdfs:label xml:lang="it">Sonoma</rdfs:label>
+    <rdfs:label xml:lang="en">Sonoma</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_355">
+    <rdfs:label xml:lang="it">_355</rdfs:label>
+    <rdfs:label xml:lang="en">_355</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="integra">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Integra</rdfs:label>
+    <rdfs:label xml:lang="en">Integra</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fr-v">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">FR-V</rdfs:label>
+    <rdfs:label xml:lang="en">FR-V</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="freestyle">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Freestyle</rdfs:label>
+    <rdfs:label xml:lang="en">Freestyle</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="montana">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Montana</rdfs:label>
+    <rdfs:label xml:lang="en">Montana</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="supercharged">
+    <rdfs:label xml:lang="it">Supercharged</rdfs:label>
+    <rdfs:label xml:lang="en">Supercharged</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="avancier">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Avancier</rdfs:label>
+    <rdfs:label xml:lang="en">Avancier</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="kalos">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+    <rdfs:label xml:lang="it">Kalos</rdfs:label>
+    <rdfs:label xml:lang="en">Kalos</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="f430">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+    <rdfs:label xml:lang="it">F430</rdfs:label>
+    <rdfs:label xml:lang="en">F430</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="nf">
+    <rdfs:label xml:lang="it">NF</rdfs:label>
+    <rdfs:label xml:lang="en">NF</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="insight">
+    <rdfs:label xml:lang="it">Insight</rdfs:label>
+    <rdfs:label xml:lang="en">Insight</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="coupe">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Coupe</rdfs:label>
+    <rdfs:label xml:lang="en">Coupe</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="copen-zz">
+    <rdfs:label xml:lang="it">Copen-zz</rdfs:label>
+    <rdfs:label xml:lang="en">Copen-zz</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lucerne">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">Lucerne</rdfs:label>
+    <rdfs:label xml:lang="en">Lucerne</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="move">
+    <rdfs:label xml:lang="it">Move</rdfs:label>
+    <rdfs:label xml:lang="en">Move</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="city">
+    <rdfs:label xml:lang="it">City</rdfs:label>
+    <rdfs:label xml:lang="en">City</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="astra">
+    <rdfs:label xml:lang="it">Astra</rdfs:label>
+    <rdfs:label xml:lang="en">Astra</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ducato">
+    <rdfs:label xml:lang="it">Ducato</rdfs:label>
+    <rdfs:label xml:lang="en">Ducato</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lantra">
+    <rdfs:label xml:lang="it">Lantra</rdfs:label>
+    <rdfs:label xml:lang="en">Lantra</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="puma">
+    <rdfs:label xml:lang="it">Puma</rdfs:label>
+    <rdfs:label xml:lang="en">Puma</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="kahuma">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Kahuma</rdfs:label>
+    <rdfs:label xml:lang="en">Kahuma</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="explorer">
+    <rdfs:label xml:lang="it">Explorer</rdfs:label>
+    <rdfs:label xml:lang="en">Explorer</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="rl">
+    <rdfs:label xml:lang="it">RL</rdfs:label>
+    <rdfs:label xml:lang="en">RL</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ram">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">RAM</rdfs:label>
+    <rdfs:label xml:lang="en">RAM</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="courier">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Courier</rdfs:label>
+    <rdfs:label xml:lang="en">Courier</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="niva">
+    <rdfs:label xml:lang="it">Niva</rdfs:label>
+    <rdfs:label xml:lang="en">Niva</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="sirion">
+    <rdfs:label xml:lang="it">Sirion</rdfs:label>
+    <rdfs:label xml:lang="en">Sirion</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="prizm">
+    <rdfs:label xml:lang="it">Prizm</rdfs:label>
+    <rdfs:label xml:lang="en">Prizm</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="veracruz">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Veracruz</rdfs:label>
+    <rdfs:label xml:lang="en">Veracruz</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="rsx">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <rdfs:label xml:lang="it">RSX</rdfs:label>
+    <rdfs:label xml:lang="en">RSX</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="palio">
+    <rdfs:label xml:lang="it">Palio</rdfs:label>
+    <rdfs:label xml:lang="en">Palio</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="amica">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Amica</rdfs:label>
+    <rdfs:label xml:lang="en">Amica</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="gentra">
+    <rdfs:label xml:lang="it">Gentra</rdfs:label>
+    <rdfs:label xml:lang="en">Gentra</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="edge">
+    <rdfs:label xml:lang="it">Edge</rdfs:label>
+    <rdfs:label xml:lang="en">Edge</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="maxx_caab">
+    <rdfs:label xml:lang="it">Maxx Caab</rdfs:label>
+    <rdfs:label xml:lang="en">Maxx Caab</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="v600">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+    <rdfs:label xml:lang="it">V600</rdfs:label>
+    <rdfs:label xml:lang="en">V600</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="airwave">
+    <rdfs:label xml:lang="it">Airwawe</rdfs:label>
+    <rdfs:label xml:lang="en">Airwawe</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="perla">
+    <rdfs:label xml:lang="it">Perla</rdfs:label>
+    <rdfs:label xml:lang="en">Perla</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="starex">
+    <rdfs:label xml:lang="it">Starex</rdfs:label>
+    <rdfs:label xml:lang="en">Starex</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_456">
+    <rdfs:label xml:lang="it">_456</rdfs:label>
+    <rdfs:label xml:lang="en">_456</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="elysion">
+    <rdfs:label xml:lang="it">Elysion</rdfs:label>
+    <rdfs:label xml:lang="en">Elysion</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="storia">
+    <rdfs:label xml:lang="it">Storia</rdfs:label>
+    <rdfs:label xml:lang="en">Storia</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="hr-v">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">HR-V</rdfs:label>
+    <rdfs:label xml:lang="en">HR-V</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="s2000">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">S2000</rdfs:label>
+    <rdfs:label xml:lang="en">S2000</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="arcadia">
+    <rdfs:label xml:lang="it">Arcadia</rdfs:label>
+    <rdfs:label xml:lang="en">Arcadia</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="f450">
+    <rdfs:label xml:lang="it">F450</rdfs:label>
+    <rdfs:label xml:lang="en">F450</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="be-go">
+    <rdfs:label xml:lang="it">Be-Go</rdfs:label>
+    <rdfs:label xml:lang="en">Be-Go</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="xenia">
+    <rdfs:label xml:lang="it">Xenia</rdfs:label>
+    <rdfs:label xml:lang="en">Xenia</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="alfred_dunhill">
+    <rdfs:label xml:lang="it">Alfred Dunhill</rdfs:label>
+    <rdfs:label xml:lang="en">Alfred Dunhill</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="rendezvous">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">Rendezvous</rdfs:label>
+    <rdfs:label xml:lang="en">Rendezvous</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="sail">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">Sail</rdfs:label>
+    <rdfs:label xml:lang="en">Sail</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="evanda">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Evanda</rdfs:label>
+    <rdfs:label xml:lang="en">Evanda</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="excelle">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">Excelle</rdfs:label>
+    <rdfs:label xml:lang="en">Excelle</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="materia">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Materia</rdfs:label>
+    <rdfs:label xml:lang="en">Materia</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="accord">
+    <rdfs:label xml:lang="it">Accord</rdfs:label>
+    <rdfs:label xml:lang="en">Accord</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="logo">
+    <rdfs:label xml:lang="it">Logo</rdfs:label>
+    <rdfs:label xml:lang="en">Logo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="mira">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Mira</rdfs:label>
+    <rdfs:label xml:lang="en">Mira</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="avan_linghi">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Avan Linghi</rdfs:label>
+    <rdfs:label xml:lang="en">Avan Linghi</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lova">
+    <rdfs:label xml:lang="it">Lova</rdfs:label>
+    <rdfs:label xml:lang="en">Lova</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="avalanche">
+    <rdfs:label xml:lang="it">Avalanche</rdfs:label>
+    <rdfs:label xml:lang="en">Avalanche</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="stepwgn">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Stepwgn</rdfs:label>
+    <rdfs:label xml:lang="en">Stepwgn</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="logan">
+    <rdfs:label xml:lang="it">Logan</rdfs:label>
+    <rdfs:label xml:lang="en">Logan</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dacia"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="impala">
+    <rdfs:label xml:lang="it">Impala</rdfs:label>
+    <rdfs:label xml:lang="en">Impala</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="stream">
+    <rdfs:label xml:lang="it">Stream</rdfs:label>
+    <rdfs:label xml:lang="en">Stream</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="matiz">
+    <rdfs:label xml:lang="it">Matiz</rdfs:label>
+    <rdfs:label xml:lang="en">Matiz</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="nexia">
+    <rdfs:label xml:lang="it">Nexia</rdfs:label>
+    <rdfs:label xml:lang="en">Nexia</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="stilo">
+    <rdfs:label xml:lang="it">Stilo</rdfs:label>
+    <rdfs:label xml:lang="en">Stilo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="click">
+    <rdfs:label xml:lang="it">Click</rdfs:label>
+    <rdfs:label xml:lang="en">Click</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="acty">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Acty</rdfs:label>
+    <rdfs:label xml:lang="en">Acty</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="taurus">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Taurus</rdfs:label>
+    <rdfs:label xml:lang="en">Taurus</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="durango">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Durango</rdfs:label>
+    <rdfs:label xml:lang="en">Durango</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="statesman">
+    <rdfs:label xml:lang="it">Statesman</rdfs:label>
+    <rdfs:label xml:lang="en">Statesman</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ram_2500">
+    <rdfs:label xml:lang="it">RAM 2500</rdfs:label>
+    <rdfs:label xml:lang="en">RAM 2500</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="grandeur">
+    <rdfs:label xml:lang="it">Grandeur</rdfs:label>
+    <rdfs:label xml:lang="en">Grandeur</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="caravan">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Caravan</rdfs:label>
+    <rdfs:label xml:lang="en">Caravan</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="elantra">
+    <rdfs:label xml:lang="it">Elantra</rdfs:label>
+    <rdfs:label xml:lang="en">Elantra</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="expedition">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Expedition</rdfs:label>
+    <rdfs:label xml:lang="en">Expedition</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="bravo">
+    <rdfs:label xml:lang="it">Bravo</rdfs:label>
+    <rdfs:label xml:lang="en">Bravo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="max">
+    <rdfs:label xml:lang="it">MAX</rdfs:label>
+    <rdfs:label xml:lang="en">MAX</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="optra">
+    <rdfs:label xml:lang="it">Optra</rdfs:label>
+    <rdfs:label xml:lang="en">Optra</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="idea">
+    <rdfs:label xml:lang="it">Idea</rdfs:label>
+    <rdfs:label xml:lang="en">Idea</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="am">
+    <rdfs:label xml:lang="it">AM</rdfs:label>
+    <rdfs:label xml:lang="en">AM</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="atrai">
+    <rdfs:label xml:lang="it">Atrai</rdfs:label>
+    <rdfs:label xml:lang="en">Atrai</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="inspire">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Inspire</rdfs:label>
+    <rdfs:label xml:lang="en">Inspire</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="jimmy">
+    <rdfs:label xml:lang="it">Jimmy</rdfs:label>
+    <rdfs:label xml:lang="en">Jimmy</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="accent">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Accent</rdfs:label>
+    <rdfs:label xml:lang="en">Accent</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="grand_caravan">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Grand Caravan</rdfs:label>
+    <rdfs:label xml:lang="en">Grand Caravan</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="santamo">
+    <rdfs:label xml:lang="it">Santamo</rdfs:label>
+    <rdfs:label xml:lang="en">Santamo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="omega">
+    <rdfs:label xml:lang="it">Omega</rdfs:label>
+    <rdfs:label xml:lang="en">Omega</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="nubira">
+    <rdfs:label xml:lang="it">Nubira</rdfs:label>
+    <rdfs:label xml:lang="en">Nubira</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="razor">
+    <rdfs:label xml:lang="it">Razor</rdfs:label>
+    <rdfs:label xml:lang="en">Razor</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="magnus">
+    <rdfs:label xml:lang="it">Magnus</rdfs:label>
+    <rdfs:label xml:lang="en">Magnus</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="applausa">
+    <rdfs:label xml:lang="it">Applausa</rdfs:label>
+    <rdfs:label xml:lang="en">Applausa</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ranger">
+    <rdfs:label xml:lang="it">Ranger</rdfs:label>
+    <rdfs:label xml:lang="en">Ranger</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="m80">
+    <rdfs:label xml:lang="it">M80</rdfs:label>
+    <rdfs:label xml:lang="en">M80</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="topkick">
+    <rdfs:label xml:lang="it">Topkick</rdfs:label>
+    <rdfs:label xml:lang="en">Topkick</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="copen">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Copen</rdfs:label>
+    <rdfs:label xml:lang="en">Copen</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="straus">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Stratus</rdfs:label>
+    <rdfs:label xml:lang="en">Stratus</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lumina">
+    <rdfs:label xml:lang="it">Lumina</rdfs:label>
+    <rdfs:label xml:lang="en">Lumina</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="magnum">
+    <rdfs:label xml:lang="it">Magnum</rdfs:label>
+    <rdfs:label xml:lang="en">Magnum</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="nsx">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Nsx</rdfs:label>
+    <rdfs:label xml:lang="en">Nsx</rdfs:label>
+    <rdfs:label xml:lang="it">NSX</rdfs:label>
+    <rdfs:label xml:lang="en">NSX</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="trevis">
+    <rdfs:label xml:lang="it">Trevis</rdfs:label>
+    <rdfs:label xml:lang="en">Trevis</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="vantage">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+    <rdfs:label xml:lang="it">Vantage</rdfs:label>
+    <rdfs:label xml:lang="en">Vantage</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lacetti">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+    <rdfs:label xml:lang="it">Lacetti</rdfs:label>
+    <rdfs:label xml:lang="en">Lacetti</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="intrepid">
+    <rdfs:label xml:lang="it">Intrepid</rdfs:label>
+    <rdfs:label xml:lang="en">Intrepid</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="hhr">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">HHR</rdfs:label>
+    <rdfs:label xml:lang="en">HHR</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="prema">
+    <rdfs:label xml:lang="it">Prema</rdfs:label>
+    <rdfs:label xml:lang="en">Prema</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="monte_carlo">
+    <rdfs:label xml:lang="it">Monte Carlo</rdfs:label>
+    <rdfs:label xml:lang="en">Monte Carlo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="matrix">
+    <rdfs:label xml:lang="it">Matrix</rdfs:label>
+    <rdfs:label xml:lang="en">Matrix</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="life">
+    <rdfs:label xml:lang="it">Life</rdfs:label>
+    <rdfs:label xml:lang="en">Life</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="challenger">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Challenger</rdfs:label>
+    <rdfs:label xml:lang="en">Challenger</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ulysse">
+    <rdfs:label xml:lang="it">Ulysse</rdfs:label>
+    <rdfs:label xml:lang="en">Ulysse</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="century">
+    <rdfs:label xml:lang="it">Century</rdfs:label>
+    <rdfs:label xml:lang="en">Century</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="z71">
+    <rdfs:label xml:lang="it">Z71</rdfs:label>
+    <rdfs:label xml:lang="en">Z71</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="vectra">
+    <rdfs:label xml:lang="it">Vectra</rdfs:label>
+    <rdfs:label xml:lang="en">Vectra</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="punto">
+    <rdfs:label xml:lang="it">Punto</rdfs:label>
+    <rdfs:label xml:lang="en">Punto</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cr-v">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">CR-V</rdfs:label>
+    <rdfs:label xml:lang="en">CR-V</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="safari">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+    <rdfs:label xml:lang="it">Safari</rdfs:label>
+    <rdfs:label xml:lang="en">Safari</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="e150">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">E150</rdfs:label>
+    <rdfs:label xml:lang="en">E150</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fit">
+    <rdfs:label xml:lang="it">Fit</rdfs:label>
+    <rdfs:label xml:lang="en">Fit</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="leganza">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+    <rdfs:label xml:lang="it">Leganza</rdfs:label>
+    <rdfs:label xml:lang="en">Leganza</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="brava">
+    <rdfs:label xml:lang="it">Brava</rdfs:label>
+    <rdfs:label xml:lang="en">Brava</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="celta">
+    <rdfs:label xml:lang="it">Celta</rdfs:label>
+    <rdfs:label xml:lang="en">Celta</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="siena">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Siena</rdfs:label>
+    <rdfs:label xml:lang="en">Siena</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="r44">
+    <rdfs:label xml:lang="it">R44</rdfs:label>
+    <rdfs:label xml:lang="en">R44</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="freeStar">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">FreeStar</rdfs:label>
+    <rdfs:label xml:lang="en">FreeStar</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_550">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+    <rdfs:label xml:lang="it">_550</rdfs:label>
+    <rdfs:label xml:lang="en">_550</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cobalt">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Cobalt</rdfs:label>
+    <rdfs:label xml:lang="en">Cobalt</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="nitro">
+    <rdfs:label xml:lang="it">Nitro</rdfs:label>
+    <rdfs:label xml:lang="en">Nitro</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="envoy">
+    <rdfs:label xml:lang="it">Envoy</rdfs:label>
+    <rdfs:label xml:lang="en">Envoy</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="by">
+    <rdfs:label xml:lang="it">BY</rdfs:label>
+    <rdfs:label xml:lang="en">BY</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#bentley"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="charger">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Charger</rdfs:label>
+    <rdfs:label xml:lang="en">Charger</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="shuttle">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Shuttle</rdfs:label>
+    <rdfs:label xml:lang="en">Shuttle</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="strada">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Strada</rdfs:label>
+    <rdfs:label xml:lang="en">Strada</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="gingo">
+    <rdfs:label xml:lang="it">Gingo</rdfs:label>
+    <rdfs:label xml:lang="en">Gingo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tosca">
+    <rdfs:label xml:lang="it">Tosca</rdfs:label>
+    <rdfs:label xml:lang="en">Tosca</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="crown_victoria">
+    <rdfs:label xml:lang="it">Crown Victoria</rdfs:label>
+    <rdfs:label xml:lang="en">Crown Victoria</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="rainier">
+    <rdfs:label xml:lang="it">Rainier</rdfs:label>
+    <rdfs:label xml:lang="en">Rainier</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="v12Vanquish">
+    <rdfs:label xml:lang="it">V9 Vanquish</rdfs:label>
+    <rdfs:label xml:lang="en">V9 Vanquish</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tourneo">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Tourneo</rdfs:label>
+    <rdfs:label xml:lang="en">Tourneo</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="windstar">
+    <rdfs:label xml:lang="it">Windstar</rdfs:label>
+    <rdfs:label xml:lang="en">Windstar</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="h1000">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">H1000</rdfs:label>
+    <rdfs:label xml:lang="en">H1000</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="terraza">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">Terraza</rdfs:label>
+    <rdfs:label xml:lang="en">Terraza</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="v8">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+    <rdfs:label xml:lang="it">V8</rdfs:label>
+    <rdfs:label xml:lang="en">V8</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="satellite">
+    <rdfs:label xml:lang="it">Satellite</rdfs:label>
+    <rdfs:label xml:lang="en">Satellite</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ndx">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <rdfs:label xml:lang="it">dx</rdfs:label>
+    <rdfs:label xml:lang="en">dx</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="sedici">
+    <rdfs:label xml:lang="it">Sedici</rdfs:label>
+    <rdfs:label xml:lang="en">Sedici</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lavita">
+    <rdfs:label xml:lang="it">Lavita</rdfs:label>
+    <rdfs:label xml:lang="en">Lavita</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cuore">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Cuore</rdfs:label>
+    <rdfs:label xml:lang="en">Cuore</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="terracam">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Terracam</rdfs:label>
+    <rdfs:label xml:lang="en">Terracam</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lanos">
+    <rdfs:label xml:lang="it">anos</rdfs:label>
+    <rdfs:label xml:lang="en">anos</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="enclave">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">Enclave</rdfs:label>
+    <rdfs:label xml:lang="en">Enclave</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="astro">
+    <rdfs:label xml:lang="it">Astro</rdfs:label>
+    <rdfs:label xml:lang="en">Astro</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="s10">
+    <rdfs:label xml:lang="it">S10</rdfs:label>
+    <rdfs:label xml:lang="en">S10</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="suburban">
+    <rdfs:label xml:lang="it">Suburban</rdfs:label>
+    <rdfs:label xml:lang="en">Suburban</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="s-max">
+    <rdfs:label xml:lang="it">S-Max</rdfs:label>
+    <rdfs:label xml:lang="en">S-Max</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="territory">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Territory</rdfs:label>
+    <rdfs:label xml:lang="en">Territory</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="yukon">
+    <rdfs:label xml:lang="it">Yukon</rdfs:label>
+    <rdfs:label xml:lang="en">Yukon</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="hemi_super8">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Hemi Super 8</rdfs:label>
+    <rdfs:label xml:lang="en">Hemi Super 8</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="continental_flying_spur">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#bentley"/>
+    <rdfs:label xml:lang="it">Continental Flying Spur</rdfs:label>
+    <rdfs:label xml:lang="en">Continental Flying Spur</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="blazer">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Blazer</rdfs:label>
+    <rdfs:label xml:lang="en">Blazer</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="doblo">
+    <rdfs:label xml:lang="it">Doblo</rdfs:label>
+    <rdfs:label xml:lang="en">Doblo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="hisit">
+    <rdfs:label xml:lang="it">Hisit</rdfs:label>
+    <rdfs:label xml:lang="en">Hisit</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="velite">
+    <rdfs:label xml:lang="it">Velite</rdfs:label>
+    <rdfs:label xml:lang="en">Velite</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tahoe">
+    <rdfs:label xml:lang="it">Tahoe</rdfs:label>
+    <rdfs:label xml:lang="en">Tahoe</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="legend">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">Legend</rdfs:label>
+    <rdfs:label xml:lang="en">Legend</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="gl8">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">GL8</rdfs:label>
+    <rdfs:label xml:lang="en">GL8</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="naked">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Naked</rdfs:label>
+    <rdfs:label xml:lang="en">Naked</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fcx">
+    <rdfs:label xml:lang="it">FCX</rdfs:label>
+    <rdfs:label xml:lang="en">FCX</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="scudo">
+    <rdfs:label xml:lang="it">Scudo</rdfs:label>
+    <rdfs:label xml:lang="en">Scudo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="g2x">
+    <rdfs:label xml:lang="it">G2X</rdfs:label>
+    <rdfs:label xml:lang="en">G2X</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="esse">
+    <rdfs:label xml:lang="it">Esse</rdfs:label>
+    <rdfs:label xml:lang="en">Esse</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="curve">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Curve</rdfs:label>
+    <rdfs:label xml:lang="en">Curve</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tanto">
+    <rdfs:label xml:lang="it">Tanto</rdfs:label>
+    <rdfs:label xml:lang="en">Tanto</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cl">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <rdfs:label xml:lang="it">CL</rdfs:label>
+    <rdfs:label xml:lang="en">CL</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="power">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Power</rdfs:label>
+    <rdfs:label xml:lang="en">Power</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_612">
+    <rdfs:label xml:lang="it">_612</rdfs:label>
+    <rdfs:label xml:lang="en">_612</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ram_1500">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">RAM 1500</rdfs:label>
+    <rdfs:label xml:lang="en">RAM 1500</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lesabre">
+    <rdfs:label xml:lang="it">LeSabre</rdfs:label>
+    <rdfs:label xml:lang="en">LeSabre</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="avenger">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Avenger</rdfs:label>
+    <rdfs:label xml:lang="en">Avenger</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="db9">
+    <rdfs:label xml:lang="it">DB9</rdfs:label>
+    <rdfs:label xml:lang="en">DB9</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#aston_martin"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="uno">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Uno</rdfs:label>
+    <rdfs:label xml:lang="en">Uno</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="camaro">
+    <rdfs:label xml:lang="it">Camaro</rdfs:label>
+    <rdfs:label xml:lang="en">Camaro</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="meriva">
+    <rdfs:label xml:lang="it">Meriva</rdfs:label>
+    <rdfs:label xml:lang="en">Meriva</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ks">
+    <rdfs:label xml:lang="it">KS</rdfs:label>
+    <rdfs:label xml:lang="en">KS</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tucson">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Tucson</rdfs:label>
+    <rdfs:label xml:lang="en">Tucson</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="hijet">
+    <rdfs:label xml:lang="it">Hijet</rdfs:label>
+    <rdfs:label xml:lang="en">Hijet</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="odyssey">
+    <rdfs:label xml:lang="it">Odyssey</rdfs:label>
+    <rdfs:label xml:lang="en">Odyssey</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="escort">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Escort</rdfs:label>
+    <rdfs:label xml:lang="en">Escort</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="arnage">
+    <rdfs:label xml:lang="it">Arnage</rdfs:label>
+    <rdfs:label xml:lang="en">Arnage</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#bentley"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="linea">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Linea</rdfs:label>
+    <rdfs:label xml:lang="en">Linea</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="mustang">
+    <rdfs:label xml:lang="it">Mustang</rdfs:label>
+    <rdfs:label xml:lang="en">Mustang</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="trailblazer">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Trailblazer</rdfs:label>
+    <rdfs:label xml:lang="en">Trailblazer</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="uplander">
+    <rdfs:label xml:lang="it">Uplander</rdfs:label>
+    <rdfs:label xml:lang="en">Uplander</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="latte">
+    <rdfs:label xml:lang="it">Latte</rdfs:label>
+    <rdfs:label xml:lang="en">Latte</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="galaxy">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Galaxy</rdfs:label>
+    <rdfs:label xml:lang="en">Galaxy</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cruze">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Cruze</rdfs:label>
+    <rdfs:label xml:lang="en">Cruze</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fd_wagon">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">FD Wagon</rdfs:label>
+    <rdfs:label xml:lang="en">FD Wagon</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cavalier">
+    <rdfs:label xml:lang="it">Cavalier</rdfs:label>
+    <rdfs:label xml:lang="en">Cavalier</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tacuma">
+    <rdfs:label xml:lang="it">Tacuma</rdfs:label>
+    <rdfs:label xml:lang="en">Tacuma</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="verna">
+    <rdfs:label xml:lang="it">Verna</rdfs:label>
+    <rdfs:label xml:lang="en">Verna</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="super_america">
+    <rdfs:label xml:lang="it">SuperAmerica</rdfs:label>
+    <rdfs:label xml:lang="en">SuperAmerica</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="azera">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Azera</rdfs:label>
+    <rdfs:label xml:lang="en">Azera</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="malibu">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Malibu</rdfs:label>
+    <rdfs:label xml:lang="en">Malibu</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="passport">
+    <rdfs:label xml:lang="it">Passport</rdfs:label>
+    <rdfs:label xml:lang="en">Passport</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="panda">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Panda</rdfs:label>
+    <rdfs:label xml:lang="en">Panda</rdfs:label>
+    <fiat:modelBelongsToSegment rdf:resource="http://www.x-media-project.org/fiat/segments#B"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="f150">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">F150</rdfs:label>
+    <rdfs:label xml:lang="en">F150</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="d01">
+    <rdfs:label xml:lang="it">D01</rdfs:label>
+    <rdfs:label xml:lang="en">D01</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="gran_move">
+    <rdfs:label xml:lang="it">Gran Move</rdfs:label>
+    <rdfs:label xml:lang="en">Gran Move</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="spark">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Spark</rdfs:label>
+    <rdfs:label xml:lang="en">Spark</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="croma">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Croma</rdfs:label>
+    <rdfs:label xml:lang="en">Croma</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="jazz">
+    <rdfs:label xml:lang="it">Jazz</rdfs:label>
+    <rdfs:label xml:lang="en">Jazz</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fiesta">
+    <rdfs:label xml:lang="it">Fiesta</rdfs:label>
+    <rdfs:label xml:lang="en">Fiesta</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="alero">
+    <rdfs:label xml:lang="it">Alero</rdfs:label>
+    <rdfs:label xml:lang="en">Alero</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="pony">
+    <rdfs:label xml:lang="it">Pony</rdfs:label>
+    <rdfs:label xml:lang="en">Pony</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="sierra">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+    <rdfs:label xml:lang="it">Sierra</rdfs:label>
+    <rdfs:label xml:lang="en">Sierra</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="neon">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">Neon</rdfs:label>
+    <rdfs:label xml:lang="en">Neon</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="winstorm">
+    <rdfs:label xml:lang="it">Winstorm</rdfs:label>
+    <rdfs:label xml:lang="en">Winstorm</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="mcx-2">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">MCX-2</rdfs:label>
+    <rdfs:label xml:lang="en">MCX-2</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="yrv">
+    <rdfs:label xml:lang="it">YRV</rdfs:label>
+    <rdfs:label xml:lang="en">YRV</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="lacrosse">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">LaCrosse</rdfs:label>
+    <rdfs:label xml:lang="en">LaCrosse</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="santa_fe">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Santa Fe</rdfs:label>
+    <rdfs:label xml:lang="en">Santa Fe</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="rezzo">
+    <rdfs:label xml:lang="it">Rezzo</rdfs:label>
+    <rdfs:label xml:lang="en">Rezzo</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="colorado">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Colorado</rdfs:label>
+    <rdfs:label xml:lang="en">Colorado</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="viper">
+    <rdfs:label xml:lang="it">Viper</rdfs:label>
+    <rdfs:label xml:lang="en">Viper</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="escape">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Escape</rdfs:label>
+    <rdfs:label xml:lang="en">Escape</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="getz">
+    <rdfs:label xml:lang="it">Getz</rdfs:label>
+    <rdfs:label xml:lang="en">Getz</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tuscani">
+    <rdfs:label xml:lang="it">Tuscani</rdfs:label>
+    <rdfs:label xml:lang="en">Tuscani</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="transit">
+    <rdfs:label xml:lang="it">Transit</rdfs:label>
+    <rdfs:label xml:lang="en">Transit</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="entourage">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Entourage</rdfs:label>
+    <rdfs:label xml:lang="en">Entourage</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_599gtb">
+    <rdfs:label xml:lang="it">_599GTB</rdfs:label>
+    <rdfs:label xml:lang="en">_599GTB</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="navi">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+    <rdfs:label xml:lang="it">Navi</rdfs:label>
+    <rdfs:label xml:lang="en">Navi</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="i30">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">i30</rdfs:label>
+    <rdfs:label xml:lang="en">i30</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="mondeo">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Mondeo</rdfs:label>
+    <rdfs:label xml:lang="en">Mondeo</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ridgeline">
+    <rdfs:label xml:lang="it">Ridgeline</rdfs:label>
+    <rdfs:label xml:lang="en">Ridgeline</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="focus_c-max">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Focus C-Max</rdfs:label>
+    <rdfs:label xml:lang="en">Focus C-Max</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="avante">
+    <rdfs:label xml:lang="it">Avante</rdfs:label>
+    <rdfs:label xml:lang="en">Avante</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tb">
+    <rdfs:label xml:lang="it">TB</rdfs:label>
+    <rdfs:label xml:lang="en">TB</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="park_avenue">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+    <rdfs:label xml:lang="it">ParkAvenue</rdfs:label>
+    <rdfs:label xml:lang="en">ParkAvenue</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="transport">
+    <rdfs:label xml:lang="it">Transport</rdfs:label>
+    <rdfs:label xml:lang="en">Transport</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="flexus">
+    <rdfs:label xml:lang="it">Flexus</rdfs:label>
+    <rdfs:label xml:lang="en">Flexus</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="barchetta">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Barchetta</rdfs:label>
+    <rdfs:label xml:lang="en">Barchetta</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="sonata">
+    <rdfs:label xml:lang="it">Sonata</rdfs:label>
+    <rdfs:label xml:lang="en">Sonata</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="gt40">
+    <rdfs:label xml:lang="it">GT40</rdfs:label>
+    <rdfs:label xml:lang="en">GT40</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="canyon">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+    <rdfs:label xml:lang="it">Canyon</rdfs:label>
+    <rdfs:label xml:lang="en">Canyon</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="micro">
+    <rdfs:label xml:lang="it">Micro</rdfs:label>
+    <rdfs:label xml:lang="en">Micro</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="cougar">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Cougar</rdfs:label>
+    <rdfs:label xml:lang="en">Cougar</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ev">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+    <rdfs:label xml:lang="it">EV</rdfs:label>
+    <rdfs:label xml:lang="en">EV</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="regal">
+    <rdfs:label xml:lang="it">Regal</rdfs:label>
+    <rdfs:label xml:lang="en">Regal</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="extrol">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Extrol</rdfs:label>
+    <rdfs:label xml:lang="en">Extrol</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="tracker">
+    <rdfs:label xml:lang="it">Tracker</rdfs:label>
+    <rdfs:label xml:lang="en">Tracker</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="grande_punto">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+    <rdfs:label xml:lang="it">Grande Punto</rdfs:label>
+    <rdfs:label xml:lang="en">Grande Punto</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="venture">
+    <rdfs:label xml:lang="it">Venture</rdfs:label>
+    <rdfs:label xml:lang="en">Venture</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="corvette">
+    <rdfs:label xml:lang="it">Corvette</rdfs:label>
+    <rdfs:label xml:lang="en">Corvette</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="charade">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Charade</rdfs:label>
+    <rdfs:label xml:lang="en">Charade</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="terios">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">Terios</rdfs:label>
+    <rdfs:label xml:lang="en">Terios</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="mira_gino">
+    <rdfs:label xml:lang="it">Mira Gino</rdfs:label>
+    <rdfs:label xml:lang="en">Mira Gino</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="metro">
+    <rdfs:label xml:lang="it">Metro</rdfs:label>
+    <rdfs:label xml:lang="en">Metro</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="caliber">
+    <rdfs:label xml:lang="it">Caliber</rdfs:label>
+    <rdfs:label xml:lang="en">Caliber</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="_575m">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+    <rdfs:label xml:lang="it">_575M</rdfs:label>
+    <rdfs:label xml:lang="en">_575M</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="captiva">
+    <rdfs:label xml:lang="it">Captiva</rdfs:label>
+    <rdfs:label xml:lang="en">Captiva</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="ka">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">Ka</rdfs:label>
+    <rdfs:label xml:lang="en">Ka</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="aveo">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Aveo</rdfs:label>
+    <rdfs:label xml:lang="en">Aveo</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="savana_cargo_van">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#gmc"/>
+    <rdfs:label xml:lang="it">Savana Cargo Van</rdfs:label>
+    <rdfs:label xml:lang="en">Savana Cargo Van</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="seicento">
+    <rdfs:label xml:lang="it">Seicento</rdfs:label>
+    <rdfs:label xml:lang="en">Seicento</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#fiat"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="mdx">
+    <rdfs:label xml:lang="it">MDX</rdfs:label>
+    <rdfs:label xml:lang="en">MDX</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#acura"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="equus">
+    <rdfs:label xml:lang="it">Equus</rdfs:label>
+    <rdfs:label xml:lang="en">Equus</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="civic">
+    <rdfs:label xml:lang="it">Civic</rdfs:label>
+    <rdfs:label xml:lang="en">Civic</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="continental">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#bentley"/>
+    <rdfs:label xml:lang="it">Continental</rdfs:label>
+    <rdfs:label xml:lang="en">Continental</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="enzo">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+    <rdfs:label xml:lang="it">Enzo</rdfs:label>
+    <rdfs:label xml:lang="en">Enzo</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="f250">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+    <rdfs:label xml:lang="it">F250</rdfs:label>
+    <rdfs:label xml:lang="en">F250</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="centennial">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#hyundai"/>
+    <rdfs:label xml:lang="it">Centennial</rdfs:label>
+    <rdfs:label xml:lang="en">Centennial</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="srt">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#dodge"/>
+    <rdfs:label xml:lang="it">SRT</rdfs:label>
+    <rdfs:label xml:lang="en">SRT</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="royaum">
+    <rdfs:label xml:lang="it">Royaum</rdfs:label>
+    <rdfs:label xml:lang="en">Royaum</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#buick"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="korando">
+    <rdfs:label xml:lang="it">Korando</rdfs:label>
+    <rdfs:label xml:lang="en">Korando</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daewoo"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="pininfarina_p4-5">
+    <rdfs:label xml:lang="it">Pininfarina P4/5</rdfs:label>
+    <rdfs:label xml:lang="en">Pininfarina P4/5</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ferrari"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="fusion">
+    <rdfs:label xml:lang="it">Fusion</rdfs:label>
+    <rdfs:label xml:lang="en">Fusion</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#ford"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="prisma">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+    <rdfs:label xml:lang="it">Prisma</rdfs:label>
+    <rdfs:label xml:lang="en">Prisma</rdfs:label>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="corsa">
+    <rdfs:label xml:lang="it">Corsa</rdfs:label>
+    <rdfs:label xml:lang="en">Corsa</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#chevrolet"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="step">
+    <rdfs:label xml:lang="it">Step</rdfs:label>
+    <rdfs:label xml:lang="en">Step</rdfs:label>
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#honda"/>
+  </fiat:ModelReleased>
+  <fiat:ModelReleased rdf:ID="uf">
+    <fiat:make rdf:resource="http://www.x-media-project.org/fiat/vehicles/makes#daihatsu"/>
+    <rdfs:label xml:lang="it">UF</rdfs:label>
+    <rdfs:label xml:lang="en">UF</rdfs:label>
+  </fiat:ModelReleased>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.2.1, Build 365)  http://protege.stanford.edu -->

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<rdf:RDF
+    xmlns:fiat="http://www.x-media-project.org/fiat#"
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:owl="http://www.w3.org/2002/07/owl#"
+  xml:base="http://www.x-media-project.org/fiat/markets">
+  <owl:Ontology rdf:about="">
+    <owl:imports rdf:resource="http://www.x-media-project.org/fiat"/>
+  </owl:Ontology>
+  <fiat:Market rdf:ID="asia">
+    <rdfs:label xml:lang="it">Asia</rdfs:label>
+    <rdfs:label xml:lang="en">Asia</rdfs:label>
+  </fiat:Market>
+  <fiat:Market rdf:ID="europe">
+    <rdfs:label xml:lang="it">Europa</rdfs:label>
+    <rdfs:label xml:lang="en">Europe</rdfs:label>
+  </fiat:Market>
+  <fiat:Market rdf:ID="northAmerica">
+    <rdfs:label xml:lang="it">Nord America</rdfs:label>
+    <rdfs:label xml:lang="en">North America</rdfs:label>
+  </fiat:Market>
+  <fiat:Market rdf:ID="southAmerica">
+    <rdfs:label xml:lang="it">Sud America</rdfs:label>
+    <rdfs:label xml:lang="en">South America</rdfs:label>
+  </fiat:Market>
+</rdf:RDF>
+
+<!-- Created with Protege (with OWL Plugin 3.2.1, Build 365)  http://protege.stanford.edu -->

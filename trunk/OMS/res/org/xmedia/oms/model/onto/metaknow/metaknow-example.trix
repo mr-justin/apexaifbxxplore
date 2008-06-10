@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+ <graphset xmlns="http://www.w3.org/2004/03/trix/trix-1/">
+   
+  <!-- G1: a simple graph containing some example statements about Fiat Punto -->
+  <graph>
+    <uri>http://example.org/exampleG1</uri>
+    <triple>
+      <uri>http://example.org/Fiat/FiatPunto</uri>
+      <uri>http://example.org/Fiat/maxSpeed</uri>
+      <plainLiteral>170mph</plainLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat/FiatPunto</uri>
+      <uri>http://example.org/Fiat/numberOfSeats</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#int">4</typedLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat/FiatPunto</uri>
+      <uri>http://example.org/Fiat/price</uri>
+      <plainLiteral>20000EUR</plainLiteral>
+    </triple>
+  </graph>
+
+  <!-- G3: a simple graph containing some example statements about Fiat Punto -->
+  <graph>
+    <uri>http://example.org/exampleG3</uri>
+     <triple>
+      <uri>http://example.org/Fiat/FiatPunto</uri>
+      <uri>http://example.org/Fiat/hasSafetyRating</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#int">2</typedLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat/FiatPunto</uri>
+      <uri>http://example.org/Fiat/hasReliabilityRating</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#int">3</typedLiteral>
+    </triple>
+  </graph>
+
+  <!-- a simple graph containing meta statements about G1 -->
+  <graph>
+    <uri>http://example.org/exampleG2</uri>
+    <triple>
+      <uri>http://example.org/exampleG1</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#has_Provenance</uri>
+      <uri>http://example.org/Fiat#provenance1</uri>
+    </triple>
+  	<triple>
+      <uri>http://example.org/Fiat#provenance1</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#creation_time</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#dateTime">2006-05-01T00:00:00Z</typedLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat#provenance1</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#confidence_degree</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#float">0.7</typedLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat#provenance1</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#agent</uri>
+      <uri>http://aifb.uni-karlsruhe.de/aifb-ns#thanhtranduc</uri>
+    </triple>
+  </graph>
+    
+  <!-- a simple graph containing meta statements about G3 -->	
+  <graph>
+    <uri>http://example.org/exampleG4</uri>
+    <triple>
+      <uri>http://example.org/exampleG3</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#has_Provenance</uri>
+      <uri>http://example.org/Fiat#provenance2</uri>
+    </triple>
+  	<triple>
+      <uri>http://example.org/Fiat#provenance2</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#creation_time</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#dateTime">2007-01-01T00:00:00Z</typedLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat#provenance2</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#confidence_degree</uri>
+      <typedLiteral datatype="http://www.w3.org/2001/XMLSchema#float">0.55</typedLiteral>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat#provenance2</uri>
+      <uri>http://www.x-media.org/ontologies/metaknow#agent</uri>
+      <uri>http://aifb.uni-karlsruhe.de/aifb-ns#aFiatEngineer</uri>
+    </triple>
+  </graph>
+  
+  <!-- a simple graph about the agents -->
+  <graph>
+    <uri>http://example.org/exampleG5</uri>
+    <triple>
+      <uri>http://aifb.uni-karlsruhe.de/aifb-ns#thanhtranduc</uri>
+      <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+      <uri>http://example.org/ns#Agent</uri>
+    </triple>
+    <triple>
+      <uri>http://example.org/Fiat#aFiatEngineer</uri>
+      <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+      <uri>http://example.org/ns#Agent</uri>
+    </triple>
+  </graph>  
+  
+  <graph>
+    <uri>http://example.org/exampleG6</uri>
+    <triple>
+      <uri>http://aifb.uni-karlsruhe.de/aifb-ns#thanhtranduc</uri>
+      <uri>http://www.w3.org/1999/02/22-rdf-syntax-ns#type</uri>
+      <uri>http://example.org/ns#Researcher</uri>
+    </triple>
+  </graph>  
+ 
+ </graphset>
