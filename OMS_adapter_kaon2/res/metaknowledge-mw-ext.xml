@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE rdf:RDF [
+    <!ENTITY owl 'http://www.w3.org/2002/07/owl#'>
+    <!ENTITY xsd 'http://www.w3.org/2001/XMLSchema#'>
+    <!ENTITY metaknow 'http://www.x-media.org/ontologies/metaknow#'>
+	<!ENTITY ent 'http://www.cs.man.ac.uk/EntityMetaview#'>
+]>
+
+<owl11xml:Ontology xmlns:xsi="http://www.w3.org/2001/XMLSchema"
+  xsi:schemaLocation="http://www.w3.org/2006/12/owl11-xml/owl1.1.xsd"
+  xmlns:owl11xml="http://www.w3.org/2006/12/owl11-xml#"
+  xmlns:a="http://www.x-media.org/metaknow-ext#"
+  xml:base="http://www.x-media.org/metaknow-ext"
+    xmlns:AxiomMetaview="http://www.cs.man.ac.uk/AxiomMetaview#"
+  owl11xml:ontologyURI="http://www.x-media.org/metaknow-ext">
+	<owl11xml:Imports>http://www.x-media.org/ontologies/metaknow</owl11xml:Imports>
+
+	<owl11xml:ClassAssertion>
+		<owl11xml:OWLClass owl11xml:URI="&metaknow;Provenance"/>
+		<owl11xml:Individual owl11xml:URI="#provenance1"/>
+	</owl11xml:ClassAssertion>
+
+	<owl11xml:DataPropertyAssertion>
+		<owl11xml:DataProperty owl11xml:URI="&metaknow;confidence_degree"/>
+		<owl11xml:Individual owl11xml:URI="#provenance1" />
+  		<owl11xml:Constant owl11xml:datatypeURI="&xsd;float">0.4</owl11xml:Constant>
+	</owl11xml:DataPropertyAssertion>
+
+	<owl11xml:DataPropertyAssertion>
+		<owl11xml:DataProperty owl11xml:URI="&metaknow;creation_time"/>
+		<owl11xml:Individual owl11xml:URI="#provenance1" />
+  		<owl11xml:Constant owl11xml:datatypeURI="&xsd;dateTime">2007-10-04T10:11:13</owl11xml:Constant>
+	</owl11xml:DataPropertyAssertion>
+
+	<owl11xml:ObjectPropertyAssertion>
+		<owl11xml:ObjectProperty owl11xml:URI="&metaknow;agent"/>
+		<owl11xml:Individual owl11xml:URI="#provenance1" />
+		<owl11xml:Individual owl11xml:URI="http://www.domainontologies/hypermedia/odahs#testuser1" />
+	</owl11xml:ObjectPropertyAssertion>
+
+	<owl11xml:ObjectPropertyAssertion>
+		<owl11xml:ObjectProperty owl11xml:URI="&metaknow;source"/>
+		<owl11xml:Individual owl11xml:URI="#provenance1" />
+		<owl11xml:Individual owl11xml:URI="#SomeSource" />
+	</owl11xml:ObjectPropertyAssertion>
+
+	<owl11xml:ClassAssertion>
+		<owl11xml:OWLClass owl11xml:URI="&metaknow;Provenance"/>
+		<owl11xml:Individual owl11xml:URI="#provenance2"/>
+	</owl11xml:ClassAssertion>
+
+	<owl11xml:DataPropertyAssertion>
+		<owl11xml:DataProperty owl11xml:URI="&metaknow;confidence_degree"/>
+		<owl11xml:Individual owl11xml:URI="#provenance2" />
+  		<owl11xml:Constant owl11xml:datatypeURI="&xsd;float">0.3</owl11xml:Constant>
+	</owl11xml:DataPropertyAssertion>
+
+	<owl11xml:ObjectPropertyAssertion>
+		<owl11xml:ObjectProperty owl11xml:URI="&metaknow;agent"/>
+		<owl11xml:Individual owl11xml:URI="#provenance2" />
+		<owl11xml:Individual owl11xml:URI="#SomeAgent" />
+	</owl11xml:ObjectPropertyAssertion>
+</owl11xml:Ontology>	
+
+<!--<owl:DatatypeProperty rdf:about="&metaknow;name">
+    <rdfs:subPropertyOf rdf:resource="#textAnnotation"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="&metaknow;description">
+    <rdfs:subPropertyOf rdf:resource="#textAnnotation"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:ID="textAnnotation"/>
+		
+<owl:DatatypeProperty rdf:about="&metaknow;uncertaintyGreaterThan">
+    <rdfs:subPropertyOf rdf:resource="#uncertaintyValueAnnotation"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="&metaknow;uncertaintyGreaterEqual">
+    <rdfs:subPropertyOf rdf:resource="#uncertaintyValueAnnotation"/>
+</owl:DatatypeProperty>
+	
+<owl:DatatypeProperty rdf:about="&metaknow;uncertaintyLowerThan">
+    <rdfs:subPropertyOf rdf:resource="#uncertaintyValueAnnotation"/>
+</owl:DatatypeProperty>
+
+<owl:DatatypeProperty rdf:about="&metaknow;uncertaintyLowerEqual">
+    <rdfs:subPropertyOf rdf:resource="#uncertaintyValueAnnotation"/>
+</owl:DatatypeProperty>
+
+	
+<owl:DatatypeProperty rdf:about="&metaknow;uncertaintyValueAnnotation">
+	<rdfs:domain rdf:resource="&ent;Axiom" />    
+	<rdfs:range  rdf:resource="&xsd;positiveInteger"/>	
+</owl:DatatypeProperty> 
+	
+<owl:ObjectProperty rdf:about="&metaknow;agentAnnotation">
+	<rdfs:domain rdf:resource="&ent;Axiom" />    
+	<rdfs:range  rdf:resource="&metaknow;Agent"/>	
+</owl:ObjectProperty> 
+-->
