@@ -1,0 +1,15 @@
+#############################################
+#  java compiler section
+#############################################
+maven.compile.target=1.5
+maven.compile.verbose=off
+maven.compile.optimize=off
+maven.compile.debug=on
+maven.compile.source=1.5
+maven.compile.deprecation=off
+
+
+
+OMS.home=../OMS
+OMS_util.home=../AccessKnow/util
+
