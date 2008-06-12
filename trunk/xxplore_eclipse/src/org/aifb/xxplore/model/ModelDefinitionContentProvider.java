@@ -199,6 +199,31 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider{
 		}
 	}
 	
+//	Modified version of updateIntepretation() below.
+//	Updates definition with highest ranked query!
+//	Used for XXPloreConsole only.
+	public boolean updateIntepretationCommandlineVersion(){
+		
+		// listening only to selection changes in the DefinitionView
+		//get keyword queries 
+		String query = m_modeldefinition.getQuery();
+		//map keywords to ontology elements
+		Map<String,Collection<KbElement>> elements = m_search_service.searchKb(query);
+
+		//connect ontology elements to compute possible definitions (queries) 
+		Collection<Collection<OWLPredicate>> queries = m_interpretator.computeQueries(elements, 
+																ExploreEnvironment.DEFAULT_WIDTH_FOR_TERMINTERPRETATION,
+																ExploreEnvironment.DEFAULT_DEPTH_FOR_TERMINTERPRETATION);
+		if(queries != null){	
+				selectedQuery = queries.iterator().next();
+				m_modeldefinition = m_translator.translate2ModelDefinition(selectedQuery,m_modeldefinition);
+				return true;
+			
+		} else {
+			return false;
+		} 
+	}
+	
 	public void updateIntepretation(){
 		// listening only to selection changes in the DefinitionView
 		//get keyword queries 
@@ -279,6 +304,11 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider{
 
 	public ModelDefinition getModelDefinition(){
 		return m_modeldefinition;
+	}
+	
+//	used by XXPloreConsole only ...
+	public void setModelDefinition(ModelDefinition modelDefinition){
+		m_modeldefinition = modelDefinition;
 	}
 	
 	public IQuery getQuery() {
