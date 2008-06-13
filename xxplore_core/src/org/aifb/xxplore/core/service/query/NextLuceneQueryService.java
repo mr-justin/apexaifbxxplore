@@ -3,10 +3,8 @@ package org.aifb.xxplore.core.service.query;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -61,9 +59,9 @@ public class NextLuceneQueryService implements IService {
 
 	private static Logger s_log = Logger.getLogger(NextLuceneQueryService.class);
 
-	private boolean m_KbReader_isClosed = false;
+//	private boolean m_KbReader_isClosed = false;
 	
-	private int numOfConcept;
+//	private int numOfConcept;
 
 	//already indexed datasources
 	private Set<String> m_indexedDS;
@@ -132,10 +130,10 @@ public class NextLuceneQueryService implements IService {
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-					System.out.println(clauseQ.getClass());
-					System.out.println(clauseQ.toString("label"));
+//					System.out.println(clauseQ.getClass());
+//					System.out.println(clauseQ.toString("label"));
 					searchWithClause(clauseQ,ress);
-					System.out.println();
+//					System.out.println();
 				}
 			}
 			//is variations of phrase or term query 
@@ -150,14 +148,14 @@ public class NextLuceneQueryService implements IService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(ress);
+//		System.out.println(ress);
 		return ress;
 	}
 
 	private void searchWithClause(Query clausequery, Map<String,Collection<KbElement>> ress){
 		try {
 			Hits results = m_kbSearcher.search(clausequery);
-			if (results == null || results.length() == 0){
+			if ((results == null) || (results.length() == 0)){
 				Set<Term> term = new HashSet<Term>();
 				clausequery.extractTerms(term);
 				//if clause query is a term query
@@ -166,8 +164,8 @@ public class NextLuceneQueryService implements IService {
 				}
 			}
 			
-			if(results != null && results.length() > 0){
-				System.out.println("results.length(): " + results.length());
+			if((results != null) && (results.length() > 0)){
+//				System.out.println("results.length(): " + results.length());
 				Collection<KbElement> res = new LinkedHashSet<KbElement>();
 				ress.put(clausequery.toString("label"), res);
 				for(int i = 0; i < results.length(); i++){
@@ -177,9 +175,9 @@ public class NextLuceneQueryService implements IService {
 		        		if(doc != null){
 		        			String type = doc.get("type");
 		        			if(type.equals(LITERAL)){
-		        				System.out.println("type: " + type);
-			        			System.out.println("score: " + score);
-		        				System.out.println("label: " + doc.get("label"));
+//		        				System.out.println("type: " + type);
+//			        			System.out.println("score: " + score);
+//		        				System.out.println("label: " + doc.get("label"));
 		        				ILiteral lit = new Literal(pruneString(doc.get("label")));
 		        				KbVertex vvertex = new KbVertex(lit,KbElement.VVERTEX,score,1);
 		        				res.add(vvertex);
@@ -187,7 +185,7 @@ public class NextLuceneQueryService implements IService {
 		        				Term term = new Term("literal",lit.getLabel());
 		        		        TermQuery query = new TermQuery(term);
 		        		        Hits hits = m_kbSearcher.search(query);
-		        		        if(hits != null && hits.length() > 0){
+		        		        if((hits != null) && (hits.length() > 0)){
 		        		        	for(int j = 0; j < hits.length(); j++){
 		        		        		Document docu = hits.doc(j);
 		        		        		if(docu != null){
@@ -200,16 +198,16 @@ public class NextLuceneQueryService implements IService {
 		        		        }
 		        			}
 		        			else if(type.equals(CONCEPT)){
-		        				System.out.println("type: " + type);
-			        			System.out.println("score: " + score);
-		        				System.out.println("uri: " + doc.get("uri"));
+//		        				System.out.println("type: " + type);
+//			        			System.out.println("score: " + score);
+//		        				System.out.println("uri: " + doc.get("uri"));
 		        				INamedConcept con = new NamedConcept(pruneString(doc.get("uri")));
 		        				res.add(new KbVertex(con,KbElement.CVERTEX,score,1));
 		        			}
 		        			else if(type.equals(DATAPROPERTY)){
-		        				System.out.println("type: " + type);
-			        			System.out.println("score: " + score);
-		        				System.out.println("uri: " + doc.get("uri"));
+//		        				System.out.println("type: " + type);
+//			        			System.out.println("score: " + score);
+//		        				System.out.println("uri: " + doc.get("uri"));
 		        				DataProperty dataProp = new DataProperty(pruneString(doc.get("uri")));
 		        				KbVertex vvertex = new KbVertex(new Resource("dummy"),KbElement.DUMMY,score,1);
 		        				res.add(vvertex);
@@ -218,7 +216,7 @@ public class NextLuceneQueryService implements IService {
 		        				Term term = new Term("attribute",str);
 		        		        TermQuery query = new TermQuery(term);
 		        		        Hits hits = m_kbSearcher.search(query);
-		        		        if(hits != null && hits.length() > 0){
+		        		        if((hits != null) && (hits.length() > 0)){
 		        		        	for(int j = 0; j < hits.length(); j++){
 		        		        		Document docu = hits.doc(j);
 		        		        		if(docu != null){
@@ -230,15 +228,15 @@ public class NextLuceneQueryService implements IService {
 		        		        }
 		        			}
 		        			else if(type.equals(OBJECTPROPERTY)){
-		        				System.out.println("type: " + type);
-			        			System.out.println("score: " + score);
-		        				System.out.println("uri: " + doc.get("uri"));
+//		        				System.out.println("type: " + type);
+//			        			System.out.println("score: " + score);
+//		        				System.out.println("uri: " + doc.get("uri"));
 		        				IObjectProperty objProp = new ObjectProperty(pruneString(doc.get("uri")));
 		        				String str = objProp.getLabel();
 		        				Term term = new Term("relation",str);
 		        		        TermQuery query = new TermQuery(term);
 		        		        Hits hits = m_kbSearcher.search(query);
-		        		        if(hits != null && hits.length() > 0){
+		        		        if((hits != null) && (hits.length() > 0)){
 		        		        	for(int j = 0; j < hits.length(); j++){
 		        		        		Document docu = hits.doc(j);
 		        		        		if(docu != null){
@@ -287,14 +285,16 @@ public class NextLuceneQueryService implements IService {
 	private static String CONCEPT = "concept";
 	private static String OBJECTPROPERTY = "objectproperty";
 	private static String DATAPROPERTY = "dataproperty";
-	private static String INDIVIDUAL = "indiviudal";
+//	private static String INDIVIDUAL = "indiviudal";
 	private static String LITERAL = "literal";
 	
 	private boolean isIndexingRequired(String datasourceUri){
 		if (!m_indexedDS.contains(datasourceUri)){
 			File file = new File(ExploreEnvironment.KB_INDEX_DIR);
 			//TODO check of the knowledgebase has been changed instead 
-			if (file.list() == null || file.list().length <= 2) return true;
+			if ((file.list() == null) || (file.list().length <= 2)) {
+				return true;
+			}
 		}
 
 		return false;
@@ -303,7 +303,9 @@ public class NextLuceneQueryService implements IService {
 	private boolean isWordNetIndexingRequired(){
 		File file = new File(ExploreEnvironment.SYN_INDEX_DIR);
 		//TODO check of the knowledgebase has been changed instead 
-		if (file.list() == null || file.list().length <= 2) return true;
+		if ((file.list() == null) || (file.list().length <= 2)) {
+			return true;
+		}
 		
 		return false;
 	}
@@ -313,8 +315,9 @@ public class NextLuceneQueryService implements IService {
 			s_log.debug("Creating the index for " + " datasource " + datasourceUri + " .....!");
 
 			try {
-				if(isWordNetIndexingRequired())
+				if(isWordNetIndexingRequired()) {
 					Syns2Index.indexWordNet();
+				}
 
 				File file = new File(ExploreEnvironment.KB_INDEX_DIR);
 				IndexWriter indexWriter = new IndexWriter(file, m_analyzer, true);
@@ -347,10 +350,11 @@ public class NextLuceneQueryService implements IService {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected  void indexDataSourceByConcept(IndexWriter indexWriter,IndexSearcher searcher){
 		IConceptDao conceptDao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
 		List concepts = conceptDao.findAll();
-		int conSize = concepts.size();
+//		int conSize = concepts.size();
 		
 		try{
 			for (Object concept : concepts){
@@ -385,8 +389,8 @@ public class NextLuceneQueryService implements IService {
 							if(prop instanceof IObjectProperty){
 								INamedConcept range = (INamedConcept)pair.getTail();
 								Document opdoc = new Document();
-								System.out.println(prop.getLabel());
-								System.out.println(ncon.getUri());
+//								System.out.println(prop.getLabel());
+//								System.out.println(ncon.getUri());
 								opdoc.add(new Field("relation", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 								opdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
 								opdoc.add(new Field("range", range.getUri(), Field.Store.YES, Field.Index.NO));
@@ -394,8 +398,8 @@ public class NextLuceneQueryService implements IService {
 							}
 							else if (prop instanceof IDataProperty ){
 								Document dpdoc = new Document();
-								System.out.println(prop.getLabel());
-								System.out.println(ncon.getUri());
+//								System.out.println(prop.getLabel());
+//								System.out.println(ncon.getUri());
 								dpdoc.add(new Field("attribute", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 								dpdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
 								indexWriter.addDocument(dpdoc);
@@ -409,13 +413,13 @@ public class NextLuceneQueryService implements IService {
 				Term term = new Term("word", label.toLowerCase());
 			    TermQuery termQuery = new TermQuery(term);
 			    Hits results = searcher.search(termQuery);
-			    if(results != null && results.length() > 0){
+			    if((results != null) && (results.length() > 0)){
 					for(int i = 0; i < results.length(); i++){
 			        	Document docu = results.doc(i);
 			        	values.addAll(Arrays.asList(docu.getValues("syn")));
 					}
 			    }	
-			    System.out.println(concept + ": " + values);
+//			    System.out.println(concept + ": " + values);
 			    for(String value : values){
 			    	Document docu = new Document();
 					docu.add(new Field("type", CONCEPT, Field.Store.YES, Field.Index.NO));
@@ -436,6 +440,7 @@ public class NextLuceneQueryService implements IService {
 		} 
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected  void indexDataSourceByProperty(IndexWriter indexWriter,IndexSearcher searcher){
 		IPropertyDao propertyDao = (IPropertyDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyDao.class);
 		List properties = propertyDao.findAll(); 
@@ -460,7 +465,7 @@ public class NextLuceneQueryService implements IService {
 				Term term = new Term("word", label.toLowerCase());
 			    TermQuery termQuery = new TermQuery(term);
 			    Hits results = searcher.search(termQuery);
-			    if(results != null && results.length() > 0){
+			    if((results != null) && (results.length() > 0)){
 					for(int i = 0; i < results.length(); i++){
 			        	Document docu = results.doc(i);
 			        	values.addAll(Arrays.asList(docu.getValues("syn")));
@@ -470,10 +475,11 @@ public class NextLuceneQueryService implements IService {
 			    	Document docu = new Document();
 					docu.add(new Field("label", value, Field.Store.NO,Field.Index.TOKENIZED));
 					docu.add(new Field("uri", uri, Field.Store.YES, Field.Index.NO));
-					if(property instanceof IObjectProperty)
+					if(property instanceof IObjectProperty) {
 						docu.add(new Field("type", OBJECTPROPERTY, Field.Store.YES, Field.Index.NO));
-					else
+					} else {
 						docu.add(new Field("type", DATAPROPERTY, Field.Store.YES, Field.Index.NO));
+					}
 					indexWriter.addDocument(docu);
 			    }
 			}
@@ -485,6 +491,7 @@ public class NextLuceneQueryService implements IService {
 		} 
 	}
 	
+	@SuppressWarnings("deprecation")
 	protected  void indexDataSourceByLiteral(IndexWriter indexWriter){
 		ILiteralDao literalDao = (ILiteralDao) PersistenceUtil.getDaoManager().getAvailableDao(ILiteralDao.class);
 		List literals = literalDao.findAll();
@@ -492,7 +499,7 @@ public class NextLuceneQueryService implements IService {
 		
 		try{
 			for (Object literal:literals){
-				System.out.println(i + ": " + ((ILiteral)literal).getLabel());
+//				System.out.println(i + ": " + ((ILiteral)literal).getLabel());
 				i++;
 				
 				Document doc = new Document();
@@ -509,14 +516,15 @@ public class NextLuceneQueryService implements IService {
 		} 
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void indexGraphElement(IndexWriter indexWriter){
 		IIndividualDao individualDao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
 		List individuals = individualDao.findAll();
-		System.out.println("individuals.size(): " + individuals.size());
+//		System.out.println("individuals.size(): " + individuals.size());
 		int i = 0; 
 		try{
 			for (Object individual:individuals){
-				System.out.println(i + ": " + ((INamedIndividual)individual).getLabel());
+//				System.out.println(i + ": " + ((INamedIndividual)individual).getLabel());
 				if (individual instanceof INamedIndividual) {
 //					INamedConcept concept = null;
 //					Object[] cons =  ((INamedIndividual)individual).getTypes().toArray();
@@ -560,20 +568,22 @@ public class NextLuceneQueryService implements IService {
 	}
 	
 	public boolean isSubConcept(Object subconcept, Object superconcept){
-		if (subconcept instanceof INamedConcept && superconcept instanceof INamedConcept){
+		if ((subconcept instanceof INamedConcept) && (superconcept instanceof INamedConcept)){
 			INamedConcept sup = (INamedConcept)superconcept;
 			INamedConcept sub = (INamedConcept)subconcept;
 			if(sup.getSubconcepts() !=  null){
-				if (sup.getSubconcepts().contains(sub)) 
+				if (sup.getSubconcepts().contains(sub)) {
 					return true;
-				else {
+				} else {
 					for (Object obj : sup.getSubconcepts()) {
-						if(isSubConcept(sub,obj)) return true;
+						if(isSubConcept(sub,obj)) {
+							return true;
+						}
 					}
 				}
-			}
-			else 
+			} else {
 				return false;
+			}
 		}
 		return false;
 	} 
@@ -654,8 +664,9 @@ public class NextLuceneQueryService implements IService {
 			// if a directory
 			String[] files = file.list();         // list its files
 			Arrays.sort(files);           // sort the files
-			for (int i = 0; i < files.length; i++)    // recursively index them
+			for (int i = 0; i < files.length; i++) {
 				indexDocs(new File(file, files[i]), writer);
+			}
 		}
 
 		else {
@@ -676,17 +687,17 @@ public class NextLuceneQueryService implements IService {
 		if( path.endsWith(".HTML") || // index .html files
 				path.endsWith(".HTM") || // index .htm files
 				path.endsWith(".TXT")) {
-			System.out.println( "Indexing HTML , Text document: " + file );
+//			System.out.println( "Indexing HTML , Text document: " + file );
 			doc = HTMLDocument.Document(file);
 		}
 
 		else if( path.endsWith(".PDF")){
-			System.out.println( "Indexing PDF document: " + file );
+//			System.out.println( "Indexing PDF document: " + file );
 			doc = PDFDocumentParser.getLuceneDocument(file);
 		}
 
 		else{
-			System.out.println( "Indexing File document: " + file );
+//			System.out.println( "Indexing File document: " + file );
 			doc = FileDocument.Document(file);
 		}
 
