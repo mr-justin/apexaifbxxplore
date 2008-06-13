@@ -346,7 +346,7 @@ public class XXPloreCommandline {
 						
 						eval = PersistenceUtil.getDaoManager().getAvailableEvaluator(IDaoManager.SPARQL_QUERYTYPE);
 						IQueryResult queryResult = eval.evaluate(m_modeldef_provider.getModelDefinition().getDLQuery());
-						print(queryResult);
+						print(queryResult,input);
 						
 						start_keywordSearch();
 					} 
@@ -379,7 +379,7 @@ public class XXPloreCommandline {
 			return input;
 		}
 		
-		private int[] m_validInputMainView = {1,2,3};
+		private int[] m_validInputMainView = {1,3};
 		
 		private boolean validateInput(String input){					
 			
@@ -409,10 +409,11 @@ public class XXPloreCommandline {
 			m_modeldef_provider = ModelDefinitionContentProvider.ModelDefinitionContentProviderSingleTonHolder.getInstance();
 			m_modeldefinition = new ModelDefinition(m_onto);
 			m_modeldef_provider.setModelDefinition(m_modeldefinition);
+			m_modeldef_provider.makeKbIndexCommandLineVersion(((IOntology)m_modeldefinition.getDataSource()).getUri());
 			
 		}
 		
-		private void print(IQueryResult queryResult){
+		private void print(IQueryResult queryResult, String query){
 			
 			String prefix = "[XXPLORE > RESULTS";
 			
@@ -436,6 +437,9 @@ public class XXPloreCommandline {
 			System.out.println();
 			System.out.println();
 			
+			printDivider("=");
+			System.out.println(prefix+"] RESULTS FOR QUERY: '"+query+"'");
+			printDivider();
 			System.out.println(prefix+" > VARIABLES]"+labels);			
 			printDivider();
 			
