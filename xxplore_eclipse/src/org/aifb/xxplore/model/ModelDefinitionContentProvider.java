@@ -364,6 +364,11 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider{
 		});
 	}
 	
+//	used by XXPloreCommandLine only ...
+	public void makeKbIndexCommandLineVersion(String datasourceUri){
+		m_search_service.indexDataSource(datasourceUri);
+	}
+	
 	public static class ModelDefinitionContentProviderSingleTonHolder {
 		
 		public static ModelDefinitionContentProvider m_modelDefinitionContentProvider;
