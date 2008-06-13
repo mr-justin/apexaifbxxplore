@@ -24,30 +24,18 @@ import org.xmedia.oms.model.api.IDatatype;
 import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IProperty;
-import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.Individual;
-import org.xmedia.oms.model.impl.Literal;
-import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.NamedIndividual;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.persistence.PersistenceUtil;
-import org.xmedia.oms.persistence.dao.IConceptDao;
-import org.xmedia.oms.persistence.dao.IDaoManager;
-import org.xmedia.oms.persistence.dao.IDatatypeDao;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
-import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
-import org.xmedia.oms.persistence.dao.QueryEvaluatorUnavailableException;
 import org.xmedia.oms.query.ConceptMemberPredicate;
-import org.xmedia.oms.query.IQueryEvaluator;
-import org.xmedia.oms.query.IQueryResult;
-import org.xmedia.oms.query.ITuple;
 import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
 import org.xmedia.oms.query.QueryException;
 import org.xmedia.oms.query.QueryWrapper;
-import org.xmedia.oms.query.ResourceTuple;
 import org.xmedia.oms.query.Variable;
 
 public class QueryTranslationService implements IService {
@@ -204,7 +192,7 @@ public class QueryTranslationService implements IService {
 		}
 		
 		String query = selectClause + whereClause;
-		System.out.println(query);
+//		System.out.println(query);
 		
 		return new QueryWrapper(query, vars);
 		
@@ -326,13 +314,14 @@ public class QueryTranslationService implements IService {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	public static void test() throws QueryException {
-		IConceptDao cDao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
-		IDatatypeDao dDao = (IDatatypeDao) PersistenceUtil.getDaoManager().getAvailableDao(IDatatypeDao.class);
-		IPropertyMemberAxiomDao paDao = (IPropertyMemberAxiomDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyMemberAxiomDao.class);
+//		IConceptDao cDao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+//		IDatatypeDao dDao = (IDatatypeDao) PersistenceUtil.getDaoManager().getAvailableDao(IDatatypeDao.class);
+//		IPropertyMemberAxiomDao paDao = (IPropertyMemberAxiomDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyMemberAxiomDao.class);
 		IPropertyDao pDao = (IPropertyDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyDao.class);
 		IIndividualDao iDao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
-		QueryTranslationService qtservice = new QueryTranslationService();
+//		QueryTranslationService qtservice = new QueryTranslationService();
 		
 //		qtservice.test();
 		
@@ -340,42 +329,42 @@ public class QueryTranslationService implements IService {
 		List<Variable> variables = new ArrayList<Variable>();
 		
 		Variable var1 = new Variable("x"+String.valueOf(UniqueIdGenerator.getInstance().getNewId()));
-		Variable var2 = new Variable("x"+String.valueOf(UniqueIdGenerator.getInstance().getNewId()));
+//		Variable var2 = new Variable("x"+String.valueOf(UniqueIdGenerator.getInstance().getNewId()));
 		
-		NamedConcept publication = (NamedConcept)cDao.findByUri("http://swrc.ontoware.org/ontology#Publication");
-		NamedConcept organization = (NamedConcept)cDao.findByUri("http://swrc.ontoware.org/ontology#Organization");
-		Property name = (Property)pDao.findByUri("http://swrc.ontoware.org/ontology#name");
+//		NamedConcept publication = (NamedConcept)cDao.findByUri("http://swrc.ontoware.org/ontology#Publication");
+//		NamedConcept organization = (NamedConcept)cDao.findByUri("http://swrc.ontoware.org/ontology#Organization");
+//		Property name = (Property)pDao.findByUri("http://swrc.ontoware.org/ontology#name");
 		Property affiliation = (Property)pDao.findByUri("http://swrc.ontoware.org/ontology#affiliation");
 		Individual id2096 = (Individual)iDao.findByUri("http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2096instance");
 		
-		Set<IPropertyMember> propMembers = paDao.findByTargetValue(new Literal("Wallenberg Global Learning Network"));
-		for (IPropertyMember propMember : propMembers) {
-			ILiteral lit = (ILiteral)propMember.getTarget();
-			System.out.println(lit.getDatatypes());
-		}
+//		Set<IPropertyMember> propMembers = paDao.findByTargetValue(new Literal("Wallenberg Global Learning Network"));
+//		for (IPropertyMember propMember : propMembers) {
+//			ILiteral lit = (ILiteral)propMember.getTarget();
+//			System.out.println(lit.getDatatypes());
+//		}
 //		predicates.add(new ConceptMemberPredicate(organization, var1));
 //		predicates.add(new PropertyMemberPredicate(name, var1, new Literal("Wallenberg Global Learning Network")));
 		predicates.add(new PropertyMemberPredicate(affiliation, id2096, var1));
 		
 		variables.add(var1);
 		
-		QueryWrapper q = qtservice.translate2SparqlQuery(predicates, variables);
+//		QueryWrapper q = qtservice.translate2SparqlQuery(predicates, variables);
 		
-		IQueryEvaluator eval;
-		try {
-			eval = PersistenceUtil.getDaoManager().getAvailableEvaluator(IDaoManager.SPARQL_QUERYTYPE);
+//		IQueryEvaluator eval;
+//		try {
+//			eval = PersistenceUtil.getDaoManager().getAvailableEvaluator(IDaoManager.SPARQL_QUERYTYPE);
 			
-			IQueryResult result = eval.evaluate(q);
-			Set<ITuple> results = result.getResult();
-			for (ITuple x : results){
-				System.out.println(((ResourceTuple)x).getElementAt(0).getLabel());
-				System.out.println(x.getLabelAt(0));
-			}
+//			IQueryResult result = eval.evaluate(q);
+//			Set<ITuple> results = result.getResult();
+//			for (ITuple x : results){
+//				System.out.println(((ResourceTuple)x).getElementAt(0).getLabel());
+//				System.out.println(x.getLabelAt(0));
+//			}
 
-		} catch (QueryEvaluatorUnavailableException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+//		} catch (QueryEvaluatorUnavailableException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
 	}
 
 	public Set<String[]> translate2StringTriples(Collection<OWLPredicate> predicates, Set<Variable> variables) {
