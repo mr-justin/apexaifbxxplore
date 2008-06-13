@@ -3,7 +3,6 @@ package org.aifb.xxplore.core.model.definition;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -312,7 +311,7 @@ public class ModelDefinition extends AbstractDefinition implements IModelDefinit
 
 	public void getSelectedQuery(ModelDefinition md, Collection<OWLPredicate> selectedQuery){
 		Map<String,List<DefinitionTuple>> completeDefinitionTuples = md.getAllCompleteDefinitionTuples();
-		if (completeDefinitionTuples != null && completeDefinitionTuples.size() != 0) {
+		if ((completeDefinitionTuples != null) && (completeDefinitionTuples.size() != 0)) {
 			for (String key : completeDefinitionTuples.keySet()) {
 				Variable sub = new Variable(key);
 				List<DefinitionTuple> tuples = completeDefinitionTuples.get(key);
@@ -320,9 +319,9 @@ public class ModelDefinition extends AbstractDefinition implements IModelDefinit
 					IProperty prop = tuple.getRelationDefinition().getDefinition();
 					IResource obj = null;
 					IDefinition objectDefinition = tuple.getObjectDefinition();
-					System.out.println(sub);
-					System.out.println(prop);
-					System.out.println(objectDefinition);
+//					System.out.println(sub);
+//					System.out.println(prop);
+//					System.out.println(objectDefinition);
 					if (objectDefinition instanceof EntityDefinition) {
 						obj = ((EntityDefinition) objectDefinition).getDefinition();
 					} else if (objectDefinition instanceof ModelDefinition) {
@@ -330,10 +329,11 @@ public class ModelDefinition extends AbstractDefinition implements IModelDefinit
 						obj = new Variable(varName);
 						getSelectedQuery((ModelDefinition) objectDefinition,selectedQuery);
 					}
-					if (prop.equals(Property.IS_INSTANCE_OF) && obj instanceof INamedConcept)
+					if (prop.equals(Property.IS_INSTANCE_OF) && (obj instanceof INamedConcept)) {
 						selectedQuery.add(new ConceptMemberPredicate(obj, sub));
-					else if (!prop.equals(Property.IS_INSTANCE_OF) && !(obj instanceof INamedConcept))
+					} else if (!prop.equals(Property.IS_INSTANCE_OF) && !(obj instanceof INamedConcept)) {
 						selectedQuery.add(new PropertyMemberPredicate(prop,sub, obj));
+					}
 				}
 			}
 		}
