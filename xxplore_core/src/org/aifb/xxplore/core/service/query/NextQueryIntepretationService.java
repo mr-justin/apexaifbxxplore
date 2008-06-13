@@ -19,11 +19,8 @@ import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.apache.log4j.Logger;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
-import org.jgrapht.alg.DijkstraShortestPath;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.jgrapht.traverse.ClosestFirstIterator;
-import org.xmedia.accessknow.sesame.persistence.SesameSession;
-import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IObjectProperty;
 import org.xmedia.oms.model.api.IOntology;
@@ -101,16 +98,19 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		connectingElements = new LinkedHashSet<KbVertex>();
 		
 	    resources = computeResources(elements);
-	    if(resources == null || resources.size() == 0) 
-	    	return null;
+	    if((resources == null) || (resources.size() == 0)) {
+			return null;
+		}
 		resourceGraph = computeGraphSchemaIndex();
 		computeGraph(resources,resourceGraph);
 		subgraphs = computeSubgraphs(resources);
-		if(subgraphs == null || subgraphs.size() == 0)
+		if((subgraphs == null) || (subgraphs.size() == 0)) {
 			return null;
+		}
 		queries = computeQueries(subgraphs);
-		if(queries == null || queries.size() == 0)
+		if((queries == null) || (queries.size() == 0)) {
 			return null;
+		}
 
 		return queries;
 	}
@@ -124,28 +124,30 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 			Collection<KbElement> collection = ress.get(keyword);
 			for(Iterator<KbElement> ite = collection.iterator(); ite.hasNext(); ){
 				KbElement element = ite.next();
-				if(element instanceof KbVertex && element.getType() == KbElement.CVERTEX){
+				if((element instanceof KbVertex) && (element.getType() == KbElement.CVERTEX)){
 					double weight = computeWeight((INamedConcept)((KbVertex)element).getResource());
-					if(weight == Double.POSITIVE_INFINITY)
+					if(weight == Double.POSITIVE_INFINITY) {
 						ite.remove();
+					}
 				}
-				else if(element instanceof KbEdge && element.getType() == KbElement.REDGE){
-					double weight = computeWeight((IProperty)((KbEdge)element).getProperty());
-					if(weight == Double.POSITIVE_INFINITY)
+				else if((element instanceof KbEdge) && (element.getType() == KbElement.REDGE)){
+					double weight = computeWeight(((KbEdge)element).getProperty());
+					if(weight == Double.POSITIVE_INFINITY) {
 						ite.remove();
-					else {
+					} else {
 						double weight1 = computeWeight((INamedConcept)((KbEdge)element).getVertex1().getResource());
 						double weight2 = computeWeight((INamedConcept)((KbEdge)element).getVertex2().getResource());
-						if(weight1 == Double.POSITIVE_INFINITY || weight2 == Double.POSITIVE_INFINITY)
+						if((weight1 == Double.POSITIVE_INFINITY) || (weight2 == Double.POSITIVE_INFINITY)) {
 							ite.remove();
+						}
 					}
 				}
 			}
-			if(collection == null || collection.size() == 0){
+			if((collection == null) || (collection.size() == 0)){
 				keywords.add(keyword);
 			}	
 			for(KbElement element : collection){
-				if(element instanceof KbEdge && element.getType() == KbElement.REDGE) {
+				if((element instanceof KbEdge) && (element.getType() == KbElement.REDGE)) {
 					allEdges = true;
 					matchingREdges.add(element);
 				}	
@@ -176,7 +178,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		IConceptDao conceptDao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
 		List concepts = conceptDao.findAll();
 		int numConcept = concepts.size();
-		System.out.println("number of Concept: " + numConcept);
+//		System.out.println("number of Concept: " + numConcept);
 		
 		for(Object concept : concepts){
 			if(concept instanceof IResource){
@@ -264,10 +266,10 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		
 		Collection<Collection<KbEdge>> subgraphs = new LinkedHashSet<Collection<KbEdge>>();
 		int size = subgraphQueue.size();
-		System.out.println("computeSubgraphs - subgraphs: " + size);
+//		System.out.println("computeSubgraphs - subgraphs: " + size);
 		for(int i = 0, j = 0; i < size; i++){
 			Subgraph subgraph = subgraphQueue.poll();
-			System.out.println(i + ": " + subgraph + "\n");
+//			System.out.println(i + ": " + subgraph + "\n");
 			Set<KbEdge> edges = subgraph.getPaths();
 			if(!subgraphs.contains(edges)){
 				subgraphs.add(edges);
@@ -298,7 +300,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 			Map<Pair, Variable> labelVar = new LinkedHashMap<Pair, Variable>();
 			UniqueIdGenerator.getInstance().resetVarIds();
 			for(KbEdge edge : subgraph){
-				if(edge.getType() == KbElement.AEDGE && edge.getVertex2().getType() != KbElement.DUMMY){
+				if((edge.getType() == KbElement.AEDGE) && (edge.getVertex2().getType() != KbElement.DUMMY)){
 					IProperty p = edge.getProperty();
 					IResource v1 = edge.getVertex1().getResource();
 					IResource v2 = edge.getVertex2().getResource();
@@ -362,7 +364,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				}
 			}
 			for(KbEdge edge : subgraph){
-				if(edge.getType() == KbElement.AEDGE && edge.getVertex2().getType() == KbElement.DUMMY){
+				if((edge.getType() == KbElement.AEDGE) && (edge.getVertex2().getType() == KbElement.DUMMY)){
 					IProperty p = edge.getProperty();
 					IResource v1 = edge.getVertex1().getResource();
 					IResource v2 = edge.getVertex2().getResource();
@@ -548,22 +550,24 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	} 
 	
 	private void computeTotalNumber(){
-		if(TOTAL_NUMBER_OF_VERTEX != -1 && TOTAL_NUMBER_OF_EDGE != -1) return;
+		if((TOTAL_NUMBER_OF_VERTEX != -1) && (TOTAL_NUMBER_OF_EDGE != -1)) {
+			return;
+		}
 		
 		StatelessSession session = (StatelessSession)SessionFactory.getInstance().getCurrentSession();
 		IOntology onto = session.getOntology();
 		
 		int numConcept = onto.getNumberOfConcept();
-		System.out.println("number of Concept: " + numConcept);
+//		System.out.println("number of Concept: " + numConcept);
 		
 		int numIndividual = onto.getNumberOfIndividual();
-		System.out.println("number of Individual: " + numIndividual);
+//		System.out.println("number of Individual: " + numIndividual);
 		
 		int numoProperty = onto.getNumberOfObjectProperty();
-		System.out.println("number of ObjectProperty: " + numoProperty);
+//		System.out.println("number of ObjectProperty: " + numoProperty);
 		
 		int numoPropertyMember = onto.getNumberOfObjectPropertyMember();
-		System.out.println("number of ObjectPropertyMember: " + numoPropertyMember);
+//		System.out.println("number of ObjectPropertyMember: " + numoPropertyMember);
 		
 		TOTAL_NUMBER_OF_VERTEX = numConcept + numIndividual;
 		
@@ -635,8 +639,8 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				 List<KbEdge> path = createEdgeList(resourceGraph, iter, endVertex);
 				 double pathLength = iter.getShortestPathLength(endVertex);
 				 cost =  pathLength/score;
-				 System.out.println("(" + matchingVertex + ")" + " to " + "(" + endVertex + ")");
-				 System.out.println("cost: " + cost);
+//				 System.out.println("(" + matchingVertex + ")" + " to " + "(" + endVertex + ")");
+//				 System.out.println("cost: " + cost);
 				 if(cost > threshold) {
 					return true;
 				 }
@@ -680,15 +684,16 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 						}
 						
 						boolean isSubgraph = false;
-						if(keywordEdgeMap != null && keywordEdgeMap.size() != 0){
+						if((keywordEdgeMap != null) && (keywordEdgeMap.size() != 0)){
 							for(Collection<KbElement> collection : keywordEdgeMap.values()){
 								isSubgraph = !Collections.disjoint(edges, collection);
-								if(!isSubgraph)
+								if(!isSubgraph) {
 									break;
+								}
 							}
-						}
-						else 
+						} else {
 							isSubgraph = true;
+						}
 						if(isSubgraph){
 							Subgraph subgraph = new Subgraph(endVertex, edges, cost);
 							if(!subgraphQueue.contains(subgraph)) {
