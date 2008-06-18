@@ -9,13 +9,14 @@ import org.w3c.dom.Element;
 public abstract class OntologyElement {
 
 	protected String _label;
-	//protected String _uri;
+	protected String _uri;
 
 	/**
 	 * Constructor of the OntologyElement class.
 	 * @param uri the URI of the ontology element
 	 */
 	protected OntologyElement(/*String uri*/) {
+		_uri = new String();
 		//_uri = uri;
 	}
 

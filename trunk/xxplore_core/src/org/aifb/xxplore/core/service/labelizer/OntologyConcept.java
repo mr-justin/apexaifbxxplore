@@ -1,10 +1,7 @@
 package org.aifb.xxplore.core.service.labelizer;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -27,17 +24,20 @@ public class OntologyConcept extends OntologyTBoxElement {
 	private int getNamespaceEnd(String uri) {
 		for (int i=uri.length()-1;i>=0;i--) {
 			char c=uri.charAt(i);
-			if (c=='#' || c==':')
+			if ((c=='#') || (c==':')) {
 				return i;
+			}
 			if (c=='/') {
-				if (i>0 && uri.charAt(i-1)=='/')
+				if ((i>0) && (uri.charAt(i-1)=='/')) {
 					return -1;
+				}
 				return i;
 			}
 		}
 		return -1;
 	}
 	
+	@Override
 	public String findTBoxLabelFullString(String indexName) {
 		String labelFullString = new String();
 		List<String> words = new ArrayList<String>();
@@ -45,18 +45,19 @@ public class OntologyConcept extends OntologyTBoxElement {
 		int indexNameLength = indexName.length();
 
 		for (int i = 0; i < indexNameLength; i++) {
-			if (i == indexNameLength - 1)
+			if (i == indexNameLength - 1) {
 				words.add(indexName.substring(wordStart, i + 1));
-			else {
+			} else {
 				char c = indexName.charAt(i);
-				if (c == ' ' || c == '_' || c == '-') {
-					if (wordStart < i) 
+				if ((c == ' ') || (c == '_') || (c == '-')) {
+					if (wordStart < i) {
 						words.add(indexName.substring(wordStart, i));
+					}
 					wordStart = i + 1;
 				}
-				if (c >= 'A' && c <= 'Z' && wordStart < i) {
+				if ((c >= 'A') && (c <= 'Z') && (wordStart < i)) {
 					char nextChar = indexName.charAt(i + 1);
-					if (nextChar >= 'a' && nextChar <= 'z') {
+					if ((nextChar >= 'a') && (nextChar <= 'z')) {
 						words.add(indexName.substring(wordStart, i));
 						wordStart = i;
 					}
@@ -96,10 +97,12 @@ public class OntologyConcept extends OntologyTBoxElement {
 		return _numInstances;
 	}
 	
+	@Override
 	public void labelElement(IndexStructure indexStructure) {
 		indexStructure.addLabel(getLabelFullString(), getLabel(), LabelizerEnvironment.C_NODE);
-		for (String labelString : getLabelStrings())
+		for (String labelString : getLabelStrings()) {
 			indexStructure.addLabel(labelString, getLabelFullString(), LabelizerEnvironment.SUBLABEL);
+		}
 	}
 	
 //	private List<String> _indexingDPs;
@@ -177,6 +180,7 @@ public class OntologyConcept extends OntologyTBoxElement {
 	 * Write a representation (XML DOM element) of the ontology concept in the XML config and labels
 	 * file.
 	 */
+	@Override
 	public void writeElementInXMLFiles(Document configFileDocument, Document labelsFileDocument, Element configFileSuperElement, Element labelsFileSuperElement) {
 		
 		/* Create the config file DOM element representation for the concept (with URI and indexing data
@@ -210,19 +214,20 @@ public class OntologyConcept extends OntologyTBoxElement {
 	/**
 	 * Print a friendly version of the ontology concept representation.
 	 */
+	@Override
 	public void printElement() {
-		System.out.print(LabelizerEnvironment.CONCEPT + ": " + getIndexName() + " ");
-		if (_indexingDPs.isEmpty() == false) {
-			System.out.print("--> Indexed by: ");
-			for (String index : getIndexingDPs())
-				System.out.print(index.substring(index.indexOf("#") + 1) + "; ");
-		}
-		if (_objectProperties.isEmpty() == false) {
-			System.out.print(";; --> OPs: ");
-			for (String uri : _objectProperties.keySet()) {
-				System.out.print(uri.substring(uri.indexOf("#") + 1) + " (" + _objectProperties.get(uri).substring(uri.indexOf("#") + 1) + "); ");
-			}
-		}
-		System.out.println("(" + LabelizerEnvironment.URI + ": " + _uri + ")");
+//		System.out.print(LabelizerEnvironment.CONCEPT + ": " + getIndexName() + " ");
+//		if (_indexingDPs.isEmpty() == false) {
+//			System.out.print("--> Indexed by: ");
+//			for (String index : getIndexingDPs())
+//				System.out.print(index.substring(index.indexOf("#") + 1) + "; ");
+//		}
+//		if (_objectProperties.isEmpty() == false) {
+//			System.out.print(";; --> OPs: ");
+//			for (String uri : _objectProperties.keySet()) {
+//				System.out.print(uri.substring(uri.indexOf("#") + 1) + " (" + _objectProperties.get(uri).substring(uri.indexOf("#") + 1) + "); ");
+//			}
+//		}
+//		System.out.println("(" + LabelizerEnvironment.URI + ": " + _uri + ")");
 	}
 }

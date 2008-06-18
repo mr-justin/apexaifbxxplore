@@ -2,7 +2,7 @@ package org.aifb.xxplore.core.service.labelizer;
 
 import org.aifb.xxplore.core.service.labelizer.IndexNodes.CNode;
 import org.aifb.xxplore.core.service.labelizer.IndexNodes.KNode;
-import org.aifb.xxplore.core.service.query.QueryInterpretationServiceExtent.KbEdge;
+//import org.aifb.xxplore.core.service.query.QueryInterpretationServiceExtent.KbEdge;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.jgrapht.graph.DefaultEdge;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -64,13 +64,13 @@ public class IndexEdges {
 			return m_costValue;
 		}
 
-		public boolean equals(KbEdge edge){
-
-			if (!m_property.equals(edge.getProperty()))  return false;
-			if (!m_vertex1.equals(edge.getVertex1())) return false;
-			if (!m_vertex2.equals(edge.getVertex2())) return false;
-			return true;
-		}
+//		public boolean equals(KbEdge edge){
+//
+//			if (!m_property.equals(edge.getProperty()))  return false;
+//			if (!m_vertex1.equals(edge.getVertex1())) return false;
+//			if (!m_vertex2.equals(edge.getVertex2())) return false;
+//			return true;
+//		}
 
 		public String toString(){
 			if(m_vertex1 != null && m_vertex2 != null && m_property != null) return m_vertex1.toString() + " " + m_property + " "  + m_vertex2.toString() + " (" + m_costValue;
@@ -124,13 +124,13 @@ public class IndexEdges {
 			return m_property;
 		}
 
-		public boolean equals(KbEdge edge){
-
-			if (!m_property.equals(edge.getProperty()))  return false;
-			if (!m_vertex1.equals(edge.getVertex1())) return false;
-			if (!m_vertex2.equals(edge.getVertex2())) return false;
-			return true;
-		}
+//		public boolean equals(KbEdge edge){
+//
+//			if (!m_property.equals(edge.getProperty()))  return false;
+//			if (!m_vertex1.equals(edge.getVertex1())) return false;
+//			if (!m_vertex2.equals(edge.getVertex2())) return false;
+//			return true;
+//		}
 
 		public String toString(){
 			if(m_vertex1 != null && m_vertex2 != null && m_property != null) return m_vertex1.toString() + " " + m_property + " "  + m_vertex2.toString();
