@@ -25,7 +25,7 @@ public class OntologyIndividual extends OntologyElement {
 	 * @param labelFullStrings the label full-strings that label the individual
 	 */
 	public OntologyIndividual(String uri, LinkedHashMap<String, String> labelFullStrings) {
-		super(uri);
+		super();
 		_labelFullStrings = labelFullStrings;
 		_labelStrings = new LinkedHashMap<String,List<String>>();
 		Set<String> keys = _labelFullStrings.keySet();
@@ -44,7 +44,7 @@ public class OntologyIndividual extends OntologyElement {
 	 * @param uri the URI of the ontology individual
 	 */
 	public OntologyIndividual(String uri) {
-		super(uri);
+		super();
 		_labelFullStrings = new LinkedHashMap<String, String>();
 		_labelStrings = new LinkedHashMap<String,List<String>>();
 		

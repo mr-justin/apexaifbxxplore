@@ -1,10 +1,6 @@
 package org.aifb.xxplore.core.service.labelizer;
 
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import net.didion.jwnl.data.POS;
+//import net.didion.jwnl.data.POS;
 
 public class LabelizerEnvironment {
 
@@ -67,8 +63,9 @@ public class LabelizerEnvironment {
 //			return false;
 
 		/* 3rd heuristic: Doesn't have long length */
-		if (labelFullString.length() > 255)
+		if (labelFullString.length() > 255) {
 			return false;
+		}
 		return true;
 	}
 }

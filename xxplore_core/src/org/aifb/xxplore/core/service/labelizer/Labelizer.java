@@ -1,12 +1,8 @@
 package org.aifb.xxplore.core.service.labelizer;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -21,13 +17,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-import net.didion.jwnl.JWNLException;
+//import net.didion.jwnl.JWNLException;
 
 import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.service.query.LuceneQueryService;
-import org.aifb.xxplore.core.service.query.QueryInterpretationServiceExtent.KbEdge;
+//import org.aifb.xxplore.core.service.query.QueryInterpretationServiceExtent.KbEdge;
 import org.aifb.xxplore.shared.exception.Emergency;
-import org.aifb.xxplore.shared.util.Pair;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -42,30 +36,20 @@ import org.xmedia.businessobject.IBusinessObject;
 //import org.xmedia.oms.adapter.kaon2.persistence.Kaon2DatatypeDao;
 //import org.xmedia.oms.adapter.kaon2.persistence.Kaon2PropertyMemberDao;
 import org.xmedia.oms.model.api.IConcept;
-import org.xmedia.oms.model.api.IDatatype;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.DataProperty;
-import org.xmedia.oms.model.impl.Datatype;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.NamedIndividual;
 import org.xmedia.oms.model.impl.ObjectProperty;
-import org.xmedia.oms.model.owl.impl.OWLConcept;
-import org.xmedia.oms.persistence.DatasourceException;
-import org.xmedia.oms.persistence.IReasonerPool;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.dao.DaoUnavailableException;
 import org.xmedia.oms.persistence.dao.IConceptDao;
-import org.xmedia.oms.persistence.dao.IDatatypeDao;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
-import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
-
-import org.aifb.xxplore.core.service.labelizer.IndexEdges;
-import org.aifb.xxplore.core.service.labelizer.IndexNodes.IndexGraphNode;
 
 public class Labelizer {
 
@@ -141,10 +125,11 @@ public class Labelizer {
 			List<? extends IBusinessObject> properties = propertyDao.findAll();
 			
 			for (IBusinessObject bo : properties) {
-				if (bo instanceof ObjectProperty)
+				if (bo instanceof ObjectProperty) {
 					_indexStructure.addObjectProperty(new OntologyObjectProperty((ObjectProperty) bo));
-				else if (bo instanceof DataProperty)
+				} else if (bo instanceof DataProperty) {
 					_indexStructure.addDataProperty(new OntologyDataProperty((DataProperty) bo));
+				}
 			}
 			
 		} catch (DaoUnavailableException e) {
@@ -169,7 +154,7 @@ public class Labelizer {
 						IProperty property = propertyMember.getProperty();
 						if (property instanceof DataProperty) {
 							String lfs = propertyMember.getTarget().getLabel();
-							if (lfs != null && lfs.length() > 1 && LabelizerEnvironment.applyHeuristics(lfs) == true) {
+							if ((lfs != null) && (lfs.length() > 1) && (LabelizerEnvironment.applyHeuristics(lfs) == true)) {
 								OntologyLiteral newLiteral = new OntologyLiteral(lfs, property);
 								for (IConcept concept : types) {
 									if (concept instanceof NamedConcept) {
@@ -187,7 +172,7 @@ public class Labelizer {
 								OntologyObjectProperty objectProperty = _indexStructure.getObjectProperty(property.getUri());
 								for (IConcept sourceType : types) {
 									for (IConcept targetType : targetIndividual.getTypes()) {
-										if (sourceType instanceof INamedConcept && targetType instanceof INamedConcept) {
+										if ((sourceType instanceof INamedConcept) && (targetType instanceof INamedConcept)) {
 											objectProperty.addPropertyMember((INamedConcept) sourceType, (INamedConcept) targetType);
 											objectProperty.increasePMNumInstances((INamedConcept) sourceType, (INamedConcept) targetType);
 										}
@@ -224,11 +209,15 @@ public class Labelizer {
 	}
 	
 	private void addEdgeToIndexGraph(CNode vertex1, CNode vertex2, IProperty property, double costValue) {
-		if (vertex1.equals(vertex2)) return;
-		if (_indexGraph.containsVertex(vertex1) == false)
+		if (vertex1.equals(vertex2)) {
+			return;
+		}
+		if (_indexGraph.containsVertex(vertex1) == false) {
 			_indexGraph.addVertex(vertex1);
-		if (_indexGraph.containsVertex(vertex2) == false)
+		}
+		if (_indexGraph.containsVertex(vertex2) == false) {
 			_indexGraph.addVertex(vertex2);
+		}
 		REdge edge = new REdge(vertex1, vertex2, property, costValue);
 		if (_indexGraph.containsEdge(edge) == false) {
 			s_log.debug("Adding edge: " + edge.toString() + "...");
@@ -239,8 +228,9 @@ public class Labelizer {
 	public CNode getCNode(INamedConcept namedConcept) {
 		Set<CNode> cnodes = _indexGraph.vertexSet();
 		for (CNode cnode : cnodes) {
-			if (cnode.getConceptLabel().equals(namedConcept))
+			if (cnode.getConceptLabel().equals(namedConcept)) {
 				return cnode;
+			}
 		}
 		return null;
 	}
@@ -277,12 +267,14 @@ public class Labelizer {
 			for (OntologySubLabel sublabel : sublabels) {
 				doc.add(new Field(SUBLABEL + new String("" + i), sublabel.getSublabel(), Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(TYPE + new String("" + i), sublabel.getType(), Field.Store.YES, Field.Index.NO));
-				if (sublabel.getProperty() != null)
+				if (sublabel.getProperty() != null) {
 					doc.add(new Field(DATA_PROPERTY + new String("" + i), sublabel.getProperty(), Field.Store.YES, Field.Index.NO));
+				}
 				i++;
 			}
-			if (label.toLowerCase().equals("philipp"))
+			if (label.toLowerCase().equals("philipp")) {
 				System.out.println("ADDING LABEL philipp WITH SUBLABEL " + sublabels.iterator().next().toString());
+			}
 			indexWriter.addDocument(doc);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -372,13 +364,16 @@ public class Labelizer {
 			_conceptLabel = conceptLabel;
 		}
 		
+		@Override
 		public boolean equals(Object obj) {
 			CNode cnode = (CNode) obj;
-			if (_conceptLabel.equals(cnode.getConceptLabel()))
+			if (_conceptLabel.equals(cnode.getConceptLabel())) {
 				return true;
+			}
 			return false;
 		}
 		
+		@Override
 		public String toString() {
 			return new String(_conceptLabel.getLabel() + "(" + getCostValue() + ")");
 		}
@@ -403,7 +398,7 @@ public class Labelizer {
 			m_vertex2 = vertex2;
 			m_property = prop;
 			m_costValue = costValue;
-			Emergency.checkPostcondition(m_vertex1 != null && m_vertex2 != null && m_property != null, "m_vertex1 != null && m_vertex2 != null && m_property != null"); 
+			Emergency.checkPostcondition((m_vertex1 != null) && (m_vertex2 != null) && (m_property != null), "m_vertex1 != null && m_vertex2 != null && m_property != null"); 
 		}
 
 		public void setVertex1(CNode vertex1){
@@ -438,17 +433,21 @@ public class Labelizer {
 			return m_costValue;
 		}
 
-		public boolean equals(KbEdge edge){
+//		public boolean equals(KbEdge edge){
+//
+//			if (!m_property.equals(edge.getProperty()))  return false;
+//			if (!m_vertex1.equals(edge.getVertex1())) return false;
+//			if (!m_vertex2.equals(edge.getVertex2())) return false;
+//			return true;
+//		}
 
-			if (!m_property.equals(edge.getProperty()))  return false;
-			if (!m_vertex1.equals(edge.getVertex1())) return false;
-			if (!m_vertex2.equals(edge.getVertex2())) return false;
-			return true;
-		}
-
+		@Override
 		public String toString(){
-			if(m_vertex1 != null && m_vertex2 != null && m_property != null) return m_vertex1.toString() + " " + m_property + " "  + m_vertex2.toString() + " (" + m_costValue;
-			else return super.toString();
+			if((m_vertex1 != null) && (m_vertex2 != null) && (m_property != null)) {
+				return m_vertex1.toString() + " " + m_property + " "  + m_vertex2.toString() + " (" + m_costValue;
+			} else {
+				return super.toString();
+			}
 		}
 	}
 
