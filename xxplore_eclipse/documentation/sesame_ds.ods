@@ -1,0 +1,9 @@
+ontology.uri=fiatOverall
+ontology.file.path=c:/exported.trix.txt
+ontology.file.name=fiatOverall
+base_ontology.uri=http://www.x-media-project.org/fiat/overall
+language=http://www.x-media-project/rdf/serialization/languages/trix
+ontology.type=urn:sesame2/repository_types/local/SailRepository/RdfsMemoryStore/persistent
+connection.provider=org.xmedia.accessknow.sesame.persistence.ConnectionProvider
+session.factory_class=org.xmedia.accessknow.sesame.persistence.SesameSessionFactory
+reasoner.on=false
