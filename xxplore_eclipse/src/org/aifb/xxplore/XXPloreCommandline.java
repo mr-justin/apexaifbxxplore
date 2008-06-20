@@ -26,6 +26,8 @@ import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
 import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
 import org.xmedia.accessknow.sesame.persistence.SesameSession;
 import org.xmedia.accessknow.sesame.persistence.SesameSessionFactory;
+import org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider;
+import org.xmedia.oms.adapter.kaon2.persistence.Kaon2DaoManager;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.OntologyImportException;
 import org.xmedia.oms.persistence.DatasourceException;
@@ -37,6 +39,7 @@ import org.xmedia.oms.persistence.InvalidParameterException;
 import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.persistence.MissingParameterException;
 import org.xmedia.oms.persistence.OntologyCreationException;
+import org.xmedia.oms.persistence.OntologyLoadException;
 import org.xmedia.oms.persistence.OpenSessionException;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
@@ -94,14 +97,7 @@ public class XXPloreCommandline {
 			print("Please enter the path to your configurationfile (*.ods). use '/' instead '\\'. " +
 					"If your path includes spaces, quotes would be great. E.g. \"c:/my files/myConf.ods.\".",false);
 
-			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-			String input = null;
-
-			try {
-				input = br.readLine();
-			} 
-			catch (IOException e){				
-			}
+			String input = getUserInput();
 
 			File file = new File(input);
 			m_parameters = new Properties();
@@ -170,6 +166,9 @@ public class XXPloreCommandline {
 				if (provider instanceof ConnectionProvider){
 					onto = provider.getConnection().loadOrCreateOntology(PropertyUtils.convertToMap(m_parameters));
 				}
+				else if (provider instanceof Kaon2ConnectionProvider){
+					onto = provider.getConnection().loadOntology(PropertyUtils.convertToMap(m_parameters));
+				}
 
 			} catch (DatasourceException e) {
 				e.printStackTrace();
@@ -178,6 +177,8 @@ public class XXPloreCommandline {
 			} catch (InvalidParameterException e) {
 				e.printStackTrace();
 			} catch (OntologyCreationException e) {
+				e.printStackTrace();
+			}catch (OntologyLoadException e) {
 				e.printStackTrace();
 			}
 
@@ -198,9 +199,17 @@ public class XXPloreCommandline {
 				} catch (OpenSessionException e) {
 					e.printStackTrace();
 				}
+				
 				//set dao manager
 				PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
 				session.close();			
+			}
+			else if (provider instanceof Kaon2ConnectionProvider) {
+				
+				ISessionFactory factory = SessionFactory.getInstance();
+				factory.configure(PropertyUtils.convertToMap(m_parameters));
+				PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
+				
 			}
 
 			ISessionFactory factory = SessionFactory.getInstance();
@@ -371,7 +380,9 @@ public class XXPloreCommandline {
 			String input = new String();
 
 			try {
+				System.out.print("[XXPLORE > INPUT]");
 				input = br.readLine();
+				System.out.println();
 			} 
 			catch (IOException e){				
 			}
