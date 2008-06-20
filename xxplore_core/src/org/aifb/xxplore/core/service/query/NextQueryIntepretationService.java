@@ -66,7 +66,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	
 	private Map<String,Collection<KbElement>> keywordEdgeMap;
 	
-	private double threshold = 100;
+	private double threshold = 50;
 	
 	private int width = 0;
 	
