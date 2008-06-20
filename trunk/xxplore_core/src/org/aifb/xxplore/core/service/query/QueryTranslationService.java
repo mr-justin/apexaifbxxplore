@@ -115,6 +115,7 @@ public class QueryTranslationService implements IService {
 				IResource res2 = ((PropertyMemberPredicate)predicate).getSecondTerm();
 				IProperty prop = ((PropertyMemberPredicate)predicate).getProperty();
 				String term1 = ""; 
+				
 				if(res1 instanceof NamedIndividual) {
 					term1 = getDelimitedIRI(((NamedIndividual)res1).getUri());
 				} else if (res1 instanceof Variable) {
@@ -124,24 +125,33 @@ public class QueryTranslationService implements IService {
 					ILiteral lit = (ILiteral)res1;						
 					term1 = "\"" + lit.getLiteral();
 					
-					Iterator<IDatatype> iter = lit.getDatatypes().iterator();
-					
-					if(iter.hasNext()){
-						
-						IDatatype datatype = iter.next();
-						
-						if(datatype.getLabel().equals(XMLSchema.STRING)){
-							
-							if(lit.getLanguage()!= null){
-								term1 += "\"@"+lit.getLanguage();
+					if(lit.getDatatypes() != null){						
+
+						Iterator<IDatatype> iter = lit.getDatatypes().iterator();
+
+						if(iter.hasNext()){
+
+							IDatatype datatype = iter.next();
+
+							if(datatype.getLabel().equals(XMLSchema.STRING)){
+
+								if(lit.getLanguage()!= null){
+									term1 += "\"@"+lit.getLanguage();
+								}
+								else{
+									term1 += "\"@"+ExploreEnvironment.DEFAULT_LITERAL_LANGUAGE;
+								}
 							}
 							else{
-								term1 += "\"@"+ExploreEnvironment.DEFAULT_LITERAL_LANGUAGE;
+								term1 += "\"^^<" + getDatatype((ILiteral)res2) + ">";
 							}
 						}
 						else{
-							term1 += "\"^^<" + getDatatype((ILiteral)res1) + ">";
+							term1+="\"";
 						}
+					}
+					else{
+						term1+="\"";
 					}
 				}
 				
@@ -155,24 +165,33 @@ public class QueryTranslationService implements IService {
 					ILiteral lit = (ILiteral)res2;						
 					term2 = "\"" + lit.getLiteral();
 					
-					Iterator<IDatatype> iter = lit.getDatatypes().iterator();
-					
-					if(iter.hasNext()){
-						
-						IDatatype datatype = iter.next();
-						
-						if(datatype.getLabel().equals(XMLSchema.STRING)){
-							
-							if(lit.getLanguage()!= null){
-								term2 += "\"@"+lit.getLanguage();
+					if(lit.getDatatypes() != null){						
+
+						Iterator<IDatatype> iter = lit.getDatatypes().iterator();
+
+						if(iter.hasNext()){
+
+							IDatatype datatype = iter.next();
+
+							if(datatype.getLabel().equals(XMLSchema.STRING)){
+
+								if(lit.getLanguage()!= null){
+									term2 += "\"@"+lit.getLanguage();
+								}
+								else{
+									term2 += "\"@"+ExploreEnvironment.DEFAULT_LITERAL_LANGUAGE;
+								}
 							}
 							else{
-								term2 += "\"@"+ExploreEnvironment.DEFAULT_LITERAL_LANGUAGE;
+								term2 += "\"^^<" + getDatatype((ILiteral)res2) + ">";
 							}
 						}
 						else{
-							term2 += "\"^^<" + getDatatype((ILiteral)res2) + ">";
+							term2+="\"";
 						}
+					}
+					else{
+						term2+="\"";
 					}
 				}
 
