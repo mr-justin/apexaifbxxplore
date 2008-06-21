@@ -1,12 +1,9 @@
 package org.aifb.xxplore;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
-import java.util.Properties;
-
 import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.core.model.definition.IModelDefinition;
 import org.aifb.xxplore.core.model.definition.ModelDefinition;
@@ -21,8 +18,6 @@ import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
-import org.eclipse.core.runtime.IStatus;
-import org.eclipse.core.runtime.MultiStatus;
 import org.eclipse.jface.action.IStatusLineManager;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.action.Separator;
@@ -177,7 +172,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 
 			if (sourcepart.getSite().getId().equals(ConceptHierarchyView.ID))
 			{	
-				if(selection instanceof IStructuredSelection && !selection.isEmpty())
+				if((selection instanceof IStructuredSelection) && !selection.isEmpty())
 				{
 					NamedConcept concept = (NamedConcept)((StructuredSelection)selection).getFirstElement();      			
 					m_graphViewer.setFocus(concept); 	
@@ -195,10 +190,10 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 			// listening only to selection changes in the DefinitionView
 			if (sourcepart.getSite().getId().equals(DefinitionView.ID)) 
 			{			   
-				if(selection instanceof IStructuredSelection && !selection.isEmpty())
+				if((selection instanceof IStructuredSelection) && !selection.isEmpty())
 				{					
-					if( ((StructuredSelection)selection).getFirstElement() instanceof Integer &&
-							(Integer)((StructuredSelection)selection).getFirstElement() == ExploreEnvironment.XXPLORE)
+					if( (((StructuredSelection)selection).getFirstElement() instanceof Integer) &&
+							((Integer)((StructuredSelection)selection).getFirstElement() == ExploreEnvironment.XXPLORE))
 					{
 
 						Iterator<Object> iter = ((StructuredSelection)selection).iterator();
@@ -216,8 +211,8 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 						}
 					}
 
-					if(((StructuredSelection)selection).getFirstElement() instanceof Integer &&
-							(Integer)((StructuredSelection)selection).getFirstElement() == ExploreEnvironment.CLEAR)
+					if((((StructuredSelection)selection).getFirstElement() instanceof Integer) &&
+							((Integer)((StructuredSelection)selection).getFirstElement() == ExploreEnvironment.CLEAR))
 					{
 						m_graphViewer.dispDefinitionViewInput(null);	
 					}
@@ -294,6 +289,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void init(IEditorSite site, IEditorInput editorInput) throws PartInitException {
 		if (!(editorInput instanceof IStorageEditorInput)){
 			System.err.println("error in input type"+ editorInput);
@@ -320,6 +316,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void dispose() {
 
 		getSite().getPage().removePartListener(m_partListener);
@@ -352,15 +349,16 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 */
 	public void handleEvent(Event event) {
 
-		if(event.type == SWT.Activate)
-
+		if(event.type == SWT.Activate) {
 			// when treeviewer has been activated 
-			if(m_treeViewer != null && event.widget == m_treeViewer.getControl()){
-				if(s_log.isDebugEnabled())
+			if((m_treeViewer != null) && (event.widget == m_treeViewer.getControl())){
+				if(s_log.isDebugEnabled()) {
 					s_log.debug("tree viewer activated...");
+				}
 
 				//do something
 			}
+		}
 
 		// when graphviewer activated
 		//...
@@ -405,7 +403,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 
 			// Set the editors selection based on the current viewer's selection.
 
-			if (m_currentViewer != null && m_currentViewer.getSelection() != null){
+			if ((m_currentViewer != null) && (m_currentViewer.getSelection() != null)){
 				setSelection(m_currentViewer.getSelection());
 			}
 		}
@@ -420,15 +418,17 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void createPages() {
 
-		if(s_log.isDebugEnabled())
+		if(s_log.isDebugEnabled()) {
 			s_log.debug("Pages of ExploreEditor is about to be created...");
+		}
 
-		createPage((ContentViewer)new GraphViewer(getContainer()), m_currentdef);
-		createPage((ContentViewer)new TreeViewer(getContainer()),  m_currentdef);
-		createPage((ContentViewer)new TableViewer(getContainer()),  m_currentdef);
-		createPage((ContentViewer)new ListViewer(getContainer()),  m_currentdef);
+		createPage(new GraphViewer(getContainer()), m_currentdef);
+		createPage(new TreeViewer(getContainer()),  m_currentdef);
+		createPage(new TableViewer(getContainer()),  m_currentdef);
+		createPage(new ListViewer(getContainer()),  m_currentdef);
 
 		// set the first tab as the active page (which is the GraphViewer)
 		setActivePage(0);
@@ -437,8 +437,9 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 
 	private void createPage(ContentViewer viewer, Object input){
 
-		if(s_log.isDebugEnabled())
+		if(s_log.isDebugEnabled()) {
 			s_log.debug("Page of " + viewer.getClass() + "is about to be created...");
+		}
 
 		if (m_contentprovider == null){
 
@@ -453,7 +454,9 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 		viewer.setInput(input);
 
 		//listen to the activation of viewer's control
-		if (viewer.getControl() != null) viewer.getControl().addListener(SWT.Activate, this);
+		if (viewer.getControl() != null) {
+			viewer.getControl().addListener(SWT.Activate, this);
+		}
 
 		//add to page
 		int pageIndex = addPage(viewer.getControl());
@@ -509,6 +512,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	protected void pageChange(int pageIndex) {
 		super.pageChange(pageIndex);
 		//get current viewer 
@@ -522,6 +526,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public Object getAdapter(Class key) {
 		if (key.equals(IContentOutlinePage.class)) {			
 			return m_contentOutlinePage;
@@ -582,6 +587,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void doSave(IProgressMonitor progressMonitor) {
 
 	}
@@ -592,6 +598,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public boolean isSaveAsAllowed() {
 		return true;
 	}
@@ -602,6 +609,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
+	@Override
 	public void doSaveAs() {
 		SaveAsDialog saveAsDialog= new SaveAsDialog(getSite().getShell());
 		saveAsDialog.open();
@@ -669,7 +677,7 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 		final Collection theSelection = collection;
 
 
-		if (theSelection != null && !theSelection.isEmpty()) {
+		if ((theSelection != null) && !theSelection.isEmpty()) {
 			// maybe should run this deferred
 			// to give the editor a chance to process the viewer update events
 			// and hence to update the views first.
@@ -689,11 +697,13 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 		}
 	}
 
+	@Override
 	protected void setActivePage(int pageIndex) {	
 		super.setActivePage(pageIndex);
 		setCurrentViewer(m_viewers[pageIndex]);
 	}	
 
+	@Override
 	protected void setInput(IEditorInput input) {			
 		if (input != getEditorInput()) {
 			super.setInput(input);
@@ -708,16 +718,24 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 					m_currentdef = def; 
 
 					DocumentResultView resultform = (DocumentResultView)getSite().getPage().findView(DocumentResultView.ID);
-					if (resultform != null) resultform.getViewer().setInput(m_currentdef);
+					if (resultform != null) {
+						resultform.getViewer().setInput(m_currentdef);
+					}
 
 					DefinitionView definition = (DefinitionView)getSite().getPage().findView(DefinitionView.ID);
-					if (definition != null) definition.getViewer().setInput(m_currentdef);
+					if (definition != null) {
+						definition.getViewer().setInput(m_currentdef);
+					}
 
 					FactResultView factresult = (FactResultView)getSite().getPage().findView(FactResultView.ID);
-					if (factresult != null) factresult.getViewer().setInput(m_currentdef);
+					if (factresult != null) {
+						factresult.getViewer().setInput(m_currentdef);
+					}
 
 					MergedResultView mergedresult = (MergedResultView)getSite().getPage().findView(MergedResultView.ID);
-					if (mergedresult != null) mergedresult.getViewer().setInput(m_currentdef);
+					if (mergedresult != null) {
+						mergedresult.getViewer().setInput(m_currentdef);
+					}
 					//TODO to get only one object searching (rigth now only for MergedResultView)
 					CommonSearchResultObservable.getInstance().setModelDefinition(m_currentdef);
 				}
@@ -732,27 +750,13 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 		IModelDefinition modeldefinition = null;
 
 		if (input instanceof IFileEditorInput){
-			IFile file = ((IFileEditorInput)input).getFile();
-			Properties parameters = new Properties();
-
-			try {
-				parameters.load(file.getContents());
-			} 
-
-			catch (IOException e) {
-				IStatus status = new MultiStatus(ExplorePlugin.PLUGIN_ID,
-						ExplorePlugin.LOADING_DEFINITION_ERROR,"The definition could not be correctly loaded",e);
-				throw new CoreException(status);
-			}
 
 			IDataSource ds = ExplorePlugin.getDatasource(
-					(String) parameters.get(ExploreEnvironment.DATASOURCE));
-
+					((IFileEditorInput)input).getFile().getFullPath().toString());
 
 			modeldefinition = new ModelDefinition(ds);					
 		}
 		return modeldefinition;
 	}
-
 
 }

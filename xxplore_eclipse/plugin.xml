@@ -126,7 +126,7 @@
       <editor
             class="org.aifb.xxplore.ExploreEditor"
             default="true"
-            extensions="def"
+            extensions="ods"
             icon="icons/sample.gif"
             id="org.aifb.xxplore.exploreeditor"
             name="explore editor"/>
