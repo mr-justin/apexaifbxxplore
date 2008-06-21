@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Log4j Plug-in
+Bundle-SymbolicName: org.apache.log4j
+Bundle-Version: 1.2.14
+Bundle-ClassPath: .
+Bundle-Vendor: Apache Software Foundation
+Bundle-Localization: plugin
+Export-Package: org.apache.log4j,
+ org.apache.log4j.spi
+Eclipse-BuddyPolicy: registered
