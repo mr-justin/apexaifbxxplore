@@ -385,16 +385,28 @@ public class NextLuceneQueryService implements IService {
 					Set<Pair> proAndRanges = ncon.getPropertiesAndRangesFrom(); 
 					if(proAndRanges != null){
 						for(Pair pair : proAndRanges){
+							
 							IProperty prop = (IProperty)pair.getHead();
+							
 							if(prop instanceof IObjectProperty){
-								INamedConcept range = (INamedConcept)pair.getTail();
+								
+								String range = new String();
+								
+								if(pair.getTail() instanceof IConcept){
+									range = ((IConcept)pair.getTail()).getLabel();
+								}
+								else if(pair.getTail() instanceof INamedConcept){
+									range = ((INamedConcept)pair.getTail()).getUri();
+								}
+								
 								Document opdoc = new Document();
 //								System.out.println(prop.getLabel());
 //								System.out.println(ncon.getUri());
 								opdoc.add(new Field("relation", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 								opdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-								opdoc.add(new Field("range", range.getUri(), Field.Store.YES, Field.Index.NO));
+								opdoc.add(new Field("range", range, Field.Store.YES, Field.Index.NO));
 								indexWriter.addDocument(opdoc);
+
 							}
 							else if (prop instanceof IDataProperty ){
 								Document dpdoc = new Document();
