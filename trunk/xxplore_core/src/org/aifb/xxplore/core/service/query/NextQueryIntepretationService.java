@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -43,6 +44,8 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	private int TOTAL_NUMBER_OF_VERTEX = -1; 
 	
 	private int TOTAL_NUMBER_OF_EDGE = -1;
+	
+	private int K_TOP = 15;
 
 	private WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
 	
@@ -261,22 +264,27 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 			}
 			if(expansionQueue.size() == 0) {
 				isFinished = true;
-			}
+			} else if(!(subgraphQueue.size() < K_TOP)) {
+				double lowestCost = 0;
+				for(QueueEntry entry : expansionQueue){
+					lowestCost =+ entry.getCost(); 
+				}
+				double highestCost = subgraphQueue.peek().getCost();
+				if(lowestCost > highestCost) {
+					isFinished = true;
+				}
+			} 
 		}
 		
-		Collection<Collection<KbEdge>> subgraphs = new LinkedHashSet<Collection<KbEdge>>();
+		List<Collection<KbEdge>> subgraphs = new LinkedList<Collection<KbEdge>>();
 		int size = subgraphQueue.size();
-//		System.out.println("computeSubgraphs - subgraphs: " + size);
-		for(int i = 0, j = 0; i < size; i++){
+		System.out.println("computeSubgraphs - subgraphs: " + size);
+		for(int i = 0; i < size; i++){
 			Subgraph subgraph = subgraphQueue.poll();
-//			System.out.println(i + ": " + subgraph + "\n");
+			System.out.println(i + ": " + subgraph + "\n");
 			Set<KbEdge> edges = subgraph.getPaths();
 			if(!subgraphs.contains(edges)){
-				subgraphs.add(edges);
-				j++;
-				if(j >= 15) {
-					return subgraphs;
-				}
+				subgraphs.add(0,edges);
 			}
 		}
 		
@@ -637,8 +645,8 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				 KbVertex endVertex = iter.next();
 				 Map<String,Queue<Cursor>> cursors = getVertexInGraphWithCursors(endVertex).getCursors();
 				 List<KbEdge> path = createEdgeList(resourceGraph, iter, endVertex);
-				 double pathLength = iter.getShortestPathLength(endVertex);
-				 cost =  pathLength/score;
+				 double pathCost = iter.getShortestPathLength(endVertex);
+				 cost =  pathCost/score;
 //				 System.out.println("(" + matchingVertex + ")" + " to " + "(" + endVertex + ")");
 //				 System.out.println("cost: " + cost);
 				 if(cost > threshold) {
@@ -697,35 +705,19 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 						if(isSubgraph){
 							Subgraph subgraph = new Subgraph(endVertex, edges, cost);
 							if(!subgraphQueue.contains(subgraph)) {
-								subgraphQueue.add(subgraph);
+								if(subgraphQueue.size() < K_TOP) {
+									subgraphQueue.add(subgraph);
+								} else {
+									double highestCost = subgraphQueue.peek().getCost();
+									if(subgraph.getCost() < highestCost) {
+										subgraphQueue.poll();
+										subgraphQueue.add(subgraph);
+									}
+								}	
 							}
 						}
-					}
+		          	}
 		         }
-				 
-//				 boolean isConnectingVertex = false;
-//				 double subgraphCost = 0;
-//		         Set<Cursor> cursorSet = new HashSet<Cursor>();
-//		         for(Queue<Cursor> queue : cursors.values()){
-//		           	if(queue.size() != 0){
-//		           		isConnectingVertex = true;
-//		           		Cursor cursor = queue.peek();
-//		           		double cursorCost = cursor.getCost();
-//		          		if(cursorCost > threshold) break;
-//		           		subgraphCost += cursorCost;
-//		           		cursorSet.add(cursor);
-//		           	}
-//		           	else {
-//		           		isConnectingVertex = false;
-//		           		break;
-//		           	}	
-//		         }
-//		         if(isConnectingVertex == true && subgraphCost <= threshold){
-//		          	connectingElements.add(endVertex);
-//		           	CSubgraph cs = new CSubgraph(endVertex, cursorSet, subgraphCost);
-//		           	if(!cursorsOfSubgraph.contains(cs)) cursorsOfSubgraph.add(cs);
-//		         }
-		         
 			}
 			return false;
 		}
@@ -781,6 +773,10 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 			return entries;
 		}
 
+		public double getCost() {
+			return cost; 
+		}
+		
 		public int compareTo(Object o) {
 			QueueEntry other = (QueueEntry)o;
 			if(cost > other.cost) {
@@ -873,20 +869,11 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	
 	class Subgraph implements Comparable {
 		
-//		private KbVertex[] targetVertices;
-		
 		private KbVertex connectingVertex;
 		
 		private Set<KbEdge> paths;
 		
 		double cost;
-		
-//		public Subgraph(KbVertex[] targetVertices, KbVertex connectingVertex, Set<KbEdge> paths, double cost){
-//			this.targetVertices = targetVertices;
-//			this.connectingVertex = connectingVertex;
-//			this.cost = cost;
-//			this.paths = paths;
-//		}
 		
 		public Subgraph(KbVertex connectingVertex, Set<KbEdge> paths, double cost){
 			this.connectingVertex = connectingVertex;
@@ -897,10 +884,6 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		public Set<KbEdge> getPaths(){
 			return paths;
 		}
-		
-//		public KbVertex[] getTargetVertices(){
-//			return targetVertices;
-//		}
 		
 		public KbVertex getConnectingVertex(){
 			return connectingVertex;
@@ -913,10 +896,10 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		public int compareTo(Object o){
 			Subgraph other = (Subgraph)o;
 			if(this.cost > other.cost) {
-				return 1;
+				return -1;
 			}
 			if(this.cost < other.cost) {
-				return -1;
+				return 1;
 			}
 			return 0;
 		}
@@ -929,14 +912,8 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 			if(!(o instanceof Subgraph)) {
 				return false;
 			}
+			
 			Subgraph other = (Subgraph)o;
-			if(cost != other.getCost()) {
-				return false;
-			}
-			if(!(connectingVertex.equals(other.getConnectingVertex()))) {
-				return false;
-			}
-//			if(!(Arrays.equals(targetVertices, other.getTargetVertices()))) return false;
 			if(!(paths.equals(other.getPaths()))) {
 				return false;
 			}
@@ -945,26 +922,12 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		
 		@Override
 		public int hashCode(){
-			int code = 0;
-//			for(KbVertex vertex : targetVertices){
-//				code += 3*vertex.hashCode();
-//			}
-			code += 7*connectingVertex.hashCode() + 13*paths.hashCode();
-			return code;
+			return 13*paths.hashCode();
 		}
-		
-//		public String printTargetVertices(){
-//			String str = "";
-//			for(KbVertex vertex : targetVertices){
-//				str += vertex.toString() + ", ";
-//			}
-//			return str;
-//		}
 		
 		@Override
 		public String toString(){
 			return "cost: " + cost 
-//			    + "\n" + "Target vertices: " + printTargetVertices()
 				+ "\n" + "Connecting vertex: " + connectingVertex
 				+ "\n" + "Paths: " + paths
  				+ "\n";
