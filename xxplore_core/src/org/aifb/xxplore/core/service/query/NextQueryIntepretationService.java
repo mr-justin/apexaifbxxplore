@@ -188,8 +188,6 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				}
 			}
 		}
-		s_log.debug("matchingREdges: " + matchingREdges);
-		s_log.debug("keywordREdgeMap: " + keywordREdgeMap);
 		return ress;
 	}
 	
@@ -307,7 +305,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				subgraphs.add(0,edges);
 			}
 		}
-		
+	
 		return subgraphs;
 	}
 	
@@ -735,6 +733,14 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 									}
 								}	
 							}
+							else {
+								for(Subgraph sub : subgraphQueue){
+									if(sub.equals(subgraph)){
+										if(sub.getCost() > subgraph.getCost())
+											sub.setCost(subgraph.getCost());
+									}
+								}
+							}
 						}
 		          	}
 		         }
@@ -907,6 +913,10 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		
 		public KbVertex getConnectingVertex(){
 			return connectingVertex;
+		}
+		
+		public void setCost(double cost){
+			this.cost = cost;
 		}
 		
 		public double getCost(){
