@@ -4,6 +4,7 @@ package org.aifb.xxplore.core.service.query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -67,7 +68,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	
 	private Set<KbElement> matchingREdges;
 	
-	private Map<String,Collection<KbElement>> keywordEdgeMap;
+	private Map<String,Collection<KbElement>> keywordREdgeMap;
 	
 	private double threshold = 50;
 	
@@ -119,38 +120,49 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	}
 
 	public Map<String,Collection<KbElement>> computeResources(Map<String,Collection<KbElement>> ress){
-		keywordEdgeMap = new LinkedHashMap<String,Collection<KbElement>>();
+		keywordREdgeMap = new LinkedHashMap<String,Collection<KbElement>>();
 		matchingREdges = new LinkedHashSet<KbElement>();
+		Map<String,IProperty> keywordAttributeMap = new LinkedHashMap<String, IProperty>();
+		Set<KbEdge> existingAEdges = new HashSet<KbEdge>();
 		Set<String> keywords = new LinkedHashSet<String>();
 		for(String keyword : ress.keySet()){
 			boolean allEdges = false;
 			Collection<KbElement> collection = ress.get(keyword);
 			for(Iterator<KbElement> ite = collection.iterator(); ite.hasNext(); ){
 				KbElement element = ite.next();
-				if((element instanceof KbVertex) && (element.getType() == KbElement.CVERTEX)){
+				if(element instanceof KbVertex && element.getType() == KbElement.CVERTEX){
 					double weight = computeWeight((INamedConcept)((KbVertex)element).getResource());
-					if(weight == Double.POSITIVE_INFINITY) {
+					if(weight == Double.POSITIVE_INFINITY)
 						ite.remove();
-					}
 				}
-				else if((element instanceof KbEdge) && (element.getType() == KbElement.REDGE)){
-					double weight = computeWeight(((KbEdge)element).getProperty());
-					if(weight == Double.POSITIVE_INFINITY) {
+				else if(element instanceof KbEdge && element.getType() == KbElement.REDGE){
+					double weight = computeWeight((IProperty)((KbEdge)element).getProperty());
+					if(weight == Double.POSITIVE_INFINITY)
 						ite.remove();
-					} else {
+					else {
 						double weight1 = computeWeight((INamedConcept)((KbEdge)element).getVertex1().getResource());
 						double weight2 = computeWeight((INamedConcept)((KbEdge)element).getVertex2().getResource());
-						if((weight1 == Double.POSITIVE_INFINITY) || (weight2 == Double.POSITIVE_INFINITY)) {
+						if(weight1 == Double.POSITIVE_INFINITY || weight2 == Double.POSITIVE_INFINITY)
 							ite.remove();
-						}
 					}
 				}
+				else if(element instanceof KbEdge && element.getType() == KbElement.AEDGE){
+					KbEdge edge = (KbEdge)element;
+					IProperty dataprop = edge.getProperty();
+					KbVertex vertex = edge.getVertex2();
+					if(vertex.getType() == KbElement.VVERTEX){
+						existingAEdges.add(edge);
+					}
+					else if(vertex.getType() == KbElement.DUMMY){
+						keywordAttributeMap.put(keyword, dataprop);
+					} 
+				}
 			}
-			if((collection == null) || (collection.size() == 0)){
+			if(collection == null || collection.size() == 0){
 				keywords.add(keyword);
 			}	
 			for(KbElement element : collection){
-				if((element instanceof KbEdge) && (element.getType() == KbElement.REDGE)) {
+				if(element instanceof KbEdge && element.getType() == KbElement.REDGE) {
 					allEdges = true;
 					matchingREdges.add(element);
 				}	
@@ -160,15 +172,24 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				}	
 			}
 			if(allEdges){
-				keywordEdgeMap.put(keyword,ress.get(keyword));
+				keywordREdgeMap.put(keyword,ress.get(keyword));
 				keywords.add(keyword);
 			}
 		}
 		for(String keyword : keywords){
 			ress.remove(keyword);
 		}
+		for(String attribute : keywordAttributeMap.keySet()){
+			IProperty keyattr = keywordAttributeMap.get(attribute); 
+			for(KbEdge edge : existingAEdges){
+				IProperty attr = edge.getProperty();
+				if(keyattr.equals(attr)){
+					ress.get(attribute).add(edge.getVertex2());
+				}
+			}
+		}
 		s_log.debug("matchingREdges: " + matchingREdges);
-		s_log.debug("keywordEdgeMap: " + keywordEdgeMap);
+		s_log.debug("keywordREdgeMap: " + keywordREdgeMap);
 		return ress;
 	}
 	
@@ -281,7 +302,6 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		System.out.println("computeSubgraphs - subgraphs: " + size);
 		for(int i = 0; i < size; i++){
 			Subgraph subgraph = subgraphQueue.poll();
-			System.out.println(i + ": " + subgraph + "\n");
 			Set<KbEdge> edges = subgraph.getPaths();
 			if(!subgraphs.contains(edges)){
 				subgraphs.add(0,edges);
@@ -692,8 +712,8 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 						}
 						
 						boolean isSubgraph = false;
-						if((keywordEdgeMap != null) && (keywordEdgeMap.size() != 0)){
-							for(Collection<KbElement> collection : keywordEdgeMap.values()){
+						if((keywordREdgeMap != null) && (keywordREdgeMap.size() != 0)){
+							for(Collection<KbElement> collection : keywordREdgeMap.values()){
 								isSubgraph = !Collections.disjoint(edges, collection);
 								if(!isSubgraph) {
 									break;
