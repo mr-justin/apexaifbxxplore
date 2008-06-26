@@ -130,10 +130,9 @@ public class NextLuceneQueryService implements IService {
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-//					System.out.println(clauseQ.getClass());
-//					System.out.println(clauseQ.toString("label"));
+					System.out.println(clauseQ.toString("label"));
 					searchWithClause(clauseQ,ress);
-//					System.out.println();
+					System.out.println();
 				}
 			}
 			//is variations of phrase or term query 
@@ -165,7 +164,7 @@ public class NextLuceneQueryService implements IService {
 			}
 			
 			if((results != null) && (results.length() > 0)){
-//				System.out.println("results.length(): " + results.length());
+				System.out.println("results.length(): " + results.length());
 				Collection<KbElement> res = new LinkedHashSet<KbElement>();
 				ress.put(clausequery.toString("label"), res);
 				for(int i = 0; i < results.length(); i++){
@@ -175,9 +174,9 @@ public class NextLuceneQueryService implements IService {
 		        		if(doc != null){
 		        			String type = doc.get("type");
 		        			if(type.equals(LITERAL)){
-//		        				System.out.println("type: " + type);
-//			        			System.out.println("score: " + score);
-//		        				System.out.println("label: " + doc.get("label"));
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("label: " + doc.get("label"));
 		        				ILiteral lit = new Literal(pruneString(doc.get("label")));
 		        				KbVertex vvertex = new KbVertex(lit,KbElement.VVERTEX,score,1);
 		        				res.add(vvertex);
@@ -198,18 +197,18 @@ public class NextLuceneQueryService implements IService {
 		        		        }
 		        			}
 		        			else if(type.equals(CONCEPT)){
-//		        				System.out.println("type: " + type);
-//			        			System.out.println("score: " + score);
-//		        				System.out.println("uri: " + doc.get("uri"));
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("uri: " + doc.get("uri"));
 		        				INamedConcept con = new NamedConcept(pruneString(doc.get("uri")));
 		        				res.add(new KbVertex(con,KbElement.CVERTEX,score,1));
 		        			}
 		        			else if(type.equals(DATAPROPERTY)){
-//		        				System.out.println("type: " + type);
-//			        			System.out.println("score: " + score);
-//		        				System.out.println("uri: " + doc.get("uri"));
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("uri: " + doc.get("uri"));
 		        				DataProperty dataProp = new DataProperty(pruneString(doc.get("uri")));
-		        				KbVertex vvertex = new KbVertex(new Resource("dummy"),KbElement.DUMMY,score,1);
+		        				KbVertex vvertex = new KbVertex(new Resource("dummy"),KbElement.DUMMY,score,2);
 		        				res.add(vvertex);
 		        				
 		        				String str = dataProp.getLabel();
@@ -228,9 +227,9 @@ public class NextLuceneQueryService implements IService {
 		        		        }
 		        			}
 		        			else if(type.equals(OBJECTPROPERTY)){
-//		        				System.out.println("type: " + type);
-//			        			System.out.println("score: " + score);
-//		        				System.out.println("uri: " + doc.get("uri"));
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("uri: " + doc.get("uri"));
 		        				IObjectProperty objProp = new ObjectProperty(pruneString(doc.get("uri")));
 		        				String str = objProp.getLabel();
 		        				Term term = new Term("relation",str);
