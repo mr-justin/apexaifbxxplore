@@ -4,7 +4,6 @@ package org.aifb.xxplore.core.service.query;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -123,7 +122,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		keywordREdgeMap = new LinkedHashMap<String,Collection<KbElement>>();
 		matchingREdges = new LinkedHashSet<KbElement>();
 		Map<String,IProperty> keywordAttributeMap = new LinkedHashMap<String, IProperty>();
-		Set<KbEdge> existingAEdges = new HashSet<KbEdge>();
+		Set<KbEdge> existingAEdges = new LinkedHashSet<KbEdge>();
 		Set<String> keywords = new LinkedHashSet<String>();
 		for(String keyword : ress.keySet()){
 			boolean allEdges = false;
@@ -188,6 +187,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 				}
 			}
 		}
+		
 		return ress;
 	}
 	
