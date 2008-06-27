@@ -1,0 +1,17 @@
+c	Collection	91
+c	Document	944146
+c	Journal	555
+c	Agent	569799
+c	Conference	2306
+c	total: 	1516897
+r	journal	341698
+r	series	589928
+r	sameAs	13397
+r	references	112303
+r	tableOfContent	9274
+r	partOf	457066
+r	bibliographicCitation	944146
+r	seeAlso	2092326
+r	homepage	847902
+r	creator	2308815
+r	total: 	7716855
