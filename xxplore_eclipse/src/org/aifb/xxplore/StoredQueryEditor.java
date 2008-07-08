@@ -5,14 +5,11 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.Stack;
 
-import org.aifb.xxplore.core.service.datafiltering.DataFilteringService;
-import org.aifb.xxplore.core.service.datafiltering.ITaskPolicyDao;
 import org.aifb.xxplore.model.ImageRegistry;
 import org.aifb.xxplore.model.StoredQueryViewContentProvider;
 import org.aifb.xxplore.storedquery.DatePicker;
@@ -22,19 +19,11 @@ import org.aifb.xxplore.storedquery.Prefix;
 import org.aifb.xxplore.storedquery.StoredQueryEditorInput;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
-import org.eclipse.jface.viewers.ISelectionChangedListener;
-import org.eclipse.jface.viewers.IStructuredContentProvider;
-import org.eclipse.jface.viewers.ITableLabelProvider;
-import org.eclipse.jface.viewers.LabelProvider;
-import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.eclipse.jface.viewers.TableViewer;
-import org.eclipse.jface.viewers.Viewer;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.ModifyEvent;
 import org.eclipse.swt.events.ModifyListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
 import org.eclipse.swt.widgets.Button;
@@ -45,7 +34,6 @@ import org.eclipse.swt.widgets.FileDialog;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Spinner;
-import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.Text;
 import org.eclipse.ui.IEditorInput;
 import org.eclipse.ui.IEditorPart;
@@ -65,17 +53,12 @@ import org.eclipse.ui.forms.widgets.Section;
 import org.eclipse.ui.part.EditorPart;
 import org.xmedia.accessknow.sesame.model.SesameOntology;
 import org.xmedia.accessknow.sesame.persistence.converter.Ses2AK;
-import org.xmedia.oms.model.api.IEntity;
-import org.xmedia.oms.model.api.INamedIndividual;
-import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.persistence.PersistenceUtil;
-import org.xmedia.oms.persistence.SessionFactory;
-import org.xmedia.oms.persistence.StatelessSession;
 import org.xmedia.oms.persistence.dao.DaoUnavailableException;
-import org.xmedia.oms.persistence.dao.IEntityDao;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
 
 public class StoredQueryEditor extends EditorPart {
+	
 	private static final int DEFAULT_ESTIMATED_TIME = 1;
 	private static final String DESCRIPTION_OVERVIEW = "Query Info";
 	private static final String StoredQueryView_ID = "org.aifb.xxplore.storedqueryview";
@@ -157,7 +140,8 @@ Select Variables
 		setInput(input);
 		this.m_editorInput = (StoredQueryEditorInput)input;
 		this.m_contentProvider = m_editorInput.getContentProvider();
-		setPartName(m_editorInput.getLabel());
+//		setPartName(m_editorInput.getLabel());
+		setPartName("Generic Query Editor");
 		setTitleToolTip(input.getToolTipText());
 	}
 
@@ -271,9 +255,10 @@ Select Variables
 		IQueryMetaFilter meta = m_queryListElement.getQuery().getMetaFilter();
 		meta.getAgents().clear();
 		meta.getSources().clear();
-		if (m_metaConfidence.getText() != null && !m_metaConfidence.getText().equals(""))
+		if ((m_metaConfidence.getText() != null) && !m_metaConfidence.getText().equals("")) {
 			meta.setConfidenceDegree(Double.valueOf(m_metaConfidence.getText()));
-		if (m_metaDate.getText() != null && !m_metaDate.getText().equals("")) {
+		}
+		if ((m_metaDate.getText() != null) && !m_metaDate.getText().equals("")) {
 			try {
 				meta.setDate(DateFormat.getDateInstance(DateFormat.SHORT, Locale.US).parse(m_metaDate.getText()));
 			} catch (ParseException e) {
@@ -325,18 +310,20 @@ Select Variables
 			String subject = texts[0].getText();
 			String object = texts[2].getText();
 			
-			if (subject.startsWith("?"))
+			if (subject.startsWith("?")) {
 				vars.push(subject);
+			}
 			
-			if (object.startsWith("?"))
+			if (object.startsWith("?")) {
 				vars.push(object);
+			}
 		}
 		
 		m_combo.setItems(vars.toArray(new String[] {}));
 	}
 
 	private void createVariableSection(Composite parent){
-		Section section = m_toolkit.createSection(parent, Section.EXPANDED | ExpandableComposite.TITLE_BAR | Section.TWISTIE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.EXPANDED | ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
 		section.setText("Select Variables:");
 		section.setLayout(new GridLayout());
 		section.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -371,7 +358,7 @@ Select Variables
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String str = m_combo.getText();
-				if(str != null && str.length()!= 0){
+				if((str != null) && (str.length()!= 0)){
 					m_queryListElement.getQuery().getSelectedVariables().add(str);
 					m_varText.setText(m_queryListElement.getQuery().getSelectedVariables().toString());
 					m_sform.reflow(true);
@@ -386,7 +373,7 @@ Select Variables
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				String str = m_combo.getText();
-				if(str != null && str.length()!= 0){
+				if((str != null) && (str.length()!= 0)){
 					m_queryListElement.getQuery().getSelectedVariables().remove(str);
 					m_varText.setText(m_queryListElement.getQuery().getSelectedVariables().toString());
 					m_sform.reflow(true);
@@ -405,7 +392,7 @@ Select Variables
 	}
 	
 	private void createPredicateSection(Composite parent){
-		Section section = m_toolkit.createSection(parent, Section.EXPANDED | ExpandableComposite.TITLE_BAR | Section.TWISTIE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.EXPANDED | ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
 		section.setText("Query Predicates");
 		section.setLayout(new GridLayout());
 		section.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -430,7 +417,7 @@ Select Variables
 	}
 	
 	private void createPredicateButtonArea(Composite parent) {
-		Section section = m_toolkit.createSection(parent, Section.NO_TITLE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.NO_TITLE);
 		section.setLayoutData(new GridData(GridData.FILL_BOTH));
 		Composite buttonSection = m_toolkit.createComposite(section);
 		section.setClient(buttonSection);
@@ -482,8 +469,9 @@ Select Variables
         				
         				int i = 0;
         				for (Label[] labels : m_predicateLabels) {
-        					if (labels[0].equals(label))
-        						break;
+        					if (labels[0].equals(label)) {
+								break;
+							}
         					i++;
         				}
         				
@@ -514,7 +502,7 @@ Select Variables
 	}
 
 	private void createPredicateFieldArea(Composite parent) {
-		Section section = m_toolkit.createSection(parent, Section.NO_TITLE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.NO_TITLE);
 		section.setLayoutData(new GridData(GridData.FILL_BOTH));
 		m_predicateSection = m_toolkit.createComposite(section);
 		section.setClient(m_predicateSection);
@@ -524,7 +512,7 @@ Select Variables
        
 		Stack<String[]> predicates = m_queryListElement.getQuery().getPredicates();
 		int i = 0;
-        if(m_editorInput.isNewQuery() || predicates.size() == 0){
+        if(m_editorInput.isNewQuery() || (predicates.size() == 0)){
         	Label[] labels = new Label[3];
         	Text[] texts = new Text[3];
          	labels[0] = m_toolkit.createLabel(m_predicateSection, "Subject: ");
@@ -568,8 +556,9 @@ Select Variables
     				
     				int i = 0;
     				for (Label[] labels : m_predicateLabels) {
-    					if (labels[0].equals(label))
-    						break;
+    					if (labels[0].equals(label)) {
+							break;
+						}
     					i++;
     				}
     				
@@ -640,8 +629,9 @@ Select Variables
         				
         				int i = 0;
         				for (Label[] labels : m_predicateLabels) {
-        					if (labels[0].equals(label))
-        						break;
+        					if (labels[0].equals(label)) {
+								break;
+							}
         					i++;
         				}
         				
@@ -670,7 +660,7 @@ Select Variables
 	}
 
 	private void createOntologySection(Composite parent){
-		Section section = m_toolkit.createSection(parent, Section.EXPANDED | ExpandableComposite.TITLE_BAR | Section.TWISTIE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.EXPANDED | ExpandableComposite.TITLE_BAR | ExpandableComposite.TWISTIE);
 		section.setText("Ontology prefixes");
 		section.setLayout(new GridLayout());
 		section.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -694,7 +684,7 @@ Select Variables
 	}
 	
 	private void createOntologyFieldArea(Composite parent) {
-		Section section = m_toolkit.createSection(parent, Section.NO_TITLE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.NO_TITLE);
 		section.setLayoutData(new GridData(GridData.FILL_BOTH));
 		m_ontologySection = m_toolkit.createComposite(section);
 		section.setClient(m_ontologySection);
@@ -703,7 +693,7 @@ Select Variables
 		m_ontologySection.setLayout(layout);
        
         Stack<Prefix> prefixes = m_queryListElement.getQuery().getPrefixes();
-        if(m_editorInput.isNewQuery() || prefixes.size() == 0){
+        if(m_editorInput.isNewQuery() || (prefixes.size() == 0)){
         	prefixes = new Stack<Prefix>();
         	prefixes.add(new Prefix("", ""));
         }
@@ -744,7 +734,7 @@ Select Variables
 	}
 	
 	private void createOntologyButtonArea (Composite parent){
-		Section section = m_toolkit.createSection(parent, Section.NO_TITLE);
+		Section section = m_toolkit.createSection(parent, ExpandableComposite.NO_TITLE);
 		section.setLayoutData(new GridData(GridData.FILL_BOTH));
 		Composite buttonSection = m_toolkit.createComposite(section);
 		section.setClient(buttonSection);
@@ -767,11 +757,13 @@ Select Variables
 			@Override
 			public void widgetSelected(SelectionEvent e) {
 				Label[] labels = m_prefixLabels.pop();
-				for (Label l : labels)
+				for (Label l : labels) {
 					l.dispose();
+				}
 				Text[] texts = m_prefixTexts.pop();
-				for (Text t : texts)
+				for (Text t : texts) {
 					t.dispose();
+				}
 				m_sform.reflow(true);
 				markDirty(true);
 				firePropertyChange(IEditorPart.PROP_DIRTY);
@@ -781,7 +773,7 @@ Select Variables
 	}
 	
 	private void createQueryInfoSection(Composite parent) {
-		Section section = m_toolkit.createSection(parent, Section.EXPANDED | Section.TITLE_BAR | Section.TWISTIE );
+		Section section = m_toolkit.createSection(parent, Section.EXPANDED | Section.TITLE_BAR | ExpandableComposite.TWISTIE );
 		section.setText(DESCRIPTION_OVERVIEW);
 		section.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 		section.addExpansionListener(new IExpansionListener() {
@@ -990,7 +982,7 @@ Select Variables
         b1.setLayoutData(new GridData(0, 0, false, false, 1, 1));
         b1.addSelectionListener(new SelectionAdapter() {
         	public void widgetSelected(SelectionEvent e) {
-        		if (m_metaAgentAddText.getText() != null && !m_metaAgentAddText.getText().equals("")) {
+        		if ((m_metaAgentAddText.getText() != null) && !m_metaAgentAddText.getText().equals("")) {
         			m_metaAgents.add(m_metaAgentAddText.getText());
     				m_sform.reflow(true);
     				markDirty(true);
@@ -1033,7 +1025,7 @@ Select Variables
         b3.setLayoutData(new GridData(0, 0, false, false, 1, 1));
         b3.addSelectionListener(new SelectionAdapter() {
         	public void widgetSelected(SelectionEvent e) {
-        		if (m_metaSourceAddText.getText() != null && !m_metaSourceAddText.getText().equals("")) {
+        		if ((m_metaSourceAddText.getText() != null) && !m_metaSourceAddText.getText().equals("")) {
         			m_metaSources.add(m_metaSourceAddText.getText());
     				m_sform.reflow(true);
     				markDirty(true);
