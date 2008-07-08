@@ -37,6 +37,12 @@
             class="org.aifb.xxplore.DefinitionView"
             id="org.aifb.xxplore.definitionview"
             name="DefinitionView"/>
+     <view
+            allowMultiple="false"
+            category="org.aifb.xxplore.category"
+            class="org.aifb.xxplore.FiatNewsSearchView"
+            id="org.aifb.xxplore.fiatnewssearchview"
+            name="NewsSearchView"/>
       <category
             id="org.aifb.xxplore.category"
             name="Explore"/>
@@ -139,7 +145,7 @@
             class="org.aifb.xxplore.StoredQueryEditor"
            	icon="icons/task.gif"
            	id="org.aifb.xxplore.storedqueryeditor"
-           	name="StoredQuery Editor"/>     	
+           	name="StoredQuery Editor"/>
    </extension>
     <extension
       point="org.eclipse.core.resources.natures"
