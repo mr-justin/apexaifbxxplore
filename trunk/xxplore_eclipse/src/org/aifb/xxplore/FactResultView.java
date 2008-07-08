@@ -47,8 +47,10 @@ public class FactResultView extends ViewPart {
 		public void selectionChanged(IWorkbenchPart sourcepart, ISelection selection) {
 
 			// listening only to selection changes in the DefinitionView/SparqlQueryView
-			if (sourcepart.getSite().getId().equals(DefinitionView.ID)||sourcepart.getSite().getId().equals(SparqlQueryView.ID)
-					|| sourcepart.getSite().getId().equals(StoredQueryView.ID)) 
+			if (sourcepart.getSite().getId().equals(DefinitionView.ID)
+					||sourcepart.getSite().getId().equals(SparqlQueryView.ID)
+					|| sourcepart.getSite().getId().equals(StoredQueryView.ID)
+					|| sourcepart.getSite().getId().equals(FiatNewsSearchView.ID)) 
 			{			   
 				if((selection instanceof IStructuredSelection) && !selection.isEmpty())
 				{					
@@ -98,6 +100,18 @@ public class FactResultView extends ViewPart {
 									
 									m_resultsContentProvider.search(query);
 									giveFeedBack(ExploreEnvironment.F_SEARCH, DefinitionView.ID, false);
+								}
+							}
+							else if(sourcepart.getSite().getId().equals(FiatNewsSearchView.ID)){
+								
+								String query_string = SparqlHelper.cleanQuery((String)second_object);			
+								String[] vars = SparqlHelper.getVars(query_string);						
+								query = new QueryWrapper(query_string,vars);
+								
+								if(!m_resultsContentProvider.alreadyAdded(FiatNewsSearchView.ID, selectionTime)){
+									
+									m_resultsContentProvider.search(query);
+									giveFeedBack(ExploreEnvironment.F_SEARCH, FiatNewsSearchView.ID, false);
 								}
 							}
 						}
@@ -248,6 +262,9 @@ public class FactResultView extends ViewPart {
 		}
 		else if (source_id.equals(StoredQueryView.ID)) {
 			title = "StoredQueryView";
+		}
+		else if (source_id.equals(FiatNewsSearchView.ID)) {
+			title = "FiatNewsSearchView";
 		}
 		
 		MessageBox mb = new MessageBox(m_composite.getShell(), SWT.ICON_WORKING | SWT.OK);
