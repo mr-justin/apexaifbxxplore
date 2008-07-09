@@ -43,11 +43,12 @@ import org.xmedia.oms.persistence.dao.DaoUnavailableException;
 import org.xmedia.oms.persistence.dao.IConceptDao;
 import org.xmedia.oms.persistence.dao.IDaoManager;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
+import org.xmedia.oms.query.QueryWrapper;
 
 public class FiatNewsSearchView extends ViewPart{
 
 	private FiatNewsSearchViewSelectionProvider m_selectionProvider;
-	private ConstructSparqlQueryHelper m_SparqlQueryHelper;
+	private SparqlQueryHelper m_SparqlQueryHelper;
 //	private boolean m_isDirty;
 //	private FormToolkit m_toolkit;
 	private ScrolledForm m_sform;
@@ -84,7 +85,7 @@ public class FiatNewsSearchView extends ViewPart{
 		
 		m_selectionProvider = new FiatNewsSearchViewSelectionProvider();
 		getSite().setSelectionProvider(m_selectionProvider);
-		m_SparqlQueryHelper = new ConstructSparqlQueryHelper();
+		m_SparqlQueryHelper = new SparqlQueryHelper();
 	
 	}
 
@@ -346,11 +347,13 @@ public class FiatNewsSearchView extends ViewPart{
 		
 		Section section = toolkit.createSection(editorComposite, ExpandableComposite.NO_TITLE);
 		section.setLayoutData(new GridData(GridData.FILL_BOTH));
+		
 		Composite buttonSection = toolkit.createComposite(section);
 		section.setClient(buttonSection);
 		GridLayout layout = new GridLayout();
 		layout.numColumns = 2;
 		buttonSection.setLayout(layout);
+		
 		Button search_button = toolkit.createButton(buttonSection,"Search",SWT.PUSH | SWT.CENTER);
 		search_button.addSelectionListener(new SelectionAdapter() {
 			@Override
@@ -359,9 +362,12 @@ public class FiatNewsSearchView extends ViewPart{
 				m_sform.reflow(true);
 				firePropertyChange(IEditorPart.PROP_DIRTY);
 				
-				String sparql_query = m_SparqlQueryHelper.constructQuery();
+				String sparql_query = m_SparqlQueryHelper.constructQuery();		
+				String[] vars = {"?news"};
+				QueryWrapper query = new QueryWrapper(sparql_query,vars);
+				
 				long selectiontime = System.currentTimeMillis();	
-				Object[] selection = {ExploreEnvironment.F_SEARCH, sparql_query, selectiontime, null};
+				Object[] selection = {ExploreEnvironment.F_SEARCH, query, selectiontime, null};
 				m_selectionProvider.setSelection(new StructuredSelection(selection));
 				
 			}
@@ -381,10 +387,7 @@ public class FiatNewsSearchView extends ViewPart{
 	}
 
 	@Override
-	public void setFocus() {
-		// TODO Auto-generated method stub
-
-	}
+	public void setFocus() {}
 
 	private static class FieldDataHelper{
 
@@ -408,8 +411,8 @@ public class FiatNewsSearchView extends ViewPart{
 		private static final String s_model_uri = "http://www.x-media-project.org/fiat#ModelReleased";
 //		private static final String s_concepts_uri = "http://www.x-media-project.org/fiat#ModelReleased";
 		private static final String s_newssource_uri = "http://www.x-media-project.org/fiat#NewsSource";
-		private static final String s_newssource_state_seen_uri = "newsStateSeen";
-		private static final String s_newssource_state_unseen_uri = "newsStateUnseen";
+		private static final String s_newssource_state_seen_uri = "http://www.x-media-project.org/fiat/news#newsStateSeen";
+		private static final String s_newssource_state_unseen_uri = "http://www.x-media-project.org/fiat/news#newsStateUnseen";
 		
 		private static Logger s_log = Logger.getLogger(GraphViewer.class.getCanonicalName());
 		
@@ -430,7 +433,7 @@ public class FiatNewsSearchView extends ViewPart{
 					Set<IIndividual> memberIndividuals = individualDao.findMemberIndividuals(namedConcept);
 					
 					for(IIndividual member : memberIndividuals){
-						members.add(member.getLabel());
+						members.add(member.toString());
 					}
 				}
 			} 
@@ -536,7 +539,7 @@ public class FiatNewsSearchView extends ViewPart{
 		}
 	}
 	
-	private class ConstructSparqlQueryHelper{
+	private class SparqlQueryHelper{
 	
 
 		private String constructQuery(){
@@ -545,40 +548,38 @@ public class FiatNewsSearchView extends ViewPart{
 			String query = new String();
 			StringBuffer query_whereClause = new StringBuffer();
 			
-			query += "PREFIX fiat:<http://www.x-media-project.org/fiat#> ";
-			query += "PREFIX rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> ";
 			query += "SELECT ?news ";
-			query += "WHERE { { ?news rdf:type fiat:News ";
-			query_whereClause.append("{ ?news rdf:type fiat:News ");
+			query += "WHERE { { ?news <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.x-media-project.org/fiat#News> ";
+			query_whereClause.append("{ ?news <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.x-media-project.org/fiat#News> ");
 			
 			if((m_combo_news_state != null) && !m_combo_news_state.getText().equals("")){
-				query += " . ?news fiat:newsState fiat:"+m_combo_news_state.getText()+" ";
-				query_whereClause.append(" . ?news fiat:newsState fiat:"+m_combo_news_state.getText()+" ");
+				query += " . ?news <http://www.x-media-project.org/fiat#newsState> <"+m_combo_news_state.getText()+"> ";
+				query_whereClause.append(" . ?news <http://www.x-media-project.org/fiat#newsState> <"+m_combo_news_state.getText()+"> ");
 			}
 			
 			if((m_combo_market != null) && !m_combo_market.getText().equals("")){
-				query += " . fiat:"+m_combo_market.getText()+" fiat:source ?news ";
-				query_whereClause.append(" . fiat:"+m_combo_market.getText()+" fiat:source ?news ");
+				query += " . <"+m_combo_market.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ";
+				query_whereClause.append(" . <"+m_combo_market.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ");
 			}
 			
 			if((m_combo_model != null) && !m_combo_model.getText().equals("")){
-				query += " . fiat:"+m_combo_model.getText()+" fiat:source ?news ";
-				query_whereClause.append(" . fiat:"+m_combo_model.getText()+" fiat:source ?news ");
+				query += " . <"+m_combo_model.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ";
+				query_whereClause.append(" . <"+m_combo_model.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ");
 			}
 			
 			if((m_combo_segment != null) && !m_combo_segment.getText().equals("")){
-				query += " . fiat:"+m_combo_segment.getText()+" fiat:source ?news ";
-				query_whereClause.append(" . fiat:"+m_combo_segment.getText()+" fiat:source ?news ");
+				query += " . <"+m_combo_segment.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ";
+				query_whereClause.append(" . <"+m_combo_segment.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ");
 			}
 			
 			if((m_combo_maker != null) && !m_combo_maker.getText().equals("")){
-				query += " . fiat:"+m_combo_maker.getText()+" fiat:source ?news ";
-				query_whereClause.append(" . fiat:"+m_combo_maker.getText()+" fiat:source ?news ");
+				query += " . <"+m_combo_maker.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ";
+				query_whereClause.append(" . <"+m_combo_maker.getText()+"> <http://www.x-media.org/ontologies/metaknow#source> ?news ");
 			}
 			
 			if((m_combo_source != null) && !m_combo_source.getText().equals("")){
-				query += " . ?news fiat:hasSource fiat:"+m_combo_source.getText()+" ";
-				query_whereClause.append(" . ?news fiat:hasSource fiat:"+m_combo_source.getText()+" ");
+				query += " . ?news <http://www.x-media-project.org/fiat#hasSource> <"+m_combo_source.getText()+"> ";
+				query_whereClause.append(" . ?news <http://www.x-media-project.org/fiat#hasSource> <"+m_combo_source.getText()+"> ");
 			}
 			
 			if((m_combo_language != null) && !m_combo_language.getText().equals("")){
@@ -596,10 +597,10 @@ public class FiatNewsSearchView extends ViewPart{
 				for(int i = 0; i < newsArticles.size(); i++){
 					
 					if(i == newsArticles.size()-1){
-						query += " . ?news fiat:hasLink \""+newsArticles.get(i)+"\"@"+language+" } }";
+						query += " . ?news <http://www.x-media-project.org/fiat#hasLink> \""+newsArticles.get(i)+"\"@"+language+" } }";
 					}
 					else{
-						query += " . ?news fiat:hasLink \""+newsArticles.get(i)+"\"@"+language+" } UNION ";
+						query += " . ?news <http://www.x-media-project.org/fiat#hasLink> \""+newsArticles.get(i)+"\"@"+language+" } UNION ";
 						query += query_whereClause.toString();
 					}
 				}
@@ -607,13 +608,12 @@ public class FiatNewsSearchView extends ViewPart{
 			else{
 				
 				if((m_combo_language != null) && !m_combo_language.getText().equals("")){
-					query += " . ?news fiat:hasLink \"*\"@"+m_combo_language.getText()+" } }";
+					query += " . ?news <http://www.x-media-project.org/fiat#hasLink> \"*\"@"+m_combo_language.getText()+" } }";
 				}
 				else{
 					query += "} } ";
 				}
 			}
-			
 			
 			return query;
 		}

@@ -76,7 +76,8 @@ public class FactResultView extends ViewPart {
 								query = new QueryWrapper(query_string,vars);
 								
 								if(!m_resultsContentProvider.alreadyAdded(StoredQueryView.ID, selectionTime)){
-																		
+									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.search(query);
 									giveFeedBack(ExploreEnvironment.F_SEARCH,StoredQueryView.ID, false);
 								}
@@ -87,7 +88,8 @@ public class FactResultView extends ViewPart {
 								query = (QueryWrapper)second_object;
 								
 								if(!m_resultsContentProvider.alreadyAdded(SparqlQueryView.ID, selectionTime)){
-																		
+									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.search(query);
 									giveFeedBack(ExploreEnvironment.F_SEARCH,SparqlQueryView.ID, false);
 								}
@@ -98,18 +100,18 @@ public class FactResultView extends ViewPart {
 								
 								if(!m_resultsContentProvider.alreadyAdded(DefinitionView.ID, selectionTime)){
 									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.search(query);
 									giveFeedBack(ExploreEnvironment.F_SEARCH, DefinitionView.ID, false);
 								}
 							}
 							else if(sourcepart.getSite().getId().equals(FiatNewsSearchView.ID)){
 								
-								String query_string = SparqlHelper.cleanQuery((String)second_object);			
-								String[] vars = SparqlHelper.getVars(query_string);						
-								query = new QueryWrapper(query_string,vars);
+								query = (QueryWrapper)second_object;
 								
 								if(!m_resultsContentProvider.alreadyAdded(FiatNewsSearchView.ID, selectionTime)){
 									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.search(query);
 									giveFeedBack(ExploreEnvironment.F_SEARCH, FiatNewsSearchView.ID, false);
 								}
@@ -136,6 +138,7 @@ public class FactResultView extends ViewPart {
 								
 								if(!m_resultsContentProvider.alreadyAdded(DefinitionView.ID, selectionTime)){
 									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.meta_search(query,(IQueryMetaFilter)filter);
 									giveFeedBack(ExploreEnvironment.META_SEARCH,sourcepart.getSite().getId(),
 											f == null || (!f.getRequireProvenances() && f.getAgents().size() == 0 && f.getSources().size() == 0 && f.getConfidenceDegree() == null && f.getDate() == null));
@@ -146,6 +149,7 @@ public class FactResultView extends ViewPart {
 								
 								if(!m_resultsContentProvider.alreadyAdded(SparqlQueryView.ID, selectionTime)){
 									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.meta_search(query,(IQueryMetaFilter)filter);
 									giveFeedBack(ExploreEnvironment.META_SEARCH,sourcepart.getSite().getId(),
 											f == null || (!f.getRequireProvenances() && f.getAgents().size() == 0 && f.getSources().size() == 0 && f.getConfidenceDegree() == null && f.getDate() == null));
@@ -155,6 +159,7 @@ public class FactResultView extends ViewPart {
 								
 								if(!m_resultsContentProvider.alreadyAdded(StoredQueryView.ID, selectionTime)){
 									
+									m_resultsContentProvider.clear();
 									m_resultsContentProvider.meta_search(query,(IQueryMetaFilter)filter);
 									giveFeedBack(ExploreEnvironment.META_SEARCH,sourcepart.getSite().getId(),
 											f == null || (!f.getRequireProvenances() && f.getAgents().size() == 0 && f.getSources().size() == 0 && f.getConfidenceDegree() == null && f.getDate() == null));
