@@ -1,6 +1,5 @@
 package org.aifb.xxplore.model;
 
-import org.aifb.xxplore.shared.util.URIHelper;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.swt.graphics.Image;
@@ -36,7 +35,7 @@ public class FactResultsLabelProvider implements ITableLabelProvider {
 					return null;
 			}
 			else
-				return URIHelper.truncateUri(tuple.getElementAt(columnIndex).toString());
+				return tuple.getElementAt(columnIndex).toString();
 		}
 		
 		return null;
