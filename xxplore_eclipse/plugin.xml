@@ -173,7 +173,7 @@
              category="org.aifb.xxplore.category"
              class="org.aifb.xxplore.wizards.ExploreProjectWizard"
              id="org.aifb.xxplore.newprojectwizard"
-             name="Explore Project"
+             name="ExploreProject Wizard"
              preferredPerspectives="org.aifb.xxplore.exploreperspective"
              project="true">
           <description/>
@@ -182,21 +182,9 @@
              category="org.aifb.xxplore.category"
              class="org.aifb.xxplore.wizards.DataSourceWizard"
              id="explore.newDataSourceWizard"
-             name="DataSourceWizard"
+             name="DataSource Wizard"
              preferredPerspectives="org.aifb.xxplore.exploreperspective"
              project="true"/>
-       <wizard
-             category="org.aifb.xxplore.category"
-             class="org.aifb.xxplore.wizards.NewModelDefinitionWizard"
-             id="explore.newModelDefinitionWizard"
-             name="ModelDefinitionWizard"
-             project="false"/>
-       <wizard
-             category="org.aifb.xxplore.category"
-             class="org.aifb.xxplore.wizards.NewDefinitionElementWizard"
-             id="explore.newDefinitionElementWizard"
-             name="DefinitionElementWizard"
-             project="false"/>
        <category
              id="org.aifb.xxplore.category"
              name="Explore"/>
