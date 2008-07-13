@@ -19,17 +19,7 @@ public class ExploreEnvironment {
 	public static final String DATASOURCE_LOCALNAME = "xxplore.datasource";
 	
 	public static final String VIEWDEFINITION_LOCALNAME = "xxplore.view_definition";
-
-	public static final String DATASOURCE = "datasource";
-	
-	public static final String DATASOURCE_FILENAME = "datasource.filename";
 			
-	public static final String PROJECT_WIZARD_DESC = "This Wizard is used to create an xxplore project!";
-	
-	public static final String PROJECT_WIZARD_MSG = "Creation of an Exploration Project!";
-	
-	public static final String PROJECT_WIZARD_PAGE1_TITLE = "Specify Explore Project Data!"; 
-	
 	public static final String CONCEPTUAL_ZOOMING_PERFORMED = "Zooming performed!"; 
 	
 	public static final String ITEM_ACTIVATED_PERFORMED = "Item activated performed!"; 
@@ -136,12 +126,24 @@ public class ExploreEnvironment {
 	
 	//CONSTANTS FOR LOADING THE DATA TO THE REPO > USED IN EXPLORE-PLUGIN
 	
-	public static final String  ONTOLOGY_FILE_PATH = "ontology.file.path";
+	public static final String ONTOLOGY_FILE_PATH = "ontology.file.path";
 	
-	public static final String  ONTOLOGY_FILE_NAME = "ontology.file.name";
+	public static final String ONTOLOGY_FILE_NAME = "ontology.file.name";
 	
-	public static final String  BASE_ONTOLOGY_URI = "base_ontology.uri";
+	public static final String BASE_ONTOLOGY_URI = "base_ontology.uri";
 	
-	public static final String  LANGUAGE = "language";
+	public static String ONTOLOGY_EXPRESSITIVITY = "ontology.expressitivity";
 	
+	public static final String LANGUAGE = "language";
+	
+	public static final String DATASOURCE = "datasource";
+	
+	public static final String DATASOURCE_EXTENSION = ".ods";
+	
+	public static final String DATASOURCE_FILENAME = "datasource.filename";
+	
+	public static final String REPOSITORY_NAME = "ontology.uri";
+	
+	public static final String PROJECT_NAME = "project.name";
+
 }
