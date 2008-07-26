@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.aifb.xxplore.core.ExploreEnvironment;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IProgressMonitor;
@@ -17,7 +18,7 @@ import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.persistence.KbEnvironment;
 
-public class WizardHelper {
+public class ExploreWizardHelper {
 
 	public static final QualifiedName DATASOURCE = new QualifiedName(ExploreEnvironment.NAME_QUALIFIER, ExploreEnvironment.DATASOURCE_LOCALNAME);
 	
@@ -91,7 +92,12 @@ public class WizardHelper {
 				
 			}
 			
-			buff.append(KbEnvironment.REASONER_ON+"=false");
+			buff.append(KbEnvironment.REASONER_ON+"=false\n");
+			buff.append(ExploreEnvironment.RESOURCE_LOCATION+"="
+					+properties.get(ExploreEnvironment.RESOURCE_LOCATION)+"\n");
+			buff.append(ExploreEnvironment.INDEX_LOCATION+"="
+					+properties.get(ExploreEnvironment.INDEX_LOCATION));
+			
 			
 			in = new ByteArrayInputStream(buff.toString().getBytes());
 			if(datasource.exists()){
@@ -106,5 +112,30 @@ public class WizardHelper {
 			}
 		}
 		return datasource;
+	}
+		
+	public static String[] getWorkspaceProjects(){
+		
+		int i = 0;
+		IProject[] projects = ResourcesPlugin.getWorkspace().getRoot().getProjects();
+		
+		String[] project_names = new String[projects.length];
+		
+		for(IProject project : projects){
+			project_names[i++] = project.getName();
+		}
+					
+		return project_names;
+	}
+	
+	public static class TextInputHelper{
+		
+		public static String cleanInputText(String input){
+			
+			String out = new String(input);
+			out = out.replace("\\", "\\\\");
+			
+			return out;
+		}
 	}
 }
