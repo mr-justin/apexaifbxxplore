@@ -7,3 +7,5 @@ ontology.type=urn:sesame2/repository_types/local/SailRepository/RdfsMemoryStore/
 connection.provider=org.xmedia.accessknow.sesame.persistence.ConnectionProvider
 session.factory_class=org.xmedia.accessknow.sesame.persistence.SesameSessionFactory
 reasoner.on=false
+resources.location=C:/Eigene Dateien/UNI/Eclipse-Workspace/XXplore_core/res
+index.location=C:/Eigene Dateien/UNI/Eclipse-Workspace/XXplore_core/res/fiatoverall_rdfs

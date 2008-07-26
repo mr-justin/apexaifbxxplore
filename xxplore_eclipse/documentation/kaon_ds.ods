@@ -2,3 +2,5 @@ ontology.uri=file:///c:/SWRC_merged3.rdf-xml.owl
 connection.provider=org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider
 session.factory_class=org.xmedia.oms.adapter.kaon2.persistence.Kaon2SessionFactory
 reasoner.on=false
+resources.location=C:/Eigene Dateien/UNI/Eclipse-Workspace/XXplore_core/res
+index.location=C:/Eigene Dateien/UNI/Eclipse-Workspace/XXplore_core/res/fiatoverall_rdfs
