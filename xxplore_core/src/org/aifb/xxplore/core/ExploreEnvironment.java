@@ -63,20 +63,18 @@ public class ExploreEnvironment {
 	
 	public static final String OBJECT_LABEL = "Object";
 	
-	/*
-	 * Please add approriate variables (in Ecplipse: Window > Preferences > Java > Build Path > Classpath Variables)
-	 */
-	public static final String DOC_INDEX_DIR = System.getenv("workspace")+"\\XXplore_core\\res\\doc_index";
-		
-	public static final String KB_INDEX_DIR = System.getenv("workspace")+"\\XXplore_core\\res\\kb_index";
 	
-	public static final String SYN_INDEX_DIR = System.getenv("workspace")+"\\XXplore_core\\res\\syn_index";
+	public static String DOC_INDEX_DIR;
 	
-	public static final String SYN_DIR = System.getenv("workspace")+"\\XXplore_core\\res\\wn_s.pl";
-		
-	public static final String DOC_DIR = System.getenv("workspace")+"\\XXplore_core\\res\\docs";
+	public static String KB_INDEX_DIR;
 	
-	public static final String STOREDQUERY_DIR = System.getenv("workspace")+"\\XXplore_core\\res\\StoredQueries.xml";
+	public static String SYN_INDEX_DIR;
+	
+	public static String DOC_DIR;
+	
+	public static String STOREDQUERY_DIR;
+	
+	public static String SYN_DIR;
 	
 	/*
 	 * 
@@ -145,5 +143,48 @@ public class ExploreEnvironment {
 	public static final String REPOSITORY_NAME = "ontology.uri";
 	
 	public static final String PROJECT_NAME = "project.name";
+	
+	public static final String PROJECT_COMMENT = "project.comment";
 
+	public static final String RESOURCE_LOCATION = "resources.location";
+	
+	public static final String INDEX_LOCATION = "index.location";
+	
+	public static final String DEFAULT_RESOURCE_LOCATION_SUFFIX = "/XXplore_core/res";
+	
+	
+	public static class LocationHelper{
+		
+		private static String s_doc_idx_suffix = "/doc_index";
+		private static String s_kb_idx_suffix = "/kb_index";
+		private static String s_syn_idx_suffix = "/syn_index";
+		private static String s_doc_dir_suffix = "/docs";
+		private static String s_storedquery_dir_suffix = "/StoredQueries.xml";
+		private static String s_syn_dir_suffix = "/wn_s.pl";
+				
+		private static String s_ResourceLocation;
+		private static String s_IndexLocation;
+		
+		
+		public static void setResourceLocation(String location){
+			LocationHelper.s_ResourceLocation = location;
+			update();
+		}
+		
+		public static void setIndexLocation(String location){
+			LocationHelper.s_IndexLocation = location;
+			update();
+		}
+		
+		private static void update(){
+			
+			DOC_INDEX_DIR = s_IndexLocation + s_doc_idx_suffix;
+			KB_INDEX_DIR = s_IndexLocation + s_kb_idx_suffix;
+			SYN_INDEX_DIR = s_IndexLocation + s_syn_idx_suffix;
+			DOC_DIR = s_IndexLocation + s_doc_dir_suffix;
+			STOREDQUERY_DIR = s_ResourceLocation + s_storedquery_dir_suffix;
+			SYN_DIR = s_ResourceLocation + s_syn_dir_suffix;
+			
+		}
+	}
 }
