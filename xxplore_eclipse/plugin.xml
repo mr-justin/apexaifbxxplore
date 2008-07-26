@@ -184,7 +184,7 @@
              id="explore.newDataSourceWizard"
              name="DataSource Wizard"
              preferredPerspectives="org.aifb.xxplore.exploreperspective"
-             project="true"/>
+             project="false"/>
        <category
              id="org.aifb.xxplore.category"
              name="Explore"/>
