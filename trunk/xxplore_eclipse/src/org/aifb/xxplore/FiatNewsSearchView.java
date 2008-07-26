@@ -92,10 +92,11 @@ public class FiatNewsSearchView extends ViewPart{
 	private void createContent(Composite editorComposite, FormToolkit toolkit){
 
 //		Create sections
+
 		createSearchSection(editorComposite,toolkit);
 		createQueryPreferencesSection(editorComposite,toolkit);
 		createButtonSection(editorComposite,toolkit);
-		
+
 	}
 
 	private Text m_text_freeSearch;
@@ -137,7 +138,13 @@ public class FiatNewsSearchView extends ViewPart{
 		label_state.setForeground(toolkit.getColors().getColor(FormColors.TITLE));
 		m_combo_news_state = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_news_state.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-		m_combo_news_state.setItems(FieldDataHelper.getStates());
+		
+		try {
+			m_combo_news_state.setItems(FieldDataHelper.getStates());
+		} catch (Exception e1) {
+			m_combo_news_state.setEnabled(false);
+			label_state.setEnabled(false);
+		}
 		
 	}
 
@@ -184,50 +191,60 @@ public class FiatNewsSearchView extends ViewPart{
 		m_combo_market = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_market.setLayoutData(gridData);
 		
-		fielddata = FieldDataHelper.getMarkets();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getMarkets();
+			if(fielddata.length == 0){
+				m_combo_market.setEnabled(false);
+				label_market.setEnabled(false);
+			}
+			else{
+				m_combo_market.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_market.setEnabled(false);
 			label_market.setEnabled(false);
-		}
-		else{
-			m_combo_market.setItems(fielddata);
-		}
+		}	
 		
-
 //		Segment
 		Label label_segment = toolkit.createLabel(sectionClient, "Segment");
 		label_segment.setForeground(toolkit.getColors().getColor(FormColors.TITLE));
 		m_combo_segment = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_segment.setLayoutData(gridData);
 		
-		fielddata = FieldDataHelper.getSegments();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getSegments();
+			if(fielddata.length == 0){
+				m_combo_segment.setEnabled(false);
+				label_segment.setEnabled(false);
+			}
+			else{
+				m_combo_segment.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_segment.setEnabled(false);
 			label_segment.setEnabled(false);
-		}
-		else{
-			m_combo_segment.setItems(fielddata);
-		}
-
+		}	
+		
 //		Maker
 		Label label_maker = toolkit.createLabel(sectionClient, "Maker");
 		label_maker.setForeground(toolkit.getColors().getColor(FormColors.TITLE));
 		m_combo_maker = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_maker.setLayoutData(gridData);
 		
-		fielddata = FieldDataHelper.getMakers();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getMakers();
+			if(fielddata.length == 0){
+				m_combo_maker.setEnabled(false);
+				label_maker.setEnabled(false);
+			}
+			else{
+				m_combo_maker.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_maker.setEnabled(false);
 			label_maker.setEnabled(false);
-		}
-		else{
-			m_combo_maker.setItems(fielddata);
-		}
-
-
+		}	
+		
 
 //		Model
 		Label label_model = toolkit.createLabel(sectionClient, "Model");
@@ -235,50 +252,63 @@ public class FiatNewsSearchView extends ViewPart{
 		m_combo_model = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_model.setLayoutData(gridData);
 		
-		fielddata = FieldDataHelper.getModels();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getModels();
+			
+			if(fielddata.length == 0){
+				m_combo_model.setEnabled(false);
+				label_model.setEnabled(false);
+			}
+			else{
+				m_combo_model.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_model.setEnabled(false);
 			label_model.setEnabled(false);
-		}
-		else{
-			m_combo_model.setItems(fielddata);
-		}
-
+		}	
+		
 //		Concept
 		Label label_concept = toolkit.createLabel(sectionClient, "Concept");
 		label_concept.setForeground(toolkit.getColors().getColor(FormColors.TITLE));
 		m_combo_concept = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_concept.setLayoutData(gridData);
-		m_combo_concept.setItems(FieldDataHelper.getConcepts());
 		
-		fielddata = FieldDataHelper.getConcepts();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getConcepts();
+			
+			if(fielddata.length == 0){
+				m_combo_concept.setEnabled(false);
+				label_concept.setEnabled(false);
+			}
+			else{
+				m_combo_concept.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_concept.setEnabled(false);
 			label_concept.setEnabled(false);
-		}
-		else{
-			m_combo_concept.setItems(fielddata);
-		}
-
+		}	
+		
 		
 //		Technology
 		Label label_technology = toolkit.createLabel(sectionClient, "Technology");
 		label_technology.setForeground(toolkit.getColors().getColor(FormColors.TITLE));
 		m_combo_technology = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_technology.setLayoutData(gridData);
-		m_combo_technology.setItems(FieldDataHelper.getTechnology());
 
-		fielddata = FieldDataHelper.getTechnology();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getTechnology();
+			if(fielddata.length == 0){
+				m_combo_technology.setEnabled(false);
+				label_technology.setEnabled(false);
+			}
+			else{
+				m_combo_technology.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_technology.setEnabled(false);
 			label_technology.setEnabled(false);
-		}
-		else{
-			m_combo_technology.setItems(fielddata);
-		}
+		}	
+		
 		
 //		Date
 		Label label_date_from = toolkit.createLabel(sectionClient, "Date (from)");
@@ -314,33 +344,39 @@ public class FiatNewsSearchView extends ViewPart{
 		m_combo_source = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_source.setLayoutData(gridData);
 
-		fielddata = FieldDataHelper.getSources();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getSources();			
+			if(fielddata.length == 0){
+				m_combo_source.setEnabled(false);
+				label_source.setEnabled(false);
+			}
+			else{
+				m_combo_source.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_source.setEnabled(false);
 			label_source.setEnabled(false);
-		}
-		else{
-			m_combo_source.setItems(fielddata);
-		}
-		
+		}	
+			
 //		Language
 		Label label_language = toolkit.createLabel(sectionClient, "Language");
 		label_language.setForeground(toolkit.getColors().getColor(FormColors.TITLE));
 		m_combo_language = new Combo(sectionClient, SWT.DROP_DOWN);
 		m_combo_language.setLayoutData(gridData);
-		m_combo_language.setItems(FieldDataHelper.getLanguages());
 
-		fielddata = FieldDataHelper.getLanguages();	
-		
-		if(fielddata.length == 0){
+		try {
+			fielddata = FieldDataHelper.getLanguages();
+			if(fielddata.length == 0){
+				m_combo_language.setEnabled(false);
+				label_language.setEnabled(false);
+			}
+			else{
+				m_combo_language.setItems(fielddata);
+			}
+		} catch (Exception e1) {
 			m_combo_language.setEnabled(false);
 			label_language.setEnabled(false);
-		}
-		else{
-			m_combo_language.setItems(fielddata);
-		}
-		
+		}		
 	}
 
 	private void createButtonSection(Composite editorComposite, FormToolkit toolkit){
@@ -417,7 +453,7 @@ public class FiatNewsSearchView extends ViewPart{
 		private static Logger s_log = Logger.getLogger(GraphViewer.class.getCanonicalName());
 		
 		
-		private static List<String> getMemberIndividuals(String concept_uri){
+		private static List<String> getMemberIndividuals(String concept_uri) throws Exception{
 			
 			List<String> members = new ArrayList<String>();
 			IDaoManager daoManager = PersistenceUtil.getDaoManager();
@@ -445,7 +481,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return members;
 		}
 			
-		private static String[] getMarkets(){
+		private static String[] getMarkets() throws Exception{
 
 			if(s_markets == null){				
 				s_markets = new ArrayList<String>();			
@@ -455,7 +491,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_markets.toArray(new String[0]);
 		}
 
-		private static String[] getSegments(){
+		private static String[] getSegments() throws Exception{
 
 			if(s_segments == null){				
 				s_segments = new ArrayList<String>();			
@@ -465,7 +501,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_segments.toArray(new String[0]);
 		}
 		
-		private static String[] getTechnology(){
+		private static String[] getTechnology() throws Exception{
 			
 			if(s_technology == null){
 				s_technology = new ArrayList<String>();
@@ -475,7 +511,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_technology.toArray(new String[0]);
 		}
 		
-		private static String[] getLanguages(){
+		private static String[] getLanguages() throws Exception{
 			
 			if(s_languages == null){
 				s_languages = new ArrayList<String>();
@@ -486,7 +522,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_languages.toArray(new String[0]);
 		}
 		
-		private static String[] getMakers(){
+		private static String[] getMakers() throws Exception{
 			
 			if(s_makers == null){
 				s_makers = new ArrayList<String>();
@@ -496,7 +532,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_makers.toArray(new String[0]);
 		}
 		
-		private static String[] getModels(){
+		private static String[] getModels() throws Exception{
 			
 			if(s_models == null){
 				s_models = new ArrayList<String>();
@@ -506,7 +542,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_models.toArray(new String[0]);
 		}
 		
-		private static String[] getConcepts(){
+		private static String[] getConcepts() throws Exception{
 			
 			if(s_concepts == null){
 				s_concepts = new ArrayList<String>();
@@ -517,7 +553,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_concepts.toArray(new String[0]);
 		}
 		
-		private static String[] getSources(){
+		private static String[] getSources() throws Exception{
 			
 			if(s_sources == null){
 				s_sources = new ArrayList<String>();
@@ -527,7 +563,7 @@ public class FiatNewsSearchView extends ViewPart{
 			return s_sources.toArray(new String[0]);
 		}
 		
-		private static String[] getStates(){
+		private static String[] getStates() throws Exception{
 			
 			if(s_state == null){
 				s_state = new ArrayList<String>();

@@ -66,9 +66,7 @@ public class ExplorePlugin extends AbstractUIPlugin {
 
 	//The shared instance.
 	private static ExplorePlugin s_plugin;
-
 	private static Map<String,IDataSource> s_datasources;
-
 	private static Logger s_log = Logger.getLogger(ExplorePlugin.class); 
 
 	public static Display s_Display = Display.getCurrent();
@@ -207,10 +205,11 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			//load ontology	
 			IOntology onto = null;
 			try {
-				if (provider instanceof ConnectionProvider)
+				if (provider instanceof ConnectionProvider) {
 					onto = provider.getConnection().loadOrCreateOntology(PropertyUtils.convertToMap(parameters));
-				else if (provider instanceof Kaon2ConnectionProvider)
+				} else if (provider instanceof Kaon2ConnectionProvider) {
 					onto = provider.getConnection().loadOntology(PropertyUtils.convertToMap(parameters));
+				}
 			} catch (DatasourceException e) {
 				e.printStackTrace();
 			} catch (MissingParameterException e) {
@@ -225,18 +224,20 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			
 			if (provider instanceof ConnectionProvider) {
 				
-				addFileToRepository(onto,PropertyUtils.convertToMap(parameters));
+				try {
+					addFileToRepository(onto,PropertyUtils.convertToMap(parameters));
+				} catch (MissingParameterException e1) {
+					e1.printStackTrace();
+				}
+				
 				SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
-//				sesame_factory.configure(PropertyUtils.convertToMap(parameters));
 				ISession session = null;
 				
 				try {
 					session = sesame_factory.openSession(provider.getConnection(), onto);
 				} catch (DatasourceException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (OpenSessionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				//set dao manager
@@ -251,45 +252,59 @@ public class ExplorePlugin extends AbstractUIPlugin {
 				PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
 			}
 			
-			
-			//TODO genericlly load datasources via reflection
-			//else if (provider instanceof Jena2ConnectionProvider || provider instanceof Ng4jConnectionProvider )
-			//	PersistenceUtil.s_daoManager = Jena2DaoManager.getInstance();
-
-			//set session factory
-			
 			ISessionFactory factory = SessionFactory.getInstance();
 			PersistenceUtil.setSessionFactory(factory); 
 			//open a new session with the ontology
 			try {
 				factory.openSession(provider.getConnection(),onto);
 			} catch (DatasourceException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (OpenSessionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			
+//			set resource and index locations ...
+			if(parameters.containsKey(ExploreEnvironment.RESOURCE_LOCATION)){
+				String location = parameters.getProperty(ExploreEnvironment.RESOURCE_LOCATION);
+				ExploreEnvironment.LocationHelper.setResourceLocation(location);
+			}
+			else{
+//				default value
+				String location = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1).toString()
+					+ ExploreEnvironment.DEFAULT_RESOURCE_LOCATION_SUFFIX;
+				ExploreEnvironment.LocationHelper.setResourceLocation(location);
+			}
+			if(parameters.containsKey(ExploreEnvironment.INDEX_LOCATION)){
+				String location = parameters.getProperty(ExploreEnvironment.INDEX_LOCATION);
+				ExploreEnvironment.LocationHelper.setIndexLocation(location);
+			}
+			else{
+//				default value
+				String location = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1).toString()
+					+ ExploreEnvironment.DEFAULT_RESOURCE_LOCATION_SUFFIX;
+				ExploreEnvironment.LocationHelper.setResourceLocation(location);
+			}
+						
 			return onto;
 		}
 	}
 	
-	private static void addFileToRepository(IOntology onto, Map<String, Object> parameters){
+	private static void addFileToRepository(IOntology onto, Map<String, Object> parameters) throws MissingParameterException{
 		
 		if(!parameters.containsKey(ExploreEnvironment.ONTOLOGY_FILE_PATH)) {
-			return;
+			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_PATH+" missing!");
 		}
 		
 		if(!parameters.containsKey(ExploreEnvironment.ONTOLOGY_FILE_NAME)) {
-			return;
+			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_NAME+" missing!");
 		}
 		
 		if(!parameters.containsKey(ExploreEnvironment.BASE_ONTOLOGY_URI)) {
-			return;
+			throw new MissingParameterException(ExploreEnvironment.BASE_ONTOLOGY_URI+" missing!");
 		}
 		
 		if(!parameters.containsKey(ExploreEnvironment.LANGUAGE)) {
-			return;
+			throw new MissingParameterException(ExploreEnvironment.LANGUAGE+" missing!");
 		}
 		
 //		Check whether or file already added to repository 
@@ -306,13 +321,12 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-		}
+		}	
 		
 		String filePath = (String)parameters.get(ExploreEnvironment.ONTOLOGY_FILE_PATH);
 		String baseUri = (String)parameters.get(ExploreEnvironment.BASE_ONTOLOGY_URI);
 		String language = (String)parameters.get(ExploreEnvironment.LANGUAGE);
-		
-		
+				
 //		File has not been added -> add it now
 		
 		try {
