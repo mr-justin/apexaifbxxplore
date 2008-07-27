@@ -222,5 +222,31 @@
                 toolbarPath="ExploreEditor"/>
        </editorContribution>
     </extension>
+    <extension
+          id="product"
+          point="org.eclipse.core.runtime.products">
+       <product
+             application="org.eclipse.ui.ide.workbench"
+             name="Explore">
+          <property
+                name="windowImages"
+                value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>
+          <property
+                name="startupForegroundColor"
+                value="008000"/>
+          <property
+                name="startupProgressRect"
+                value="0,280,400,15"/>
+          <property
+                name="startupMessageRect"
+                value="7,220,441,20"/>
+         <property 
+         		name="preferenceCustomization" 
+         		value="plugin_customization.ini"/>
+         <property 
+         		name="windowImages" 
+         		value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>		
+       </product>
+    </extension>
 
 </plugin>
