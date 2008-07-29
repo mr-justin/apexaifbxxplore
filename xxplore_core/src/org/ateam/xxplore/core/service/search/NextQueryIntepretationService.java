@@ -14,10 +14,10 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
-import org.aifb.xxplore.core.service.IServiceListener;
 import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.service.IServiceListener;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.WeightedPseudograph;
