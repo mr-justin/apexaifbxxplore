@@ -3,7 +3,7 @@ package org.ateam.xxplore.core.service.search;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
-import org.aifb.xxplore.core.service.labelizer.OntologySubLabel;
+import org.ateam.xxplore.core.service.labelizer.OntologySubLabel;
 
 public class WordIntersection {
 

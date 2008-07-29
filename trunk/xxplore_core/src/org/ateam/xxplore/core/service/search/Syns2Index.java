@@ -3,11 +3,11 @@ package org.ateam.xxplore.core.service.search;
 import java.io.*;
 import java.util.*;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.apache.lucene.analysis.*;
 import org.apache.lucene.analysis.standard.*;
 import org.apache.lucene.index.*;
 import org.apache.lucene.document.*;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.xmedia.oms.persistence.KbEnvironment;
 
 /**

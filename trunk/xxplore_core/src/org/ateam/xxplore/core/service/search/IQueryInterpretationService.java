@@ -2,7 +2,7 @@ package org.ateam.xxplore.core.service.search;
 
 import java.util.Collection;
 
-import org.aifb.xxplore.core.service.IService;
+import org.ateam.xxplore.core.service.IService;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.query.OWLPredicate;
 
