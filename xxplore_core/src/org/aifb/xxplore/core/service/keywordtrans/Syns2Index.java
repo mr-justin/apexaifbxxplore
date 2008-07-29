@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.query;
+package org.aifb.xxplore.core.service.keywordtrans;
 
 import java.io.*;
 import java.util.*;

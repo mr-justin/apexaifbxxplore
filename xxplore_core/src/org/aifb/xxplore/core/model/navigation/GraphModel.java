@@ -12,7 +12,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.service.query.KbEdge;
+import org.aifb.xxplore.core.service.keywordtrans.KbEdge;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.URIHelper;

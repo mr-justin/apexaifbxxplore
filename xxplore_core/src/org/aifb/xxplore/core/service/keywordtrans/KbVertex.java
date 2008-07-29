@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.query;
+package org.aifb.xxplore.core.service.keywordtrans;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.PriorityBlockingQueue;
 
-import org.aifb.xxplore.core.service.query.NextQueryIntepretationService.Cursor;
+import org.aifb.xxplore.core.service.keywordtrans.NextQueryIntepretationService.Cursor;
 import org.xmedia.oms.model.api.IResource;
 
 public class KbVertex implements KbElement{

@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.query;
+package org.aifb.xxplore.core.service.keywordtrans;
 
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.jgrapht.graph.DefaultEdge;
