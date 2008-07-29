@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.query;
+package org.aifb.xxplore.core.service.keywordtrans;
 
 /**
  * Copyright 2004 The Apache Software Foundation
