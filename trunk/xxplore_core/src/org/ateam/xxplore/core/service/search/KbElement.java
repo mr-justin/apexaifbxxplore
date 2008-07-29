@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.search;
+package org.ateam.xxplore.core.service.search;
 
 public interface KbElement {
 	
