@@ -17,10 +17,8 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
-//import net.didion.jwnl.JWNLException;
 
 import org.aifb.xxplore.core.ExploreEnvironment;
-//import org.aifb.xxplore.core.service.query.QueryInterpretationServiceExtent.KbEdge;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
