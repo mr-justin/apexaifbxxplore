@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.search;
+package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -35,6 +35,9 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
+import org.ateam.xxplore.core.service.search.KbEdge;
+import org.ateam.xxplore.core.service.search.KbElement;
+import org.ateam.xxplore.core.service.search.KbVertex;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.ILiteral;

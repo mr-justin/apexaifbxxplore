@@ -12,11 +12,11 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.service.search.KbEdge;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.URIHelper;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.service.search.KbEdge;
 import org.jgrapht.graph.SimpleDirectedGraph;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IDataProperty;

@@ -1,4 +1,4 @@
-package org.aifb.xxplore.core.service.search;
+package org.ateam.xxplore.core.service.search;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
