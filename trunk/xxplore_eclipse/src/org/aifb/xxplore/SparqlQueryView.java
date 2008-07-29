@@ -7,11 +7,11 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Stack;
-import org.aifb.xxplore.core.ExploreEnvironment;
+
 import org.aifb.xxplore.storedquery.Prefix;
 import org.aifb.xxplore.storedquery.Query;
-//import org.aifb.xxplore.model.ModelDefinitionContentProvider;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;

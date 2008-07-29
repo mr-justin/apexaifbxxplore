@@ -2,7 +2,8 @@ package org.aifb.xxplore.wizards;
 
 import java.io.File;
 import java.util.HashMap;
-import org.aifb.xxplore.core.ExploreEnvironment;
+
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.jface.wizard.WizardPage;
 import org.eclipse.swt.SWT;

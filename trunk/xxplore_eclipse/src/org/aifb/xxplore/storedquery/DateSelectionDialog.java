@@ -4,12 +4,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.aifb.xxplore.task.DatePickerPanel;
+import org.aifb.xxplore.task.DatePickerPanel.DateSelection;
 import org.eclipse.jface.dialogs.Dialog;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
-import org.aifb.xxplore.task.DatePickerPanel;
-import org.aifb.xxplore.task.DatePickerPanel.DateSelection;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;

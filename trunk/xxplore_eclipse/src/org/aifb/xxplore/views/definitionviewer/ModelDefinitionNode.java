@@ -1,15 +1,14 @@
 package org.aifb.xxplore.views.definitionviewer;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
 import org.aifb.xxplore.model.ModelDefinitionContentProvider;
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
 import org.eclipse.jface.action.IAction;
 import org.xmedia.oms.model.api.IResource;
 

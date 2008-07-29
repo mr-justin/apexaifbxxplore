@@ -1,7 +1,5 @@
 package org.aifb.xxplore.action;
 
-import org.aifb.xxplore.core.model.definition.EntityDefinition;
-import org.aifb.xxplore.core.model.definition.RelationDefinition;
 import org.aifb.xxplore.views.definitionviewer.CriterionNode;
 import org.aifb.xxplore.views.definitionviewer.DefinitionTupleObjectNode;
 import org.aifb.xxplore.views.definitionviewer.DefinitionTupleRelationNode;
@@ -9,6 +7,8 @@ import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.aifb.xxplore.views.definitionviewer.ObjectNode;
 import org.aifb.xxplore.views.definitionviewer.RelationNode;
 import org.aifb.xxplore.views.definitionviewer.SubjectNode;
+import org.ateam.xxplore.core.model.definition.EntityDefinition;
+import org.ateam.xxplore.core.model.definition.RelationDefinition;
 import org.eclipse.jface.action.Action;
 
 public class DeleteDefinitionViewNodeAction extends Action {

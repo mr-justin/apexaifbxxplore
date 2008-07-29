@@ -3,9 +3,6 @@ package org.aifb.xxplore.model;
 import java.util.List;
 
 import org.aifb.xxplore.StoredQueryView;
-import org.aifb.xxplore.TaskListView;
-import org.aifb.xxplore.core.service.datafiltering.DataFilteringService;
-import org.aifb.xxplore.core.service.datafiltering.ITaskPolicyDao;
 import org.aifb.xxplore.storedquery.StoredQueryList;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;

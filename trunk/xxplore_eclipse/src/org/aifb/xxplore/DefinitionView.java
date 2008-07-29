@@ -4,11 +4,12 @@ package org.aifb.xxplore;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import org.aifb.xxplore.core.ExploreEnvironment;
+
 import org.aifb.xxplore.model.ModelDefinitionContentProvider;
 import org.aifb.xxplore.model.ModelDefinitionLabelProvider;
 import org.aifb.xxplore.views.definitionviewer.DefinitionViewer;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.viewers.AbstractTreeViewer;

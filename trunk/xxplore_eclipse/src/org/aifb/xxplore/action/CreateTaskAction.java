@@ -1,14 +1,14 @@
 package org.aifb.xxplore.action;
 
 import org.aifb.xxplore.ExplorePlugin;
+import org.aifb.xxplore.TaskListView;
 import org.aifb.xxplore.task.ITaskListElement;
 import org.aifb.xxplore.task.TaskEditorInput;
 import org.aifb.xxplore.task.TaskListElement;
-import org.aifb.xxplore.TaskListView;
+import org.ateam.xxplore.core.service.datafiltering.Task;
 import org.eclipse.jface.action.Action;
 import org.eclipse.ui.IWorkbenchPage;
 import org.eclipse.ui.PartInitException;
-import org.aifb.xxplore.core.service.datafiltering.Task;
 
 public class CreateTaskAction extends Action {
 

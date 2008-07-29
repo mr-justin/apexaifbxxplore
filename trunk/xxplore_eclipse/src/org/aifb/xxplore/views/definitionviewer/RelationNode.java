@@ -5,13 +5,13 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.aifb.xxplore.action.DeleteDefinitionViewNodeAction;
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
-import org.aifb.xxplore.core.model.definition.IRelationDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.model.definition.RelationDefinition;
 import org.aifb.xxplore.model.ImageRegistry;
 import org.aifb.xxplore.model.ModelDefinitionContentProvider;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
+import org.ateam.xxplore.core.model.definition.IRelationDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.model.definition.RelationDefinition;
 import org.eclipse.jface.action.IAction;
 import org.eclipse.swt.graphics.Image;
 import org.xmedia.oms.model.api.IProperty;

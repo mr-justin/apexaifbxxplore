@@ -9,7 +9,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.aifb.xxplore.model.ConceptHierachyLabelProvider;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.IStructuredSelection;
@@ -25,11 +27,6 @@ import org.eclipse.swt.widgets.TreeItem;
 import org.eclipse.ui.ISelectionListener;
 import org.eclipse.ui.IWorkbenchPart;
 import org.eclipse.ui.part.ViewPart;
-
-
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.model.ConceptHierachyLabelProvider;
-
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.NamedConcept;
 

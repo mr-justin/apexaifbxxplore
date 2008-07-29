@@ -15,14 +15,13 @@ import org.eclipse.core.resources.IResourceVisitor;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;
-//import org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider;
+import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
 import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.IDataSource;
 import org.xmedia.oms.persistence.InvalidParameterException;
 import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.persistence.MissingParameterException;
 import org.xmedia.oms.persistence.OntologyLoadException;
-import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
 
 
 public class ExploreBuildVisitor implements IResourceVisitor {

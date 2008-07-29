@@ -3,6 +3,7 @@ package org.aifb.xxplore.views.graphviewer;
 
 import java.awt.event.MouseEvent;
 import java.util.Arrays;
+
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
@@ -10,13 +11,13 @@ import org.aifb.xxplore.action.CollapseNodeAction;
 import org.aifb.xxplore.action.ExpandNodeAction;
 import org.aifb.xxplore.action.GetDataTypesNodeAction;
 import org.aifb.xxplore.action.HideDataTypesNodeAction;
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.model.navigation.IGraphModel;
 import org.aifb.xxplore.model.IExploreEditorContentProvider;
 import org.aifb.xxplore.views.dnd.ElementTransfer;
 import org.aifb.xxplore.views.dnd.ExploreDragController;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.model.navigation.IGraphModel;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.ContentViewer;

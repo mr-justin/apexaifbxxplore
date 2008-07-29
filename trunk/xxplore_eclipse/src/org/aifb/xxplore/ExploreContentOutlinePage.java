@@ -4,10 +4,10 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.model.ElementContentProvider;
 import org.aifb.xxplore.model.ElementLabelProvider;
 import org.aifb.xxplore.views.dnd.ElementTransfer;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.SelectionChangedEvent;
 import org.eclipse.jface.viewers.StructuredSelection;

@@ -12,12 +12,12 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
 import org.aifb.xxplore.model.ModelDefinitionContentProvider;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.aifb.xxplore.shared.util.URIHelper;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.MultiStatus;

@@ -9,19 +9,20 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Stack;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.service.IService;
-import org.aifb.xxplore.core.service.query.KbElement;
-import org.aifb.xxplore.core.service.query.NextLuceneQueryService;
-import org.aifb.xxplore.core.service.query.NextQueryIntepretationService;
-import org.aifb.xxplore.core.service.query.QueryTranslationService;
 import org.aifb.xxplore.shared.util.URIHelper;
 import org.aifb.xxplore.storedquery.IQuery;
 import org.aifb.xxplore.storedquery.Prefix;
 import org.aifb.xxplore.storedquery.Query;
+import org.aifb.xxplore.views.definitionviewer.CheckboxDialog;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.aifb.xxplore.views.definitionviewer.ModelDefinitionNode;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.service.IService;
+import org.ateam.xxplore.core.service.search.KbElement;
+import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
+import org.ateam.xxplore.core.service.search.NextQueryIntepretationService;
+import org.ateam.xxplore.core.service.search.QueryTranslationService;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -36,7 +37,6 @@ import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
 import org.xmedia.oms.query.QueryWrapper;
 import org.xmedia.oms.query.Variable;
-import org.aifb.xxplore.views.definitionviewer.CheckboxDialog;
 
 
 

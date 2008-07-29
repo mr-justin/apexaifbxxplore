@@ -1,7 +1,7 @@
 package org.aifb.xxplore.views.definitionviewer;
 
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
 import org.aifb.xxplore.model.ModelDefinitionContentProvider;
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
 
 public abstract class DefinitionNode extends AbstractTreeNode {
 	

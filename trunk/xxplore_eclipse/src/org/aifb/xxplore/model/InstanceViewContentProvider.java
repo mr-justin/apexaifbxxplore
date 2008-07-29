@@ -7,11 +7,8 @@ import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.xmedia.oms.model.api.IIndividual;
-import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
-import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
-import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.PropertyMember;
 import org.xmedia.oms.query.ResourceTuple;
 

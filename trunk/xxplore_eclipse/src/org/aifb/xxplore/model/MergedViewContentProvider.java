@@ -8,15 +8,14 @@ import java.util.Observer;
 import java.util.Set;
 import java.util.TreeMap;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.misc.CommonSearchResultObservable;
 import org.aifb.xxplore.misc.ScoredDocumentITupleContainer;
-import org.aifb.xxplore.shared.util.ModelChangeEvent;
 import org.aifb.xxplore.views.MergedResultsViewer;
 import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.Hit;
 import org.apache.lucene.search.Hits;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.xmedia.oms.query.IQueryResult;

@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.aifb.xxplore.task.ITaskListElement;
-
 public class TaskList implements Serializable {
 
     private static final long serialVersionUID = 3618984485791021105L;

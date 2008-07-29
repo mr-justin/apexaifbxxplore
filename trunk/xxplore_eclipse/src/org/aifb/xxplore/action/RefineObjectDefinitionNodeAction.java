@@ -1,15 +1,8 @@
 package org.aifb.xxplore.action;
 
-import org.aifb.xxplore.core.model.definition.EntityDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.model.definition.RelationDefinition;
-import org.aifb.xxplore.model.ModelDefinitionContentProvider;
-import org.aifb.xxplore.views.definitionviewer.AbstractTreeNode;
 import org.aifb.xxplore.views.definitionviewer.CriterionNode;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.eclipse.jface.action.Action;
-import org.xmedia.oms.model.api.IResource;
-import org.xmedia.oms.model.impl.Property;
 
 public class RefineObjectDefinitionNodeAction extends Action {
 	

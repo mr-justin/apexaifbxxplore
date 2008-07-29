@@ -3,11 +3,11 @@ package org.aifb.xxplore;
 import java.util.Iterator;
 
 import org.aifb.xxplore.SparqlQueryView.SparqlHelper;
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.model.FactResultsContentProvider;
 import org.aifb.xxplore.model.FactResultsLabelProvider;
 import org.aifb.xxplore.storedquery.IQueryMetaFilter;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;

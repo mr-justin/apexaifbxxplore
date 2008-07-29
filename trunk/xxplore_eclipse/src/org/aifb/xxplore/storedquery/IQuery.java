@@ -5,8 +5,6 @@ import java.util.Date;
 import java.util.Set;
 import java.util.Stack;
 
-import org.xmedia.oms.model.api.INamedIndividual;
-
 public interface IQuery extends Serializable {
     
     public abstract String getPath();

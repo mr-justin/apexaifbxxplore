@@ -3,7 +3,7 @@ package org.aifb.xxplore.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ITableLabelProvider;

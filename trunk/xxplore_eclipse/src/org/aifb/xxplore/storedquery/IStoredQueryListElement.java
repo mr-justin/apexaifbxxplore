@@ -1,6 +1,5 @@
 package org.aifb.xxplore.storedquery;
 
-import org.aifb.xxplore.core.service.datafiltering.ITask;
 import org.eclipse.jface.resource.JFaceResources;
 import org.eclipse.swt.graphics.Color;
 import org.eclipse.swt.graphics.Font;

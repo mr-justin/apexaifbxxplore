@@ -3,7 +3,7 @@ package org.aifb.xxplore.views.graphviewer;
 import java.awt.event.MouseEvent;
 import java.util.Iterator;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.ExploreEnvironment;
 
 import prefuse.controls.ControlAdapter;
 import prefuse.util.ColorLib;

@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.StringTokenizer;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.views.graphviewer.GraphViewer;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
 import org.eclipse.jface.viewers.ISelectionProvider;

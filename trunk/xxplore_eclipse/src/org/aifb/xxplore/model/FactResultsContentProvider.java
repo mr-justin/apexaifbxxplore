@@ -3,13 +3,10 @@ package org.aifb.xxplore.model;
 
 import java.util.Date;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Set;
-
 
 import org.aifb.xxplore.DefinitionView;
 import org.aifb.xxplore.SparqlQueryView;
-import org.aifb.xxplore.shared.util.URIHelper;
 import org.aifb.xxplore.storedquery.IQueryMetaFilter;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -19,14 +16,14 @@ import org.eclipse.swt.widgets.TableColumn;
 import org.xmedia.oms.metaknow.ComplexProvenance;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedIndividual;
-import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.dao.IDaoManager;
 import org.xmedia.oms.query.IQueryEvaluator;
 import org.xmedia.oms.query.IQueryResult;
 import org.xmedia.oms.query.ITuple;
 import org.xmedia.oms.query.QueryResult;
-import org.xmedia.oms.query.QueryWrapper;import org.xmedia.oms.query.ResourceTuple;
+import org.xmedia.oms.query.QueryWrapper;
+import org.xmedia.oms.query.ResourceTuple;
 
 
 public class FactResultsContentProvider implements IStructuredContentProvider {

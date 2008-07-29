@@ -1,13 +1,14 @@
 package org.aifb.xxplore.misc;
 
 import java.util.Observable;
+
 import org.aifb.xxplore.DefinitionView;
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.service.query.NextLuceneQueryService;
 import org.apache.log4j.Logger;
 import org.apache.lucene.search.Hits;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
