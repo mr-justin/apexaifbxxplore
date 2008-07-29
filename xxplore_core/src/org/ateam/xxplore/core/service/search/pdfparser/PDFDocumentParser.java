@@ -1,4 +1,4 @@
-package org.ateam.xxplore.core.service.query.pdfparser;
+package org.ateam.xxplore.core.service.search.pdfparser;
 import java.io.File;
 import java.io.IOException;
 

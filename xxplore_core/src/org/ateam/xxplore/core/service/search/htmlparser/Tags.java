@@ -1,4 +1,4 @@
-package org.ateam.xxplore.core.service.query.htmlparser;
+package org.ateam.xxplore.core.service.search.htmlparser;
 
 /**
  * Copyright 2004 The Apache Software Foundation
