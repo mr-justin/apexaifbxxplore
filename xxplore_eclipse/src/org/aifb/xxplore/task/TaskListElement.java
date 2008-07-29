@@ -1,6 +1,6 @@
 package org.aifb.xxplore.task;
 
-import org.aifb.xxplore.core.service.datafiltering.ITask;
+import org.ateam.xxplore.core.service.datafiltering.ITask;
 import org.eclipse.swt.graphics.Image;
 
 public class TaskListElement implements ITaskListElement {

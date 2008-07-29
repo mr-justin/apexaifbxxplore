@@ -2,19 +2,20 @@ package org.aifb.xxplore.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.model.navigation.GraphModel;
-import org.aifb.xxplore.core.model.navigation.IGraphModel;
-import org.aifb.xxplore.core.service.IContentProviderService;
+
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.model.navigation.GraphModel;
+import org.ateam.xxplore.core.model.navigation.IGraphModel;
+import org.ateam.xxplore.core.service.IContentProviderService;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.Viewer;
 import org.xmedia.oms.model.api.IHierarchicalSchema;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IResource;
+
 import prefuse.data.Node;
-//import sun.rmi.runtime.GetThreadPoolAction;
 
 
 /**

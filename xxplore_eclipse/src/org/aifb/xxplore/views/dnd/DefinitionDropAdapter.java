@@ -1,9 +1,9 @@
 package org.aifb.xxplore.views.dnd;
 
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.viewers.TreeViewer;
 import org.eclipse.jface.viewers.ViewerDropAdapter;
 import org.eclipse.swt.dnd.DND;

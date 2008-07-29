@@ -1,11 +1,8 @@
 package org.aifb.xxplore.action;
 
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.model.ModelDefinitionContentProvider;
-import org.aifb.xxplore.views.definitionviewer.AbstractTreeNode;
-import org.aifb.xxplore.views.definitionviewer.DefinitionTupleObjectNode;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.aifb.xxplore.views.definitionviewer.ObjectNode;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
 import org.eclipse.jface.action.Action;
 
 public class CreateModelDefinitionAction extends Action {

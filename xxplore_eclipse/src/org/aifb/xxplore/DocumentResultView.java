@@ -2,11 +2,11 @@ package org.aifb.xxplore;
 
 import java.util.Iterator;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.service.query.NextLuceneQueryService;
 import org.aifb.xxplore.model.ResultViewContentProvider;
 import org.aifb.xxplore.views.DocumentResultsViewer;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;

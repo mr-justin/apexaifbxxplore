@@ -4,7 +4,7 @@ package org.aifb.xxplore.wizards;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.ResourcesPlugin;

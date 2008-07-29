@@ -1,8 +1,8 @@
 package org.aifb.xxplore.action;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.views.graphviewer.GraphControl;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.jface.action.Action;
 import org.xmedia.oms.model.api.IResource;
 

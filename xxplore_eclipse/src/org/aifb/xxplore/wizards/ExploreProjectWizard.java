@@ -1,9 +1,10 @@
 package org.aifb.xxplore.wizards;
 
 import java.io.IOException;
+
 import org.aifb.xxplore.ExplorePlugin;
 import org.aifb.xxplore.builder.ExploreNature;
-import org.aifb.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.IProject;
 import org.eclipse.core.resources.IProjectDescription;

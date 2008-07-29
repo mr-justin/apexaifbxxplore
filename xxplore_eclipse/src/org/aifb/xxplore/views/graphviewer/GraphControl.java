@@ -26,19 +26,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.IEntityDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition.DefinitionTuple;
-import org.aifb.xxplore.core.model.navigation.IGraphModel;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.IEntityDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition.DefinitionTuple;
+import org.ateam.xxplore.core.model.navigation.IGraphModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.awt.SWT_AWT;
 import org.eclipse.swt.graphics.Rectangle;
@@ -54,6 +53,7 @@ import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
+import org.xmedia.oms.query.Variable;
 
 import prefuse.Constants;
 import prefuse.Display;
@@ -95,7 +95,6 @@ import prefuse.visual.VisualGraph;
 import prefuse.visual.VisualItem;
 import prefuse.visual.expression.HoverPredicate;
 import prefuse.visual.expression.InGroupPredicate;
-import org.xmedia.oms.query.Variable;
 
 /**
  * Instances of this class provide a selectable user interface object

@@ -4,7 +4,8 @@ import java.awt.Graphics2D;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
-import org.aifb.xxplore.core.ExploreEnvironment;
+
+import org.ateam.xxplore.core.ExploreEnvironment;
 
 import prefuse.Constants;
 import prefuse.data.Edge;

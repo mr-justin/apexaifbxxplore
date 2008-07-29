@@ -1,6 +1,6 @@
 package org.aifb.xxplore.model;
 
-import org.aifb.xxplore.core.model.navigation.IGraphModel;
+import org.ateam.xxplore.core.model.navigation.IGraphModel;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 
 /**

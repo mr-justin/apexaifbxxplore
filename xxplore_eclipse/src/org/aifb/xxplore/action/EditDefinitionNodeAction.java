@@ -1,6 +1,5 @@
 package org.aifb.xxplore.action;
 
-import org.aifb.xxplore.model.ModelDefinitionContentProvider;
 import org.aifb.xxplore.views.definitionviewer.CriterionNode;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.eclipse.jface.action.Action;

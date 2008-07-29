@@ -2,7 +2,6 @@ package org.aifb.xxplore.views;
 
 import org.aifb.xxplore.model.ResultViewContentProvider;
 import org.apache.log4j.Logger;
-//import org.apache.lucene.search.Hits;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.ContentViewer;
 import org.eclipse.jface.viewers.ISelection;
@@ -15,7 +14,6 @@ import org.eclipse.swt.widgets.Table;
 import org.eclipse.swt.widgets.TableColumn;
 import org.eclipse.ui.forms.widgets.Form;
 import org.eclipse.ui.forms.widgets.FormToolkit;
-//import org.eclipse.ui.forms.widgets.TableWrapLayout;
 
 public class FactResultsViewer extends ContentViewer{
 

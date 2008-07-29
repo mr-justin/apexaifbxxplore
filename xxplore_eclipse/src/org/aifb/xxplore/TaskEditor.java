@@ -1,15 +1,14 @@
 package org.aifb.xxplore;
 
-import java.io.File;
 import java.util.Calendar;
 
-import org.aifb.xxplore.core.service.datafiltering.DataFilteringService;
-import org.aifb.xxplore.core.service.datafiltering.ITaskPolicyDao;
 import org.aifb.xxplore.model.ImageRegistry;
 import org.aifb.xxplore.model.TaskListViewContentProvider;
 import org.aifb.xxplore.task.DatePicker;
 import org.aifb.xxplore.task.ITaskListElement;
 import org.aifb.xxplore.task.TaskEditorInput;
+import org.ateam.xxplore.core.service.datafiltering.DataFilteringService;
+import org.ateam.xxplore.core.service.datafiltering.ITaskPolicyDao;
 import org.eclipse.core.runtime.IProgressMonitor;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.ISelectionChangedListener;
@@ -51,8 +50,6 @@ import org.eclipse.ui.forms.widgets.FormToolkit;
 import org.eclipse.ui.forms.widgets.ImageHyperlink;
 import org.eclipse.ui.forms.widgets.ScrolledForm;
 import org.eclipse.ui.forms.widgets.Section;
-import org.eclipse.ui.forms.widgets.TableWrapData;
-import org.eclipse.ui.forms.widgets.TableWrapLayout;
 import org.eclipse.ui.part.EditorPart;
 
 public class TaskEditor extends EditorPart {

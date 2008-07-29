@@ -2,13 +2,12 @@ package org.aifb.xxplore.model;
 
 import java.io.File;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.service.query.NextLuceneQueryService;
 import org.aifb.xxplore.views.DocumentResultsViewer;
-//import org.apache.log4j.Logger;
 import org.apache.lucene.search.Hits;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.Viewer;

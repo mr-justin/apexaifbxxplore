@@ -9,9 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ISaveParticipant;
 import org.eclipse.core.resources.ISavedState;

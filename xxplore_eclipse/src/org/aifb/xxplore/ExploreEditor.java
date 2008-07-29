@@ -4,15 +4,16 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
-import org.aifb.xxplore.core.ExploreEnvironment;
-import org.aifb.xxplore.core.model.definition.IModelDefinition;
-import org.aifb.xxplore.core.model.definition.ModelDefinition;
-import org.aifb.xxplore.core.service.KbContentProviderService;
+
 import org.aifb.xxplore.misc.CommonSearchResultObservable;
 import org.aifb.xxplore.model.ExploreEditorContentProvider;
 import org.aifb.xxplore.model.ExploreEditorLabelProvider;
 import org.aifb.xxplore.views.graphviewer.GraphViewer;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
+import org.ateam.xxplore.core.model.definition.IModelDefinition;
+import org.ateam.xxplore.core.model.definition.ModelDefinition;
+import org.ateam.xxplore.core.service.KbContentProviderService;
 import org.eclipse.core.resources.IFile;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
@@ -53,7 +54,7 @@ import org.eclipse.ui.views.properties.IPropertySheetPage;
 import org.eclipse.ui.views.properties.PropertySheet;
 import org.eclipse.ui.views.properties.PropertySheetPage;
 import org.xmedia.oms.model.impl.NamedConcept;
-import org.xmedia.oms.persistence.IDataSource ;
+import org.xmedia.oms.persistence.IDataSource;
 
 
 

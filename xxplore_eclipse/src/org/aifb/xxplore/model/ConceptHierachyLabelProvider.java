@@ -4,13 +4,9 @@
 package org.aifb.xxplore.model;
 
 
-import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.jface.viewers.ILabelProvider;
+import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
-
-import prefuse.data.Node;
-
-import org.aifb.xxplore.core.ExploreEnvironment;
 import org.xmedia.oms.model.api.IResource;
 
 

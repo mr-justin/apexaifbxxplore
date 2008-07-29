@@ -2,9 +2,6 @@ package org.aifb.xxplore.task;
 
 import java.io.File;
 
-import org.aifb.xxplore.task.TaskList;
-import org.aifb.xxplore.TaskListView;
-
 public class TaskListManager {
     	
     private File taskListFile;
