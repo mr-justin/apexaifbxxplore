@@ -232,20 +232,20 @@
                 name="windowImages"
                 value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>
           <property
-                name="startupForegroundColor"
-                value="008000"/>
-          <property
                 name="startupProgressRect"
-                value="0,280,400,15"/>
-          <property
-                name="startupMessageRect"
-                value="7,220,441,20"/>
+                value="0,230,300,15"/>
          <property 
          		name="preferenceCustomization" 
          		value="plugin_customization.ini"/>
          <property 
          		name="windowImages" 
-         		value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>		
+         		value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>
+         <property
+               name="startupForegroundColor"
+               value="008000"/>
+         <property
+               name="startupMessageRect"
+               value="7,210,441,20"/>		
        </product>
     </extension>
 
