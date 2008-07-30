@@ -3,7 +3,7 @@
 <plugin>
    <extension
          id="explore"
-         name="XMedia Explore"
+         name="org.aifb.xxplore.gui.explore"
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
@@ -50,9 +50,8 @@
             allowMultiple="false"
             category="org.aifb.xxplore.category"
             class="org.aifb.xxplore.DocumentResultView"
-            icon="icons/document_view.gif"
             id="org.aifb.xxplore.documentresultview"
-            name="DocumentView"/>
+            name="DocumentView"/> <!-- icon="icons/document_view.gif" -->
       <view
             allowMultiple="false"
             category="org.aifb.xxplore.category"
@@ -63,9 +62,8 @@
             allowMultiple="false"
             category="org.aifb.xxplore.category"
             class="org.aifb.xxplore.MergedResultView"
-            icon="icons/document_view.gif"
             id="org.aifb.xxplore.mergedresultview"
-            name="MergedResultView"/>
+            name="MergedResultView"/> <!-- icon="icons/document_view.gif" -->
       <view
             allowMultiple="false"
             category="org.aifb.xxplore.category"
@@ -189,6 +187,7 @@
              id="org.aifb.xxplore.category"
              name="Explore"/>
     </extension>
+    <!--
     <extension
           id="org.aifb.xxplore.preferences"
           name="Explore Preferences"
@@ -199,6 +198,7 @@
              id="XXplore explore.page1"
              name="XXplore explore.page1"/>
     </extension>
+    -->
     <extension
           point="org.eclipse.ui.editorActions">
        <editorContribution
@@ -223,30 +223,23 @@
        </editorContribution>
     </extension>
     <extension
-          id="product"
+          id="explore"
           point="org.eclipse.core.runtime.products">
        <product
-             application="org.eclipse.ui.ide.workbench"
+             application="org.aifb.xxplore.gui.explore"
              name="Explore">
           <property
                 name="windowImages"
                 value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>
           <property
+                name="startupForegroundColor"
+                value="008000"/>
+          <property
                 name="startupProgressRect"
                 value="0,230,300,15"/>
-         <property 
-         		name="preferenceCustomization" 
-         		value="plugin_customization.ini"/>
-         <property 
-         		name="windowImages" 
-         		value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>
-         <property
-               name="startupForegroundColor"
-               value="008000"/>
-         <property
-               name="startupMessageRect"
-               value="7,210,441,20"/>		
+          <property
+                name="startupMessageRect"
+                value="7,210,441,20"/>
        </product>
     </extension>
-
 </plugin>
