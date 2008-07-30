@@ -1,12 +1,11 @@
 package org.aifb.xxplore;
 
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.eclipse.ui.application.IWorkbenchWindowConfigurer;
 import org.eclipse.ui.application.WorkbenchAdvisor;
 import org.eclipse.ui.application.WorkbenchWindowAdvisor;
 
 public class ExploreWorkbenchAdvisor extends WorkbenchAdvisor {
-
-	private static final String PERSPECTIVE_ID = "org.aifb.xxplore.exploreperspective";
 
 	public WorkbenchWindowAdvisor createWorkbenchWindowAdvisor(
 			IWorkbenchWindowConfigurer configurer) {
@@ -14,7 +13,7 @@ public class ExploreWorkbenchAdvisor extends WorkbenchAdvisor {
 	}
 
 	public String getInitialWindowPerspectiveId() {
-		return PERSPECTIVE_ID;
+		return ExploreEnvironment.DEFAULT_START_PERSPECTIVE;
 	}
 
 }

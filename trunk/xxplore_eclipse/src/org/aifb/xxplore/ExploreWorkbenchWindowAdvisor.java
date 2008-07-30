@@ -22,6 +22,6 @@ public class ExploreWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 		configurer.setInitialSize(new Point(700, 600));
 		configurer.setShowCoolBar(false);
 		configurer.setShowStatusLine(false);
-		configurer.setTitle("XMedia -Explore! Plugin");
+		configurer.setTitle("XMedia - Explore! Plugin");
 	}
 }
