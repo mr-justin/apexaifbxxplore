@@ -152,6 +152,7 @@ public class ExploreEnvironment {
 	
 	public static final String DEFAULT_RESOURCE_LOCATION_SUFFIX = "/XXplore_core/res";
 	
+	public static final String DEFAULT_START_PERSPECTIVE = "org.aifb.xxplore.explorestandardperspective";
 	
 	public static class LocationHelper{
 		
