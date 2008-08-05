@@ -1,0 +1,234 @@
+- August, 2008
+- Version 1.0.0
+
+///////////////////////////////////////////////////
+///////////// HOW TO EXPORT EXPLORE ///////////////
+///////////////////////////////////////////////////
+
+
+
+
+
+
+1.) ~~~~~~~ USED RESOURCES ~~~~~~~
+http://www.ibm.com/developerworks/library/os-eclipse-brand/index.html
+(visited: August 08)
+http://www.vogella.de/articles/RichClientPlatform/article.html#makingaproduct
+(visited: August 08)
+http://www.eclipsezone.com/eclipse/forums/c5605.html
+(visited: August 08)
+
+
+2.) ~~~~~~~ MAKE PRODUCT ~~~~~~~
+Follow the instructions of one the above resources to create a product definition. 
+So far, this should be pretty straight forward.
+
+Important: after setting up a product definition, test it by using 'Launch the Product' or
+'Launch the Product in debug mode'.
+
+
+3.) ~~~~~~~ EXPORT PRODUCT ~~~~~~~
+
+3.1 Use the 'Eclipse Product Export Wizard'
+
+In theory, you should be able to export the product, simply by using the 'Eclipse Product
+Export Wizard'. However, I did run into several problems. The the following, I'll try to outline
+a solution.
+
+3.2 Problems and Solutions
+
+a)Manifest: have a look at each plugin manifest. Note, I did attach one of my build.properties
+and manifest.mf files in the appendix (Plugin 'OMS').
+ 
+- runtime tab:
+    * classpath: include the needed libraries aswell as a '.'.
+    * exported packages: select the packages needed by other plugins. I found it useful
+      to only(!) export packages from the plugin itself, i.e. no (!) packages from used
+      libraries. (Otherwise I got some LinkageErrors - http://java.sun.com/j2se/1.4.2/docs/api/java/lang/LinkageError.html).    
+
+- build tab:
+    * binary build/source build: include your libraries and the META-INF
+    * extra classpath entries: include your libraries
+
+- build.properties: have a look for warnings/errors > fix them
+
+- build: have a look for warnings/errors > fix them
+
+- dependencies:
+    * required plugins: add required plugins. Run 'Find unused dependencies' (remove them) 
+      aswell as 'Look for cycles in the dependency graph' (remove them). Important: 
+      I ran into problems when trying to reexport a plugin, so you may want 
+      to uncheck this box.
+      
+- overview:
+    * general information: make sure ID/version/name is provided; uncheck the option 'Activate this
+     plugin when one of its classes is loaded'.
+    * exporting: run 'organize manifest wizard', it just might help.
+
+
+b) Debugging help
+
+- Compilation errors: 
+(You did run the eclipse export wizard and got some compilation errors.)
+
+    * There should be a folder for each plugin. Have a close look at the log files!
+      Warnings you may ignore for now, errors, however, you have to fix. I ran into
+      dozens of 'import not resolved' errors - if you do, too, have a close look at 
+      your runtime/build configuration(s).
+      
+- Some other strange errors, e.g. 'No application id has been found.'
+(You did manage to compile it, but it's not starting.)
+
+    * Chances are good (no matter the exception), you don't have all needed plugins
+      selected in 'your_product > configuration'. Note, for me the 'add required plugins'
+      functions was not working properly. So, you might want to check the selected 
+      plugins in your launch configuration.
+      In the appendix, I did attach my product configuration. Note, you might need
+      other plugins by now, since XXPlore might have changed.
+      
+    * Also, for debugging purposes, you might want to launch your 'XXPlore.exe' from
+      command with the following parameters:
+      
+       XXPlore -consoleLog -noExit -console
+       
+       This way, once XXPlore has crashed, you are able to use the ogsi prompt. Type
+       in 'help' to get an overview of the available commands. In particular, I did
+       use the 'ss' command to display the status of my plugins or start a plugin using the
+       'start x' function. See also, http://www.eclipsezone.com/forums/thread.jspa?messageID=92124802&#92124802
+       (visited: August 08).                   
+                      
+             
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+                                  APPENDIX:
+
+
+- build.properties (project OMS):
+--------------------------------------------------------- 
+      bin.includes = .,\
+                     lib/,\
+                     META-INF/
+      source.. = src/,\
+                 res/
+      jars.extra.classpath = lib/openrdf-model.jar,\
+                             lib/sparql-core.jar
+      src.includes = lib/,\
+                     META-INF/
+--------------------------------------------------------- 
+
+- manifest (project OMS):
+--------------------------------------------------------- 
+      Manifest-Version: 1.0
+      Bundle-ManifestVersion: 2
+      Bundle-Name: oms
+      Bundle-SymbolicName: org.xmedia.oms
+      Bundle-Version: 1.0.0
+      Bundle-Localization: plugin
+      Export-Package: 
+       org.xmedia.businessobject,
+       org.xmedia.oms.metaknow,
+       org.xmedia.oms.metaknow.rewrite,
+       org.xmedia.oms.model.api,
+       org.xmedia.oms.model.impl,
+       org.xmedia.oms.model.onto,
+       org.xmedia.oms.model.onto.car,
+       org.xmedia.oms.model.onto.metaknow,
+       org.xmedia.oms.model.onto.smw,
+       org.xmedia.oms.model.owl.api,
+       org.xmedia.oms.model.owl.impl,
+       org.xmedia.oms.persistence,
+       org.xmedia.oms.persistence.dao,
+       org.xmedia.oms.query
+      Bundle-ClassPath: lib/sparql-core.jar,
+       lib/openrdf-model.jar,
+       .
+      Require-Bundle: org.aifb.util
+---------------------------------------------------------
+
+- product.explore:
+---------------------------------------------------------
+      <?xml version="1.0" encoding="UTF-8"?>
+      <?pde version="3.1"?>
+      
+      <product name="product.explore" id="org.aifb.xxplore.gui.product" application="org.aifb.xxplore.gui.explore" useFeatures="false">
+      
+         <configIni use="default"/>
+      
+         <launcherArgs>
+            <programArgs>-consoleLog</programArgs>
+            <vmArgs>-Xmx256m</vmArgs>
+         </launcherArgs>
+      
+         <windowImages i16="/XXplore_eclipse/icons/xxplore_window_16x16.gif" i32="/XXplore_eclipse/icons/xxplore_window_32x32.gif" i48="/XXplore_eclipse/icons/xxplore_window_48x48.gif" i64="/XXplore_eclipse/icons/xxplore_window_64x64.gif" i128="/XXplore_eclipse/icons/xxplore_window_128x128.gif"/>
+      
+         <splash
+            location="org.aifb.xxplore.gui"
+            startupProgressRect="0,230,300,15"
+            startupMessageRect="7,210,441,20"
+            startupForegroundColor="008000" />
+         <launcher name="XXPlore">
+            <solaris/>
+            <win useIco="true">
+               <ico path="/XXplore_eclipse/icons/xxplore.ico"/>
+               <bmp/>
+            </win>
+         </launcher>
+      
+         <plugins>
+            <plugin id="com.ibm.icu"/>
+            <plugin id="com.ibm.icu.source"/>
+            <plugin id="com.ibm.icu34.data.update" fragment="true"/>
+            <plugin id="org.aifb.util"/>
+            <plugin id="org.aifb.xxplore.gui"/>
+            <plugin id="org.aifb.xxplore.standard"/>
+            <plugin id="org.apache.log4j"/>
+            <plugin id="org.apache.xerces"/>
+            <plugin id="org.apache.xml.resolver"/>
+            <plugin id="org.eclipse.ant.core"/>
+            <plugin id="org.eclipse.core.boot"/>
+            <plugin id="org.eclipse.core.commands"/>
+            <plugin id="org.eclipse.core.contenttype"/>
+            <plugin id="org.eclipse.core.expressions"/>
+            <plugin id="org.eclipse.core.filebuffers"/>
+            <plugin id="org.eclipse.core.filesystem"/>
+            <plugin id="org.eclipse.core.filesystem.win32.x86" fragment="true"/>
+            <plugin id="org.eclipse.core.jobs"/>
+            <plugin id="org.eclipse.core.resources"/>
+            <plugin id="org.eclipse.core.resources.compatibility" fragment="true"/>
+            <plugin id="org.eclipse.core.resources.win32" fragment="true"/>
+            <plugin id="org.eclipse.core.runtime"/>
+            <plugin id="org.eclipse.core.runtime.compatibility"/>
+            <plugin id="org.eclipse.core.runtime.compatibility.auth"/>
+            <plugin id="org.eclipse.core.runtime.compatibility.registry" fragment="true"/>
+            <plugin id="org.eclipse.core.variables"/>
+            <plugin id="org.eclipse.equinox.common"/>
+            <plugin id="org.eclipse.equinox.preferences"/>
+            <plugin id="org.eclipse.equinox.registry"/>
+            <plugin id="org.eclipse.help"/>
+            <plugin id="org.eclipse.jface"/>
+            <plugin id="org.eclipse.jface.databinding"/>
+            <plugin id="org.eclipse.jface.text"/>
+            <plugin id="org.eclipse.osgi"/>
+            <plugin id="org.eclipse.swt"/>
+            <plugin id="org.eclipse.swt.win32.win32.x86" fragment="true"/>
+            <plugin id="org.eclipse.text"/>
+            <plugin id="org.eclipse.ui"/>
+            <plugin id="org.eclipse.ui.forms"/>
+            <plugin id="org.eclipse.ui.ide"/>
+            <plugin id="org.eclipse.ui.navigator"/>
+            <plugin id="org.eclipse.ui.navigator.resources"/>
+            <plugin id="org.eclipse.ui.views"/>
+            <plugin id="org.eclipse.ui.views.properties.tabbed"/>
+            <plugin id="org.eclipse.ui.win32" fragment="true"/>
+            <plugin id="org.eclipse.ui.workbench"/>
+            <plugin id="org.eclipse.ui.workbench.texteditor"/>
+            <plugin id="org.eclipse.update.configurator"/>
+            <plugin id="org.eclipse.update.core"/>
+            <plugin id="org.eclipse.update.core.win32" fragment="true"/>
+            <plugin id="org.eclipse.update.ui"/>
+            <plugin id="org.xmedia.oms"/>
+            <plugin id="org.xmedia.oms.adapter.kaon2"/>
+            <plugin id="org.xmedia.oms.adapter.sesame2"/>
+         </plugins>
+      
+      </product>
+--------------------------------------------------------- 
