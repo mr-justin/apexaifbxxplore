@@ -21,7 +21,7 @@ public class ExploreActionBarAdvisor extends ActionBarAdvisor {
 	// in the fill methods. This ensures that the actions aren't recreated
 	// when fillActionBars is called with FILL_PROXY.
 	private IWorkbenchAction exitAction;
-	private IWorkbenchAction openAction;
+//	private IWorkbenchAction openAction;
 	private IWorkbenchAction refreshAction;
 	private IWorkbenchAction closeAction;
 
@@ -36,7 +36,7 @@ public class ExploreActionBarAdvisor extends ActionBarAdvisor {
 		// file.
 		// Registering also provides automatic disposal of the actions when
 		// the window is closed.
-		openAction = ActionFactory.OPEN_PERSPECTIVE_DIALOG.create(window);
+//		openAction = ActionFactory.OPEN_PERSPECTIVE_DIALOG.create(window);
 		refreshAction = ActionFactory.REFRESH.create(window);
 		closeAction = ActionFactory.CLOSE.create(window);
 		exitAction = ActionFactory.QUIT.create(window);
@@ -47,14 +47,14 @@ public class ExploreActionBarAdvisor extends ActionBarAdvisor {
 		MenuManager fileMenu = new MenuManager("&File",
 				IWorkbenchActionConstants.M_FILE);
 		menuBar.add(fileMenu);
-		fileMenu.add(openAction);
+//		fileMenu.add(openAction);
 		fileMenu.add(refreshAction);
 		fileMenu.add(closeAction);
 		fileMenu.add(exitAction);
 		
-		MenuManager helpMenu = new MenuManager("&Help",
-				IWorkbenchActionConstants.M_HELP);
-		menuBar.add(helpMenu);
+//		MenuManager helpMenu = new MenuManager("&Help",
+//				IWorkbenchActionConstants.M_HELP);
+//		menuBar.add(helpMenu);
 	}
 
 }
