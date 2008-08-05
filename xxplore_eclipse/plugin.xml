@@ -3,7 +3,7 @@
 <plugin>
    <extension
          id="explore"
-         name="org.aifb.xxplore.gui.explore"
+         name="Explore Plugin"
          point="org.eclipse.core.runtime.applications">
       <application>
          <run
@@ -80,14 +80,14 @@
         	allowMultiple="true"
        	  	category="org.aifb.xxplore.category"
          	class="org.aifb.xxplore.TaskListView"
-         	icon="icons/task-list.gif"
+         	icon="$nl$/icons/task-list.gif"
          	id="org.aifb.xxplore.tasklistview"
          	name="TaskListView"/>   
       <view
         	allowMultiple="true"
        	  	category="org.aifb.xxplore.category"
          	class="org.aifb.xxplore.StoredQueryView"
-         	icon="icons/task-list.gif"
+         	icon="$nl$/icons/task-list.gif"
          	id="org.aifb.xxplore.storedqueryview"
          	name="StoredQueryView"/>     	 
    </extension>
@@ -131,17 +131,17 @@
             class="org.aifb.xxplore.ExploreEditor"
             default="true"
             extensions="ods"
-            icon="icons/sample.gif"
+            icon="$nl$/icons/sample.gif"
             id="org.aifb.xxplore.exploreeditor"
             name="explore editor"/>
       <editor
             class="org.aifb.xxplore.TaskEditor"
-           	icon="icons/task.gif"
+           	icon="$nl$/icons/task.gif"
            	id="org.aifb.xxplore.taskeditor"
            	name="Task Editor"/>
       <editor
             class="org.aifb.xxplore.StoredQueryEditor"
-           	icon="icons/task.gif"
+           	icon="$nl$/icons/task.gif"
            	id="org.aifb.xxplore.storedqueryeditor"
            	name="StoredQuery Editor"/>
    </extension>
@@ -168,20 +168,26 @@
           name="xxplore.newWizards"
           point="org.eclipse.ui.newWizards">
        <wizard
+             canFinishEarly="false"
              category="org.aifb.xxplore.category"
              class="org.aifb.xxplore.wizards.ExploreProjectWizard"
+             hasPages="true"
+             icon="$nl$/icons/sample.gif"
              id="org.aifb.xxplore.newprojectwizard"
              name="ExploreProject Wizard"
-             preferredPerspectives="org.aifb.xxplore.exploreperspective"
+             preferredPerspectives="org.aifb.xxplore.explorestandardperspective"
              project="true">
           <description/>
        </wizard>
        <wizard
+             canFinishEarly="false"
              category="org.aifb.xxplore.category"
              class="org.aifb.xxplore.wizards.DataSourceWizard"
+             hasPages="true"
+             icon="$nl$/icons/repositories.gif"
              id="explore.newDataSourceWizard"
              name="DataSource Wizard"
-             preferredPerspectives="org.aifb.xxplore.exploreperspective"
+             preferredPerspectives="org.aifb.xxplore.explorestandardperspective"
              project="false"/>
        <category
              id="org.aifb.xxplore.category"
@@ -215,7 +221,7 @@
           -->
           <action
                 class="org.aifb.xxplore.action.ChangeLayoutAction"
-                icon="icons/lattice.png"
+                icon="$nl$/icons/lattice.png"
                 id="org.aifb.xxplore.exploreeditor.actions.changeLayoutActionID"
                 label="Change layout"
                 style="push"
@@ -223,11 +229,11 @@
        </editorContribution>
     </extension>
     <extension
-          id="explore"
+          id="product"
           point="org.eclipse.core.runtime.products">
        <product
              application="org.aifb.xxplore.gui.explore"
-             name="Explore">
+             name="product.explore">
           <property
                 name="windowImages"
                 value="icons/xxplore_window_16x16.gif,icons/xxplore_window_32x32.gif,icons/xxplore_window_48x48.gif,icons/xxplore_window_64x64.gif,icons/xxplore_window_128x128.gif"/>
