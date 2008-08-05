@@ -150,7 +150,7 @@ public class ExploreEnvironment {
 	
 	public static final String INDEX_LOCATION = "index.location";
 	
-	public static final String DEFAULT_RESOURCE_LOCATION_SUFFIX = "/XXplore_core/res";
+	public static final String DEFAULT_RESOURCE_LOCATION_SUFFIX = "/res";
 	
 	public static final String DEFAULT_START_PERSPECTIVE = "org.aifb.xxplore.explorestandardperspective";
 	
@@ -166,6 +166,14 @@ public class ExploreEnvironment {
 		private static String s_ResourceLocation;
 		private static String s_IndexLocation;
 		
+		
+		public static String getResourceLocation(){
+			return LocationHelper.s_ResourceLocation;
+		}
+		
+		public static String getIndexLocation(){
+			return LocationHelper.s_IndexLocation;
+		}
 		
 		public static void setResourceLocation(String location){
 			LocationHelper.s_ResourceLocation = location;
