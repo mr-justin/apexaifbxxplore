@@ -4,6 +4,12 @@
 package org.aifb.xxplore.model;
 
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.net.URL;
+
+import org.aifb.xxplore.ExplorePlugin;
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.viewers.ILabelProvider;
 import org.eclipse.jface.viewers.ILabelProviderListener;
 import org.eclipse.swt.graphics.Image;
@@ -29,9 +35,17 @@ public class ConceptHierachyLabelProvider implements ILabelProvider {
 	public void dispose() {
 	}
 
+	@SuppressWarnings("deprecation")
 	public Image getImage(Object element) {
-		return null;
+
+		URL relativeURL = Platform.getBundle(ExplorePlugin.PLUGIN_ID).getEntry("/");
+		try {
+			return new Image(null, new FileInputStream(Platform.resolve(relativeURL).getPath()+"/icons/concept.png"));
+		} catch (IOException e) {
+			return null;
+		}
 	}
+
 
 	public void addListener(ILabelProviderListener listener) {		
 	}
