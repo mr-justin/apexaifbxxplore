@@ -1,10 +1,8 @@
 package org.aifb.xxplore;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
@@ -25,10 +23,11 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
+import org.openrdf.repository.RepositoryException;
 import org.osgi.framework.BundleContext;
 import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
 import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
-import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
+import org.xmedia.accessknow.sesame.persistence.SesameConnection;
 import org.xmedia.accessknow.sesame.persistence.SesameSession;
 import org.xmedia.accessknow.sesame.persistence.SesameSessionFactory;
 import org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider;
@@ -202,67 +201,6 @@ public class ExplorePlugin extends AbstractUIPlugin {
 
 			provider.configure(parameters);
 
-			//load ontology	
-			IOntology onto = null;
-			try {
-				if (provider instanceof ConnectionProvider) {
-					onto = provider.getConnection().loadOrCreateOntology(PropertyUtils.convertToMap(parameters));
-				} else if (provider instanceof Kaon2ConnectionProvider) {
-					onto = provider.getConnection().loadOntology(PropertyUtils.convertToMap(parameters));
-				}
-			} catch (DatasourceException e) {
-				e.printStackTrace();
-			} catch (MissingParameterException e) {
-				e.printStackTrace();
-			} catch (InvalidParameterException e) {
-				e.printStackTrace();
-			} catch (OntologyCreationException e) {
-				e.printStackTrace();
-			} catch (OntologyLoadException e) {
-				e.printStackTrace();
-			}
-			
-			if (provider instanceof ConnectionProvider) {
-				
-				try {
-					addFileToRepository(onto,PropertyUtils.convertToMap(parameters));
-				} catch (MissingParameterException e1) {
-					e1.printStackTrace();
-				}
-				
-				SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
-				ISession session = null;
-				
-				try {
-					session = sesame_factory.openSession(provider.getConnection(), onto);
-				} catch (DatasourceException e) {
-					e.printStackTrace();
-				} catch (OpenSessionException e) {
-					e.printStackTrace();
-				}
-				//set dao manager
-				PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
-				
-				session.close();			
-			}
-			else if (provider instanceof Kaon2ConnectionProvider) {
-				ISessionFactory factory = SessionFactory.getInstance();
-				factory.configure(PropertyUtils.convertToMap(parameters));
-
-				PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
-			}
-			
-			ISessionFactory factory = SessionFactory.getInstance();
-			PersistenceUtil.setSessionFactory(factory); 
-			//open a new session with the ontology
-			try {
-				factory.openSession(provider.getConnection(),onto);
-			} catch (DatasourceException e) {
-				e.printStackTrace();
-			} catch (OpenSessionException e) {
-				e.printStackTrace();
-			}
-			
 //			set resource and index locations ...
 			if(parameters.containsKey(ExploreEnvironment.RESOURCE_LOCATION)){
 				String location = parameters.getProperty(ExploreEnvironment.RESOURCE_LOCATION);
@@ -284,7 +222,84 @@ public class ExplorePlugin extends AbstractUIPlugin {
 					+ ExploreEnvironment.DEFAULT_RESOURCE_LOCATION_SUFFIX;
 				ExploreEnvironment.LocationHelper.setResourceLocation(location);
 			}
-						
+			
+			//load ontology	
+			IOntology onto = null;
+			SesameConnection ses_con = null;
+			try {
+				if (provider instanceof ConnectionProvider) {
+
+					try {
+						ses_con = new SesameConnection(ExploreEnvironment.LocationHelper.getResourceLocation());
+					} catch (RepositoryException e2) {
+						e2.printStackTrace();
+						ses_con = (SesameConnection)provider.getConnection();
+					}	
+
+					try {
+						onto = ses_con.loadOntology(PropertyUtils.convertToMap(parameters));
+					}
+					catch (OntologyLoadException e) {
+
+						onto = ses_con.createOntology(PropertyUtils.convertToMap(parameters));
+
+						try {
+							addFileToRepository(onto,PropertyUtils.convertToMap(parameters));
+						} catch (MissingParameterException e1) {
+							e1.printStackTrace();
+						}
+					}
+				
+				} else if (provider instanceof Kaon2ConnectionProvider) {
+					onto = provider.getConnection().loadOntology(PropertyUtils.convertToMap(parameters));
+				}
+			} catch (DatasourceException e) {
+				e.printStackTrace();
+			} catch (MissingParameterException e) {
+				e.printStackTrace();
+			} catch (InvalidParameterException e) {
+				e.printStackTrace();
+			} catch (OntologyCreationException e) {
+				e.printStackTrace();
+			} catch (OntologyLoadException e) {
+				e.printStackTrace();
+			}
+			
+			if (provider instanceof ConnectionProvider) {
+					
+				SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
+				ISession session = null;
+				
+				try {
+					session = sesame_factory.openSession(ses_con, onto);
+				} catch (DatasourceException e) {
+					e.printStackTrace();
+				} catch (OpenSessionException e) {
+					e.printStackTrace();
+				}
+				//set dao manager
+				PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
+				
+				session.close();			
+			}
+			else if (provider instanceof Kaon2ConnectionProvider) {
+				ISessionFactory factory = SessionFactory.getInstance();
+				factory.configure(PropertyUtils.convertToMap(parameters));
+
+				PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
+			}
+			
+			ISessionFactory factory = SessionFactory.getInstance();
+			PersistenceUtil.setSessionFactory(factory); 
+			//open a new session with the ontology
+			try {
+				factory.openSession(ses_con,onto);
+			} catch (DatasourceException e) {
+				e.printStackTrace();
+			} catch (OpenSessionException e) {
+				e.printStackTrace();
+			}
+									
 			return onto;
 		}
 	}
@@ -307,28 +322,10 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			throw new MissingParameterException(ExploreEnvironment.LANGUAGE+" missing!");
 		}
 		
-//		Check whether or file already added to repository 
-		
-		File repositoryDir = new File(SesameRepositoryFactory.REPO_PATH_DEFAULT);
-		String path = repositoryDir.getAbsolutePath()+"/"+parameters.get(ExploreEnvironment.ONTOLOGY_FILE_NAME)+"_added";
-		boolean already_added = Arrays.asList(repositoryDir.list()).contains(parameters.get(ExploreEnvironment.ONTOLOGY_FILE_NAME)+"_added");
-		
-		if(already_added) {
-			return;
-		} else{
-			try {
-				(new File(path)).createNewFile();
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}	
-		
 		String filePath = (String)parameters.get(ExploreEnvironment.ONTOLOGY_FILE_PATH);
 		String baseUri = (String)parameters.get(ExploreEnvironment.BASE_ONTOLOGY_URI);
 		String language = (String)parameters.get(ExploreEnvironment.LANGUAGE);
 				
-//		File has not been added -> add it now
-		
 		try {
 			onto.importOntology(language, baseUri, new FileReader(filePath));
 		} 
