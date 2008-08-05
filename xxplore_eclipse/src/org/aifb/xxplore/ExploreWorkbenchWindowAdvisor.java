@@ -18,10 +18,15 @@ public class ExploreWorkbenchWindowAdvisor extends WorkbenchWindowAdvisor {
 	}
 
 	public void preWindowOpen() {
+		
 		IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+		
 		configurer.setInitialSize(new Point(700, 600));
 		configurer.setShowCoolBar(false);
 		configurer.setShowStatusLine(false);
+		configurer.setShowFastViewBars(true);
+		configurer.setShowStatusLine(true);
+		configurer.setShowPerspectiveBar(true);
 		configurer.setTitle("XMedia - Explore! Plugin");
 	}
 }
