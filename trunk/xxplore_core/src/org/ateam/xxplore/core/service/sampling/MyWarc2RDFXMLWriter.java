@@ -10,11 +10,15 @@ import it.unimi.dsi.law.warc.io.WarcRecord;
 import it.unimi.dsi.law.warc.util.BURL;
 import it.unimi.dsi.law.warc.util.WarcHttpResponse;
 
+import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.net.URI;
 
+import org.apache.commons.lang.StringUtils;
 import org.openrdf.model.Statement;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.repository.Repository;
@@ -25,13 +29,10 @@ import org.openrdf.rio.RDFHandlerException;
 import org.openrdf.rio.RDFParseException;
 import org.openrdf.rio.helpers.RDFHandlerBase;
 import org.openrdf.rio.ntriples.NTriplesParser;
+import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.sail.memory.MemoryStore;
 
-
-/**
- * 
- */
-public class MyWarcReader {
+public class MyWarc2RDFXMLWriter {
 	
 	private FastBufferedInputStream in;
 	private GZWarcRecord record;
@@ -43,6 +44,11 @@ public class MyWarcReader {
 	private NTriplesParser parser;
 	private CountHandler countHandler;
 	
+	private BufferedWriter bw;
+	private RDFXMLWriter writer;
+	
+	private String targetDirectory;
+	
 	private int urlCount = 0;
 	private int maxUrlCount = -1; 
 	private String currentUrl = "";
@@ -51,14 +57,11 @@ public class MyWarcReader {
 	private int lineCountAllUrls = 0;
 	private int lineCountThisUrl = 0;
 
-	private Repository myRepository;
-	private RepositoryConnection connection;
-	
 	private static String sourceDir = "D:\\watson.warc";
-	private static String repositoryDir = "D:\\sampling\\repository\\WARC";
+	private static String targetDir = "D:\\watson\\";
 	private static int urls = 5;
 	
-	public MyWarcReader(String sourceDir, String repositoryDir) {
+	public MyWarc2RDFXMLWriter(String sourceDir, String targetDir) {
 		try {
 			in = new FastBufferedInputStream(new FileInputStream(new File(sourceDir)));
 			record = new GZWarcRecord();
@@ -68,21 +71,16 @@ public class MyWarcReader {
 			parser = new NTriplesParser();
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
-			myRepository = new SailRepository(new MemoryStore(new File(repositoryDir)));
-			myRepository.initialize();
-			connection = myRepository.getConnection();
-			factory = myRepository.getValueFactory();
+			targetDirectory = targetDir;
+			new File(targetDir).mkdirs();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		} 
 	}
 	
-	public MyWarcReader(String sourceDir, String repositoryDir, int maxUrlCount) throws FileNotFoundException, RepositoryException{
-		this(sourceDir, repositoryDir);
+	public MyWarc2RDFXMLWriter(String sourceDir, String targetDir, int maxUrlCount) throws FileNotFoundException, RepositoryException{
+		this(sourceDir, targetDir);
 		this.maxUrlCount = maxUrlCount;
 	}
 	
@@ -92,13 +90,13 @@ public class MyWarcReader {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		MyWarcReader reader = new MyWarcReader(sourceDir, repositoryDir, urls);
+		MyWarc2RDFXMLWriter writer = new MyWarc2RDFXMLWriter(sourceDir, targetDir, urls);
 		try {
-			while (reader.hasNext() && ((reader.getUrlCount() < reader.getMaxUrlCount()) || (reader.getMaxUrlCount() == -1))) {
-				WarcRecord nextRecord = reader.next();
+			while (writer.hasNext() && ((writer.getUrlCount() < writer.getMaxUrlCount()) || (writer.getMaxUrlCount() == -1))) {
+				WarcRecord nextRecord = writer.next();
 				// Get the HttpResponse
 				try {
-					reader.getResponse().fromWarcRecord(nextRecord);
+					writer.getResponse().fromWarcRecord(nextRecord);
 
 					// This will dump the content of the record
 //					reader.dumpContent(reader.getResponse().contentAsStream());
@@ -107,11 +105,11 @@ public class MyWarcReader {
 //					System.out.println("lineCount all Urls: " + lineCountAllUrls);
 
 					// This will count the number of triples by parsing the RDF
-					reader.parseTriples(reader.getResponse().contentAsStream(), nextRecord.header.subjectUri.toString());
-					System.out.println("urlCount: " + reader.getUrlCount());
+					writer.parseTriples(writer.getResponse().contentAsStream(), nextRecord.header.subjectUri.toString());
+					System.out.println("urlCount: " + writer.getUrlCount());
 					System.out.println("Processing Url: " + nextRecord.header.subjectUri);
-					System.out.println("tripleCount for this Url: " + reader.getTripleCountThisUrl());
-					System.out.println("tripleCount for all Urls: " + reader.getTripleCountAllUrls());
+					System.out.println("tripleCount for this Url: " + writer.getTripleCountThisUrl());
+					System.out.println("tripleCount for all Urls: " + writer.getTripleCountAllUrls());
 
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -120,7 +118,7 @@ public class MyWarcReader {
 			}
 		} catch (RuntimeException re) {}
 		finally {
-			reader.close();
+			writer.close();
 		}
 	}
 
@@ -158,15 +156,10 @@ public class MyWarcReader {
 	
 	public void close() {
 		try {
-			if(connection != null)
-				connection.close();
-			if(myRepository != null)
-				myRepository.shutDown();
 			if(in != null)
 				in.close();
-		} catch (RepositoryException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			if(bw != null)
+				bw.close();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -203,28 +196,54 @@ public class MyWarcReader {
 		}
 	}
 
+	private static String fsTransduceUri(String uri) {
+
+		uri = StringUtils.replace(uri, ":", "COLON");
+		uri = StringUtils.replace(uri, "/", "SLASH");
+		uri = StringUtils.replace(uri, "#", "SHARP");
+
+		return uri;
+	}
+	
 	public class CountHandler extends RDFHandlerBase {
 
 		private int count = 0;
 		
 		public void endRDF() throws RDFHandlerException {
 			super.endRDF();
+			writer.endRDF();
 			// System.out.println("Counted " + count + " statements.");
 		}
 
 		public void handleStatement(Statement st) {
 			try {
-				connection.add(st, factory.createURI(currentUrl));
-				System.out.println(st);
-			} catch (RepositoryException e) {
+				writer.handleStatement(st);
+			} catch (RDFHandlerException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			System.out.println(st);
 			count++;
 		}
 
 		public void startRDF() throws RDFHandlerException {
 			super.startRDF();
+			if (bw != null) {
+				try {
+					bw.close();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}	
+			try {
+				bw = new BufferedWriter(new FileWriter(targetDirectory + fsTransduceUri(currentUrl) + ".rdf"));
+				writer = new RDFXMLWriter(bw);
+				writer.startRDF();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			count = 0;
 		}
 
@@ -243,5 +262,5 @@ public class MyWarcReader {
 			return "true";
 		}
 	}
-	
+
 }
