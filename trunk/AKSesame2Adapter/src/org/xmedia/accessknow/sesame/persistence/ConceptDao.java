@@ -18,6 +18,7 @@ import org.xmedia.accessknow.sesame.persistence.converter.Ses2AK;
 import org.xmedia.accessknow.sesame.persistence.converter.AK2Ses;
 import org.xmedia.businessobject.IBusinessObject;
 import org.xmedia.oms.model.api.IConcept;
+import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IProperty;
@@ -115,7 +116,7 @@ public class ConceptDao implements IConceptDao {
 		return findSuperconcepts(concept, session.isReasoningOn());
 	}
 
-	public Set<IConcept> findTypes(INamedIndividual individual)
+	public Set<IConcept> findTypes(IIndividual individual)
 			throws DatasourceException {
 		try {
 			RepositoryConnection conn = session.getRepositoryConnection();
@@ -148,7 +149,7 @@ public class ConceptDao implements IConceptDao {
 			return types;
 		} 
 		catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all types of an individual with a uri "+individual.getUri(), e);
+			throw new DatasourceException("Error occurred while retrieving all types of an individual with a uri "+individual.getLabel(), e);
 		}
 	}
 

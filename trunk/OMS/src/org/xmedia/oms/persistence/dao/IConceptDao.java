@@ -3,6 +3,7 @@ package org.xmedia.oms.persistence.dao;
 import java.util.Set;
 
 import org.xmedia.oms.model.api.IConcept;
+import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IProperty;
@@ -33,7 +34,7 @@ public interface IConceptDao extends IEntityDao<INamedConcept> {
 	
 	/***** find by individual **********************************************************/
 	
-	public Set<IConcept> findTypes(INamedIndividual individual) throws DatasourceException;
+	public Set<IConcept> findTypes(IIndividual individual) throws DatasourceException;
 	
 
 }

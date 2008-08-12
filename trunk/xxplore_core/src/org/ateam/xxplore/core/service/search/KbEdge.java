@@ -19,6 +19,16 @@ public class KbEdge extends DefaultWeightedEdge implements KbElement{
 	
 	private int type;
 	
+	private int aggregationNum = 1;
+	
+	public KbEdge(KbVertex vertex1, KbVertex vertex2, IProperty prop, int type){
+		this.vertex1 = vertex1;
+		this.vertex2 = vertex2;
+		this.property = prop;
+		this.type = type;
+		Emergency.checkPostcondition(vertex1 != null && vertex2 != null && property != null, "m_vertex1 != null && m_vertex2 != null && m_property != null"); 
+	}
+	
 	public KbEdge(KbVertex vertex1, KbVertex vertex2, IProperty prop, int type, double weight){
 		this.vertex1 = vertex1;
 		this.vertex2 = vertex2;
@@ -56,6 +66,14 @@ public class KbEdge extends DefaultWeightedEdge implements KbElement{
 	public IProperty getProperty(){
 		return property;
 	}
+	
+	public void incrementAggregationNumber(){
+		aggregationNum++;
+	}
+	
+	public int getAggregationNumber(){
+		return aggregationNum;
+	} 
 	
 	public void setCost(double weight){
 		this.cost = weight;

@@ -26,8 +26,6 @@ public class NamedIndividual extends Individual implements INamedIndividual {
 	/** The URI of the entity. */
     private String m_uri;
     
-	private Set<IConcept> m_types;
-	
 	private Set<IProperty> m_propertiesFrom;
 
 	private Set<IProperty> m_propertiesTo;
@@ -70,17 +68,6 @@ public class NamedIndividual extends Individual implements INamedIndividual {
 		}
 	}
 	
-	public Set<IConcept> getTypes() {
-		if (m_types == null){
-
-			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
-			m_types = dao.findTypes(this);
-
-		}
-
-		return m_types;
-	}
-
 	public Set<IProperty> getProperties() {
 		HashSet<IProperty> props = new HashSet<IProperty>();
 		Set<IProperty> from = getPropertiesFrom();

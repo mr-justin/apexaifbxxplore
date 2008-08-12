@@ -488,7 +488,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		}
 	}
 	
-	private  void addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
+	private void addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addVertex = false;
 		addVertex = graph.addVertex(vertex);
 		if(addVertex) {

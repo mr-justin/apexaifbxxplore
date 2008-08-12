@@ -99,7 +99,14 @@ public class Ses2AK {
 		} else {
 			property = getDataProperty(aStatement.getPredicate(), itsOntology);
 		}
-		IResource object = Ses2AK.getObject(sesObject, itsOntology);
+		IResource object = null;
+		if(property.equals(org.xmedia.oms.model.impl.Property.IS_INSTANCE_OF)) {
+			if(sesObject instanceof URI) {
+				object = Ses2AK.getNamedConcept((URI)sesObject, itsOntology);
+			}
+		} else {
+			object = Ses2AK.getObject(sesObject, itsOntology);
+		}
 		
 		return PropertyMember.createPropertyMember(subject, 
 				property, 

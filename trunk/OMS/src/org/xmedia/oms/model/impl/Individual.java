@@ -3,10 +3,12 @@ package org.xmedia.oms.model.impl;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.persistence.PersistenceUtil;
+import org.xmedia.oms.persistence.dao.IConceptDao;
 import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
 
 public class Individual extends Resource implements IIndividual {
@@ -15,6 +17,9 @@ public class Individual extends Resource implements IIndividual {
 	 * 
 	 */
 	private static final long serialVersionUID = -8925079039600753294L;
+	
+	private Set<IConcept> m_types;
+	
 	private Set<IPropertyMember> m_objectpropertiesFromValues;
 	private Set<IPropertyMember> m_objectpropertiesToValues;
 	private Set<IPropertyMember> m_propertiesFromValues;
@@ -32,6 +37,17 @@ public class Individual extends Resource implements IIndividual {
 	
 	public Individual(String label, IOntology onto){
 		super(label, onto);
+	}
+	
+	public Set<IConcept> getTypes() {
+		if (m_types == null){
+
+			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+			m_types = dao.findTypes(this);
+
+		}
+
+		return m_types;
 	}
 
 	public Set<IPropertyMember> getObjectPropertyFromValues() {

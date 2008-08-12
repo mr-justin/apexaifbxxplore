@@ -9,6 +9,7 @@ import java.util.Set;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.xmedia.oms.metaknow.IProvenance;
+import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedIndividual;
@@ -78,7 +79,7 @@ public class PropertyMember extends Axiom implements IPropertyMember{
 			m_type = DATA_PROPERTY_MEMBER;
 		}
 		if(type == OBJECT_PROPERTY_MEMBER){
-			Emergency.checkPrecondition(source instanceof IIndividual && target instanceof IIndividual, 
+			Emergency.checkPrecondition(source instanceof IIndividual && (target instanceof IIndividual || target instanceof IConcept), 
 			"source instanceof IIndividual && target instanceof IIndividual");
 			m_type = OBJECT_PROPERTY_MEMBER;
 		}
