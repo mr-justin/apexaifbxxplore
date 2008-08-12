@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Search>
+<Type>Search</Type>
+<Result>ent</Result>
+<Target>z</Target>
+<Triple>
+?x	equals	Michael Jordan
+?x	rel:college	?y
+?z	rel:college	?y
+?z	typeof	BasketballPlayer
+?z	att:draftYear	>1990
+target	equals	?z
+</Triple>
+</Search>

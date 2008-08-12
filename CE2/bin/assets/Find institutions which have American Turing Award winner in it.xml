@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Search>
+<Type>Search</Type>
+<Result>ent</Result>
+<Target>a</Target>
+<Triple>
+?x	rel:prizes	?y
+?y	equals	Turing Award
+?x	rel:placeOfBirth	?z
+?z	keywords	United States
+?x	rel:workInstitution	?a
+target	equals	?a
+</Triple>
+</Search>
