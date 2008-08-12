@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Search>
+<Type>Search</Type>
+<Result>ent</Result>
+<Target>x</Target>
+<Triple>
+?x	typeof	_Scientist
+?x	rel:workInstitution	?y
+?y	equals	IBM
+target	equals	?x
+</Triple>
+</Search>

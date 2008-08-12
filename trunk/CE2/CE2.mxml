@@ -1,0 +1,928 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" right="20" left="20" bottom="10" top="10"
+	xmlns:adobe="http://www.adobe.com/2006/fc"
+	xmlns:urlbase = "http://www.google.cn" backgroundColor="#b5cbf0" backgroundAlpha="1" xmlns:net="flash.net.*" backgroundGradientColors="[#4669e1, #b5cbf0]" xmlns:viewsource="com.adobe.viewsource.*">
+	<!--<mx:Image id="logo" source="@Embed('assets/logo.gif')" left="20" right="10" top="30"/> -->
+	<!--<mx:Label id="logo" text="CE2Pedia" fontSize="36" fontWeight="bold" fontFamily="Verdana"
+		left="20" top="30"/> -->
+	<mx:SWFLoader id="logo" source="@Embed('assets/logo.swf')" left="20" right="10" top="30"/>
+	<mx:HBox top="100" right="20" left="20" width="100%" id="hbox1">
+		<mx:Panel id="SampleQuery" title="Sample Queries" height="515" width="200">
+			<!-- Sample Queries are Placed Here-->
+			<mx:TextArea text="Find the documents about Ontology" editable="false" backgroundColor="0xE0FFFF"
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)" height="30" width="100%"/>
+			<mx:TextArea text="Find Documentary film about World War" editable="false"
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)" height="30" width="100%"/>
+			<mx:TextArea text="Find  entities about martial arts" editable="false" backgroundColor="0xE0FFFF"
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" height="31"/>
+			<mx:TextArea text="Find basketball players in the same college as Micheal Jordan whose draft year is after 1990" editable="false" 
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" height="60"/>
+			<mx:TextArea text="Find the Scientists who work in IBM" editable="false" backgroundColor="0xE0FFFF"
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" height="30"/>
+			<mx:TextArea text="Find institutions which have American Turing Award winner in it" editable="false" 
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%"/>
+			<mx:TextArea text="Find documents that contain the entities about Pro Evolution Soccer" editable="false" 
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" backgroundColor="0xE0FFFF"/>
+			<mx:TextArea text="Find the nationalities of Nobel Prize winners" editable="false" 
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" height="31"/>
+			<mx:TextArea text="Find the Entrepreneurs who co-occur with Bill Gates in Forbes reports" editable="false" 
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" height="45" backgroundColor="0xE0FFFF"/>
+			<mx:TextArea text="Find the companies which co-occur with Google in some report about Search engine optimization" editable="false" 
+				fontSize="10" borderThickness="0" buttonMode="true" useHandCursor="true" mouseChildren="false"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)" click="loadXML(event)"  width="100%" height="58"/>
+			<!-- Sample Queries are Placed Here-->
+			<!--<mx:TextArea id="test" width="100%"/> -->
+		</mx:Panel>
+		<mx:VBox id="RightCol" width="100%">
+			<mx:HBox id="InputAndGraph" width="100%" right="10">
+				<mx:VBox id="QueryInput">
+					<mx:LinkButton id="ChangeState" label="Modify query and Create your query" textAlign="left"
+						 click="currentState='Advanced'" fontFamily="Verdana" fontSize="11"/>
+				</mx:VBox>
+			</mx:HBox>
+			<mx:Form id="results" width="100%" borderStyle="solid">
+			</mx:Form>
+		</mx:VBox>
+	</mx:HBox>
+	
+	<mx:states>
+		<mx:State name="Advanced">
+			<mx:AddChild relativeTo="{QueryInput}">
+				<mx:Grid id="InputGrid" width="50%" right="5" left="5">
+						<mx:GridRow width="80%">
+							<mx:GridItem width="100%">
+								<mx:Label text="Subject" width="100%"/>
+							</mx:GridItem>
+							<mx:GridItem width="100%">
+								<mx:Label text="Predicate" width="100%"/>
+							</mx:GridItem>
+							<mx:GridItem width="100%">
+								<mx:Label text="Object" width="100%"/>
+							</mx:GridItem>
+						</mx:GridRow>
+						<mx:GridRow width="80%">
+							<mx:GridItem width="100%"> 
+								<adobe:AutoComplete id="firstSub" focusOut="addNode(event)" focusIn="showVar(event)" width="120"/>
+							</mx:GridItem>
+							<mx:GridItem width="100%">
+								<adobe:AutoComplete id="firstPre" focusOut="addEdge(event)" focusIn="showType(event)"
+									 close="suggestRA(event)" width="120"/>
+							</mx:GridItem>
+							<mx:GridItem width="100%">
+								<adobe:AutoComplete id="firstObj" focusOut="addNode(event)" focusIn="suggestC(event)"
+									 close="selectSgst(event)" width="120"/>
+							</mx:GridItem>
+							<mx:GridItem>
+								<mx:LinkButton click="deleteRow(event)" icon="@Embed('assets/delete.png')"/>
+							</mx:GridItem>
+						</mx:GridRow>
+					</mx:Grid>
+				</mx:AddChild>
+			<mx:AddChild relativeTo="{QueryInput}">
+					<mx:HBox width="100%" right="10">
+						<!--<mx:RadioButtonGroup id="ConstraintType" itemClick="handlePredicate(event)"/>
+						<mx:RadioButton groupName="ConstraintType" id="T" label="typeof" value="typeof" selected="true"/>
+						<mx:RadioButton groupName="ConstraintType" id="R" label="relation" value="rel:"/>
+						<mx:RadioButton groupName="ConstraintType" id="At" label="attribute" value="att:"/>
+						<mx:RadioButton groupName="ConstraintType" id="K" label="keywords" value="keywords"/>
+						<mx:RadioButton groupName="ConstraintType" id="E" label="equals" value="equals"/>
+						<mx:RadioButton groupName="ConstraintType" id="An" label="annotation" value="rel:annotatedIn"/> -->
+						<mx:Button id="addButton" label="Add" icon="@Embed('assets/add.png')" click="addRow('','','')" fontSize="10"/>
+					</mx:HBox>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{QueryInput}">
+					<mx:HBox width="80%">
+						<mx:Label text="Select the target node here"/>
+						<mx:ComboBox id="vSelector" width="100" dataProvider="{variables}"/>
+						<mx:Button id="SearchButton" icon="@Embed('assets/search.png')" label="Search" click="search(event)" fontSize="10" fontFamily="Verdana"/>
+					</mx:HBox>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{InputAndGraph}">
+			<mx:Panel title="Query Graph" height="350" width="50%" alpha="1">
+				<adobe:SpringGraph id="QueryGraph" width="100%" height="100%"
+					backgroundColor="#E0FFFF" lineColor="#ff1493" repulsionFactor="0.50">
+					<adobe:itemRenderer>
+						<mx:Component>
+							<mx:HBox backgroundAlpha="0.3" backgroundColor="#92a6ed"
+								paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5">
+								<mx:Label text="{data.data}" fontSize="12" color="#000000"/>
+							</mx:HBox>					
+						</mx:Component>
+					</adobe:itemRenderer>
+				</adobe:SpringGraph>
+			</mx:Panel>
+			</mx:AddChild>
+			<mx:SetEventHandler target="{ChangeState}" name="click" handler="currentState=''"/>
+			<mx:SetProperty target="{ChangeState}" name="label" value="Collapse Query Details"/>
+			<mx:SetProperty target="{logo}" name="width"/>
+			<mx:SetStyle target="{logo}" name="right" value="20"/>
+			<mx:SetProperty target="{QueryInput}" name="width" value="426"/>
+			<mx:SetStyle target="{logo}" name="fontFamily" value="Verdana"/>
+			<mx:SetStyle target="{logo}" name="fontWeight" value="bold"/>
+			<mx:SetProperty target="{hbox1}" name="width"/>
+			<mx:SetStyle target="{hbox1}" name="top" value="100"/>
+			<mx:SetStyle name="backgroundGradientColors" value="[#4669e1, #b5cbf0]"/>
+			<mx:SetStyle name="backgroundAlpha" value="1"/>
+		</mx:State>
+	</mx:states>
+	
+	<mx:ArrayCollection id="variables">
+	</mx:ArrayCollection>
+	
+	<!--<mx:ArrayCollection id="tempVariables">
+	</mx:ArrayCollection> -->
+	
+	<mx:ArrayCollection id="SuggestType">
+		<mx:String>typeof</mx:String>
+		<mx:String>att:</mx:String>
+		<mx:String>rel:</mx:String>
+		<mx:String>rel:annotatedIn</mx:String>
+		<mx:String>equals</mx:String>
+		<mx:String>keywords</mx:String>
+	</mx:ArrayCollection>
+	
+	<!--Specify the URL for Servlet-->
+	<mx:String id="urlbase">http://ce2.apexlab.org/hahax.html</mx:String>
+	<mx:String id="testurl">http://localhost:8080/CE2/CE2</mx:String>
+	<mx:HTTPService id="searchSend" url="{urlbase}" resultFormat="e4x" result="displayResult()" 
+		fault="requestFault(event)" method="POST" showBusyCursor="true"/>
+	<mx:HTTPService id="suggestSend" url="{urlbase}" resultFormat="e4x" result="displaySuggestion(event)"
+		fault="requestFault(event)" method="POST" showBusyCursor="true"/>
+	<net:URLLoader id="xmlLoader" dataFormat="{URLLoaderDataFormat.TEXT}" complete="loadComplete()"/>
+	
+	<mx:Script>
+		<![CDATA[
+			import mx.managers.CursorManager;
+			import mx.controls.Spacer;
+			import com.adobe.flex.extras.controls.springgraph.IViewFactory;
+			import mx.containers.FormHeading;
+			import mx.controls.ComboBase;
+			import mx.controls.HRule;
+			import mx.events.DropdownEvent;
+			import com.adobe.flex.extras.controls.AutoComplete;
+			import mx.utils.ArrayUtil;
+			import mx.collections.ArrayCollection;
+			import mx.containers.FormItem;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.controls.menuClasses.MenuBarItem;
+			import mx.controls.Menu;
+			import com.adobe.flex.extras.controls.springgraph.Item;
+			import com.adobe.flex.extras.controls.springgraph.Graph;
+			import mx.events.ItemClickEvent;
+			import mx.containers.GridItem;
+			import mx.containers.GridRow;
+			import mx.controls.TextInput;
+			import mx.controls.Label;
+			import mx.controls.Alert;
+			
+			[Embed(source="assets/delete.png")]
+            [Bindable]
+            public var deleteIcon:Class;
+            
+            [Embed(source="assets/pre.png")]
+            [Bindable]
+            public var preIcon:Class;
+            
+            [Embed(source="assets/next.png")]
+            [Bindable]
+            public var nextIcon:Class;
+			
+			[Bindable]
+			private var catSgstReply:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var catSgstShow:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var raSgstReply:ArrayCollection = new ArrayCollection();
+			
+			[Bindable]
+			private var raSgstShow:ArrayCollection = new ArrayCollection();
+			
+			//variables for query graph
+			private var table:Object = new Object();
+			private var g:Graph = new Graph();
+			private var resultType:String = new String();
+			
+			//for result display
+			private var currentResult:int = 0;
+			private var queryTarget:String;
+			private var hasEvidence:Boolean;
+			
+			public function addRow(Sub:String, Pre:String, Obj:String):void{
+				var itemInput1:AutoComplete = new AutoComplete();
+				var itemInput2:AutoComplete = new AutoComplete();
+				var itemInput3:AutoComplete = new AutoComplete();
+				itemInput1.addEventListener(FocusEvent.FOCUS_OUT, addNode);
+				itemInput1.addEventListener(FocusEvent.FOCUS_IN, showVar);
+				itemInput1.width = 120;
+				//itemInput1.dataProvider = tempVariables;
+				itemInput2.addEventListener(FocusEvent.FOCUS_OUT, addEdge);
+				itemInput2.addEventListener(FocusEvent.FOCUS_IN, showType);
+				itemInput2.addEventListener(DropdownEvent.CLOSE, suggestRA);
+				itemInput2.width = 120;
+				itemInput3.addEventListener(FocusEvent.FOCUS_OUT, addNode);
+				itemInput3.addEventListener(FocusEvent.FOCUS_IN, suggestC);
+				itemInput3.addEventListener(DropdownEvent.CLOSE, selectSgst);
+				itemInput3.width = 120;
+				//itemInput1.data = Sub;
+				//itemInput2.data = Pre;
+				//itemInput3.data = Obj;
+				//itemInput3.dataProvider = catSgstReply;
+				var delButton:LinkButton = new LinkButton();
+				var item1:GridItem = new GridItem();
+				var item2:GridItem = new GridItem();
+				var item3:GridItem = new GridItem();
+				var item4:GridItem = new GridItem();
+				var row:GridRow = new GridRow();
+				delButton.setStyle("icon", deleteIcon);
+				delButton.addEventListener(MouseEvent.CLICK, deleteRow);
+				item1.addChild(itemInput1);
+				item2.addChild(itemInput2);
+				item3.addChild(itemInput3);
+				item4.addChild(delButton);
+				row.addChild(item1);
+				row.addChild(item2);
+				row.addChild(item3);
+				row.addChild(item4);
+				InputGrid.addChild(row);
+				if(Sub != ""){
+					itemInput1.typedText = Sub;
+					table[itemInput1.parent.getChildAt(0)] = Sub;
+				}
+				if(Pre != ""){
+					itemInput2.typedText = Pre;
+				}
+				if(Obj != ""){
+					itemInput3.typedText = Obj;
+					table[itemInput3.parent.getChildAt(0)] = Obj;
+				}
+				if(Pre == "typeof" && Obj != ""){
+					itemInput3.data = "_"+Obj;						
+				}
+				else if(Obj != ""){
+					itemInput3.data = Obj;
+				}
+			}
+			
+			public function deleteRow(event:Event):void{
+				InputGrid.removeChild(event.target.parent.parent);
+				
+				//var prefix:String = new String(InputGrid.parent.getChildAt(1).toString());
+				var fromItem:Item = g.find(event.target.parent.parent.getChildAt(0).getChildAt(0).text);
+				var toItem:Item = g.find(event.target.parent.parent.getChildAt(2).getChildAt(0).text);
+				//test.text = "finding item complete";
+				if(fromItem != null && toItem != null){
+					g.unlink(fromItem, toItem);
+				}
+				
+				if(fromItem != null && g.numLinks(fromItem) == 0){
+					g.remove(fromItem);
+					removeItem(fromItem.data.toString());
+					//test.text += fromItem.data.toString() + " is removed\n";
+				}
+				if(toItem != null && g.numLinks(toItem) == 0){
+					g.remove(toItem);
+					removeItem(toItem.data.toString());
+					//test.text += toItem.data.toString() + " is removed\n";
+				}
+				if(g.hasNode(fromItem.data.toString())){
+					g.remove(fromItem.data.toString());
+				}
+				if(g.hasNode(toItem.data.toString())){
+					g.remove(toItem.data.toString());
+				}
+				QueryGraph.dataProvider = g;
+				//test.text += "delete successfully";
+			}
+			
+			public function addNode(event:FocusEvent):void{
+				//need careful consideration and test
+				var item:Item;
+				var item1:Item;
+				var item2:Item;
+				var id:String = event.currentTarget.text;
+				//test.text += event.currentTarget.toString();
+				
+				if(table[event.currentTarget.toString()] == null){
+					//test.text += "1in";
+					if(g.hasNode(id)){
+						g.find(id).data = event.currentTarget.text;
+						table[event.currentTarget.toString()] = event.currentTarget.text;
+					}
+					else{
+						if(id != ""){
+							item = new Item(id);
+							item.data = event.currentTarget.text;
+							g.add(item);
+							addItem(item.data.toString());
+							table[event.currentTarget.toString()] = event.currentTarget.text;
+						}
+					}
+					if(event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0).text != ""
+						&& event.target.parent.parent.parent.parent.getChildAt(1).getChildAt(0).text != ""
+						&& event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0).text != ""){
+						addEdge(event);
+					}
+					QueryGraph.dataProvider = g;
+					//test.text += "1out\n";
+				}
+				else{
+					if(event.currentTarget.text == ""){
+						//test.text += "2in";
+						item1 = g.find(table[event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0)]);
+						item2 = g.find(table[event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0)]);
+						if(item1 != null && item2 != null){
+							g.unlink(item1, item2);
+						}
+						if(item1 != null && g.numLinks(item1) == 0){
+							g.remove(item1);
+							removeItem(item1.data.toString());
+						}
+						if(item2 != null && g.numLinks(item2) == 0){
+							g.remove(item2);
+							removeItem(item2.data.toString());
+						}
+						table[event.currentTarget.toString()] = null;
+						//test.text += "2out\n";
+					}
+					else{
+						//test.text += "3in";
+						if(event.currentTarget.text != table[event.currentTarget.toString()]){
+							item1 = g.find(table[event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0)]);
+							item2 = g.find(table[event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0)]);
+							if(item1 != null && item2 != null){
+								g.unlink(item1, item2);
+							}
+							item = new Item(event.currentTarget.text);
+							item.data = event.currentTarget.text;
+							g.add(item);
+							addItem(item.data.toString());
+							if(event.currentTarget.toString() == event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0)){
+								if(item != null && item2 != null){
+									g.link(item2,item);
+								}
+							}
+							else{
+								if(item1 != null && item != null){
+									g.link(item1,item);
+								}
+							}
+							if(item1 != null && g.numLinks(item1) == 0){
+								g.remove(item1);
+								removeItem(item1.data.toString());
+							}
+							if(item2 != null && g.numLinks(item2) == 0){
+								g.remove(item2);
+								removeItem(item2.data.toString());
+							}
+							table[event.currentTarget.toString()] = event.currentTarget.text;
+							g.find(event.currentTarget.text).data = event.currentTarget.text;
+						}
+						//test.text += "3out\n";
+					}
+				}
+				
+				if(event.target.parent.parent.data == null){
+					if(event.target.parent.parent.text.charAt(0) != "?"
+						&& event.target.parent.parent.parent.parent.getChildAt(1).getChildAt(0).text == "typeof"){
+						event.target.parent.parent.data = "_" + event.target.parent.text;
+					}
+					else{
+						event.target.parent.parent.data = event.target.parent.text;
+					}
+				}
+				event.target.parent.parent.dataProvider = event.target.parent.text;
+			}
+			
+			public function addEdge(event:FocusEvent):void{
+				//test.text += "5in";
+				event.target.parent.parent.dataProvider = event.target.parent.text;
+				if(event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0).text == ""
+					|| event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0).text == ""){
+						//test.text += "5out";
+						return;
+					}	
+				var fromItem:Item = g.find(event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0).text);
+				var toItem:Item = g.find(event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0).text);
+				if(fromItem == null){
+					fromItem = new Item(event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0).text);
+					fromItem.data = event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0).text;
+					g.add(fromItem);
+					addItem(fromItem.data.toString());
+				}
+				if(toItem == null){
+					toItem = new Item(event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0).text);
+					toItem.data = event.target.parent.parent.parent.parent.getChildAt(2).getChildAt(0).text;
+					g.add(toItem);
+					addItem(toItem.data.toString());
+				}
+				if(g.linked(fromItem,toItem)){
+					//test.text += "5out";
+					return;
+				}
+				g.link(fromItem, toItem);
+				QueryGraph.dataProvider = g;
+				//test.text += "5out";
+			}
+			
+			public function search(event:Event):void{
+				var triples:String = new String();
+				
+				if(!checkConsistency(InputGrid)){
+					//test.text = "&&& The Query is not Consistent &&&\n";
+					return;				
+				}
+				
+				currentResult = 0;
+				searchSend.request.Type = "Search";
+				for(var i:Number = 1; i < InputGrid.numChildren; i++){
+					if(event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(0).getChildAt(0).text != ""
+					&& event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(1).getChildAt(0).text != ""
+					&& event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(2).getChildAt(0).text != ""){
+						if(event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(1).getChildAt(0).text != "rel:annotatedIn"){
+							triples += event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(0).getChildAt(0).text
+							+ "\t" + event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(1).getChildAt(0).text
+							+ "\t" + event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(2).getChildAt(0).data + "\n";
+						}
+						else{
+							triples += event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(0).getChildAt(0).text
+							+ "\t" + "rel:mentionIn"
+							+ "\t" + event.target.parent.parent.parent.getChildAt(0).getChildAt(1).getChildAt(i).getChildAt(2).getChildAt(0).data + "\n";
+						}
+					}
+				}
+				triples += "target\tequals\t"+vSelector.selectedItem.toString();
+				searchSend.request.Triple = triples;
+				
+				//show the query triples for test
+				//test.text = searchSend.request.Triple + "\ntarget type: " + resultType;
+				
+				//send the query to the servlet
+				searchSend.send();
+			}
+			
+			public function suggestRA(event:DropdownEvent):void{
+				var suggestType:String = event.target.text;
+				if(suggestType == "rel:" || suggestType == "att:"){
+					suggestion(event.target.parent.parent.parent, suggestType, 
+					event.target.parent.parent.getChildAt(0).getChildAt(0).text);
+					event.target.typedText = "";
+					event.target.dataProvider = raSgstReply;
+				}
+				else if(suggestType.charAt(0) == "r" || suggestType.charAt(0) == "a"){
+					var i:int = event.target.selectedIndex;
+					var temp:Array = suggestSend.lastResult.Suggestion[i].split("\t");
+					temp.pop();
+					event.target.data = temp.pop();
+				}
+			}
+			
+			public function suggestC(event:FocusEvent):void{
+				event.target.parent.parent.data = null;
+				var suggestType:String = event.target.parent.parent.parent.parent.getChildAt(1).getChildAt(0).text;
+				if(suggestType == "typeof"){
+					suggestion(event.target.parent.parent.parent.parent.parent, "typeof", 
+					event.target.parent.parent.parent.parent.getChildAt(0).getChildAt(0).text);
+					event.target.parent.parent.dataProvider = catSgstReply;
+				}
+			}
+			
+			public function suggestion(gridTable:Object, suggestType:String, target:String):void{
+				if(!checkConsistency(InputGrid)){
+					//test.text = "&&& The Query is not Consistent &&&\n";
+					return;				
+				}
+				
+				var triples:String = new String();
+				
+				suggestSend.request.Type = "Suggest";
+				
+				if(suggestType == "typeof"){
+					suggestSend.request.SuggestType = "Cat";
+				}
+				else if(suggestType.charAt(0) == "r"){
+					suggestSend.request.SuggestType = "Rel";
+				}
+				else if(suggestType.charAt(0) == "a"){
+					suggestSend.request.SuggestType = "Att";
+				}
+				for(var i:int = 1; i < InputGrid.numChildren; i++){
+					if(gridTable.getChildAt(i).getChildAt(0).getChildAt(0).text != ""
+					&& gridTable.getChildAt(i).getChildAt(1).getChildAt(0).text != ""
+					&& gridTable.getChildAt(i).getChildAt(2).getChildAt(0).text != ""){
+						triples += gridTable.getChildAt(i).getChildAt(0).getChildAt(0).text
+							+ "\t" + gridTable.getChildAt(i).getChildAt(1).getChildAt(0).text
+							+ "\t" + gridTable.getChildAt(i).getChildAt(2).getChildAt(0).data
+							+ "\n";
+					}
+				}
+				triples += "target\tequals\t" + target;
+				suggestSend.request.Triple = triples;
+				
+				//test.text = suggestSend.request.Triple;
+				
+				//send the query to the servlet
+				suggestSend.send();
+			}
+			
+			public function displayResult():void{
+				results.removeAllChildren();
+				var startResult:int = searchSend.lastResult.Number>0?currentResult+1:0;
+				var endResult:int = currentResult+10>searchSend.lastResult.Number?searchSend.lastResult.Number:currentResult+10;
+				var s:Label = new Label();
+				var prePage:LinkButton = new LinkButton();
+				var nextPage:LinkButton = new LinkButton();
+				prePage.label = "Prev";
+				nextPage.label = "Next";
+				if(currentResult - 10 < 0){
+					prePage.enabled = false;
+				}
+				if(currentResult + 10 >= searchSend.lastResult.Number){
+					nextPage.enabled = false;
+				}
+				prePage.setStyle("icon", preIcon);
+				nextPage.setStyle("icon", nextIcon);
+				prePage.addEventListener(MouseEvent.CLICK, pre);
+				nextPage.addEventListener(MouseEvent.CLICK, next);
+				s.text = "Results = " + searchSend.lastResult.TotalNumber + " in " + searchSend.lastResult.Time/1000 + "s ("
+				+ startResult + "~" + endResult + ")";
+				s.setStyle("fontSize", 10);
+				//s.setStyle("fontStyle", "italic");
+				s.setStyle("fontFamily", "Verdana");
+				s.setStyle("fontWeight", "bold");
+				var line:HBox = new HBox();
+				var formHead:FormItem = new FormItem();
+				line.addChild(s);
+				var space:Spacer = new Spacer();
+				line.addChild(space);
+				space.width = results.width * 0.45;
+				line.addChild(prePage);
+				line.addChild(nextPage);
+				formHead.addChild(line);
+				results.addChild(formHead);
+				
+				var numResult:Number = searchSend.lastResult.Number;
+				var ri:ResultItem;
+				var hr:HRule;
+				var rdata:Object;
+
+				for(var i:int = currentResult; i < currentResult + 10; i++){
+					if(i < numResult){
+						var t:Array = searchSend.lastResult.Result[i].split("\t");
+						rdata = new Object();
+						rdata.w = results.width*0.95;
+						if(i%2 == 0){
+							rdata.c = 0xE0FFFF;
+						}
+						else{
+							rdata.c = 0xFFFFFF;
+						}
+						rdata.i = t.pop();
+						rdata.s = t.pop();
+						rdata.n = t.pop();
+						rdata.u = t.pop();
+						rdata.t = resultType;
+						rdata.evd = hasEvidence;
+						ri = new ResultItem();
+						ri.data = rdata;
+					
+						results.addChild(ri);
+					}
+					else{
+						break;
+					}
+				}
+			}
+			
+			private function pre(current:int):void{
+				if(currentResult - 10 >= 0){
+					currentResult -= 10;
+					displayResult();
+				}
+			}
+			
+			private function next(current:int):void{
+				if(currentResult + 10 < searchSend.lastResult.Number){
+					currentResult += 10;
+					displayResult();
+				}
+			}
+			
+			public function displaySuggestion(event:ResultEvent):void{
+				var i:int = 0;
+				var numSgst:int = event.result.Number;
+				if(event.result.SuggestType == "Cat"){
+					catSgstReply.removeAll();
+				
+					//assign the suggestions to catSgst
+					for(i = 0; i < numSgst; i++){
+						var t1:Array = event.result.Suggestion[i].split("\t");
+						catSgstReply.addItem(t1.pop());
+					}
+				}
+				else{
+					raSgstReply.removeAll();
+					//assign the suggestions to catSgst
+					for(i = 0; i < numSgst; i++){
+						var t2:Array = event.result.Suggestion[i].split("\t");
+						if(event.result.SuggestType == "Att"){
+							event.result.Suggestion[i].split()
+							raSgstReply.addItem("att:" + t2.pop());
+						}
+						else if(event.result.SuggestType == "Rel"){
+							raSgstReply.addItem("rel:" + t2.pop());
+						}
+					}
+				}
+				var tt:Object = getFocus();
+				tt.parent.parent.open();
+			}
+			
+			public function selectSgst(event:DropdownEvent):void{
+				for(var i:int = 0; i < suggestSend.lastResult.Number; i++){
+					if(startWith(suggestSend.lastResult.Suggestion[i], event.target.selectedItem)){
+						break;
+					}
+				}
+				
+				var temp:Array = suggestSend.lastResult.Suggestion[i].split("\t");
+				temp.pop();
+				event.target.data = temp.pop();
+			}
+			
+			public function showType(event:FocusEvent):void{
+				resetPredicate();
+				var current:String = event.target.parent.text;
+				var temp:ArrayCollection = new ArrayCollection(SuggestType.toArray());
+				if(current == ""){
+					//test.text = "@@@@";
+					event.target.parent.parent.dataProvider = temp;
+					event.target.parent.parent.selectedItem = "typeof";
+					event.target.parent.parent.open();
+					//test.text += "####";
+				}
+				else{
+					//test.text = "%%%%";
+					temp.addItem(current);
+					event.target.parent.parent.dataProvider = temp;
+					event.target.parent.parent.selectedItem = current;
+					//event.target.parent.parent.open();
+					//test.text += "####";
+				}
+			}
+			
+			public function showVar(event:FocusEvent):void{
+				//resetVariables();
+				var tempVariables:ArrayCollection = new ArrayCollection();
+				tempVariables.removeAll();
+				for(var i:int = 0; i < variables.length; i++){
+					tempVariables.addItem(variables.getItemAt(i).toString());
+				}
+				event.target.parent.parent.dataProvider = tempVariables;
+				//event.target.parent.parent.open();
+			}
+			
+			public function requestFault(event:FaultEvent):void{
+				//TODO change the focus to the logo pic
+				logo.setFocus();
+				Alert.show(event.fault.toString(), "Fault");
+			}
+			
+			private function empty(temp:Array):void{
+				for(var i:int = 0; i < temp.length; i++){
+					temp.pop();
+				}
+			}
+			
+			private function addItem(item:String):void{
+				if(item.charAt(0) == "?" && !variables.contains(item)){
+					variables.addItem(item);
+				}
+			}
+			
+			private function removeItem(item:String):void{
+				if(item.charAt(0) == "?"){
+					variables.removeItemAt(variables.getItemIndex(item));
+				}
+			}
+			
+			private function resetVariables():void{
+				variables.filterFunction = resetFilter;
+				variables.refresh();
+			}
+			
+			private function resetPredicate():void{
+				SuggestType.filterFunction = resetFilter;
+				SuggestType.refresh();
+			}
+			
+			private function resetFilter(element:*):Boolean{
+				return true;
+			}
+			
+			private function startWith(container:String, substring:String):Boolean{
+				if(substring.length > container.length){
+					return false;
+				}
+				else{
+					for(var i:int = 0; i < substring.length; i++){
+						if(container.charAt(i) != substring.charAt(i)){
+							return false;
+						}
+					}
+				}
+				return true;
+			}
+			
+			private function loadXML(event:Event):void{
+				var fileName:String = "assets/" + event.target.text + ".xml";
+				//var fileName:String = event.target.text + ".xml";
+				xmlLoader.load(new URLRequest(fileName));
+				//test.text += "Load XML Begins\n";
+			}
+			
+			private function loadComplete():void{
+				//test.text += "Load XML Successfully\n";
+				var i:int = 0;
+				
+				//load the Sample query in the queryXML
+				var queryXML:XML = new XML(xmlLoader.data);
+				
+				//set the target type according to queryXML.
+				resultType = queryXML.Result;
+				
+				//TODO update the InputGrid according to queryXML
+				//updateGrid(queryXML);
+				
+				//TODO send the query stored in queryXML to servlet
+				currentState = 'Advanced';			//change the current state to ADVANCED
+				searchSend.request.Type = "Search";
+				var triple:String = new String();
+				var tripleArray:Array = queryXML.Triple.split("\n");
+				var tCollection:ArrayCollection = new ArrayCollection(tripleArray);
+				
+				InputGrid.removeAllChildren();
+				var labels:GridRow = new GridRow();
+				var s:Label = new Label();
+				var p:Label = new Label();
+				var o:Label = new Label();
+				var i1:GridItem = new GridItem();
+				var i2:GridItem = new GridItem();
+				var i3:GridItem = new GridItem();
+				s.text = "Subject";
+				p.text = "Predicate";
+				o.text = "Object";
+				i1.addChild(s);i2.addChild(p);i3.addChild(o);
+				labels.addChild(i1);labels.addChild(i2);labels.addChild(i3);
+				InputGrid.addChild(labels);
+				g.empty();
+				variables.removeAll();
+				queryTarget = "?"+trim(queryXML.Target);
+				hasEvidence = false;
+				for(i = 0; i < tCollection.length - 1; i++){
+					triple += tCollection.getItemAt(i);
+					triple += '\n';
+					
+					var temp:Array = tCollection.getItemAt(i).split("\t");
+					var Obj:String = trim(temp.pop());
+					var Pre:String = temp.pop();
+					if(Pre=="rel:mentionIn"){
+						Pre = "rel:annotatedIn";
+					}
+					var Sub:String = trim(temp.pop());
+					
+					//add the variables into vSelector
+					addItem(Obj);addItem(Sub);
+					var sub:Item = new Item(Sub);
+					var obj:Item = new Item(Obj);
+					sub.data = Sub;
+					obj.data = Obj;
+					g.add(sub);g.add(obj);
+					g.link(sub, obj);
+					
+					if(Sub == queryTarget || Obj == queryTarget){
+						if(Pre.substring(0,3) == "rel"){
+							hasEvidence = true;
+						}
+					}
+					
+					addRow(Sub, Pre, Obj);
+				}
+				QueryGraph.dataProvider = g;
+				triple += tCollection.getItemAt(i).toString();
+				searchSend.request.Triple = triple;
+				vSelector.selectedItem = "?"+trim(queryXML.Target);
+				queryTarget = "?"+trim(queryXML.Target);
+				searchSend.send();
+				currentResult = 0;
+			}
+			
+			private function trim(init:String):String{
+				if(init.charAt(0) == "_"){
+					init = init.substring(1);
+				}
+				if(init.charAt(init.length-1) == '\r'){
+					return init.substring(0, init.length - 1);
+				}
+				return init;
+			}
+			
+			private function highLight(event:Event):void{
+				//test.text = event.target.toString();
+				event.target.setStyle("textDecoration", "underline");
+				event.target.setStyle("fontWeight", "bold");
+			}
+			
+			private function unhighLight(event:Event):void{
+				event.target.setStyle("textDecoration", "none");
+				event.target.setStyle("fontWeight", "normal");
+			}
+			
+			private function checkConsistency(gridInput:Object):Boolean{
+				var target:String = vSelector.selectedItem.toString();
+				var entity:ArrayCollection = new ArrayCollection();
+				var doc:ArrayCollection = new ArrayCollection();
+				
+				resultType = null;
+				hasEvidence = false;
+				
+				for(var i:int = 1; i<gridInput.numChildren; i++){
+					if(gridInput.getChildAt(i).getChildAt(1).getChildAt(0).text == "rel:annotatedIn"){
+						if(entity.contains(gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text) 
+							|| doc.contains(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text)
+							|| gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text == 
+							gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text){
+							return false;
+						}
+						else{
+							entity.addItem(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text);
+							doc.addItem(gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text);
+						}
+						
+						if(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text == vSelector.selectedItem
+							||gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text == vSelector.selectedItem){
+							hasEvidence = true;
+						}
+					}
+					else if(startWith(gridInput.getChildAt(i).getChildAt(1).getChildAt(0).text, "rel:")){
+						if(doc.contains(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text)
+							|| doc.contains(gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text)){
+								return false;
+						}
+						else{
+							entity.addItem(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text);
+							entity.addItem(gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text);
+						}
+						
+						if(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text == vSelector.selectedItem
+							||gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text == vSelector.selectedItem){
+							hasEvidence = true;
+						}
+					}
+					else if(gridInput.getChildAt(i).getChildAt(1).getChildAt(0).text == "typeof"){
+						if(gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text == "doc"
+							|| gridInput.getChildAt(i).getChildAt(2).getChildAt(0).text == "document"){
+								if(entity.contains(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text)){
+									return false;
+								}
+								else{
+									doc.addItem(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text);
+								}
+							}
+					}
+					else if(gridInput.getChildAt(i).getChildAt(1).getChildAt(0).text != "keywords"){
+						if(doc.contains(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text)){
+							return false;
+						}
+						else{
+							entity.addItem(gridInput.getChildAt(i).getChildAt(0).getChildAt(0).text);
+						}
+					}
+				}
+				
+				if(!doc.contains(vSelector.selectedItem) && !entity.contains(vSelector.selectedItem)){
+					entity.addItem(vSelector.selectedItem);
+				}
+				
+				if(entity.contains(vSelector.selectedItem)){
+					resultType = "ent";
+				}
+				else if(doc.contains(vSelector.selectedItem)){
+					resultType = "doc";
+				}
+				return true;
+			}
+		]]>
+	</mx:Script>
+</mx:Application>

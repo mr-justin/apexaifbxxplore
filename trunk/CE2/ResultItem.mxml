@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:FormItem xmlns:mx="http://www.adobe.com/2006/mxml" width="{data.w}" height="20"
+	backgroundColor="{data.c}" direction="horizontal"
+	mouseOver="currentState = 'onIt'" mouseOut="currentState = ''">
+	<mx:VBox id="itemInfo" width="100%" height="100%" right="10">
+		<mx:HBox id="digest" width="100%">
+			<mx:Label id="entityName" text="{data.n}" fontSize="10" width="80%" height="100%" textAlign="left" click="redirect(event)"
+				mouseOver="highLight(event)" mouseOut="unhighLight(event)"/>
+			<mx:LinkButton id="showDetail" label="Show Details" right="10" alpha="1" click="detailRequest(event)"/>
+			<mx:LinkButton id="showEvidence" label="Show Evidences" alpha="1" click="evidenceRequest(event)" enabled="{data.evd}"/>
+		</mx:HBox>
+		<mx:TextArea id="result" editable="false" width="90%" height="70%" borderThickness="0" fontSize="10"/>
+	</mx:VBox>
+	
+	<mx:states>
+		<mx:State name="onIt">
+			<mx:SetStyle target="{this}" name="backgroundColor" value="0xD0FFFF"/>
+		</mx:State>
+	</mx:states>
+	
+	<mx:String id="detail"></mx:String>
+	<mx:String id="evidence"></mx:String>
+	
+	<mx:String id="urlbase">http://ce2.apexlab.org/hahax.html</mx:String>
+	<mx:HTTPService id="detailSend" url="{urlbase}" resultFormat="e4x" result="displayDetail(event)"
+		fault="displayFault(event)" method="POST" showBusyCursor="true"/>
+	<mx:HTTPService id="evidenceSend" url="{urlbase}" resultFormat="e4x" result="displayEvidence(event)"
+		fault="displayFault(event)" method="POST" showBusyCursor="true"/>
+
+	<mx:Script>
+		<![CDATA[
+			import flash.net.navigateToURL;
+			import mx.states.SetEventHandler;
+			import mx.controls.TextArea;
+			import mx.states.SetProperty;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			import mx.rpc.http.mxml.HTTPService;
+			
+			public var haveDetail:Boolean = false;
+			public var haveEvidence:Boolean = false;
+			
+			public function detailRequest(event:MouseEvent):void{
+				if(!haveDetail){
+					if(data.t == "ent"){
+						detailSend.request.Type = "Detail";
+					}
+					else if(data.t == "doc"){
+						detailSend.request.Type = "Snippet";
+					}
+					detailSend.request.ID = data.i;
+					detailSend.send();
+				}
+				else{
+					result.htmlText = detail;
+				}
+				
+				this.height = 150;
+				showDetail.label = "Hide Details";
+				showDetail.removeEventListener(MouseEvent.CLICK, detailRequest);
+				showDetail.addEventListener(MouseEvent.CLICK, hideDetail);
+				
+				showEvidence.label = "Show Evidences";
+				showEvidence.removeEventListener(MouseEvent.CLICK, hideEvidence);
+				showEvidence.addEventListener(MouseEvent.CLICK, evidenceRequest);
+			}
+			
+			public function evidenceRequest(event:MouseEvent):void{
+				if(!haveEvidence){
+					evidenceSend.request.Type = "Evidence";
+					evidenceSend.request.Id = data.i;
+					evidenceSend.send();
+				}
+				else{
+					result.htmlText = evidence;
+				}
+				
+				this.height = 150;
+				showEvidence.label = "Hide Evidences";
+				showEvidence.removeEventListener(MouseEvent.CLICK, evidenceRequest);
+				showEvidence.addEventListener(MouseEvent.CLICK, hideEvidence);
+				
+				showDetail.label = "Show Details";
+				showDetail.removeEventListener(MouseEvent.CLICK, hideDetail);
+				showDetail.addEventListener(MouseEvent.CLICK, detailRequest);
+			}
+			
+			public function displayDetail(event:ResultEvent):void{
+				haveDetail = true;
+				
+				var type:String = detailSend.lastResult.Type; 
+				if(type == "Snippet"){
+					result.htmlText = detailSend.lastResult.Snippet;
+					detail = result.htmlText;
+				}
+				else if(type == "Detail"){
+					//TODO show Detail
+					result.htmlText = event.result.Category;
+					result.htmlText += event.result.Relation;
+					result.htmlText += event.result.Attribute;
+					detail = result.htmlText;
+				}
+				else{
+					//wrong type
+				}
+			}
+			
+			public function displayEvidence(event:ResultEvent):void{
+				haveEvidence = true;
+				
+				result.htmlText = event.result.Evidence;
+				evidence = result.htmlText;
+			}
+			
+			public function hideDetail(event:MouseEvent):void{
+				this.height = 20;
+				showDetail.label = "Show Details";
+				showDetail.removeEventListener(MouseEvent.CLICK, hideDetail);
+				showDetail.addEventListener(MouseEvent.CLICK, detailRequest);
+			}
+			
+			public function hideEvidence(event:MouseEvent):void{
+				this.height = 20;
+				showEvidence.label = "Show Evidences";
+				showEvidence.removeEventListener(MouseEvent.CLICK, hideEvidence);
+				showEvidence.addEventListener(MouseEvent.CLICK, evidenceRequest);
+			}
+			
+			public function redirect(event:Event):void{
+				var URL:String = data.u;
+				if(data.t == "doc"){
+					URL = "http://en.wikipedia.org/wiki/" + URL;
+				}
+				else if(data.t == "ent") {
+					URL = "http://dbpedia.org/resource/" + URL;
+				}
+				navigateToURL(new URLRequest(URL));
+				
+			}
+			
+			public function displayFault(event:FaultEvent):void{
+				Alert.show(event.toString(), "Fault");
+			}
+			
+			private function highLight(event:Event):void{
+				//test.text = event.target.toString();
+				event.target.parent.setStyle("textDecoration", "underline");
+				event.target.parent.setStyle("fontWeight", "bold");
+			}
+			
+			private function unhighLight(event:Event):void{
+				event.target.parent.setStyle("textDecoration", "none");
+				event.target.parent.setStyle("fontWeight", "normal");
+			}
+		]]>
+	</mx:Script>
+</mx:FormItem>
