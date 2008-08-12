@@ -21,7 +21,14 @@ public class KbVertex implements KbElement{
 	
 	private int type;
 	
+	private int aggregationNum = 1;
+	
 	private Map<String,Queue<Cursor>> cursors;
+	
+	public KbVertex(IResource resource, int type) {
+		this.resource = resource;
+		this.type = type;
+	}
 	
 	public KbVertex(IResource resource, int type, double weight) {
 		this.resource = resource;
@@ -47,6 +54,14 @@ public class KbVertex implements KbElement{
 	public IResource getResource(){
 		return resource;
 	}
+	
+	public void incrementAggregationNumber(){
+		aggregationNum++;
+	}
+	
+	public int getAggregationNumber(){
+		return aggregationNum;
+	} 
 	
 	public void setCost(double weight){
 		this.cost = weight;

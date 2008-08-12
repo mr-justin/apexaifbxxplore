@@ -1,6 +1,8 @@
 package org.ateam.xxplore.core.service.search;
 
-public interface KbElement {
+import java.io.Serializable;
+
+public interface KbElement extends Serializable {
 	
 	public static final int CVERTEX = 0;
 	

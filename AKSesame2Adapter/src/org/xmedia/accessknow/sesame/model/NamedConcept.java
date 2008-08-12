@@ -14,6 +14,15 @@ public class NamedConcept extends org.xmedia.oms.model.impl.NamedConcept {
 		super(uri, onto);
 	}
 	
-	
+//	@Override
+//	public String getLabel() {
+//		// TODO implement it!
+//		return toString();
+//	}
+
+	@Override
+	public String toString() {
+		return getUri();
+	}
 
 }

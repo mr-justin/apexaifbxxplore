@@ -4,6 +4,8 @@ import java.util.Set;
 
 
 public interface IIndividual extends IResource {
+	
+	public Set<IConcept> getTypes(); 
 	/**
 	 * 
 	 * @return a set of property members, each containing this individual as the source or the target 

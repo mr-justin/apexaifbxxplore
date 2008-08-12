@@ -1,0 +1,6 @@
+PARAMETERS FILE FOR THE ONTOLOGY ALIGNMENT PROCESS
+ontology1 = C:/Work/ontology1.owl;		//file name of ontology 1 (mandatory)
+ontology2 = C:/Work/onrology2.owl;		//file name of ontology 2 (mandatory)
+explicitFile = C:/Work/preknown.txt;	//file name of pre-known alignments (highly recommended, if existing)
+scenario = NOSCENARIO;				//description of scenario (highly recommended) *NOSCENARIO*, QUERYREWRITING, ONTOLOGYMERGING, DATAINTEGRATION, REASONING, ONTOLOGYEVOLUTION
+cutoffFile = C:/Work/result.txt;		//file name of cut-off alignments (mandatory)

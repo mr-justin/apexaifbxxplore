@@ -509,8 +509,8 @@ public class SesameOntology implements IOntology {
 		if(dao_manager instanceof ExtendedSesameDaoManager){
 			
 			IPropertyMemberAxiomDao propertyMemberDao = ((ExtendedSesameDaoManager)dao_manager).getPropertyMemberDao();
-//			count = propertyMemberDao.findAll().size();
-			count = 10000;
+			count = propertyMemberDao.findAll().size();
+//			count = 10000;
 			m_noOpm = count;
 			return count;
 		}

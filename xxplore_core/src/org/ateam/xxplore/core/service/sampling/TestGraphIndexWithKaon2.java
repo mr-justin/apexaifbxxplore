@@ -2,7 +2,9 @@ package org.ateam.xxplore.core.service.sampling;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashSet;
@@ -69,7 +71,7 @@ public class TestGraphIndexWithKaon2 {
 	
 	private static String ONTOLOGY_URI = "viewAIFB_OWL";
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args){
 		init();
 		
 		computeTotalNumber();
@@ -121,19 +123,31 @@ public class TestGraphIndexWithKaon2 {
 				}
 			}
 
-			// save graphIndex to the file *.graph
+//			 save graphIndex to the file *.graph
 			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
 				structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
 			File graphIndex = new File(path);
 			if(!graphIndex.exists()){
 				graphIndex.getParentFile().mkdirs();
-				graphIndex.createNewFile();
+				try {
+					graphIndex.createNewFile();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(graphIndex));
-			out.writeObject(resourceGraph);
-			out.close();
-
-			
+			ObjectOutputStream out;
+			try {
+				out = new ObjectOutputStream(new FileOutputStream(graphIndex));
+				out.writeObject(resourceGraph);
+				out.close();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		for(KbVertex vertex : resourceGraph.vertexSet()){
@@ -146,10 +160,23 @@ public class TestGraphIndexWithKaon2 {
 		// retrieve graphIndex
 		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
 			structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
-		ObjectInputStream in = new ObjectInputStream(new FileInputStream(path));
-		WeightedPseudograph<KbVertex,KbEdge> newResourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
-		in.close();
-		
+		ObjectInputStream in;
+		WeightedPseudograph<KbVertex,KbEdge> newResourceGraph = null;
+		try {
+			in = new ObjectInputStream(new FileInputStream(path));
+			newResourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
+			in.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		System.out.println("\n" + "new graph:");
 		for(KbVertex vertex : newResourceGraph.vertexSet()){
 			System.out.println("vertex: " + vertex + "\n(" + vertex.getCost() + ")");

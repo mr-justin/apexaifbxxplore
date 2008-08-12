@@ -85,9 +85,9 @@ public class SesameRepositoryFactory {
 		
 		String uriAsString = aUri.toString();
 		
-		uriAsString = StringUtils.replace(uriAsString, ":", "colon");
-		uriAsString = StringUtils.replace(uriAsString, "/", "slash");
-		uriAsString = StringUtils.replace(uriAsString, "#", "sharp");
+		uriAsString = StringUtils.replace(uriAsString, ":", "COLON");
+		uriAsString = StringUtils.replace(uriAsString, "/", "SLASH");
+		uriAsString = StringUtils.replace(uriAsString, "#", "SHARP");
 		
 		return uriAsString;
 	}

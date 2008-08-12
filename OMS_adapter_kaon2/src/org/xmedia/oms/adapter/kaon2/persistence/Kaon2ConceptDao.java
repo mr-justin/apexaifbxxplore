@@ -41,6 +41,7 @@ import org.xmedia.oms.model.api.IDatatype;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.IHierarchicalSchema;
 import org.xmedia.oms.model.api.IHierarchicalSchemaNode;
+import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IObjectProperty;
@@ -384,25 +385,27 @@ public class Kaon2ConceptDao extends AbstractKaon2Dao implements IConceptDao{
 		return superConcepts;
 	}
 	
-	public Set<IConcept> findTypes(INamedIndividual individual) throws DatasourceException{
+	public Set<IConcept> findTypes(IIndividual individual) throws DatasourceException{
 
 		//this method require a named individual
 		Emergency.checkPrecondition(individual instanceof INamedIndividual, "individual instanceof INamedIndividual");
+		
+		INamedIndividual namedIndividual = (INamedIndividual)individual; 
 
 		StatelessSession session = (StatelessSession)SessionFactory.getInstance().getCurrentSession();
 		Kaon2Ontology onto = (Kaon2Ontology) session.getOntology();
 		Set<IConcept> clazzSet = null;
 
-		if (s_log.isDebugEnabled()) s_log.debug("find types of: " + individual.getLabel());
+		if (s_log.isDebugEnabled()) s_log.debug("find types of: " + namedIndividual.getLabel());
 
 		Set<ClassMember> axioms = new HashSet<ClassMember>();
 		try {
 
-			individual = (INamedIndividual)checkForDelegate(individual); 
-			if(individual == null) return null;
+			namedIndividual = (INamedIndividual)checkForDelegate(namedIndividual); 
+			if(namedIndividual == null) return null;
 
 			axioms = onto.getDelegate().createAxiomRequest(ClassMember.class).
-			setCondition("individual", individual.getDelegate()).getAll();
+			setCondition("individual", namedIndividual.getDelegate()).getAll();
 
 			//no such axioms 
 			if(axioms == null || axioms.size() == 0) return null;
