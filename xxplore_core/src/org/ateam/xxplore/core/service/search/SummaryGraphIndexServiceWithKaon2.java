@@ -1,40 +1,27 @@
-package org.ateam.xxplore.core.service.sampling;
+package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+
 import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.PropertyUtils;
-import org.aifb.xxplore.shared.vocabulary.RDFS;
 import org.apache.log4j.Logger;
-import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.search.KbEdge;
 import org.ateam.xxplore.core.service.search.KbElement;
 import org.ateam.xxplore.core.service.search.KbVertex;
 import org.jgrapht.graph.WeightedPseudograph;
-import org.openrdf.repository.RepositoryException;
-import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
-import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
-import org.xmedia.accessknow.sesame.persistence.SesameConnection;
-import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
-import org.xmedia.accessknow.sesame.persistence.SesameSession;
-import org.xmedia.accessknow.sesame.persistence.SesameSessionFactory;
+import org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider;
+import org.xmedia.oms.adapter.kaon2.persistence.Kaon2DaoManager;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -43,36 +30,30 @@ import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.model.api.IResource;
-import org.xmedia.oms.model.api.OntologyImportException;
 import org.xmedia.oms.model.impl.DataProperty;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.persistence.DatasourceException;
-import org.xmedia.oms.persistence.IKbConnection;
+import org.xmedia.oms.persistence.IConnectionProvider;
 import org.xmedia.oms.persistence.ISession;
 import org.xmedia.oms.persistence.ISessionFactory;
-import org.xmedia.oms.persistence.ITransaction;
 import org.xmedia.oms.persistence.InvalidParameterException;
 import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.persistence.MissingParameterException;
-import org.xmedia.oms.persistence.OntologyCreationException;
 import org.xmedia.oms.persistence.OntologyLoadException;
 import org.xmedia.oms.persistence.OpenSessionException;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
 import org.xmedia.oms.persistence.StatelessSession;
 import org.xmedia.oms.persistence.dao.IConceptDao;
-import org.xmedia.oms.persistence.dao.IIndividualDao;
-import org.xmedia.oms.persistence.dao.ILiteralDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
 import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
-import org.xmedia.uris.impl.XMURIFactoryInsulated;
 
 
-public class TestGraphIndexWithSesame2 {
+public class SummaryGraphIndexServiceWithKaon2 {
 	
-	private static Logger s_log = Logger.getLogger(TestGraphIndexWithSesame2.class);
+	private static Logger s_log = Logger.getLogger(SummaryGraphIndexServiceWithSesame2.class);
 	
 	private static IOntology m_onto;
 	private static ISession m_session;
@@ -81,13 +62,8 @@ public class TestGraphIndexWithSesame2 {
 	public static int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
 	private static WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
 	
-	private static String repositoryDir = "D:\\BTC\\sampling\\repository";
-	private static String ONTOLOGY_URI = "target"; // repository directory name
-	private static String ONTOLOGY_FILE_PATH = "D:\\BTC\\target.rdf";
-	private static String ONTOLOGY_FILE_NAME = "target.rdf";
-	private static String BASE_ONTOLOGY_URI = "http://www.example.org/example";
-	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
-	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDFS_MEMORY_PERSISTENT;
+	private static String ONTOLOGY_FILE_PATH = "file:///D:/BTC/viewAIFB_OWL.owl";
+	private static String ONTOLOGY_URI = "viewAIFB_OWL";
 	
 	public static void main(String[] args){
 		init();
@@ -140,9 +116,8 @@ public class TestGraphIndexWithSesame2 {
 					
 				}
 			}
-			
 
-			// save graphIndex to the file *.graph
+//			 save graphIndex to the file *.graph
 			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
 				structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
 			File graphIndex = new File(path);
@@ -206,7 +181,7 @@ public class TestGraphIndexWithSesame2 {
 		
 	}
 	
-	public static boolean addGraphElement(KbVertex vertex1, KbVertex vertex2, IProperty property, WeightedPseudograph<KbVertex,KbEdge> graph){
+	public static void addGraphElement(KbVertex vertex1, KbVertex vertex2, IProperty property, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addEdge = false; 
 		KbEdge edge = null;
 		IObjectProperty objectProperty = new ObjectProperty(property.getUri());
@@ -229,11 +204,9 @@ public class TestGraphIndexWithSesame2 {
 		} else {
 			s_log.debug("Edge " + edge + " is already in the graph!");
 		}
-		
-		return addEdge;
 	}
 	
-	private static boolean addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
+	private static void addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addVertex = false;
 		addVertex = graph.addVertex(vertex);
 		if(addVertex) {
@@ -241,11 +214,9 @@ public class TestGraphIndexWithSesame2 {
 		} else {
 			s_log.debug("Vertex " + vertex + " is already in the graph!");
 		}
-		
-		return addVertex;
 	}
 	
-	public static boolean addGraphElement(KbEdge edge, WeightedPseudograph<KbVertex,KbEdge> graph){
+	public static void addGraphElement(KbEdge edge, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addEdge = false; 
 		if(!(graph.containsEdge(edge))){
 			KbVertex vertex1 = edge.getVertex1();
@@ -263,8 +234,6 @@ public class TestGraphIndexWithSesame2 {
 		} else {
 			s_log.debug("Edge " + edge + " is already in the graph!");
 		}
-		
-		return addEdge;
 	}
 	
 	private static void computeTotalNumber(){
@@ -305,109 +274,77 @@ public class TestGraphIndexWithSesame2 {
 		int numProMem = property.getNumberOfPropertyMember();
 		return computeEdgeWeight(numProMem,TOTAL_NUMBER_OF_PROPERTYMEMBER);
 	}  
+	
+	private static IOntology loadOntology(IConnectionProvider provider,Properties props, String uri) throws DatasourceException,MissingParameterException, InvalidParameterException,OntologyLoadException {
+
+		/** ******** load ontology using the provider object *********** */
+		props.setProperty(KbEnvironment.PHYSICAL_ONTOLOGY_URI, uri);
+
+		return provider.getConnection().loadOntology(PropertyUtils.convertToMap(props));
+	}
 
 	private static void init() {
-		
-//		load ontology	
-		Properties parameters = new Properties();
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, ONTOLOGY_URI);
-		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-		
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, ONTOLOGY_FILE_PATH);
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_NAME, ONTOLOGY_FILE_NAME);
-		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_ONTOLOGY_URI);
-		parameters.setProperty(ExploreEnvironment.LANGUAGE, LANGUAGE);
-		
-		m_onto = null;
-		SesameConnection ses_con = null;
+
+		/** ******** create connection provider *********** */
+		// String providerClazz =
+		// parameters.getProperty(KbEnvironment.CONNECTION_PROVIDER_CLASS);
+		IConnectionProvider provider = new Kaon2ConnectionProvider();
+
+		/** ******** configure connection provider *********** */
+		Properties props = new Properties();
+		// set connection url, e.g. jdbc:hsqldb:hsql://localhost/
+		props.setProperty(KbEnvironment.CONNECTION_URL, "");
+
+		// as kaon2 currently runs in memory only, no connection data to the db
+		// is required
+		// the product name of the database used by jena store, e.g. HSQL
+		props.setProperty(KbEnvironment.DB_PRODUCT_NAME, "");
+		// the driver class used for connection to the database, e.g.
+		// org.hsqldb.jdbcDriver
+		props.setProperty(KbEnvironment.DB_DRIVER_CLASS, "");
+
+		props.setProperty(KbEnvironment.TRANSACTION_CLASS,"org.xmedia.oms.adapter.kaon2.persistence.Kaon2Transaction");
+
+		provider.configure(props);
+
 		try {
-			try {
-				ses_con = new SesameConnection(repositoryDir);
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-
-			try {
-				m_onto = ses_con.loadOntology(PropertyUtils.convertToMap(parameters));
-			} catch (OntologyLoadException e) {
-
-				m_onto = ses_con.createOntology(PropertyUtils.convertToMap(parameters));
-
-				try {
-					addFileToRepository(m_onto, PropertyUtils.convertToMap(parameters));
-				} catch (MissingParameterException e1) {
-					e1.printStackTrace();
-				}
-			}
-		} catch (DatasourceException e) {
-			e.printStackTrace();
-		} catch (MissingParameterException e) {
-			e.printStackTrace();
-		} catch (InvalidParameterException e) {
-			e.printStackTrace();
-		} catch (OntologyCreationException e) {
-			e.printStackTrace();
-		} 
-		
-		SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
-		ISession session = null;
-		
-		try {
-			session = sesame_factory.openSession(ses_con, m_onto);
-		} catch (DatasourceException e) {
-			e.printStackTrace();
-		} catch (OpenSessionException e) {
-			e.printStackTrace();
+			m_onto = loadOntology(provider, props, ONTOLOGY_FILE_PATH);
+		} catch (DatasourceException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (MissingParameterException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (InvalidParameterException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (OntologyLoadException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
 		}
-		//set dao manager
-		PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
-		
-		session.close();	
-		
+
+		/** ******** create a session *********** */
 		ISessionFactory factory = SessionFactory.getInstance();
-		PersistenceUtil.setSessionFactory(factory); 
-		//open a new session with the ontology
+		// not much to configure now
+		factory.configure(PropertyUtils.convertToMap(props));
+		// set session factory
+		PersistenceUtil.setSessionFactory(factory);
+		// open a new session with the ontology
 		try {
-			m_session = factory.openSession(ses_con,m_onto);
+			factory.openSession(provider.getConnection(), m_onto);
 		} catch (DatasourceException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (OpenSessionException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-								
+
+		/** ******** set a dao manager *********** */
+		// the dao manager provides the daos to be use to access the knowledge
+		// base
+		PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
+
 	}
 
-	private static void addFileToRepository(IOntology onto, Map<String, Object> parameters)throws MissingParameterException{
-		
-		if(!parameters.containsKey(ExploreEnvironment.ONTOLOGY_FILE_PATH)) {
-			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_PATH+" missing!");
-		}
-		
-		if(!parameters.containsKey(ExploreEnvironment.ONTOLOGY_FILE_NAME)) {
-			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_NAME+" missing!");
-		}
-		
-		if(!parameters.containsKey(ExploreEnvironment.BASE_ONTOLOGY_URI)) {
-			throw new MissingParameterException(ExploreEnvironment.BASE_ONTOLOGY_URI+" missing!");
-		}
-		
-		if(!parameters.containsKey(ExploreEnvironment.LANGUAGE)) {
-			throw new MissingParameterException(ExploreEnvironment.LANGUAGE+" missing!");
-		}
-		
-		String filePath = (String)parameters.get(ExploreEnvironment.ONTOLOGY_FILE_PATH);
-		String baseUri = (String)parameters.get(ExploreEnvironment.BASE_ONTOLOGY_URI);
-		String language = (String)parameters.get(ExploreEnvironment.LANGUAGE);
-				
-		try {
-			onto.importOntology(language, baseUri, new FileReader(filePath));
-		} 
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} 
-		catch (OntologyImportException e) {
-			e.printStackTrace();
-		}
-	}
-	
 }

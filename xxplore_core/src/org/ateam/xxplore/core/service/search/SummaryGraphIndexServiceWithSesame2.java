@@ -1,4 +1,4 @@
-package org.ateam.xxplore.core.service.sampling;
+package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -70,9 +70,9 @@ import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
 import org.xmedia.uris.impl.XMURIFactoryInsulated;
 
 
-public class TestGraphIndexWithSesame2 {
+public class SummaryGraphIndexServiceWithSesame2 {
 	
-	private static Logger s_log = Logger.getLogger(TestGraphIndexWithSesame2.class);
+	private static Logger s_log = Logger.getLogger(SummaryGraphIndexServiceWithSesame2.class);
 	
 	private static IOntology m_onto;
 	private static ISession m_session;
