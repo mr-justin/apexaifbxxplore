@@ -56,19 +56,13 @@ public class TestGraphIndexWithKaon2 {
 	private static Logger s_log = Logger.getLogger(TestGraphIndexWithSesame2.class);
 	
 	private static IOntology m_onto;
-	
 	private static ISession m_session;
-	
 	private static String structureIndexDir = "D:\\BTC\\sampling\\structureIndex"; 
-	
 	public static int TOTAL_NUMBER_OF_INDIVIDUAL = 1; 
-	
 	public static int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
-	
 	private static WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
 	
 	private static String ONTOLOGY_FILE_PATH = "file:///D:/BTC/viewAIFB_OWL.owl";
-	
 	private static String ONTOLOGY_URI = "viewAIFB_OWL";
 	
 	public static void main(String[] args){
