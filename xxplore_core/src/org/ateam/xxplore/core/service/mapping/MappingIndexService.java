@@ -42,10 +42,7 @@ public class MappingIndexService {
 			if(datasources.length == 2){
 				datasource1 = datasources[0];
 				datasource2 = datasources[1];
-			} else {
-				datasource1 = "";
-				datasource2 = "";
-			}
+			} 
 			m_analyzer = new StandardAnalyzer();
 			File indexDir = new File(mappingIndexDir);
 			if (!indexDir.exists())
