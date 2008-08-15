@@ -23,7 +23,6 @@ import org.eclipse.core.runtime.Status;
 import org.eclipse.jface.resource.ImageDescriptor;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.ui.plugin.AbstractUIPlugin;
-import org.openrdf.repository.RepositoryException;
 import org.osgi.framework.BundleContext;
 import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
 import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
@@ -231,7 +230,7 @@ public class ExplorePlugin extends AbstractUIPlugin {
 
 					try {
 						ses_con = new SesameConnection(ExploreEnvironment.LocationHelper.getResourceLocation());
-					} catch (RepositoryException e2) {
+					} catch (Exception e2) {
 						e2.printStackTrace();
 						ses_con = (SesameConnection)provider.getConnection();
 					}	
