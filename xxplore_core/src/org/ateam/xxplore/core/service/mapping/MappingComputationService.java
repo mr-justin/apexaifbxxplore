@@ -1,21 +1,36 @@
 package org.ateam.xxplore.core.service.mapping;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Vector;
+
+import org.apache.commons.lang.StringUtils;
 
 import edu.unika.aifb.foam.input.ExplicitRelation;
 import edu.unika.aifb.foam.input.MyOntology;
 import edu.unika.aifb.foam.main.Align;
 import edu.unika.aifb.foam.main.Parameter;
 import edu.unika.aifb.foam.result.Evaluation;
-import edu.unika.aifb.foam.result.Save;
+import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
 	
-	private static final String[] ONTOLOGYFILES = {"D:/BTC/opus_august2007.rdf","D:/BTC/viewAIFB_OWL.owl"};   //ontologies 	
+	private static final String[] ONTOLOGYFILES = {"D:/BTC/opus_august2007.rdf","D:/BTC/swrc_v0.7.owl"};   //ontologies 
+	private static final String OUTPUTDIR = "D:/BTC/sampling/mapping";
+	private static final String DATASOURCE1 = "opus_august2007.rdf";
+	private static final String DATASOURCE2 = "swrc_v0.7.owl";
+	private static final String FILENAME = OUTPUTDIR.endsWith(File.separator) ? 
+			OUTPUTDIR + fsTransduceUri(DATASOURCE1) + "+" + fsTransduceUri(DATASOURCE2) : 
+			OUTPUTDIR + File.separator + fsTransduceUri(DATASOURCE1) + "+" + fsTransduceUri(DATASOURCE2);
+	private static final String CUTOFFFILE = FILENAME + ".mapping";
+//	private static final String RESULTFILE = FILENAME + ".details";	//output
+//	private static final String QUESTIONFILE = FILENAME + ".doubt";
+	
 	private static final String EXPLICITFILE = "";				
 //	private static final int SCENARIO = Parameter.NOSCENARIO;
-	private static final String CUTOFFFILE = "D:/BTC/sampling/mapping/results.txt";
 	private static final int MAXITERATIONS = 10;		
 	private static final boolean INTERNALTOO = Parameter.EXTERNAL;	
 	private static final boolean EFFICIENTAGENDA = Parameter.COMPLETE;
@@ -26,9 +41,7 @@ public class MappingComputationService {
 	private static final double MAXERROR = 0.9; 
 	private static final int NUMBERQUESTIONS = 5;
 	private static final boolean REMOVEDOUBLES = Parameter.REMOVEDOUBLES;	
-	private static final String RESULTFILE = "D:/BTC/sampling/mapping/details.txt";	//output
 	private static final double CUTOFF = 0.9;  //0.25;0.31;0.35(0.7);0.9(0.95)
-	private static final String QUESTIONFILE = "D:/BTC/sampling/mapping/doubt.txt";
 	private static final String MANUALMAPPINGSFILE = "D:/BTC/sampling/mapping/MapCSV.txt";	
 	
 	
@@ -37,6 +50,8 @@ public class MappingComputationService {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+		checkFiles();
+		addDatasources();
 		application();
 	}
 	
@@ -68,8 +83,6 @@ public class MappingComputationService {
 	 * has been run we can access the results.
 	 */
 	public static void application() {
-		checkFiles();
-		
 		Align align = new Align();								//creating the new alignment method
 		MyOntology ontologies = new MyOntology(ONTOLOGYFILES);	//assigning the ontologies
 		if (ontologies.ok == false) {System.exit(1);}
@@ -82,14 +95,43 @@ public class MappingComputationService {
 		align.p = parameter;
 		align.explicit = explicit;
 		align.align();									//process
+		saveVector(align.cutoff, CUTOFFFILE);
 //		Save.saveVector(align.alignments, RESULTFILE); 	//align.alignments is a vector, with each element containing entity 1, entity 2, relation, and confidence
 //		Save.saveCompleteEval(align.ontology,align.resultListLatest,MANUALMAPPINGSFILE,align.p.cutoff,RESULTFILE);	//save mappings
-		Save.saveImportantEval(align.ontology,align.resultListLatest,MANUALMAPPINGSFILE,align.p.cutoff,RESULTFILE);	//save mappings
-		Save.saveVector(align.cutoff, CUTOFFFILE);
-		Save.saveVector(align.questions, QUESTIONFILE);	//align.questions  is an similar vector just presenting the doubtful mappings, these should ideally be checked by the user
+//		Save.saveImportantEval(align.ontology,align.resultListLatest,MANUALMAPPINGSFILE,align.p.cutoff,RESULTFILE);	//save mappings
+//		Save.saveVector(align.cutoff, CUTOFFFILE);
+//		Save.saveVector(align.questions, QUESTIONFILE);	//align.questions  is an similar vector just presenting the doubtful mappings, these should ideally be checked by the user
 		Evaluation evaluation = new Evaluation(MANUALMAPPINGSFILE);
 		evaluation.doEvaluation(align.ontology,align.resultListLatest,align.p.cutoff);
 		evaluation.printEvaluation();
+	}
+	
+	public static void saveVector(Vector vector, String fileName) {
+		try {
+			File result = new File(fileName);
+			FileWriter out = new FileWriter(result, true);
+			Iterator iter = vector.iterator();
+			while (iter.hasNext()) {
+				String[] element = (String[]) iter.next();
+				out.write(element[0]+";"+element[1]+";"+element[2]+"\n");
+			}
+			out.close();
+			UserInterface.print("Saved "+fileName+"\n");
+		} catch (Exception e) {
+			UserInterface.print(e.getMessage());
+		}
+	}
+	
+	public static void addDatasources() {
+		try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(CUTOFFFILE));
+			writer.write(DATASOURCE1 + ";" + DATASOURCE2);
+			writer.newLine();
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void checkFiles() {
@@ -104,27 +146,36 @@ public class MappingComputationService {
 			}
 		}
 		
-		File details = new File(RESULTFILE);
-		if(!details.exists()){
-			details.getParentFile().mkdirs();
-			try {
-				details.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		
-		File doubt = new File(QUESTIONFILE);
-		if(!doubt.exists()){
-			doubt.getParentFile().mkdirs();
-			try {
-				doubt.createNewFile();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		File details = new File(RESULTFILE);
+//		if(!details.exists()){
+//			details.getParentFile().mkdirs();
+//			try {
+//				details.createNewFile();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		
+//		File doubt = new File(QUESTIONFILE);
+//		if(!doubt.exists()){
+//			doubt.getParentFile().mkdirs();
+//			try {
+//				doubt.createNewFile();
+//			} catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 	} 
+	
+	private static String fsTransduceUri(String uri) {
+
+		uri = StringUtils.replace(uri, ":", "COLON");
+		uri = StringUtils.replace(uri, "/", "SLASH");
+		uri = StringUtils.replace(uri, "#", "SHARP");
+
+		return uri;
+	}
 
 }
