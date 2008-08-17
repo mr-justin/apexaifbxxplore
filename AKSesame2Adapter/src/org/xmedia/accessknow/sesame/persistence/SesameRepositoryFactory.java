@@ -22,6 +22,10 @@ import org.openrdf.repository.config.RepositoryFactory;
 import org.openrdf.repository.config.RepositoryImplConfig;
 import org.openrdf.repository.config.RepositoryRegistry;
 import org.openrdf.repository.manager.LocalRepositoryManager;
+import org.openrdf.repository.sail.SailRepository;
+import org.openrdf.sail.Sail;
+import org.openrdf.sail.nativerdf.config.NativeStoreConfig;
+import org.openrdf.sail.nativerdf.config.NativeStoreFactory;
 
 public class SesameRepositoryFactory {
 
@@ -282,6 +286,35 @@ public class SesameRepositoryFactory {
 		}
 		
 		return repository;
+	}
+	
+	/**
+	 * Method for creating a native RDF repository with specific indices.
+	 * 
+	 * @param ontologyUri
+	 * @param type
+	 * @param indices
+	 * @return
+	 * @throws Exception
+	 */
+	public synchronized Repository createRepositoryWithIndex(
+			URI ontologyUri, 
+			URI type,
+			String indices) throws Exception  {
+		RepositoryType repositoryType = RepositoryType.forUrn(type.toString());
+		
+		if(repositoryType != RepositoryType.RDFS_NATIVE &&
+				repositoryType != RepositoryType.RDF_NATIVE)
+			throw new Exception("Unsopported repository type '" + type + "'. Only native store repositories may use indices.");
+		
+		NativeStoreConfig config = new NativeStoreConfig(indices);
+		Sail sail = new NativeStoreFactory().getSail(config);
+		
+		SailRepository theRepository = new SailRepository(sail);
+		theRepository.setDataDir(theManager.getRepositoryDir(fsTransduceUri(ontologyUri)));
+		theRepository.initialize();
+		
+		return theRepository;
 	}
 	
 	public synchronized boolean repositoryExist(URI theOntologyUri) {

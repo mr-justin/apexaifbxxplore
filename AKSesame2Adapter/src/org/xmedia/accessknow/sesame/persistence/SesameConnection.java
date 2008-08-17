@@ -500,15 +500,29 @@ public class SesameConnection extends AbstractConnection {
 		URI ontologyType = getParameterAsUri(parameters, KbEnvironment.ONTOLOGY_TYPE);
 		SesameRemoteRepositoryHandle remoteHandle = getRemoteHandle(ontologyUri);
 		
-		ontology = SesameOntology.createOntology(
-				ontologyUri, 
-				ontologyType, 
-				remoteHandle, 
-				this, 
-				getReificationSwitch(parameters));
-		
-		addOntology(ontology);
-		
+		if(parameters.containsKey(KbEnvironment.ONTOLOGY_INDEX)){
+	
+			try {
+				ontology = SesameOntology.createOntologyWithIndex(
+						ontologyUri,
+						(String)parameters.get(KbEnvironment.ONTOLOGY_INDEX),
+						ontologyType,
+						this, 
+						getReificationSwitch(parameters));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else{
+			ontology = SesameOntology.createOntology(
+					ontologyUri, 
+					ontologyType, 
+					remoteHandle, 
+					this, 
+					getReificationSwitch(parameters));
+		}
+	
+		addOntology(ontology);	
 		return ontology;
 	}
 	
