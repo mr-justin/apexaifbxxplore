@@ -194,11 +194,16 @@ public class XXPloreCommandline {
 						if(m_parameters.get(KbEnvironment.ONTOLOGY_TYPE).equals(SesameRepositoryFactory.RDFS_NATIVE) ||
 								m_parameters.get(KbEnvironment.ONTOLOGY_TYPE).equals(SesameRepositoryFactory.RDF_NATIVE)){
 							
-							String index = m_parameters.getProperty(KbEnvironment.ONTOLOGY_INDEX);
-							
-							if(index.equals("all")){
-								m_parameters.setProperty(KbEnvironment.ONTOLOGY_INDEX, IndexHelper.s_all_indices);
-								onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+							if(m_parameters.containsKey(KbEnvironment.ONTOLOGY_INDEX)){
+								String index = m_parameters.getProperty(KbEnvironment.ONTOLOGY_INDEX);
+								
+								if(index.equals("all")){
+									m_parameters.setProperty(KbEnvironment.ONTOLOGY_INDEX, IndexHelper.s_all_indices);
+									onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+								}
+								else{
+									onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+								}
 							}
 							else{
 								onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
