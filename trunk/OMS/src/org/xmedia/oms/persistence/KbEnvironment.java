@@ -71,7 +71,12 @@ public final class KbEnvironment {
 	 * the type of the ontology
 	 */
 	public static final String ONTOLOGY_TYPE ="ontology.type";
-		
+	
+	/**
+	 * the specific index for the ontology
+	 */
+	public static final String ONTOLOGY_INDEX ="ontology.index";
+	
 	/**
 	 * the uri of the ontology
 	 */
