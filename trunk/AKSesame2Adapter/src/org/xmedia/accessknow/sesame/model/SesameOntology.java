@@ -59,7 +59,6 @@ public class SesameOntology implements IOntology {
 	
 	private URI uri = null;
 	private Repository repository = null;
-	@SuppressWarnings("unused")
 	private SesameConnection connection = null;
 	
 	private SesameSparqlEvaluator theSparqlEvaluator = null;
@@ -169,6 +168,52 @@ public class SesameOntology implements IOntology {
 			throw new OntologyCreationException(theOntologyUri, e);
 		}
 		
+	}
+	
+	/**
+	 * 
+	 * Creates a SesamesOntology with specific indices. 
+	 * Note, only a native RDF repository supports such indices.
+	 * 
+	 * @param theOntologyUri
+	 * @param indices
+	 * @param itsType
+	 * @param connection
+	 * @param reificationEnabled
+	 * @return ontology
+	 * @throws OntologyCreationException
+	 * @throws Exception
+	 */
+	
+	public static IOntology createOntologyWithIndex(
+			URI theOntologyUri,
+			String indices,
+			URI itsType,  
+			SesameConnection connection, 
+			boolean reificationEnabled) throws OntologyCreationException,Exception {
+		
+		Repository itsRepository = null;
+		
+		try {
+			itsRepository = connection.getRepositoryFactory().createRepositoryWithIndex(
+					theOntologyUri, 
+					itsType, 
+					indices);
+			
+			if (itsRepository == null) {
+				throw new OntologyCreationException(theOntologyUri);
+			}
+			
+			return new SesameOntology(
+					itsRepository,
+					theOntologyUri,
+					connection,
+					reificationEnabled);
+		} catch (OntologyCreationException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new OntologyCreationException(theOntologyUri, e);
+		}
 	}
 	
 	/**
