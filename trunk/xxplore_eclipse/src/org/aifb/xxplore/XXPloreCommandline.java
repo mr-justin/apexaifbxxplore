@@ -23,6 +23,7 @@ import org.openrdf.repository.RepositoryException;
 import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
 import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
 import org.xmedia.accessknow.sesame.persistence.SesameConnection;
+import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
 import org.xmedia.accessknow.sesame.persistence.SesameSession;
 import org.xmedia.accessknow.sesame.persistence.SesameSessionFactory;
 import org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider;
@@ -150,13 +151,13 @@ public class XXPloreCommandline {
 
 			provider.configure(m_parameters);
 
-			//				set resource and index locations ...
+			//set resource and index locations ...
 			if(m_parameters.containsKey(ExploreEnvironment.RESOURCE_LOCATION)){
 				String location = m_parameters.getProperty(ExploreEnvironment.RESOURCE_LOCATION);
 				ExploreEnvironment.LocationHelper.setResourceLocation(location);
 			}
 			else{
-				//					default value
+				//default value
 				String location = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1).toString()
 				+ ExploreEnvironment.DEFAULT_RESOURCE_LOCATION_SUFFIX;
 				ExploreEnvironment.LocationHelper.setResourceLocation(location);
@@ -185,13 +186,27 @@ public class XXPloreCommandline {
 						ses_con = (SesameConnection)provider.getConnection();
 					}	
 
-					try {
+					try {						
 						onto = ses_con.loadOntology(PropertyUtils.convertToMap(m_parameters));
 					}
 					catch (OntologyLoadException e) {
 
-						onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
-
+						if(m_parameters.get(KbEnvironment.ONTOLOGY_TYPE).equals(SesameRepositoryFactory.RDFS_NATIVE) ||
+								m_parameters.get(KbEnvironment.ONTOLOGY_TYPE).equals(SesameRepositoryFactory.RDF_NATIVE)){
+							
+							String index = m_parameters.getProperty(KbEnvironment.ONTOLOGY_INDEX);
+							
+							if(index.equals("all")){
+								m_parameters.setProperty(KbEnvironment.ONTOLOGY_INDEX, IndexHelper.s_all_indices);
+								onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+							}
+							else{
+								onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+							}
+						}
+						else{
+							onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+						}					
 						try {
 							addFileToRepository(onto,PropertyUtils.convertToMap(m_parameters));
 						} catch (MissingParameterException e1) {
@@ -525,11 +540,6 @@ public class XXPloreCommandline {
 			else{
 				
 				strgBuffer.insert(0, prefix);				
-//				if(strgBuffer.length() > line_length){				
-//					for(int i = 0; i < strgBuffer.length(); i += line_length){					
-//						strgBuffer.insert(i, "\n");					
-//					}
-//				}
 				System.out.println(strgBuffer.toString().toUpperCase());
 			}
 		}
@@ -543,5 +553,12 @@ public class XXPloreCommandline {
 		private static final int KEYWORD_SEARCH = 4;
 	
 		private static int CURRENT_STATE;
+	}
+
+	private static class IndexHelper{
+		
+		private static final String s_all_indices = "spoc,spco,sopc,socp,scpo,scop,psoc,psco,posc,pocs," +
+				"pcso,pcos,ospc,oscp,opsc,opcs,ocsp,ocps,cspo,csop,cpso,cpos,cosp,cops";
+	
 	}
 }
