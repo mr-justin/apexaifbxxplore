@@ -10,15 +10,11 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
-import org.ateam.xxplore.core.ExploreEnvironment;
 
 public class MappingIndexService {
 	
 	private static final String MAPPING_FILE = "D:/BTC/sampling/mapping/opus_august2007.rdf+swrc_v0.7.owl.mapping";
 	private static final String MAPPING_INDEX_DIR = "D:/BTC/sampling/mapping/index";
-	
-	private static final String DATASOURCE1 = "opus_august2007.rdf";
-	private static final String DATASOURCE2 = "swrc_v0.7.owl"; 
 	
 	private IndexWriter indexWriter;
 	private StandardAnalyzer m_analyzer;
@@ -31,7 +27,6 @@ public class MappingIndexService {
 	public static void main(String[] args) {
 		MappingIndexService service = new MappingIndexService(MAPPING_FILE, MAPPING_INDEX_DIR, true);
 		service.indexMappings();
-		service.disposeService();
 	}
 	
 	public MappingIndexService(String mappingFile, String mappingIndexDir, boolean create) {
@@ -96,16 +91,8 @@ public class MappingIndexService {
 			
 			indexWriter.optimize();
 	        indexWriter.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
-	
-	public void disposeService() {
-		try {
-			m_analyzer = null;
 			br.close();
+			m_analyzer = null;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
