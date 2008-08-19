@@ -20,7 +20,7 @@ public class MappingComputationService {
 	
 	private static String[] ONTOLOGIES = {"D:/BTC/opus_august2007.rdf","D:/BTC/swrc_v0.7.owl"};   //ontologies 
 	private static String[] DATASOURCES = {"opus_august2007.rdf","swrc_v0.7.owl"};
-	private static String OUTPUTDIR  = "D:/BTC/sampling/mapping";
+	private static String OUTPUTDIR  = "D:/BTC/sampling/mappingResult";
 	
 	private String ontology1;
 	private String ontology2;

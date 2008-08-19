@@ -13,8 +13,8 @@ import org.apache.lucene.index.IndexWriter;
 
 public class MappingIndexService {
 	
-	private static final String MAPPING_FILE = "D:/BTC/sampling/mapping/opus_august2007.rdf+swrc_v0.7.owl.mapping";
-	private static final String MAPPING_INDEX_DIR = "D:/BTC/sampling/mapping/index";
+	private static final String MAPPING_FILE = "D:/BTC/sampling/mappingResult/opus_august2007.rdf+swrc_v0.7.owl.mapping";
+	private static final String MAPPING_INDEX_DIR = "D:/BTC/sampling/mappingIndex";
 	
 	private IndexWriter indexWriter;
 	private StandardAnalyzer m_analyzer;
