@@ -16,6 +16,7 @@ import java.util.Set;
 import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.search.KbEdge;
 import org.ateam.xxplore.core.service.search.KbElement;
 import org.ateam.xxplore.core.service.search.KbVertex;
@@ -55,18 +56,34 @@ public class SummaryGraphIndexServiceWithKaon2 {
 	
 	private static Logger s_log = Logger.getLogger(SummaryGraphIndexServiceWithSesame2.class);
 	
-	private static IOntology m_onto;
-	private static ISession m_session;
-	private static String structureIndexDir = "D:\\BTC\\sampling\\structureIndex"; 
-	public static int TOTAL_NUMBER_OF_INDIVIDUAL = 1; 
-	public static int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
-	private static WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
+	private IOntology m_onto;
+	private ISession m_session;
+	
+	private String structureIndexDir; 
+	private String ontologyFilePath;
+	private String ontologyUri;
+	
+	public int TOTAL_NUMBER_OF_INDIVIDUAL = 1; 
+	public int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
+	private WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
 	
 	private static String ONTOLOGY_FILE_PATH = "file:///D:/BTC/viewAIFB_OWL.owl";
 	private static String ONTOLOGY_URI = "viewAIFB_OWL";
+	private static String STRUCTURE_INDEX_DIR = "D:\\BTC\\sampling\\structureIndex";
+//	
+	public static void main(String[] args) {
+		SummaryGraphIndexServiceWithKaon2 service = new SummaryGraphIndexServiceWithKaon2(ONTOLOGY_FILE_PATH, ONTOLOGY_URI, STRUCTURE_INDEX_DIR);
+		service.indexSummaryGraph();
+	} 
 	
-	public static void main(String[] args){
+	public SummaryGraphIndexServiceWithKaon2(String ontologyFilePath, String ontologyUri, String structureIndexDir) {
+		this.ontologyFilePath = ontologyFilePath;
+		this.ontologyUri = ontologyUri;
+		this.structureIndexDir = structureIndexDir;
 		init();
+	}
+	
+	public void indexSummaryGraph() {
 		
 		computeTotalNumber();
 		
@@ -116,10 +133,11 @@ public class SummaryGraphIndexServiceWithKaon2 {
 					
 				}
 			}
+			
 
-//			 save graphIndex to the file *.graph
-			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
-				structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
+			// save graphIndex into the file *.graph
+			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ontologyUri + ".graph" : 
+				structureIndexDir + File.separator + ontologyUri + ".graph");
 			File graphIndex = new File(path);
 			if(!graphIndex.exists()){
 				graphIndex.getParentFile().mkdirs();
@@ -152,36 +170,36 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		}
 		
 		// retrieve graphIndex
-		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
-			structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
-		ObjectInputStream in;
-		WeightedPseudograph<KbVertex,KbEdge> newResourceGraph = null;
-		try {
-			in = new ObjectInputStream(new FileInputStream(path));
-			newResourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
-			in.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println("\n" + "new graph:");
-		for(KbVertex vertex : newResourceGraph.vertexSet()){
-			System.out.println("vertex: " + vertex + "\n(" + vertex.getCost() + ")");
-		}
-		for(KbEdge edge : newResourceGraph.edgeSet()){
-			System.out.println("edge: " + edge + "\n(" + edge.getCost() + ")");
-		}
+//		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
+//			structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
+//		ObjectInputStream in;
+//		WeightedPseudograph<KbVertex,KbEdge> newResourceGraph = null;
+//		try {
+//			in = new ObjectInputStream(new FileInputStream(path));
+//			newResourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
+//			in.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		System.out.println("\n" + "new graph:");
+//		for(KbVertex vertex : newResourceGraph.vertexSet()){
+//			System.out.println("vertex: " + vertex + "\n(" + vertex.getCost() + ")");
+//		}
+//		for(KbEdge edge : newResourceGraph.edgeSet()){
+//			System.out.println("edge: " + edge + "\n(" + edge.getCost() + ")");
+//		}
 		
 	}
 	
-	public static void addGraphElement(KbVertex vertex1, KbVertex vertex2, IProperty property, WeightedPseudograph<KbVertex,KbEdge> graph){
+	public boolean addGraphElement(KbVertex vertex1, KbVertex vertex2, IProperty property, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addEdge = false; 
 		KbEdge edge = null;
 		IObjectProperty objectProperty = new ObjectProperty(property.getUri());
@@ -204,9 +222,11 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		} else {
 			s_log.debug("Edge " + edge + " is already in the graph!");
 		}
+		
+		return addEdge;
 	}
 	
-	private static void addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
+	private boolean addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addVertex = false;
 		addVertex = graph.addVertex(vertex);
 		if(addVertex) {
@@ -214,9 +234,11 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		} else {
 			s_log.debug("Vertex " + vertex + " is already in the graph!");
 		}
+		
+		return addVertex;
 	}
 	
-	public static void addGraphElement(KbEdge edge, WeightedPseudograph<KbVertex,KbEdge> graph){
+	public boolean addGraphElement(KbEdge edge, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addEdge = false; 
 		if(!(graph.containsEdge(edge))){
 			KbVertex vertex1 = edge.getVertex1();
@@ -234,9 +256,11 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		} else {
 			s_log.debug("Edge " + edge + " is already in the graph!");
 		}
+		
+		return addEdge;
 	}
 	
-	private static void computeTotalNumber(){
+	private void computeTotalNumber(){
 		StatelessSession session = (StatelessSession)SessionFactory.getInstance().getCurrentSession();
 		IOntology onto = session.getOntology();
 		
@@ -251,39 +275,31 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		TOTAL_NUMBER_OF_PROPERTYMEMBER = numoPropertyMember;
 	}
 	
-	private static double computeEdgeWeight(double num, double totalNum){
+	private double computeEdgeWeight(double num, double totalNum){
 		if(num == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
 		return 2-Math.log(1+num/totalNum)/Math.log(2);
 	}
 	
-	private static double computeVertexWeight(double num, double totalNum){
+	private double computeVertexWeight(double num, double totalNum){
 		if(num == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
 		return 2-Math.log(1+num/totalNum)/Math.log(2); 
 	}
 	
-	private static double computeWeight(INamedConcept concept){
+	private double computeWeight(INamedConcept concept){
 		int numIndividual = concept.getNumberOfIndividuals();
 		return computeVertexWeight(numIndividual,TOTAL_NUMBER_OF_INDIVIDUAL);
 	}
 	
-	private static double computeWeight(IProperty property){
+	private double computeWeight(IProperty property){
 		int numProMem = property.getNumberOfPropertyMember();
 		return computeEdgeWeight(numProMem,TOTAL_NUMBER_OF_PROPERTYMEMBER);
 	}  
-	
-	private static IOntology loadOntology(IConnectionProvider provider,Properties props, String uri) throws DatasourceException,MissingParameterException, InvalidParameterException,OntologyLoadException {
 
-		/** ******** load ontology using the provider object *********** */
-		props.setProperty(KbEnvironment.PHYSICAL_ONTOLOGY_URI, uri);
-
-		return provider.getConnection().loadOntology(PropertyUtils.convertToMap(props));
-	}
-
-	private static void init() {
+	private void init() {
 
 		/** ******** create connection provider *********** */
 		// String providerClazz =
@@ -308,7 +324,7 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		provider.configure(props);
 
 		try {
-			m_onto = loadOntology(provider, props, ONTOLOGY_FILE_PATH);
+			m_onto = loadOntology(provider, props, ontologyFilePath);
 		} catch (DatasourceException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -345,6 +361,14 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		// base
 		PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
 
+	}
+	
+	private static IOntology loadOntology(IConnectionProvider provider,Properties props, String uri) throws DatasourceException,MissingParameterException, InvalidParameterException,OntologyLoadException {
+
+		/** ******** load ontology using the provider object *********** */
+		props.setProperty(KbEnvironment.PHYSICAL_ONTOLOGY_URI, uri);
+
+		return provider.getConnection().loadOntology(PropertyUtils.convertToMap(props));
 	}
 
 }

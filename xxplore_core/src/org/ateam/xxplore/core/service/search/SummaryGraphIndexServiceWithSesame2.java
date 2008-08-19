@@ -1,35 +1,24 @@
 package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.StringWriter;
-import java.net.URI;
-import java.net.URISyntaxException;
-import java.util.Arrays;
 import java.util.HashSet;
-import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.PropertyUtils;
-import org.aifb.xxplore.shared.vocabulary.RDFS;
 import org.apache.log4j.Logger;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.search.KbEdge;
 import org.ateam.xxplore.core.service.search.KbElement;
 import org.ateam.xxplore.core.service.search.KbVertex;
 import org.jgrapht.graph.WeightedPseudograph;
-import org.openrdf.repository.RepositoryException;
-import org.xmedia.accessknow.sesame.persistence.ConnectionProvider;
 import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
 import org.xmedia.accessknow.sesame.persistence.SesameConnection;
 import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
@@ -44,15 +33,12 @@ import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.api.OntologyImportException;
-import org.xmedia.oms.model.impl.DataProperty;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.persistence.DatasourceException;
-import org.xmedia.oms.persistence.IKbConnection;
 import org.xmedia.oms.persistence.ISession;
 import org.xmedia.oms.persistence.ISessionFactory;
-import org.xmedia.oms.persistence.ITransaction;
 import org.xmedia.oms.persistence.InvalidParameterException;
 import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.persistence.MissingParameterException;
@@ -62,10 +48,6 @@ import org.xmedia.oms.persistence.OpenSessionException;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
 import org.xmedia.oms.persistence.StatelessSession;
-import org.xmedia.oms.persistence.dao.IConceptDao;
-import org.xmedia.oms.persistence.dao.IIndividualDao;
-import org.xmedia.oms.persistence.dao.ILiteralDao;
-import org.xmedia.oms.persistence.dao.IPropertyDao;
 import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
 import org.xmedia.uris.impl.XMURIFactoryInsulated;
 
@@ -74,14 +56,18 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	
 	private static Logger s_log = Logger.getLogger(SummaryGraphIndexServiceWithSesame2.class);
 	
-	private static IOntology m_onto;
-	private static ISession m_session;
-	private static String structureIndexDir = "D:\\BTC\\sampling\\structureIndex"; 
-	public static int TOTAL_NUMBER_OF_INDIVIDUAL = 1; 
-	public static int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
-	private static WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
+	private IOntology m_onto;
+	private ISession m_session;
 	
-	private static String repositoryDir = "D:\\BTC\\sampling\\repository";
+	private String structureIndexDir; 
+	private String repositoryDir;
+	private Properties parameters;
+	
+	public int TOTAL_NUMBER_OF_INDIVIDUAL = 1; 
+	public int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
+	private WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
+	
+	
 	private static String ONTOLOGY_URI = "target"; // repository directory name
 	private static String ONTOLOGY_FILE_PATH = "D:\\BTC\\target.rdf";
 	private static String ONTOLOGY_FILE_NAME = "target.rdf";
@@ -89,8 +75,31 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
 	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDFS_MEMORY_PERSISTENT;
 	
-	public static void main(String[] args){
-		init();
+	private static String REPOSITORY_DIR = "D:\\BTC\\sampling\\repository";
+	private static String STRUCTURE_INDEX_DIR = "D:\\BTC\\sampling\\structureIndex";
+	
+	public static void main(String[] args) {
+		Properties parameters = new Properties();
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, ONTOLOGY_URI);
+		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
+		
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, ONTOLOGY_FILE_PATH);
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_NAME, ONTOLOGY_FILE_NAME);
+		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_ONTOLOGY_URI);
+		parameters.setProperty(ExploreEnvironment.LANGUAGE, LANGUAGE);
+		
+		SummaryGraphIndexServiceWithSesame2 service = new SummaryGraphIndexServiceWithSesame2(parameters, REPOSITORY_DIR, STRUCTURE_INDEX_DIR);
+		service.indexSummaryGraph();
+	} 
+	
+	public SummaryGraphIndexServiceWithSesame2(Properties parameters, String repositoryDir, String structureIndexDir) {
+		this.parameters = parameters;
+		this.repositoryDir = repositoryDir;
+		this.structureIndexDir = structureIndexDir;
+		init();	
+	}
+	
+	public void indexSummaryGraph() {
 		
 		computeTotalNumber();
 		
@@ -142,9 +151,9 @@ public class SummaryGraphIndexServiceWithSesame2 {
 			}
 			
 
-			// save graphIndex to the file *.graph
-			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
-				structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
+			// save graphIndex into the file *.graph
+			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
+				structureIndexDir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
 			File graphIndex = new File(path);
 			if(!graphIndex.exists()){
 				graphIndex.getParentFile().mkdirs();
@@ -177,36 +186,36 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		}
 		
 		// retrieve graphIndex
-		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
-			structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
-		ObjectInputStream in;
-		WeightedPseudograph<KbVertex,KbEdge> newResourceGraph = null;
-		try {
-			in = new ObjectInputStream(new FileInputStream(path));
-			newResourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
-			in.close();
-		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		System.out.println("\n" + "new graph:");
-		for(KbVertex vertex : newResourceGraph.vertexSet()){
-			System.out.println("vertex: " + vertex + "\n(" + vertex.getCost() + ")");
-		}
-		for(KbEdge edge : newResourceGraph.edgeSet()){
-			System.out.println("edge: " + edge + "\n(" + edge.getCost() + ")");
-		}
+//		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ONTOLOGY_URI + ".graph" : 
+//			structureIndexDir + File.separator + ONTOLOGY_URI + ".graph");
+//		ObjectInputStream in;
+//		WeightedPseudograph<KbVertex,KbEdge> newResourceGraph = null;
+//		try {
+//			in = new ObjectInputStream(new FileInputStream(path));
+//			newResourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
+//			in.close();
+//		} catch (FileNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		} catch (ClassNotFoundException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//
+//		System.out.println("\n" + "new graph:");
+//		for(KbVertex vertex : newResourceGraph.vertexSet()){
+//			System.out.println("vertex: " + vertex + "\n(" + vertex.getCost() + ")");
+//		}
+//		for(KbEdge edge : newResourceGraph.edgeSet()){
+//			System.out.println("edge: " + edge + "\n(" + edge.getCost() + ")");
+//		}
 		
 	}
 	
-	public static boolean addGraphElement(KbVertex vertex1, KbVertex vertex2, IProperty property, WeightedPseudograph<KbVertex,KbEdge> graph){
+	public boolean addGraphElement(KbVertex vertex1, KbVertex vertex2, IProperty property, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addEdge = false; 
 		KbEdge edge = null;
 		IObjectProperty objectProperty = new ObjectProperty(property.getUri());
@@ -233,7 +242,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		return addEdge;
 	}
 	
-	private static boolean addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
+	private boolean addGraphElement(KbVertex vertex, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addVertex = false;
 		addVertex = graph.addVertex(vertex);
 		if(addVertex) {
@@ -245,7 +254,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		return addVertex;
 	}
 	
-	public static boolean addGraphElement(KbEdge edge, WeightedPseudograph<KbVertex,KbEdge> graph){
+	public boolean addGraphElement(KbEdge edge, WeightedPseudograph<KbVertex,KbEdge> graph){
 		boolean addEdge = false; 
 		if(!(graph.containsEdge(edge))){
 			KbVertex vertex1 = edge.getVertex1();
@@ -267,7 +276,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		return addEdge;
 	}
 	
-	private static void computeTotalNumber(){
+	private void computeTotalNumber(){
 		StatelessSession session = (StatelessSession)SessionFactory.getInstance().getCurrentSession();
 		IOntology onto = session.getOntology();
 		
@@ -282,42 +291,33 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		TOTAL_NUMBER_OF_PROPERTYMEMBER = numoPropertyMember;
 	}
 	
-	private static double computeEdgeWeight(double num, double totalNum){
+	private double computeEdgeWeight(double num, double totalNum){
 		if(num == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
 		return 2-Math.log(1+num/totalNum)/Math.log(2);
 	}
 	
-	private static double computeVertexWeight(double num, double totalNum){
+	private double computeVertexWeight(double num, double totalNum){
 		if(num == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
 		return 2-Math.log(1+num/totalNum)/Math.log(2); 
 	}
 	
-	private static double computeWeight(INamedConcept concept){
+	private double computeWeight(INamedConcept concept){
 		int numIndividual = concept.getNumberOfIndividuals();
 		return computeVertexWeight(numIndividual,TOTAL_NUMBER_OF_INDIVIDUAL);
 	}
 	
-	private static double computeWeight(IProperty property){
+	private double computeWeight(IProperty property){
 		int numProMem = property.getNumberOfPropertyMember();
 		return computeEdgeWeight(numProMem,TOTAL_NUMBER_OF_PROPERTYMEMBER);
 	}  
 
-	private static void init() {
+	private void init() {
 		
 //		load ontology	
-		Properties parameters = new Properties();
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, ONTOLOGY_URI);
-		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-		
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, ONTOLOGY_FILE_PATH);
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_NAME, ONTOLOGY_FILE_NAME);
-		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_ONTOLOGY_URI);
-		parameters.setProperty(ExploreEnvironment.LANGUAGE, LANGUAGE);
-		
 		m_onto = null;
 		SesameConnection ses_con = null;
 		try {
