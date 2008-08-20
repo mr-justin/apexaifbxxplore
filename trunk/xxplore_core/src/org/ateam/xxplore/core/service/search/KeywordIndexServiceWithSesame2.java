@@ -30,6 +30,7 @@ import org.xmedia.accessknow.sesame.persistence.SesameSession;
 import org.xmedia.accessknow.sesame.persistence.SesameSessionFactory;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IDataProperty;
+import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
@@ -73,8 +74,6 @@ public class KeywordIndexServiceWithSesame2 {
 	private Properties parameters;
 	
 	private String datasource;
-	
-	
 	
 	private static String ONTOLOGY_URI = "target"; // repository directory name
 	private static String ONTOLOGY_FILE_PATH = "D:\\BTC\\target.rdf";
@@ -138,8 +137,7 @@ public class KeywordIndexServiceWithSesame2 {
 			indexSearcher.close();
 
 			indexDataSourceByLiteral(indexWriter);
-
-			indexGraphElement(indexWriter);
+			indexDataSourceByIndividual(indexWriter);
 
 			indexWriter.optimize();
 			indexWriter.close();
@@ -172,59 +170,6 @@ public class KeywordIndexServiceWithSesame2 {
 					doc.add(new Field("uri", uri, Field.Store.YES, Field.Index.NO));
 				}
 				indexWriter.addDocument(doc);
-				
-				if(concept instanceof NamedConcept){
-					NamedConcept ncon = (NamedConcept)concept;
-//					Set<IProperty> propsFrom = ncon.getPropertiesFrom();
-//					if(propsFrom != null){
-//						for(IProperty prop : propsFrom){
-//							if(prop instanceof DataProperty){
-//								Document dpdoc = new Document();
-//								System.out.println(prop.getLabel());
-//								System.out.println(ncon.getUri());
-//								dpdoc.add(new Field("attribute", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-//								dpdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-//								indexWriter.addDocument(dpdoc);
-//						}
-//					}
-					Set<Pair> proAndRanges = ncon.getPropertiesAndRangesFrom(); 
-					if(proAndRanges != null){
-						for(Pair pair : proAndRanges){
-							
-							IProperty prop = (IProperty)pair.getHead();
-							
-							if(prop instanceof IObjectProperty){
-								
-								String range = new String();
-								
-								if(pair.getTail() instanceof IConcept){
-									range = ((IConcept)pair.getTail()).getLabel();
-								}
-								else if(pair.getTail() instanceof INamedConcept){
-									range = ((INamedConcept)pair.getTail()).getUri();
-								}
-								
-								Document opdoc = new Document();
-//								System.out.println(prop.getLabel());
-//								System.out.println(ncon.getUri());
-								opdoc.add(new Field("relation", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-								opdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-								opdoc.add(new Field("range", range, Field.Store.YES, Field.Index.NO));
-								indexWriter.addDocument(opdoc);
-
-							}
-							else if (prop instanceof IDataProperty ){
-								Document dpdoc = new Document();
-//								System.out.println(prop.getLabel());
-//								System.out.println(ncon.getUri());
-								dpdoc.add(new Field("attribute", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-								dpdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-								indexWriter.addDocument(dpdoc);
-							}
-						}
-					}
-					
-				}
 				
 				Set<String> values = new HashSet<String>();
 				Term term = new Term("word", label.toLowerCase());
@@ -334,43 +279,49 @@ public class KeywordIndexServiceWithSesame2 {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void indexGraphElement(IndexWriter indexWriter){
+	public void indexDataSourceByIndividual (IndexWriter indexWriter){
 		IIndividualDao individualDao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
 		List individuals = individualDao.findAll();
 //		System.out.println("individuals.size(): " + individuals.size());
 		int i = 0; 
 		try{
-			for (Object individual:individuals){
+			for (Object souceIndividual:individuals){
 //				System.out.println(i + ": " + ((INamedIndividual)individual).getLabel());
-				if (individual instanceof INamedIndividual) {
-//					INamedConcept concept = null;
-//					Object[] cons =  ((INamedIndividual)individual).getTypes().toArray();
-//					if(cons != null && cons.length > 0){
-//						for (int j = cons.length - 1; j > 0; j--) {
-//							if (isSubConcept(cons[j],cons[j-1])) {
-//								Object o = cons[j];
-//								cons[j] = cons[j-1];
-//								cons[j-1] = o;
-//							}
-//						}
-//						concept = (INamedConcept)cons[0];
-//						System.out.println(i + ": " + concept.getLabel());
-//					}	
-					Set<IConcept> cons = ((INamedIndividual)individual).getTypes();
-					Set<IPropertyMember> propmembers = ((INamedIndividual)individual).getPropertyFromValues();
+				if (souceIndividual instanceof IIndividual) {
+					Set<IConcept> sourceConcepts = ((IIndividual)souceIndividual).getTypes();
+					Document doc = new Document();
+					doc.add(new Field("type", INDIVIDUAL, Field.Store.YES, Field.Index.NO));
+					doc.add(new Field("label", ((IIndividual)souceIndividual).getLabel(), Field.Store.NO, Field.Index.TOKENIZED));
+					
+					indexWriter.addDocument(doc);
+					
+					
+					
+					Set<IPropertyMember> propmembers = ((IIndividual)souceIndividual).getPropertyFromValues();
 					for(IPropertyMember propmember : propmembers){
-						if(propmember.getTarget() instanceof ILiteral){
-							for(IConcept con : cons){
-								Document doc = new Document();
-								doc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-								doc.add(new Field("dataproperty", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.NO));
-								doc.add(new Field("concept", ((INamedConcept)con).getUri(),Field.Store.YES, Field.Index.NO));
+						if(propmember.getType() == PropertyMember.DATA_PROPERTY_MEMBER && propmember.getTarget() instanceof ILiteral){
+							for(IConcept scon : sourceConcepts){
+								Document attrdoc = new Document();
+								attrdoc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
+								attrdoc.add(new Field("attribute", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
+								attrdoc.add(new Field("concept", ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
 								
-								indexWriter.addDocument(doc);
+								indexWriter.addDocument(attrdoc);
 							}
 						}	
-						else if(propmember.getType() == PropertyMember.OBJECT_PROPERTY_MEMBER){
-							
+						else if(propmember.getType() == PropertyMember.OBJECT_PROPERTY_MEMBER && propmember.getTarget() instanceof IIndividual){
+							IIndividual targetIndividual = (IIndividual)propmember.getTarget();
+							Set<IConcept> targetConcepts = ((IIndividual)targetIndividual).getTypes();
+							for(IConcept scon : sourceConcepts){
+								for(IConcept tcon : targetConcepts) {
+									Document reldoc = new Document();
+									reldoc.add(new Field("relation", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
+									reldoc.add(new Field("domain", ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
+									reldoc.add(new Field("range", ((INamedConcept)tcon).getUri(),Field.Store.YES, Field.Index.NO));
+								
+									indexWriter.addDocument(reldoc);
+								}
+							}
 						}
 					}
 				}
@@ -383,7 +334,6 @@ public class KeywordIndexServiceWithSesame2 {
 			e.printStackTrace();
 		} 
 	}
-	
 	
 	private void init() {
 		
