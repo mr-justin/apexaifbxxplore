@@ -1,6 +1,7 @@
 package org.xmedia.oms.adapter.kaon2.persistence;
 
 
+import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
 
@@ -35,6 +36,7 @@ import org.xmedia.oms.model.api.OntologyImportException;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.persistence.AbstractDataSource;
 import org.xmedia.oms.persistence.DatasourceException;
+import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.persistence.SessionFactory;
 import org.xmedia.oms.persistence.StatelessSession;
 
@@ -43,7 +45,13 @@ import org.xmedia.oms.persistence.StatelessSession;
 
 public class Kaon2Ontology extends AbstractDataSource implements IOntology {
 
-
+    public static final String OWL_RDF="OWL/RDF";
+    /** The name of the format for OWL XML. */
+    public static final String OWL_XML="OWL/XML";
+    /** The name of the format for OWL 1.1 XML. */
+    public static final String OWL_1_1_XML="OWL1.1/XML";
+    
+    
 	/** the URI of the data source*/
 	private String m_uri;
 
@@ -251,8 +259,19 @@ public class Kaon2Ontology extends AbstractDataSource implements IOntology {
 		return 0;
 	}
 	
-	public void export(String language, Writer writer) throws OntologyExportException {
-		// TODO Auto-generated method stub
+	public void export(String format, Writer writer) throws OntologyExportException {
+		try {
+			m_delegate.saveOntology(format, writer , KbEnvironment.DEFAULT_ONTOLOGY_ENCODING);
+		} catch (KAON2Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 
