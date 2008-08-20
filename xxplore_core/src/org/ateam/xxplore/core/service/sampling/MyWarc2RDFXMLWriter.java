@@ -14,8 +14,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.net.URI;
 
 import org.apache.commons.lang.StringUtils;
@@ -57,8 +59,8 @@ public class MyWarc2RDFXMLWriter {
 	private int lineCountAllUrls = 0;
 	private int lineCountThisUrl = 0;
 
-	private static String sourceDir = "D:\\watson.warc";
-	private static String targetDir = "D:\\watson\\";
+	private static String sourceDir = "D:/BTC/watson.warc";
+	private static String targetDir = "D:/BTC/watson/";
 	private static int urls = 5;
 	
 	public MyWarc2RDFXMLWriter(String sourceDir, String targetDir) {
@@ -237,7 +239,7 @@ public class MyWarc2RDFXMLWriter {
 				}
 			}	
 			try {
-				bw = new BufferedWriter(new FileWriter(targetDirectory + fsTransduceUri(currentUrl) + ".rdf"));
+				bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetDirectory + fsTransduceUri(currentUrl) + ".rdf"),"UTF-8")); 
 				writer = new RDFXMLWriter(bw);
 				writer.startRDF();
 			} catch (IOException e) {
