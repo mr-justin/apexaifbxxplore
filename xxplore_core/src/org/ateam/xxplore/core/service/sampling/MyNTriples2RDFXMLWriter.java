@@ -3,9 +3,11 @@ package org.ateam.xxplore.core.service.sampling;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import org.openrdf.model.Statement;
 import org.openrdf.rio.RDFHandlerException;
@@ -25,9 +27,9 @@ public class MyNTriples2RDFXMLWriter {
 
 	private int tripleCount = 0;
 	
-	private static String sourceDir = "D:\\swetodblp_april_2008-mod.nt";
-	private static String targetDir = "D:\\target.rdf";
-	private static int maxTripleCount = 1000;
+	private static String sourceDir = "D:\\BTC\\swetodblp_april_2008-mod.nt";
+	private static String targetDir = "D:\\BTC\\target.rdf";
+	private static int maxTripleCount = 2000;
 	
 	public MyNTriples2RDFXMLWriter(String sourceDir, String targetDir) {
 		try {
@@ -35,7 +37,7 @@ public class MyNTriples2RDFXMLWriter {
 			parser = new MyNTriplesParser();
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
-			bw = new BufferedWriter(new FileWriter(targetDir)); 
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetDir),"UTF-8")); 
 			writer = new RDFXMLWriter(bw);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
