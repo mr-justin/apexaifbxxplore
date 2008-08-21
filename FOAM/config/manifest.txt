@@ -1,5 +1,0 @@
-Manifest-Version: 2.0
-Created-By: ehrig@aifb.uni-karlsruhe.de
-Class-Path: lib/kaon2.jar
-Main-Class: edu.unika.aifb.foam.main.Align
-
