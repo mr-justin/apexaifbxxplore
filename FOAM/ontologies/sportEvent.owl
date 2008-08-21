@@ -1,0 +1,2300 @@
+<?xml version='1.0' encoding='UTF-8'?>
+
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	xmlns:SmartSUMO="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#" 
+	xmlns:DOLCE="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#"
+	xmlns:kb="http://protege.stanford.edu/kb#"
+	xmlns:linginfo="http://www.smartweb-project.org/ontologies/linginfo#"
+  	xmlns:owl = "http://www.w3.org/2002/07/owl#"
+  	xmlns:xsd = 'http://www.w3.org/2001/XMLSchema#'
+ >
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+<owl:AnnotationProperty rdf:about="http://www.smartweb-project.org/ontologies/linginfo#lingInfo" />
+<owl:Class rdf:about="http://protege.stanford.edu/kb#AdvantageRule"
+	 rdfs:label="AdvantageRule">
+	<rdfs:comment>At the referee's discretion, an infraction may not be called if it gives the offending team an advantage. For instance, play might not he stopped if the referee thought calling a foul gave the defending team an advantage by killing an attack.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballRule"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_5"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_6"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#All-roundPlayer"
+	 rdfs:comment="The most complete who can play in all posts."
+	 rdfs:label="All-roundPlayer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10141"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10142"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Amateur"
+	 rdfs:comment="An amateur player"
+	 rdfs:label="Amateur">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10175"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10176"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#AmericanSoccerLeagues"
+	 rdfs:label="AmericanSoccerLeagues">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#League"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Anthem"
+	 rdfs:comment="A song of praise."
+	 rdfs:label="Anthem">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_33"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_34"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Music"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#AnyPlayerAction"
+	 rdfs:label="AnyPlayerAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SinglePlayerAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Applause"
+	 rdfs:comment="A demonstration of approval by clapping the hands together."
+	 rdfs:label="Applause">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SpectatorAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Expressing"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Assist"
+	 rdfs:label="Assist">
+	<rdfs:comment>The pass or passes which immediately precede a goal; a maximum of two assists can be credited for one goal.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#AssistantReferee"
+	 rdfs:label="AssistantReferee">
+	<rdfs:comment>Formerly "Linesmen"; the 2 officials who assist the referee in making his decisions; they monitor the sidelines and goal lines to determine when a ball goes out of bounds and they carry a flag to signal their observations.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballOfficialPerson"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_149"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_67"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_68"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_69"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Attack"
+	 rdfs:comment='Or "Offense" To move forward to try to score goals.'
+	 rdfs:label="Attack">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_8"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10095"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10096"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Attack"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Attacker"
+	 rdfs:label="Attacker">
+	<rdfs:comment>Or "Offensive Player"; any player on the team that has possession of the ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OtherFootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_66"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_93"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_94"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#AttackingMidfielder"
+	 rdfs:label="AttackingMidfielder">
+	<rdfs:comment>The most forward-playing midfielder, playing right behind the forwards; he supports the offense by providing passes to forwards to set up goals.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Midfielder"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10184"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10185"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10186"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10187"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BackDoor"
+	 rdfs:label="BackDoor">
+	<rdfs:comment>The area on the opposite side of the goal mouth from where a cross or corner kick was taken, extremely tough for goal keepers to cover.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_142"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BackHeader"
+	 rdfs:comment="A player's use of his head to direct the ball backwards."
+	 rdfs:label="BackHeader">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Header"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BackTackle"
+	 rdfs:label="BackTackle">
+	<rdfs:comment>An attempt by a defender to take the ball away from a ball carrier by swinging the defender's leg in front of the ball from behind.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tackle"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Ball"
+	 rdfs:label="Ball">
+	<rdfs:comment>Round object that is hit or thrown or kicked in games; any object with a spherical shape;</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10006"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10048"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10049"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#ThreeDimensionalFigure"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BallAction"
+	 rdfs:label="BallAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AnyPlayerAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10050"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10051"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BallCarrier"
+	 rdfs:comment="A player that has possession of the ball."
+	 rdfs:label="BallCarrier">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_88"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_89"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BallDeflection"
+	 rdfs:comment="The ricochet of a ball after it hits a player."
+	 rdfs:label="BallDeflection">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Deflection"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_71"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BallPossession"
+	 rdfs:comment="Control of the ball."
+	 rdfs:label="BallPossession">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Possession"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_12"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_136"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BananaKick"
+	 rdfs:label="BananaKick">
+	<rdfs:comment>A type of kick that gives the ball a curved trajectory; used to get the ball around an obstacle such as a goaltender or defender.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Lob"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Banned"
+	 rdfs:comment="Players sent off will be banned from the next game(s)."
+	 rdfs:label="Banned">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10172"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10173"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BeOffside"
+	 rdfs:label="BeOffside">
+	<rdfs:comment>An attacking player positioned so that fewer than 2 opposing defensive players (usually the goalie and 1 other defender) are between him and the goal he is attacking; a player is not offside if he is exactly even with one or both of these defensive players.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#WithoutBallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Beat"
+	 rdfs:label="Beat">
+	<rdfs:comment>To get the ball through or around an opponent by dribbling or shooting.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Play"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BeckenbauerSweeper"
+	 rdfs:label="BeckenbauerSweeper">
+	<rdfs:comment>Because West Germany's Franz Beckenbauer was one of the most complete players ever, he transformed the sweeper-into both an attack and defense position during the late 1960s' and changed the game forever.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defender"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10146"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10147"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Begin"
+	 rdfs:label="Begin">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#MatchAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_4"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_5"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Behavior"
+	 rdfs:comment="Manner of acting or conducting oneself."
+	 rdfs:label="Behavior">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#BodyMotion"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BehindTheDefender"
+	 rdfs:comment="The area between a defender and his goal."
+	 rdfs:label="BehindTheDefender">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_143"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Block"
+	 rdfs:label="Block">
+	<rdfs:comment>To interfere with or otherwise prevent the movement of an opposing defensive player. Also, to clear opposing players out of the path of the ball carrier.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_8"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_9"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#BodyAction"
+	 rdfs:label="BodyAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AnyPlayerAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Boo"
+	 rdfs:comment="A cry or noise made to express displeasure or contempt."
+	 rdfs:label="Boo">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SpectatorAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Expressing"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Boots"
+	 rdfs:label="Boots">
+	<rdfs:comment>or "Cleats",  The metal, plastic or rubber points in the bottom of a soccer shoe used to provide a player with traction; term also used to refer to the shoes themselves.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10000"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_47"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_48"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Break"
+	 rdfs:label="Break">
+	<rdfs:comment>When a team quickly advances the ball down the field in an attempt to get its players near the opponent's goal before the defenders have a chance to retreat; also called an advantage</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Breakaway"
+	 rdfs:label="Breakaway">
+	<rdfs:comment>When an attacker with the ball approaches the goal undefended; this exciting play pits a sole attacker against the goalkeeper in a one-on-one showdown.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BallAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_18_Nov_Instance_2"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Bundesliga"
+	 rdfs:comment="The German professional football league."
+	 rdfs:label="Bundesliga">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#League"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Cap"
+	 rdfs:comment="A recognition earned by a player for each appearance."
+	 rdfs:label="Cap">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_90"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_91"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_92"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Card"
+	 rdfs:comment="Thin cardboard, usually rectangular."
+	 rdfs:label="Card">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_131"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_132"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CarryingTheBall"
+	 rdfs:label="CarryingTheBall">
+	<rdfs:comment>A foul called on a goalkeeper when he takes more than 4 steps while holding or bouncing the ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Foul"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Center"
+	 rdfs:label="Center">
+	<rdfs:comment>A pass from a player located near the sideline towards the middle of the field; used to get the ball closer to the front of the goal</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CenterCircle"
+	 rdfs:label="CenterCircle">
+	<rdfs:comment>A circular marking in the center of the field from which kickoffs are taken to start or restart the game.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_35"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_36"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CenterKick"
+	 rdfs:label="CenterKick">
+	<rdfs:comment>Or "kick off"; to kick off to start or restart the game from the center spot.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CenterLine"
+	 rdfs:label="CenterLine">
+	<rdfs:comment>Or "Midfield line"; a line that divides the field in half along its width.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_42"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_43"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_44"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CenterSpot"
+	 rdfs:label="CenterSpot">
+	<rdfs:comment>The small circular mark inside the center circle that denotes the center of the field from which kickoffs are taken to start or restart the game.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldPoint"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_27"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_28"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CentralDefender"
+	 rdfs:label="CentralDefender">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defender"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10106"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10107"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_95"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Charge"
+	 rdfs:label="Charge">
+	<rdfs:comment>To run into an opponent; legal if done from the front or side of the ball carrier; illegal against a player without the ball or from behind.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ChestTrap"
+	 rdfs:label="ChestTrap">
+	<rdfs:comment>When a player uses his chest to slow down and control a ball in the air.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Trap"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Chip"
+	 rdfs:label="Chip">
+	<rdfs:comment>A high, floated kick that lifts the ball over the heads of defenders or the goalkeeper.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ChipPass"
+	 rdfs:label="ChipPass">
+	<rdfs:comment>A pass lofted into the air from a player to a teammate; used primarily to evade a defender by kicking the ball over his head.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Chip"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ChipShoot"
+	 rdfs:label="ChipShoot">
+	<rdfs:comment>A kick lofted into the air to try to sail the ball over the goalkeeper's head and still make it under the crossbar into the goal.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Chip"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shoot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Clear"
+	 rdfs:label="Clear">
+	<rdfs:comment>A kick, ideally of good distance, that attempts to get the ball away from the penalty area quickly. Can also be a punch by a goalkeeper.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Hit"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_12"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_74"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_75"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_76"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Clock"
+	 rdfs:comment="A timepiece that shows the time of day."
+	 rdfs:label="Clock">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_129"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_130"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Device"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Club"
+	 rdfs:label="Club">
+	<rdfs:comment>A sports club. Typically consists of one or more divisions. Divisions may consist of one or more DivisionTeams. DivisionTeams consist of the squad (the players) and other people. However, you may choose any other type of modelling dependencies.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_109"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_110"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_111"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_112"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Competition"
+	 rdfs:label="Competition">
+	<rdfs:comment>An occasion on which a winner is selected from among two or more contestants.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10169"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10170"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Contest"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Concacaf"
+	 rdfs:label="Concacaf">
+	<rdfs:comment>The Confederation Norte-Centroamericana y Del Caribe de Footbal; the regional organization of North American and Central American soccer under which World Cup qualifying matches are played; member countries include the U.S., Canada, Mexico, and Central American and Caribbean countries.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballConfederation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ConsolationMatch"
+	 rdfs:label="ConsolationMatch">
+	<rdfs:comment>A tournament game played between the losers of the 2 semifinal matches to determine the third-place team.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballMatch"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_155"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CornerArc"
+	 rdfs:label="CornerArc">
+	<rdfs:comment>A quarter-circle located at each of the 4 corners of the field; on a corner kick, the ball must be kicked from inside this arc.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_39"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_40"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CornerArea"
+	 rdfs:label="CornerArea">
+	<rdfs:comment>A quarter-circle located at each of the 4 corners of the field; on a corner kick, the ball must be kicked from inside this arc.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_144"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CornerFlag"
+	 rdfs:label="CornerFlag">
+	<rdfs:comment>The flag located at each of the 4 corners of the field, inside the corner area.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFlag"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_45"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_46"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CornerKick"
+	 rdfs:label="CornerKick">
+	<rdfs:comment>A free kick for the attackers taken from the corner after a defender puts the ball out of play over the goal line.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10069"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10070"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_37"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_38"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_73"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Counterattack"
+	 rdfs:label="Counterattack">
+	<rdfs:comment>An attack launched by a defending team soon after it regains possession of the ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Cracker"
+	 rdfs:comment="A very powerful shot."
+	 rdfs:label="Cracker">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_30"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_31"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_32"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_33"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_34"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_35"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_36"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_73"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shoot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CreatingSpace"
+	 rdfs:label="CreatingSpace">
+	<rdfs:comment>When a player from the attacking team moves without the ball to draw defenders away from the ball carrier and give him space.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#WithoutBallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Cross"
+	 rdfs:label="Cross">
+	<rdfs:comment>A pass from an attacking player near the sideline to a teammate in the middle or opposite side of the field; used to give the teammate a good scoring opportunity.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_32"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Crossbar"
+	 rdfs:label="Crossbar">
+	<rdfs:comment>The horizontal beam that forms the top of a goal and sits on top of the two posts;</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_49"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_50"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_51"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Woodwork"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Cup"
+	 rdfs:label="Cup">
+	<rdfs:comment>A large metal vessel with two handles that is awarded to the winner of a competition;</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_133"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_134"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CutDownTheAngle"
+	 rdfs:label="CutDownTheAngle">
+	<rdfs:comment>When the goalie comes out of the goal several feet to make himself closer and larger to an attacker, leaving the attacker less net to shoot at.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalkeeperAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#CutOff"
+	 rdfs:label="CutOff">
+	<rdfs:comment>When a defensive player keeps his body between an attacker and the defender's goal, forcing the attacker out towards the sidelines.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DangerousPlay"
+	 rdfs:label="DangerousPlay">
+	<rdfs:comment>When a player attempts a play that the referee considers dangerous to that player or others, such as trying to kick the ball out of the goalie's hands, even if no contact is made.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#WithoutBallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Defender"
+	 rdfs:label="Defender">
+	<rdfs:comment>The 3 or 4 players on a team whose primary task is to stop the opposition from scoring; also called fullbacks.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OtherFootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10097"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10098"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10099"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10100"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10101"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10102"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10148"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Defense"
+	 rdfs:comment="A team's function of preventing the opposition from scoring."
+	 rdfs:label="Defense">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_151"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_152"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Maneuver"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DefensiveMidfielder"
+	 rdfs:label="DefensiveMidfielder">
+	<rdfs:comment>The player positioned just in front of his team's defense; he is often assigned to mark the opposition's best offensive player; also called the midfield anchor.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Midfielder"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10181"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10182"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10183"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DefensivePressure"
+	 rdfs:label="DefensivePressure">
+	<rdfs:comment>When one or more defenders closely mark a ball carrier to harass him into losing the ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Deflection"
+	 rdfs:comment="A turning aside."
+	 rdfs:label="Deflection">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10001"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#DirectionChange"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DirectFreeKick"
+	 rdfs:label="DirectFreeKick">
+	<rdfs:comment>A goal can be scored directly from this free kick without the ball touching another player.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FreeKick"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10118"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10119"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Diving"
+	 rdfs:comment="To lunge especially in order to seize something."
+	 rdfs:label="Diving">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#BodyMotion"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DivingHeader"
+	 rdfs:label="DivingHeader">
+	<rdfs:comment>A ball struck near ground level by the head of a diving player.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Diving"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Header"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Division"
+	 rdfs:label="Division">
+	<rdfs:comment>Part of a club. One club may consist of multiple divisions (for example, one division for football, one division for basketball, ...).</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_10000"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_10001"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DivisionTeam"
+	 rdfs:label="DivisionTeam">
+	<rdfs:comment>A number of people (Squad and OtherPeople) that form a team of a division.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10038"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Double"
+	 rdfs:comment="2 goals scored in a football game by a single player."
+	 rdfs:label="Double">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalScore"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_5"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_137"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Downfield"
+	 rdfs:label="Downfield">
+	<rdfs:comment>In or into the part of the field toward which the offensive team is headed.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballField"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_141"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Dribble"
+	 rdfs:label="Dribble">
+	<rdfs:comment>Or "dribbling", a way of advancing the ball by a series of short taps with one or both feet, usually keeping the ball close to the body, allowing one to change speed and direction with the ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Play"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Dribbler"
+	 rdfs:label="Dribbler">
+	<rdfs:comment>A player who advances the ball while controlling it with his feet.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OtherFootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_100"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_101"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DropBall"
+	 rdfs:label="DropBall">
+	<rdfs:comment>A method of restarting a game where the referee drops the ball between 2 players facing each other.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#RefereeAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#DropKick"
+	 rdfs:label="DropKick">
+	<rdfs:comment>When a goalie drops the ball from his hands and kicks it before it hits the ground.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalkeeperAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Encourage"
+	 rdfs:comment="Inspire with confidence; give hope or courage to; spur on."
+	 rdfs:label="Encourage">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_149"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_150"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_17"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SpectatorAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#IntentionalPsychologicalProcess"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#End"
+	 rdfs:label="End">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#MatchAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_6"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_7"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#EndTime"
+	 rdfs:label="EndTime">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimePoint"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_100"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_99"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#EnglishFootballAssociation"
+	 rdfs:label="EnglishFootballAssociation">
+	<rdfs:comment>An association of English football teams founded in 1863 to set football rules.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Equalizer"
+	 rdfs:comment="A score that ties a game."
+	 rdfs:label="Equalizer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalScore"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_65"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_66"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_67"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_68"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_69"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#EuropeanCup"
+	 rdfs:label="EuropeanCup">
+	<rdfs:comment>The championship tournament played between Europe's top national teams.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTournament"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#F.a."
+	 rdfs:label="F.a.">
+	<rdfs:comment>Football Association; often used to refer to the English Football Association, who, along with FIFA and other football associations, helps maintain the rules of football.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FarPost"
+	 rdfs:comment="The goalpost furthest from the ball."
+	 rdfs:label="FarPost">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Post"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_135"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_136"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Feint"
+	 rdfs:label="Feint">
+	<rdfs:comment>Or "Fake"; a move by a player meant to deceive an opposing player; used by a ball carrier to make a defender think the ball carrier is going to dribble, pass or shoot in a certain direction when he is not.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Fifa"
+	 rdfs:label="Fifa">
+	<rdfs:comment>Federation Internationale de Football Association; the official governing body of international football since 1904 which established the World Cup tournament; helps set and revise rules of the game, called the 17 Laws.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Flag"
+	 rdfs:label="Flag">
+	<rdfs:comment>Usually rectangular piece of cloth of distinctive design; a rectangular piece of fabric used as a signalling device.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_40"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_41"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Artifact"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Flank"
+	 rdfs:label="Flank">
+	<rdfs:comment>The area of the field near the touchline. Also known as the "wing".</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_2"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_3"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FlickHeader"
+	 rdfs:comment="A player's use of his head to deflect the ball."
+	 rdfs:label="FlickHeader">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Header"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootTrap"
+	 rdfs:label="FootTrap">
+	<rdfs:comment>When a player uses his foot to slow down and control a ball in the air.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Trap"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballAction"
+	 rdfs:label="FootballAction">
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#activity"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballArea"
+	 rdfs:comment="Abstract: Football Area"
+	 rdfs:label="FootballArea">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballField"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballAssociation"
+	 rdfs:label="FootballAssociation">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_123"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SportiveOrganization"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballCaution"
+	 rdfs:label="FootballCaution">
+	<rdfs:comment>a warning given by the referee to a player who has broken the law.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Sanction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballConfederation"
+	 rdfs:label="FootballConfederation">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_124"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SportiveOrganization"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballExpulsion"
+	 rdfs:label="FootballExpulsion">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Sanction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballField"
+	 rdfs:comment="The rectangular area where soccer matches are played."
+	 rdfs:label="FootballField">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballGeographicArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_83"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_84"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_85"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_86"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_17"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_18"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballFieldLine"
+	 rdfs:label="FootballFieldLine">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballField"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Line"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_20"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_21"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_22"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_23"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_24"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_25"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballFieldPoint"
+	 rdfs:label="FootballFieldPoint">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballField"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10010"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10011"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10012"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10013"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_29"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_30"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Spot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballFlag"
+	 rdfs:label="FootballFlag">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Flag"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_42"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_43"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_44"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballGeographicArea"
+	 rdfs:comment="Abstract: Football Geographic Area"
+	 rdfs:label="FootballGeographicArea">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#GeographicArea"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballMatch"
+	 rdfs:label="FootballMatch">
+	<rdfs:comment>Two teams try to kick the ball into each other's goal. This is exactly one match. See Tournament for modelling multiple matches.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_2"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_28"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_3"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_4"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballObject"
+	 rdfs:comment="Abstract: Football Object"
+	 rdfs:label="FootballObject">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Artifact"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballOfficialPerson"
+	 rdfs:label="FootballOfficialPerson">
+	<rdfs:comment>The referee and 2 linesmen who work together to make sure the game is played according to the rules of soccer; responsible for stopping and restarting play, keeping track of the score and the time remaining and citing violations of the rules, called fouls; they wear uniforms that distinguish them from the players on both teams.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPerson"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_82"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_83"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_84"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballPerson"
+	 rdfs:label="FootballPerson">
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_79"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_80"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_81"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballPlayer"
+	 rdfs:label="FootballPlayer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPerson"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10029"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10031"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10032"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10143"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballPoint"
+	 rdfs:label="FootballPoint">
+	<rdfs:comment>A team statistic indicating its degree of success, calculated as follows: 2 points for a win (3 from the 1994 World Cup), 1 point for a tie, 0 points for a loss; also, an individual statistic for a player, calculated by totaling 2 points for each goal and 1 point for each assist.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Point"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_105"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_106"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_107"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballPresident"
+	 rdfs:comment="An executive officer of a football team."
+	 rdfs:label="FootballPresident">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPerson"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#President"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_10"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_11"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_12"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballRule"
+	 rdfs:label="FootballRule">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Rule"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_2"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_3"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_4"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballShoe"
+	 rdfs:label="FootballShoe">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_49"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_50"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shoe"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballSpectator"
+	 rdfs:label="FootballSpectator">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPerson"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_114"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_115"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_118"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Spectator"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballTimeDuration"
+	 rdfs:comment="Abstract: Football Time Duration"
+	 rdfs:label="FootballTimeDuration">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimeDuration"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballTimePoint"
+	 rdfs:label="FootballTimePoint">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_96"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_97"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_98"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimePoint"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballTournament"
+	 rdfs:label="FootballTournament">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_0"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_1"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_2"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tournament"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballTrainer"
+	 rdfs:label="FootballTrainer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballSpectator"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_119"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_130"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_131"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_132"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_133"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Trainer"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FootballUniform"
+	 rdfs:label="FootballUniform">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_27"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_28"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Forward"
+	 rdfs:label="Forward">
+	<rdfs:comment>The players on a team who are responsible for most of a team's scoring; they play in front of the rest of their team where they can take most of its shots; strikers and wingers.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Attacker"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10090"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10091"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10189"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_102"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_106"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ForwardPass"
+	 rdfs:comment="A pass made towards the opposition's goal."
+	 rdfs:label="ForwardPass">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Foul"
+	 rdfs:label="Foul">
+	<rdfs:comment>A violation of the rules for which the referee assesses a free kick.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10162"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10163"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FreeKick"
+	 rdfs:label="FreeKick">
+	<rdfs:comment>A kick awarded to a player for a foul committed by the opposition; the player kicks an unobstructed stationary ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10111"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10112"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FrontHeader"
+	 rdfs:label="FrontHeader">
+	<rdfs:comment>The striking of a ball in the air by a player's forehead; the most common type of header.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Header"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#FrontTackle"
+	 rdfs:label="FrontTackle">
+	<rdfs:comment>An attempt by a defender to kick the ball away from an attacker by approaching him from a head-on position.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tackle"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GiveSanction"
+	 rdfs:label="GiveSanction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#RefereeAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoalArea"
+	 rdfs:label="GoalArea">
+	<rdfs:comment>The rectangular area in front of each goal from which all goal kicks are taken; inside this area, it is illegal for opposing players to charge a goalie not holding the ball.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_53"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_54"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_55"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoalKick"
+	 rdfs:label="GoalKick">
+	<rdfs:comment>A type of restart where the ball is kicked from inside the goal area away from the goal; awarded to the defending team when a ball that crossed the goal line was last touched by a player on the attacking team.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10067"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10068"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoalLine"
+	 rdfs:label="GoalLine">
+	<rdfs:comment>The field boundary running along its width at each end; also called the end line; runs right across the front of the goal; the line which a ball must completely cross for a goal to be scored.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10065"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10066"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_59"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_99"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoalObject"
+	 rdfs:label="GoalObject">
+	<rdfs:comment>The wide structure consisting of two posts, a crossbar and a net into which all goals are scored.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_25"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_26"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoalScore"
+	 rdfs:label="GoalScore">
+	<rdfs:comment>A ball that crosses the goal line between the goalposts and below the crossbar for which a point is awarded;</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10123"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10124"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10138"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10139"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_110"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Maneuver"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Goalkeeper"
+	 rdfs:label="Goalkeeper">
+	<rdfs:comment>The player positioned directly in front of the goal who tries to prevent shots from getting into the net behind him; the only player allowed to use his hands and arms, though only within the penalty area.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_23"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10055"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10056"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10057"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10058"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10059"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_112"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoalkeeperAction"
+	 rdfs:label="GoalkeeperAction">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10060"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10061"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10062"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10063"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10064"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_70"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SinglePlayerAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Goalmouth"
+	 rdfs:comment="The front opening to each goal."
+	 rdfs:label="Goalmouth">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_51"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_52"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoldenGoal"
+	 rdfs:label="GoldenGoal">
+	<rdfs:comment>A goal scored during overtime which gives instant victory to the scoring team.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalScore"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_4"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_138"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_139"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_140"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#GoolkeeperDive"
+	 rdfs:label="GoolkeeperDive">
+	<rdfs:comment>To catch the ball by jumping towards it and falling on the ground.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Diving"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalkeeperAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Guest"
+	 rdfs:comment="A visitor to whom hospitality is extended."
+	 rdfs:label="Guest">
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_126"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_127"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Hacking"
+	 rdfs:comment="Kicking an opponent in the shins"
+	 rdfs:label="Hacking">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Foul"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#HalfTime"
+	 rdfs:comment="The intermission between the 2 periods or halves of a game."
+	 rdfs:label="HalfTime">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimeDuration"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_81"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_82"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_150"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_151"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_152"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#HalfVolleyShot"
+	 rdfs:label="HalfVolleyShot">
+	<rdfs:comment>When the ball is kicked just as it is rebounding off the ground.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Volley"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#HandBall"
+	 rdfs:label="HandBall">
+	<rdfs:comment>Also "Hand"; a foul where a player touches the ball with his hand or arm; the opposing team is awarded a direct free kick.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Foul"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#HatTrick"
+	 rdfs:comment="3 or more goals scored in a game by a single player."
+	 rdfs:label="HatTrick">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalScore"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_141"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_142"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Header"
+	 rdfs:comment="The striking of a ball in the air by a player's head."
+	 rdfs:label="Header">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_74"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_75"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Hit"
+	 rdfs:comment="or kick"
+	 rdfs:label="Hit">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Play"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#HoldOpponent"
+	 rdfs:label="HoldOpponent">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Foul"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#HomeSide"
+	 rdfs:label="HomeSide">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Host"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_39"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_40"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_41"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_42"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Hook"
+	 rdfs:label="Hook">
+	<rdfs:comment>The curved trajectory of a ball due to spin imparted on it by a kicker, such as in a banana kick.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_13"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_1"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Trajectory"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Host"
+	 rdfs:label="Host">
+	<rdfs:comment>A person who invites guests to a social event (such as a party in his or her own home) and who is responsible for them while they are there.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_128"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_129"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#IFAB"
+	 rdfs:label="IFAB">
+	<rdfs:comment>International Football Association Board (IFAB) founded in 1886; the organization consisting of 4 British soccer organizations and FIFA that approves all changes in the official international rules of soccer called the 17 Laws.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#IndirectFreeKick"
+	 rdfs:label="IndirectFreeKick">
+	<rdfs:comment>A goal can only be scored on this free kick after the ball has touched another player.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FreeKick"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10120"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10121"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#InjuryTime"
+	 rdfs:label="InjuryTime">
+	<rdfs:comment>Time added to the end of any period according to the referee's judgment of time lost due to player injuries or intentional stalling by a team.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimeDuration"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_52"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_53"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#InstepDrive"
+	 rdfs:label="InstepDrive">
+	<rdfs:comment>A straight shot taken with the instep of a player's foot; usually the most powerful and accurate of shots.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shoot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Inswinger"
+	 rdfs:comment="A pass or shot that curves toward the goal."
+	 rdfs:label="Inswinger">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Juggling"
+	 rdfs:label="Juggling">
+	<rdfs:comment>Keeping a ball in the air with any part of the body besides the hands or arms; used for practice and developing coordination.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BallAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#RecreationOrExercise"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#JulesRimetTrophy"
+	 rdfs:label="JulesRimetTrophy">
+	<rdfs:comment>The trophy given to the World Cup winner between 1930 and 1970, after which it was permanently retired.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Cup"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Trophy"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Kick"
+	 rdfs:comment="or Hit"
+	 rdfs:label="Kick">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Hit"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_31"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_32"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#LeadPass"
+	 rdfs:label="LeadPass">
+	<rdfs:comment>A pass sent ahead of a moving teammate to arrive at a location at the same time he does.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#League"
+	 rdfs:comment="An alliance of teams that organizes sporting competition."
+	 rdfs:label="League">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_125"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_126"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SportiveOrganization"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Line"
+	 rdfs:label="Line">
+	<rdfs:comment>A mark that is long relative to its width; a length (straight or curved) without breadth or thickness;</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_15"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_16"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#GeographicArea"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#LandArea"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TwoDimensionalFigure"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#LinesmanAction"
+	 rdfs:label="LinesmanAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OfficialAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Lob"
+	 rdfs:comment='Or "Loft"; is a high-arcing kick.'
+	 rdfs:label="Lob">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#LongPass"
+	 rdfs:label="LongPass">
+	<rdfs:comment>A long, and usually high, pass from a teams' own half, over the heads of the other team's defence.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#MLS"
+	 rdfs:label="MLS">
+	<rdfs:comment>Major League Soccer — the new U.S. outdoor league scheduled to begin play in the Spring of 1995.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AmericanSoccerLeagues"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#MSL"
+	 rdfs:label="MSL">
+	<rdfs:comment>Major Soccer League — a U.S. indoor league which formed in 1990 from the "MISL" and folded in 1992.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AmericanSoccerLeagues"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ManToMan"
+	 rdfs:label="ManToMan">
+	<rdfs:comment>A type of defense where each defender is assigned to mark a different forward from the other team;</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defense"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10002"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_153"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Marking"
+	 rdfs:label="Marking">
+	<rdfs:comment>To prevent a member of the opposing team from taking control of the ball by staying close to them all the time.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_11"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#WithoutBallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Mascot"
+	 rdfs:label="Mascot">
+	<rdfs:comment>A person or animal that is adopted by a team or other group as a symbolic figure.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10007"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10009"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SymbolicFigure"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Match"
+	 rdfs:label="Match">
+	<rdfs:comment>A game or contest in which two or more persons, animals, or teams oppose and compete with each other</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10177"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10178"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10179"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10180"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Game"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#MatchAction"
+	 rdfs:label="MatchAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#MatchTeam"
+	 rdfs:label="MatchTeam">
+	<rdfs:comment>A team of people taking part in a Match. This includes players or a squad and other people. Bench and lineup are to be understand as snapshots at the beginning of the match. Changes in the lineup are to be modeled as TrainerActions during the Match.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10038"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_10002"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_10003"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Midfield"
+	 rdfs:label="Midfield">
+	<rdfs:comment>The region of the field near the midfield line; the area controlled by the midfielders.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_145"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_146"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#MidfieldAnchor"
+	 rdfs:label="MidfieldAnchor">
+	<rdfs:comment>The player positioned just in front of his team's defense; he is often assigned to mark the opposition's best offensive player.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#DefensiveMidfielder"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_67"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_103"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Midfielder"
+	 rdfs:label="Midfielder">
+	<rdfs:comment>The players who link together the offensive and defensive functions of a team; they play behind their forwards.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OtherFootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10149"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10150"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10151"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10152"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10153"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#NASL"
+	 rdfs:label="NASL">
+	<rdfs:comment>North American Soccer League — an outdoor league formed in the U.S. in 1967 that attracted great international players including Pele and huge audiences to the U.S. in the 1970s; folded in 1985.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AmericanSoccerLeagues"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#NCAA"
+	 rdfs:label="NCAA">
+	<rdfs:comment>National Collegiate Athletic Association — governs and organizes sports at the collegiate level; has its own soccer committee.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#NPSL"
+	 rdfs:label="NPSL">
+	<rdfs:comment>National Professional Soccer League — a U.S. indoor league that plays its games in a modified hockey rink, much like the former MISL; plays by non-traditional rules to create a faster-paced, higher-scoring game; also, a different league by the same name that played in the 1960s, merging with another league to form the NASL.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AmericanSoccerLeagues"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#NationalPlayer"
+	 rdfs:label="NationalPlayer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10008"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10009"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#NearPost"
+	 rdfs:comment="The goalpost closest to the ball."
+	 rdfs:label="NearPost">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Post"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_137"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_138"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Net"
+	 rdfs:label="Net">
+	<rdfs:comment>An interconnected or intersecting configuration or system of components; a goal lined with netting; "Hemp", "jute" or "nylon cord" draped over the frame of the goal and extending behind it; also used to refer to the goal itself.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_53"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_54"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Nutmeg"
+	 rdfs:label="Nutmeg">
+	<rdfs:comment>The act of purposely dribbling the ball through an opponent's legs and regaining posession.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Hit"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Obstruction"
+	 rdfs:label="Obstruction">
+	<rdfs:comment>When a defensive player, instead of going after the ball, uses his body to prevent an offensive player from playing it.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OfficialAction"
+	 rdfs:label="OfficialAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OfficialFifaBall"
+	 rdfs:label="OfficialFifaBall">
+	<rdfs:comment>The official Fifa ball with 27-28 inch circumference and 14-16 ounce weight.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Ball"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_3"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_34"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OfficialGameClock"
+	 rdfs:label="OfficialGameClock">
+	<rdfs:comment>The clock that the referee carries with him on the field so he can signal when each half is over; does not stop during the game, even when play does.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Clock"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_15"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_16"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OffsideTrap"
+	 rdfs:label="OffsideTrap">
+	<rdfs:comment>A defense tactic where a (defensive) player, or players intentionally moves forward to put an attacking player offside.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10016"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10017"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tactic"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OpenAttacker"
+	 rdfs:label="OpenAttacker">
+	<rdfs:comment>Describes an attacking player who does not have anyone marking him.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Attacker"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_0"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_1"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OtherFootballPlayer"
+	 rdfs:comment="Abstract: Other Football Player"
+	 rdfs:label="OtherFootballPlayer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OtherPeople"
+	 rdfs:comment="The people missing to form a DivisionTeam of a Squad."
+	 rdfs:label="OtherPeople">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OutletPass"
+	 rdfs:label="OutletPass">
+	<rdfs:comment>When a goaltender or defender passes the ball from close to his own goal toward the other team's goal; used to start a counterattack.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OutsideDefender"
+	 rdfs:label="OutsideDefender">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defender"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10109"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10110"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_96"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#OverTime"
+	 rdfs:label="OverTime">
+	<rdfs:comment>The extra periods played after a regulation game ends tied; used in collegiate and championship international matches to determine a winner.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimeDuration"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_76"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_77"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_78"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Overhead"
+	 rdfs:label="Overhead">
+	<rdfs:comment>Also  "Bicycle kick" or "Scissors kick", a specular kick where at contact the player is literally upside down.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Overlap"
+	 rdfs:label="Overlap">
+	<rdfs:comment>When a winger moves away from the sideline towards the center of the field to create space for a teammate to advance the ball undefended along the side of the field.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Pass"
+	 rdfs:label="Pass">
+	<rdfs:comment>When a player kicks the ball to his teammate; used to move the ball closer to the opposing goal, to keep the ball away from an opponent or to give the ball to a player who is in a better position to score.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Hit"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10088"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10089"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PenaltyArc"
+	 rdfs:label="PenaltyArc">
+	<rdfs:comment>A circular arc whose center is the penalty spot and extends from the top of the penalty area; designates an area that opposing players are not allowed to enter prior to a penalty kick.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_48"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_49"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PenaltyArea"
+	 rdfs:label="PenaltyArea">
+	<rdfs:comment>16 meter (18 yard) area arround the goal, from the posts to the left and right and towards the centre. The goalkeeper may touch the ball with his hands within the penalty-area. Fouls within the area (may) result in a penalty-kick.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_51"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_52"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PenaltyKick"
+	 rdfs:label="PenaltyKick">
+	<rdfs:comment>Or "Penalty shot" or simplay "Penalty"; awarded for the most severe rule violations and those committed by the defense within its own penalty area; also taken in a tiebreaker to decide a match.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Kick"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_21"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_22"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_24"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_33"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PenaltySpot"
+	 rdfs:label="PenaltySpot">
+	<rdfs:comment>The small circular spot located in front of the center of the goal line from which all penalty kicks are taken; positioned at the center of the penalty arc.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldPoint"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_14"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_26"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_41"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Penetrate"
+	 rdfs:label="Penetrate">
+	<rdfs:comment>To advance the ball behind opposing defenders (between them and their goal).</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PenetratingPass"
+	 rdfs:label="PenetratingPass">
+	<rdfs:comment>To pass the ball to a teammate behind opposing defenders (between them and their goal).</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Period"
+	 rdfs:label="Period">
+	<rdfs:comment>Also "Half"; the segment of time into which a game is divided; a regulation game consists of two 45-minutes halves.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimeDuration"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_85"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_86"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Play"
+	 rdfs:comment="To trap, dribble, kick or head the ball."
+	 rdfs:label="Play">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BallAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10025"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10026"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PlayMaker"
+	 rdfs:label="PlayMaker">
+	<rdfs:comment>The versatile midfielder most responsible for organizing play in the midfield area; often a team's energetic leader.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OtherFootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_68"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_55"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_56"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PlayOff"
+	 rdfs:label="PlayOff">
+	<rdfs:comment>A tournament that takes place after a season's schedule has been completed; used to determine a champion.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tournament"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Player"
+	 rdfs:comment="A person who participates in or is skilled at some game."
+	 rdfs:label="Player">
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10027"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10028"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10054"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PlayerAction"
+	 rdfs:label="PlayerAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10033"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10034"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Point"
+	 rdfs:comment="The unit of counting in scoring a game or contest;"
+	 rdfs:label="Point">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_103"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_104"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#UnitOfMeasure"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Possession"
+	 rdfs:comment="The act of possessing"
+	 rdfs:label="Possession">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10052"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10053"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Relation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Post"
+	 rdfs:label="Post">
+	<rdfs:comment>Goalpost or the area near it; a piece (as of timber or metal) fixed firmly in an upright position especially as a stay or support.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_20"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_47"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_48"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Woodwork"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#President"
+	 rdfs:label="President">
+	<rdfs:comment>An executive officer of a firm, corporation, university, team, etc.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_8"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_9"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Position"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ProfessionalFoul"
+	 rdfs:label="ProfessionalFoul">
+	<rdfs:comment>A foul, usually hard and from behind, in which a defender intentionally takes down a player to disrupt a clear scoring opportunity, usually a break-away. The "professional foul" usally results in a yellow or red card.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Foul"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_78"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_79"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_80"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ProfessionalPlayer"
+	 rdfs:comment="A professional player"
+	 rdfs:label="ProfessionalPlayer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10165"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10166"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10167"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PunchOut"
+	 rdfs:comment="A forceful hit with a fist to keep the ball out of."
+	 rdfs:label="PunchOut">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalkeeperAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#PushPass"
+	 rdfs:label="PushPass">
+	<rdfs:comment>When a player pushes the ball with the inside of his foot to a teammate.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#QualifyingMatches"
+	 rdfs:label="QualifyingMatches">
+	<rdfs:comment>Games played in the preceding of a tournament to determine which teams participate in that tournament.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_157"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_158"/>
+</owl:Class>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#Reason_for_stoppage"
+	 rdfs:label="Reason_for_stoppage">
+</owl:ObjectProperty>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Receiver"
+	 rdfs:comment="A player who gets a pass from a teammate."
+	 rdfs:label="Receiver">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_2"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_105"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RedCard"
+	 rdfs:label="RedCard">
+	<rdfs:comment>A card presented to a football player by the referee signifying the player's ejection from the match. The red card is presented for dangerous fouls, repeated fouls, striking an opponent, spitting or after a player receives a second yellow card during the game.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Card"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_15"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_16"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Referee"
+	 rdfs:label="Referee">
+	<rdfs:comment>The chief official; he makes all final decisions, acts as timekeeper, calls all fouls and starts and stops play.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballOfficialPerson"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10019"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10020"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10073"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_85"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RefereeAction"
+	 rdfs:label="RefereeAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#OfficialAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10021"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10022"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10074"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RefereeFlag"
+	 rdfs:label="RefereeFlag">
+	<rdfs:comment>A flag that linesmen carry to signal their observations to the referee.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFlag"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10023"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10024"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10075"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RegularSeason"
+	 rdfs:label="RegularSeason">
+	<rdfs:comment>The schedule of games set before the season; consists of all games played before a playoff or tournament is held.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_74"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_75"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Schedule"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RegulationGame"
+	 rdfs:label="RegulationGame">
+	<rdfs:comment>Two completed periods of a game, prior to any overtime or tiebreaker.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimeDuration"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_87"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_88"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_89"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_90"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RiseTheFlag"
+	 rdfs:label="RiseTheFlag">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#LinesmanAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Round"
+	 rdfs:label="Round">
+	<rdfs:comment>A stage of a tournament at which teams compete; the World Cup tournament has 5 main rounds.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_94"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_95"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_19"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Stage"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Rule"
+	 rdfs:label="Rule">
+	<rdfs:comment>A principle or condition that customarily governs behavior;
+
+something regarded as a normative example;
+
+prescribed guide for conduct or action.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_0"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_1"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#NormativeAttribute"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#RunOnGoal"
+	 rdfs:label="RunOnGoal">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_58"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_59"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Sack"
+	 rdfs:comment="The act of terminating someone's employment."
+	 rdfs:label="Sack">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Removing"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Sanction"
+	 rdfs:comment="a formal decree (decree: an order having the force of law)"
+	 rdfs:label="Sanction">
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Declaring"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Save"
+	 rdfs:label="Save">
+	<rdfs:comment>The act of a goalkeeper in blocking or stopping a shot that would have gone into the goal without his intervention.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalkeeperAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Schedule"
+	 rdfs:label="Schedule">
+	<rdfs:comment>An ordered list of times at which things are planned to occur; a temporally organized plan for matters to be attended to.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10086"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10087"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Plan"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ScoreGoal"
+	 rdfs:comment="The action of scoring a goal."
+	 rdfs:label="ScoreGoal">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BallAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10125"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10126"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10127"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10128"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10137"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Scorer"
+	 rdfs:comment="Player who scores a goal."
+	 rdfs:label="Scorer">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_69"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_70"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_108"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_109"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_111"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SendingOff"
+	 rdfs:comment="To eject a player for a flagrant violation of the rules."
+	 rdfs:label="SendingOff">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballCaution"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SetPlay"
+	 rdfs:label="SetPlay">
+	<rdfs:comment>A planned strategy that a team uses when a game is restarted with a free kick, penalty kick, corner kick, goal kick, throw-in or kickoff.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_76"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Strategy"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Shielding"
+	 rdfs:label="Shielding">
+	<rdfs:comment>Or "Screening"; a technique used by a ball carrier to protect the ball from a defender closely marking him; the ball carrier keeps his body between the ball and the defender.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Shinguards"
+	 rdfs:label="Shinguards">
+	<rdfs:comment>Pads that strap onto a player's lower leg to protect the shins should he or she be kicked there.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_139"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_140"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Shoe"
+	 rdfs:label="Shoe">
+	<rdfs:comment>A covering shaped to fit the foot (below the ankle) with a flexible upper of leather or plastic and a sole and heel of heavier material.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_127"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_128"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Clothing"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Shoot"
+	 rdfs:label="Shoot">
+	<rdfs:comment>When a player kicks the ball at the opponent's net in an attempt to score a goal.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10116"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10117"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10190"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Shot"
+	 rdfs:label="Shot">
+	<rdfs:comment>A ball kicked or headed by a player at the opponent's net in an attempt to score a goal</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Hit"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ShoulderCharge"
+	 rdfs:label="ShoulderCharge">
+	<rdfs:comment>Minimal shoulder-to-shoulder contact by a defender against a ball carrier; the only contact allowed by the rules unless a defender touches the ball first.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Charge"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Shout"
+	 rdfs:comment="Utter aloud; often with surprise, horror, or joy;"
+	 rdfs:label="Shout">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#SpectatorAction"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Expressing"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ShowingCard"
+	 rdfs:label="ShowingCard">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballCaution"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_19"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_20"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ShowingRedCard"
+	 rdfs:label="ShowingRedCard">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_17"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_18"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#ShowingCard"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ShowingYellowCard"
+	 rdfs:label="ShowingYellowCard">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_21"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_22"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#ShowingCard"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ShowingYellowRedCard"
+	 rdfs:label="ShowingYellowRedCard">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_23"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_24"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#ShowingCard"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SideTackle"
+	 rdfs:label="SideTackle">
+	<rdfs:comment>An attempt by a defender to redirect the ball slightly with his foot away from a ball carrier running in the same direction.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tackle"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Sideline"
+	 rdfs:label="Sideline">
+	<rdfs:comment>Side boundary of the football field; a line that runs along the length of the field on each side.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_45"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_46"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_47"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SingleElimination"
+	 rdfs:label="SingleElimination">
+	<rdfs:comment>A type of tournament where a single loss eliminates a team from the tournament.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tournament"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SinglePlayerAction"
+	 rdfs:label="SinglePlayerAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#PlayerAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SlidingTackle"
+	 rdfs:label="SlidingTackle">
+	<rdfs:comment>An attempt to take posession of the ball from the opponent by sliding on the ground.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tackle"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Small-SidedGame"
+	 rdfs:comment="A match played with fewer than 11 players per side."
+	 rdfs:label="Small-SidedGame">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballMatch"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_156"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Speaker"
+	 rdfs:label="Speaker">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballSpectator"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_120"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_121"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Spectator"
+	 rdfs:comment="A close observer; someone who looks at something."
+	 rdfs:label="Spectator">
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_108"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_63"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_116"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_117"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SpectatorAction"
+	 rdfs:label="SpectatorAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SportiveOrganization"
+	 rdfs:label="SportiveOrganization">
+	<rdfs:comment>SportiveOrganization is the class
+of Organizations who focuses on sports.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_122"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Organization"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Spot"
+	 rdfs:comment="A geometric element that has position but no extension;"
+	 rdfs:label="Spot">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_protege_football_29_Oct_Instance_0"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_protege_football_29_Oct_Instance_1"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#LandArea"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#OneDimensionalFigure"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Squad"
+	 rdfs:label="Squad">
+	<rdfs:comment>A squad is a set of players that itself is part of a DivisionTeam.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_3"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_4"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SquarePass"
+	 rdfs:comment="A pass made by a player to a teammate running alongside him."
+	 rdfs:label="SquarePass">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Stadium"
+	 rdfs:label="Stadium">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballGeographicArea"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_10"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_11"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Stage"
+	 rdfs:comment="Any distinct time period in a sequence of events;"
+	 rdfs:label="Stage">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_91"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_92"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_93"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimeInterval"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#StartTime"
+	 rdfs:label="StartTime">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTimePoint"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_101"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_102"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Starter"
+	 rdfs:comment="A player who is on the field to play at the start of a game;"
+	 rdfs:label="Starter">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_113"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Steal"
+	 rdfs:comment="When a player takes the ball away from an opposing player."
+	 rdfs:label="Steal">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Stopper"
+	 rdfs:label="Stopper">
+	<rdfs:comment>The defender that marks the best scorer on the attacking team, often the opposition's striker; exists only in a man-to-man defense.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defender"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_97"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_98"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Strategy"
+	 rdfs:comment="An elaborate and systematic plan of action."
+	 rdfs:label="Strategy">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10084"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10085"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Plan"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Striker"
+	 rdfs:label="Striker">
+	<rdfs:comment>A team's most powerful and best-scoring forward who plays towards the center of the field;</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Forward"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_19"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_20"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_107"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Substitute"
+	 rdfs:comment="A reserve player who can replace another player."
+	 rdfs:label="Substitute">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_60"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_61"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Substitution"
+	 rdfs:comment="Substitution of a player by another"
+	 rdfs:label="Substitution">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_62"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_63"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TrainerAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SundayShot"
+	 rdfs:label="SundayShot">
+	<rdfs:comment>A long, wild, hopeless shot that results in a goal If tried a thousand times, it would only in "during a Sunday league match".</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Supporter"
+	 rdfs:label="Supporter">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballSpectator"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_3"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_4"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_64"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_65"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_122"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Sweeper"
+	 rdfs:label="Sweeper">
+	<rdfs:comment>The defender that plays closest to his own goal behind the rest of the defenders; a team's last line of defense in front of the goalkeeper.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defender"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_65"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_66"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#SymbolicFigure"
+	 rdfs:label="SymbolicFigure">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10005"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10006"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#ShapeAttribute"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#TVSpectator"
+	 rdfs:label="TVSpectator">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballSpectator"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_123"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_124"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Tackle"
+	 rdfs:label="Tackle">
+	<rdfs:comment>The act of taking the ball away from a player by kicking or stopping it with one's feet.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BodyAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Tactic"
+	 rdfs:comment="A plan for attaining a particular goal."
+	 rdfs:label="Tactic">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10082"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10083"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Plan"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#TakeToTheField"
+	 rdfs:label="TakeToTheField">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_6"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_7"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#TalliedShoot"
+	 rdfs:comment="A shoot that ends to scoring a goal."
+	 rdfs:label="TalliedShoot">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#ScoreGoal"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Shoot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Team"
+	 rdfs:label="Team">
+	<rdfs:comment>A group on the same side, as in a game. As this term is used in very many ways typically, we model about everything as a "team" and specify further in the subclasses. See Club for further information.</rdfs:comment>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10039"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SportEventOntology_Instance_0"/>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#GroupOfPeople"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#TeamAction"
+	 rdfs:label="TeamAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#PlayerAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10093"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10094"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Teammate"
+	 rdfs:comment="A fellow member of a team;"
+	 rdfs:label="Teammate">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10036"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10037"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Territory"
+	 rdfs:comment="The half of the field which a team defends."
+	 rdfs:label="Territory">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballField"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_147"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ThighTrap"
+	 rdfs:label="ThighTrap">
+	<rdfs:comment>When a player uses his thigh to slow down and control a ball in the air.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Trap"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ThroughPass"
+	 rdfs:label="ThroughPass">
+	<rdfs:comment>A pass sent to a teammate to get him the ball behind his defender; used to penetrate a line of defenders.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#ThrowIn"
+	 rdfs:label="ThrowIn">
+	<rdfs:comment>A type of restart where a player throws the ball from behind his head with two hands while standing with both feet on the ground behind a sideline; taken by a player opposite the team that last touched the ball before it went out of bounds across a sideline.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#BallAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10071"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10072"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Tiebreaker"
+	 rdfs:label="Tiebreaker">
+	<rdfs:comment>A way to choose the winner of a match when teams are tied after overtime; in FIFA tournament play, a series of penalty kicks are taken by players from both teams, and the team that scores on more of them is declared the winner; The tie-breaking procedure after regulation time used in MLS games is called "shootout".</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#MatchAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_154"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_155"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Timekeeper"
+	 rdfs:label="Timekeeper">
+	<rdfs:comment>The job of the referee, who keeps track of the official time to notify teams and fans when each period is completed.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballOfficialPerson"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_86"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_87"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Tournament"
+	 rdfs:label="Tournament">
+	<rdfs:comment>A series of contests in which a number of contestants compete and the one that prevails through the final round or that finishes with the best record is declared the winner.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Competition"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Trailing"
+	 rdfs:comment="Running behind another player."
+	 rdfs:label="Trailing">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#WithoutBallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Trainer"
+	 rdfs:comment="One who trains other persons or animal"
+	 rdfs:label="Trainer">
+	<rdfs:subClassOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10154"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10155"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10156"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#TrainerAction"
+	 rdfs:label="TrainerAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10157"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10158"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10159"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Trajectory"
+	 rdfs:comment="A line or route along which something travels or moves."
+	 rdfs:label="Trajectory">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_5_Nov_Instance_0"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_protege_football_29_Oct_Instance_3"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Spot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Trap"
+	 rdfs:label="Trap">
+	<rdfs:comment>Also stop; when a player uses his body to slow down and control a moving ball, most often using his chest, thighs or feet.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Play"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Trophy"
+	 rdfs:label="Trophy">
+	<rdfs:comment>An award for success in war or hunting; something given as a token of victory.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#UnilateralGiving"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Turnover"
+	 rdfs:comment="The loss of possession of the ball."
+	 rdfs:label="Turnover">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Possession"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_13"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_14"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#USSF"
+	 rdfs:label="USSF">
+	<rdfs:comment>United States Soccer Federation — organization formed in 1913 to govern soccer in America; America's link to FIFA, providing soccer rules and guidelines to players, referees and spectators nationwide.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#USYSA"
+	 rdfs:label="USYSA">
+	<rdfs:comment>United States Youth Soccer Association — the official Youth Division of the organizes and administers youth league competitions, establishes rules and guidelines, and holds clinics and workshops to support players, coaches and referees. USSF and the largest youth soccer organization in the U.S.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballAssociation"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#UnsportsmanlikeConduct"
+	 rdfs:comment="Rude behavior."
+	 rdfs:label="UnsportsmanlikeConduct">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Behavior"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Upfield"
+	 rdfs:label="Upfield">
+	<rdfs:comment>In or into the part of the field toward which the offensive team is headed.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballField"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_148"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#VIP"
+	 rdfs:comment="Very Important Person"
+	 rdfs:label="VIP">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballSpectator"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_14"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_125"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#VisitingTeam"
+	 rdfs:label="VisitingTeam">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Guest"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_44"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_46"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Volley"
+	 rdfs:comment="Kicking the ball out of the air before it hits the ground."
+	 rdfs:label="Volley">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Hit"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#WallPass"
+	 rdfs:label="WallPass">
+	<rdfs:comment>A pass by a ball carrier who sends the ball to a teammate, then runs behind his own defender and quickly receives a pass back; used to get a player past his defender without having to dribble by him.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Pass"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_24"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_25"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Tactic"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#WallSetting"
+	 rdfs:comment="Setting a Wall."
+	 rdfs:label="WallSetting">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#TeamAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#WarmUp"
+	 rdfs:label="WarmUp">
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10079"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10081"/>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#WithoutBallAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Whistle"
+	 rdfs:label="Whistle">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_6"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_7"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Whistling"
+	 rdfs:label="Whistling">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#RefereeAction"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10076"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10077"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_72"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Wing"
+	 rdfs:label="Wing">
+	<rdfs:comment>The outside forwards who play to the sides of the strikers and whose primary task is to provide them with accurate crossing passes so they can shoot at the goal; often the fastest players and best dribblers on a team.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Forward"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10188"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_25"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_26"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_27"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#WithoutBallAction"
+	 rdfs:label="WithoutBallAction">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#AnyPlayerAction"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Woodwork"
+	 rdfs:comment="A name for the crossbar and goalposts of a soccer goal."
+	 rdfs:label="Woodwork">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#GoalObject"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_56"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_57"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_58"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#WorldCup"
+	 rdfs:comment="World Cup tournament played every 4 years."
+	 rdfs:label="WorldCup">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballTournament"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10003"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10004"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_30"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_31"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#WorldCupAnthem"
+	 rdfs:label="WorldCupAnthem">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Anthem"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_32"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_21"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_17_Nov_Instance_22"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#YellowCard"
+	 rdfs:label="YellowCard">
+	<rdfs:comment>A playing card-sized card that a referee holds up to warn a football player for dangerous or unsportsmanlike behavior; also called a caution; 2 yellow cards in one game earns a player an automatic red card, signaling his removal from the game.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Card"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10160"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_2_Nov_Instance_10161"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#Zone"
+	 rdfs:label="Zone">
+	<rdfs:comment>A type of defense that assigns each defender to a particular area in front of or around his team's goal in which he is responsible for marking any attacker that enters;</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Defense"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_10005"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_12_Nov_Instance_154"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_17Laws"
+	 rdfs:label="_17Laws">
+	<rdfs:comment>17 Laws based upon the rules that were first ratified by the International Football Association Board(1874).</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballRule"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_7"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1966WorldCupWillie"
+	 rdfs:comment="The name of the mascot for the 1996 World Cup."
+	 rdfs:label="_1966WorldCupWillie">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1970Juanito"
+	 rdfs:comment="The name of the mascot for the 1970 World Cup."
+	 rdfs:label="_1970Juanito">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1974TipAndTap"
+	 rdfs:comment="The name of the mascot for the 1974 World Cup."
+	 rdfs:label="_1974TipAndTap">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1978Gauchito"
+	 rdfs:comment="The name of the mascot for the 1978 World Cup."
+	 rdfs:label="_1978Gauchito">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1982Naranjito"
+	 rdfs:comment="The name of the mascot for the 1982 World Cup."
+	 rdfs:label="_1982Naranjito">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1986Pique"
+	 rdfs:comment="The name of the mascot for the 1986 World Cup."
+	 rdfs:label="_1986Pique">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1990Ciao"
+	 rdfs:comment="The name of the mascot for the 1990 World Cup."
+	 rdfs:label="_1990Ciao">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1994Striker"
+	 rdfs:comment="The name of the mascot for the 1994 World Cup."
+	 rdfs:label="_1994Striker">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_1998Footix"
+	 rdfs:comment="The name of the mascot for the 1998 World Cup."
+	 rdfs:label="_1998Footix">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_2002AtoKazAndNik"
+	 rdfs:comment="The name of the mascot for the 2002 World Cup."
+	 rdfs:label="_2002AtoKazAndNik">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Mascot"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_2On1Break"
+	 rdfs:label="_2On1Break">
+	<rdfs:comment>A type of break with 2 attacking players against 1 defensive player.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Break"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_3On1Break"
+	 rdfs:label="_3On1Break">
+	<rdfs:comment>A type of break with 3 attacking players against only 1 defensive player.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Break"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_3On2Break"
+	 rdfs:label="_3On2Break">
+	<rdfs:comment>A type of break with 3 attacking players against 2 defensive players.</rdfs:comment>
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#Break"/>
+</owl:Class>
+<owl:Class rdf:about="http://protege.stanford.edu/kb#_6-yard-line"
+	 rdfs:label="_6-yard-line">
+	<rdfs:subClassOf rdf:resource="http://protege.stanford.edu/kb#FootballFieldLine"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_57"/>
+	<linginfo:lingInfo rdf:resource="http://protege.stanford.edu/kb#SUMO_linginfo_protege_football_8_Nov_Instance_58"/>
+</owl:Class>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#activities"
+	 rdfs:label="activities">
+	<rdfs:comment>References the occuring activities in the match, for example scored goals, or substitutions.</rdfs:comment>
+	<rdfs:range rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#activity"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Match"/>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#atMinute"
+	 rdfs:comment="The minute of the game the action has occurred."
+	 rdfs:label="atMinute">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#FootballAction"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#attendence"
+	 rdfs:comment="The number of spectators in the match."
+	 rdfs:label="attendence">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#bench"
+	 rdfs:comment="The matches' substitute players."
+	 rdfs:label="bench">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#MatchTeam"/>
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Player"/>
+</owl:DatatypeProperty>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#comment"
+	 rdfs:label="comment">
+	<rdfs:comment>A free-text comment. Not used by the system. For knowledge engineers only.</rdfs:comment>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Team"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#lineup"
+	 rdfs:comment="The game's initial lineup."
+	 rdfs:label="lineup">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#MatchTeam"/>
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Player"/>
+</owl:ObjectProperty>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#matchNumber"
+	 rdfs:label="matchNumber">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#matches"
+	 rdfs:comment="The matches the tournament consists of."
+	 rdfs:label="matches">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Tournament"/>
+</owl:ObjectProperty>
+<owl:DatatypeProperty rdf:about="http://protege.stanford.edu/kb#name"
+	 rdfs:comment="The person's name."
+	 rdfs:label="name">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#FootballPerson"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+</owl:DatatypeProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#officials"
+	 rdfs:comment="References the matches' official persons."
+	 rdfs:label="officials">
+	<rdfs:range rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Match"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#partOf"
+	 rdfs:comment="A generic part-of relationship."
+	 rdfs:label="partOf">
+	<rdfs:subPropertyOf rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#part-of"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Team"/>
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Team"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#people"
+	 rdfs:comment="A set of people."
+	 rdfs:label="people">
+	<rdfs:range rdf:resource="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#agentive-role"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#MatchTeam"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#OtherPeople"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#performedBy"
+	 rdfs:comment="The player performing the action."
+	 rdfs:label="performedBy">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#FootballPlayer"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#SinglePlayerAction"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#player"
+	 rdfs:comment="The player the caution has been assigned to."
+	 rdfs:label="player">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Sanction"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#players"
+	 rdfs:comment="The players in the team."
+	 rdfs:label="players">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Squad"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#referee"
+	 rdfs:comment="The referee that issued the sanction."
+	 rdfs:label="referee">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Referee"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Sanction"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#substituteByWhom"
+	 rdfs:comment="The player entering the playing field."
+	 rdfs:label="substituteByWhom">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Substitution"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#substituteWhom"
+	 rdfs:comment="What player is substituted?"
+	 rdfs:label="substituteWhom">
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#Player"/>
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Substitution"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#team1"
+	 rdfs:comment="The first team participating in the match."
+	 rdfs:label="team1">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#MatchTeam"/>
+</owl:ObjectProperty>
+<owl:ObjectProperty rdf:about="http://protege.stanford.edu/kb#team2"
+	 rdfs:comment="References the second team participating in the match."
+	 rdfs:label="team2">
+	<rdfs:domain rdf:resource="http://protege.stanford.edu/kb#Match"/>
+	<rdfs:range rdf:resource="http://protege.stanford.edu/kb#MatchTeam"/>
+</owl:ObjectProperty>
+</rdf:RDF>
