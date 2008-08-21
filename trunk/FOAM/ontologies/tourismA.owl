@@ -1,0 +1,2368 @@
+<rdf:RDF
+  xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+  xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#'
+  xmlns:owl = "http://www.w3.org/2002/07/owl#"
+  xmlns:xsd = 'http://www.w3.org/2001/XMLSchema#'
+ >
+
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ort___natuerliches_Gebiet'>
+    <rdfs:label>hat_Ort___natuerliches_Gebiet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ort'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#natuerliches_Gebiet'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Doppelzimmer'>
+    <rdfs:label>Doppelzimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flaechenmass'>
+    <rdfs:label>Flaechenmass</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#raeumliche_Masseinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Elbe'>
+    <rdfs:label>Elbe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fluss'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hansestadt'>
+    <rdfs:label>Hansestadt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Stadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Parchim'>
+    <rdfs:label>Parchim</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Zingst'>
+    <rdfs:label>Ostseebad_Zingst</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Beginn'>
+    <rdfs:label>Beginn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeitpunkt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schlosshotel_Spyker'>
+    <rdfs:label>Schlosshotel_Spyker</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schaalsee'>
+    <rdfs:label>Schaalsee</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Telefon'>
+    <rdfs:label>Telefon</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Aktivurlaub'>
+    <rdfs:label>Aktivurlaub</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Urlaub'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Freizeitangebot'>
+    <rdfs:label>Freizeitangebot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ereignis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ferienwohnung'>
+    <rdfs:label>Ferienwohnung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fluss'>
+    <rdfs:label>Fluss</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gewaesser'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Nebensaison'>
+    <rdfs:label>Nebensaison</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Saison'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Landhaus_Kubbelkow'>
+    <rdfs:label>Landhaus_Kubbelkow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Badminton'>
+    <rdfs:label>Badminton</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ruhner_Berge'>
+    <rdfs:label>Ruhner_Berge</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Berg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hund'>
+    <rdfs:label>Hund</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Haustier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Liter'>
+    <rdfs:label>Liter</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Raummass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Boddenkueste'>
+    <rdfs:label>Boddenkueste</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kueste'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kutschfahrt'>
+    <rdfs:label>Kutschfahrt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausflug'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Eintrittspreis'>
+    <rdfs:label>hat_Eintrittspreis</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Kulturangebot'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ding'>
+    <rdfs:label>Ding</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Root'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Anzahl_Zimmer'>
+    <rdfs:label>hat_Anzahl_Zimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ferienhaus'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Situation'>
+    <rdfs:label>Situation</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Root'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kegeln'>
+    <rdfs:label>Kegeln</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Mueritz'>
+    <rdfs:label>Mueritz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#See'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Nationalpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ferienresidenz_Steinhagen'>
+    <rdfs:label>Ferienresidenz_Steinhagen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Hauptstadt'>
+    <rdfs:label>hat_Hauptstadt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Bundesland'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Prerow'>
+    <rdfs:label>Ostseebad_Prerow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Vogel'>
+    <rdfs:label>Vogel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Tier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Boot'>
+    <rdfs:label>Boot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Sekunde'>
+    <rdfs:label>Sekunde</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Anzahl_Betten'>
+    <rdfs:label>hat_Anzahl_Betten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Unterkunft'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#benoetigt_Ausruestung'>
+    <rdfs:label>benoetigt_Ausruestung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Supermarkt'>
+    <rdfs:label>Supermarkt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Einkaufsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ende'>
+    <rdfs:label>Ende</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeitpunkt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Sommer'>
+    <rdfs:label>Sommer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Jahreszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Stromanschluss'>
+    <rdfs:label>hat_Stromanschluss</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Campingplatz'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#oeffentliches_Gebaeude'>
+    <rdfs:label>oeffentliches_Gebaeude</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Synagoge'>
+    <rdfs:label>Synagoge</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kirche'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ruderboot'>
+    <rdfs:label>Ruderboot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Boot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Gemeinde'>
+    <rdfs:label>Gemeinde</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ort'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schlosshotel'>
+    <rdfs:label>Schlosshotel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Hotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit___oeffentliches_Gebaeude'>
+    <rdfs:label>hat_Oeffnungszeit___oeffentliches_Gebaeude</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Oeffnungszeit'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugzeug'>
+    <rdfs:label>Flugzeug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Luftverkehrsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz'>
+    <rdfs:label>Flugplatz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#verkehrliche_Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Brunch'>
+    <rdfs:label>Brunch</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Verpflegung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Angeln'>
+    <rdfs:label>Angeln</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Watt'>
+    <rdfs:label>Watt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#natuerliches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Beginn'>
+    <rdfs:label>hat_Beginn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Service-Hotline'>
+    <rdfs:label>Service-Hotline</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Informationsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Peene'>
+    <rdfs:label>Peene</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fluss'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Meer'>
+    <rdfs:label>Meer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gewaesser'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Wassersport'>
+    <rdfs:label>Wassersport</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit___Kulturangebot'>
+    <rdfs:label>hat_Oeffnungszeit___Kulturangebot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Oeffnungszeit'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Kulturangebot'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ziel'>
+    <rdfs:label>hat_Ziel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Berg'>
+    <rdfs:label>Berg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#natuerliches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Angebot'>
+    <rdfs:label>hat_Angebot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Einkaufsmoeglichkeit'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Waren_vielist'>
+    <rdfs:label>Flugplatz_Waren_vielist</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Qualitaet'>
+    <rdfs:label>hat_Qualitaet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Verpflegung'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fruehstuecksbuffet'>
+    <rdfs:label>Fruehstuecksbuffet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Verpflegung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fahrrad'>
+    <rdfs:label>Fahrrad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kreisstrasse'>
+    <rdfs:label>Kreisstrasse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Strasse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Landstrasse'>
+    <rdfs:label>Landstrasse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Strasse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Auspraegung'>
+    <rdfs:label>hat_Auspraegung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Uebernachtungspreis'>
+    <rdfs:label>hat_Uebernachtungspreis</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Unterkunft'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Heissluftballon'>
+    <rdfs:label>Heissluftballon</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Luftverkehrsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Wanderung'>
+    <rdfs:label>Wanderung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Freizeitangebot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Lunchpaket'>
+    <rdfs:label>Lunchpaket</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Verpflegung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Pferd'>
+    <rdfs:label>Pferd</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Tier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#politisches_Gebiet'>
+    <rdfs:label>politisches_Gebiet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Weiler'>
+    <rdfs:label>Weiler</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ort'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Salzmuseum_Bad_Suelze'>
+    <rdfs:label>Salzmuseum_Bad_Suelze</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Nationalpark'>
+    <rdfs:label>Nationalpark</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturschutzgebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ziel___Wanderung'>
+    <rdfs:label>hat_Ziel___Wanderung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ziel'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Wanderung'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Rerik-Zweedorf'>
+    <rdfs:label>Flugplatz_Rerik-Zweedorf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Sellin'>
+    <rdfs:label>Ostseebad_Sellin</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fremdenverkehrsverband'>
+    <rdfs:label>Fremdenverkehrsverband</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Informationsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Telefonnummer___Service-Hotline'>
+    <rdfs:label>hat_Telefonnummer___Service-Hotline</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Telefonnummer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Service-Hotline'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Seebad'>
+    <rdfs:label>Seebad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ort'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ausstattung___Zimmer'>
+    <rdfs:label>hat_Ausstattung___Zimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ausstattung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zimmer'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Beginn___Zeitraum'>
+    <rdfs:label>hat_Beginn___Zeitraum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Beginn'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zeitraum'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Beginn'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Eisenbahnlinie'>
+    <rdfs:label>Eisenbahnlinie</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#verkehrliche_Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Flaeche'>
+    <rdfs:label>hat_Flaeche</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Flaechenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Teilweise_Materielles_Ding'>
+    <rdfs:label>Teilweise_Materielles_Ding</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#liegt_an_Meer'>
+    <rdfs:label>liegt_an_Meer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Seebad'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Meer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hotel_Schloss_Buggenhagen'>
+    <rdfs:label>Hotel_Schloss_Buggenhagen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Meter'>
+    <rdfs:label>Meter</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Basketball'>
+    <rdfs:label>Basketball</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Bezeichnung___Ereignis'>
+    <rdfs:label>hat_Bezeichnung___Ereignis</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Bezeichnung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ereignis'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit___Fremdenverkehrsverband'>
+    <rdfs:label>hat_Oeffnungszeit___Fremdenverkehrsverband</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Oeffnungszeit'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fremdenverkehrsverband'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Squash'>
+    <rdfs:label>Squash</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schwimmbad'>
+    <rdfs:label>Schwimmbad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Erlebnisurlaub'>
+    <rdfs:label>Erlebnisurlaub</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Urlaub'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Naturschutzgebiet'>
+    <rdfs:label>Naturschutzgebiet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseeheilbad_Graal-Mueritz'>
+    <rdfs:label>Ostseeheilbad_Graal-Mueritz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Werbung'>
+    <rdfs:label>Werbung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Informationsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Mecklenburgisches_Elbetal'>
+    <rdfs:label>Mecklenburgisches_Elbetal</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss_Gross_Plasten'>
+    <rdfs:label>Schloss_Gross_Plasten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Entfernung'>
+    <rdfs:label>hat_Entfernung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Infrastruktur'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Tankstelle'>
+    <rdfs:label>Tankstelle</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit___Schwimmbad'>
+    <rdfs:label>hat_Oeffnungszeit___Schwimmbad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Oeffnungszeit'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Schwimmbad'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kuehlschrank'>
+    <rdfs:label>Kuehlschrank</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Leerungszeit'>
+    <rdfs:label>hat_Leerungszeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Briefkasten'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Zeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Raubtier'>
+    <rdfs:label>Raubtier</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Tier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Sauna'>
+    <rdfs:label>Sauna</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ballsport'>
+    <rdfs:label>Ballsport</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Guettin'>
+    <rdfs:label>Flugplatz_Guettin</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Auspraegung___raeumliche_Masseinheit'>
+    <rdfs:label>hat_Auspraegung___raeumliche_Masseinheit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Auspraegung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#raeumliche_Masseinheit'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Root'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Woche'>
+    <rdfs:label>Woche</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Auspraegung___Zeitpunkt'>
+    <rdfs:label>hat_Auspraegung___Zeitpunkt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Auspraegung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zeitpunkt'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Root'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Mensch'>
+    <rdfs:label>Mensch</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Lebewesen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Tiefgarage'>
+    <rdfs:label>Tiefgarage</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Parkmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#U-Bahn'>
+    <rdfs:label>U-Bahn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Eisenbahn'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fitnesscenter'>
+    <rdfs:label>Fitnesscenter</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Aerobic'>
+    <rdfs:label>Aerobic</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Motel'>
+    <rdfs:label>Motel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Rostock'>
+    <rdfs:label>Rostock</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Hansestadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Freilichtmuseum_Gross_Raden'>
+    <rdfs:label>Freilichtmuseum_Gross_Raden</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hauptsaison'>
+    <rdfs:label>Hauptsaison</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Saison'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss_Hotel_Kittendorf'>
+    <rdfs:label>Schloss_Hotel_Kittendorf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Autobahn'>
+    <rdfs:label>Autobahn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Strasse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Zimmer___Ferienwohnung'>
+    <rdfs:label>hat_Zimmer___Ferienwohnung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Zimmer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ferienwohnung'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Stadt'>
+    <rdfs:label>Stadt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ort'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Volleyball'>
+    <rdfs:label>Volleyball</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Erlebniskneipe_Warnemuende'>
+    <rdfs:label>Erlebniskneipe_Warnemuende</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kneipe'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Gottesdienstzeit'>
+    <rdfs:label>hat_Gottesdienstzeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Kirche'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Zeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Telefonnummer___Unterkunft'>
+    <rdfs:label>hat_Telefonnummer___Unterkunft</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Telefonnummer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Unterkunft'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flughafen'>
+    <rdfs:label>Flughafen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zeiteinheit'>
+    <rdfs:label>Zeiteinheit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Minibar'>
+    <rdfs:label>Minibar</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Weg'>
+    <rdfs:label>Weg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Strasse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Insel'>
+    <rdfs:label>Insel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Land'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schweriner_See'>
+    <rdfs:label>Schweriner_See</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#See'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#See'>
+    <rdfs:label>See</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gewaesser'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Wismar-Mueggenburg'>
+    <rdfs:label>Flugplatz_Wismar-Mueggenburg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Telefonnummer'>
+    <rdfs:label>hat_Telefonnummer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Dierhagen'>
+    <rdfs:label>Ostseebad_Dierhagen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Strandkaufhaus'>
+    <rdfs:label>Strandkaufhaus</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kaufhaus'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit___Gastronomie'>
+    <rdfs:label>hat_Oeffnungszeit___Gastronomie</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Oeffnungszeit'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Gastronomie'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#ist_Vereinssport'>
+    <rdfs:label>ist_Vereinssport</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Sport'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Stunde'>
+    <rdfs:label>Stunde</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Bezeichnung'>
+    <rdfs:label>hat_Bezeichnung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Verpflegung'>
+    <rdfs:label>Verpflegung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Helpter_Berg'>
+    <rdfs:label>Helpter_Berg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Berg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ort___Ding'>
+    <rdfs:label>hat_Ort___Ding</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ort'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ding'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Vorsaison'>
+    <rdfs:label>Vorsaison</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Saison'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Waschmaschine'>
+    <rdfs:label>Waschmaschine</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss_Basthorst'>
+    <rdfs:label>Schloss_Basthorst</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Boutique'>
+    <rdfs:label>Boutique</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Einkaufsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Radweg'>
+    <rdfs:label>Radweg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Weg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Grenze'>
+    <rdfs:label>hat_Grenze</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Tier'>
+    <rdfs:label>Tier</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Lebewesen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Staatliches_Museum_Schwerin'>
+    <rdfs:label>Staatliches_Museum_Schwerin</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kurhaus'>
+    <rdfs:label>Kurhaus</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Tag'>
+    <rdfs:label>Tag</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#verkehrliche_Infrastruktur'>
+    <rdfs:label>verkehrliche_Infrastruktur</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Reichweite'>
+    <rdfs:label>hat_Reichweite</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit___Zimmervermittlung'>
+    <rdfs:label>hat_Oeffnungszeit___Zimmervermittlung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Oeffnungszeit'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zimmervermittlung'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Museum'>
+    <rdfs:label>Museum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sehenswuerdigkeit'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kulturangebot'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Einkaufsmoeglichkeit'>
+    <rdfs:label>Einkaufsmoeglichkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ausstattung'>
+    <rdfs:label>Ausstattung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zug'>
+    <rdfs:label>Zug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Eisenbahn'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kleinstadt'>
+    <rdfs:label>Kleinstadt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Stadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Kabelanschluss'>
+    <rdfs:label>hat_Kabelanschluss</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fernseher'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Anzahl_Sitzplaetze'>
+    <rdfs:label>hat_Anzahl_Sitzplaetze</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kaufhaus'>
+    <rdfs:label>Kaufhaus</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Einkaufsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bus'>
+    <rdfs:label>Bus</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Telefonnummer___Gastronomie'>
+    <rdfs:label>hat_Telefonnummer___Gastronomie</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Telefonnummer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Gastronomie'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Purkshof'>
+    <rdfs:label>Flugplatz_Purkshof</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flughafen_Rostock'>
+    <rdfs:label>Flughafen_Rostock</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flughafen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bad_Doberan'>
+    <rdfs:label>Bad_Doberan</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schlosspark-Hotel_Hohendorf'>
+    <rdfs:label>Schlosspark-Hotel_Hohendorf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Stralsund'>
+    <rdfs:label>Stralsund</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Hansestadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ort'>
+    <rdfs:label>Ort</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Neustadt_Glewe'>
+    <rdfs:label>Flugplatz_Neustadt_Glewe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Segelboot'>
+    <rdfs:label>Segelboot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Boot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Lebewesen'>
+    <rdfs:label>hat_Lebewesen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Gewaesser'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Tier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schmalspurbahn_Molli'>
+    <rdfs:label>Schmalspurbahn_Molli</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Eisenbahnlinie'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ludwigslust'>
+    <rdfs:label>Ludwigslust</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Bezeichnung___Ding'>
+    <rdfs:label>hat_Bezeichnung___Ding</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Bezeichnung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ding'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#benoetigt_Ausruestung___Sport'>
+    <rdfs:label>benoetigt_Ausruestung___Sport</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#benoetigt_Ausruestung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Sport'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zeitraum'>
+    <rdfs:label>Zeitraum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bundesstrasse'>
+    <rdfs:label>Bundesstrasse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Strasse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Usedom'>
+    <rdfs:label>Usedom</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Erholungsurlaub'>
+    <rdfs:label>Erholungsurlaub</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Urlaub'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flughafen_Parchim-Mecklenburg'>
+    <rdfs:label>Flughafen_Parchim-Mecklenburg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flughafen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Person'>
+    <rdfs:label>Person</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Mensch'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#raeumliche_Masseinheit'>
+    <rdfs:label>raeumliche_Masseinheit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Raeumliches_Konzept'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#OEffnungszeit'>
+    <rdfs:label>OEffnungszeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeitraum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Faehre'>
+    <rdfs:label>Faehre</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schiff'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Otto-Lilienthal-Museum'>
+    <rdfs:label>Otto-Lilienthal-Museum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bernsteinmuseum_Ribnitz-Damgarten'>
+    <rdfs:label>Bernsteinmuseum_Ribnitz-Damgarten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Schwerin-Pinnow'>
+    <rdfs:label>Flugplatz_Schwerin-Pinnow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hans-Fallada-Gedenkstaette'>
+    <rdfs:label>Hans-Fallada-Gedenkstaette</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_max__Fahrgastzahl'>
+    <rdfs:label>hat_max__Fahrgastzahl</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Anzahl_Sterne'>
+    <rdfs:label>hat_Anzahl_Sterne</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Hotel'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Dorf'>
+    <rdfs:label>Dorf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ort'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kinderbetreuung'>
+    <rdfs:label>Kinderbetreuung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss'>
+    <rdfs:label>Schloss</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sehenswuerdigkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Infrastruktur'>
+    <rdfs:label>Infrastruktur</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Glaubensgemeinschaft'>
+    <rdfs:label>hat_Glaubensgemeinschaft</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Kirche'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ferienhaus'>
+    <rdfs:label>Ferienhaus</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Speisekarte'>
+    <rdfs:label>hat_Speisekarte</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Restaurant'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hubschrauber'>
+    <rdfs:label>Hubschrauber</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Luftverkehrsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Land'>
+    <rdfs:label>Land</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#natuerliches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Unterkunft'>
+    <rdfs:label>Unterkunft</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ereignis'>
+    <rdfs:label>Ereignis</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Situation'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Immaterielles'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bundesland'>
+    <rdfs:label>Bundesland</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Strassenbahn'>
+    <rdfs:label>Strassenbahn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Eisenbahn'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Briefkasten'>
+    <rdfs:label>Briefkasten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Parkmoeglichkeit'>
+    <rdfs:label>Parkmoeglichkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ausflug'>
+    <rdfs:label>Ausflug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Freizeitangebot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Einzelzimmer'>
+    <rdfs:label>Einzelzimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ortsverbindungsstrasse'>
+    <rdfs:label>Ortsverbindungsstrasse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Strasse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Oeffnungszeit'>
+    <rdfs:label>hat_Oeffnungszeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Schmoldow'>
+    <rdfs:label>Flugplatz_Schmoldow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Telefonnummer___Fremdenverkehrsverband'>
+    <rdfs:label>hat_Telefonnummer___Fremdenverkehrsverband</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Telefonnummer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fremdenverkehrsverband'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Trebel'>
+    <rdfs:label>Trebel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fluss'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ziel___Urlaub'>
+    <rdfs:label>hat_Ziel___Urlaub</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ziel'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Urlaub'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Radfahren'>
+    <rdfs:label>Radfahren</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Reisedauer'>
+    <rdfs:label>hat_Reisedauer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Urlaub'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Zeitraum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Geschwindigkeit'>
+    <rdfs:label>hat_Geschwindigkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Badezimmer'>
+    <rdfs:label>Badezimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bank'>
+    <rdfs:label>Bank</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostvorpommern'>
+    <rdfs:label>Ostvorpommern</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Zimmer___Ferienhaus'>
+    <rdfs:label>hat_Zimmer___Ferienhaus</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Zimmer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ferienhaus'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Bewohner'>
+    <rdfs:label>hat_Bewohner</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Lebewesen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kubikmeter'>
+    <rdfs:label>Kubikmeter</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Raummass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Grossstadt'>
+    <rdfs:label>Grossstadt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Stadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Heinrich-Schliemann-Museum'>
+    <rdfs:label>Heinrich-Schliemann-Museum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Tiefe'>
+    <rdfs:label>hat_Tiefe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Gewaesser'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Mecklenburg-Strelitz'>
+    <rdfs:label>Mecklenburg-Strelitz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Luftverkehrsmittel'>
+    <rdfs:label>Luftverkehrsmittel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fernseher'>
+    <rdfs:label>Fernseher</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Ahrenshoop'>
+    <rdfs:label>Ostseebad_Ahrenshoop</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss_Vanselow'>
+    <rdfs:label>Schloss_Vanselow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kino'>
+    <rdfs:label>Kino</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kulturangebot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Dusche'>
+    <rdfs:label>Dusche</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Beginn___OEffnungszeit'>
+    <rdfs:label>hat_Beginn___OEffnungszeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Beginn'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Beginn'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Duenenwanderung'>
+    <rdfs:label>Duenenwanderung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wanderung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Badewanne'>
+    <rdfs:label>Badewanne</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Saison'>
+    <rdfs:label>Saison</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeitraum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Campingplatz'>
+    <rdfs:label>Campingplatz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Reiten'>
+    <rdfs:label>Reiten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Anklam'>
+    <rdfs:label>Flugplatz_Anklam</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Winter'>
+    <rdfs:label>Winter</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Jahreszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Jahr'>
+    <rdfs:label>Jahr</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Parkplatz'>
+    <rdfs:label>Parkplatz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Parkmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Groesse'>
+    <rdfs:label>hat_Groesse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zimmer'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Flaechenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Halbpension'>
+    <rdfs:label>Halbpension</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Verpflegung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Restaurant'>
+    <rdfs:label>Restaurant</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gastronomie'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Boltenhagen'>
+    <rdfs:label>Ostseebad_Boltenhagen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ernst-Barlach-Gedenkstaette'>
+    <rdfs:label>Ernst-Barlach-Gedenkstaette</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Schutzwuerdigkeit'>
+    <rdfs:label>hat_Schutzwuerdigkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Naturschutzgebiet'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Strasse'>
+    <rdfs:label>Strasse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#verkehrliche_Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Vollpension'>
+    <rdfs:label>Vollpension</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Verpflegung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Sport'>
+    <rdfs:label>Sport</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Freizeitangebot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Immaterielles'>
+    <rdfs:label>Immaterielles</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Root'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Freizeitpark'>
+    <rdfs:label>Freizeitpark</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Stralsunder_Museum_fuer_Meereskunde_und_Fischerei'>
+    <rdfs:label>Stralsunder_Museum_fuer_Meereskunde_und_Fischerei</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Buecherei'>
+    <rdfs:label>Buecherei</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Postamt'>
+    <rdfs:label>Postamt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Laengenmass'>
+    <rdfs:label>Laengenmass</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#raeumliche_Masseinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Satellitenempfang'>
+    <rdfs:label>hat_Satellitenempfang</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Fernseher'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Root'>
+    <rdfs:label>Root</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad'>
+    <rdfs:label>Ostseebad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Seebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Greifswald'>
+    <rdfs:label>Greifswald</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Hansestadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Strandkorb'>
+    <rdfs:label>Strandkorb</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Minute'>
+    <rdfs:label>Minute</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Freibad'>
+    <rdfs:label>Freibad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schwimmbad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Informationsinhalt'>
+    <rdfs:label>hat_Informationsinhalt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Informationsmoeglichkeit'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Veranstaltungskalender'>
+    <rdfs:label>Veranstaltungskalender</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Informationsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Herbst'>
+    <rdfs:label>Herbst</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Jahreszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Gewaesser'>
+    <rdfs:label>Gewaesser</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#natuerliches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Sehenswuerdigkeit'>
+    <rdfs:label>Sehenswuerdigkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Teilweise_Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Hoechstgeschwindigkeit'>
+    <rdfs:label>hat_Hoechstgeschwindigkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Strasse'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Jahreszeit'>
+    <rdfs:label>Jahreszeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeitraum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fritz-Reuter-Literaturmuseum'>
+    <rdfs:label>Fritz-Reuter-Literaturmuseum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zimmer'>
+    <rdfs:label>Zimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kloster'>
+    <rdfs:label>Kloster</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sehenswuerdigkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Theodor-Koerner-Museum'>
+    <rdfs:label>Theodor-Koerner-Museum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schwimmen'>
+    <rdfs:label>Schwimmen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wassersport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Warnow'>
+    <rdfs:label>Warnow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fluss'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ende___Zeitraum'>
+    <rdfs:label>hat_Ende___Zeitraum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ende'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zeitraum'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Ende'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Lebensraum'>
+    <rdfs:label>hat_Lebensraum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Tier'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#natuerliches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kulturangebot'>
+    <rdfs:label>Kulturangebot</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Teilweise_Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ausstattung'>
+    <rdfs:label>hat_Ausstattung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hallenbad'>
+    <rdfs:label>Hallenbad</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schwimmbad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Laenge'>
+    <rdfs:label>hat_Laenge</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Boot'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#ist_vorhanden'>
+    <rdfs:label>ist_vorhanden</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ausstattung'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Wohnzimmer'>
+    <rdfs:label>Wohnzimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Salzwasser'>
+    <rdfs:label>hat_Salzwasser</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Gewaesser'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Wattwanderung'>
+    <rdfs:label>Wattwanderung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wanderung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ziel___Ausflug'>
+    <rdfs:label>hat_Ziel___Ausflug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ziel'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ausflug'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fortbewegungsmittel'>
+    <rdfs:label>Fortbewegungsmittel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Telefonnummer___Zimmervermittlung'>
+    <rdfs:label>hat_Telefonnummer___Zimmervermittlung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Telefonnummer'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Zimmervermittlung'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Segelflugzeug'>
+    <rdfs:label>Segelflugzeug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugzeug'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ausdehnung'>
+    <rdfs:label>hat_Ausdehnung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Land'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ort'>
+    <rdfs:label>hat_Ort</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flughafen_Stralsund-Barth'>
+    <rdfs:label>Flughafen_Stralsund-Barth</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flughafen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Katze'>
+    <rdfs:label>Katze</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Haustier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Aussenkueste'>
+    <rdfs:label>Aussenkueste</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kueste'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Demmin'>
+    <rdfs:label>Demmin</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#ist_Kartentelefon'>
+    <rdfs:label>ist_Kartentelefon</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Telefonzelle'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Guestrow'>
+    <rdfs:label>Guestrow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fruehling'>
+    <rdfs:label>Fruehling</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Jahreszeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Surfen'>
+    <rdfs:label>Surfen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wassersport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#ist_weiblich'>
+    <rdfs:label>ist_weiblich</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Mensch'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hafen'>
+    <rdfs:label>Hafen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#verkehrliche_Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Anzahl_Parkplaetze'>
+    <rdfs:label>hat_Anzahl_Parkplaetze</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Parkmoeglichkeit'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Alter'>
+    <rdfs:label>hat_Alte</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Lebewesen'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Binz'>
+    <rdfs:label>Ostseebad_Binz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Handball'>
+    <rdfs:label>Handball</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fliegen'>
+    <rdfs:label>Fliegen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Naturpark'>
+    <rdfs:label>Naturpark</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturschutzgebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Golf'>
+    <rdfs:label>Golf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Zimmer'>
+    <rdfs:label>hat_Zimme</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#natuerliches_Gebiet'>
+    <rdfs:label>natuerliches_Gebiet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Telefonzelle'>
+    <rdfs:label>Telefonzelle</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Recknitz'>
+    <rdfs:label>Recknitz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fluss'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zeitpunkt'>
+    <rdfs:label>Zeitpunkt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Mueritzflugplatz'>
+    <rdfs:label>Mueritzflugplatz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Raeumliches_Konzept'>
+    <rdfs:label>Raeumliches_Konzept</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Root'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Staat'>
+    <rdfs:label>Staat</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kueste'>
+    <rdfs:label>Kueste</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Land'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ausstattung___Unterkunft'>
+    <rdfs:label>hat_Ausstattung___Unterkunft</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ausstattung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Unterkunft'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Aufenthaltsraum'>
+    <rdfs:label>Aufenthaltsraum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Monat'>
+    <rdfs:label>Monat</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zeiteinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kneipe'>
+    <rdfs:label>Kneipe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gastronomie'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Wustrow'>
+    <rdfs:label>Ostseebad_Wustrow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Gast'>
+    <rdfs:label>Gast</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Eisenbahn'>
+    <rdfs:label>Eisenbahn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_einwohnerzahl'>
+    <rdfs:label>hat_einwohnerzahl</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ort'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Jasmund'>
+    <rdfs:label>Jasmund</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Nationalpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ausflugsdampfer'>
+    <rdfs:label>Ausflugsdampfer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schiff'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Tauchen'>
+    <rdfs:label>Tauchen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wassersport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Rasende_Robert'>
+    <rdfs:label>Rasende_Robert</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Eisenbahnlinie'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Biosphaerenreservat'>
+    <rdfs:label>Biosphaerenreservat</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturschutzgebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Nationalitaet'>
+    <rdfs:label>hat_Nationalitaet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Staat'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss_Kaarz'>
+    <rdfs:label>Schloss_Kaarz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flughafen_Heringsdorf'>
+    <rdfs:label>Flughafen_Heringsdorf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flughafen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Urlaub'>
+    <rdfs:label>Urlaub</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ereignis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Wismar'>
+    <rdfs:label>Wismar</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Hansestadt'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Tennis'>
+    <rdfs:label>Tennis</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schlosshotel_Krugsdorf'>
+    <rdfs:label>Schlosshotel_Krugsdorf</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schiff'>
+    <rdfs:label>Schiff</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hotel_Schloss_Vietgest'>
+    <rdfs:label>Hotel_Schloss_Vietgest</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flughafen_Neubrandenburg-Trollenhagen'>
+    <rdfs:label>Flughafen_Neubrandenburg-Trollenhagen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flughafen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kirche'>
+    <rdfs:label>Kirche</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sehenswuerdigkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Pension'>
+    <rdfs:label>Pension</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Whirlpool'>
+    <rdfs:label>Whirlpool</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Pony'>
+    <rdfs:label>Pony</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Tier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Rerik'>
+    <rdfs:label>Ostseebad_Rerik</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#S-Bahn'>
+    <rdfs:label>S-Bahn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Eisenbahn'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kremserfahrt'>
+    <rdfs:label>Kremserfahrt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausflug'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Trassenheide'>
+    <rdfs:label>Ostseebad_Trassenheide</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Duesenflugzeug'>
+    <rdfs:label>Duesenflugzeug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugzeug'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Landkreis'>
+    <rdfs:label>Landkreis</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#politisches_Gebiet'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Nordwestmecklenburg'>
+    <rdfs:label>Nordwestmecklenburg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Spielplatz'>
+    <rdfs:label>Spielplatz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Infrastruktur'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Terrasse'>
+    <rdfs:label>Terrasse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Segeln'>
+    <rdfs:label>Segeln</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wassersport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Gastronomie'>
+    <rdfs:label>Gastronomie</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Teilweise_Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Jagdschloss_Friedrichswalde'>
+    <rdfs:label>Jagdschloss_Friedrichswalde</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Baden'>
+    <rdfs:label>Baden</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Wassersport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Thuenen-Museum'>
+    <rdfs:label>Thuenen-Museum</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kiosk'>
+    <rdfs:label>Kiosk</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Einkaufsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Stralsund'>
+    <rdfs:label>Flugplatz_Stralsund</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bach'>
+    <rdfs:label>Bach</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Gewaesser'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ende___OEffnungszeit'>
+    <rdfs:label>hat_Ende___OEffnungszeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Ende'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#OEffnungszeit'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Ende'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Solarium'>
+    <rdfs:label>Solarium</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Nossentiner-Schwinzer_Heide'>
+    <rdfs:label>Nossentiner-Schwinzer_Heide</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Brohmer_Berge'>
+    <rdfs:label>Brohmer_Berge</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Berg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Nordvorpommern'>
+    <rdfs:label>Nordvorpommern</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Binnenland'>
+    <rdfs:label>Binnenland</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Land'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schloss_Luehburg'>
+    <rdfs:label>Schloss_Luehburg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Schlosshotel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Jugendherberge'>
+    <rdfs:label>Jugendherberge</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Gebiet'>
+    <rdfs:label>Gebiet</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Raeumliches_Konzept'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Fahrplan'>
+    <rdfs:label>hat_Fahrplan</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Eisenbahnlinie'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Liegestuhl'>
+    <rdfs:label>Liegestuhl</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Sonnenschirm'>
+    <rdfs:label>Sonnenschirm</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Lebewesen'>
+    <rdfs:label>Lebewesen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Teilweise_Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#benoetigt_Ausruestung___Wanderung'>
+    <rdfs:label>benoetigt_Ausruestung___Wanderung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#benoetigt_Ausruestung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Wanderung'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Guestrow'>
+    <rdfs:label>Flugplatz_Guestrow</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Strand'>
+    <rdfs:label>Strand</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Land'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Baabe'>
+    <rdfs:label>Ostseebad_Baabe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Reisemittel'>
+    <rdfs:label>hat_Reisemittel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Urlaub'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zimmervermittlung'>
+    <rdfs:label>Zimmervermittlung</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Informationsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Gezeiten'>
+    <rdfs:label>hat_Gezeiten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Watt'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Suedost_Ruegen'>
+    <rdfs:label>Suedost_Ruegen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Biosphaerenreservat'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ruine'>
+    <rdfs:label>Ruine</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Sehenswuerdigkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#liegt_in_Gewaesser'>
+    <rdfs:label>liegt_in_Gewaesser</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Insel'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Gewaesser'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Haustier'>
+    <rdfs:label>Haustier</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Tier'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Flugplan'>
+    <rdfs:label>hat_Flugplan</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Flugplatz'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Waschbecken'>
+    <rdfs:label>Waschbecken</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ausstattung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Mannschaftsgroesse'>
+    <rdfs:label>hat_Mannschaftsgroesse</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Sport'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Muenster'>
+    <rdfs:label>Muenster</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kirche'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zeit'>
+    <rdfs:label>Zeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Immaterielles'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Hoehe'>
+    <rdfs:label>hat_Hoehe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Berg'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Kosten'>
+    <rdfs:label>hat_Kosten</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Ausflug'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Kathedrale'>
+    <rdfs:label>Kathedrale</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kirche'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Kuehlungsborn'>
+    <rdfs:label>Ostseebad_Kuehlungsborn</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Ende'>
+    <rdfs:label>hat_Ende</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Wanderweg'>
+    <rdfs:label>Wanderweg</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Weg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Museum_Greifswald'>
+    <rdfs:label>Museum_Greifswald</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Propellerfugzeug'>
+    <rdfs:label>Propellerfugzeug</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugzeug'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Flugplatz_Pasewalk-Franzfelde'>
+    <rdfs:label>Flugplatz_Pasewalk-Franzfelde</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flugplatz'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Dom'>
+    <rdfs:label>Dom</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kirche'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Raummass'>
+    <rdfs:label>Raummass</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#raeumliche_Masseinheit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Zinnowitz'>
+    <rdfs:label>Ostseebad_Zinnowitz</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Landebahnlaenge'>
+    <rdfs:label>hat_Landebahnlaenge</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Flugplatz'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Segelfliegen'>
+    <rdfs:label>Segelfliegen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fliegen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Drogerie'>
+    <rdfs:label>Drogerie</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Einkaufsmoeglichkeit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Fussball'>
+    <rdfs:label>Fussball</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ballsport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Feldberger_Seenlandschaft'>
+    <rdfs:label>Feldberger_Seenlandschaft</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hausprospekt'>
+    <rdfs:label>Hausprospekt</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Werbung'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Bahnhof'>
+    <rdfs:label>Bahnhof</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#oeffentliches_Gebaeude'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Balonfahren'>
+    <rdfs:label>Balonfahren</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fliegen'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Bezeichnung___Raeumliches_Konzept'>
+    <rdfs:label>hat_Bezeichnung___Raeumliches_Konzept</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#hat_Bezeichnung'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Raeumliches_Konzept'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Theater'>
+    <rdfs:label>Theater</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Kulturangebot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ruegen'>
+    <rdfs:label>Ruegen</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Landkreis'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Naturpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Zwischensaison'>
+    <rdfs:label>Zwischensaison</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Saison'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Quadratmeter'>
+    <rdfs:label>Quadratmeter</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Flaechenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Materielles_Ding'>
+    <rdfs:label>Materielles_Ding</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Vorpommersche_Boddenlandschaft'>
+    <rdfs:label>Vorpommersche_Boddenlandschaft</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Nationalpark'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#hat_Flughoehe'>
+    <rdfs:label>hat_Flughoehe</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://meh/tourism1#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://meh/tourism1#Luftverkehrsmittel'/>
+    <rdfs:range rdf:resource='http://meh/tourism1#Laengenmass'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#DEFAULT_ROOT_RELATION'>
+    <rdfs:label>DEFAULT_ROOT_RELATION</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#DEFAULT_ROOT_DATATYPE_RELATION'>
+    <rdfs:label>DEFAULT_ROOT_DATATYPE_RELATION</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Schlafzimmer'>
+    <rdfs:label>Schlafzimmer</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Zimmer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Informationsmoeglichkeit'>
+    <rdfs:label>Informationsmoeglichkeit</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Teilweise_Materielles_Ding'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Hotel'>
+    <rdfs:label>Hotel</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Unterkunft'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Ostseebad_Goehren'>
+    <rdfs:label>Ostseebad_Goehre</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Ostseebad'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://meh/tourism1#Auto'>
+    <rdfs:label>Auto</rdfs:label>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:subClassOf rdf:resource='http://meh/tourism1#Fortbewegungsmittel'/>
+  </rdf:Description>
+</rdf:RDF>

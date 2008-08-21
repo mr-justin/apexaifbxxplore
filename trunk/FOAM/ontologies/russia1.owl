@@ -1,0 +1,2242 @@
+<rdf:RDF
+  xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+  xmlns:NS0='http://lonely.org/russia#'
+  xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#'
+  xmlns:owl = "http://www.w3.org/2002/07/owl#"
+  xmlns:xsd = 'http://www.w3.org/2001/XMLSchema#'
+ >
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+  <rdf:Description rdf:about='http://lonely.org/russia#woodcarving'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>http://lonely.org/russia#woodcarving</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#culture'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>culture</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nameable_thing'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#budget'>
+    <rdfs:label xml:lang='en'>budget</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#level'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#December'>
+    <rdfs:label xml:lang='en'>December</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#human_being'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>human_being</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#living_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#written_document'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>written_document</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#document'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Europe'>
+    <rdfs:label xml:lang='en'>Europe</rdfs:label>
+    <rdfs:label xml:lang='en'>Europa</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Belgium'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Czech'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#France'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Holland'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Hungary'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Poland'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Russian'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Berlin'>
+    <rdfs:label xml:lang='en'>Berlin</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Warsaw'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Amsterdam'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Paris'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_name___nameable_thing>Berlin</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Neva'>
+    <rdfs:label xml:lang='en'>Neva</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#river'/>
+    <NS0:has_name___nameable_thing>Neva</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#South_Ameriaca'>
+    <rdfs:label xml:lang='en'>South Ameriaca</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#nature_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>nature_area</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#restaurant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>restaurant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#music'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>music</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#France'>
+    <rdfs:label xml:lang='en'>France</rdfs:label>
+    <rdfs:label xml:lang='en'>France</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Paris'/>
+    <NS0:is_MemberOfEU>true</NS0:is_MemberOfEU>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#trekking'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>trekking</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#bear'>
+    <rdfs:label xml:lang='en'>bear</rdfs:label>
+    <rdfs:label xml:lang='en'>bear</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#animal'/>
+    <NS0:has_name___nameable_thing>bear</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#DEFAULT_ROOT_RELATION'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cash'>
+    <rdfs:label xml:lang='en'>cash</rdfs:label>
+    <rdfs:label xml:lang='en'>cash</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#payment'/>
+    <NS0:has_name___nameable_thing>Cash</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#white_nights'>
+    <rdfs:label xml:lang='en'>white_nights</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#festival'/>
+    <NS0:is_at rdf:resource='http://lonely.org/russia#St_Petersburg'/>
+    <NS0:is_on rdf:resource='http://lonely.org/russia#June'/>
+    <NS0:has_name___nameable_thing>White Nights</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#skiing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>skiing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#EU'>
+    <rdfs:label xml:lang='en'>EU</rdfs:label>
+    <rdfs:label xml:lang='en'>EU</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#political_area'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Belgium'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#France'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Holland'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Czech'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Hungary'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#Poland'/>
+    <NS0:has_name___nameable_thing>European Union</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Lukoil'>
+    <rdfs:label xml:lang='en'>Lukoil</rdfs:label>
+    <rdfs:label xml:lang='en'>Lukoil</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#oil'/>
+    <NS0:has_name___nameable_thing>Lukoil</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#country'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>country</rdfs:label>
+    <rdfs:label xml:lang='en'>country</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#zone'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>zone</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_length'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_length</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#river'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Ural'>
+    <rdfs:label xml:lang='en'>Ural</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#mountain'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#German'>
+    <rdfs:label xml:lang='en'>German</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#language'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#need_equipment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>need_equipment</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#adventure'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#steamship'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>steamship</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#ship'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#August'>
+    <rdfs:label xml:lang='en'>August</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>true</NS0:is_dampest>
+    <NS0:is_main_holiday>true</NS0:is_main_holiday>
+    <NS0:is_warmest>true</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#danger'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>danger</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#causal_agent'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#include_city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>include_city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#time_zone'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_railway_to___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#has_railway_to'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#city'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#mid_range'>
+    <rdfs:label xml:lang='en'>mid_range</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#level'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#square'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>square</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#level'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>level</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#measurement'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#document'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>document</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#physical_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#bus'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>bus</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#means_of_transport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#nameable_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>nameable_thing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#natur_reserve'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>natur_reserve</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>town</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#male'>
+    <rdfs:label xml:lang='en'>male</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#gender'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#eating'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>eating</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#top_end'>
+    <rdfs:label xml:lang='en'>top_end</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#level'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#physical_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>physical_thing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#material_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_railway_to___political_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#has_railway_to'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#political_area'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#measurement'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_7'>
+    <rdfs:label xml:lang='en'>GMT_UTC+7</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Russian_Orthodox'>
+    <rdfs:label xml:lang='en'>Russian_Orthodox</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#religion'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#volt'>
+    <rdfs:label xml:lang='en'>volt</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#electromagnetic_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_at'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_at</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#festival'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_3'>
+    <rdfs:label xml:lang='en'>GMT_UTC+3</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#April'>
+    <rdfs:label xml:lang='en'>April</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_method___pay_bills'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_method___pay_bills</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#pay_bills'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#payment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_monetary_unit___GDP_per_head'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_monetary_unit___GDP_per_head</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#GDP_per_head'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#monetary__unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_garden'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_garden</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#town'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#garden'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Kola'>
+    <rdfs:label xml:lang='en'>Kola</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#peninsula'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#festival'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>festival</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-9'>
+    <rdfs:label xml:lang='en'>GMT_UTC-9</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cathedral_of_St_Sophia'>
+    <rdfs:label xml:lang='en'>cathedral_of_St_Sophia</rdfs:label>
+    <rdfs:label xml:lang='en'>cathedral_of_St_Sophia</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#cathedral'/>
+    <NS0:has_name___nameable_thing>Cathedral of St Sophia</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#Novgorod'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#automotive'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>automotive</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_level___lodging'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_level___lodging</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#lodging'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#level'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-5'>
+    <rdfs:label xml:lang='en'>GMT_UTC-5</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_rivertransport_to___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#has_rivertransport_to'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#city'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Odessa'>
+    <rdfs:label xml:lang='en'>Odessa</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ordinary_city'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:has_name___nameable_thing>Odessa</NS0:has_name___nameable_thing>
+    <NS0:is_biggest>false</NS0:is_biggest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cinema'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cinema</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture_offer'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Azov_Sea'>
+    <rdfs:label xml:lang='en'>Azov_Sea</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#sea'/>
+    <NS0:has_name___nameable_thing>Azov</NS0:has_name___nameable_thing>
+    <NS0:is_close_to rdf:resource='http://lonely.org/russia#Volgograd'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#pine'>
+    <rdfs:label xml:lang='en'>pine</rdfs:label>
+    <rdfs:label xml:lang='en'>pine</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#plant'/>
+    <NS0:has_name___nameable_thing>pine</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_rate___inflation'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_rate___inflation</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#inflation'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#rate'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#flight'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>flight</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#growth_rate'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>growth_rate</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#rate'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-1'>
+    <rdfs:label xml:lang='en'>GMT_UTC-1</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC-1</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_10'>
+    <rdfs:label xml:lang='en'>GMT_UTC+10</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+10</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#iron_ore'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>iron_ore</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#easter'>
+    <rdfs:label xml:lang='en'>easter</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#festival'/>
+    <NS0:has_name___nameable_thing>Easter</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Sawn_Timber'>
+    <rdfs:label xml:lang='en'>Sawn_Timber</rdfs:label>
+    <rdfs:label xml:lang='en'>Sawn_Timber</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#timber'/>
+    <NS0:has_name___nameable_thing>Sawn Timber</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#English'>
+    <rdfs:label xml:lang='en'>English</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#language'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Winter'>
+    <rdfs:label xml:lang='en'>Winter</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#June'>
+    <rdfs:label xml:lang='en'>June</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#earth'>
+    <rdfs:label xml:lang='en'>earth</rdfs:label>
+    <rdfs:label xml:lang='en'>earth</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#space'/>
+    <NS0:has_name___nameable_thing>Earth</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_member'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_member</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#political_area'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_attractions'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_attractions</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#city'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#attractions_of_city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#surface_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>surface_area</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#food'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>food</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#physical_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Vladimir_Vladimirovich_Putin'>
+    <rdfs:label xml:lang='en'>Vladimir_Vladimirovich_Putin</rdfs:label>
+    <rdfs:label xml:lang='en'>Vladimir_Vladimirovich_Putin</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#president'/>
+    <NS0:belong_to___person rdf:resource='http://lonely.org/russia#Russian'/>
+    <NS0:has_gender rdf:resource='http://lonely.org/russia#male'/>
+    <NS0:has_name___nameable_thing>Vladimir Vlaimirovich Putin</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#require_visa'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>require_visa</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#traveller'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#be_used_for'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_used_for</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#means_of_transport'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Prague'>
+    <rdfs:label xml:lang='en'>Prague</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Czech'/>
+    <NS0:has_name___nameable_thing>Prague</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#language'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>language</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#tiger'>
+    <rdfs:label xml:lang='en'>tiger</rdfs:label>
+    <rdfs:label xml:lang='en'>tiger</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#animal'/>
+    <NS0:has_name___nameable_thing>tiger</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#traveller'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>traveller</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Lake_Baikal'>
+    <rdfs:label xml:lang='en'>Lake_Baikal</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#lake'/>
+    <NS0:has_name___nameable_thing>Baikal</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#partial_material_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>partial_material_thing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nameable_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#wolf'>
+    <rdfs:label xml:lang='en'>wolf</rdfs:label>
+    <rdfs:label xml:lang='en'>wolf</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#animal'/>
+    <NS0:has_name___nameable_thing>wolf</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_major_TradingPartner'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_major_TradingPartner</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#political_area'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Animist'>
+    <rdfs:label xml:lang='en'>Animist</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#religion'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Summer'>
+    <rdfs:label xml:lang='en'>Summer</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#risk'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>risk</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#causal_agent'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#ethnic'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>ethnic</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nameable_thing'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Amsterdam'>
+    <rdfs:label xml:lang='en'>Amsterdam</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Berlin'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Holland'/>
+    <NS0:has_name___nameable_thing>Amsterdam</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Novgorod'>
+    <rdfs:label xml:lang='en'>Novgorod</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ordinary_city'/>
+    <NS0:has_rivertransport_to rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#cathedral_of_St_Sophia'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#Millennium_of_Russia'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#church_of_our_Saviour_at_Ilino'/>
+    <NS0:has_infrastructure rdf:resource='http://lonely.org/russia#Kremlin'/>
+    <NS0:has_name___nameable_thing>Novgorod</NS0:has_name___nameable_thing>
+    <NS0:is_biggest>false</NS0:is_biggest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#vacation_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>vacation_area</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Volgograd'>
+    <rdfs:label xml:lang='en'>Volgograd</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#town'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Beijing'/>
+    <NS0:has_name___nameable_thing>Volgograd</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#gender'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>gender</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#boat'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>boat</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#ship'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Antarctica'>
+    <rdfs:label xml:lang='en'>Antarctica</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Millennium_of_Russia'>
+    <rdfs:label xml:lang='en'>Millennium_of_Russia</rdfs:label>
+    <rdfs:label xml:lang='en'>Millennium_of_Russia</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#monument'/>
+    <NS0:has_name___nameable_thing>Millennium of Russia Monument</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#Novgorod'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_from'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_from</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#transfer'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lie_in___locatable_thing___locatable_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#lie_in___locatable_thing'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#locatable_thing'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#sight'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>sight</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#attractions_of_city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#location'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>location</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#physical_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#theatre'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>theatre</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture_offer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_close_to'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_close_to</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#nature_area'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_on'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_on</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#festival'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#russian'>
+    <rdfs:label xml:lang='en'>russian</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#language'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Germany'>
+    <rdfs:label xml:lang='en'>Germany</rdfs:label>
+    <rdfs:label xml:lang='en'>Germany</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Belgium'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Czech'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#France'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Holland'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Poland'/>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Berlin'/>
+    <NS0:has_name___nameable_thing>Deutschland</NS0:has_name___nameable_thing>
+    <NS0:is_MemberOfEU>true</NS0:is_MemberOfEU>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_potitical_fact'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_potitical_fact</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#living_being'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>living_being</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#partial_material_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#adventure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>adventure</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#church'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>church</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture_offer'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Islam'>
+    <rdfs:label xml:lang='en'>Islam</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#religion'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#alcohol'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>alcohol</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#drink'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cathedral'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cathedral</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture_offer'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#infrastructure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>infrastructure</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#physical_thing'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#locatable_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#culture_offer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>culture_offer</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#attractions_of_city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#taxi'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>taxi</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#means_of_transport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Hungary'>
+    <rdfs:label xml:lang='en'>Hungary</rdfs:label>
+    <rdfs:label xml:lang='en'>Hungary</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:is_MemberOfEU>true</NS0:is_MemberOfEU>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Budapest'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#shouldnot_travel_to'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>shouldnot_travel_to</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#traveller'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_duration'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_duration</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#jaunt'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_monetary_unit___eating'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_monetary_unit___eating</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#eating'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#monetary__unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#hiking'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>hiking</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#inhabitant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>inhabitant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#us_dollar'>
+    <rdfs:label xml:lang='en'>us_dollar</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#monetary__unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#maritime_reserve'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>maritime_reserve</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Irkutsk'>
+    <rdfs:label xml:lang='en'>Irkutsk</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ordinary_city'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:is_biggest>false</NS0:is_biggest>
+    <NS0:has_name___nameable_thing>Irkutsk</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_dampest'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>is_dampest</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#month'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_rivertransport_to'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_rivertransport_to</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#belong_to___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>belong_to___city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#city'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_offer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_offer</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#restaurant'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#area_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>area_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Russian'>
+    <rdfs:label xml:lang='en'>Russian</rdfs:label>
+    <rdfs:label xml:lang='en'>Russian</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ethnic'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Hilton'>
+    <rdfs:label xml:lang='en'>Hilton</rdfs:label>
+    <rdfs:label xml:lang='en'>Hilton</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#hotel'/>
+    <NS0:has_name___nameable_thing>Hotel Hilton</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>palace</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#far_east_maritime_reserve'>
+    <rdfs:label xml:lang='en'>far_east_maritime_reserve</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#maritime_reserve'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Rabies'>
+    <rdfs:label xml:lang='en'>Rabies</rdfs:label>
+    <rdfs:label xml:lang='en'>Rabies</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#health_risk'/>
+    <NS0:exist_in rdf:resource='http://lonely.org/russia#Russian'/>
+    <NS0:has_name___nameable_thing>Rabies</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_8'>
+    <rdfs:label xml:lang='en'>GMT_UTC+8</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+8</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#plant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>plant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#living_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Trans-Siberian'>
+    <rdfs:label xml:lang='en'>Trans-Siberian</rdfs:label>
+    <rdfs:label xml:lang='en'>Trans-Siberian</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#railway'/>
+    <NS0:is_from rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:has_destination rdf:resource='http://lonely.org/russia#Vladivostok'/>
+    <NS0:has_name___nameable_thing>Trans Siberian</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Pacific'>
+    <rdfs:label xml:lang='en'>Pacific</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#sea'/>
+    <NS0:has_name___nameable_thing>Pacific</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_4'>
+    <rdfs:label xml:lang='en'>GMT_UTC+4</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+4</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Russian_Winter_Festival'>
+    <rdfs:label xml:lang='en'>Russian_Winter_Festival</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#festival'/>
+    <NS0:is_at rdf:resource='http://lonely.org/russia#St_Petersburg'/>
+    <NS0:is_at rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:is_at rdf:resource='http://lonely.org/russia#Novgorod'/>
+    <NS0:is_on rdf:resource='http://lonely.org/russia#December'/>
+    <NS0:is_on rdf:resource='http://lonely.org/russia#January'/>
+    <NS0:has_name___nameable_thing>Russian Winter Festival</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_festival'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_festival</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#art'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#festival'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_0'>
+    <rdfs:label xml:lang='en'>GMT_UTC+0</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC-0</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#animal'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>animal</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#living_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_distance'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#jaunt'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Moscow'>
+    <rdfs:label xml:lang='en'>Moscow</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Vladivostok'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Warsaw'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Budapest'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Prague'/>
+    <NS0:has_rivertransport_to rdf:resource='http://lonely.org/russia#St_Petersburg'/>
+    <NS0:has_rivertransport_to rdf:resource='http://lonely.org/russia#Volgograd'/>
+    <NS0:has_rivertransport_to rdf:resource='http://lonely.org/russia#Novgorod'/>
+    <NS0:is_biggest>false</NS0:is_biggest>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#Kremlin'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#Red_Square'/>
+    <NS0:has_infrastructure rdf:resource='http://lonely.org/russia#Hilton'/>
+    <NS0:has_infrastructure rdf:resource='http://lonely.org/russia#Trans-Siberian'/>
+    <NS0:has_name___nameable_thing>Moscow</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#immaterial_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>immaterial_thing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#vodka'>
+    <rdfs:label xml:lang='en'>vodka</rdfs:label>
+    <rdfs:label xml:lang='en'>vodka</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#alcohol'/>
+    <NS0:has_name___nameable_thing>Vodka</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#time_zone'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time_zone</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_length_unit___jaunt'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#has_length_unit'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#jaunt'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#kayaking'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>kayaking</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-6'>
+    <rdfs:label xml:lang='en'>GMT_UTC-6</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#ussuri_natur_reserve'>
+    <rdfs:label xml:lang='en'>ussuri_natur_reserve</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#natur_reserve'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#hertz'>
+    <rdfs:label xml:lang='en'>hertz</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#electromagnetic_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_president'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_president</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#president'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-2'>
+    <rdfs:label xml:lang='en'>GMT_UTC-2</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC-2</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Amsterdam'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Berlin'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Budapest'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Paris'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Prague'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Warsaw'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#ballet'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>ballet</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_rate___annual_growth'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_rate___annual_growth</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#annual_growth'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#rate'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_birthplace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_birthplace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#person'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#exist_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>exist_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#causal_agent'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#causal_agent'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>causal_agent</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#physical_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_11'>
+    <rdfs:label xml:lang='en'>GMT_UTC+11</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+11</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Vladivostok'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_method___jaunt'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_method___jaunt</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#jaunt'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#land_transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#health_risk'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>health_risk</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#risk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#alpine_vista'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>alpine_vista</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_infrastructure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_infrastructure</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#city'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#infrastructure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#gulf'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>gulf</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#boeing_747'>
+    <rdfs:label xml:lang='en'>boeing_747</rdfs:label>
+    <rdfs:label xml:lang='en'>boeing_747</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#plane'/>
+    <NS0:has_name___nameable_thing>Boeing 747</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Ukrainian'>
+    <rdfs:label xml:lang='en'>Ukrainian</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ethnic'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Federation'>
+    <rdfs:label xml:lang='en'>Federation</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#government'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#capital_city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>capital_city</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#kilometer'>
+    <rdfs:label xml:lang='en'>kilometer</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#rate'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>rate</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#measurement'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_economical_fact'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_economical_fact</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#economical_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#industry'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>industry</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#partial_material_thing'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#locatable_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_backdrop'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_backdrop</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#sea'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#mountain'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_middle'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_middle</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#transfer'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#means_of_transport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_rate___growth'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_rate___growth</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#population'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#rate'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_rivertransport_to___political_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#has_rivertransport_to'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#political_area'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cruiser'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cruiser</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#ship'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#measurement'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>measurement</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#electromagnetic_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>electromagnetic_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#time_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#DEFAULT_ROOT_CONCEPT'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#birch'>
+    <rdfs:label xml:lang='en'>birch</rdfs:label>
+    <rdfs:label xml:lang='en'>birch</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#plant'/>
+    <NS0:has_name___nameable_thing>birch</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#approval'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>approval</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#written_document'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#February'>
+    <rdfs:label xml:lang='en'>February</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#accomodation'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>accomodation</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#ordinary_city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>ordinary_city</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Sochi'>
+    <rdfs:label xml:lang='en'>Sochi</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#vacation_area'/>
+    <NS0:is_close_to rdf:resource='http://lonely.org/russia#Black_Sea'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#annual_growth'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>annual_growth</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#economical_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#belong_to___document'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>belong_to___document</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#document'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#traveller'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#river_transfer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>river_transfer</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#March'>
+    <rdfs:label xml:lang='en'>March</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Don'>
+    <rdfs:label xml:lang='en'>Don</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#river'/>
+    <NS0:is_close_to rdf:resource='http://lonely.org/russia#Kazan'/>
+    <NS0:flow_to rdf:resource='http://lonely.org/russia#Azov_Sea'/>
+    <NS0:has_name___nameable_thing>Don</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-10'>
+    <rdfs:label xml:lang='en'>GMT_UTC-10</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Beijing'>
+    <rdfs:label xml:lang='en'>Beijing</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Vladivostok'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#China'/>
+    <NS0:has_name___nameable_thing>Beijing</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#railway'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>railway</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#land_transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#garden'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>garden</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture_offer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#travel_event'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>travel_event</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#building'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>building</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#infrastructure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#day'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>day</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#north_pole'>
+    <rdfs:label xml:lang='en'>north_pole</rdfs:label>
+    <rdfs:label xml:lang='en'>north_pole</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#location'/>
+    <NS0:has_name___nameable_thing>North Pole</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#religion'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>religion</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#drink'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>drink</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#metric'>
+    <rdfs:label xml:lang='en'>metric</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#credit_card'>
+    <rdfs:label xml:lang='en'>credit_card</rdfs:label>
+    <rdfs:label xml:lang='en'>credit_card</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#payment'/>
+    <NS0:has_name___nameable_thing>Credit Card</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Spring'>
+    <rdfs:label xml:lang='en'>Spring</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#North_America'>
+    <rdfs:label xml:lang='en'>North America</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#U.S.A.'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GDP'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>GDP</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#economical_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_biggest'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>is_biggest</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#city'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Holland'>
+    <rdfs:label xml:lang='en'>Holland</rdfs:label>
+    <rdfs:label xml:lang='en'>Holland</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Amsterdam'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Belgium'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Caspian_Sea'>
+    <rdfs:label xml:lang='en'>Caspian_Sea</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#sea'/>
+    <NS0:has_name___nameable_thing>Caspian</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Encephalitis'>
+    <rdfs:label xml:lang='en'>Encephalitis</rdfs:label>
+    <rdfs:label xml:lang='en'>Encephalitis</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#health_risk'/>
+    <NS0:exist_in rdf:resource='http://lonely.org/russia#Russian'/>
+    <NS0:has_name___nameable_thing>Encephalitis</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_railway_to'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_railway_to</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#drive'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>drive</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#land_transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cheque'>
+    <rdfs:label xml:lang='en'>cheque</rdfs:label>
+    <rdfs:label xml:lang='en'>cheque</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#payment'/>
+    <NS0:has_name___nameable_thing>Cheque</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Warsaw'>
+    <rdfs:label xml:lang='en'>Warsaw</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Berlin'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Poland'/>
+    <NS0:has_name___nameable_thing>Warsaw</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#construction_equipment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>construction_equipment</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#forest'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>forest</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_length_unit___river'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#has_length_unit'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#river'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Africa'>
+    <rdfs:label xml:lang='en'>Africa</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#attractions_of_city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>attractions_of_city</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#partial_material_thing'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#locatable_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#month'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>month</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Diphtheria'>
+    <rdfs:label xml:lang='en'>Diphtheria</rdfs:label>
+    <rdfs:label xml:lang='en'>Diphtheria</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#health_risk'/>
+    <NS0:has_name___nameable_thing>Diphtheria</NS0:has_name___nameable_thing>
+    <NS0:exist_in rdf:resource='http://lonely.org/russia#Russian'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#island'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>island</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#locatable_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>locatable_thing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#musical_composition'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>musical_composition</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#canal'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>canal</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#waterway'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#White_Sea'>
+    <rdfs:label xml:lang='en'>White_Sea</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#sea'/>
+    <NS0:has_name___nameable_thing>White Sea</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#hilltop_view'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>hilltop_view</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#district'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>district</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Oceania'>
+    <rdfs:label xml:lang='en'>Oceania</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#pay_bills'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>pay_bills</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Poland'>
+    <rdfs:label xml:lang='en'>Poland</rdfs:label>
+    <rdfs:label xml:lang='en'>Poland</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Poland'/>
+    <NS0:is_MemberOfEU>true</NS0:is_MemberOfEU>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Warsaw'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Dagestan'>
+    <rdfs:label xml:lang='en'>Dagestan</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#district'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Kazan'>
+    <rdfs:label xml:lang='en'>Kazan</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#town'/>
+    <NS0:has_garden rdf:resource='http://lonely.org/russia#Dachas'/>
+    <NS0:has_name___nameable_thing>Kazan</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_9'>
+    <rdfs:label xml:lang='en'>GMT_UTC+9</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+9</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+    <NS0:include_city rdf:resource='http://lonely.org/russia#Irkutsk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_destination'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_destination</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#transfer'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_5'>
+    <rdfs:label xml:lang='en'>GMT_UTC+5</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+5</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_1'>
+    <rdfs:label xml:lang='en'>GMT_UTC+1</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+1</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lie_in___locatable_thing___industry'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#lie_in___locatable_thing'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#industry'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#jaunt'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>jaunt</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Belgium'>
+    <rdfs:label xml:lang='en'>Belgium</rdfs:label>
+    <rdfs:label xml:lang='en'>Belgium</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:is_MemberOfEU>true</NS0:is_MemberOfEU>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Ulan_Ude'>
+    <rdfs:label xml:lang='en'>Ulan_Ude</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ordinary_city'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:has_name___nameable_thing>Ulan Ude</NS0:has_name___nameable_thing>
+    <NS0:is_biggest>false</NS0:is_biggest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Christmas'>
+    <rdfs:label xml:lang='en'>Christmas</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#festival'/>
+    <NS0:has_name___nameable_thing>Christmas</NS0:has_name___nameable_thing>
+    <NS0:is_on rdf:resource='http://lonely.org/russia#December'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_major_river'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_major_river</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#river'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#waterway'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>waterway</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#timber'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>timber</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-7'>
+    <rdfs:label xml:lang='en'>GMT_UTC-7</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#plane'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>plane</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#means_of_transport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Dachas'>
+    <rdfs:label xml:lang='en'>Dachas</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#garden'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#government'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>government</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-3'>
+    <rdfs:label xml:lang='en'>GMT_UTC-3</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC-3</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Chechnya'>
+    <rdfs:label xml:lang='en'>Chechnya</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#district'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#political_fact'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>political_fact</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GDP_per_head'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>GDP_per_head</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#economical_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_12'>
+    <rdfs:label xml:lang='en'>GMT_UTC+12</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+12</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#fact'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>fact</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#transfer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>transfer</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#infrastructure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Film_Festival'>
+    <rdfs:label xml:lang='en'>Film_Festival</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#festival'/>
+    <NS0:is_at rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:is_on rdf:resource='http://lonely.org/russia#Autumn'/>
+    <NS0:has_name___nameable_thing>Film Festival</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_major_industry'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_major_industry</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_danger'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_danger</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#area'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#danger'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Black_Sea'>
+    <rdfs:label xml:lang='en'>Black_Sea</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#sea'/>
+    <NS0:has_backdrop rdf:resource='http://lonely.org/russia#Caucasus'/>
+    <NS0:has_name___nameable_thing>Black Sea</NS0:has_name___nameable_thing>
+    <NS0:is_close_to rdf:resource='http://lonely.org/russia#Odessa'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#square_meter'>
+    <rdfs:label xml:lang='en'>square_meter</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#area_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Ulyanovsk'>
+    <rdfs:label xml:lang='en'>Ulyanovsk</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#town'/>
+    <NS0:has_name___nameable_thing>Ulyanovsk</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Volga'>
+    <rdfs:label xml:lang='en'>Volga</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#river'/>
+    <NS0:has_length>3700</NS0:has_length>
+    <NS0:has_length_unit rdf:resource='http://lonely.org/russia#kilometer'/>
+    <NS0:flow_to rdf:resource='http://lonely.org/russia#Caspian_Sea'/>
+    <NS0:has_name___nameable_thing>Volga</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#St_Petersburg'>
+    <rdfs:label xml:lang='en'>St_Petersburg</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ordinary_city'/>
+    <NS0:has_rivertransport_to rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#state_hermitage_museum'/>
+    <NS0:has_attractions rdf:resource='http://lonely.org/russia#Peter_Paul_fortress'/>
+    <NS0:has_name___nameable_thing>St Petersburg</NS0:has_name___nameable_thing>
+    <NS0:is_biggest>false</NS0:is_biggest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#season'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>season</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#January'>
+    <rdfs:label xml:lang='en'>January</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#agricultural'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>agricultural</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_main_holiday'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>is_main_holiday</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#month'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Vladivostok'>
+    <rdfs:label xml:lang='en'>Vladivostok</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ordinary_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Beijing'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:is_biggest>false</NS0:is_biggest>
+    <NS0:has_name___nameable_thing>Vladivostok</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_name___nameable_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_name___nameable_thing</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#nameable_thing'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#embroidery'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>embroidery</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#outer_space'>
+    <rdfs:label xml:lang='en'>outer_space</rdfs:label>
+    <rdfs:label xml:lang='en'>outer_space</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#space'/>
+    <NS0:has_name___nameable_thing>Out Space</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#mushroom'>
+    <rdfs:label xml:lang='en'>mushroom</rdfs:label>
+    <rdfs:label xml:lang='en'>mushroom</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#plant'/>
+    <NS0:has_name___nameable_thing>mushroom</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#land_transfer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>land_transfer</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#transfer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cost_money___eating'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>cost_money___eating</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#eating'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#November'>
+    <rdfs:label xml:lang='en'>November</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#female'>
+    <rdfs:label xml:lang='en'>female</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#gender'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#cost_money___lodging'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>cost_money___lodging</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#lodging'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Red_Square'>
+    <rdfs:label xml:lang='en'>Red_Square</rdfs:label>
+    <rdfs:label xml:lang='en'>Red_Square</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#square'/>
+    <NS0:has_name___nameable_thing>Red Square</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#September'>
+    <rdfs:label xml:lang='en'>September</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#monument'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>monument</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Budapest'>
+    <rdfs:label xml:lang='en'>Budapest</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#Hungary'/>
+    <NS0:has_name___nameable_thing>Budapest</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#flow_to'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>flow_to</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#river'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#sea'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#inflation'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>inflation</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#economical_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lie_in___locatable_thing___infrastructure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#lie_in___locatable_thing'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#infrastructure'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#ship'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>ship</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#means_of_transport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lie_in___locatable_thing___attractions_of_city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#lie_in___locatable_thing'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#attractions_of_city'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_place'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_place</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#adventure'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#location'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-11'>
+    <rdfs:label xml:lang='en'>GMT_UTC-11</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#July'>
+    <rdfs:label xml:lang='en'>July</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>true</NS0:is_dampest>
+    <NS0:is_main_holiday>true</NS0:is_main_holiday>
+    <NS0:is_warmest>true</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Autumn'>
+    <rdfs:label xml:lang='en'>Autumn</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_length_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_length_unit</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Hepatltis'>
+    <rdfs:label xml:lang='en'>Hepatltis</rdfs:label>
+    <rdfs:label xml:lang='en'>Hepatltis</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#health_risk'/>
+    <NS0:exist_in rdf:resource='http://lonely.org/russia#Russian'/>
+    <NS0:has_name___nameable_thing>Hepatltis</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Czech'>
+    <rdfs:label xml:lang='en'>Czech</rdfs:label>
+    <rdfs:label xml:lang='en'>Czech</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Germany'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Czech'/>
+    <NS0:is_MemberOfEU>true</NS0:is_MemberOfEU>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Prague'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#waterfall'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>waterfall</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_monetary_unit___lodging'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_monetary_unit___lodging</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#lodging'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#monetary__unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#river'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>river</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#waterway'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#state_hermitage_museum'>
+    <rdfs:label xml:lang='en'>state_hermitage_museum</rdfs:label>
+    <rdfs:label xml:lang='en'>state_hermitage_museum</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#museum'/>
+    <NS0:has_name___nameable_thing>State Hermitage Museum</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#St_Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#volume_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>volume_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#space'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>space</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#location'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#payment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>payment</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#physical_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#fortress'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>fortress</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#mountaineering'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>mountaineering</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Peter_Paul_fortress'>
+    <rdfs:label xml:lang='en'>Peter_Paul_fortress</rdfs:label>
+    <rdfs:label xml:lang='en'>Peter_Paul_fortress</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#fortress'/>
+    <NS0:has_name___nameable_thing>Peter  Paul Fortress</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#St_Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#musical_performance'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>musical_performance</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#coal'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>coal</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#bicycling'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>bicycling</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#adventure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#means_of_transport'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>means_of_transport</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#infrastructure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#museum'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>museum</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#culture_offer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#arcade'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>arcade</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#sight'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Tatar'>
+    <rdfs:label xml:lang='en'>Tatar</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#ethnic'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lake'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>lake</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#waterway'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#political_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>political_area</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Ingushetia'>
+    <rdfs:label xml:lang='en'>Ingushetia</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#district'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#mountain'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>mountain</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>area</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_level___eating'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_level___eating</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#eating'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#level'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_gender'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_gender</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#person'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#gender'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#economical_fact'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>economical_fact</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#rouble'>
+    <rdfs:label xml:lang='en'>rouble</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#monetary__unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Paris'>
+    <rdfs:label xml:lang='en'>Paris</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#capital_city'/>
+    <NS0:has_railway_to rdf:resource='http://lonely.org/russia#Berlin'/>
+    <NS0:belong_to___city rdf:resource='http://lonely.org/russia#France'/>
+    <NS0:has_name___nameable_thing>Paris</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_6'>
+    <rdfs:label xml:lang='en'>GMT_UTC+6</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+6</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#U.S.A.'>
+    <rdfs:label xml:lang='en'>U.S.A.</rdfs:label>
+    <rdfs:label xml:lang='en'>U.S.A.</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_name___nameable_thing>United States of America</NS0:has_name___nameable_thing>
+    <NS0:is_MemberOfEU>false</NS0:is_MemberOfEU>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#appartment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>appartment</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#accomodation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_2'>
+    <rdfs:label xml:lang='en'>GMT_UTC+2</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#art'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>art</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#immaterial_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#belong_to___person'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>belong_to___person</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#person'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#ethnic'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-8'>
+    <rdfs:label xml:lang='en'>GMT_UTC-8</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#region'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>region</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#location'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#battleship'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>battleship</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#ship'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lodging'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>lodging</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC-4'>
+    <rdfs:label xml:lang='en'>GMT_UTC-4</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#monetary__unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>monetary_ unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_border'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_border</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#GMT_UTC_13'>
+    <rdfs:label xml:lang='en'>GMT_UTC+13</rdfs:label>
+    <rdfs:label xml:lang='en'>GMT_UTC+13</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_MemberOfEU'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>is_MemberOfEU</rdfs:label>
+    <rdfs:label xml:lang='en'>is_MemberOfPoliticalArea</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#deer'>
+    <rdfs:label xml:lang='en'>deer</rdfs:label>
+    <rdfs:label xml:lang='en'>deer</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#animal'/>
+    <NS0:has_name___nameable_thing>deer</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#peninsula'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>peninsula</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nature_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>city</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#oil'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>oil</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#industry'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Asia'>
+    <rdfs:label xml:lang='en'>Asia</rdfs:label>
+    <rdfs:label xml:lang='en'>Asia</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#continent'/>
+    <NS0:has_member rdf:resource='http://lonely.org/russia#China'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_time_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_time_unit</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#jaunt'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#sea'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>sea</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#waterway'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_capital_city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_capital_city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#country'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#music_spring'>
+    <rdfs:label xml:lang='en'>music_spring</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#festival'/>
+    <NS0:is_at rdf:resource='http://lonely.org/russia#St_Petersburg'/>
+    <NS0:is_on rdf:resource='http://lonely.org/russia#April'/>
+    <NS0:has_name___nameable_thing>Music Spring</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Typhoid'>
+    <rdfs:label xml:lang='en'>Typhoid</rdfs:label>
+    <rdfs:label xml:lang='en'>Typhoid</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#health_risk'/>
+    <NS0:exist_in rdf:resource='http://lonely.org/russia#Russian'/>
+    <NS0:has_name___nameable_thing>Typhoid</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_value___GDP_per_head'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_value___GDP_per_head</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#GDP_per_head'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Visa'>
+    <rdfs:label xml:lang='en'>Visa</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#approval'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_monetary_unit___GDP'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_monetary_unit___GDP</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#GDP'/>
+    <rdfs:range rdf:resource='http://lonely.org/russia#monetary__unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#May'>
+    <rdfs:label xml:lang='en'>May</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Caucasus'>
+    <rdfs:label xml:lang='en'>Caucasus</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#mountain'/>
+    <NS0:is_close_to rdf:resource='http://lonely.org/russia#Black_Sea'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Russia'>
+    <rdfs:label xml:lang='en'>Russia</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_president rdf:resource='http://lonely.org/russia#Vladimir_Vladimirovich_Putin'/>
+    <NS0:is_MemberOfEU>false</NS0:is_MemberOfEU>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#China'/>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Moscow'/>
+    <NS0:has_major_TradingPartner rdf:resource='http://lonely.org/russia#EU'/>
+    <NS0:has_major_TradingPartner rdf:resource='http://lonely.org/russia#China'/>
+    <NS0:has_major_TradingPartner rdf:resource='http://lonely.org/russia#U.S.A.'/>
+    <NS0:has_major_industry rdf:resource='http://lonely.org/russia#Lukoil'/>
+    <NS0:has_major_industry rdf:resource='http://lonely.org/russia#Sawn_Timber'/>
+    <NS0:has_major_river rdf:resource='http://lonely.org/russia#Dnepr'/>
+    <NS0:has_major_river rdf:resource='http://lonely.org/russia#Don'/>
+    <NS0:has_major_river rdf:resource='http://lonely.org/russia#Neva'/>
+    <NS0:has_major_river rdf:resource='http://lonely.org/russia#Volga'/>
+    <NS0:has_name___nameable_thing>Russia</NS0:has_name___nameable_thing>
+    <NS0:has_potitical_fact rdf:resource='http://lonely.org/russia#Russian_Orthodox'/>
+    <NS0:has_potitical_fact rdf:resource='http://lonely.org/russia#Islam'/>
+    <NS0:has_potitical_fact rdf:resource='http://lonely.org/russia#Federation'/>
+    <NS0:has_potitical_fact rdf:resource='http://lonely.org/russia#Animist'/>
+    <NS0:has_potitical_fact rdf:resource='http://lonely.org/russia#russian'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Kremlin'>
+    <rdfs:label xml:lang='en'>Kremlin</rdfs:label>
+    <rdfs:label xml:lang='en'>Kremlin</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#palace'/>
+    <NS0:has_name___nameable_thing>Kremlin</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#lie_in___locatable_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>lie_in___locatable_thing</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_RELATION'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#president'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>president</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#inhabitant'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#has_value___GDP'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_value___GDP</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#GDP'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#October'>
+    <rdfs:label xml:lang='en'>October</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#month'/>
+    <NS0:is_dampest>false</NS0:is_dampest>
+    <NS0:is_main_holiday>false</NS0:is_main_holiday>
+    <NS0:is_warmest>false</NS0:is_warmest>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#material_thing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>material_thing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#nameable_thing'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#person'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>person</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#human_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#length_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>length_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#Dnepr'>
+    <rdfs:label xml:lang='en'>Dnepr</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#river'/>
+    <NS0:flow_to rdf:resource='http://lonely.org/russia#Black_Sea'/>
+    <NS0:flow_to rdf:resource='http://lonely.org/russia#Caspian_Sea'/>
+    <NS0:has_name___nameable_thing>Dnepr</NS0:has_name___nameable_thing>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#architecture'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>architecture</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#church_of_our_Saviour_at_Ilino'>
+    <rdfs:label xml:lang='en'>church_of_our_Saviour_at_Ilino</rdfs:label>
+    <rdfs:label xml:lang='en'>church_of_our_Saviour_at_Ilino</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#church'/>
+    <NS0:has_name___nameable_thing>Church of Our Saviour-at-Ilino</NS0:has_name___nameable_thing>
+    <NS0:lie_in___locatable_thing rdf:resource='http://lonely.org/russia#Novgorod'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#literature'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>literature</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#China'>
+    <rdfs:label xml:lang='en'>China</rdfs:label>
+    <rdf:type rdf:resource='http://lonely.org/russia#country'/>
+    <NS0:has_border rdf:resource='http://lonely.org/russia#Russia'/>
+    <NS0:has_capital_city rdf:resource='http://lonely.org/russia#Beijing'/>
+    <NS0:is_MemberOfEU>false</NS0:is_MemberOfEU>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#population'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>population</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_fact'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#continent'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>continent</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#political_area'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#hotel'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>hotel</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://lonely.org/russia#accomodation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://lonely.org/russia#is_warmest'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>is_warmest</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://lonely.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://lonely.org/russia#month'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+</rdf:RDF>
