@@ -119,11 +119,11 @@ public class KeywordIndexServiceWithSesame2 {
 		this(parameters,repositoryDir,keywordIndexDir, parameters.getProperty(KbEnvironment.ONTOLOGY_URI),create);
 	}
 	
-	private static String CONCEPT = "concept";
-	private static String OBJECTPROPERTY = "objectproperty";
-	private static String DATAPROPERTY = "dataproperty";
-	private static String INDIVIDUAL = "indiviudal";
-	private static String LITERAL = "literal";
+	public static String CONCEPT = "concept";
+	public static String OBJECTPROPERTY = "objectproperty";
+	public static String DATAPROPERTY = "dataproperty";
+	public static String INDIVIDUAL = "indiviudal";
+	public static String LITERAL = "literal";
 	
 	
 	public void indexKeywords() {
@@ -291,23 +291,25 @@ public class KeywordIndexServiceWithSesame2 {
 					Set<IConcept> sourceConcepts = ((IIndividual)souceIndividual).getTypes();
 					Document doc = new Document();
 					doc.add(new Field("type", INDIVIDUAL, Field.Store.YES, Field.Index.NO));
-					doc.add(new Field("label", ((IIndividual)souceIndividual).getLabel(), Field.Store.NO, Field.Index.TOKENIZED));
-					
+					if(souceIndividual instanceof INamedIndividual)
+						doc.add(new Field("label", ((INamedIndividual)souceIndividual).getUri(), Field.Store.NO, Field.Index.UN_TOKENIZED));
+					else
+						doc.add(new Field("label", ((IIndividual)souceIndividual).getLabel(), Field.Store.NO, Field.Index.UN_TOKENIZED));
+					for(IConcept con : sourceConcepts) {
+						doc.add(new Field("concept", ((INamedConcept)con).getUri(),Field.Store.YES, Field.Index.NO));
+					}
 					indexWriter.addDocument(doc);
-					
-					
 					
 					Set<IPropertyMember> propmembers = ((IIndividual)souceIndividual).getPropertyFromValues();
 					for(IPropertyMember propmember : propmembers){
 						if(propmember.getType() == PropertyMember.DATA_PROPERTY_MEMBER && propmember.getTarget() instanceof ILiteral){
+							Document attrdoc = new Document();
+							attrdoc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
+							attrdoc.add(new Field("attribute", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
 							for(IConcept scon : sourceConcepts){
-								Document attrdoc = new Document();
-								attrdoc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-								attrdoc.add(new Field("attribute", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
 								attrdoc.add(new Field("concept", ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
-								
-								indexWriter.addDocument(attrdoc);
 							}
+							indexWriter.addDocument(attrdoc);
 						}	
 						else if(propmember.getType() == PropertyMember.OBJECT_PROPERTY_MEMBER && propmember.getTarget() instanceof IIndividual){
 							IIndividual targetIndividual = (IIndividual)propmember.getTarget();
