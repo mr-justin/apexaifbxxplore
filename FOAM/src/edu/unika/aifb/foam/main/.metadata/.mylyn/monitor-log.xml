@@ -1,0 +1,1892 @@
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:23:15.604 GMT</date>
+	<endDate>2008-06-01 12:23:15.604 GMT</endDate>
+	<originId>org.eclipse.ui.internal.introview</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: viewHide</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:23:15.703 GMT</date>
+	<endDate>2008-06-01 12:23:15.703 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:23:15.779 GMT</date>
+	<endDate>2008-06-01 12:23:15.779 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: viewHide</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:23:23.68 GMT</date>
+	<endDate>2008-06-01 12:23:23.68 GMT</endDate>
+	<originId>import</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:23:25.88 GMT</date>
+	<endDate>2008-06-01 12:23:25.88 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:23:31.572 GMT</date>
+	<endDate>2008-06-01 12:23:31.572 GMT</endDate>
+	<originId>org.eclipse.ui.actions.NewWizardMenu</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:23:44.530 GMT</date>
+	<endDate>2008-06-01 12:23:44.530 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:23:49.324 GMT</date>
+	<endDate>2008-06-01 12:23:49.324 GMT</endDate>
+	<originId>import</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:26:58.687 GMT</date>
+	<endDate>2008-06-01 12:26:58.687 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Sz1mIvISutE6395YW61hNTmhmko=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:26:58.688 GMT</date>
+	<endDate>2008-06-01 12:26:58.688 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:27:19.971 GMT</date>
+	<endDate>2008-06-01 12:27:19.971 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/nQYrr=8XuouaEhXExRSFE01QnZE=/13TlekKOi0T0DR0xJVd869ue8F0=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:27:20.397 GMT</date>
+	<endDate>2008-06-01 12:27:20.397 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/DnYpJ5SIjU8fp1+zr=TKJ8WPVqY=/ETjlghKXOaMhjJVdw8RBnxqPo9c=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:27:35.243 GMT</date>
+	<endDate>2008-06-01 12:27:35.243 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/OrOA9cMp0UqNjh7Wk=cp9qTXXx4=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:28:00.683 GMT</date>
+	<endDate>2008-06-01 12:28:00.683 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/nQYrr=8XuouaEhXExRSFE01QnZE=/eRXQMEDzv83TmXpjP7OAJeZ5cw4=/tT2hGdpVrbxcL0VTeONstNa4awg=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:28:03.446 GMT</date>
+	<endDate>2008-06-01 12:28:03.447 GMT</endDate>
+	<originId>org.eclipse.ui.dialogs.PropertyDialogAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:28:06.569 GMT</date>
+	<endDate>2008-06-01 12:28:06.569 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:28:25.88 GMT</date>
+	<endDate>2008-06-01 12:28:25.88 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:28:27.126 GMT</date>
+	<endDate>2008-06-01 12:28:27.126 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:28:27.276 GMT</date>
+	<endDate>2008-06-01 12:28:27.276 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:28:28.483 GMT</date>
+	<endDate>2008-06-01 12:28:28.483 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:28:28.485 GMT</date>
+	<endDate>2008-06-01 12:28:28.485 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:28:28.486 GMT</date>
+	<endDate>2008-06-01 12:28:28.486 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:28:29.52 GMT</date>
+	<endDate>2008-06-01 12:28:29.52 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:28:41.781 GMT</date>
+	<endDate>2008-06-01 12:28:41.781 GMT</endDate>
+	<originId>org.eclipse.debug.internal.ui.actions.RunDropDownAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>toolbar</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:28:44.434 GMT</date>
+	<endDate>2008-06-01 12:28:44.434 GMT</endDate>
+	<originId>org.eclipse.debug.internal.ui.actions.LaunchShortcutAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:29:25.32 GMT</date>
+	<endDate>2008-06-01 12:29:25.32 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:29:26.516 GMT</date>
+	<endDate>2008-06-01 12:29:26.516 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>TCVlDZq+wMDUUruxfJxNHlDe0+A=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:29:28.334 GMT</date>
+	<endDate>2008-06-01 12:29:28.334 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:09.527 GMT</date>
+	<endDate>2008-06-01 12:30:09.528 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:14.452 GMT</date>
+	<endDate>2008-06-01 12:30:14.452 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/DnYpJ5SIjU8fp1+zr=TKJ8WPVqY=/ETjlghKXOaMhjJVdw8RBnxqPo9c=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:15.949 GMT</date>
+	<endDate>2008-06-01 12:30:15.949 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/DnYpJ5SIjU8fp1+zr=TKJ8WPVqY=/yOrpUiIWVF+vxP8QwjRTOP4rx0w=/68BrkRktlND3oTexCq=dg7mVOL8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:22.67 GMT</date>
+	<endDate>2008-06-01 12:30:22.67 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:24.21 GMT</date>
+	<endDate>2008-06-01 12:30:24.21 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/DnYpJ5SIjU8fp1+zr=TKJ8WPVqY=/ETjlghKXOaMhjJVdw8RBnxqPo9c=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:29.407 GMT</date>
+	<endDate>2008-06-01 12:30:29.407 GMT</endDate>
+	<originId>org.eclipse.jdt.internal.ui.refactoring.reorg.CopyToClipboardAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:32.607 GMT</date>
+	<endDate>2008-06-01 12:30:32.607 GMT</endDate>
+	<originId>org.eclipse.jdt.internal.ui.refactoring.reorg.DeleteAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:36.176 GMT</date>
+	<endDate>2008-06-01 12:30:36.176 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:42.98 GMT</date>
+	<endDate>2008-06-01 12:30:42.98 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/nQYrr=8XuouaEhXExRSFE01QnZE=/13TlekKOi0T0DR0xJVd869ue8F0=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:43.113 GMT</date>
+	<endDate>2008-06-01 12:30:43.113 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/OrOA9cMp0UqNjh7Wk=cp9qTXXx4=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:44.810 GMT</date>
+	<endDate>2008-06-01 12:30:44.810 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:44.990 GMT</date>
+	<endDate>2008-06-01 12:30:44.990 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:45.40 GMT</date>
+	<endDate>2008-06-01 12:30:45.40 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:30:45.62 GMT</date>
+	<endDate>2008-06-01 12:30:45.62 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:45.63 GMT</date>
+	<endDate>2008-06-01 12:30:45.63 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:45.63 GMT</date>
+	<endDate>2008-06-01 12:30:45.63 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:47.672 GMT</date>
+	<endDate>2008-06-01 12:30:47.672 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:47.730 GMT</date>
+	<endDate>2008-06-01 12:30:47.730 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:47.800 GMT</date>
+	<endDate>2008-06-01 12:30:47.800 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>TCVlDZq+wMDUUruxfJxNHlDe0+A=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:47.829 GMT</date>
+	<endDate>2008-06-01 12:30:47.829 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:30:49.175 GMT</date>
+	<endDate>2008-06-01 12:30:49.175 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:30:49.189 GMT</date>
+	<endDate>2008-06-01 12:30:49.189 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:50.766 GMT</date>
+	<endDate>2008-06-01 12:30:50.766 GMT</endDate>
+	<originId>org.eclipse.debug.internal.ui.actions.RunDropDownAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>toolbar</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:51.654 GMT</date>
+	<endDate>2008-06-01 12:30:51.654 GMT</endDate>
+	<originId>org.eclipse.debug.ui.actions.LaunchAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:30:59.257 GMT</date>
+	<endDate>2008-06-01 12:30:59.257 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:31:02.138 GMT</date>
+	<endDate>2008-06-01 12:31:02.138 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/UkcPlifM14siazrx3S5a+0wq62Q=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:31:04.301 GMT</date>
+	<endDate>2008-06-01 12:31:04.301 GMT</endDate>
+	<originId>org.eclipse.jdt.internal.ui.refactoring.reorg.PasteAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:31:04.410 GMT</date>
+	<endDate>2008-06-01 12:31:04.410 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:31:05.923 GMT</date>
+	<endDate>2008-06-01 12:31:05.923 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:31:13.278 GMT</date>
+	<endDate>2008-06-01 12:31:13.278 GMT</endDate>
+	<originId>import</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:31:45.949 GMT</date>
+	<endDate>2008-06-01 12:31:45.949 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:32:01.691 GMT</date>
+	<endDate>2008-06-01 12:32:01.691 GMT</endDate>
+	<originId>org.eclipse.debug.internal.ui.actions.DebugDropDownAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>toolbar</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:32:02.644 GMT</date>
+	<endDate>2008-06-01 12:32:02.644 GMT</endDate>
+	<originId>org.eclipse.debug.ui.actions.LaunchAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:32:07.530 GMT</date>
+	<endDate>2008-06-01 12:32:07.530 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:32:10.359 GMT</date>
+	<endDate>2008-06-01 12:32:10.359 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/nQYrr=8XuouaEhXExRSFE01QnZE=/13TlekKOi0T0DR0xJVd869ue8F0=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:32:12.245 GMT</date>
+	<endDate>2008-06-01 12:32:12.245 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/UkcPlifM14siazrx3S5a+0wq62Q=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:32:14.27 GMT</date>
+	<endDate>2008-06-01 12:32:14.27 GMT</endDate>
+	<originId>org.eclipse.jdt.internal.ui.refactoring.reorg.DeleteAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:33:14.838 GMT</date>
+	<endDate>2008-06-01 12:33:14.838 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:33:27.523 GMT</date>
+	<endDate>2008-06-01 12:33:27.523 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:33:27.524 GMT</date>
+	<endDate>2008-06-01 12:33:27.524 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:33:27.525 GMT</date>
+	<endDate>2008-06-01 12:33:27.525 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:33:27.525 GMT</date>
+	<endDate>2008-06-01 12:33:27.525 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:33:30.784 GMT</date>
+	<endDate>2008-06-01 12:33:30.784 GMT</endDate>
+	<originId>org.eclipse.ui.actions.NewWizardMenu</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:33:40.347 GMT</date>
+	<endDate>2008-06-01 12:33:40.347 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:33:45.814 GMT</date>
+	<endDate>2008-06-01 12:33:45.814 GMT</endDate>
+	<originId>import</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:34:32.464 GMT</date>
+	<endDate>2008-06-01 12:34:32.464 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:34:51.518 GMT</date>
+	<endDate>2008-06-01 12:34:51.518 GMT</endDate>
+	<originId>org.eclipse.jdt.internal.ui.refactoring.reorg.DeleteAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:34:53.773 GMT</date>
+	<endDate>2008-06-01 12:34:53.773 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:34:54.506 GMT</date>
+	<endDate>2008-06-01 12:34:54.506 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:34:57.107 GMT</date>
+	<endDate>2008-06-01 12:34:57.107 GMT</endDate>
+	<originId>org.eclipse.ui.actions.NewWizardMenu</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:35:19.247 GMT</date>
+	<endDate>2008-06-01 12:35:19.247 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:35:23.491 GMT</date>
+	<endDate>2008-06-01 12:35:23.491 GMT</endDate>
+	<originId>import</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:35:54.366 GMT</date>
+	<endDate>2008-06-01 12:35:54.366 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Sz1mIvISutE6395YW61hNTmhmko=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:35:54.366 GMT</date>
+	<endDate>2008-06-01 12:35:54.366 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:36:10.213 GMT</date>
+	<endDate>2008-06-01 12:36:10.213 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/HQag128ADm7dGN5JI4OYP+787U4=/0r5YEtEpNQe0NINHzHrm8PaOIVE=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:36:10.827 GMT</date>
+	<endDate>2008-06-01 12:36:10.827 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/vy90noDJcPUFUunV8+hDTni4jTU=/qnymq5KLTCwGHdolA7+rPWTP0bI=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:36:11.982 GMT</date>
+	<endDate>2008-06-01 12:36:11.982 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/nTtRPkzmgySlqBHKaCODoRTIR2M=/ugE0COa4CsY0lPmk+kfSa0+DwSY=/KjPeCJ2LTuFk3PXiAs16l4wv7oQ=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:36:19.435 GMT</date>
+	<endDate>2008-06-01 12:36:19.435 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/nTtRPkzmgySlqBHKaCODoRTIR2M=/7LJSBEteoPZ57njsGhKQRznikE0=/WxUxcTbe7wqmcyQaUX9WOD8z9qY=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:36:24.265 GMT</date>
+	<endDate>2008-06-01 12:36:24.265 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/nTtRPkzmgySlqBHKaCODoRTIR2M=/KR0+ENmWuVkKcYVl8Av7vQrQK+8=/5dG4mpncIoGs6hYeFhn6fnVuu4w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:36:33.484 GMT</date>
+	<endDate>2008-06-01 12:36:33.484 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:36:35.215 GMT</date>
+	<endDate>2008-06-01 12:36:35.215 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:36:35.306 GMT</date>
+	<endDate>2008-06-01 12:36:35.306 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:36:35.976 GMT</date>
+	<endDate>2008-06-01 12:36:35.976 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:36:35.977 GMT</date>
+	<endDate>2008-06-01 12:36:35.977 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:36:35.977 GMT</date>
+	<endDate>2008-06-01 12:36:35.977 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:36:36.518 GMT</date>
+	<endDate>2008-06-01 12:36:36.518 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:36:38.926 GMT</date>
+	<endDate>2008-06-01 12:36:38.926 GMT</endDate>
+	<originId>org.eclipse.debug.internal.ui.actions.RunDropDownAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>toolbar</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:36:40.566 GMT</date>
+	<endDate>2008-06-01 12:36:40.566 GMT</endDate>
+	<originId>org.eclipse.debug.internal.ui.actions.LaunchShortcutAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:39:16.498 GMT</date>
+	<endDate>2008-06-01 12:39:16.498 GMT</endDate>
+	<originId>org.eclipse.ui.console.ConsoleView</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: viewShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:39:16.498 GMT</date>
+	<endDate>2008-06-01 12:39:16.498 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: viewShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:39:16.499 GMT</date>
+	<endDate>2008-06-01 12:39:16.499 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:41:34.209 GMT</date>
+	<endDate>2008-06-01 12:41:34.209 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:42:12.792 GMT</date>
+	<endDate>2008-06-01 12:42:12.792 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:42:17.529 GMT</date>
+	<endDate>2008-06-01 12:42:17.529 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:19.790 GMT</date>
+	<endDate>2008-06-01 12:42:19.790 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:20.481 GMT</date>
+	<endDate>2008-06-01 12:42:20.481 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:20.604 GMT</date>
+	<endDate>2008-06-01 12:42:20.604 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:20.639 GMT</date>
+	<endDate>2008-06-01 12:42:20.639 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:42:20.654 GMT</date>
+	<endDate>2008-06-01 12:42:20.654 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:20.655 GMT</date>
+	<endDate>2008-06-01 12:42:20.655 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:20.655 GMT</date>
+	<endDate>2008-06-01 12:42:20.655 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:22.716 GMT</date>
+	<endDate>2008-06-01 12:42:22.716 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:22.726 GMT</date>
+	<endDate>2008-06-01 12:42:22.726 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:22.749 GMT</date>
+	<endDate>2008-06-01 12:42:22.749 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/OrOA9cMp0UqNjh7Wk=cp9qTXXx4=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:42:25.575 GMT</date>
+	<endDate>2008-06-01 12:42:25.575 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.actions.RefreshAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:28.960 GMT</date>
+	<endDate>2008-06-01 12:42:28.960 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/WfxlX2a8KBCvViknPpJzlxGx0nQ=/SRmoOEw5kS3kWdmogbrxHmGNZwE=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:29.83 GMT</date>
+	<endDate>2008-06-01 12:42:29.83 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:42:29.94 GMT</date>
+	<endDate>2008-06-01 12:42:29.94 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/WfxlX2a8KBCvViknPpJzlxGx0nQ=/SRmoOEw5kS3kWdmogbrxHmGNZwE=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:29.95 GMT</date>
+	<endDate>2008-06-01 12:42:29.95 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:29.95 GMT</date>
+	<endDate>2008-06-01 12:42:29.95 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:33.485 GMT</date>
+	<endDate>2008-06-01 12:42:33.485 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:33.495 GMT</date>
+	<endDate>2008-06-01 12:42:33.495 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/WfxlX2a8KBCvViknPpJzlxGx0nQ=/SRmoOEw5kS3kWdmogbrxHmGNZwE=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:33.634 GMT</date>
+	<endDate>2008-06-01 12:42:33.634 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/a=2Dr4QZoaHi7rKQ1TlGyXVoUjg=/6mZmMx1lM+INzqPKI+Luu6U8RNI=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:35.382 GMT</date>
+	<endDate>2008-06-01 12:42:35.382 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/a=2Dr4QZoaHi7rKQ1TlGyXVoUjg=/6mZmMx1lM+INzqPKI+Luu6U8RNI=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:35.519 GMT</date>
+	<endDate>2008-06-01 12:42:35.519 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:42:35.551 GMT</date>
+	<endDate>2008-06-01 12:42:35.551 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/a=2Dr4QZoaHi7rKQ1TlGyXVoUjg=/6mZmMx1lM+INzqPKI+Luu6U8RNI=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:35.552 GMT</date>
+	<endDate>2008-06-01 12:42:35.552 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:35.552 GMT</date>
+	<endDate>2008-06-01 12:42:35.552 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:41.629 GMT</date>
+	<endDate>2008-06-01 12:42:41.629 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:41.639 GMT</date>
+	<endDate>2008-06-01 12:42:41.639 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/a=2Dr4QZoaHi7rKQ1TlGyXVoUjg=/6mZmMx1lM+INzqPKI+Luu6U8RNI=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:42:41.706 GMT</date>
+	<endDate>2008-06-01 12:42:41.706 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/5Bjiwm=FuIfSDy9XWoVAsZD=5yQ=/XsJFsuQFAqdnffQz3Lx6vcBjrTk=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:41.911 GMT</date>
+	<endDate>2008-06-01 12:42:41.911 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:42:41.925 GMT</date>
+	<endDate>2008-06-01 12:42:41.925 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/5Bjiwm=FuIfSDy9XWoVAsZD=5yQ=/XsJFsuQFAqdnffQz3Lx6vcBjrTk=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:41.925 GMT</date>
+	<endDate>2008-06-01 12:42:41.925 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:42:41.926 GMT</date>
+	<endDate>2008-06-01 12:42:41.926 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:00.609 GMT</date>
+	<endDate>2008-06-01 12:43:00.609 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:43:00.619 GMT</date>
+	<endDate>2008-06-01 12:43:00.619 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/5Bjiwm=FuIfSDy9XWoVAsZD=5yQ=/XsJFsuQFAqdnffQz3Lx6vcBjrTk=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:43:00.698 GMT</date>
+	<endDate>2008-06-01 12:43:00.698 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/vySIh2bnKfUDilVS=WVTsa2jUas=/qiwHWYX4hTmpKlMg9VCj8+VvH0A=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:00.856 GMT</date>
+	<endDate>2008-06-01 12:43:00.856 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:43:00.869 GMT</date>
+	<endDate>2008-06-01 12:43:00.869 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/vySIh2bnKfUDilVS=WVTsa2jUas=/qiwHWYX4hTmpKlMg9VCj8+VvH0A=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:00.869 GMT</date>
+	<endDate>2008-06-01 12:43:00.869 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:00.870 GMT</date>
+	<endDate>2008-06-01 12:43:00.870 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorOpen</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:43:23.504 GMT</date>
+	<endDate>2008-06-01 12:43:23.505 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:23.653 GMT</date>
+	<endDate>2008-06-01 12:43:23.653 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:43:23.670 GMT</date>
+	<endDate>2008-06-01 12:43:23.670 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/5Bjiwm=FuIfSDy9XWoVAsZD=5yQ=/XsJFsuQFAqdnffQz3Lx6vcBjrTk=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:23.679 GMT</date>
+	<endDate>2008-06-01 12:43:23.679 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:24.562 GMT</date>
+	<endDate>2008-06-01 12:43:24.562 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:43:24.573 GMT</date>
+	<endDate>2008-06-01 12:43:24.573 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/a=2Dr4QZoaHi7rKQ1TlGyXVoUjg=/6mZmMx1lM+INzqPKI+Luu6U8RNI=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:24.582 GMT</date>
+	<endDate>2008-06-01 12:43:24.582 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:25.858 GMT</date>
+	<endDate>2008-06-01 12:43:25.859 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:43:25.871 GMT</date>
+	<endDate>2008-06-01 12:43:25.871 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/WfxlX2a8KBCvViknPpJzlxGx0nQ=/SRmoOEw5kS3kWdmogbrxHmGNZwE=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:25.879 GMT</date>
+	<endDate>2008-06-01 12:43:25.879 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:28.90 GMT</date>
+	<endDate>2008-06-01 12:43:28.90 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>edit</kind>
+	<date>2008-06-01 12:43:28.102 GMT</date>
+	<endDate>2008-06-01 12:43:28.102 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/p4H9kWjjVQZ=4YkWyDVOTnGGaBw=/p30jSUtfeISQx6jE7XJUVO5hsX8=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:28.107 GMT</date>
+	<endDate>2008-06-01 12:43:28.107 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.42 GMT</date>
+	<endDate>2008-06-01 12:43:29.42 GMT</endDate>
+	<originId>org.eclipse.ui.DefaultTextEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.86 GMT</date>
+	<endDate>2008-06-01 12:43:29.86 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:43:29.127 GMT</date>
+	<endDate>2008-06-01 12:43:29.127 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/P054osCG2nZkWrRJeJj6xA5+C6I=/xZCvqbtZGR=6sw8iN5HoLT=T468=/1qevE0UwJU9trkiG0WC+jmxokck=/DyKzOXDkp=osyz7wlVExLmWHywM=/T5DU1eaGtTTiylmTeJlYZjOf12w=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.142 GMT</date>
+	<endDate>2008-06-01 12:43:29.142 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.778 GMT</date>
+	<endDate>2008-06-01 12:43:29.778 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.CompilationUnitEditor</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.814 GMT</date>
+	<endDate>2008-06-01 12:43:29.814 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.823 GMT</date>
+	<endDate>2008-06-01 12:43:29.823 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:43:29.833 GMT</date>
+	<endDate>2008-06-01 12:43:29.833 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>resource</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/2WmDHripnP+MAuaB9DKJ5dPWlmQ=/vySIh2bnKfUDilVS=WVTsa2jUas=/qiwHWYX4hTmpKlMg9VCj8+VvH0A=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:43:29.852 GMT</date>
+	<endDate>2008-06-01 12:43:29.852 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: editorClose</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:43:34.800 GMT</date>
+	<endDate>2008-06-01 12:43:34.800 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:43:36.807 GMT</date>
+	<endDate>2008-06-01 12:43:36.807 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:43:38.894 GMT</date>
+	<endDate>2008-06-01 12:43:38.894 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>Y=XDR+8VhQDxIdeBYLepLDyU7jU=/UkcPlifM14siazrx3S5a+0wq62Q=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:43:43.603 GMT</date>
+	<endDate>2008-06-01 12:43:43.603 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.actions.RenameAction</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>menu</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:43:54.574 GMT</date>
+	<endDate>2008-06-01 12:43:54.574 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>selection</kind>
+	<date>2008-06-01 12:43:54.589 GMT</date>
+	<endDate>2008-06-01 12:43:54.589 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.PackageExplorer</originId>
+	<structureKind>java</structureKind>
+	<structureHandle>3MT70wVxzwJl2UURyQ2WQshNKsA=/=Ifva099z3=rSedx+sALgX7vqk0=</structureHandle>
+	<navigation>null</navigation>
+	<delta>null</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:44:04.630 GMT</date>
+	<endDate>2008-06-01 12:44:04.630 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>LTrAZqc28aWWajKqfyrRXemCx40=</structureHandle>
+	<navigation>null</navigation>
+	<delta>activated</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:44:04.715 GMT</date>
+	<endDate>2008-06-01 12:44:04.715 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective changed: actionSetShow</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>preference</kind>
+	<date>2008-06-01 12:44:04.745 GMT</date>
+	<endDate>2008-06-01 12:44:04.745 GMT</endDate>
+	<originId>org.eclipse.jdt.ui.JavaPerspective</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>perspective closed</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>
+<interactionEvent>
+	<kind>command</kind>
+	<date>2008-06-01 12:44:04.780 GMT</date>
+	<endDate>2008-06-01 12:44:04.780 GMT</endDate>
+	<originId>org.eclipse.ui.internal.WorkbenchWindow</originId>
+	<structureKind>null</structureKind>
+	<structureHandle>gZmLkbazE00TxC8oVszpqUbRzow=/K+iMpCQsduglOsYkdIUQZQMtaDM=</structureHandle>
+	<navigation>null</navigation>
+	<delta>closed</delta>
+	<interestContribution>1.0</interestContribution>
+</interactionEvent>

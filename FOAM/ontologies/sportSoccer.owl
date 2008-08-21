@@ -1,0 +1,2173 @@
+<?xml version='1.0' encoding='ISO-8859-1'?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" 
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" 
+	xmlns:daml="http://www.daml.org/2000/12/daml+oil#" 
+	xmlns:SmartSUMO="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#" 
+	xmlns:DOLCE="http://ontology.ip.rm.cnr.it/DOLCE-Lite-Plus#"
+	xmlns:sport="http://sport.semanticweb.org/sport#"
+  	xmlns:owl = "http://www.w3.org/2002/07/owl#"
+  	xmlns:xsd = 'http://www.w3.org/2001/XMLSchema#'
+ >
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Action">
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Directed">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Action"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Match_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Action"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Begin">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Match_action"/>
+        <rdfs:label xml:lang="fr">
+            Commancer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Begin
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#End">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Match_action"/>
+        <rdfs:label xml:lang="fr">
+            Finir
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            End
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Official_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Action"/>
+        <rdfs:label xml:lang="fr">
+            Action_officiel
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Official_action
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Linesman_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Official_action"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Rise_the_banner">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Linesman_action"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Referee_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Official_action"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Drop_ball">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Referee_action"/>
+        <rdfs:label xml:lang="fr">
+            Entre_deux
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Drop_ball
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Give_Sanction">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Referee_action"/>
+        <rdfs:label xml:lang="fr">
+            Sanctionner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Give_sanction
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Whistle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Referee_action"/>
+        <rdfs:label xml:lang="fr">
+            Siffler
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Whistle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Player_Action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Action"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Goalkeeper_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Player_Action"/>
+        <rdfs:label xml:lang="fr">
+            Action_goal
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Goalkeeper_action
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Block">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Goalkeeper_action"/>
+        <rdfs:label xml:lang="fr">
+            Bloquer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Block
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Cut_down_the_angle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Goalkeeper_action"/>
+        <rdfs:label xml:lang="fr">
+            Fermer_angle
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Cut_down_the_angle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Drop_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Goalkeeper_action"/>
+        <rdfs:label xml:lang="fr">
+            Degagement_au_pied
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Drop_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Punch_out">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Goalkeeper_action"/>
+        <rdfs:label xml:lang="fr">
+            Degager_du_poing
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Punch_out
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Save">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Goalkeeper_action"/>
+        <rdfs:label xml:lang="fr">
+            Arret_du_gardien
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Save
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Other_player_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Player_Action"/>
+        <rdfs:label xml:lang="fr">
+            Action_des_joueurs
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Player_Action
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Be_Offside">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Etre_hors_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Be_Offside
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Be_replaced">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Est_remplace
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Be_replaced
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Beat">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Dribbler
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Beat
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Breakaway">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            face_a_face_gardien
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Breakaway
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Center">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Centrer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Center
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Charge">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Faire_contact
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Charge
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Shoulder_charge">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Charge"/>
+        <rdfs:label xml:lang="fr">
+            Contact_epaule_epaule
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Shoulder_charge
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Chest_trap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Ammorti_poitrine
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Chest_trap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Clear">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Degager
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Clear
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Counter_attack">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+	  <rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Attack"/>
+        <rdfs:label xml:lang="fr">
+            Contre_attaque
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Counter_attack
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Cross">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Passe_en_profondeur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Cross
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Dangerous_play">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Jeu_dangereux
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Dangerous_play
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Dive">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Plonger
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Dive
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Do_foul">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Faire_faute
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Do_foul
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Do_Professional_foul">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Do_foul"/>
+        <rdfs:label xml:lang="fr">
+            Faute_volontaire
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Do_professional_foul
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Do_handball">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Do_foul"/>
+        <rdfs:label xml:lang="fr">
+            Faire_main
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            do_handball
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Hold_opponent">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Do_foul"/>
+        <rdfs:label xml:lang="fr">
+            Retenir_un_adversaire
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Hold_an_opponent
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Do_obstruction">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Faire_obstruction
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Do_obstruction
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Dribble">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Controler_balle
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Dribble
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Feint">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Feinter
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Feint
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Hacking">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Faucher
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Hacking
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Half_volley_shot">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Tir_en_demi_de_volee
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Half_volley_shot
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Header">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Faire_tete
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Header
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Back_header">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Header"/>
+        <rdfs:label xml:lang="fr">
+            Faire_tete_arriere
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Back_header
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Diving_header">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Header"/>
+        <rdfs:label xml:lang="fr">
+            Tete_plongeante
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Diving_header
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Flick_header">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Header"/>
+        <rdfs:label xml:lang="fr">
+            Detournement_de_la_tete
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Flick_header
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Front_header">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Header"/>
+        <rdfs:label xml:lang="fr">
+            Faire_tete_avant
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Front_header
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Hit">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            frapper
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Hit
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Hook">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Brosse
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Hook
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Inswinger">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="en">
+            Inswinger
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Juggling">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Jongler
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Juggling
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Tir
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Banana_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Tir_brosser
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Banana_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Bicycle_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Bicyclette
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Bicycle_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Center_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Remise_en_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Center_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Corner_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Tirer_corner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Corner_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Free_kicking">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Tirer_coup_franc
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Free_kicking
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Direct_free_kicking">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Free_kicking"/>
+        <rdfs:label xml:lang="fr">
+            Tirer_coup_franc_direct
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Direct_free_kicking
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Indirect_free_kicking">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Free_kicking"/>
+        <rdfs:label xml:lang="fr">
+            Tirer_coup_franc_indirect
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Indirect_free_kicking
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penalty_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Tirer_penalty
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penalty_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Scissor_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Kick"/>
+        <rdfs:label xml:lang="fr">
+            Ciseaux
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Scissor_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Kickoff">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Remise_en_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Kickoff
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Lob">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Lob
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Lob
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Marking">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Marquer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Marking
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Nutmeg">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Petit_pont
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Nutmeg
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Overlap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Ecarter_le_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Overlap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Faire_Passe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Chip_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            Passe_en_lob
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Chip_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Lead_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            Passe_en_profondeur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Lead_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Long_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            longue_passe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            long_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Outlet_passes">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            Degagement_offensif
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Outlet_passes
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penetrating_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            Passe_en_profondeur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penetrating_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Push_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            Passe_plat_du_pied
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Push_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Square_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="en">
+            Square_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Wall_pass">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Pass"/>
+        <rdfs:label xml:lang="fr">
+            Une_deux
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Wall_pass
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penetrate">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Penetrer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penetrate
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Play">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Jouer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Play
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Run">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Courir
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Run
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Run_upfield">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Monter
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Run_upfield
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Score">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Marquer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Score
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Shielding">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Couvrir_la_balle
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Shielding
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Shoot">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Tirer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Shoot
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Chip_shoot">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Shoot"/>
+        <rdfs:label xml:lang="fr">
+            Tir_lobe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Chip_shoot
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Tallied_shoot">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Shoot"/>
+        <rdfs:label xml:lang="fr">
+            Ti_cadre
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Tallied_shoot
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Steal">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Subtiliser
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Steal
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Stop">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Arreter
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Stop
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Tackle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Tackler
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Tackle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Back_tackle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Tackle"/>
+        <rdfs:label xml:lang="fr">
+            Tackler_par_derriere
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Back_tackle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Front_tackle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Tackle"/>
+        <rdfs:label xml:lang="fr">
+            Tackle_avant
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Front_tackle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Side_tackle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Tackle"/>
+        <rdfs:label xml:lang="fr">
+            Tackle_de_cote
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Side_Tackle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Sliding_tackle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Tackle"/>
+        <rdfs:label xml:lang="fr">
+            Tackle_glisse
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Sliding_Tackle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Throw_in">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Touche
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Throw_in
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Trap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Pieger
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Trap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Foot_trap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Trap"/>
+        <rdfs:label xml:lang="fr">
+            Controle_de_la_balle
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Foot_trap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Offside_trap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Trap"/>
+        <rdfs:label xml:lang="fr">
+            Piege_du_hors_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Offside_trap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Thigh_trap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Trap"/>
+        <rdfs:label xml:lang="fr">
+            Controle_de_la_cuisse
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Thigh_trap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Volley">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Other_player_action"/>
+        <rdfs:label xml:lang="fr">
+            Reprise_de_volley
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Volley
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Viewer_action">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Action"/>
+        <rdfs:label xml:lang="fr">
+            Action_des_supporters
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Supporter_action
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Cheer">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer_action"/>
+        <rdfs:label xml:lang="fr">
+            Applaudir
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Cheer
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Boo">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer_action"/>
+        <rdfs:label xml:lang="fr">
+            Huer
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Boo
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Encourage">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer_action"/>
+        <rdfs:label xml:lang="fr">
+            Encourager
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Encourage
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Call">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer_action"/>
+        <rdfs:label xml:lang="fr">
+            Crier
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Call
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#NormativeAttribute">
+        <rdfs:label xml:lang="fr">
+            Attribut
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Attribute
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Qualitative_attribute">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Attribute"/>
+        <rdfs:label xml:lang="fr">
+            Attribut_qualitatif
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Qualitative_attribute
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Soccer_rule_attribute">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Attribute"/>
+        <rdfs:label xml:lang="fr">
+            Attribut_fotballistique
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Soccer_rule_attribute
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Entity">
+        <rdfs:label xml:lang="fr">
+            Entite
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Entity
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Actor">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Entity"/>
+        <rdfs:label xml:lang="fr">
+            Acteur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Actor
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Club">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Club
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#League">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Ligue
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            League
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Match">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Match
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Object">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Objet
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Object
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Audience">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Object"/>
+        <rdfs:label xml:lang="fr">
+            Public
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Audience
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Ball">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Object"/>
+        <rdfs:label xml:lang="fr">
+            Ballon
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Ball
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Corner_Banner">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Object"/>
+        <rdfs:label xml:lang="fr">
+            Drapeau_de_corner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Corner_banner
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Net">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Object"/>
+        <rdfs:label xml:lang="fr">
+            Filet
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Net
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Team">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Object"/>
+        <rdfs:label xml:lang="fr">
+            Equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Wall">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Object"/>
+        <rdfs:label xml:lang="fr">
+            Mur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Wall
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#Organization">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Organisation
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Organization
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Person">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Personne
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Person
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Official">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Person"/>
+        <rdfs:label xml:lang="fr">
+            Officiel
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Official
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Linesman">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Official"/>
+        <rdfs:label xml:lang="fr">
+            Juge_de_touche
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Linesman
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Referee">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Official"/>
+        <rdfs:label xml:lang="fr">
+            Arbitre
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Referee
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Timekeeper">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Official"/>
+        <rdfs:label xml:lang="fr">
+            Arbitre_exterieur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Timekeeper
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Player">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Person"/>
+        <rdfs:label xml:lang="fr">
+            Joueur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Player
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Goalkeeper">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Player"/>
+        <rdfs:label xml:lang="fr">
+            Goal
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Goalkeeper
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#OtherPlayer">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Player"/>
+        <rdfs:label xml:lang="fr">
+            Autres_joueurs
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Other_player
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Attacker">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Attaquant
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Attacker
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Back">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Arriere
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Back
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#CentralDefender">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Back"/>
+        <rdfs:label xml:lang="fr">
+            Arriere_centre
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Central_defender
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Cap">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Capitaine
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Cap
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Forward">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Avant
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Forward
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Midfielder">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Milieu_de_terrain
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Midfielder
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#AttackingMidfielder">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Midfielder"/>
+        <rdfs:label xml:lang="fr">
+            Milieu_terrain_attaquant
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Attacking_Midfielder
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#DefensiveMidfielder">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Midfielder"/>
+        <rdfs:label xml:lang="fr">
+            Milieu_terrain_defensif
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Defensive_Midfielder
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Linkman">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Midfielder"/>
+        <rdfs:label xml:lang="en">
+            Linkman
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#MidfieldAnchor">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Midfielder"/>
+        <rdfs:label xml:lang="fr">
+            Libero
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Midfield_Anchor
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Stopper">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Stoppeur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Stopper
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Sweeper">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Libero
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Sweeper
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Wing">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#OtherPlayer"/>
+        <rdfs:label xml:lang="fr">
+            Ailie
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Wing
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Substitute">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Player"/>
+        <rdfs:label xml:lang="fr">
+            Remplacant
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Substitute
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#President">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Person"/>
+        <rdfs:label xml:lang="fr">
+            Pesident
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            President
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Viewer">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Person"/>
+        <rdfs:label xml:lang="fr">
+            Spectateur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Viewer
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Speaker">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer"/>
+        <rdfs:label xml:lang="fr">
+            Commentateur_de_stade
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Speaker
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Supporter">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer"/>
+        <rdfs:label xml:lang="fr">
+            Supporter
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Supporter
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#TV-viewer">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer"/>
+        <rdfs:label xml:lang="fr">
+            TV_spectateur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            TV_viewer
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Trainer">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer"/>
+        <rdfs:label xml:lang="fr">
+            Entraineur
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Trainer
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#VeryImportantPerson">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Viewer"/>
+        <rdfs:label xml:lang="fr">
+            Personalites
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            VeryImportantPerson
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Tournament">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Actor"/>
+        <rdfs:label xml:lang="fr">
+            Tournoi
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Tournament
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Place">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Entity"/>
+        <rdfs:label xml:lang="fr">
+            Lieu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Place
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Area">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Place"/>
+	  <rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#GeographicArea"/>
+        <rdfs:label xml:lang="fr">
+            Aire
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Area
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Corner_Area">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Area"/>
+        <rdfs:label xml:lang="fr">
+            Zone_de_corner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Corner_Area
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Goal_Area">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Area"/>
+        <rdfs:label xml:lang="fr">
+            Zone_des_6_metres
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Goal_Area
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Midfield">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Area"/>
+        <rdfs:label xml:lang="fr">
+            partie_centrale
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Midfield
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penalty_Area">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Area"/>
+        <rdfs:label xml:lang="fr">
+            Zone_des_18_metres
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penalty_Area
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Field">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Place"/>
+        <rdfs:label xml:lang="fr">
+            Terrain
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Field
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Line">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Place"/>
+        <rdfs:label xml:lang="fr">
+            Ligne
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Line
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Center_Circle">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Line"/>
+        <rdfs:label xml:lang="fr">
+            Cercle_Centre
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Center_circle
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Center_line">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Line"/>
+        <rdfs:label xml:lang="fr">
+            Ligne_Centre
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Center_Line
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Corner_Arc">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Line"/>
+        <rdfs:label xml:lang="fr">
+            Ligne_de_corner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Corner_arc
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Goal_Line">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Line"/>
+        <rdfs:label xml:lang="fr">
+            Ligne_de_but
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Goal_line
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penalty_Arc">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Line"/>
+        <rdfs:label xml:lang="fr">
+            Ligne_de_penalty
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penalty_Arc
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Touch_Line">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Line"/>
+        <rdfs:label xml:lang="fr">
+            Ligne_de_touche
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Touch_line
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Point">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Place"/>
+        <rdfs:label xml:lang="fr">
+            Point
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Point
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Center_Spot">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Point"/>
+        <rdfs:label xml:lang="fr">
+            Point_remise_en_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Center_Spot
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penalty_spot">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Point"/>
+        <rdfs:label xml:lang="fr">
+            Point_de_penalty
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penalty_point
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Sanction">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Entity"/>
+        <rdfs:label xml:lang="fr">
+            Sanction
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Sanction
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Advantage_rule">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Sanction"/>
+        <rdfs:label xml:lang="fr">
+            Regle_de_l_avantage
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Advantage_rule
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Caution">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Sanction"/>
+        <rdfs:label xml:lang="fr">
+            Averstissement
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Caution
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Red_Card">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Caution"/>
+        <rdfs:label xml:lang="fr">
+            Carton_rouge
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Red_Card
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Sending_off">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Caution"/>
+        <rdfs:label xml:lang="fr">
+            Exclusion
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Sending_off
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Yellow_Card">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Caution"/>
+        <rdfs:label xml:lang="fr">
+            Carton_Jaune
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Yellow_Card
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Stoppage">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Entity"/>
+        <rdfs:label xml:lang="fr">
+            Arret_de_jeu
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Corner">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            Corner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Corner
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Fault">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            Faute
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Fault
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Handball">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Fault"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Free_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Direct_free_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Free_kick"/>
+        <rdfs:label xml:lang="fr">
+            Coup_fran_direct
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Direct_free_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Indirect_free_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Free_kick"/>
+        <rdfs:label xml:lang="fr">
+            Coup_franc_indirect
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Indirect_free_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Goal">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            But
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Goal
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Goal_kick">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            Sortie_de_but
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Goal_kick
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Offside">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            Hors_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Offside
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Out_of_bounds">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            Touche
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Out_of_bounds
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Penalty">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Stoppage"/>
+        <rdfs:label xml:lang="fr">
+            Penalite
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Penalty
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Measure"/>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Boolean-type">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Measure"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#False_value">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Boolean-type"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#True_value">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Boolean-type"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Integer-type">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Measure"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Real-type">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Measure"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Time">
+        <rdfs:label xml:lang="fr">
+            Temps
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Time
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Duration">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Time"/>
+	  <rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimeDuration"/>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Halftime">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Duration"/>
+        <rdfs:label xml:lang="fr">
+            Mi_temps
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Halftime
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Injury_time">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Duration"/>
+        <rdfs:label xml:lang="fr">
+            Arrets_de_jeu
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Injury_time
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Overtime">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Duration"/>
+        <rdfs:label xml:lang="fr">
+            Prolongation
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Overtime
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Sudden_death">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Overtime"/>
+        <rdfs:label xml:lang="fr">
+            Mort_subite
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Sudden_death
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Period">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Duration"/>
+        <rdfs:label xml:lang="fr">
+            Periode
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Period
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimePoint">
+        <rdfs:subClassOf rdf:resource="http://sport.semanticweb.org/sport#Time"/>
+        <rdfs:label xml:lang="fr">
+            Point_temporel
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Point_in_time
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#End_Time">
+        <rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimePoint"/>
+        <rdfs:label xml:lang="fr">
+            Instant_de_fin
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            End_time
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Start_time">
+        <rdfs:subClassOf rdf:resource="http://smartweb.semanticweb.org/2004/1012/SmartSUMO.rdfs#TimePoint"/>
+        <rdfs:label xml:lang="fr">
+            instant_de_depart
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Start_point
+        </rdfs:label>
+    </owl:Class>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#date_of_birth">
+        <rdfs:label xml:lang="fr">
+            Date_de_naissance
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Date_of_birth
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#match_date">
+        <rdfs:label xml:lang="fr">
+            Date_du_match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            match_date
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#agent">
+        <rdfs:label xml:lang="fr">
+            agent
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Agent
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#team_goalkeeper">
+        <rdfs:label xml:lang="fr">
+            Goal_de_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team_goalkeeper
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#club_president">
+        <rdfs:label xml:lang="fr">
+            President_de_club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Club_president
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#national_team">
+        <rdfs:label xml:lang="fr">
+            Selection_nationale
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            National_team
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#match_name">
+        <rdfs:label xml:lang="fr">
+            nom_match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            match_name
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#ephemeral_instance"/>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#team_trainer">
+        <rdfs:label xml:lang="fr">
+            Entraineur_de_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team_Trainer
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#nationality">
+        <rdfs:label xml:lang="fr">
+            Nationalite
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Nationality
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#team_supported">
+        <rdfs:label xml:lang="fr">
+            Equipe_encouragee
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team_supported
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#supporter_colors">
+        <rdfs:label xml:lang="fr">
+            Couleur_du_supporter
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Supporter_colors
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#club_colors">
+        <rdfs:label xml:lang="fr">
+            couleur_de_club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Color_club
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#town_club">
+        <rdfs:label xml:lang="fr">
+            Club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Town_club
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#forname">
+        <rdfs:label xml:lang="fr">
+            Prenom
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Forname
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#match_tournament">
+        <rdfs:label xml:lang="fr">
+            tournoi_du_match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            match_tournament
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#club_town">
+        <rdfs:label xml:lang="fr">
+            Ville_du_club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Club_town
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#club_team">
+        <rdfs:label xml:lang="fr">
+            Equipe du club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Club_team
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#team_substitute">
+        <rdfs:label xml:lang="fr">
+            Remplacant_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team_substitute
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#match_hour">
+        <rdfs:label xml:lang="fr">
+            heure_du_match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            match_hour
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#match_first_team">
+        <rdfs:label xml:lang="fr">
+            Premiere_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Match_First_Team
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#weight">
+        <rdfs:label xml:lang="fr">
+            poids
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            weight
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#club_name">
+        <rdfs:label xml:lang="fr">
+            Nom_du_club
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Club_name
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#aggregate">
+        <rdfs:label xml:lang="fr">
+            Joueur_de_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team_player
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#user_specific"/>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#height">
+        <rdfs:label xml:lang="fr">
+            Taille
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Height
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#match_second_team">
+        <rdfs:label xml:lang="fr">
+            deuxieme_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Match_second_Team
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#team_club">
+        <rdfs:label xml:lang="fr">
+            Club_de_equipe
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Team_club
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#object">
+        <rdfs:label xml:lang="fr">
+            Sanctionner
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Give_sanction
+        </rdfs:label>
+    </owl:ObjectProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#name">
+        <rdfs:label xml:lang="fr">
+            Nom
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Name
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:DatatypeProperty rdf:about="http://sport.semanticweb.org/sport#match_town">
+        <rdfs:label xml:lang="fr">
+            ville_du_match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            match_town
+        </rdfs:label>
+    </owl:DatatypeProperty>
+    
+    <owl:ObjectProperty rdf:about="http://sport.semanticweb.org/sport#match_referee">
+        <rdfs:label xml:lang="fr">
+            Arbitre_du_match
+        </rdfs:label>
+        <rdfs:label xml:lang="en">
+            Match_referee
+        </rdfs:label>
+    </owl:ObjectProperty>
+
+    <owl:Class rdf:about="http://sport.semanticweb.org/sport#Attribute">
+        <rdfs:label xml:lang="en">
+            Attribute
+        </rdfs:label>
+    </owl:Class>
+    
+</rdf:RDF>
