@@ -18,9 +18,9 @@ import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
 	
-	private static String[] ONTOLOGIES = {"D:/BTC/target.rdf","D:/BTC/watson/1.rdf"};   //ontologies 
+	private static String[] ONTOLOGIES = {"C:/MyFiles/Projekte/Workspaces/current_projects/XXplore_core_G/res/target.rdf","C:/MyFiles/Projekte/Workspaces/current_projects/XXplore_core_G/res/swrc_v0.7.owl"};   //ontologies 
 	private static String[] DATASOURCES = {"target.rdf","swrc_v0.7.owl"};
-	private static String OUTPUTDIR  = "D:/BTC/sampling/mappingResult";
+	private static String OUTPUTDIR  = "C:/MyFiles/Projekte/Workspaces/current_projects/XXplore_core_G/res/mappingResult";
 	
 	private String ontology1;
 	private String ontology2;
