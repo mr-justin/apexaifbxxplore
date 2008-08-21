@@ -29,7 +29,7 @@ public class MyNTriples2RDFXMLWriter {
 	
 	private static String sourceDir = "D:\\BTC\\swetodblp_april_2008-mod.nt";
 	private static String targetDir = "D:\\BTC\\target.rdf";
-	private static int maxTripleCount = 2000;
+	private static int maxTripleCount = 5000;
 	
 	public MyNTriples2RDFXMLWriter(String sourceDir, String targetDir) {
 		try {
@@ -37,7 +37,7 @@ public class MyNTriples2RDFXMLWriter {
 			parser = new MyNTriplesParser();
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
-			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetDir),"UTF-8")); 
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetDir),"UTF-16")); 
 			writer = new RDFXMLWriter(bw);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
