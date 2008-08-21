@@ -1,0 +1,2651 @@
+<rdf:RDF
+  xmlns:rdf='http://www.w3.org/1999/02/22-rdf-syntax-ns#'
+  xmlns:rdfs='http://www.w3.org/2000/01/rdf-schema#'
+  xmlns:NS0='http://travel.org/russia#'
+  xmlns:owl = "http://www.w3.org/2002/07/owl#"
+  xmlns:xsd = 'http://www.w3.org/2001/XMLSchema#'
+ >
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+  <rdf:Description rdf:about='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#take_place_on'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>take_place_on</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#festival'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#time_slot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#south'>
+    <rdfs:label xml:lang='en'>south</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#recreation_sports'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>recreation_sports</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Spiritual_Product'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#southeast'>
+    <rdfs:label xml:lang='en'>southeast</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#foreign_business_person'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>foreign_business_person</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_4_pm'>
+    <rdfs:label xml:lang='en'>4 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Panorama_Restaurant'>
+    <rdfs:label xml:lang='en'>Panorama_Restaurant</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#restaurant'/>
+    <NS0:has_name___region>Panorama Restaurant</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Murmansk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Dimension'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>Dimension</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kremlin'>
+    <rdfs:label xml:lang='en'>Kremlin</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#palace'/>
+    <NS0:has_name___region>Kremlin</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Dollar'>
+    <rdfs:label xml:lang='en'>Dollar</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#currency'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#October'>
+    <rdfs:label xml:lang='en'>October</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Russia'>
+    <rdfs:label xml:lang='en'>Russia</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#country'/>
+    <NS0:has_capital rdf:resource='http://travel.org/russia#Moscow'/>
+    <NS0:has_population_value>146,861,022</NS0:has_population_value>
+    <NS0:has_tel_code>7</NS0:has_tel_code>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Saturday'>
+    <rdfs:label xml:lang='en'>Saturday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#language'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>language</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#overview'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_needed_for'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_needed_for</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#certificate'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#device_to_be_observed'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Suzdal'>
+    <rdfs:label xml:lang='en'>Suzdal</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#town'/>
+    <NS0:has_distance_to_moscow>220</NS0:has_distance_to_moscow>
+    <NS0:has_position_to_moscow___town rdf:resource='http://travel.org/russia#northeast'/>
+    <NS0:belong_to_country___town rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_name___region>Suzdal</NS0:has_name___region>
+    <NS0:has_distance_unit___town rdf:resource='http://travel.org/russia#kilo_meter'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hard_currency_restaurant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>hard_currency_restaurant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#restaurant'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#open_hour'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>open_hour</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_slot'/>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumption_information'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_end'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_end</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#time_slot'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Carnival'>
+    <rdfs:label xml:lang='en'>Carnival</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#festival'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_value___time_point'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_value___time_point</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#time_point'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#northwest'>
+    <rdfs:label xml:lang='en'>northwest</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#about_health'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>about_health</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#tourist_information'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_10_am'>
+    <rdfs:label xml:lang='en'>10 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_duration_value'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_duration_value</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#cruise'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#meat'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>meat</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#village'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>village</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Vladimir'>
+    <rdfs:label xml:lang='en'>Vladimir</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_name___region>Vladimir</NS0:has_name___region>
+    <NS0:has_population_value>343,000</NS0:has_population_value>
+    <NS0:has_distance_to_moscow___city>170</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#northwest'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#St_Demetrius_Cathedral'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#physician'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>physician</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Berlin'>
+    <rdfs:label xml:lang='en'>Berlin</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Germany'/>
+    <NS0:has_name___region>Berlin</NS0:has_name___region>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_position_to_stpetersburg___palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_position_to_stpetersburg___palace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#palace'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-10'>
+    <rdfs:label xml:lang='en'>GMT_UTC-10</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#geographical_environment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>geographical_environment</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#convenience_store'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>convenience_store</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#credit_card'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>credit_card</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#means_of_payment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Pushkin_Palace'>
+    <rdfs:label xml:lang='en'>Pushkin_Palace</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#palace'/>
+    <NS0:has_distance_to_stpetersburg___palace>30</NS0:has_distance_to_stpetersburg___palace>
+    <NS0:has_length_unit___palace rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_name___region>Pushkin</NS0:has_name___region>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#west'>
+    <rdfs:label xml:lang='en'>west</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Moscow_Conservatory'>
+    <rdfs:label xml:lang='en'>Moscow_Conservatory</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#conservatory'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Vosstaniye_Square'>
+    <rdfs:label xml:lang='en'>Vosstaniye_Square</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#square'/>
+    <NS0:has_name___region>Vosstaniye Square</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Tula'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#kilo_meter'>
+    <rdfs:label xml:lang='en'>kilo_meter</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Peter_the_Great'>
+    <rdfs:label xml:lang='en'>Peter_the_Great</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#czar'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Caspian_Sea'>
+    <rdfs:label xml:lang='en'>Caspian_Sea</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sea'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#shopping_mall'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>shopping_mall</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GPS'>
+    <rdfs:label xml:lang='en'>GPS</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#device_to_be_observed'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#meter'>
+    <rdfs:label xml:lang='en'>meter</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#consumption_information'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>consumption_information</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#overview'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Caviar'>
+    <rdfs:label xml:lang='en'>Caviar</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Pavlovsk_Palace'>
+    <rdfs:label xml:lang='en'>Pavlovsk_Palace</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#palace'/>
+    <NS0:has_name___region>Pavlovsk Palace</NS0:has_name___region>
+    <NS0:has_distance_to_stpetersburg___palace>30</NS0:has_distance_to_stpetersburg___palace>
+    <NS0:has_length_unit___palace rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_stpetersburg___palace rdf:resource='http://travel.org/russia#southeast'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#square'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>square</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#passport'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>passport</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#document'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#lake'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>lake</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#university'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>university</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Banking_Hours_special'>
+    <rdfs:label xml:lang='en'>Banking_Hours_special</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#open_hour'/>
+    <NS0:has_beginn rdf:resource='http://travel.org/russia#_9_am'/>
+    <NS0:has_end rdf:resource='http://travel.org/russia#_2_pm'/>
+    <NS0:has_time_unit rdf:resource='http://travel.org/russia#o_clock'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Saturday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St_Peter_and_Paul_Cathedral'>
+    <rdfs:label xml:lang='en'>St_Peter_and_Paul_Cathedral</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cathedral'/>
+    <NS0:has_name___region>St. Peter and Paul Cathedral</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#Peter_the_Great'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_position_to_stpetersburg'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_position_to_stpetersburg</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#street'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>street</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_2'>
+    <rdfs:label xml:lang='en'>GMT_UTC+2</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#belong_to_country___town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>belong_to_country___town</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_mouth'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_mouth</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#river'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_to_stpetersburg___town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_to_stpetersburg___town</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#allowed_in_Russia'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>allowed_in_Russia</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#currency'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-4'>
+    <rdfs:label xml:lang='en'>GMT_UTC-4</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#week'>
+    <rdfs:label xml:lang='en'>week</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#second'>
+    <rdfs:label xml:lang='en'>second</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Pushkin'>
+    <rdfs:label xml:lang='en'>Pushkin</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#author'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_5_am'>
+    <rdfs:label xml:lang='en'>5 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#peninsula'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>peninsula</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#English'>
+    <rdfs:label xml:lang='en'>English</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#language'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Vladivostok'>
+    <rdfs:label xml:lang='en'>Vladivostok</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_population_value>648,000</NS0:has_population_value>
+    <NS0:has_distance_to_moscow___city>6,400</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#east'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Bolshoi_Theatre'>
+    <rdfs:label xml:lang='en'>Bolshoi_Theatre</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#theatre'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#rain_massage'>
+    <rdfs:label xml:lang='en'>rain_massage</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#water_cure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St_Demetrius_Cathedral'>
+    <rdfs:label xml:lang='en'>St_Demetrius_Cathedral</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cathedral'/>
+    <NS0:has_name___region>St. Demetrius Cathedral</NS0:has_name___region>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#white_Stone_Architecture'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Vladimir'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_8_pm'>
+    <rdfs:label xml:lang='en'>8 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Vodka'>
+    <rdfs:label xml:lang='en'>Vodka</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#drink'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#president'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>president</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#organisation'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>organisation</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Material'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Sauna'>
+    <rdfs:label xml:lang='en'>Sauna</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#entertainment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cruise'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cruise</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#architecture'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>architecture</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#higher'>
+    <rdfs:label xml:lang='en'>higher</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#fee_scale'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_service_object'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_service_object</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#hard_currency_restaurant'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#foreign_business_person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Tchaikovsky'>
+    <rdfs:label xml:lang='en'>Tchaikovsky</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#musician'/>
+    <NS0:has_birthplace rdf:resource='http://travel.org/russia#St.Petersburg'/>
+    <NS0:has_name___material>Tchaikovsky</NS0:has_name___material>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Red_Square'>
+    <rdfs:label xml:lang='en'>Red_Square</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#square'/>
+    <NS0:has_name___region>Red Square</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#February'>
+    <rdfs:label xml:lang='en'>February</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Neva'>
+    <rdfs:label xml:lang='en'>Neva</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#river'/>
+    <NS0:has_name___region>Neva</NS0:has_name___region>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_name___region'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_name___region</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#region'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#year'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>year</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_slot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#market'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>market</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-11'>
+    <rdfs:label xml:lang='en'>GMT_UTC-11</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#sponsor'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>sponsor</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#organisation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#club'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>club</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#place_for_nightlife'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#founded_by'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>founded_by</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#museum'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#theatre'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>theatre</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cash'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cash</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#means_of_payment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#public_space'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>public_space</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Germany'>
+    <rdfs:label xml:lang='en'>Germany</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#country'/>
+    <NS0:has_tel_code>49</NS0:has_tel_code>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hand_painted_Lacquerware'>
+    <rdfs:label xml:lang='en'>hand_painted_Lacquerware</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#handwork'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#church'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>church</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#tower'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>tower</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#north'>
+    <rdfs:label xml:lang='en'>north</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_showed_in___opera'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_showed_in___opera</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#opera'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#northeast'>
+    <rdfs:label xml:lang='en'>northeast</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#month'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>month</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_slot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#is_on_weekday'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_on_weekday</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#open_hour'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#canal'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>canal</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#mud_bath'>
+    <rdfs:label xml:lang='en'>mud_bath</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#rest_cure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#mile'>
+    <rdfs:label xml:lang='en'>mile</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hydrotherapy_bath'>
+    <rdfs:label xml:lang='en'>hydrotherapy_bath</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#rest_cure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>town</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Lake_Onega'>
+    <rdfs:label xml:lang='en'>Lake_Onega</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#lake'/>
+    <NS0:has_name___region>Onega</NS0:has_name___region>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#Kizhi'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kazan_Kremlin'>
+    <rdfs:label xml:lang='en'>Kazan_Kremlin</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#palace'/>
+    <NS0:has_name___region>Kremlin Kazan</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Kazan'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Russian'>
+    <rdfs:label xml:lang='en'>Russian</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#language'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Novosibirsk'>
+    <rdfs:label xml:lang='en'>Novosibirsk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_name___region>Novosibirsk</NS0:has_name___region>
+    <NS0:has_population_value>1,436,000</NS0:has_population_value>
+    <NS0:has_distance_to_moscow___city>2,830</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#east'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>palace</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_duration_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_duration_unit</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#cruise'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Griboyedova_Canal'>
+    <rdfs:label xml:lang='en'>Griboyedova_Canal</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#canal'/>
+    <NS0:has_name___region>Griboyedova Kanal</NS0:has_name___region>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_3_pm'>
+    <rdfs:label xml:lang='en'>3 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_3'>
+    <rdfs:label xml:lang='en'>GMT_UTC+3</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#place_for_nightlife'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>place_for_nightlife</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_value___area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_value___area</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#surface_area'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_showed_in___dance'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_showed_in___dance</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#dance'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Friday'>
+    <rdfs:label xml:lang='en'>Friday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Andrei_Sakharov'>
+    <rdfs:label xml:lang='en'>Andrei_Sakharov</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#physician'/>
+    <NS0:live_in rdf:resource='http://travel.org/russia#Novgorod'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_unit___area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_unit___area</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#surface_area'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#area_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#east'>
+    <rdfs:label xml:lang='en'>east</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kremlin_Palace_Theatre'>
+    <rdfs:label xml:lang='en'>Kremlin_Palace_Theatre</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#theatre'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-5'>
+    <rdfs:label xml:lang='en'>GMT_UTC-5</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Balalaika'>
+    <rdfs:label xml:lang='en'>Balalaika</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#instrument'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Sunday'>
+    <rdfs:label xml:lang='en'>Sunday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#opera'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>opera</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_birthplace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_birthplace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#person'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_9_am'>
+    <rdfs:label xml:lang='en'>9 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Volga'>
+    <rdfs:label xml:lang='en'>Volga</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#river'/>
+    <NS0:has_name___region>Volga</NS0:has_name___region>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#Kazan'/>
+    <NS0:has_mouth rdf:resource='http://travel.org/russia#St.Petersburg'/>
+    <NS0:has_source rdf:resource='http://travel.org/russia#Caspian_Sea'/>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#Volgograd'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#sq_meter'>
+    <rdfs:label xml:lang='en'>sq_meter</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#area_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Mikhail_Gorbachev'>
+    <rdfs:label xml:lang='en'>Mikhail_Gorbachev</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#president'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#others'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>others</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#May'>
+    <rdfs:label xml:lang='en'>May</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>true</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Bolshoi_Ballet'>
+    <rdfs:label xml:lang='en'>Bolshoi_Ballet</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#ballet_company'/>
+    <NS0:attend_performance_at rdf:resource='http://travel.org/russia#Bolshoi_Theatre'/>
+    <NS0:attend_performance_at rdf:resource='http://travel.org/russia#Kremlin_Palace_Theatre'/>
+    <NS0:has_name___material>Bolshoi Ballet</NS0:has_name___material>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#food'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>food</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_12_pm'>
+    <rdfs:label xml:lang='en'>12 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St_Isaac_s_Cathedral'>
+    <rdfs:label xml:lang='en'>St_Isaac&apos;s_Cathedral</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cathedral'/>
+    <NS0:has_name___region>St. Isaac&apos;s Cathedral</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_sight___town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_sight___town</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_space'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kizhi'>
+    <rdfs:label xml:lang='en'>Kizhi</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_distance_to_stpetersburg___city>320</NS0:has_distance_to_stpetersburg___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_stpetersburg rdf:resource='http://travel.org/russia#northeast'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#wooden_Church'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#length_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>length_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#classic_music'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>classic_music</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Milkailovsky_Park'>
+    <rdfs:label xml:lang='en'>Milkailovsky_Park</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#park'/>
+    <NS0:has_name___region>Mikailovsky Park</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#is_known_for___shopping_place'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_known_for___shopping_place</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#shopping_place'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Vitoslavlitsy_Museum'>
+    <rdfs:label xml:lang='en'>Vitoslavlitsy_Museum</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#museum'/>
+    <NS0:has_name___region>Vitoslavlitsy Museum of Wooden Architecture</NS0:has_name___region>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#wooden_Architecture'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Novgorod'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#dance'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>dance</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Wood_Sculpture'>
+    <rdfs:label xml:lang='en'>Wood_Sculpture</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#human_being'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>human_being</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#living_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#along_river'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>along_river</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#cruise'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#river'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Volgograd'>
+    <rdfs:label xml:lang='en'>Volgograd</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_population_value>1,000,000</NS0:has_population_value>
+    <NS0:has_name___region>Volgograd</NS0:has_name___region>
+    <NS0:has_distance_to_moscow___city>900</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#southeast'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#the_Festival_of_the_North'>
+    <rdfs:label xml:lang='en'>the_Festival_of_the_North</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#festival'/>
+    <NS0:take_place_at rdf:resource='http://travel.org/russia#Murmansk'/>
+    <NS0:take_place_on rdf:resource='http://travel.org/russia#March'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#photocopy'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>photocopy</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#document'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Pushkin_Museum'>
+    <rdfs:label xml:lang='en'>Pushkin_Museum</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#museum'/>
+    <NS0:has_name___region>Pushkin Museum</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+    <NS0:closed_on rdf:resource='http://travel.org/russia#Monday'/>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#Pushkin'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-12'>
+    <rdfs:label xml:lang='en'>GMT_UTC-12</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Beijing'>
+    <rdfs:label xml:lang='en'>Beijing</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#China'/>
+    <NS0:has_name___region>Beijing</NS0:has_name___region>
+    <NS0:has_tel_code>001</NS0:has_tel_code>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#is_best_time_for_travel'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>is_best_time_for_travel</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#month'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#boolean'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_position_to_moscow___palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_position_to_moscow___palace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#palace'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St_Sofia_Cathedral'>
+    <rdfs:label xml:lang='en'>St_Sofia_Cathedral</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cathedral'/>
+    <NS0:has_name___region>St. Sofia Cathedral</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Novgorod'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#public_place'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>public_place</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_space'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#normal_restaurant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>normal_restaurant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#restaurant'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#fruit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>fruit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#bar'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>bar</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#place_for_nightlife'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_unit___region'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_unit___region</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#living_being'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>living_being</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Material'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#local_store'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>local_store</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cathedral'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cathedral</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#mineral_bath'>
+    <rdfs:label xml:lang='en'>mineral_bath</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#rest_cure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#time_point'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time_point</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#forest'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>forest</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Petrodvorets'>
+    <rdfs:label xml:lang='en'>Petrodvorets</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#palace'/>
+    <NS0:has_distance_to_stpetersburg___palace>32</NS0:has_distance_to_stpetersburg___palace>
+    <NS0:has_position_to_stpetersburg___palace rdf:resource='http://travel.org/russia#west'/>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#Wood_Sculpture'/>
+    <NS0:has_name___region>Petrodvorets</NS0:has_name___region>
+    <NS0:has_length_unit___palace rdf:resource='http://travel.org/russia#kilo_meter'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_4_am'>
+    <rdfs:label xml:lang='en'>4 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_active_at'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_active_at</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#robber'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Arctic_Circle'>
+    <rdfs:label xml:lang='en'>Arctic_Circle</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#singing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>singing</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_included_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_included_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#visa'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#passport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_4'>
+    <rdfs:label xml:lang='en'>GMT_UTC+4</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_7_pm'>
+    <rdfs:label xml:lang='en'>7 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_showed_in___singing'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_showed_in___singing</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#singing'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Manezh_Square'>
+    <rdfs:label xml:lang='en'>Manezh_Square</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#square'/>
+    <NS0:has_name___region>Manezh Square</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-6'>
+    <rdfs:label xml:lang='en'>GMT_UTC-6</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Canada'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#U.S.A.'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Dostoyevsky'>
+    <rdfs:label xml:lang='en'>Dostoyevsky</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#author'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#casino'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>casino</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#place_for_nightlife'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_sold_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_sold_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#consumer_goods'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#live_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>live_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#person'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#theatre_company'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>theatre_company</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#artwork_organisation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#shopping_place'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>shopping_place</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#be_paid_for'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>be_paid_for</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#fee_scale'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_space'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_time_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_time_unit</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#open_hour'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_10'>
+    <rdfs:label xml:lang='en'>GMT_UTC+10</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Orel'>
+    <rdfs:label xml:lang='en'>Orel</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_distance_to_moscow___city>340</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#southwest'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_to_moscow___palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_to_moscow___palace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#palace'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#study_at'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>study_at</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#student'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#university'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#normal'>
+    <rdfs:label xml:lang='en'>normal</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#fee_scale'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#rock'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>rock</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#live_music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#season'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>season</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_slot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#ice_skating'>
+    <rdfs:label xml:lang='en'>ice_skating</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sport'/>
+    <NS0:has_training_place rdf:resource='http://travel.org/russia#Gorky_Park'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Winter_Palace'>
+    <rdfs:label xml:lang='en'>Winter_Palace</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#palace'/>
+    <NS0:has_name___region>the Winter Palace</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_13'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>13</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#live_music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Spiritual_Product'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>Spiritual_Product</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#o_clock'>
+    <rdfs:label xml:lang='en'>o&apos;clock</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Lake_Baikal'>
+    <rdfs:label xml:lang='en'>Lake_Baikal</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#lake'/>
+    <NS0:has_name___region>Baikal</NS0:has_name___region>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#Irkutsk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Tula'>
+    <rdfs:label xml:lang='en'>Tula</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#town'/>
+    <NS0:belong_to_country___town rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_population_value>540,000</NS0:has_population_value>
+    <NS0:has_sight___town rdf:resource='http://travel.org/russia#History_of_Arms_Museum'/>
+    <NS0:has_sight___town rdf:resource='http://travel.org/russia#Vosstaniye_Square'/>
+    <NS0:has_distance_to_moscow>180</NS0:has_distance_to_moscow>
+    <NS0:has_distance_unit___town rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___town rdf:resource='http://travel.org/russia#south'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#China'>
+    <rdfs:label xml:lang='en'>China</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#country'/>
+    <NS0:has_tel_code>86</NS0:has_tel_code>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#time_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#consumer_goods'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>consumer_goods</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Material'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#conservatory'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>conservatory</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#artwork_organisation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#DEFAULT_ROOT_CONCEPT'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Material'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>Material</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#artwork_organisation'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>artwork_organisation</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#organisation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#December'>
+    <rdfs:label xml:lang='en'>December</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Wednsday'>
+    <rdfs:label xml:lang='en'>Wednsday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_position_to_moscow___town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_position_to_moscow___town</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Monument_to_Peter_the_Great'>
+    <rdfs:label xml:lang='en'>Monument_to_Peter_the_Great</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#monument'/>
+    <NS0:has_name___region>Monument to Peter the Great</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kamchatka_Peninsula'>
+    <rdfs:label xml:lang='en'>Kamchatka_Peninsula</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#peninsula'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#DEFAULT_ROOT_RELATION'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#beginn_point'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>beginn_point</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#travel_event'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>travel_event</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#activity'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Pyatigorsk'>
+    <rdfs:label xml:lang='en'>Pyatigorsk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#town'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Trans_Siberian'>
+    <rdfs:label xml:lang='en'>Trans_Siberian</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#train_travel'/>
+    <NS0:has_name___recreation>Trans Siberian</NS0:has_name___recreation>
+    <NS0:pass_by rdf:resource='http://travel.org/russia#Irkutsk'/>
+    <NS0:pass_by rdf:resource='http://travel.org/russia#Novosibirsk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Samovar'>
+    <rdfs:label xml:lang='en'>Samovar</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#simple_consumer_device'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>simple_consumer_device</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#electronic_device'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Monday'>
+    <rdfs:label xml:lang='en'>Monday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#means_of_payment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>means_of_payment</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumption_information'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_length_unit___palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_length_unit___palace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#palace'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cititzen_of_russia'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cititzen_of_russia</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#sponsor'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#closed_on'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>closed_on</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#museum'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#circuse'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>circuse</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_2_pm'>
+    <rdfs:label xml:lang='en'>2 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#entertainment'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>entertainment</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#activity'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Petrozavodsk'>
+    <rdfs:label xml:lang='en'>Petrozavodsk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#tour_company'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>tour_company</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#sponsor'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#University_of_Kazan'>
+    <rdfs:label xml:lang='en'>University_of_Kazan</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#university'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Yakutsk'>
+    <rdfs:label xml:lang='en'>Yakutsk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:has_distance_to_moscow___city>4,900</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#northeast'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_population_value>188,000</NS0:has_population_value>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#museum'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>museum</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#musician'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>musician</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#sport'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>sport</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#activity'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_8_am'>
+    <rdfs:label xml:lang='en'>8 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#A_Month_in_the_Country'>
+    <rdfs:label xml:lang='en'>A_Month_in_the_Country</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#novel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#interred_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>interred_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#czar'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#cathedral'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Hungry_Duck'>
+    <rdfs:label xml:lang='en'>Hungry_Duck</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#rock'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_5'>
+    <rdfs:label xml:lang='en'>GMT_UTC+5</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#white_Stone_Architecture'>
+    <rdfs:label xml:lang='en'>white_Stone_Architecture</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#architecture'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#U.S.A.'>
+    <rdfs:label xml:lang='en'>U.S.A.</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#sq_km'>
+    <rdfs:label xml:lang='en'>sq_km</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#area_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_11_pm'>
+    <rdfs:label xml:lang='en'>11 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Laptop'>
+    <rdfs:label xml:lang='en'>Laptop</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#simple_consumer_device'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-7'>
+    <rdfs:label xml:lang='en'>GMT_UTC-7</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#festival'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>festival</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Icecream'>
+    <rdfs:label xml:lang='en'>Icecream</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#political_region'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>political_region</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#region'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>region</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Dimension'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_11'>
+    <rdfs:label xml:lang='en'>GMT_UTC+11</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Krisis_Zhanra'>
+    <rdfs:label xml:lang='en'>Krisis_Zhanra</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#folk_music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Ulyanovsk'>
+    <rdfs:label xml:lang='en'>Ulyanovsk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#town'/>
+    <NS0:belong_to_country___town rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_population_value>625,000</NS0:has_population_value>
+    <NS0:has_distance_to_moscow>715</NS0:has_distance_to_moscow>
+    <NS0:has_distance_unit___town rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_moscow___town rdf:resource='http://travel.org/russia#east'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#need_certifikate'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>need_certifikate</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#device_to_be_observed'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#certificate'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#public_building'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>public_building</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_space'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#boutique'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>boutique</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#tourist_shop'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>tourist_shop</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#shopping_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#pass_by'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>pass_by</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#travel_event'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_open_hour___place'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_open_hour___place</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#shopping_place'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#open_hour'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#belong_to_country___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>belong_to_country___city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#student'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>student</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_to_stpetersburg___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_to_stpetersburg___city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#person'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>person</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#human_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Designer_Boutique'>
+    <rdfs:label xml:lang='en'>Designer_Boutique</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#boutique'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#time'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Dimension'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#water_cure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>water_cure</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#cure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#September'>
+    <rdfs:label xml:lang='en'>September</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>true</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#time_slot'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time_slot</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_position_to_stpetersburg___town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_position_to_stpetersburg___town</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Novgorod'>
+    <rdfs:label xml:lang='en'>Novgorod</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_population_value>240,000</NS0:has_population_value>
+    <NS0:has_distance_to_stpetersburg___city>160</NS0:has_distance_to_stpetersburg___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_position_to_stpetersburg rdf:resource='http://travel.org/russia#southeast'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#St_Sofia_Cathedral'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Vitoslavlitsy_Museum'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Potato'>
+    <rdfs:label xml:lang='en'>Potato</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#vegetable'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#T_Shirt'>
+    <rdfs:label xml:lang='en'>T_Shirt</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#clothes'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Mariinsky_Ballet'>
+    <rdfs:label xml:lang='en'>Mariinsky_Ballet</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#ballet_company'/>
+    <NS0:has_name___material>Mariinsky Ballet</NS0:has_name___material>
+    <NS0:attend_performance_at rdf:resource='http://travel.org/russia#Kremlin_Palace_Theatre'/>
+    <NS0:attend_performance_at rdf:resource='http://travel.org/russia#Mariinsky_Theatre'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#bank'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>bank</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#July'>
+    <rdfs:label xml:lang='en'>July</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>true</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#day'>
+    <rdfs:label xml:lang='en'>day</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_3_am'>
+    <rdfs:label xml:lang='en'>3 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#country'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>country</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Ivan_Goncharev'>
+    <rdfs:label xml:lang='en'>Ivan_Goncharev</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#author'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#check'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>check</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#means_of_payment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_6_pm'>
+    <rdfs:label xml:lang='en'>6 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#composer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>composer</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Nevsky_Prospekt'>
+    <rdfs:label xml:lang='en'>Nevsky_Prospekt</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#street'/>
+    <NS0:has_name___region>Nevsky Prospekt</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#direction'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>direction</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Dimension'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#revolutionary'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>revolutionary</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Antique'>
+    <rdfs:label xml:lang='en'>Antique</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_to_moscow'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_to_moscow</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_3days_visa'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>3days_visa</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#visa'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC'>
+    <rdfs:label xml:lang='en'>GMT_UTC</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_written'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_written</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#author'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#novel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_12_am'>
+    <rdfs:label xml:lang='en'>12 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#plant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>plant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#living_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kuril_Islands'>
+    <rdfs:label xml:lang='en'>Kuril_Islands</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#archipelago'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_6'>
+    <rdfs:label xml:lang='en'>GMT_UTC+6</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Japan'>
+    <rdfs:label xml:lang='en'>Japan</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Christ_the_Savior_Cathedral'>
+    <rdfs:label xml:lang='en'>Christ_the_Savior_Cathedral</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cathedral'/>
+    <NS0:has_name___region>Christ the Savior Cathedral</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-8'>
+    <rdfs:label xml:lang='en'>GMT_UTC-8</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Thursday'>
+    <rdfs:label xml:lang='en'>Thursday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#overview'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>overview</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#tourist_information'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St_Nicholas_Church'>
+    <rdfs:label xml:lang='en'>St_Nicholas_Church</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#church'/>
+    <NS0:has_name___region>St. Nicholas&apos; Church</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Murmansk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Lenin'>
+    <rdfs:label xml:lang='en'>Lenin</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#revolutionary'/>
+    <rdf:type rdf:resource='http://travel.org/russia#student'/>
+    <NS0:study_at rdf:resource='http://travel.org/russia#University_of_Kazan'/>
+    <NS0:has_birthplace rdf:resource='http://travel.org/russia#Ulyanovsk'/>
+    <NS0:has_name___material>Lenin</NS0:has_name___material>
+    <NS0:live_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Bread'>
+    <rdfs:label xml:lang='en'>Bread</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_12'>
+    <rdfs:label xml:lang='en'>GMT_UTC+12</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>city</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Winter'>
+    <rdfs:label xml:lang='en'>Winter</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hour'>
+    <rdfs:label xml:lang='en'>hour</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#clothes'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>clothes</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_source'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_source</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#river'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_open_hour___building'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_open_hour___building</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#bank'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#open_hour'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_capital'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_capital</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#country'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#city'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Mamayev_Hill'>
+    <rdfs:label xml:lang='en'>Mamayev_Hill</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#mountain'/>
+    <NS0:has_name___region>Mamayev</NS0:has_name___region>
+    <NS0:is_close_to rdf:resource='http://travel.org/russia#Volgograd'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Peter_and_Paul_Fortress'>
+    <rdfs:label xml:lang='en'>Peter_and_Paul_Fortress</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#fortress'/>
+    <NS0:has_name___region>Peter and Paul Fortress</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Banking_Hours_normal'>
+    <rdfs:label xml:lang='en'>Banking_Hours_normal</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#open_hour'/>
+    <NS0:has_beginn rdf:resource='http://travel.org/russia#_9_am'/>
+    <NS0:has_beginn rdf:resource='http://travel.org/russia#_2_pm'/>
+    <NS0:has_end rdf:resource='http://travel.org/russia#_1_pm'/>
+    <NS0:has_end rdf:resource='http://travel.org/russia#_6_pm'/>
+    <NS0:has_end rdf:resource='http://travel.org/russia#_7_pm'/>
+    <NS0:has_time_unit rdf:resource='http://travel.org/russia#o_clock'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Friday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Monday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Thursday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Tuesday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Wednsday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Summer'>
+    <rdfs:label xml:lang='en'>Summer</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_to_moscow___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_to_moscow___city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#rest_cure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>rest_cure</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#cure'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_unit___town'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_unit___town</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#town'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_1_pm'>
+    <rdfs:label xml:lang='en'>1 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#titanic'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>titanic</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#live_music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#visa'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>visa</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#document'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_unit___time'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_unit___time</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#time_point'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#March'>
+    <rdfs:label xml:lang='en'>March</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#vegetable'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>vegetable</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#lie_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>lie_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#public_space'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#normal_traveler'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>normal_traveler</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#sq_mi'>
+    <rdfs:label xml:lang='en'>sq_mi</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#area_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#drink'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>drink</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#food'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_sight___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_sight___city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_space'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Area_of_Russia'>
+    <rdfs:label xml:lang='en'>Area_of_Russia</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#surface_area'/>
+    <NS0:has_value___area>17,055,150</NS0:has_value___area>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#religion'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>religion</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#overview'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cooperative_restaurant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cooperative_restaurant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#restaurant'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Turgenev'>
+    <rdfs:label xml:lang='en'>Turgenev</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#author'/>
+    <NS0:has_birthplace rdf:resource='http://travel.org/russia#Orel'/>
+    <NS0:has_written rdf:resource='http://travel.org/russia#A_Month_in_the_Country'/>
+    <NS0:has_name___material>Turgenev</NS0:has_name___material>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_7_am'>
+    <rdfs:label xml:lang='en'>7 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#ballet_company'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>ballet_company</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#artwork_organisation'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_beginn'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_beginn</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#time_slot'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Museam_of_Wooden_Architecture'>
+    <rdfs:label xml:lang='en'>Museam_of_Wooden_Architecture</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#museum'/>
+    <NS0:has_name___region>Museum of Wooden Architecture</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Irkutsk'/>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#wooden_Architecture'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Onion_Dom'>
+    <rdfs:label xml:lang='en'>Onion_Dom</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#architecture'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cure</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#about_health'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Tchaikovsky_Concert_Hall'>
+    <rdfs:label xml:lang='en'>Tchaikovsky_Concert_Hall</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#concert_hall'/>
+    <NS0:has_name___region>Tchaikovsky Concert Hall</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#visual_decorative_art'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>visual_decorative_art</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_10_pm'>
+    <rdfs:label xml:lang='en'>10 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#disease_type'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>disease_type</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#about_health'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#wooden_Architecture'>
+    <rdfs:label xml:lang='en'>wooden_Architecture</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#architecture'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hiking'>
+    <rdfs:label xml:lang='en'>hiking</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Hat'>
+    <rdfs:label xml:lang='en'>Hat</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#clothes'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#disco'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>disco</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#place_for_nightlife'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Irkutsk'>
+    <rdfs:label xml:lang='en'>Irkutsk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_name___region>Irkutsk</NS0:has_name___region>
+    <NS0:has_population_value>630,000</NS0:has_population_value>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Museam_of_Wooden_Architecture'/>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#east'/>
+    <NS0:has_distance_to_moscow___city>4,215</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#minute'>
+    <rdfs:label xml:lang='en'>minute</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#inspector'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>inspector</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Kazan'>
+    <rdfs:label xml:lang='en'>Kazan</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_distance_to_moscow___city>725</NS0:has_distance_to_moscow___city>
+    <NS0:has_distance_unit___region rdf:resource='http://travel.org/russia#kilo_meter'/>
+    <NS0:has_name___region>kazan</NS0:has_name___region>
+    <NS0:has_population_value>1,094,000</NS0:has_population_value>
+    <NS0:has_position_to_moscow___city rdf:resource='http://travel.org/russia#east'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Kazan_Kremlin'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#University_of_Kazan'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#author'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>author</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hunting'>
+    <rdfs:label xml:lang='en'>hunting</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_7'>
+    <rdfs:label xml:lang='en'>GMT_UTC+7</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Dimension'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Scarves'>
+    <rdfs:label xml:lang='en'>Scarves</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#clothes'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#History_of_Arms_Museum'>
+    <rdfs:label xml:lang='en'>History_of_Arms_Museum</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#museum'/>
+    <NS0:founded_by rdf:resource='http://travel.org/russia#Peter_the_Great'/>
+    <NS0:has_name___region>the History of Arms Museum</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Tula'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#animal'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>animal</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#living_being'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Izmailovski_Stadium'>
+    <rdfs:label xml:lang='en'>Izmailovski_Stadium</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#market'/>
+    <NS0:has_name___region>Izmailovski</NS0:has_name___region>
+    <NS0:is_known_for___shopping_place rdf:resource='http://travel.org/russia#Antique'/>
+    <NS0:is_known_for___shopping_place rdf:resource='http://travel.org/russia#Souvenir'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-9'>
+    <rdfs:label xml:lang='en'>GMT_UTC-9</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Moscow'>
+    <rdfs:label xml:lang='en'>Moscow</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_distance_to_moscow___city>0</NS0:has_distance_to_moscow___city>
+    <NS0:has_name___region>Moscow</NS0:has_name___region>
+    <NS0:has_tel_code>095</NS0:has_tel_code>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#_24_Hour_Convenience_Store'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Designer_Boutique'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Christ_the_Savior_Cathedral'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Kremlin'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Manezh_Square'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Red_Square'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#St_Basil_s_Cathedral'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Monument_to_Peter_the_Great'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Tretyakov_Gallery'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Gorky_Park'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Arbat'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Izmailovski_Stadium'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_3months_visa'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>3months_visa</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#visa'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Hermitage_Museum'>
+    <rdfs:label xml:lang='en'>Hermitage_Museum</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#museum'/>
+    <NS0:has_name___region>Hermitage Museum</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-1'>
+    <rdfs:label xml:lang='en'>GMT_UTC-1</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_13'>
+    <rdfs:label xml:lang='en'>GMT_UTC+13</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#ballet'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>ballet</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#dance'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Canada'>
+    <rdfs:label xml:lang='en'>Canada</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#sea'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>sea</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Russian_Ruble'>
+    <rdfs:label xml:lang='en'>Russian_Ruble</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#currency'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#June'>
+    <rdfs:label xml:lang='en'>June</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>true</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Summer_Garden'>
+    <rdfs:label xml:lang='en'>Summer_Garden</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#garden'/>
+    <NS0:has_name___region>Summer Garden</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#valley'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>valley</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#surface_area'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>surface_area</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#overview'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_name___recreation'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_name___recreation</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#recreation_sports'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#swimming'>
+    <rdfs:label xml:lang='en'>swimming</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Cellular_Phone'>
+    <rdfs:label xml:lang='en'>Cellular_Phone</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#device_to_be_observed'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#novel'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>novel</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#literature'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_2_am'>
+    <rdfs:label xml:lang='en'>2 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#November'>
+    <rdfs:label xml:lang='en'>November</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#literature'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>literature</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Old_Circus'>
+    <rdfs:label xml:lang='en'>Old_Circus</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#circuse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#inch'>
+    <rdfs:label xml:lang='en'>inch</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#length_unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Tuesday'>
+    <rdfs:label xml:lang='en'>Tuesday</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#weekday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#end_point'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>end_point</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#monument'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>monument</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_5_pm'>
+    <rdfs:label xml:lang='en'>5 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#archipelago'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>archipelago</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Arbat'>
+    <rdfs:label xml:lang='en'>Arbat</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#local_store'/>
+    <NS0:has_name___region>Arbat</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+    <NS0:is_known_for___shopping_place rdf:resource='http://travel.org/russia#T_Shirt'/>
+    <NS0:is_known_for___shopping_place rdf:resource='http://travel.org/russia#Soviet_Army_Memorabilia'/>
+    <NS0:is_known_for___shopping_place rdf:resource='http://travel.org/russia#Scarves'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#restaurant'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>restaurant</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#garden'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>garden</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_student'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_student</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#university'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#student'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_name___material'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_name___material</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#Material'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#concert_hall'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>concert_hall</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_name___disease'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_name___disease</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#about_health'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Spring'>
+    <rdfs:label xml:lang='en'>Spring</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#ski'>
+    <rdfs:label xml:lang='en'>ski</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#wooden_Church'>
+    <rdfs:label xml:lang='en'>wooden_Church</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#church'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Kizhi'/>
+    <NS0:has_name___region>The Church of the Transfiguration</NS0:has_name___region>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#wooden_Architecture'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_11_am'>
+    <rdfs:label xml:lang='en'>11 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_departure'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_departure</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#travel_event'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#robber'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>robber</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Dombai'>
+    <rdfs:label xml:lang='en'>Dombai</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#valley'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#river'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>river</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#War_and_Pearce'>
+    <rdfs:label xml:lang='en'>War_and_Pearce</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#novel'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Volga_Cruise'>
+    <rdfs:label xml:lang='en'>Volga_Cruise</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cruise'/>
+    <NS0:along_river rdf:resource='http://travel.org/russia#Volga'/>
+    <NS0:has_duration_unit rdf:resource='http://travel.org/russia#day'/>
+    <NS0:has_duration_value>7</NS0:has_duration_value>
+    <NS0:has_name___recreation>Cruise of Volga</NS0:has_name___recreation>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Gun_Monument'>
+    <rdfs:label xml:lang='en'>Gun_Monument</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#monument'/>
+    <NS0:has_name___region>Gun Monument</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Murmansk'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#device_to_be_observed'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>device_to_be_observed</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#electronic_device'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#dancer'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>dancer</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#fortress'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>fortress</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#cafe'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>cafe</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_name___literature'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_name___literature</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#literature'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#string'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_position_to_moscow___city'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_position_to_moscow___city</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#city'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#southwest'>
+    <rdfs:label xml:lang='en'>southwest</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#direction'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_currency'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_currency</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#country'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#currency'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#electronic_device'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>electronic_device</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#island'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>island</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#area_unit'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>area_unit</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#unit'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#horseback_riding'>
+    <rdfs:label xml:lang='en'>horseback_riding</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#sport'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Soviet_Army_Memorabilia'>
+    <rdfs:label xml:lang='en'>Soviet_Army_Memorabilia</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#mountain'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>mountain</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#geographical_environment'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_country'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_country</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#time_zone'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#country'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_8'>
+    <rdfs:label xml:lang='en'>GMT_UTC+8</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#China'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#culture_and_art'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>culture_and_art</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Spiritual_Product'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_destination'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_destination</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#travel_event'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_population_value'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_population_value</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#political_region'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#handwork'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>handwork</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#time_zone'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>time_zone</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time'/>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#overview'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St.Petersburg'>
+    <rdfs:label xml:lang='en'>St.Petersburg</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:has_tel_code>812</NS0:has_tel_code>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Hermitage_Museum'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Nevsky_Prospekt'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Panorama_Restaurant'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#St_Isaac_s_Cathedral'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Summer_Garden'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Winter_Palace'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#St_Peter_and_Paul_Cathedral'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Peter_and_Paul_Fortress'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Mariinsky_Theatre'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Shopping_Hours'>
+    <rdfs:label xml:lang='en'>Shopping_Hours</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#open_hour'/>
+    <NS0:has_beginn rdf:resource='http://travel.org/russia#_9_am'/>
+    <NS0:has_end rdf:resource='http://travel.org/russia#_7_pm'/>
+    <NS0:has_time_unit rdf:resource='http://travel.org/russia#o_clock'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Friday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Monday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Saturday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Thursday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Tuesday'/>
+    <NS0:is_on_weekday rdf:resource='http://travel.org/russia#Wednsday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_distance_to_stpetersburg___palace'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_distance_to_stpetersburg___palace</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#palace'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-2'>
+    <rdfs:label xml:lang='en'>GMT_UTC-2</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Wall_Plaque'>
+    <rdfs:label xml:lang='en'>Wall_Plaque</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#fee_scale'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>fee_scale</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumption_information'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Tretyakov_Gallery'>
+    <rdfs:label xml:lang='en'>Tretyakov_Gallery</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#museum'/>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+    <NS0:has_name___region>Tretyakov Gallery</NS0:has_name___region>
+    <NS0:closed_on rdf:resource='http://travel.org/russia#Monday'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#park'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>park</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_place'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#czar'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>czar</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#person'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#instrument'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>instrument</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumer_goods'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#January'>
+    <rdfs:label xml:lang='en'>January</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_example'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_example</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#architecture'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_language'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_language</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#country'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#language'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#is_known_for___public_space'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_known_for___public_space</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#public_space'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#DEFAULT_ROOT_CONCEPT'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_6_am'>
+    <rdfs:label xml:lang='en'>6 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#hotel'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>hotel</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#public_building'/>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#sponsor'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#lived_in'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>lived_in</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#czar'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#palace'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Murmansk'>
+    <rdfs:label xml:lang='en'>Murmansk</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#city'/>
+    <NS0:belong_to_country___city rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_position_to_stpetersburg rdf:resource='http://travel.org/russia#north'/>
+    <NS0:has_distance_to_stpetersburg___city>1,015</NS0:has_distance_to_stpetersburg___city>
+    <NS0:has_name___region>Murmansk</NS0:has_name___region>
+    <NS0:has_population_value>450,000</NS0:has_population_value>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Gun_Monument'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#Panorama_Restaurant'/>
+    <NS0:has_sight___city rdf:resource='http://travel.org/russia#St_Nicholas_Church'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#weekday'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>weekday</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#time_slot'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Russian_Winter_Folk_Festival'>
+    <rdfs:label xml:lang='en'>Russian_Winter_Folk_Festival</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#festival'/>
+    <NS0:take_place_on rdf:resource='http://travel.org/russia#January'/>
+    <NS0:take_place_on rdf:resource='http://travel.org/russia#December'/>
+    <NS0:take_place_at rdf:resource='http://travel.org/russia#Suzdal'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#music'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>music</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#culture_and_art'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#take_place_at'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>take_place_at</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#festival'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_9_pm'>
+    <rdfs:label xml:lang='en'>9 pm</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#tourist_information'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>tourist_information</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Spiritual_Product'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#St_Basil_s_Cathedral'>
+    <rdfs:label xml:lang='en'>St_Basil&apos;s_Cathedral</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#cathedral'/>
+    <NS0:has_name___region>St. Basil&apos;s Cathedral</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+    <NS0:is_known_for___public_space rdf:resource='http://travel.org/russia#Onion_Dom'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Autumn'>
+    <rdfs:label xml:lang='en'>Autumn</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#season'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#is_close_to'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>is_close_to</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#geographical_environment'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#political_region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#certificate'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>certificate</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#document'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#train_travel'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>train_travel</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Souvenir'>
+    <rdfs:label xml:lang='en'>Souvenir</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#air_travel'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>air_travel</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#travel_event'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#folk_music'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>folk_music</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#live_music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_training_place'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>has_training_place</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#sport'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#region'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Mariinsky_Theatre'>
+    <rdfs:label xml:lang='en'>Mariinsky_Theatre</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#theatre'/>
+    <NS0:has_name___region>Theatre of Mariinsky</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#St.Petersburg'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Meta_Sculpture'>
+    <rdfs:label xml:lang='en'>Meta_Sculpture</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#others'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#document'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>document</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#Material'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#has_tel_code'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+    <rdfs:label xml:lang='en'>has_tel_code</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_DATATYPE_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#political_region'/>
+    <rdfs:range rdf:resource='http://www.w3.org/2001/XMLSchema#integer'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#live_music'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>live_music</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#music'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Grand_Moscow_State_Circus'>
+    <rdfs:label xml:lang='en'>Grand_Moscow_State_Circus</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#circuse'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Gorky_Park'>
+    <rdfs:label xml:lang='en'>Gorky_Park</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#park'/>
+    <NS0:has_name___region>Gorky</NS0:has_name___region>
+    <NS0:lie_in rdf:resource='http://travel.org/russia#Moscow'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#currency'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>currency</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#consumption_information'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Leo_Tolstoy'>
+    <rdfs:label xml:lang='en'>Leo_Tolstoy</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#author'/>
+    <rdf:type rdf:resource='http://travel.org/russia#student'/>
+    <NS0:study_at rdf:resource='http://travel.org/russia#University_of_Kazan'/>
+    <NS0:has_written rdf:resource='http://travel.org/russia#War_and_Pearce'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#activity'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#Class'/>
+    <rdfs:label xml:lang='en'>activity</rdfs:label>
+    <rdfs:subClassOf rdf:resource='http://travel.org/russia#recreation_sports'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_9'>
+    <rdfs:label xml:lang='en'>GMT_UTC+9</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Russia'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Japan'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#registered_through'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>registered_through</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#_3months_visa'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#sponsor'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#attend_performance_at'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#ObjectProperty'/>
+    <rdfs:label xml:lang='en'>attend_performance_at</rdfs:label>
+    <rdfs:subPropertyOf rdf:resource='http://travel.org/russia#DEFAULT_ROOT_RELATION'/>
+    <rdfs:domain rdf:resource='http://travel.org/russia#artwork_organisation'/>
+    <rdfs:range rdf:resource='http://travel.org/russia#public_building'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#April'>
+    <rdfs:label xml:lang='en'>April</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#month'/>
+    <NS0:is_best_time_for_travel>false</NS0:is_best_time_for_travel>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC_1'>
+    <rdfs:label xml:lang='en'>GMT_UTC+1</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+    <NS0:has_country rdf:resource='http://travel.org/russia#Germany'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_24_Hour_Convenience_Store'>
+    <rdfs:label xml:lang='en'>24_Hour_Convenience_Store</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#convenience_store'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#_1_am'>
+    <rdfs:label xml:lang='en'>1 am</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_point'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#GMT_UTC-3'>
+    <rdfs:label xml:lang='en'>GMT_UTC-3</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#time_zone'/>
+  </rdf:Description>
+  <rdf:Description rdf:about='http://travel.org/russia#Traditional_Folk_Singing'>
+    <rdfs:label xml:lang='en'>Traditional_Folk_Singing</rdfs:label>
+    <rdf:type rdf:resource='http://travel.org/russia#singing'/>
+  </rdf:Description>
+</rdf:RDF>

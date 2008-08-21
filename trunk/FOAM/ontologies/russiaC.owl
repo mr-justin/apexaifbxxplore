@@ -1,0 +1,1810 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+	xmlns:ns4="http://www.w3.org/2001/XMLSchema#"
+	xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+	xmlns:ns1="meh://633496984#"  
+	xmlns:owl = "http://www.w3.org/2002/07/owl#"
+	xmlns:xsd = 'http://www.w3.org/2001/XMLSchema#'
+ >
+  <owl:Ontology rdf:about="">
+  </owl:Ontology>
+
+  <rdf:Description rdf:about='meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION'>
+    <rdf:type rdf:resource='http://www.w3.org/2002/07/owl#DatatypeProperty'/>
+  </rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_length_unit">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:range rdf:resource="meh://633496984#length_unit"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_railway_to">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#is_MemberOfEU">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+	<rdfs:label>is_MimbirOfPoliticalAria</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#month">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#time_unit"/>
+	<rdfs:label>rmpguubg</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#museum">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>iiseii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#vacation_area">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>trrtfdom</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#budget">
+	<rdf:type rdf:resource="meh://633496984#level"/>
+	<rdfs:label>iuiget</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#mountain">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>iouitaii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#musical_performance">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#music"/>
+	<rdfs:label>musiial_performanie</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Budapest">
+	<rdf:type rdf:resource="meh://633496984#capital_city"/>
+	<ns1:has_name___nameable_thing>Budapest</ns1:has_name___nameable_thing>
+	<rdfs:label>Budaieit</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-11">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMT_UTCi11</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_potitical_fact">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#political_fact"/>
+	<rdfs:label>rrjrofng</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#risk">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>eursueoe</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#far_east_maritime_reserve">
+	<rdf:type rdf:resource="meh://633496984#maritime_reserve"/>
+	<rdfs:label>firieistimiritimeireserve</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_capital_city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#city"/>
+	<rdfs:label>has_iapital_iiti</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#appartment">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#accomodation"/>
+	<rdfs:label>otdcgfrb</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_infrastructure">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#city"/>
+	<rdfs:range rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>rreqcncg</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Trans-Siberian">
+	<rdf:type rdf:resource="meh://633496984#railway"/>
+	<ns1:is_from rdf:resource="meh://633496984#Moscow"/>
+	<ns1:has_destination rdf:resource="meh://633496984#Vladivostok"/>
+	<ns1:has_name___nameable_thing>Trans Siberian</ns1:has_name___nameable_thing>
+	<rdfs:label>Triis-Siberiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#be_used_for">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#transfer"/>
+	<rdfs:label>bphbncuu</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#season">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#time_unit"/>
+	<rdfs:label>ieiion</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#waterway">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>iateiiay</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_president">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#president"/>
+	<rdfs:label>hasiiresident</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#political_area">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#location"/>
+	<rdfs:label>politicil_irei</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#length_unit">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>leigih_uiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_festival">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#art"/>
+	<rdfs:range rdf:resource="meh://633496984#festival"/>
+	<rdfs:label>his_iestivil</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_rivertransport_to___city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#has_rivertransport_to"/>
+	<rdfs:domain rdf:resource="meh://633496984#city"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#immaterial_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#DEFAULT_ROOT_CONCEPT"/>
+	<rdfs:label>immateriai_thini</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#locatable_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#DEFAULT_ROOT_CONCEPT"/>
+	<rdfs:label>iocaiabie_ihing</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_economical_fact">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>hisieconomicilifict</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#music_spring">
+	<rdf:type rdf:resource="meh://633496984#festival"/>
+	<ns1:has_name___nameable_thing>Music Spring</ns1:has_name___nameable_thing>
+	<rdfs:label>music_sprini</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_value___GDP_per_head">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+	<rdfs:label>has_value___GDP_iei_head</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Ulyanovsk">
+	<rdf:type rdf:resource="meh://633496984#town"/>
+	<ns1:has_name___nameable_thing>Ulyanovsk</ns1:has_name___nameable_thing>
+	<rdfs:label>Uliinovsk</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#agricultural">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>agiicultuial</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#iron_ore">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>bppkpfur</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_monetary_unit___eating">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#eating"/>
+	<rdfs:label>his_monetiiy_unit___eiting</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_12">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMTiUTC+1i</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_border">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>hai_borier</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_monetary_unit___GDP_per_head">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>hasimonetaryiunitiiiGDiiperihead</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#culture">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>iuiture</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Prague">
+	<rdf:type rdf:resource="meh://633496984#capital_city"/>
+	<ns1:has_name___nameable_thing>Prague</ns1:has_name___nameable_thing>
+	<rdfs:label>iragie</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#DEFAULT_ROOT_RELATION">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#include_city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#city"/>
+	<rdfs:label>includeiciiy</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#capital_city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#city"/>
+	<rdfs:label>isiqidrn</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#garden">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>iardin</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#land_transfer">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#transfer"/>
+	<rdfs:label>laid_tiaisfei</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cathedral_of_St_Sophia">
+	<rdf:type rdf:resource="meh://633496984#cathedral"/>
+	<ns1:has_name___nameable_thing>Cathedral of St Sophia</ns1:has_name___nameable_thing>
+	<rdfs:label>cathedialiofiStiSophia</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#inhabitant">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#person"/>
+	<rdfs:label>inhibitint</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_railway_to___political_area">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#has_railway_to"/>
+	<rdfs:domain rdf:resource="meh://633496984#political_area"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#attractions_of_city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#locatable_thing"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:label>attractioniioficity</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_backdrop">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#mountain"/>
+	<rdfs:label>hisibickdrop</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#area_unit">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>pgknbmfr</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#time_unit">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>iimi_unii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#nature_area">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#location"/>
+	<rdfs:label>jojfplqj</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#bus">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>eqcsgdlr</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_major_industry">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>his_mijor_iidustry</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_garden">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#town"/>
+	<rdfs:range rdf:resource="meh://633496984#garden"/>
+	<rdfs:label>pjqujcro</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#us_dollar">
+	<rdf:type rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>pghqmebb</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#flow_to">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#river"/>
+	<rdfs:label>iliw_ti</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#taxi">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>tiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lie_in___locatable_thing___infrastructure">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#lie_in___locatable_thing"/>
+	<rdfs:domain rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:range rdf:resource="meh://633496984#city"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#sight">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>siiit</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cheque">
+	<ns1:has_name___nameable_thing>Cheque</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>ktkigkmg</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lie_in___locatable_thing___locatable_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#lie_in___locatable_thing"/>
+	<rdfs:domain rdf:resource="meh://633496984#locatable_thing"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#drink">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>urdktbrn</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Dachas">
+	<rdf:type rdf:resource="meh://633496984#garden"/>
+	<rdfs:label>iaihas</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#January">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>iaiuary</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#February">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>hmuducsf</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cinema">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#art"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>cinemi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_distance">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#jaunt"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+	<rdfs:label>hasidisiance</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#automotive">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>hpfcmbmp</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#woodcarving">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>tlcshgud</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-10">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMT_iTi-10</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#German">
+	<rdf:type rdf:resource="meh://633496984#language"/>
+	<rdfs:label>Germii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#religion">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_fact"/>
+	<rdfs:label>reliiiin</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#gulf">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>iulf</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#July">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>true</ns1:is_dampest>
+	<rdfs:label>fcdpcngu</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#plant">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#living_being"/>
+	<rdfs:label>ncrgessk</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_middle">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#transfer"/>
+	<rdfs:label>rhicbbst</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#credit_card">
+	<ns1:has_name___nameable_thing>Credit Card</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>ntmsrctb</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#infrastructure">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#locatable_thing"/>
+	<rdfs:label>inirastrictire</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#mid_range">
+	<rdf:type rdf:resource="meh://633496984#level"/>
+	<rdfs:label>mii_rangi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#ballet">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#art"/>
+	<rdfs:label>billei</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Hilton">
+	<rdf:type rdf:resource="meh://633496984#hotel"/>
+	<ns1:has_name___nameable_thing>Hotel Hilton</ns1:has_name___nameable_thing>
+	<ns1:lie_in___locatable_thing rdf:resource="meh://633496984#Moscow"/>
+	<rdfs:label>othjmnmc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#November">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>Noveibei</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_railway_to___city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#has_railway_to"/>
+	<rdfs:domain rdf:resource="meh://633496984#city"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#December">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>Deceiier</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_1">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMi_UiC+i</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Sawn_Timber">
+	<rdf:type rdf:resource="meh://633496984#timber"/>
+	<ns1:has_name___nameable_thing>Sawn Timber</ns1:has_name___nameable_thing>
+	<rdfs:label>iawn_iimber</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>citi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#north_pole">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<ns1:has_name___nameable_thing>North Pole</ns1:has_name___nameable_thing>
+	<rdfs:label>noiti_pole</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Hepatltis">
+	<rdf:type rdf:resource="meh://633496984#health_risk"/>
+	<ns1:exist_in rdf:resource="meh://633496984#Russian"/>
+	<ns1:has_name___nameable_thing>Hepatltis</ns1:has_name___nameable_thing>
+	<rdfs:label>Hipatltis</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Chechnya">
+	<rdf:type rdf:resource="meh://633496984#district"/>
+	<rdfs:label>ihechiya</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#DEFAULT_ROOT_CONCEPT">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#steamship">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>steimshii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#hiking">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>hikiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#eating">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#travel_event"/>
+	<rdfs:label>iating</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Ukrainian">
+	<rdf:type rdf:resource="meh://633496984#ethnic"/>
+	<rdfs:label>Ukraiiiai</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Ulan_Ude">
+	<ns1:has_name___nameable_thing>Ulan Ude</ns1:has_name___nameable_thing>
+	<ns1:is_biggest>false</ns1:is_biggest>
+	<rdf:type rdf:resource="meh://633496984#city"/>
+	<rdfs:label>mjuidqdm</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Dagestan">
+	<rdf:type rdf:resource="meh://633496984#district"/>
+	<rdfs:label>lqhjsdlc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Holland">
+	<ns1:has_border rdf:resource="meh://633496984#Germany"/>
+	<ns1:has_capital_city rdf:resource="meh://633496984#Amsterdam"/>
+	<ns1:has_border rdf:resource="meh://633496984#Belgium"/>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>Hillani</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#arcade">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#sight"/>
+	<rdfs:label>ircidi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#location">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>fuedtlqb</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_13">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMi_UiC+13</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#human_being">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#living_being"/>
+	<rdfs:label>mgnriiic</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_method___jaunt">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#jaunt"/>
+	<rdfs:range rdf:resource="meh://633496984#land_transfer"/>
+	<rdfs:label>hasimethodiiijaunt</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#transfer">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>qdfnkenc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_name___nameable_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+	<rdfs:label>rplgilji</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#gender">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>fljsnods</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#level">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>iivii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_major_river">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#river"/>
+	<rdfs:label>has_majoi_iivei</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#fact">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>faci</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#belong_to___person">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#person"/>
+	<rdfs:range rdf:resource="meh://633496984#ethnic"/>
+	<rdfs:label>biling_ti___pirsin</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#ussuri_natur_reserve">
+	<rdf:type rdf:resource="meh://633496984#natur_reserve"/>
+	<rdfs:label>dnsbbmgl</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#river">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#waterway"/>
+	<rdfs:label>rivir</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#growth_rate">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>griwth_rite</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#volt">
+	<rdf:type rdf:resource="meh://633496984#electromagnetic_unit"/>
+	<rdfs:label>tkruitch</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_level___eating">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#eating"/>
+	<rdfs:range rdf:resource="meh://633496984#level"/>
+	<rdfs:label>ias_level___eatini</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#town">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>iiwn</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_rate___inflation">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#inflation"/>
+	<rdfs:label>has_raie___infiaiion</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_destination">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#transfer"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>ias_destination</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Irkutsk">
+	<ns1:is_biggest>false</ns1:is_biggest>
+	<ns1:has_name___nameable_thing>Irkutsk</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#city"/>
+	<rdfs:label>Irkuiik</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#White_Sea">
+	<ns1:has_name___nameable_thing>White Sea</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#waterway"/>
+	<rdfs:label>Wiite_Sei</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Black_Sea">
+	<ns1:has_backdrop rdf:resource="meh://633496984#Caucasus"/>
+	<ns1:has_name___nameable_thing>Black Sea</ns1:has_name___nameable_thing>
+	<ns1:is_close_to rdf:resource="meh://633496984#Odessa"/>
+	<rdf:type rdf:resource="meh://633496984#waterway"/>
+	<rdfs:label>Biack_Sia</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lodging">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#travel_event"/>
+	<rdfs:label>kkghcbqf</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Warsaw">
+	<rdf:type rdf:resource="meh://633496984#capital_city"/>
+	<ns1:has_name___nameable_thing>Warsaw</ns1:has_name___nameable_thing>
+	<rdfs:label>iirsiw</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#church">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#sight"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#building"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>ciuici</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#measurement">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>iiasuriiint</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Germany">
+	<ns1:has_border rdf:resource="meh://633496984#Belgium"/>
+	<ns1:has_border rdf:resource="meh://633496984#Czech"/>
+	<ns1:has_border rdf:resource="meh://633496984#France"/>
+	<ns1:has_border rdf:resource="meh://633496984#Holland"/>
+	<ns1:has_border rdf:resource="meh://633496984#Poland"/>
+	<ns1:has_name___nameable_thing>Deutschland</ns1:has_name___nameable_thing>
+	<ns1:is_MemberOfEU>true</ns1:is_MemberOfEU>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>mlnujsdc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_8">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMT_UTii8</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Animist">
+	<rdf:type rdf:resource="meh://633496984#religion"/>
+	<rdfs:label>Animisi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#travel_event">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>trivei_event</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#require_visa">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+	<rdfs:label>riquiriivisa</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_gender">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#person"/>
+	<rdfs:range rdf:resource="meh://633496984#gender"/>
+	<rdfs:label>hai_iender</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Tatar">
+	<rdf:type rdf:resource="meh://633496984#ethnic"/>
+	<rdfs:label>Tiiir</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_value___GDP">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#GDP"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+	<rdfs:label>his_vilie___GDP</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#metric">
+	<rdf:type rdf:resource="meh://633496984#length_unit"/>
+	<rdfs:label>cblbctbo</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_offer">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>has_oiiir</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#ethnic">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>grlmdmqu</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#plane">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>plini</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#October">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>Octoier</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#document">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>documini</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cathedral">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#sight"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#building"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>cithedril</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#need_equipment">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#adventure"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+	<rdfs:label>frpsbisu</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#is_at">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#festival"/>
+	<rdfs:label>rrflidrf</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-7">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMT_iTC-i</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Kola">
+	<rdf:type rdf:resource="meh://633496984#peninsula"/>
+	<rdfs:label>iola</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#industry">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#locatable_thing"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:label>iidustiy</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#March">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>iaich</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#August">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>true</ns1:is_dampest>
+	<rdfs:label>bqgqmtcr</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Visa">
+	<rdf:type rdf:resource="meh://633496984#written_document"/>
+	<rdfs:label>iisa</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#coal">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>ciil</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#architecture">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#art"/>
+	<rdfs:label>aichiieciuie</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#outer_space">
+	<ns1:has_name___nameable_thing>Out Space</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>ouierispace</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lie_in___locatable_thing___attractions_of_city">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#lie_in___locatable_thing"/>
+	<rdfs:domain rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:range rdf:resource="meh://633496984#city"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_11">
+	<ns1:include_city rdf:resource="meh://633496984#Vladivostok"/>
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMi_UiCi11</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#April">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>ipril</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Film_Festival">
+	<rdf:type rdf:resource="meh://633496984#festival"/>
+	<ns1:is_at rdf:resource="meh://633496984#Moscow"/>
+	<ns1:has_name___nameable_thing>Film Festival</ns1:has_name___nameable_thing>
+	<rdfs:label>Fiim_Festivai</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#kilometer">
+	<rdf:type rdf:resource="meh://633496984#length_unit"/>
+	<rdfs:label>iilimeter</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_3">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>fljsfcof</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#music">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#art"/>
+	<rdfs:label>misic</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#wolf">
+	<ns1:has_name___nameable_thing>wolf</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#living_being"/>
+	<rdfs:label>iolf</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#russian">
+	<rdf:type rdf:resource="meh://633496984#language"/>
+	<rdfs:label>njkojopd</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Russian">
+	<rdf:type rdf:resource="meh://633496984#ethnic"/>
+	<rdfs:label>lcdhnmcc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Lake_Baikal">
+	<rdf:type rdf:resource="meh://633496984#lake"/>
+	<ns1:has_name___nameable_thing>Baikal</ns1:has_name___nameable_thing>
+	<rdfs:label>LakeiBaikai</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Belgium">
+	<ns1:has_border rdf:resource="meh://633496984#Germany"/>
+	<ns1:is_MemberOfEU>true</ns1:is_MemberOfEU>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>Bilgium</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Paris">
+	<rdf:type rdf:resource="meh://633496984#capital_city"/>
+	<ns1:has_name___nameable_thing>Paris</ns1:has_name___nameable_thing>
+	<rdfs:label>ijdqgoip</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-3">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>Gii_UiC-3</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#boeing_747">
+	<rdf:type rdf:resource="meh://633496984#plane"/>
+	<ns1:has_name___nameable_thing>Boeing 747</ns1:has_name___nameable_thing>
+	<rdfs:label>boeini_7i7</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Hungary">
+	<ns1:is_MemberOfEU>true</ns1:is_MemberOfEU>
+	<ns1:has_capital_city rdf:resource="meh://633496984#Budapest"/>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>Hingary</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-6">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>iMT_UTi-6</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#district">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>disiiici</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_rivertransport_to">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>has_riveriransiori_io</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#shouldnot_travel_to">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>shoildnot_travil_to</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#living_being">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:label>liviig_ieiig</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Caucasus">
+	<rdf:type rdf:resource="meh://633496984#mountain"/>
+	<ns1:is_close_to rdf:resource="meh://633496984#Black_Sea"/>
+	<rdfs:label>Caucaiui</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_rate___growth">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#population"/>
+	<rdfs:label>urhgbhmb</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#exist_in">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>eiisi_in</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#square_meter">
+	<rdf:type rdf:resource="meh://633496984#area_unit"/>
+	<rdfs:label>iquareimeter</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#France">
+	<ns1:has_border rdf:resource="meh://633496984#Germany"/>
+	<ns1:has_capital_city rdf:resource="meh://633496984#Paris"/>
+	<ns1:is_MemberOfEU>true</ns1:is_MemberOfEU>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>Fiaice</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#inflation">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#fact"/>
+	<rdfs:label>iiflatiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#adventure">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#culture"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#travel_event"/>
+	<rdfs:label>lrkkuqdk</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#building">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>building</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#September">
+	<rdf:type rdf:resource="meh://633496984#month"/>
+	<ns1:is_dampest>false</ns1:is_dampest>
+	<rdfs:label>Siitimbir</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Antarctica">
+	<rdf:type rdf:resource="meh://633496984#continent"/>
+	<rdfs:label>jkhqkhfd</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#political_fact">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#fact"/>
+	<rdfs:label>ctikhrsq</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Diphtheria">
+	<rdf:type rdf:resource="meh://633496984#health_risk"/>
+	<ns1:has_name___nameable_thing>Diphtheria</ns1:has_name___nameable_thing>
+	<ns1:exist_in rdf:resource="meh://633496984#Russian"/>
+	<rdfs:label>Dipitieria</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#timber">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>rmqnrdui</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_monetary_unit___lodging">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#lodging"/>
+	<rdfs:label>ldnqrsft</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#person">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#human_being"/>
+	<rdfs:label>pirion</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#language">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_fact"/>
+	<rdfs:label>langiagi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#flight">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#transfer"/>
+	<rdfs:label>fliihi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#literature">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#art"/>
+	<rdfs:label>liiiraiuri</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#mushroom">
+	<rdf:type rdf:resource="meh://633496984#plant"/>
+	<ns1:has_name___nameable_thing>mushroom</ns1:has_name___nameable_thing>
+	<rdfs:label>muihriim</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Caspian_Sea">
+	<ns1:has_name___nameable_thing>Caspian</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#waterway"/>
+	<rdfs:label>CaspianiSea</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#peninsula">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>peiiisula</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#tiger">
+	<ns1:has_name___nameable_thing>tiger</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#living_being"/>
+	<rdfs:label>tigii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-1">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>phrrnqtn</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#is_biggest">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#city"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+	<rdfs:label>is_biiiest</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#is_from">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#transfer"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>qemtolqc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#hertz">
+	<rdf:type rdf:resource="meh://633496984#electromagnetic_unit"/>
+	<rdfs:label>hirti</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#pay_bills">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#travel_event"/>
+	<rdfs:label>iay_iills</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cash">
+	<ns1:has_name___nameable_thing>Cash</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#physical_thing"/>
+	<rdfs:label>bsjiephs</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#construction_equipment">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>constiuction_iquipmint</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_time_unit">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#jaunt"/>
+	<rdfs:range rdf:resource="meh://633496984#time_unit"/>
+	<rdfs:label>has_time_uiit</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Typhoid">
+	<rdf:type rdf:resource="meh://633496984#health_risk"/>
+	<ns1:exist_in rdf:resource="meh://633496984#Russian"/>
+	<ns1:has_name___nameable_thing>Typhoid</ns1:has_name___nameable_thing>
+	<rdfs:label>Typhiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#river_transfer">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#transfer"/>
+	<rdfs:label>river_iransfer</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_length_unit___river">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#has_length_unit"/>
+	<rdfs:domain rdf:resource="meh://633496984#river"/>
+	<rdfs:range rdf:resource="meh://633496984#length_unit"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#jaunt">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>iaint</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#art">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#immaterial_thing"/>
+	<rdfs:label>rfgemgli</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#boat">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>boii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#trekking">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>mpsdlptk</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Rabies">
+	<rdf:type rdf:resource="meh://633496984#health_risk"/>
+	<ns1:exist_in rdf:resource="meh://633496984#Russian"/>
+	<ns1:has_name___nameable_thing>Rabies</ns1:has_name___nameable_thing>
+	<rdfs:label>Raiies</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#kayaking">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>iiyiiing</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#musical_composition">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#music"/>
+	<rdfs:label>musical_cimpisitiin</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_method___pay_bills">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#pay_bills"/>
+	<rdfs:label>has_method___pai_iills</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#theatre">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#attractions_of_city"/>
+	<rdfs:label>iieaire</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#bear">
+	<ns1:has_name___nameable_thing>bear</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#living_being"/>
+	<rdfs:label>beii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Russia">
+	<ns1:has_president rdf:resource="meh://633496984#Vladimir_Vladimirovich_Putin"/>
+	<ns1:is_MemberOfEU>false</ns1:is_MemberOfEU>
+	<ns1:has_capital_city rdf:resource="meh://633496984#Moscow"/>
+	<ns1:has_major_industry rdf:resource="meh://633496984#Sawn_Timber"/>
+	<ns1:has_major_river rdf:resource="meh://633496984#Dnepr"/>
+	<ns1:has_name___nameable_thing>Russia</ns1:has_name___nameable_thing>
+	<ns1:has_potitical_fact rdf:resource="meh://633496984#Islam"/>
+	<ns1:has_potitical_fact rdf:resource="meh://633496984#Federation"/>
+	<ns1:has_potitical_fact rdf:resource="meh://633496984#Animist"/>
+	<ns1:has_potitical_fact rdf:resource="meh://633496984#russian"/>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>rrtrsfof</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#health_risk">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#risk"/>
+	<rdfs:label>healthirisi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lake">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#waterway"/>
+	<rdfs:label>laii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GDP">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#fact"/>
+	<rdfs:label>iDi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Islam">
+	<rdf:type rdf:resource="meh://633496984#religion"/>
+	<rdfs:label>isiam</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Pacific">
+	<ns1:has_name___nameable_thing>Pacific</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#waterway"/>
+	<rdfs:label>Paiifii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#president">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#inhabitant"/>
+	<rdfs:label>presideii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#rouble">
+	<rdf:type rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>iiuble</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#day">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#time_unit"/>
+	<rdfs:label>iiy</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Africa">
+	<rdf:type rdf:resource="meh://633496984#continent"/>
+	<rdfs:label>Aiiica</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-4">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMTiiTC-4</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lie_in___locatable_thing___industry">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#lie_in___locatable_thing"/>
+	<rdfs:domain rdf:resource="meh://633496984#industry"/>
+	<rdfs:range rdf:resource="meh://633496984#political_area"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#battleship">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>iattleshii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_level___lodging">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#lodging"/>
+	<rdfs:range rdf:resource="meh://633496984#level"/>
+	<rdfs:label>ighduiiq</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cost_money___lodging">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#lodging"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+	<rdfs:label>cosi_money___iodging</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#written_document">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#document"/>
+	<rdfs:label>wiiiien_documeni</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#material_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nameable_thing"/>
+	<rdfs:label>miteriilithing</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#nameable_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#DEFAULT_ROOT_CONCEPT"/>
+	<rdfs:label>nameaile_thing</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#physical_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#material_thing"/>
+	<rdfs:label>physicai_thing</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#square">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#sight"/>
+	<rdfs:label>sqiari</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Vladivostok">
+	<ns1:is_biggest>false</ns1:is_biggest>
+	<ns1:has_name___nameable_thing>Vladivostok</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#city"/>
+	<rdfs:label>Vladiviitik</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Odessa">
+	<ns1:has_name___nameable_thing>Odessa</ns1:has_name___nameable_thing>
+	<ns1:is_biggest>false</ns1:is_biggest>
+	<rdf:type rdf:resource="meh://633496984#city"/>
+	<rdfs:label>Odeiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Moscow">
+	<rdf:type rdf:resource="meh://633496984#capital_city"/>
+	<ns1:is_biggest>false</ns1:is_biggest>
+	<ns1:has_infrastructure rdf:resource="meh://633496984#Hilton"/>
+	<ns1:has_infrastructure rdf:resource="meh://633496984#Trans-Siberian"/>
+	<ns1:has_name___nameable_thing>Moscow</ns1:has_name___nameable_thing>
+	<rdfs:label>iisciw</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#mountaineering">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>mountainiiring</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#palace">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#sight"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#building"/>
+	<rdfs:label>fpmbpsol</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#island">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>isiani</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Poland">
+	<ns1:has_border rdf:resource="meh://633496984#Germany"/>
+	<ns1:has_border rdf:resource="meh://633496984#Poland"/>
+	<ns1:is_MemberOfEU>true</ns1:is_MemberOfEU>
+	<ns1:has_capital_city rdf:resource="meh://633496984#Warsaw"/>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>Polaii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#vodka">
+	<rdf:type rdf:resource="meh://633496984#alcohol"/>
+	<ns1:has_name___nameable_thing>Vodka</ns1:has_name___nameable_thing>
+	<rdfs:label>jdhmniju</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#hotel">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#accomodation"/>
+	<rdfs:label>mccmhelr</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#continent">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>coiiiieii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-5">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>iMT_UTi-5</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#cruiser">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#infrastructure"/>
+	<rdfs:label>ciuisii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Ural">
+	<rdf:type rdf:resource="meh://633496984#mountain"/>
+	<rdfs:label>Urai</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#natur_reserve">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>ruombtlj</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_duration">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#jaunt"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#integer"/>
+	<rdfs:label>hai_iuration</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#accomodation">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#building"/>
+	<rdfs:label>iccimiditiin</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC-2">
+	<ns1:include_city rdf:resource="meh://633496984#Amsterdam"/>
+	<ns1:include_city rdf:resource="meh://633496984#Budapest"/>
+	<ns1:include_city rdf:resource="meh://633496984#Paris"/>
+	<ns1:include_city rdf:resource="meh://633496984#Prague"/>
+	<ns1:include_city rdf:resource="meh://633496984#Warsaw"/>
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>qkfdutrb</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Czech">
+	<ns1:has_border rdf:resource="meh://633496984#Germany"/>
+	<ns1:has_border rdf:resource="meh://633496984#Czech"/>
+	<ns1:is_MemberOfEU>true</ns1:is_MemberOfEU>
+	<ns1:has_capital_city rdf:resource="meh://633496984#Prague"/>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>Ciich</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_danger">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>has_daiier</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Federation">
+	<rdf:type rdf:resource="meh://633496984#political_fact"/>
+	<rdfs:label>kjsibnst</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#population">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#political_fact"/>
+	<rdfs:label>ioiulaiion</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#alcohol">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#drink"/>
+	<rdfs:label>shjrhgnc</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#is_close_to">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>ii_cloie_io</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Red_Square">
+	<rdf:type rdf:resource="meh://633496984#square"/>
+	<ns1:has_name___nameable_thing>Red Square</ns1:has_name___nameable_thing>
+	<ns1:lie_in___locatable_thing rdf:resource="meh://633496984#Moscow"/>
+	<rdfs:label>iugjtiks</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#oil">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#industry"/>
+	<rdfs:label>iii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#festival">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#culture"/>
+	<rdfs:label>festivii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_7">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>GMTiUTC+7</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#U.S.A.">
+	<ns1:has_name___nameable_thing>United States of America</ns1:has_name___nameable_thing>
+	<ns1:is_MemberOfEU>false</ns1:is_MemberOfEU>
+	<rdf:type rdf:resource="meh://633496984#political_area"/>
+	<rdfs:label>UiSiAi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#railway">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#land_transfer"/>
+	<rdfs:label>raiiwai</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Dnepr">
+	<rdf:type rdf:resource="meh://633496984#river"/>
+	<ns1:flow_to rdf:resource="meh://633496984#Black_Sea"/>
+	<ns1:flow_to rdf:resource="meh://633496984#Caspian_Sea"/>
+	<ns1:has_name___nameable_thing>Dnepr</ns1:has_name___nameable_thing>
+	<rdfs:label>Dneii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_length_unit___jaunt">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#has_length_unit"/>
+	<rdfs:domain rdf:resource="meh://633496984#jaunt"/>
+	<rdfs:range rdf:resource="meh://633496984#length_unit"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Asia">
+	<rdf:type rdf:resource="meh://633496984#continent"/>
+	<rdfs:label>Aiii</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#maritime_reserve">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#nature_area"/>
+	<rdfs:label>maiitimi_iisiivi</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#lie_in___locatable_thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:label>idcbjkil</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#birch">
+	<rdf:type rdf:resource="meh://633496984#plant"/>
+	<ns1:has_name___nameable_thing>birch</ns1:has_name___nameable_thing>
+	<rdfs:label>iirci</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#deer">
+	<ns1:has_name___nameable_thing>deer</ns1:has_name___nameable_thing>
+	<rdf:type rdf:resource="meh://633496984#living_being"/>
+	<rdfs:label>diir</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#hilltop_view">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#sight"/>
+	<rdfs:label>gstbjeln</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#electromagnetic_unit">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#measurement"/>
+	<rdfs:label>eieitromagnetii_unit</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#is_dampest">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#DatatypeProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_DATATYPE_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#month"/>
+	<rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#boolean"/>
+	<rdfs:label>is_daipist</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#GMT_UTC_2">
+	<rdf:type rdf:resource="meh://633496984#location"/>
+	<rdfs:label>iiT_UTC+2</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Amsterdam">
+	<rdf:type rdf:resource="meh://633496984#capital_city"/>
+	<ns1:has_name___nameable_thing>Amsterdam</ns1:has_name___nameable_thing>
+	<rdfs:label>Amsiirdam</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#skiing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>ikiing</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#top_end">
+	<rdf:type rdf:resource="meh://633496984#level"/>
+	<rdfs:label>iop_eni</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#embroidery">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+	<rdfs:subClassOf rdf:resource="meh://633496984#adventure"/>
+	<rdfs:label>orfgosgo</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#has_monetary_unit___GDP">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<rdfs:subPropertyOf rdf:resource="meh://633496984#DEFAULT_ROOT_RELATION"/>
+	<rdfs:domain rdf:resource="meh://633496984#GDP"/>
+	<rdfs:label>his_monetiry_unit___GDP</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#female">
+	<rdf:type rdf:resource="meh://633496984#gender"/>
+	<rdfs:label>ieiale</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Vladimir_Vladimirovich_Putin">
+	<rdf:type rdf:resource="meh://633496984#president"/>
+	<ns1:belong_to___person rdf:resource="meh://633496984#Russian"/>
+	<ns1:has_name___nameable_thing>Vladimir Vlaimirovich Putin</ns1:has_name___nameable_thing>
+	<rdfs:label>Vladimir_Vladimirovici_Putin</rdfs:label>
+</rdf:Description>
+
+<rdf:Description rdf:about="meh://633496984#Christmas">
+	<rdf:type rdf:resource="meh://633496984#festival"/>
+	<ns1:has_name___nameable_thing>Christmas</ns1:has_name___nameable_thing>
+	<rdfs:label>ndqtbqnm</rdfs:label>
+</rdf:Description>
+
+</rdf:RDF>
