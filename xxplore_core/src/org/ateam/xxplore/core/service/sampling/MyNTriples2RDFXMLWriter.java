@@ -28,8 +28,8 @@ public class MyNTriples2RDFXMLWriter {
 
 	private int tripleCount = 0;
 	
-	private static String sourceDir = "D:\\BTC\\swetodblp_april_2008-mod.nt";
-	private static String targetDir = "D:\\BTC\\asdfasdfasdf\\asdfasdf\\target.rdf";
+	private static String sourceDir = "D:/BTC/swetodblp_april_2008-mod.nt";
+	private static String targetDir = "res/BTC/target.rdf";
 	private static int maxTripleCount = 10000;
 	
 	public MyNTriples2RDFXMLWriter(String sourceDir, String targetDir) {
