@@ -20,11 +20,15 @@ public interface IPropertyDao extends IEntityDao<IProperty>{
 	
 	public Set<Pair> findPropertiesAndRangesFrom(INamedConcept concept) throws DatasourceException;
 	
+	public String findLabel(IProperty property) throws DatasourceException;
+	
 	/***** find by individual **********************************************************/
 	public Set<IProperty> findProperties(INamedIndividual individual) throws DatasourceException;
 	
 	public Set<IProperty> findPropertiesFrom(INamedIndividual individual) throws DatasourceException;
 	
-	public Set<IProperty> findPropertiesTo(INamedIndividual individual) throws DatasourceException;	
+	public Set<IProperty> findPropertiesTo(INamedIndividual individual) throws DatasourceException;
+
+		
 
 }

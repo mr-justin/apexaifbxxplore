@@ -2,6 +2,8 @@ package org.xmedia.oms.persistence.dao;
 
 import java.util.Set;
 
+import org.openrdf.repository.RepositoryException;
+import org.xmedia.businessobject.IBusinessObject;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -26,6 +28,8 @@ public interface IConceptDao extends IEntityDao<INamedConcept> {
 	
 	public Set<IConcept> findSuperconcepts(INamedConcept concept, boolean includeInferred) throws DatasourceException;
 	
+	public String findLabel(INamedConcept concept) throws DatasourceException;
+	
 	/***** find by property  *********************************************************/	
 	public Set<INamedConcept> findDomains(IProperty property) throws DatasourceException;
 	
@@ -35,6 +39,5 @@ public interface IConceptDao extends IEntityDao<INamedConcept> {
 	/***** find by individual **********************************************************/
 	
 	public Set<IConcept> findTypes(IIndividual individual) throws DatasourceException;
-	
 
 }

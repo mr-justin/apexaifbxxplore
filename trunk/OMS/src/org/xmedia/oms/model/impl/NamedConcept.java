@@ -1,6 +1,5 @@
 package org.xmedia.oms.model.impl;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,26 +11,27 @@ import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IProperty;
+import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
+import org.xmedia.oms.persistence.dao.DaoUnavailableException;
 import org.xmedia.oms.persistence.dao.IConceptDao;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
 
-public class NamedConcept extends Concept implements INamedConcept{
+public class NamedConcept extends Concept implements INamedConcept {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 
-
 	/** The URI of the entity. */
 	private String m_uri;
-	
+
 	private int numberOfIndividual = -1;
 
-	private Set<IIndividual> m_memberIndidviduals; 
+	private Set<IIndividual> m_memberIndidviduals;
 
 	private Set<IConcept> m_subconcepts;
 
@@ -47,16 +47,18 @@ public class NamedConcept extends Concept implements INamedConcept{
 
 	private Set<Pair> m_propRanges;
 
-	public static NamedConcept TOP = new NamedConcept("http://www.w3.org/2002/07/owl#Thing");
+	public static NamedConcept TOP = new NamedConcept(
+			"http://www.w3.org/2002/07/owl#Thing");
 
-	public static NamedConcept BOTTOM = new NamedConcept("http://www.w3.org/2002/07/owl#Nothing");
+	public static NamedConcept BOTTOM = new NamedConcept(
+			"http://www.w3.org/2002/07/owl#Nothing");
 
 	public NamedConcept(String uri) {
 		m_uri = uri;
 		setOid(UniqueIdGenerator.getInstance().getNewId(getUri()));
 	}
 
-	public NamedConcept(String uri, IOntology onto){
+	public NamedConcept(String uri, IOntology onto) {
 		super(onto);
 		m_uri = uri;
 		setOid(UniqueIdGenerator.getInstance().getNewId(getUri()));
@@ -66,16 +68,31 @@ public class NamedConcept extends Concept implements INamedConcept{
 		return m_uri;
 	}
 
-	public String getLabel(){
+	public String getLabel() {
 
-		return m_uri.substring(SessionFactory.getInstance().getCurrentSession().getConnection().getNamespaces().guessNamespaceEnd(m_uri)+1);
-		//return SessionFactory.getInstance().getCurrentSession().getConnection().getNamespaces().abbreviateAsNamespace(m_uri);
+		try {
+			return PersistenceUtil.getDaoManager().getConceptDao().findLabel(
+					this);
+		} catch (DatasourceException e) {
+			e.printStackTrace();
+		} catch (DaoUnavailableException e) {
+			e.printStackTrace();
+		} finally {
+			//if no label is available, generate one from the uri
+			return m_uri.substring(SessionFactory.getInstance()
+					.getCurrentSession().getConnection().getNamespaces()
+					.guessNamespaceEnd(m_uri) + 1);
+			// return
+			// SessionFactory.getInstance().getCurrentSession().getConnection
+			// ().getNamespaces().abbreviateAsNamespace(m_uri);
+		}
 	}
 
 	@Override
 	public boolean equals(Object res) {
-		if (res instanceof NamedConcept){
-			if(((NamedConcept)res).getUri().equals(getUri())) return true;
+		if (res instanceof NamedConcept) {
+			if (((NamedConcept) res).getUri().equals(getUri()))
+				return true;
 		}
 
 		return super.equals(res);
@@ -90,23 +107,25 @@ public class NamedConcept extends Concept implements INamedConcept{
 		}
 	}
 
-	public Set<IIndividual> getMemberIndividuals(){			
+	public Set<IIndividual> getMemberIndividuals() {
 
-		if (m_memberIndidviduals == null){
+		if (m_memberIndidviduals == null) {
 
-			IIndividualDao dao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
+			IIndividualDao dao = (IIndividualDao) PersistenceUtil
+					.getDaoManager().getAvailableDao(IIndividualDao.class);
 			m_memberIndidviduals = dao.findMemberIndividuals(this);
 
 		}
 
 		return m_memberIndidviduals;
 	}
-	
-	public int getNumberOfIndividuals(){			
 
-		if (numberOfIndividual ==  -1){
+	public int getNumberOfIndividuals() {
 
-			IIndividualDao dao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
+		if (numberOfIndividual == -1) {
+
+			IIndividualDao dao = (IIndividualDao) PersistenceUtil
+					.getDaoManager().getAvailableDao(IIndividualDao.class);
 			numberOfIndividual = dao.getNumberOfIndividual(this);
 
 		}
@@ -114,12 +133,14 @@ public class NamedConcept extends Concept implements INamedConcept{
 		return numberOfIndividual;
 	}
 
-	public Set<IIndividual> getMemberIndividuals(boolean includeInferred){			
+	public Set<IIndividual> getMemberIndividuals(boolean includeInferred) {
 
-		if (m_memberIndidviduals == null){
+		if (m_memberIndidviduals == null) {
 
-			IIndividualDao dao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
-			m_memberIndidviduals = dao.findMemberIndividuals(this, includeInferred);
+			IIndividualDao dao = (IIndividualDao) PersistenceUtil
+					.getDaoManager().getAvailableDao(IIndividualDao.class);
+			m_memberIndidviduals = dao.findMemberIndividuals(this,
+					includeInferred);
 
 		}
 
@@ -127,9 +148,10 @@ public class NamedConcept extends Concept implements INamedConcept{
 	}
 
 	public Set<IConcept> getDisjointConcepts() {
-		if (m_disjconcepts == null){
+		if (m_disjconcepts == null) {
 
-			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IConceptDao.class);
 			m_disjconcepts = dao.findDisjointConcepts(this);
 
 		}
@@ -138,9 +160,10 @@ public class NamedConcept extends Concept implements INamedConcept{
 	}
 
 	public Set<IConcept> getEquivalentConcepts() {
-		if (m_equiconcepts == null){
+		if (m_equiconcepts == null) {
 
-			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IConceptDao.class);
 			m_equiconcepts = dao.findEquivalentConcepts(this);
 
 		}
@@ -149,9 +172,10 @@ public class NamedConcept extends Concept implements INamedConcept{
 	}
 
 	public Set<IConcept> getSubconcepts() {
-		if (m_subconcepts == null){
+		if (m_subconcepts == null) {
 
-			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IConceptDao.class);
 			m_subconcepts = dao.findSubconcepts(this);
 
 		}
@@ -161,9 +185,10 @@ public class NamedConcept extends Concept implements INamedConcept{
 	}
 
 	public Set<IConcept> getSuperconcepts() {
-		if (m_superconcepts == null){
+		if (m_superconcepts == null) {
 
-			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+			IConceptDao dao = (IConceptDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IConceptDao.class);
 			m_superconcepts = dao.findSuperconcepts(this);
 
 		}
@@ -172,10 +197,11 @@ public class NamedConcept extends Concept implements INamedConcept{
 	}
 
 	public Set<IProperty> getPropertiesFrom() {
-		if (m_propertiesFrom == null){
+		if (m_propertiesFrom == null) {
 
-			IPropertyDao dao = (IPropertyDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyDao.class);
-			m_propertiesFrom  = dao.findPropertiesFrom(this);
+			IPropertyDao dao = (IPropertyDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IPropertyDao.class);
+			m_propertiesFrom = dao.findPropertiesFrom(this);
 
 		}
 
@@ -183,17 +209,19 @@ public class NamedConcept extends Concept implements INamedConcept{
 	}
 
 	public Set<Pair> getPropertiesAndRangesFrom() {
-		if (m_propRanges == null){
-			IPropertyDao dao = (IPropertyDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyDao.class);
+		if (m_propRanges == null) {
+			IPropertyDao dao = (IPropertyDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IPropertyDao.class);
 			m_propRanges = dao.findPropertiesAndRangesFrom(this);
 		}
 		return m_propRanges;
 	}
 
 	public Set<IProperty> getPropertiesTo() {
-		if (m_propertiesTo == null){
+		if (m_propertiesTo == null) {
 
-			IPropertyDao dao = (IPropertyDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyDao.class);
+			IPropertyDao dao = (IPropertyDao) PersistenceUtil.getDaoManager()
+					.getAvailableDao(IPropertyDao.class);
 			m_propertiesTo = dao.findPropertiesTo(this);
 
 		}
@@ -203,11 +231,15 @@ public class NamedConcept extends Concept implements INamedConcept{
 
 	public Set<IProperty> getProperties() {
 		Set<IProperty> props = new HashSet<IProperty>();
-		if (m_propertiesFrom == null) getPropertiesFrom();
-		if (m_propertiesFrom != null) props.addAll(m_propertiesFrom);
-		
-		if (m_propertiesTo == null) getPropertiesTo(); 
-		if(m_propertiesTo != null) props.addAll(m_propertiesTo);
+		if (m_propertiesFrom == null)
+			getPropertiesFrom();
+		if (m_propertiesFrom != null)
+			props.addAll(m_propertiesFrom);
+
+		if (m_propertiesTo == null)
+			getPropertiesTo();
+		if (m_propertiesTo != null)
+			props.addAll(m_propertiesTo);
 		return props;
 	}
 

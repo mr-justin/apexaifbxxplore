@@ -37,14 +37,14 @@ import org.xmedia.accessknow.sesame.persistence.converter.Ses2AK;
 
 /**
  * @author an2548
- *
+ * 
  */
 public class PropertyDao extends AbstractDao implements IPropertyDao {
 
 	private SesameSession m_session;
 
 	public PropertyDao(SesameSession session) {
-		this.m_session = session; 
+		this.m_session = session;
 	}
 
 	/**
@@ -52,233 +52,260 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 	 */
 	@Deprecated
 	public Set<IProperty> findProperties(INamedConcept concept)
-	throws DatasourceException {
+			throws DatasourceException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	public Set<IProperty> findProperties(INamedIndividual individual)
-	throws DatasourceException {
+			throws DatasourceException {
 		Set<IProperty> results = new HashSet<IProperty>();
 		try {
 			results.addAll(findPropertiesFrom(individual));
 			results.addAll(findPropertiesTo(individual));
 			return results;
-		} catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all properties of an individual with a uri "+individual.getUri(), e);
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all properties of an individual with a uri "
+							+ individual.getUri(), e);
 		}
 	}
 
-
-	public Set<Pair> findPropertiesAndRangesFrom(INamedConcept concept)throws DatasourceException {
+	public Set<Pair> findPropertiesAndRangesFrom(INamedConcept concept)
+			throws DatasourceException {
 
 		Set<Pair> props = new HashSet<Pair>();
 
 		try {
 
 			RepositoryConnection con = m_session.getRepositoryConnection();
-			SesameOntology onto = ((SesameOntology)m_session.getOntology());
+			SesameOntology onto = ((SesameOntology) m_session.getOntology());
 			ValueFactory factory = onto.getRepository().getValueFactory();
 
-			try{
+			try {
 
-				List<Statement> properties = con.getStatements(null, RDFS.DOMAIN, AK2Ses.getResource(concept, factory), m_session.isReasoningOn()).asList();
+				List<Statement> properties = con.getStatements(null,
+						RDFS.DOMAIN, AK2Ses.getResource(concept, factory),
+						m_session.isReasoningOn()).asList();
 
-				//find properties from superconcepts
+				// find properties from superconcepts
 				IDaoManager daoManager = m_session.getDaoManager();
 				IConceptDao conceptDao = daoManager.getConceptDao();
 
-				Set<IConcept> super_concepts = conceptDao.findSuperconcepts(concept);
+				Set<IConcept> super_concepts = conceptDao
+						.findSuperconcepts(concept);
 				Iterator<IConcept> iter = super_concepts.iterator();
 
-				while(iter.hasNext()){
+				while (iter.hasNext()) {
 
 					IConcept super_concept = iter.next();
-					properties.addAll(con.getStatements(null, RDFS.DOMAIN, AK2Ses.getResource(super_concept, factory), m_session.isReasoningOn()).asList());
+					properties.addAll(con.getStatements(null, RDFS.DOMAIN,
+							AK2Ses.getResource(super_concept, factory),
+							m_session.isReasoningOn()).asList());
 
 				}
 
-				for(Statement stmt : properties){
+				for (Statement stmt : properties) {
 
 					Resource subject = stmt.getSubject();
 
-					if(subject instanceof URI){
+					if (subject instanceof URI) {
 
-						RepositoryResult<Statement> property_range = con.getStatements(subject, RDFS.RANGE, null, m_session.isReasoningOn());
+						RepositoryResult<Statement> property_range = con
+								.getStatements(subject, RDFS.RANGE, null,
+										m_session.isReasoningOn());
 
-//						property range has been specified
-						if(property_range.hasNext()){
+						// property range has been specified
+						if (property_range.hasNext()) {
 
-							Statement property_range_stmt = property_range.next();
+							Statement property_range_stmt = property_range
+									.next();
 							Value range = property_range_stmt.getObject();
 
-							if(Ses2AK.isObjectProperty((URI)subject, range)) {
+							if (Ses2AK.isObjectProperty((URI) subject, range)) {
 
-								if(range instanceof URI){
-									
-									INamedConcept namedConcept = Ses2AK.getNamedConcept((URI)range, onto);
-									IObjectProperty objectProperty = Ses2AK.getObjectProperty((URI)subject, m_session.getOntology());
+								if (range instanceof URI) {
 
-									props.add(new Pair(objectProperty,namedConcept));
+									INamedConcept namedConcept = Ses2AK
+											.getNamedConcept((URI) range, onto);
+									IObjectProperty objectProperty = Ses2AK
+											.getObjectProperty((URI) subject,
+													m_session.getOntology());
+
+									props.add(new Pair(objectProperty,
+											namedConcept));
 								}
-							}
-							else{
+							} else {
 
-								if(range instanceof org.openrdf.model.Literal){
-									
-									IDatatype datatype = Ses2AK.getDatatype(((org.openrdf.model.Literal)range).getDatatype(), onto);
-									IDataProperty dataProperty = Ses2AK.getDataProperty((URI)subject, m_session.getOntology());
+								if (range instanceof org.openrdf.model.Literal) {
 
-									props.add(new Pair(dataProperty,datatype));
-								}
-								else if(range instanceof URI){
-									
-									IDatatype datatype = Ses2AK.getDatatype((URI)range, onto);
-									IDataProperty dataProperty = Ses2AK.getDataProperty((URI)subject, m_session.getOntology());
+									IDatatype datatype = Ses2AK.getDatatype(
+											((org.openrdf.model.Literal) range)
+													.getDatatype(), onto);
+									IDataProperty dataProperty = Ses2AK
+											.getDataProperty((URI) subject,
+													m_session.getOntology());
 
-									props.add(new Pair(dataProperty,datatype));
+									props.add(new Pair(dataProperty, datatype));
+								} else if (range instanceof URI) {
+
+									IDatatype datatype = Ses2AK.getDatatype(
+											(URI) range, onto);
+									IDataProperty dataProperty = Ses2AK
+											.getDataProperty((URI) subject,
+													m_session.getOntology());
+
+									props.add(new Pair(dataProperty, datatype));
 								}
 							}
 						}
 					}
 				}
-			}
-			catch(Exception s){
+			} catch (Exception s) {
 				s.printStackTrace();
-			}
-			finally{
+			} finally {
 				con.close();
 			}
-		} 
-		catch (RepositoryException e){
+		} catch (RepositoryException e) {
 			e.printStackTrace();
-		}	
+		}
 
 		return props;
 	}
 
+	public Set<IProperty> findPropertiesFrom(INamedConcept concept)
+			throws DatasourceException {
 
-	public Set<IProperty> findPropertiesFrom(INamedConcept concept) throws DatasourceException {
-
-		Set<IProperty> result = new HashSet<IProperty>(); 
+		Set<IProperty> result = new HashSet<IProperty>();
 
 		try {
 
 			RepositoryConnection con = m_session.getRepositoryConnection();
-			ValueFactory factory = ((SesameOntology)m_session.getOntology()).getRepository().getValueFactory();
-			
-			List<Statement> properties = con.getStatements(null, 
-					RDFS.DOMAIN, 
-					AK2Ses.getResource(concept, m_session.getValueFactory()), 
+			ValueFactory factory = ((SesameOntology) m_session.getOntology())
+					.getRepository().getValueFactory();
+
+			List<Statement> properties = con.getStatements(null, RDFS.DOMAIN,
+					AK2Ses.getResource(concept, m_session.getValueFactory()),
 					m_session.isReasoningOn()).asList();
 
 			IDaoManager daoManager = m_session.getDaoManager();
 			IConceptDao conceptDao = daoManager.getConceptDao();
 
-//			also add properties from superConcepts ...
-			Set<IConcept> super_concepts = conceptDao.findSuperconcepts(concept);
+			// also add properties from superConcepts ...
+			Set<IConcept> super_concepts = conceptDao
+					.findSuperconcepts(concept);
 			Iterator<IConcept> iter = super_concepts.iterator();
 
-			while(iter.hasNext()){
+			while (iter.hasNext()) {
 
 				IConcept super_concept = iter.next();
-				properties.addAll(con.getStatements(null, RDFS.DOMAIN, AK2Ses.getResource(super_concept, factory), m_session.isReasoningOn()).asList());
+				properties.addAll(con.getStatements(null, RDFS.DOMAIN,
+						AK2Ses.getResource(super_concept, factory),
+						m_session.isReasoningOn()).asList());
 
 			}
-			
-			for(Statement stmt : properties){
+
+			for (Statement stmt : properties) {
 
 				Resource subject = stmt.getSubject();
-				
-				if(subject instanceof URI){
-					
-					RepositoryResult<Statement> property_range = con.getStatements(subject, RDFS.RANGE, null, m_session.isReasoningOn());
-					
-					if(property_range.hasNext()){
+
+				if (subject instanceof URI) {
+
+					RepositoryResult<Statement> property_range = con
+							.getStatements(subject, RDFS.RANGE, null, m_session
+									.isReasoningOn());
+
+					if (property_range.hasNext()) {
 
 						Statement property_range_stmt = property_range.next();
 						Value range = property_range_stmt.getObject();
 
-						if(Ses2AK.isObjectProperty((URI)subject, range)){
-							result.add(Ses2AK.getObjectProperty((URI)subject, m_session.getOntology()));
-						}
-						else{						
-							result.add(Ses2AK.getDataProperty((URI)subject, m_session.getOntology()));
+						if (Ses2AK.isObjectProperty((URI) subject, range)) {
+							result.add(Ses2AK.getObjectProperty((URI) subject,
+									m_session.getOntology()));
+						} else {
+							result.add(Ses2AK.getDataProperty((URI) subject,
+									m_session.getOntology()));
 						}
 					}
 				}
 			}
-		} 
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return result;
 	}
 
-	public Set<IProperty> findPropertiesFrom(INamedIndividual individual) throws DatasourceException {
+	public Set<IProperty> findPropertiesFrom(INamedIndividual individual)
+			throws DatasourceException {
 
 		Set<IProperty> propertiesFrom = new HashSet<IProperty>();
 
 		try {
 
-			RepositoryConnection con = m_session.getRepositoryConnection();	
-			
-			RepositoryResult<Statement> results = con.getStatements(AK2Ses.getResource(individual, m_session.getValueFactory()), 
-					null, 
-					null, 
-					m_session.isReasoningOn());
-			
-			while(results.hasNext()){
+			RepositoryConnection con = m_session.getRepositoryConnection();
+
+			RepositoryResult<Statement> results = con.getStatements(AK2Ses
+					.getResource(individual, m_session.getValueFactory()),
+					null, null, m_session.isReasoningOn());
+
+			while (results.hasNext()) {
 
 				Statement stmt = results.next();
 				Resource subject = stmt.getSubject();
-				
-				if(subject instanceof URI){
-					
-					RepositoryResult<Statement> property_range = con.getStatements(subject, RDFS.RANGE, null, m_session.isReasoningOn());
-					
-					if(property_range.hasNext()){
+
+				if (subject instanceof URI) {
+
+					RepositoryResult<Statement> property_range = con
+							.getStatements(subject, RDFS.RANGE, null, m_session
+									.isReasoningOn());
+
+					if (property_range.hasNext()) {
 
 						Statement property_range_stmt = property_range.next();
 						Value range = property_range_stmt.getObject();
 
-						if(Ses2AK.isObjectProperty((URI)subject, range)){
-							propertiesFrom.add(Ses2AK.getObjectProperty((URI)subject, m_session.getOntology()));
-						}
-						else{						
-							propertiesFrom.add(Ses2AK.getDataProperty((URI)subject, m_session.getOntology()));
+						if (Ses2AK.isObjectProperty((URI) subject, range)) {
+							propertiesFrom.add(Ses2AK.getObjectProperty(
+									(URI) subject, m_session.getOntology()));
+						} else {
+							propertiesFrom.add(Ses2AK.getDataProperty(
+									(URI) subject, m_session.getOntology()));
 						}
 					}
 				}
 			}
-		} 
-		catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all properties from an individual with a uri "+individual.getUri(), e);
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all properties from an individual with a uri "
+							+ individual.getUri(), e);
 		}
-		
+
 		return propertiesFrom;
 	}
 
-
-	public Set<IProperty> findPropertiesTo(INamedConcept concept) throws DatasourceException {
+	public Set<IProperty> findPropertiesTo(INamedConcept concept)
+			throws DatasourceException {
 
 		Set<IProperty> result = new HashSet<IProperty>();
 
 		try {
 
-			RepositoryConnection con = m_session.getRepositoryConnection();		
-			RepositoryResult<Statement> results = con.getStatements(null, null, AK2Ses.getResource(concept, m_session.getValueFactory()), m_session.isReasoningOn());
+			RepositoryConnection con = m_session.getRepositoryConnection();
+			RepositoryResult<Statement> results = con.getStatements(null, null,
+					AK2Ses.getResource(concept, m_session.getValueFactory()),
+					m_session.isReasoningOn());
 
-			while(results.hasNext()){
+			while (results.hasNext()) {
 
 				Statement stmt = results.next();
 				URI predicate = stmt.getPredicate();
-				result.add(Ses2AK.getObjectProperty(predicate, m_session.getOntology()));
+				result.add(Ses2AK.getObjectProperty(predicate, m_session
+						.getOntology()));
 
 			}
-		} 
-		catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -286,19 +313,21 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 	}
 
 	public Set<IProperty> findPropertiesTo(INamedIndividual individual)
-	throws DatasourceException {
+			throws DatasourceException {
 		Set<IProperty> results = new HashSet<IProperty>();
 		IProperty prop;
 		try {
-			Resource resource = AK2Ses.getResource(individual, m_session.getValueFactory());
+			Resource resource = AK2Ses.getResource(individual, m_session
+					.getValueFactory());
 			RepositoryConnection conn = m_session.getRepositoryConnection();
-			RepositoryResult<Statement> sesResult = conn.getStatements(null, null, resource, m_session.isReasoningOn());
+			RepositoryResult<Statement> sesResult = conn.getStatements(null,
+					null, resource, m_session.isReasoningOn());
 			Statement stmt;
 			try {
-				while(sesResult.hasNext()) {
+				while (sesResult.hasNext()) {
 					stmt = sesResult.next();
 					prop = this.findByUri(stmt.getPredicate().toString());
-					if(!results.contains(prop)) {
+					if (!results.contains(prop)) {
 						results.add(prop);
 					}
 				}
@@ -306,8 +335,10 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 				sesResult.close();
 			}
 			return results;
-		} catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all properties to an individual with a uri "+individual.getUri(), e);
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all properties to an individual with a uri "
+							+ individual.getUri(), e);
 		}
 	}
 
@@ -315,18 +346,22 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 		try {
 			RepositoryConnection conn = m_session.getRepositoryConnection();
 			RepositoryResult<Statement> sesResult = conn.getStatements(
-					m_session.getValueFactory().createURI(uri), 
-					RDF.TYPE, RDF.PROPERTY, true);
+					m_session.getValueFactory().createURI(uri), RDF.TYPE,
+					RDF.PROPERTY, true);
 			IProperty res = null;
 			URI sesUri;
 			try {
-				if(sesResult.hasNext()) {
+				if (sesResult.hasNext()) {
 
-					sesUri = (URI)sesResult.next().getSubject();
-					if(Ses2AK.isObjectProperty(sesUri, m_session.getOntology(), m_session.getRepositoryConnection())) {
-						res = Ses2AK.getObjectProperty(sesUri, m_session.getOntology());
+					sesUri = (URI) sesResult.next().getSubject();
+					if (Ses2AK.isObjectProperty(sesUri,
+							m_session.getOntology(), m_session
+									.getRepositoryConnection())) {
+						res = Ses2AK.getObjectProperty(sesUri, m_session
+								.getOntology());
 					} else {
-						res = Ses2AK.getDataProperty(sesUri, m_session.getOntology());
+						res = Ses2AK.getDataProperty(sesUri, m_session
+								.getOntology());
 					}
 				}
 			} finally {
@@ -334,7 +369,9 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 			}
 			return res;
 		} catch (RepositoryException e) {
-			throw new DatasourceException("Error occurred while retrieving a property with a uri "+uri, e);
+			throw new DatasourceException(
+					"Error occurred while retrieving a property with a uri "
+							+ uri, e);
 		}
 	}
 
@@ -355,27 +392,29 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 			RepositoryConnection conn = m_session.getRepositoryConnection();
 			RepositoryResult<Statement> properties = null;
 
-			properties = conn.getStatements(null,RDF.TYPE,RDF.PROPERTY, m_session.isReasoningOn());
+			properties = conn.getStatements(null, RDF.TYPE, RDF.PROPERTY,
+					m_session.isReasoningOn());
 
-			while(properties.hasNext()) {
+			while (properties.hasNext()) {
 
 				Statement stmt = properties.next();
 				Resource property = stmt.getSubject();
 
-				if(property instanceof URI){
+				if (property instanceof URI) {
 
-					if(Ses2AK.isObjectProperty((URI)property, m_session.getOntology(), conn)){
+					if (Ses2AK.isObjectProperty((URI) property, m_session
+							.getOntology(), conn)) {
 
-						results.add(Ses2AK.getObjectProperty((URI)stmt.getSubject(), m_session.getOntology()));
-					}
-					else{
+						results.add(Ses2AK.getObjectProperty((URI) stmt
+								.getSubject(), m_session.getOntology()));
+					} else {
 
-						results.add(Ses2AK.getDataProperty((URI)stmt.getSubject(), m_session.getOntology()));
+						results.add(Ses2AK.getDataProperty((URI) stmt
+								.getSubject(), m_session.getOntology()));
 					}
 				}
 			}
-		}
-		catch(RepositoryException e){
+		} catch (RepositoryException e) {
 			e.printStackTrace();
 		}
 
@@ -412,6 +451,33 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 	public void update(IBusinessObject existingBo) throws DatasourceException {
 		// TODO Auto-generated method stub
 
+	}
+
+	public String findLabel(IProperty property) throws DatasourceException {
+
+		try {
+			RepositoryConnection conn = m_session.getRepositoryConnection();
+			RepositoryResult<Statement> stmts = conn.getStatements(AK2Ses
+					.getResource(property, m_session.getValueFactory()),
+					RDFS.LABEL, null, false);
+
+			Statement stmt;
+			String label = null;
+			try {
+				while (stmts.hasNext()) {
+					stmt = stmts.next();
+					label = stmt.getObject().stringValue();
+				}
+			} finally {
+				stmts.close();
+			}
+			return label;
+
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while finding a label by property" + property,
+					e);
+		}
 	}
 
 }
