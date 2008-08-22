@@ -1,11 +1,16 @@
 package org.ateam.xxplore.core.service.search;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -19,6 +24,13 @@ import org.ateam.xxplore.core.service.search.KbEdge;
 import org.ateam.xxplore.core.service.search.KbElement;
 import org.ateam.xxplore.core.service.search.KbVertex;
 import org.jgrapht.graph.WeightedPseudograph;
+import org.openrdf.model.URI;
+import org.openrdf.model.impl.StatementImpl;
+import org.openrdf.model.vocabulary.OWL;
+import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.rio.RDFHandlerException;
+import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
 import org.xmedia.accessknow.sesame.persistence.SesameConnection;
 import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
@@ -63,6 +75,9 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	private String repositoryDir;
 	private Properties parameters;
 	
+	private BufferedWriter bw;
+	private RDFXMLWriter writer;
+	
 	public int TOTAL_NUMBER_OF_INDIVIDUAL = 1; 
 	public int TOTAL_NUMBER_OF_PROPERTYMEMBER = 1;
 	private WeightedPseudograph<KbVertex,KbEdge> resourceGraph;
@@ -77,6 +92,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	
 	private static String REPOSITORY_DIR = "D:\\BTC\\sampling\\repository";
 	private static String STRUCTURE_INDEX_DIR = "D:\\BTC\\sampling\\structureIndex";
+	private static String SCHEMA_FOR_MAPPING = "D:/BTC/sampling/mapping/schema.rdf";
 	
 	public static void main(String[] args) {
 		Properties parameters = new Properties();
@@ -88,7 +104,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_ONTOLOGY_URI);
 		parameters.setProperty(ExploreEnvironment.LANGUAGE, LANGUAGE);
 		
-		SummaryGraphIndexServiceWithSesame2 service = new SummaryGraphIndexServiceWithSesame2(parameters, REPOSITORY_DIR, STRUCTURE_INDEX_DIR);
+		SummaryGraphIndexServiceWithSesame2 service = new SummaryGraphIndexServiceWithSesame2(parameters, REPOSITORY_DIR, STRUCTURE_INDEX_DIR, SCHEMA_FOR_MAPPING);
 		service.indexSummaryGraph();
 	} 
 	
@@ -97,6 +113,25 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		this.repositoryDir = repositoryDir;
 		this.structureIndexDir = structureIndexDir;
 		init();	
+	}
+	
+	public SummaryGraphIndexServiceWithSesame2(Properties parameters, String repositoryDir, String structureIndexDir, String schema) {
+		this.parameters = parameters;
+		this.repositoryDir = repositoryDir;
+		this.structureIndexDir = structureIndexDir;
+		init();	
+		new File(schema).getParentFile().mkdirs();
+		try {
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(schema),"UTF-8"));
+			writer = new RDFXMLWriter(bw);
+			writer.startRDF();
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 	
 	public void indexSummaryGraph() {
@@ -120,6 +155,30 @@ public class SummaryGraphIndexServiceWithSesame2 {
 					Set<IConcept> targets = ((IIndividual)target).getTypes();
 					Set<KbVertex> sourceVertices = new HashSet<KbVertex>();
 					Set<KbVertex> targetVertices = new HashSet<KbVertex>();
+					
+					if (property.getDelegate() instanceof URI) {
+						try {
+							URI predicate = (URI) property.getDelegate();
+							writer.handleStatement(new StatementImpl(predicate, RDF.TYPE, OWL.OBJECTPROPERTY));
+							for (IConcept src : sources) {
+								if (src.getDelegate() instanceof URI) {
+									URI domain = (URI) src.getDelegate();
+									writer.handleStatement(new StatementImpl(domain, RDF.TYPE, OWL.CLASS));	
+									writer.handleStatement(new StatementImpl(predicate, RDFS.DOMAIN, domain));	
+								}
+							}
+							for (IConcept tar : targets) {
+								if (tar.getDelegate() instanceof URI) {
+									URI range = (URI) tar.getDelegate();
+									writer.handleStatement(new StatementImpl(range, RDF.TYPE, OWL.CLASS));	
+									writer.handleStatement(new StatementImpl(predicate, RDFS.RANGE, range));	
+								}
+							}
+						} catch (RDFHandlerException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
 					
 					if(sources != null && sources.size() != 0 ) {
 						for(IConcept scon : sources) {
@@ -150,32 +209,44 @@ public class SummaryGraphIndexServiceWithSesame2 {
 				}
 			}
 			
-
-			// save graphIndex into the file *.graph
-			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
-				structureIndexDir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
-			File graphIndex = new File(path);
-			if(!graphIndex.exists()){
-				graphIndex.getParentFile().mkdirs();
-				try {
-					graphIndex.createNewFile();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			ObjectOutputStream out;
+		}
+		
+		try {
+			writer.endRDF();
+			if(bw != null)
+				bw.close();
+		} catch (RDFHandlerException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		//save graphIndex into the file *.graph
+		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
+			structureIndexDir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
+		File graphIndex = new File(path);
+		if(!graphIndex.exists()){
+			graphIndex.getParentFile().mkdirs();
 			try {
-				out = new ObjectOutputStream(new FileOutputStream(graphIndex));
-				out.writeObject(resourceGraph);
-				out.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				graphIndex.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		ObjectOutputStream out;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(graphIndex));
+			out.writeObject(resourceGraph);
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		for(KbVertex vertex : resourceGraph.vertexSet()){
