@@ -4,7 +4,7 @@ import org.xmedia.oms.model.api.IResource;
 
 public class DelegatesManager {
 
-	private static final boolean SET_DELEGATES = false;
+	private static final boolean SET_DELEGATES = true;
 	
 	public static void setDelegate(IResource aResource, Object itsDelegate) {
 		

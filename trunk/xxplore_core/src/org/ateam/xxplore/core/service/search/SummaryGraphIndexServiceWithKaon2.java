@@ -130,36 +130,34 @@ public class SummaryGraphIndexServiceWithKaon2 {
 							}
 						}
 					}
-					
 				}
 			}
-			
-
-			// save graphIndex into the file *.graph
-			String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ontologyUri + ".graph" : 
-				structureIndexDir + File.separator + ontologyUri + ".graph");
-			File graphIndex = new File(path);
-			if(!graphIndex.exists()){
-				graphIndex.getParentFile().mkdirs();
-				try {
-					graphIndex.createNewFile();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-			ObjectOutputStream out;
+		}
+		
+		// save graphIndex into the file *.graph
+		String path = (structureIndexDir.endsWith(File.separator) ? structureIndexDir + ontologyUri + ".graph" : 
+			structureIndexDir + File.separator + ontologyUri + ".graph");
+		File graphIndex = new File(path);
+		if(!graphIndex.exists()){
+			graphIndex.getParentFile().mkdirs();
 			try {
-				out = new ObjectOutputStream(new FileOutputStream(graphIndex));
-				out.writeObject(resourceGraph);
-				out.close();
-			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				graphIndex.createNewFile();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		ObjectOutputStream out;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(graphIndex));
+			out.writeObject(resourceGraph);
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 		for(KbVertex vertex : resourceGraph.vertexSet()){

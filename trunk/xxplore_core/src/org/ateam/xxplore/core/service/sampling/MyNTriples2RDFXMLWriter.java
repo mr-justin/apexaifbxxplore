@@ -2,6 +2,7 @@ package org.ateam.xxplore.core.service.sampling;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
@@ -28,7 +29,7 @@ public class MyNTriples2RDFXMLWriter {
 	private int tripleCount = 0;
 	
 	private static String sourceDir = "D:\\BTC\\swetodblp_april_2008-mod.nt";
-	private static String targetDir = "D:\\BTC\\target.rdf";
+	private static String targetDir = "D:\\BTC\\asdfasdfasdf\\asdfasdf\\target.rdf";
 	private static int maxTripleCount = 10000;
 	
 	public MyNTriples2RDFXMLWriter(String sourceDir, String targetDir) {
@@ -37,6 +38,7 @@ public class MyNTriples2RDFXMLWriter {
 			parser = new MyNTriplesParser();
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
+			new File(targetDir).getParentFile().mkdirs();
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetDir),"UTF-8")); 
 			writer = new RDFXMLWriter(bw);
 		} catch (FileNotFoundException e) {
@@ -54,6 +56,7 @@ public class MyNTriples2RDFXMLWriter {
 			parser = new MyNTriplesParser(maxTripleCount);
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
+			new File(targetDir).getParentFile().mkdirs();
 			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(targetDir),"UTF-8")); 
 			writer = new RDFXMLWriter(bw);
 		} catch (FileNotFoundException e) {
