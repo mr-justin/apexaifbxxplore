@@ -2,14 +2,11 @@ package org.xmedia.oms.persistence.dao;
 
 import java.util.Set;
 
-import org.openrdf.repository.RepositoryException;
-import org.xmedia.businessobject.IBusinessObject;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
-import org.xmedia.oms.model.api.INamedIndividual;
-import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IObjectProperty;
+import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.persistence.DatasourceException;
 
 
