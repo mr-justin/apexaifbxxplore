@@ -10,8 +10,10 @@ import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IProperty;
+import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
+import org.xmedia.oms.persistence.dao.DaoUnavailableException;
 import org.xmedia.oms.persistence.dao.IConceptDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
 
@@ -47,7 +49,19 @@ public class NamedIndividual extends Individual implements INamedIndividual {
 
 	public String getLabel()
 	{
-		return m_uri.substring(SessionFactory.getInstance().getCurrentSession().getConnection().getNamespaces().guessNamespaceEnd(m_uri)+1);
+		try {
+			return PersistenceUtil.getDaoManager().getIndividualDao().findLabel(
+					this);
+		} catch (DatasourceException e) {
+			e.printStackTrace();
+		} catch (DaoUnavailableException e) {
+			e.printStackTrace();
+		} finally {
+			//if no label is available, generate one from the uri
+			return m_uri.substring(SessionFactory.getInstance().getCurrentSession().getConnection().getNamespaces().guessNamespaceEnd(m_uri)+1);
+		}
+		
+		
 	}
 
 	@Override

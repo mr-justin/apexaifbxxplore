@@ -234,5 +234,33 @@ public class IndividualDao implements IIndividualDao {
 	public int getNumberOfIndividual(INamedConcept concept, boolean includeInferred) throws DatasourceException {
 		return getNumberOfIndividual(concept);
 	}
+	
+	public String findLabel(INamedIndividual individual) throws DatasourceException {
+
+		try {
+			RepositoryConnection conn = session.getRepositoryConnection();
+			RepositoryResult<Statement> stmts = conn.getStatements(AK2Ses
+					.getResource(individual, session.getValueFactory()),
+					RDFS.LABEL, null, false);
+
+			Statement stmt;
+			String label = null;
+			try {
+				while (stmts.hasNext()) {
+					stmt = stmts.next();
+					label = stmt.getObject().stringValue();
+				}
+			} finally {
+				stmts.close();
+			}
+			return label;
+
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while finding a label by concept" + individual,
+					e);
+		}
+	}
+
 
 }
