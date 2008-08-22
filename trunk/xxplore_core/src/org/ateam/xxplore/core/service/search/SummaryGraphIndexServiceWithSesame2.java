@@ -26,6 +26,7 @@ import org.ateam.xxplore.core.service.search.KbVertex;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.StatementImpl;
+import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.OWL;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
@@ -84,15 +85,15 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	
 	
 	private static String ONTOLOGY_URI = "target"; // repository directory name
-	private static String ONTOLOGY_FILE_PATH = "D:\\BTC\\target.rdf";
+	private static String ONTOLOGY_FILE_PATH = "res/target.rdf";
 	private static String ONTOLOGY_FILE_NAME = "target.rdf";
 	private static String BASE_ONTOLOGY_URI = "http://www.example.org/example";
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
 	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDFS_MEMORY_PERSISTENT;
 	
-	private static String REPOSITORY_DIR = "D:\\BTC\\sampling\\repository";
-	private static String STRUCTURE_INDEX_DIR = "D:\\BTC\\sampling\\structureIndex";
-	private static String SCHEMA_FOR_MAPPING = "D:/BTC/sampling/mapping/schema.rdf";
+	private static String REPOSITORY_DIR = "res/BTC/sampling/repository";
+	private static String STRUCTURE_INDEX_DIR = "res/BTC/sampling/structureIndex";
+	private static String SCHEMA_FOR_MAPPING = "res/BTC/sampling/mapping/schema.rdf";
 	
 	public static void main(String[] args) {
 		Properties parameters = new Properties();
@@ -156,28 +157,49 @@ public class SummaryGraphIndexServiceWithSesame2 {
 					Set<KbVertex> sourceVertices = new HashSet<KbVertex>();
 					Set<KbVertex> targetVertices = new HashSet<KbVertex>();
 					
-					if (property.getDelegate() instanceof URI) {
-						try {
-							URI predicate = (URI) property.getDelegate();
-							writer.handleStatement(new StatementImpl(predicate, RDF.TYPE, OWL.OBJECTPROPERTY));
-							for (IConcept src : sources) {
-								if (src.getDelegate() instanceof URI) {
-									URI domain = (URI) src.getDelegate();
-									writer.handleStatement(new StatementImpl(domain, RDF.TYPE, OWL.CLASS));	
-									writer.handleStatement(new StatementImpl(predicate, RDFS.DOMAIN, domain));	
-								}
-							}
-							for (IConcept tar : targets) {
-								if (tar.getDelegate() instanceof URI) {
-									URI range = (URI) tar.getDelegate();
-									writer.handleStatement(new StatementImpl(range, RDF.TYPE, OWL.CLASS));	
-									writer.handleStatement(new StatementImpl(predicate, RDFS.RANGE, range));	
-								}
-							}
-						} catch (RDFHandlerException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
+					// you should set "SET_DELEGATES = false" in DelegatesManager. 
+//					if (property.getDelegate() instanceof URI) {
+//						try {
+//							URI predicate = (URI) property.getDelegate();
+//							writer.handleStatement(new StatementImpl(predicate, RDF.TYPE, OWL.OBJECTPROPERTY));
+//							for (IConcept src : sources) {
+//								if (src.getDelegate() instanceof URI) {
+//									URI domain = (URI) src.getDelegate();
+//									writer.handleStatement(new StatementImpl(domain, RDF.TYPE, OWL.CLASS));	
+//									writer.handleStatement(new StatementImpl(predicate, RDFS.DOMAIN, domain));	
+//								}
+//							}
+//							for (IConcept tar : targets) {
+//								if (tar.getDelegate() instanceof URI) {
+//									URI range = (URI) tar.getDelegate();
+//									writer.handleStatement(new StatementImpl(range, RDF.TYPE, OWL.CLASS));	
+//									writer.handleStatement(new StatementImpl(predicate, RDFS.RANGE, range));	
+//								}
+//							}
+//						} catch (RDFHandlerException e) {
+//							// TODO Auto-generated catch block
+//							e.printStackTrace();
+//						}
+//					}
+					
+					try {
+						URI predicate = new URIImpl(property.getUri());
+						writer.handleStatement(new StatementImpl(predicate,	RDF.TYPE, OWL.OBJECTPROPERTY));
+
+						for (IConcept src : sources) {
+							URI domain = new URIImpl(((INamedConcept)src).getUri());
+							writer.handleStatement(new StatementImpl(domain, RDF.TYPE, OWL.CLASS));
+							writer.handleStatement(new StatementImpl(predicate, RDFS.DOMAIN, domain));
 						}
+						for (IConcept tar : targets) {
+							URI range = new URIImpl(((INamedConcept)tar).getUri());
+							writer.handleStatement(new StatementImpl(range, RDF.TYPE, OWL.CLASS));
+							writer.handleStatement(new StatementImpl(predicate, RDFS.RANGE, range));
+						}
+
+					} catch (RDFHandlerException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 					
 					if(sources != null && sources.size() != 0 ) {

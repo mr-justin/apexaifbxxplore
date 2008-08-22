@@ -60,7 +60,7 @@ public class MyWarc2RDFXMLWriter {
 	private int lineCountThisUrl = 0;
 
 	private static String sourceDir = "D:/BTC/watson.warc";
-	private static String targetDir = "D:/BTC/watson/";
+	private static String targetDir = "res/BTC/watson/";
 	private static int urls = 20;
 	
 	public MyWarc2RDFXMLWriter(String sourceDir, String targetDir) {
