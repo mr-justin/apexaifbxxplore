@@ -49,17 +49,21 @@ public class NamedIndividual extends Individual implements INamedIndividual {
 
 	public String getLabel()
 	{
+		String label = null; 
 		try {
-			return PersistenceUtil.getDaoManager().getIndividualDao().findLabel(
+			label = PersistenceUtil.getDaoManager().getIndividualDao().findLabel(
 					this);
 		} catch (DatasourceException e) {
 			e.printStackTrace();
 		} catch (DaoUnavailableException e) {
 			e.printStackTrace();
-		} finally {
+		} 
+		
+		if (label == null || label.length() == 0) 	
 			//if no label is available, generate one from the uri
-			return m_uri.substring(SessionFactory.getInstance().getCurrentSession().getConnection().getNamespaces().guessNamespaceEnd(m_uri)+1);
-		}
+			return m_uri.substring(SessionFactory.getInstance().getCurrentSession()
+					.getConnection().getNamespaces().guessNamespaceEnd(m_uri) + 1);
+		else return label; 
 		
 		
 	}

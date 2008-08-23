@@ -70,22 +70,21 @@ public class NamedConcept extends Concept implements INamedConcept {
 
 	public String getLabel() {
 
+		String label = null;
 		try {
-			return PersistenceUtil.getDaoManager().getConceptDao().findLabel(
+			label = PersistenceUtil.getDaoManager().getConceptDao().findLabel(
 					this);
 		} catch (DatasourceException e) {
 			e.printStackTrace();
 		} catch (DaoUnavailableException e) {
 			e.printStackTrace();
-		} finally {
+		} 
+		
+		if (label == null || label.length() == 0) 	
 			//if no label is available, generate one from the uri
-			return m_uri.substring(SessionFactory.getInstance()
-					.getCurrentSession().getConnection().getNamespaces()
-					.guessNamespaceEnd(m_uri) + 1);
-			// return
-			// SessionFactory.getInstance().getCurrentSession().getConnection
-			// ().getNamespaces().abbreviateAsNamespace(m_uri);
-		}
+			return m_uri.substring(SessionFactory.getInstance().getCurrentSession()
+					.getConnection().getNamespaces().guessNamespaceEnd(m_uri) + 1);
+		else return label; 
 	}
 
 	@Override

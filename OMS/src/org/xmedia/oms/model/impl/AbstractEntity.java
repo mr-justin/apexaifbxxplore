@@ -31,23 +31,21 @@ public abstract class AbstractEntity extends Resource implements IEntity {
 
 	public String getLabel() {
 		
-
+		String label = null;
 		try {
-			return PersistenceUtil.getDaoManager().getPropertyDao().findLabel(
+			label = PersistenceUtil.getDaoManager().getPropertyDao().findLabel(
 					(IProperty) this);
 		} catch (DatasourceException e) {
 			e.printStackTrace();
 		} catch (DaoUnavailableException e) {
 			e.printStackTrace();
-		} finally {
+		}
+		
+		if (label == null || label.length() == 0) 	
 			//if no label is available, generate one from the uri
 			return m_uri.substring(SessionFactory.getInstance().getCurrentSession()
 					.getConnection().getNamespaces().guessNamespaceEnd(m_uri) + 1);
-		}
-		
-		// return
-		// SessionFactory.getInstance().getCurrentSession().getConnection
-		// ().getNamespaces().abbreviateAsNamespace(m_uri);
+		else return label; 
 
 	}
 }
