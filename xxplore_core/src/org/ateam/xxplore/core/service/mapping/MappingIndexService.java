@@ -20,9 +20,9 @@ import org.apache.lucene.search.TermQuery;
 
 public class MappingIndexService {
 	
-	private static final String MAPPING_FILE = "D:/BTC/sampling/mappingResult/opus_august2007.rdf+swrc_v0.7.owl.mapping";
-	private static final String MAPPING_INDEX_DIR = "D:/BTC/sampling/mappingIndex";
-	private static final String KEYWORD_INDEX_DIR = "D:/BTC/sampling/keywordIndex";
+	private static final String MAPPING_FILE = "res/BTC/sampling/mapping/mappingResult/schema.rdf+swrc.owl.mapping";
+	private static final String MAPPING_INDEX_DIR = "res/BTC/sampling/mappingIndex";
+	private static final String KEYWORD_INDEX_DIR = "res/BTC/sampling/keywordIndex";
 	
 	private IndexWriter indexWriter;
 	private StandardAnalyzer m_analyzer;

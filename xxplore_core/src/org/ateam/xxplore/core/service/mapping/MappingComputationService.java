@@ -18,17 +18,19 @@ import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
 	
-	private static String[] ONTOLOGIES = {"D:/BTC/schema.rdf","D:/BTC/swrc.owl"};   //ontologies 
+	private static String[] ONTOLOGIES = {"D:/zl/eclipse/workspace_google/XXplore_core/res/BTC/schema.rdf",
+		"D:/zl/eclipse/workspace_google/XXplore_core/res/BTC/swrc.owl"};   //ontologies 
 	private static String[] DATASOURCES = {"schema.rdf","swrc.owl"};
-	private static String OUTPUTDIR  = "D:/BTC/sampling/mappingResult";
+	private static String OUTPUTDIR  = "res/BTC/sampling/mapping/mappingResult";
+	private static String EXPLICITFILE = "schema.rdf+swrc.owl.mapping";
 	
 	private String ontology1;
 	private String ontology2;
 	private String datasource1;
 	private String datasource2;
 	private String resultFile;
+	private String explicitFile = "";
 	
-	private static final String EXPLICITFILE = "";				
 //	private static final int SCENARIO = Parameter.NOSCENARIO;
 	private static final int MAXITERATIONS = 10;		
 	private static final boolean INTERNALTOO = Parameter.EXTERNAL;	
@@ -49,6 +51,7 @@ public class MappingComputationService {
 	 * @param args
 	 */
 	public static void main(String[] args) {
+//		MappingComputationService service = new MappingComputationService(ONTOLOGIES, DATASOURCES, OUTPUTDIR, EXPLICITFILE);
 		MappingComputationService service = new MappingComputationService(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
 		service.computeMappings();
 	}
@@ -64,16 +67,11 @@ public class MappingComputationService {
 				+ ".mapping";
  	}
 	
-	public MappingComputationService(String ontology1, String ontology2, String datasource1, String datasource2, String outputDir) {
-		this.ontology1 = ontology1;
-		this.ontology2 = ontology2;
-		this.datasource1 = datasource1;
-		this.datasource2 = datasource2;
-		this.resultFile = outputDir.endsWith(File.separator) ? 
-				outputDir + fsTransduceUri(datasource1) + "+" + fsTransduceUri(datasource2) : 
-				outputDir + File.separator + fsTransduceUri(datasource1) + "+" + fsTransduceUri(datasource2)
-				+ ".mapping";
-	}
+	public MappingComputationService(String[] ontologies, String[] datasources, String outputDir, String preknow) {
+		this(ontologies, datasources, outputDir);
+		this.explicitFile = preknow; 
+ 	}
+	
 	
 	public void computeMappings() {
 		checkFile(resultFile);
@@ -85,7 +83,7 @@ public class MappingComputationService {
 		Align align = new Align();								//creating the new alignment method
 		MyOntology ontologies = new MyOntology(ontologyFiles);	//assigning the ontologies
 		if (ontologies.ok == false) {System.exit(1);}
-		ExplicitRelation explicit = new ExplicitRelation(EXPLICITFILE,ontologies);	//assigning pre-known alignments
+		ExplicitRelation explicit = new ExplicitRelation(explicitFile,ontologies);	//assigning pre-known alignments
 //		Parameter parameter = new Parameter(Parameter.NOSCENARIO,ONTOLOGYFILES); 
 		Parameter parameter = new Parameter(MAXITERATIONS,STRATEGY,INTERNALTOO,EFFICIENTAGENDA,CLASSIFIERFILE,RULESFILE,SEMI,MAXERROR,NUMBERQUESTIONS,REMOVEDOUBLES,CUTOFF,ontologyFiles);	//assigning the parameters
 		parameter.manualmappingsFile = MANUALMAPPINGSFILE;
