@@ -5,7 +5,6 @@ import java.util.Collection;
 import java.util.Hashtable;
 import java.util.Iterator;
 
-import org.aifb.xxplore.misc.CommonSearchResultObservable;
 import org.aifb.xxplore.model.ExploreEditorContentProvider;
 import org.aifb.xxplore.model.ExploreEditorLabelProvider;
 import org.aifb.xxplore.views.graphviewer.GraphViewer;
@@ -263,16 +262,6 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 			else if (part instanceof FactResultView){
 				FactResultView view = (FactResultView)part; 
 				view.getViewer().setInput(m_currentdef);
-			}
-			else if (part instanceof MergedResultView) {
-				MergedResultView view = (MergedResultView)part;
-				/*setInput has to be called, to make the viewer known by the contentprovider*/
-				view.getViewer().setInput(m_currentdef);
-
-				//TODO to get only one object searching (rigth now only for MergedResultView)
-				CommonSearchResultObservable.getInstance().setModelDefinition(m_currentdef);
-				/*add the definitionViewListener of CommonSearchResultObservable to the SelechtionService*/
-				getSite().getPage().addSelectionListener(CommonSearchResultObservable.getInstance().getDefinitionViewListener());
 			}
 			else if (part instanceof ConceptHierarchyView){
 				addSelectionChangedListener((ISelectionChangedListener)part);
@@ -732,13 +721,6 @@ public class ExploreEditor extends MultiPageEditorPart implements ISelectionProv
 					if (factresult != null) {
 						factresult.getViewer().setInput(m_currentdef);
 					}
-
-					MergedResultView mergedresult = (MergedResultView)getSite().getPage().findView(MergedResultView.ID);
-					if (mergedresult != null) {
-						mergedresult.getViewer().setInput(m_currentdef);
-					}
-					//TODO to get only one object searching (rigth now only for MergedResultView)
-					CommonSearchResultObservable.getInstance().setModelDefinition(m_currentdef);
 				}
 
 			} catch (CoreException e) {
