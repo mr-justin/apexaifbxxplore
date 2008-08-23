@@ -85,7 +85,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	
 	
 	private static String ONTOLOGY_URI = "target"; // repository directory name
-	private static String ONTOLOGY_FILE_PATH = "res/target.rdf";
+	private static String ONTOLOGY_FILE_PATH = "res/BTC/target.rdf";
 	private static String ONTOLOGY_FILE_NAME = "target.rdf";
 	private static String BASE_ONTOLOGY_URI = "http://www.example.org/example";
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
@@ -93,7 +93,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 	
 	private static String REPOSITORY_DIR = "res/BTC/sampling/repository";
 	private static String STRUCTURE_INDEX_DIR = "res/BTC/sampling/structureIndex";
-	private static String SCHEMA_FOR_MAPPING = "res/BTC/sampling/mapping/schema.rdf";
+	private static String SCHEMA_FOR_MAPPING = "res/BTC/schema.rdf";
 	
 	public static void main(String[] args) {
 		Properties parameters = new Properties();
@@ -157,7 +157,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 					Set<KbVertex> sourceVertices = new HashSet<KbVertex>();
 					Set<KbVertex> targetVertices = new HashSet<KbVertex>();
 					
-					// you should set "SET_DELEGATES = false" in DelegatesManager. 
+					// first set "SET_DELEGATES = true" in org.xmedia.accessknow.sesame.persistence.converter.DelegatesManager. 
 //					if (property.getDelegate() instanceof URI) {
 //						try {
 //							URI predicate = (URI) property.getDelegate();
@@ -227,7 +227,6 @@ public class SummaryGraphIndexServiceWithSesame2 {
 							}
 						}
 					}
-					
 				}
 			}
 			
@@ -316,7 +315,7 @@ public class SummaryGraphIndexServiceWithSesame2 {
 			if(objectProperty.equals(Property.SUBCLASS_OF)) {
 				edge = new KbEdge(vertex1, vertex2, objectProperty, KbElement.REDGE, 0);
 			} else {
-				edge = new KbEdge(vertex1, vertex2, objectProperty, KbElement.REDGE, computeWeight(property));
+				edge = new KbEdge(vertex1, vertex2, objectProperty, KbElement.REDGE, 2);
 			}
 		}
 		else {
@@ -376,12 +375,12 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		int numIndividual = onto.getNumberOfIndividual();
 		System.out.println("number of Individual: " + numIndividual);
 		
-		int numoPropertyMember = onto.getNumberOfObjectPropertyMember();
-		System.out.println("number of ObjectPropertyMember: " + numoPropertyMember);
+//		int numoPropertyMember = onto.getNumberOfObjectPropertyMember();
+//		System.out.println("number of ObjectPropertyMember: " + numoPropertyMember);
 		
 		TOTAL_NUMBER_OF_INDIVIDUAL = numIndividual;
 		
-		TOTAL_NUMBER_OF_PROPERTYMEMBER = numoPropertyMember;
+//		TOTAL_NUMBER_OF_PROPERTYMEMBER = numoPropertyMember;
 	}
 	
 	private double computeEdgeWeight(double num, double totalNum){
