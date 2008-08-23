@@ -859,4 +859,9 @@ class Kaon2PropertyDao extends AbstractKaon2Dao implements IPropertyDao{
 		return null;
 	}
 
+	public String findLabel(IProperty property) throws DatasourceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -346,4 +346,9 @@ class Kaon2IndividualDao extends AbstractKaon2Dao implements IIndividualDao {
 			s_log.debug("individual could not be found !");
 		return null;
 	}
+
+	public String findLabel(INamedIndividual individual) throws DatasourceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
