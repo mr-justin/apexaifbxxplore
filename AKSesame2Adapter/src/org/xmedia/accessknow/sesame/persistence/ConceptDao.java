@@ -159,18 +159,23 @@ public class ConceptDao implements IConceptDao {
 		try {
 			RepositoryConnection conn = session.getRepositoryConnection();
 			
-			
 			//TODO: should not use create but search for entity that has this URI?
-			RepositoryResult<Statement> sesResult = conn.getStatements(
-					session.getValueFactory().createURI(uri), 
-					RDF.TYPE, null, session.isReasoningOn());
+			URI object = session.getValueFactory().createURI(uri);
 			INamedConcept concept = null;
-			try {
-				if(sesResult.hasNext()) {
-					concept = Ses2AK.getNamedConcept(sesResult.next().getSubject(), session.getOntology()); 
-				} 
-			} finally {
-				sesResult.close();
+			if (!object.getNamespace().equals(RDFS.NAMESPACE)
+					&& !object.getNamespace().equals(RDF.NAMESPACE)
+					&& !object.getNamespace().equals(
+							"http://www.w3.org/2002/07/owl#")) {
+				RepositoryResult<Statement> sesResult = conn.getStatements(
+						null, RDF.TYPE, object, session.isReasoningOn());
+				try {
+					if (sesResult.hasNext()) {
+						concept = Ses2AK.getNamedConcept((URI) sesResult.next()
+								.getObject(), session.getOntology());
+					}
+				} finally {
+					sesResult.close();
+				}
 			}
 			return concept;
 		} catch (RepositoryException e) {
