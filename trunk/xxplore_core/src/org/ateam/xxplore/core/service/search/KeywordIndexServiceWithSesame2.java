@@ -76,14 +76,14 @@ public class KeywordIndexServiceWithSesame2 {
 	private String datasource;
 	
 	private static String ONTOLOGY_URI = "target"; // repository directory name
-	private static String ONTOLOGY_FILE_PATH = "D:\\BTC\\target.rdf";
+	private static String ONTOLOGY_FILE_PATH = "res/BTC/target.rdf";
 	private static String ONTOLOGY_FILE_NAME = "target.rdf";
 	private static String BASE_ONTOLOGY_URI = "http://www.example.org/example";
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
 	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDFS_MEMORY_PERSISTENT;
 	
-	private static String REPOSITORY_DIR = "D:\\BTC\\sampling\\repository";
-	private static String KEYWORD_INDEX_DIR = "D:\\BTC\\sampling\\keywordIndex";
+	private static String REPOSITORY_DIR = "res/BTC/sampling/repository";
+	private static String KEYWORD_INDEX_DIR = "res/BTC/sampling/keywordIndex";
 	
 	public static void main(String[] args) {
 		Properties parameters = new Properties();
