@@ -581,4 +581,9 @@ public class Kaon2ConceptDao extends AbstractKaon2Dao implements IConceptDao{
 		if (s_log.isDebugEnabled()) s_log.debug("concept could not be found !");
 		return null;
 	}
+
+	public String findLabel(INamedConcept concept) throws DatasourceException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
