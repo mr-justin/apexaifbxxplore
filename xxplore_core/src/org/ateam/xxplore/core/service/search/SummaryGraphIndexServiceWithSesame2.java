@@ -101,9 +101,8 @@ public class SummaryGraphIndexServiceWithSesame2 {
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
 		
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, ONTOLOGY_FILE_PATH);
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_NAME, ONTOLOGY_FILE_NAME);
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_ONTOLOGY_URI);
-		parameters.setProperty(ExploreEnvironment.LANGUAGE, LANGUAGE);
+		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		
 		SummaryGraphIndexServiceWithSesame2 service = new SummaryGraphIndexServiceWithSesame2(parameters, REPOSITORY_DIR, STRUCTURE_INDEX_DIR, SCHEMA_FOR_MAPPING);
 		service.indexSummaryGraph();
@@ -475,21 +474,17 @@ public class SummaryGraphIndexServiceWithSesame2 {
 			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_PATH+" missing!");
 		}
 		
-		if(!parameters.containsKey(ExploreEnvironment.ONTOLOGY_FILE_NAME)) {
-			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_NAME+" missing!");
-		}
-		
 		if(!parameters.containsKey(ExploreEnvironment.BASE_ONTOLOGY_URI)) {
 			throw new MissingParameterException(ExploreEnvironment.BASE_ONTOLOGY_URI+" missing!");
 		}
 		
-		if(!parameters.containsKey(ExploreEnvironment.LANGUAGE)) {
-			throw new MissingParameterException(ExploreEnvironment.LANGUAGE+" missing!");
+		if(!parameters.containsKey(ExploreEnvironment.SERIALIZATION_FORMAT)) {
+			throw new MissingParameterException(ExploreEnvironment.SERIALIZATION_FORMAT+" missing!");
 		}
 		
 		String filePath = (String)parameters.get(ExploreEnvironment.ONTOLOGY_FILE_PATH);
 		String baseUri = (String)parameters.get(ExploreEnvironment.BASE_ONTOLOGY_URI);
-		String language = (String)parameters.get(ExploreEnvironment.LANGUAGE);
+		String language = (String)parameters.get(ExploreEnvironment.SERIALIZATION_FORMAT);
 				
 		try {
 			onto.importOntology(language, baseUri, new FileReader(filePath));

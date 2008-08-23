@@ -14,16 +14,10 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.FilenameFilter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.zip.GZIPInputStream;
-
-import org.apache.tools.bzip2.CBZip2InputStream;
-
-import SameAsCollector.TrueFilter;
 
 import com.ice.tar.TarInputStream;
 

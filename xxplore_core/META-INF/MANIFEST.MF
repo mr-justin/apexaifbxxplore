@@ -10,7 +10,8 @@ Bundle-ClassPath: lib/jgrapht-jdk1.5.jar,
  lib/FontBox-0.1.0.jar,
  lib/dsiutils-1.0.6.jar,
  lib/fastutil-5.1.5.jar,
- lib/law-1.4.jar
+ lib/law-1.4.jar,
+ lib/javatar-2.5.jar
 Bundle-Localization: plugin
 Require-Bundle: org.apache.log4j;visibility:=reexport,
  org.eclipse.core.runtime,
