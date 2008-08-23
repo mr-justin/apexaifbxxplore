@@ -125,14 +125,12 @@ public class ExploreEnvironment {
 	//CONSTANTS FOR LOADING THE DATA TO THE REPO > USED IN EXPLORE-PLUGIN
 	
 	public static final String ONTOLOGY_FILE_PATH = "ontology.file.path";
-	
-	public static final String ONTOLOGY_FILE_NAME = "ontology.file.name";
-	
+		
 	public static final String BASE_ONTOLOGY_URI = "base_ontology.uri";
 	
 	public static String ONTOLOGY_EXPRESSITIVITY = "ontology.expressitivity";
 	
-	public static final String LANGUAGE = "language";
+	public static final String SERIALIZATION_FORMAT = "language";
 	
 	public static final String DATASOURCE = "datasource";
 	
