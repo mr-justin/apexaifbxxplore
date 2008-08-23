@@ -58,6 +58,7 @@ public final class KbEnvironment {
 	
 	public static final String IMPORTED_ONTOLOGY_URI = "imported.ontology.uri";
 	
+	public static final String DEFAULT_ONTOLOGY_ENCODING = "ISO-8859-1";
 	
 	/**
 	 * the uri of the ontology
