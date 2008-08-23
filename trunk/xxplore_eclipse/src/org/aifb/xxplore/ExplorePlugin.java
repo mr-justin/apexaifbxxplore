@@ -36,6 +36,7 @@ import org.xmedia.oms.model.api.OntologyImportException;
 import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.IConnectionProvider;
 import org.xmedia.oms.persistence.IDataSource;
+import org.xmedia.oms.persistence.IKbConnection;
 import org.xmedia.oms.persistence.ISession;
 import org.xmedia.oms.persistence.ISessionFactory;
 import org.xmedia.oms.persistence.InvalidParameterException;
@@ -224,23 +225,23 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			
 			//load ontology	
 			IOntology onto = null;
-			SesameConnection ses_con = null;
+			IKbConnection con = null;
 			try {
 				if (provider instanceof ConnectionProvider) {
 
 					try {
-						ses_con = new SesameConnection(ExploreEnvironment.LocationHelper.getResourceLocation());
+						con = new SesameConnection(ExploreEnvironment.LocationHelper.getResourceLocation());
 					} catch (Exception e2) {
 						e2.printStackTrace();
-						ses_con = (SesameConnection)provider.getConnection();
+						con = (SesameConnection)provider.getConnection();
 					}	
 
 					try {
-						onto = ses_con.loadOntology(PropertyUtils.convertToMap(parameters));
+						onto = con.loadOntology(PropertyUtils.convertToMap(parameters));
 					}
 					catch (OntologyLoadException e) {
 
-						onto = ses_con.createOntology(PropertyUtils.convertToMap(parameters));
+						onto = con.createOntology(PropertyUtils.convertToMap(parameters));
 
 						try {
 							addFileToRepository(onto,PropertyUtils.convertToMap(parameters));
@@ -250,7 +251,8 @@ public class ExplorePlugin extends AbstractUIPlugin {
 					}
 				
 				} else if (provider instanceof Kaon2ConnectionProvider) {
-					onto = provider.getConnection().loadOntology(PropertyUtils.convertToMap(parameters));
+					con = provider.getConnection();
+					onto = con.loadOntology(PropertyUtils.convertToMap(parameters));
 				}
 			} catch (DatasourceException e) {
 				e.printStackTrace();
@@ -270,7 +272,7 @@ public class ExplorePlugin extends AbstractUIPlugin {
 				ISession session = null;
 				
 				try {
-					session = sesame_factory.openSession(ses_con, onto);
+					session = sesame_factory.openSession(con, onto);
 				} catch (DatasourceException e) {
 					e.printStackTrace();
 				} catch (OpenSessionException e) {
@@ -292,7 +294,7 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			PersistenceUtil.setSessionFactory(factory); 
 			//open a new session with the ontology
 			try {
-				factory.openSession(ses_con,onto);
+				factory.openSession(con,onto);
 			} catch (DatasourceException e) {
 				e.printStackTrace();
 			} catch (OpenSessionException e) {
