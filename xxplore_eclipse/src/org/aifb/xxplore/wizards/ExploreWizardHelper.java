@@ -67,17 +67,13 @@ public class ExploreWizardHelper {
 				buff.append(ExploreEnvironment.ONTOLOGY_FILE_PATH+"=");
 				buff.append(properties.get(ExploreEnvironment.ONTOLOGY_FILE_PATH));
 				buff.append("\n");
-				
-				buff.append(ExploreEnvironment.ONTOLOGY_FILE_NAME+"=");
-				buff.append(properties.get(ExploreEnvironment.ONTOLOGY_FILE_NAME));
-				buff.append("\n");
-				
+								
 				buff.append(ExploreEnvironment.BASE_ONTOLOGY_URI+"=");
 				buff.append(properties.get(ExploreEnvironment.BASE_ONTOLOGY_URI));
 				buff.append("\n");
 				
-				buff.append(ExploreEnvironment.LANGUAGE+"=");
-				buff.append(properties.get(ExploreEnvironment.LANGUAGE));
+				buff.append(ExploreEnvironment.SERIALIZATION_FORMAT+"=");
+				buff.append(properties.get(ExploreEnvironment.SERIALIZATION_FORMAT));
 				buff.append("\n");
 				
 				buff.append(KbEnvironment.ONTOLOGY_TYPE+"=");

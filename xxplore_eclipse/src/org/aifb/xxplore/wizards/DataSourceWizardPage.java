@@ -267,9 +267,8 @@ public class DataSourceWizardPage extends WizardPage implements Listener{
 			
 			properties.put(ExploreEnvironment.REPOSITORY_NAME, m_repository_name_text.getText().trim());
 			properties.put(ExploreEnvironment.ONTOLOGY_FILE_PATH, ExploreWizardHelper.TextInputHelper.cleanInputText(m_datasourceUri_text.getText().trim()));
-			properties.put(ExploreEnvironment.ONTOLOGY_FILE_NAME, (new File(m_datasourceUri_text.getText().trim())).getName());
 			properties.put(ExploreEnvironment.BASE_ONTOLOGY_URI, m_baseUri_text.getText().trim());
-			properties.put(ExploreEnvironment.LANGUAGE, m_combo_syntax.getText().trim());
+			properties.put(ExploreEnvironment.SERIALIZATION_FORMAT, m_combo_syntax.getText().trim());
 			
 		}
 		
