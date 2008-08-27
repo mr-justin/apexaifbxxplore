@@ -76,45 +76,14 @@ import org.xmedia.uris.impl.XMURIFactoryInsulated;
 public class ExtractInstancesServiceWithSesame2 {
 
 	private static Logger s_log = Logger.getLogger(ExtractInstancesServiceWithSesame2.class);
-	
-	private IOntology m_onto;
-	private ISession m_session;
-	
-	private String repositoryDir;
-	private Properties parameters;
-	
+			
 	private BufferedReader br;
 	
 	private BufferedWriter bw;
 	private RDFXMLWriter writer;
 	
-	private static String ONTOLOGY_URI = "target"; // repository directory name
-	private static String ONTOLOGY_FILE_PATH = "res/target.rdf";
-	private static String ONTOLOGY_FILE_NAME = "target.rdf";
-	private static String BASE_ONTOLOGY_URI = "http://www.example.org/example";
-	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
-	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDFS_MEMORY_PERSISTENT;
 	
-	private static String REPOSITORY_DIR = "res/BTC/sampling/repository";
-	private static String SCHEMA_MAPPING_FILE = "res/BTC/sampling/mapping/mappingResult/schema.rdf+swrc.owl.mapping"; 
-	private static String EXTRACTED_ENTITIES = "res/BTC/target_entities.rdf"; 
-	
-	public static void main(String[] args) {
-		Properties parameters = new Properties();
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, ONTOLOGY_URI);
-		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-		
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, ONTOLOGY_FILE_PATH);
-		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_ONTOLOGY_URI);
-		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
-		
-		ExtractInstancesServiceWithSesame2 service = new ExtractInstancesServiceWithSesame2(parameters, REPOSITORY_DIR, SCHEMA_MAPPING_FILE, EXTRACTED_ENTITIES);
-		service.extractInstances();
-	} 
-	
-	public ExtractInstancesServiceWithSesame2(Properties parameters, String repositoryDir, String schemaMappingFile, String extractedEntities) {
-		this.parameters = parameters;
-		this.repositoryDir = repositoryDir;
+	public ExtractInstancesServiceWithSesame2(String schemaMappingFile, String extractedEntities) {
 		new File(extractedEntities).getParentFile().mkdirs();
 		try {
 			br = new BufferedReader(new FileReader(schemaMappingFile));
@@ -128,7 +97,6 @@ public class ExtractInstancesServiceWithSesame2 {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		init();	
 	}
 	
 	public void extractInstances() {
@@ -237,97 +205,4 @@ public class ExtractInstancesServiceWithSesame2 {
 				e2.printStackTrace();
 			}
 	}
-	
-	private void init() {
-		
-//		load ontology	
-		m_onto = null;
-		SesameConnection ses_con = null;
-		try {
-			try {
-				ses_con = new SesameConnection(repositoryDir);
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
-
-			try {
-				m_onto = ses_con.loadOntology(PropertyUtils.convertToMap(parameters));
-			} catch (OntologyLoadException e) {
-
-				m_onto = ses_con.createOntology(PropertyUtils.convertToMap(parameters));
-
-				try {
-					addFileToRepository(m_onto, PropertyUtils.convertToMap(parameters));
-				} catch (MissingParameterException e1) {
-					e1.printStackTrace();
-				}
-			}
-		} catch (DatasourceException e) {
-			e.printStackTrace();
-		} catch (MissingParameterException e) {
-			e.printStackTrace();
-		} catch (InvalidParameterException e) {
-			e.printStackTrace();
-		} catch (OntologyCreationException e) {
-			e.printStackTrace();
-		} 
-		
-		SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
-		ISession session = null;
-		
-		try {
-			session = sesame_factory.openSession(ses_con, m_onto);
-		} catch (DatasourceException e) {
-			e.printStackTrace();
-		} catch (OpenSessionException e) {
-			e.printStackTrace();
-		}
-		//set dao manager
-		PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
-		
-		session.close();	
-		
-		ISessionFactory factory = SessionFactory.getInstance();
-		PersistenceUtil.setSessionFactory(factory); 
-		//open a new session with the ontology
-		try {
-			m_session = factory.openSession(ses_con,m_onto);
-		} catch (DatasourceException e) {
-			e.printStackTrace();
-		} catch (OpenSessionException e) {
-			e.printStackTrace();
-		}
-								
-	}
-
-	private static void addFileToRepository(IOntology onto, Map<String, Object> parameters)throws MissingParameterException{
-		
-		if(!parameters.containsKey(ExploreEnvironment.ONTOLOGY_FILE_PATH)) {
-			throw new MissingParameterException(ExploreEnvironment.ONTOLOGY_FILE_PATH+" missing!");
-		}
-				
-		if(!parameters.containsKey(ExploreEnvironment.BASE_ONTOLOGY_URI)) {
-			throw new MissingParameterException(ExploreEnvironment.BASE_ONTOLOGY_URI+" missing!");
-		}
-		
-		if(!parameters.containsKey(ExploreEnvironment.SERIALIZATION_FORMAT)) {
-			throw new MissingParameterException(ExploreEnvironment.SERIALIZATION_FORMAT+" missing!");
-		}
-		
-		String filePath = (String)parameters.get(ExploreEnvironment.ONTOLOGY_FILE_PATH);
-		String baseUri = (String)parameters.get(ExploreEnvironment.BASE_ONTOLOGY_URI);
-		String language = (String)parameters.get(ExploreEnvironment.SERIALIZATION_FORMAT);
-				
-		try {
-			onto.importOntology(language, baseUri, new FileReader(filePath));
-		} 
-		catch (FileNotFoundException e) {
-			e.printStackTrace();
-		} 
-		catch (OntologyImportException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
 }

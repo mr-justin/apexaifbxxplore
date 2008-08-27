@@ -18,11 +18,7 @@ import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
 	
-	private static String[] ONTOLOGIES = {"D:/zl/eclipse/workspace_google/XXplore_core/res/BTC/schema.rdf",
-		"D:/zl/eclipse/workspace_google/XXplore_core/res/BTC/swrc.owl"};   //ontologies 
-	private static String[] DATASOURCES = {"schema.rdf","swrc.owl"};
-	private static String OUTPUTDIR  = "res/BTC/sampling/mapping/mappingResult";
-	private static String EXPLICITFILE = "schema.rdf+swrc.owl.mapping";
+
 	
 	private String ontology1;
 	private String ontology2;
@@ -36,25 +32,15 @@ public class MappingComputationService {
 	private static final boolean INTERNALTOO = Parameter.EXTERNAL;	
 	private static final boolean EFFICIENTAGENDA = Parameter.COMPLETE;
 	private static final int STRATEGY = Parameter.DECISIONTREE;
-	private static final String CLASSIFIERFILE = "config/tree.obj";
-	private static final String RULESFILE = "config/rules.obj";	
+	private static final String CLASSIFIERFILE = "res/tree.obj";
+	private static final String RULESFILE = "res/rules.obj";	
 	private static final boolean SEMI = Parameter.FULLAUTOMATIC;
 	private static final double MAXERROR = 0.9; 
 	private static final int NUMBERQUESTIONS = 5;
 	private static final boolean REMOVEDOUBLES = Parameter.REMOVEDOUBLES;	
 	private static final double CUTOFF = 0.9;  //0.25;0.31;0.35(0.7);0.9(0.95)
-	private static final String MANUALMAPPINGSFILE = "D:/BTC/sampling/mapping/MapCSV.txt";	
+	private static final String MANUALMAPPINGSFILE = "";	
 	
-	
-	/**
-	 * This is just a general testing method.
-	 * @param args
-	 */
-	public static void main(String[] args) {
-//		MappingComputationService service = new MappingComputationService(ONTOLOGIES, DATASOURCES, OUTPUTDIR, EXPLICITFILE);
-		MappingComputationService service = new MappingComputationService(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
-		service.computeMappings();
-	}
 	
 	public MappingComputationService(String[] ontologies, String[] datasources, String outputDir) {
 		this.ontology1 = ontologies[0];
@@ -93,12 +79,12 @@ public class MappingComputationService {
 		align.explicit = explicit;
 		align.align();									//process
 		saveVector(align.cutoff, resultFile);
-		Evaluation evaluation = new Evaluation(MANUALMAPPINGSFILE);
+		Evaluation evaluation = new Evaluation(resultFile);
 		evaluation.doEvaluation(align.ontology,align.resultListLatest,align.p.cutoff);
 		evaluation.printEvaluation();
 	}
 	
-	public void saveVector(Vector vector, String fileName) {
+	private void saveVector(Vector vector, String fileName) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
 			Iterator iter = vector.iterator();
