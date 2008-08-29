@@ -1,9 +1,15 @@
 package org.ateam.xxplore.core.service.search;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -17,21 +23,34 @@ import java.util.Set;
 import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.apache.log4j.Logger;
+import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.IServiceListener;
 import org.jgrapht.Graph;
 import org.jgrapht.Graphs;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.jgrapht.traverse.ClosestFirstIterator;
+import org.openrdf.model.URI;
+import org.openrdf.model.impl.StatementImpl;
+import org.openrdf.model.impl.URIImpl;
+import org.openrdf.model.vocabulary.OWL;
+import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
+import org.openrdf.rio.RDFHandlerException;
+import org.xmedia.oms.model.api.IConcept;
+import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IObjectProperty;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IProperty;
+import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
 import org.xmedia.oms.persistence.StatelessSession;
 import org.xmedia.oms.persistence.dao.IConceptDao;
+import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
 import org.xmedia.oms.query.ConceptMemberPredicate;
 import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
@@ -85,7 +104,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		// TODO Auto-generated method stub
 	}
 
-	public Collection<Collection<OWLPredicate>> computeQueries(Map<String,Collection<KbElement>> elements, int width, int depth) {
+	public Collection<Collection<OWLPredicate>> computeQueries(Map<String,Collection<KbElement>> elements, String datasourceUri, int width, int depth) {
 		
 		if (elements == null) {
 			return null;
@@ -104,7 +123,7 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 	    if((resources == null) || (resources.size() == 0)) {
 			return null;
 		}
-		resourceGraph = computeGraphSchemaIndex();
+		resourceGraph = computeGraphSchemaIndex(datasourceUri);
 		computeGraph(resources,resourceGraph);
 		subgraphs = computeSubgraphs(resources);
 		if((subgraphs == null) || (subgraphs.size() == 0)) {
@@ -191,26 +210,51 @@ public class NextQueryIntepretationService implements IQueryInterpretationServic
 		return ress;
 	}
 	
-	public WeightedPseudograph<KbVertex,KbEdge> computeGraphSchemaIndex(){
-//		if(resourceGraph != null) return resourceGraph;
+//	public WeightedPseudograph<KbVertex,KbEdge> computeGraphSchemaIndex(){
+////		if(resourceGraph != null) return resourceGraph;
+//		
+//		WeightedPseudograph<KbVertex,KbEdge> graph = new WeightedPseudograph<KbVertex,KbEdge>(KbEdge.class);
+//		
+//		//construct graphSchemaIndex by Concept
+//		IConceptDao conceptDao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
+//		List concepts = conceptDao.findAll();
+//		int numConcept = concepts.size();
+////		System.out.println("number of Concept: " + numConcept);
+//		
+//		for(Object concept : concepts){
+//			if(concept instanceof IResource){
+//				IResource resource = (IResource)concept;
+//				addGraphElements(resource, graph);
+//			}	
+//		}
+//		
+//		verticesOfGraphIndex = graph.vertexSet();
+//		return graph;
+//	}
+	
+	public WeightedPseudograph<KbVertex,KbEdge> computeGraphSchemaIndex(String datasourceUri){
 		
-		WeightedPseudograph<KbVertex,KbEdge> graph = new WeightedPseudograph<KbVertex,KbEdge>(KbEdge.class);
+		WeightedPseudograph<KbVertex,KbEdge> resourceGraph = null;
+		File graphIndex = new File(ExploreEnvironment.GRAPH_INDEX_DIR, datasourceUri + ".graph");
+		ObjectInputStream in;
 		
-		//construct graphSchemaIndex by Concept
-		IConceptDao conceptDao = (IConceptDao) PersistenceUtil.getDaoManager().getAvailableDao(IConceptDao.class);
-		List concepts = conceptDao.findAll();
-		int numConcept = concepts.size();
-//		System.out.println("number of Concept: " + numConcept);
-		
-		for(Object concept : concepts){
-			if(concept instanceof IResource){
-				IResource resource = (IResource)concept;
-				addGraphElements(resource, graph);
-			}	
+		try {
+			in = new ObjectInputStream(new FileInputStream(graphIndex));
+			resourceGraph = (WeightedPseudograph<KbVertex,KbEdge>)in.readObject(); 
+			in.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		verticesOfGraphIndex = graph.vertexSet();
-		return graph;
+
+		verticesOfGraphIndex = resourceGraph.vertexSet();
+		return resourceGraph;
 	}
 	
 	public void computeGraph(Map<String,Collection<KbElement>> resources, WeightedPseudograph<KbVertex,KbEdge> graph){

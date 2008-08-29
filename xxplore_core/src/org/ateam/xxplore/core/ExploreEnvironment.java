@@ -68,6 +68,8 @@ public class ExploreEnvironment {
 	
 	public static String KB_INDEX_DIR;
 	
+	public static String GRAPH_INDEX_DIR;
+	
 	public static String SYN_INDEX_DIR;
 	
 	public static String DOC_DIR;
@@ -156,6 +158,7 @@ public class ExploreEnvironment {
 		
 		private static String s_doc_idx_suffix = "/doc_index";
 		private static String s_kb_idx_suffix = "/kb_index";
+		private static String s_graph_idx_suffix = "/graph_index";
 		private static String s_syn_idx_suffix = "/syn_index";
 		private static String s_doc_dir_suffix = "/docs";
 		private static String s_storedquery_dir_suffix = "/StoredQueries.xml";
@@ -187,6 +190,7 @@ public class ExploreEnvironment {
 			
 			DOC_INDEX_DIR = s_IndexLocation + s_doc_idx_suffix;
 			KB_INDEX_DIR = s_IndexLocation + s_kb_idx_suffix;
+			GRAPH_INDEX_DIR = s_IndexLocation + s_graph_idx_suffix;
 			SYN_INDEX_DIR = s_IndexLocation + s_syn_idx_suffix;
 			DOC_DIR = s_IndexLocation + s_doc_dir_suffix;
 			STOREDQUERY_DIR = s_ResourceLocation + s_storedquery_dir_suffix;

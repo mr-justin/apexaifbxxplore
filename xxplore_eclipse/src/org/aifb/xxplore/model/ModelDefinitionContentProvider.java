@@ -17,6 +17,7 @@ import org.aifb.xxplore.storedquery.Query;
 import org.aifb.xxplore.views.definitionviewer.CheckboxDialog;
 import org.aifb.xxplore.views.definitionviewer.ITreeNode;
 import org.aifb.xxplore.views.definitionviewer.ModelDefinitionNode;
+import org.apache.commons.lang.StringUtils;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.model.definition.ModelDefinition;
 import org.ateam.xxplore.core.service.IService;
@@ -24,6 +25,7 @@ import org.ateam.xxplore.core.service.search.KbElement;
 import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
 import org.ateam.xxplore.core.service.search.NextQueryIntepretationService;
 import org.ateam.xxplore.core.service.search.QueryTranslationService;
+import org.ateam.xxplore.core.service.search.SummaryGraphIndexService;
 import org.eclipse.jface.viewers.AbstractTreeViewer;
 import org.eclipse.jface.viewers.ITreeContentProvider;
 import org.eclipse.jface.viewers.TreeViewer;
@@ -115,8 +117,10 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 						m_modeldefinition);
 
 				if (m_modeldefinition.getDataSource() instanceof IOntology) {
-					makeKbIndex(((IOntology) m_modeldefinition.getDataSource())
-							.getUri());
+					makeKbIndex(fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
+							.getUri()));
+					makeGraphIndex(fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
+							.getUri()));
 					System.out.println(((IOntology) m_modeldefinition
 							.getDataSource()).getUri());
 				}
@@ -129,6 +133,14 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 		}
 	}
 
+	private static String fsTransduceUri(String uri) {
+		uri = StringUtils.replace(uri, ":", "COLON");
+		uri = StringUtils.replace(uri, "/", "SLASH");
+		uri = StringUtils.replace(uri, "#", "SHARP");
+
+		return uri;
+	}
+	
 	public String truncateUri(String uri) {
 		return uri.indexOf("#") >= 0 ? uri.substring(uri.indexOf("#") + 1)
 				: uri;
@@ -230,12 +242,14 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 		String query = m_modeldefinition.getQuery();
 		// map keywords to ontology elements
 		Map<String, Collection<KbElement>> elements = m_search_service
-				.searchKb(query);
+				.searchKb(query, fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
+						.getUri()));
 
 		// connect ontology elements to compute possible definitions (queries)
 		Collection<Collection<OWLPredicate>> queries = m_interpretator
 				.computeQueries(
 						elements,
+						fsTransduceUri(((IOntology) m_modeldefinition.getDataSource()).getUri()),
 						ExploreEnvironment.DEFAULT_WIDTH_FOR_TERMINTERPRETATION,
 						ExploreEnvironment.DEFAULT_DEPTH_FOR_TERMINTERPRETATION);
 		if (queries != null) {
@@ -263,12 +277,14 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 		String query = m_modeldefinition.getQuery();
 		// map keywords to ontology elements
 		Map<String, Collection<KbElement>> elements = m_search_service
-				.searchKb(query);
+				.searchKb(query, fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
+						.getUri()));
 
 		// connect ontology elements to compute possible definitions (queries)
 		Collection<Collection<OWLPredicate>> queries = m_interpretator
 				.computeQueries(
 						elements,
+						fsTransduceUri(((IOntology) m_modeldefinition.getDataSource()).getUri()),
 						ExploreEnvironment.DEFAULT_WIDTH_FOR_TERMINTERPRETATION,
 						ExploreEnvironment.DEFAULT_DEPTH_FOR_TERMINTERPRETATION);
 		if (queries != null) {
@@ -288,12 +304,14 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 		String query = m_modeldefinition.getQuery();
 		// map keywords to ontology elements
 		Map<String, Collection<KbElement>> elements = m_search_service
-				.searchKb(query);
+				.searchKb(query, fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
+						.getUri()));
 
 		// connect ontology elements to compute possible definitions (queries)
 		Collection<Collection<OWLPredicate>> queries = m_interpretator
 				.computeQueries(
 						elements,
+						fsTransduceUri(((IOntology) m_modeldefinition.getDataSource()).getUri()),
 						ExploreEnvironment.DEFAULT_WIDTH_FOR_TERMINTERPRETATION,
 						ExploreEnvironment.DEFAULT_DEPTH_FOR_TERMINTERPRETATION);
 
@@ -431,10 +449,22 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 			}
 		});
 	}
+	
+	private void makeGraphIndex(final String datasourceUri) {
+		Display.getCurrent().asyncExec(new Runnable() {
+			public void run() {
+				new SummaryGraphIndexService().indexSummaryGraph(datasourceUri);
+			}
+		});
+	}
 
 	// used by XXPloreCommandLine only ...
 	public void makeKbIndexCommandLineVersion(String datasourceUri) {
 		m_search_service.indexDataSource(datasourceUri);
+	}
+	
+	public void makeGraphIndexCommandLineVersion(String datasourceUri) {
+		new SummaryGraphIndexService().indexSummaryGraph(datasourceUri);
 	}
 
 	public static class ModelDefinitionContentProviderSingleTonHolder {

@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.util.Pair;
+import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -40,6 +41,7 @@ import org.ateam.xxplore.core.service.search.htmlparser.HTMLDocument;
 import org.ateam.xxplore.core.service.search.pdfparser.PDFDocumentParser;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IDataProperty;
+import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
@@ -120,12 +122,12 @@ public class NextLuceneQueryService implements IService {
 	}
 	
 	
-	public Map<String,Collection<KbElement>> searchKb(String query){
+	public Map<String,Collection<KbElement>> searchKb(String query, String datasource){
 		Map<String,Collection<KbElement>> ress = new LinkedHashMap<String,Collection<KbElement>>();
 		try {
 			if (m_kbSearcher ==null){
 				s_log.debug("Open index " + ExploreEnvironment.KB_INDEX_DIR + " and init kb searcher!");
-				m_kbSearcher = new IndexSearcher(ExploreEnvironment.KB_INDEX_DIR);
+				m_kbSearcher = new IndexSearcher(ExploreEnvironment.KB_INDEX_DIR + "/" + datasource);
 			}
 			QueryParser parser = new QueryParser("label", m_analyzer);
 			Query q = parser.parse(query);
@@ -191,7 +193,7 @@ public class NextLuceneQueryService implements IService {
 		        		        	for(int j = 0; j < hits.length(); j++){
 		        		        		Document docu = hits.doc(j);
 		        		        		if(docu != null){
-		        		        			IDataProperty prop = new DataProperty(pruneString(docu.get("dataproperty")));
+		        		        			IDataProperty prop = new DataProperty(pruneString(docu.get("attribute")));
 		        		        			INamedConcept con = new NamedConcept(pruneString(docu.get("concept")));
 		        		        			KbVertex cvertex = new KbVertex(con,KbElement.CVERTEX,1);
 		        		        			res.add(new KbEdge(cvertex, vvertex, prop, KbElement.AEDGE,1));
@@ -222,7 +224,7 @@ public class NextLuceneQueryService implements IService {
 		        		        	for(int j = 0; j < hits.length(); j++){
 		        		        		Document docu = hits.doc(j);
 		        		        		if(docu != null){
-		        		        			INamedConcept con = new NamedConcept(pruneString(docu.get("domain")));
+		        		        			INamedConcept con = new NamedConcept(pruneString(docu.get("concept")));
 		        		        			KbVertex cvertex = new KbVertex(con,KbElement.CVERTEX,1);
 		        		        			res.add(new KbEdge(cvertex, vvertex, dataProp, KbElement.AEDGE,1));
 		        		        		}
@@ -287,7 +289,7 @@ public class NextLuceneQueryService implements IService {
 	private static String CONCEPT = "concept";
 	private static String OBJECTPROPERTY = "objectproperty";
 	private static String DATAPROPERTY = "dataproperty";
-//	private static String INDIVIDUAL = "indiviudal";
+	private static String INDIVIDUAL = "indiviudal";
 	private static String LITERAL = "literal";
 	
 	private boolean isIndexingRequired(String datasourceUri){
@@ -321,7 +323,7 @@ public class NextLuceneQueryService implements IService {
 					Syns2Index.indexWordNet();
 				}
 
-				File file = new File(ExploreEnvironment.KB_INDEX_DIR);
+				File file = new File(ExploreEnvironment.KB_INDEX_DIR, datasourceUri);
 				IndexWriter indexWriter = new IndexWriter(file, m_analyzer, true);
 				
 				IndexSearcher indexSearcher = new IndexSearcher(ExploreEnvironment.SYN_INDEX_DIR);
@@ -332,8 +334,7 @@ public class NextLuceneQueryService implements IService {
 				indexSearcher.close();
 				
 				indexDataSourceByLiteral(indexWriter);
-				
-				indexGraphElement(indexWriter);
+				indexDataSourceByIndividual(indexWriter);
 				
 				indexWriter.optimize();
 				indexWriter.close();
@@ -369,59 +370,6 @@ public class NextLuceneQueryService implements IService {
 					doc.add(new Field("uri", uri, Field.Store.YES, Field.Index.NO));
 				}
 				indexWriter.addDocument(doc);
-				
-				if(concept instanceof NamedConcept){
-					NamedConcept ncon = (NamedConcept)concept;
-//					Set<IProperty> propsFrom = ncon.getPropertiesFrom();
-//					if(propsFrom != null){
-//						for(IProperty prop : propsFrom){
-//							if(prop instanceof DataProperty){
-//								Document dpdoc = new Document();
-//								System.out.println(prop.getLabel());
-//								System.out.println(ncon.getUri());
-//								dpdoc.add(new Field("attribute", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-//								dpdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-//								indexWriter.addDocument(dpdoc);
-//						}
-//					}
-					Set<Pair> proAndRanges = ncon.getPropertiesAndRangesFrom(); 
-					if(proAndRanges != null){
-						for(Pair pair : proAndRanges){
-							
-							IProperty prop = (IProperty)pair.getHead();
-							
-							if(prop instanceof IObjectProperty){
-								
-								String range = new String();
-								
-								if(pair.getTail() instanceof IConcept){
-									range = ((IConcept)pair.getTail()).getLabel();
-								}
-								else if(pair.getTail() instanceof INamedConcept){
-									range = ((INamedConcept)pair.getTail()).getUri();
-								}
-								
-								Document opdoc = new Document();
-//								System.out.println(prop.getLabel());
-//								System.out.println(ncon.getUri());
-								opdoc.add(new Field("relation", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-								opdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-								opdoc.add(new Field("range", range, Field.Store.YES, Field.Index.NO));
-								indexWriter.addDocument(opdoc);
-
-							}
-							else if (prop instanceof IDataProperty ){
-								Document dpdoc = new Document();
-//								System.out.println(prop.getLabel());
-//								System.out.println(ncon.getUri());
-								dpdoc.add(new Field("attribute", prop.getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-								dpdoc.add(new Field("domain", ncon.getUri(), Field.Store.YES, Field.Index.NO));
-								indexWriter.addDocument(dpdoc);
-							}
-						}
-					}
-					
-				}
 				
 				Set<String> values = new HashSet<String>();
 				Term term = new Term("word", label.toLowerCase());
@@ -521,6 +469,64 @@ public class NextLuceneQueryService implements IService {
 				doc.add(new Field("label", ((ILiteral)literal).getLabel(), Field.Store.YES, Field.Index.TOKENIZED));
 				
 				indexWriter.addDocument(doc);
+			}
+		}
+		catch (IOException e) {
+			s_log.error("Exception occurred while making index: " + e);
+			//TODO handle excpetion
+			e.printStackTrace();
+		} 
+	}
+	
+	public void indexDataSourceByIndividual (IndexWriter indexWriter){
+		IIndividualDao individualDao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
+		List individuals = individualDao.findAll();
+		System.out.println("individuals.size(): " + individuals.size());
+		int i = 0; 
+		try{
+			for (Object souceIndividual:individuals){
+				System.out.println(i + ": " + ((INamedIndividual)souceIndividual).getLabel());
+				if (souceIndividual instanceof IIndividual) {
+					Set<IConcept> sourceConcepts = ((IIndividual)souceIndividual).getTypes();
+					Document doc = new Document();
+					doc.add(new Field("type", INDIVIDUAL, Field.Store.YES, Field.Index.NO));
+					if(souceIndividual instanceof INamedIndividual)
+						doc.add(new Field("label", ((INamedIndividual)souceIndividual).getUri(), Field.Store.NO, Field.Index.UN_TOKENIZED));
+					else
+						doc.add(new Field("label", ((IIndividual)souceIndividual).getLabel(), Field.Store.NO, Field.Index.UN_TOKENIZED));
+					for(IConcept con : sourceConcepts) {
+						doc.add(new Field("concept", ((INamedConcept)con).getUri(),Field.Store.YES, Field.Index.NO));
+					}
+					indexWriter.addDocument(doc);
+					
+					Set<IPropertyMember> propmembers = ((IIndividual)souceIndividual).getPropertyFromValues();
+					for(IPropertyMember propmember : propmembers){
+						if(propmember.getType() == PropertyMember.DATA_PROPERTY_MEMBER && propmember.getTarget() instanceof ILiteral){
+							for(IConcept scon : sourceConcepts){
+								Document attrdoc = new Document();
+								attrdoc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
+								attrdoc.add(new Field("attribute", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
+								attrdoc.add(new Field("concept", ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
+								indexWriter.addDocument(attrdoc);
+							}
+						}	
+						else if(propmember.getType() == PropertyMember.OBJECT_PROPERTY_MEMBER && propmember.getTarget() instanceof IIndividual){
+							IIndividual targetIndividual = (IIndividual)propmember.getTarget();
+							Set<IConcept> targetConcepts = ((IIndividual)targetIndividual).getTypes();
+							for(IConcept scon : sourceConcepts){
+								for(IConcept tcon : targetConcepts) {
+									Document reldoc = new Document();
+									reldoc.add(new Field("relation", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
+									reldoc.add(new Field("domain", ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
+									reldoc.add(new Field("range", ((INamedConcept)tcon).getUri(),Field.Store.YES, Field.Index.NO));
+								
+									indexWriter.addDocument(reldoc);
+								}
+							}
+						}
+					}
+				}
+				i++;
 			}
 		}
 		catch (IOException e) {

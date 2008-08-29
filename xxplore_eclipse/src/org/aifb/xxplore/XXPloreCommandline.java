@@ -445,6 +445,7 @@ public class XXPloreCommandline {
 			m_modeldefinition = new ModelDefinition(m_onto);
 			m_modeldef_provider.setModelDefinition(m_modeldefinition);
 			m_modeldef_provider.makeKbIndexCommandLineVersion(((IOntology)m_modeldefinition.getDataSource()).getUri());
+			m_modeldef_provider.makeGraphIndexCommandLineVersion(((IOntology)m_modeldefinition.getDataSource()).getUri());
 			
 		}
 		
