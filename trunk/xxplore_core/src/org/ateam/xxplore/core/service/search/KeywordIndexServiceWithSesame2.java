@@ -302,13 +302,13 @@ public class KeywordIndexServiceWithSesame2 {
 					Set<IPropertyMember> propmembers = ((IIndividual)souceIndividual).getPropertyFromValues();
 					for(IPropertyMember propmember : propmembers){
 						if(propmember.getType() == PropertyMember.DATA_PROPERTY_MEMBER && propmember.getTarget() instanceof ILiteral){
-							Document attrdoc = new Document();
-							attrdoc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-							attrdoc.add(new Field("attribute", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
 							for(IConcept scon : sourceConcepts){
+								Document attrdoc = new Document();
+								attrdoc.add(new Field("literal", propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
+								attrdoc.add(new Field("attribute", propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
 								attrdoc.add(new Field("concept", ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
+								indexWriter.addDocument(attrdoc);
 							}
-							indexWriter.addDocument(attrdoc);
 						}	
 						else if(propmember.getType() == PropertyMember.OBJECT_PROPERTY_MEMBER && propmember.getTarget() instanceof IIndividual){
 							IIndividual targetIndividual = (IIndividual)propmember.getTarget();
