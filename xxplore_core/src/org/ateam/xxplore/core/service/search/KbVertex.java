@@ -78,7 +78,7 @@ public class KbVertex implements KbElement{
 	public float getScore(){
 		return score;
 	}
-	
+		
 	public void createCursors(Set<String> keywords){
 		cursors = new HashMap<String,Queue<Cursor>>();
 		for(String keyword : keywords){
