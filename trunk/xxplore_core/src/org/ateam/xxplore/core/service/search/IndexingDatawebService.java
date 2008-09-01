@@ -89,12 +89,12 @@ public class IndexingDatawebService {
 		service.m_con.closeOntology(onto);
 
 		//index swrc 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
-		onto = service.importOntology(parameters, SWRC_PATH);
-		service.index(parameters, SWRC_SCHEMA_PATH, onto);
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(onto);
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+//		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
+//		onto = service.importOntology(parameters, SWRC_PATH);
+//		service.index(parameters, SWRC_SCHEMA_PATH, onto);
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(onto);
 
 		//compute schema mappings for SWRC
 		service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
@@ -106,12 +106,12 @@ public class IndexingDatawebService {
 		service.m_sessionFactory.getCurrentSession().close();
 		service.m_con.closeOntology(onto);
 
-		//extract DBLP instances 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-		onto = service.importOntology(parameters, SWRC_PATH);
-		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(onto);
+		//extract SWRC instances 
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+//		onto = service.importOntology(parameters, SWRC_PATH);
+//		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(onto);
 		
 //		try {
 //			((SesameConnection)service.m_con).deleteAllOntologies();
@@ -166,24 +166,36 @@ public class IndexingDatawebService {
 		//load ontology
 		IOntology onto = null;
 		try {
-			onto = m_con.loadOrCreateOntology(PropertyUtils.convertToMap(parameters));
-			onto.importOntology(LANGUAGE, BASE_URI, new FileReader(filepath));
-		} catch (OntologyCreationException e) {
+			onto = m_con.loadOntology(PropertyUtils.convertToMap(parameters));
+			
+		} catch (OntologyLoadException e) {
+			e.printStackTrace();
+			try {
+				onto = m_con.createOntology(PropertyUtils.convertToMap(parameters));
+				onto.importOntology(LANGUAGE, BASE_URI, new FileReader(filepath));
+			} catch (MissingParameterException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (InvalidParameterException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (OntologyCreationException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (FileNotFoundException e2) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (OntologyImportException e2) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (InvalidParameterException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (MissingParameterException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} catch (InvalidParameterException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} 
-		catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OntologyImportException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 
 		try {
 			ISession session = m_sessionFactory.openSession(m_con, onto);
