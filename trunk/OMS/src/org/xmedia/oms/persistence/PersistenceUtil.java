@@ -6,22 +6,20 @@ public class PersistenceUtil {
 
 	private static IDaoManager s_daoManager;
 	
-	private static ISessionFactory s_sessionFactory;
-	
 	public static IDaoManager getDaoManager(){
 		return s_daoManager;
 	}
 	
 	public static ISessionFactory getSessionFactory(){
-		return s_sessionFactory;
+		return SessionFactory.getInstance();
 	}
 	
 	public static void setDaoManager(IDaoManager man){
 		s_daoManager = man;
 	}
 	
-	public static void setSessionFactory(ISessionFactory factory){
-		s_sessionFactory = factory;
+	public static void setSession(ISession session){
+		SessionFactory.getInstance().setSession(session);
 	}
 
 }

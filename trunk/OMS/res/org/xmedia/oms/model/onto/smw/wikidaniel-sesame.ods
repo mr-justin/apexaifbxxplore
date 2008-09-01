@@ -1,5 +1,5 @@
 ontology.uri=localhost
-ontology.file.path=c:/wikidaniel-20080824.owl
+ontology.file.path=C:/MyFiles/Projekte/Workspaces/current_projects/OMS_G/res/org/xmedia/oms/model/onto/smw/wikidaniel-20080824.owl
 ontology.file.name=wikidaniel-20080824.owl
 base_ontology.uri=http://localhost/smw-devel
 language=http://www.x-media-project/rdf/serialization/languages/rdf_xml
@@ -8,5 +8,5 @@ ontology.index=all
 connection.provider=org.xmedia.accessknow.sesame.persistence.ConnectionProvider
 session.factory_class=org.xmedia.accessknow.sesame.persistence.SesameSessionFactory
 reasoner.on=false
-resources.location=C:/Dokumente und Einstellungen/Daniel/Eigene Dateien/daniel/studium/Diplomarbeit/Code3/XXplore_core/res
-index.location=C:/Dokumente und Einstellungen/Daniel/Eigene Dateien/daniel/studium/Diplomarbeit/Code3/XXplore_core/res/dawiki
+resources.location=C:/DataWebSearch/res
+index.location=C:/DataWebSearch/index
