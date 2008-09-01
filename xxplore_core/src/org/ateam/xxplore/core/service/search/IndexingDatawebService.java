@@ -80,32 +80,39 @@ public class IndexingDatawebService {
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
 
-		//load DBLP as base ontology first
+		//index DBLP 
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
-
 		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
-		service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
-
 		IOntology onto = service.importOntology(parameters, DBLP_PATH);
 		service.index(parameters, DBLP_SCHEMA_PATH, onto); 
-		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
-
 		service.m_sessionFactory.getCurrentSession().close();
 		service.m_con.closeOntology(onto);
 
-		
-
-		//import swrc 
+		//index swrc 
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
 		onto = service.importOntology(parameters, SWRC_PATH);
 		service.index(parameters, SWRC_SCHEMA_PATH, onto);
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(onto);
+
+		//compute schema mappings for SWRC
+		service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
+		
+		//extract DBLP instances 
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
+		onto = service.importOntology(parameters, DBLP_PATH);
 		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES, onto);
 		service.m_sessionFactory.getCurrentSession().close();
 		service.m_con.closeOntology(onto);
-		//compute instances for SWRC
 
-
+		//extract DBLP instances 
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+		onto = service.importOntology(parameters, SWRC_PATH);
+		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(onto);
+		
 //		try {
 //			((SesameConnection)service.m_con).deleteAllOntologies();
 //			service.m_con.close();
