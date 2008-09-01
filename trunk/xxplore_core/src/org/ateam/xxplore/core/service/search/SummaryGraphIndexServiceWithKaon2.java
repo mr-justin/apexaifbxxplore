@@ -80,7 +80,6 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		this.ontologyFilePath = ontologyFilePath;
 		this.ontologyUri = ontologyUri;
 		this.structureIndexDir = structureIndexDir;
-		init();
 	}
 	
 	public void indexSummaryGraph() {
@@ -296,70 +295,6 @@ public class SummaryGraphIndexServiceWithKaon2 {
 		int numProMem = property.getNumberOfPropertyMember();
 		return computeEdgeWeight(numProMem,TOTAL_NUMBER_OF_PROPERTYMEMBER);
 	}  
-
-	private void init() {
-
-		/** ******** create connection provider *********** */
-		// String providerClazz =
-		// parameters.getProperty(KbEnvironment.CONNECTION_PROVIDER_CLASS);
-		IConnectionProvider provider = new Kaon2ConnectionProvider();
-
-		/** ******** configure connection provider *********** */
-		Properties props = new Properties();
-		// set connection url, e.g. jdbc:hsqldb:hsql://localhost/
-		props.setProperty(KbEnvironment.CONNECTION_URL, "");
-
-		// as kaon2 currently runs in memory only, no connection data to the db
-		// is required
-		// the product name of the database used by jena store, e.g. HSQL
-		props.setProperty(KbEnvironment.DB_PRODUCT_NAME, "");
-		// the driver class used for connection to the database, e.g.
-		// org.hsqldb.jdbcDriver
-		props.setProperty(KbEnvironment.DB_DRIVER_CLASS, "");
-
-		props.setProperty(KbEnvironment.TRANSACTION_CLASS,"org.xmedia.oms.adapter.kaon2.persistence.Kaon2Transaction");
-
-		provider.configure(props);
-
-		try {
-			m_onto = loadOntology(provider, props, ontologyFilePath);
-		} catch (DatasourceException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (MissingParameterException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidParameterException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (OntologyLoadException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-
-		/** ******** create a session *********** */
-		ISessionFactory factory = SessionFactory.getInstance();
-		// not much to configure now
-		factory.configure(PropertyUtils.convertToMap(props));
-		// set session factory
-		PersistenceUtil.setSessionFactory(factory);
-		// open a new session with the ontology
-		try {
-			factory.openSession(provider.getConnection(), m_onto);
-		} catch (DatasourceException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (OpenSessionException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		/** ******** set a dao manager *********** */
-		// the dao manager provides the daos to be use to access the knowledge
-		// base
-		PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
-
-	}
 	
 	private static IOntology loadOntology(IConnectionProvider provider,Properties props, String uri) throws DatasourceException,MissingParameterException, InvalidParameterException,OntologyLoadException {
 

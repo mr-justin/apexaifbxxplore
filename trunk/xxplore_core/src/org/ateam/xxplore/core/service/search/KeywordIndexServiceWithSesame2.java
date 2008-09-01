@@ -386,7 +386,7 @@ public class KeywordIndexServiceWithSesame2 {
 		session.close();	
 		
 		ISessionFactory factory = SessionFactory.getInstance();
-		PersistenceUtil.setSessionFactory(factory); 
+		PersistenceUtil.setSession(session); 
 		//open a new session with the ontology
 		try {
 			m_session = factory.openSession(ses_con,m_onto);
