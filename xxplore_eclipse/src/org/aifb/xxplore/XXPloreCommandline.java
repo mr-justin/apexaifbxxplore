@@ -33,6 +33,7 @@ import org.xmedia.oms.model.api.OntologyImportException;
 import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.IConnectionProvider;
 import org.xmedia.oms.persistence.IDataSource;
+import org.xmedia.oms.persistence.IKbConnection;
 import org.xmedia.oms.persistence.ISession;
 import org.xmedia.oms.persistence.ISessionFactory;
 import org.xmedia.oms.persistence.InvalidParameterException;
@@ -175,19 +176,19 @@ public class XXPloreCommandline {
 
 			//load ontology	
 			IOntology onto = null;
-			SesameConnection ses_con = null;
+			IKbConnection con = null;
 			try {
 				if (provider instanceof ConnectionProvider) {
 
 					try {
-						ses_con = new SesameConnection(ExploreEnvironment.LocationHelper.getResourceLocation());
+						con = new SesameConnection(ExploreEnvironment.LocationHelper.getResourceLocation());
 					} catch (RepositoryException e2) {
 						e2.printStackTrace();
-						ses_con = (SesameConnection)provider.getConnection();
+						con = (SesameConnection)provider.getConnection();
 					}	
 
 					try {						
-						onto = ses_con.loadOntology(PropertyUtils.convertToMap(m_parameters));
+						onto = con.loadOntology(PropertyUtils.convertToMap(m_parameters));
 					}
 					catch (OntologyLoadException e) {
 
@@ -199,18 +200,18 @@ public class XXPloreCommandline {
 								
 								if(index.equals("all")){
 									m_parameters.setProperty(KbEnvironment.ONTOLOGY_INDEX, IndexHelper.s_all_indices);
-									onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+									onto = con.createOntology(PropertyUtils.convertToMap(m_parameters));
 								}
 								else{
-									onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+									onto = con.createOntology(PropertyUtils.convertToMap(m_parameters));
 								}
 							}
 							else{
-								onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+								onto = con.createOntology(PropertyUtils.convertToMap(m_parameters));
 							}
 						}
 						else{
-							onto = ses_con.createOntology(PropertyUtils.convertToMap(m_parameters));
+							onto = con.createOntology(PropertyUtils.convertToMap(m_parameters));
 						}					
 						try {
 							addFileToRepository(onto,PropertyUtils.convertToMap(m_parameters));
@@ -234,13 +235,13 @@ public class XXPloreCommandline {
 				e.printStackTrace();
 			}
 
+			ISession session = null;
 			if (provider instanceof ConnectionProvider) {
 
 				SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
-				ISession session = null;
 
 				try {
-					session = sesame_factory.openSession(ses_con, onto);
+					session = sesame_factory.openSession(con, onto);
 				} catch (DatasourceException e) {
 					e.printStackTrace();
 				} catch (OpenSessionException e) {
@@ -249,26 +250,21 @@ public class XXPloreCommandline {
 				//set dao manager
 				PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
 
-				session.close();			
 			}
 			else if (provider instanceof Kaon2ConnectionProvider) {
 				ISessionFactory factory = SessionFactory.getInstance();
 				factory.configure(PropertyUtils.convertToMap(m_parameters));
-
+				try {
+					session = factory.openSession(con, onto);
+				} catch (OpenSessionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
 			}
 
-			ISessionFactory factory = SessionFactory.getInstance();
-			PersistenceUtil.setSessionFactory(factory); 
+			PersistenceUtil.setSession(session); 
 			//open a new session with the ontology
-			try {
-				factory.openSession(ses_con,onto);
-			} catch (DatasourceException e) {
-				e.printStackTrace();
-			} catch (OpenSessionException e) {
-				e.printStackTrace();
-			}
-
 			m_onto =  onto;
 
 			State.CURRENT_STATE = State.REPOSITORY_READY;

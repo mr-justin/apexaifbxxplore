@@ -265,11 +265,10 @@ public class ExplorePlugin extends AbstractUIPlugin {
 			} catch (OntologyLoadException e) {
 				e.printStackTrace();
 			}
-			
+			ISession session = null;
 			if (provider instanceof ConnectionProvider) {
 					
 				SesameSessionFactory sesame_factory = new SesameSessionFactory(new XMURIFactoryInsulated());
-				ISession session = null;
 				
 				try {
 					session = sesame_factory.openSession(con, onto);
@@ -281,17 +280,21 @@ public class ExplorePlugin extends AbstractUIPlugin {
 				//set dao manager
 				PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
 				
-				session.close();			
 			}
 			else if (provider instanceof Kaon2ConnectionProvider) {
 				ISessionFactory factory = SessionFactory.getInstance();
 				factory.configure(PropertyUtils.convertToMap(parameters));
-
 				PersistenceUtil.setDaoManager(Kaon2DaoManager.getInstance());
+				try {
+					session = factory.openSession(con, onto);
+				} catch (OpenSessionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 			
 			ISessionFactory factory = SessionFactory.getInstance();
-			PersistenceUtil.setSessionFactory(factory); 
+			PersistenceUtil.setSession(session); 
 			//open a new session with the ontology
 			try {
 				factory.openSession(con,onto);
