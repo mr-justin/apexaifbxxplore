@@ -1,7 +1,6 @@
 package org.xmedia.oms.adapter.kaon2.ex;
 
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,19 +9,14 @@ import java.util.Set;
 import org.semanticweb.kaon2.api.Axiom;
 import org.semanticweb.kaon2.api.Cursor;
 import org.semanticweb.kaon2.api.DefaultOntologyResolver;
-import org.semanticweb.kaon2.api.Fact;
-import org.semanticweb.kaon2.api.KAON2Connection;
 import org.semanticweb.kaon2.api.KAON2Exception;
 import org.semanticweb.kaon2.api.KAON2Manager;
 import org.semanticweb.kaon2.api.Namespaces;
 import org.semanticweb.kaon2.api.Ontology;
-import org.semanticweb.kaon2.api.formatting.OntologyFileFormat;
+import org.semanticweb.kaon2.api.OntologyManager;
 import org.semanticweb.kaon2.api.logic.Term;
 import org.semanticweb.kaon2.api.owl.axioms.ObjectPropertyMember;
-import org.semanticweb.kaon2.api.owl.elements.DataProperty;
-import org.semanticweb.kaon2.api.owl.elements.Individual;
 import org.semanticweb.kaon2.api.owl.elements.OWLEntity;
-import org.semanticweb.kaon2.api.owl.elements.ObjectProperty;
 import org.semanticweb.kaon2.api.reasoner.Query;
 import org.semanticweb.kaon2.api.reasoner.Reasoner;
 
@@ -81,18 +75,18 @@ public class MetaknowWithOWL11MV {
         String metaviewOntologyURI="meta:"+ontologyURI;
 
         // This connection will contain the original ontology and all metaview-related information.
-        KAON2Connection connection=KAON2Manager.newConnection();
-        connection.setOntologyResolver(resolver);
+        OntologyManager manager = KAON2Manager.newOntologyManager();
+        manager.setOntologyResolver(resolver);
         
         
         // We now open the entity metaview by simply asking for the mentioned URI.
 //        Ontology entityMetaview=connection.openOntology(entityMetaviewOntologyURI,new HashMap<String,Object>());
         
         // We open the axiom metaview by simply asking for the mentioned URI.
-        Ontology metaknow = connection.openOntology(metaOntURI, new HashMap<String,Object>());
-        Ontology metaviewExtension = connection.openOntology(metaviewExtensionURI, new HashMap<String,Object>());
-        Ontology onto = connection.openOntology(ontologyURI, new HashMap<String,Object>());
-        Ontology axiomMetaview=connection.openOntology(axiomMetaviewOntologyURI,new HashMap<String,Object>());
+        Ontology metaknow = manager.openOntology(metaOntURI, new HashMap<String,Object>());
+        Ontology metaviewExtension = manager.openOntology(metaviewExtensionURI, new HashMap<String,Object>());
+        Ontology onto = manager.openOntology(ontologyURI, new HashMap<String,Object>());
+        Ontology axiomMetaview=manager.openOntology(axiomMetaviewOntologyURI,new HashMap<String,Object>());
         
         System.out.println(metaviewExtensionURI);
         
@@ -227,7 +221,7 @@ public class MetaknowWithOWL11MV {
 //        axiomMetaview.saveOntology(OntologyFileFormat.OWL_1_1_XML,new File("axiom-mw.xml"),"UTF-8");
 //        entityMetaview.saveOntology(OntologyFileFormat.OWL_1_1_XML,new File("C:\\MyFiles\\Projekte\\Workspaces\\current_projects\\xxplore\\trunk\\standard-kaon2\\res\\entity-mw.xml"),"UTF-8"); 
         // Finally, we clean-up before we exit.
-        connection.close();
+        manager.close();
     }
     protected static <T extends OWLEntity> void printEntityCursor(Namespaces namespaces,Cursor<T> cursor) throws KAON2Exception {
         try {

@@ -121,11 +121,10 @@ public class MetaviewExample {
 		ISessionFactory factory = SessionFactory.getInstance();
 		//not much to configure now
 		factory.configure(PropertyUtils.convertToMap(props));
-		//set session factory
-		PersistenceUtil.setSessionFactory(factory); 
 		//open a new session with the ontology
 		try {
 			factory.openSession(provider.getConnection(), m_onto);
+			PersistenceUtil.setSession(factory.openSession(provider.getConnection(), m_onto));
 		} catch (DatasourceException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
