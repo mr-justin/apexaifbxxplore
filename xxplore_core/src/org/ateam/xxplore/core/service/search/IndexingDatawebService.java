@@ -83,35 +83,35 @@ public class IndexingDatawebService {
 		//index DBLP 
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
 		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
-		IOntology onto = service.importOntology(parameters, DBLP_PATH);
+		IOntology onto = service.loadOntology(parameters, DBLP_PATH);
 		service.index(parameters, DBLP_SCHEMA_PATH, onto); 
 		service.m_sessionFactory.getCurrentSession().close();
 		service.m_con.closeOntology(onto);
 
 		//index swrc 
-//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-//		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
-//		onto = service.importOntology(parameters, SWRC_PATH);
-//		service.index(parameters, SWRC_SCHEMA_PATH, onto);
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(onto);
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
+		onto = service.loadOntology(parameters, SWRC_PATH);
+		service.index(parameters, SWRC_SCHEMA_PATH, onto);
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(onto);
 
 		//compute schema mappings for SWRC
 		service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
 		
 		//extract DBLP instances 
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
-		onto = service.importOntology(parameters, DBLP_PATH);
+		onto = service.loadOntology(parameters, DBLP_PATH);
 		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES, onto);
 		service.m_sessionFactory.getCurrentSession().close();
 		service.m_con.closeOntology(onto);
 
 		//extract SWRC instances 
-//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-//		onto = service.importOntology(parameters, SWRC_PATH);
-//		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(onto);
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+		onto = service.loadOntology(parameters, SWRC_PATH);
+		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(onto);
 		
 //		try {
 //			((SesameConnection)service.m_con).deleteAllOntologies();
@@ -162,14 +162,13 @@ public class IndexingDatawebService {
 	}
 
 
-	private IOntology importOntology(Properties parameters, String filepath){
+	private IOntology loadOntology(Properties parameters, String filepath){
 		//load ontology
 		IOntology onto = null;
 		try {
 			onto = m_con.loadOntology(PropertyUtils.convertToMap(parameters));
 			
 		} catch (OntologyLoadException e) {
-			e.printStackTrace();
 			try {
 				onto = m_con.createOntology(PropertyUtils.convertToMap(parameters));
 				onto.importOntology(LANGUAGE, BASE_URI, new FileReader(filepath));
