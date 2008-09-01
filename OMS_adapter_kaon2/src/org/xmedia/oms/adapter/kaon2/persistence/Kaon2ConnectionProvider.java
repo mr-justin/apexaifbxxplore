@@ -18,10 +18,10 @@ import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.semanticweb.kaon2.api.DefaultOntologyResolver;
-import org.semanticweb.kaon2.api.KAON2Connection;
 import org.semanticweb.kaon2.api.KAON2Exception;
 import org.semanticweb.kaon2.api.KAON2Manager;
 import org.semanticweb.kaon2.api.Ontology;
+import org.semanticweb.kaon2.api.OntologyManager;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.impl.Namespaces;
 import org.xmedia.oms.persistence.AbstractConnection;
@@ -100,13 +100,13 @@ public class Kaon2ConnectionProvider implements IConnectionProvider {
 	public class Kaon2Connection extends AbstractConnection{
 
 		/** the kaon2 connection delegate */
-		private KAON2Connection m_delegate;
+		private OntologyManager m_delegate;
 		private DefaultOntologyResolver m_resolver;
 
 		public Kaon2Connection(){
 
 			try {
-				m_delegate = KAON2Manager.newConnection();
+				m_delegate = KAON2Manager.newOntologyManager();
 				m_resolver = new DefaultOntologyResolver();
 				m_delegate.setOntologyResolver(m_resolver);
 			}
@@ -118,7 +118,7 @@ public class Kaon2ConnectionProvider implements IConnectionProvider {
 
 		}
 
-		public KAON2Connection getConnection() {
+		public OntologyManager getConnection() {
 			return m_delegate;
 		}
 

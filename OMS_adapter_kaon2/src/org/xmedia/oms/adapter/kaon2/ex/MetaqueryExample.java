@@ -121,8 +121,6 @@ public class MetaqueryExample {
 		ISessionFactory factory = SessionFactory.getInstance();
 		//not much to configure now
 		factory.configure(PropertyUtils.convertToMap(props));
-		//set session factory
-		PersistenceUtil.setSessionFactory(factory); 
 		//open a new session with the ontology
 		try {
 			factory.openSession(provider.getConnection(), m_onto);

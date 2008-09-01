@@ -15,12 +15,12 @@ import org.aifb.xxplore.shared.exception.Emergency;
 import org.apache.log4j.Logger;
 import org.semanticweb.kaon2.api.Axiom;
 import org.semanticweb.kaon2.api.Entity;
-import org.semanticweb.kaon2.api.KAON2Connection;
 import org.semanticweb.kaon2.api.KAON2Exception;
 import org.semanticweb.kaon2.api.KAON2Factory;
 import org.semanticweb.kaon2.api.KAON2Manager;
 import org.semanticweb.kaon2.api.Ontology;
 import org.semanticweb.kaon2.api.OntologyChangeEvent;
+import org.semanticweb.kaon2.api.OntologyManager;
 import org.semanticweb.kaon2.api.Request;
 import org.semanticweb.kaon2.api.logic.Constant;
 import org.semanticweb.kaon2.api.owl.axioms.DataPropertyMember;
@@ -100,7 +100,7 @@ public class Kaon2PropertyMemberDao extends AbstractKaon2Dao implements
 	private void updateMetaviews() {
 		if (getOntology() != null) {
 			m_ontology = getOntology();
-			KAON2Connection conn = ((Kaon2Connection) getSession()
+			OntologyManager conn = ((Kaon2Connection) getSession()
 					.getConnection()).getConnection();
 			try {
 				m_axiomMetaview = conn.openOntology(m_axiomMetaviewPrefix
