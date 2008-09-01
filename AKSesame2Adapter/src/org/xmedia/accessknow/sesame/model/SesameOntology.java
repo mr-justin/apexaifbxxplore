@@ -74,7 +74,7 @@ public class SesameOntology implements IOntology {
 	private int m_noOpm = -1;
 	private int m_noInd = -1;
 	
-	protected SesameOntology(
+	public SesameOntology(
 			Repository itsRepository, 
 			URI itsUri, 
 			SesameConnection connection,
@@ -106,114 +106,6 @@ public class SesameOntology implements IOntology {
 	
 	public Boolean getReificationMutex() {
 		return reificationMutex;
-	}
-	
-	public static IOntology loadOntology(
-			URI ontologyUri,
-			SesameRemoteRepositoryHandle remoteHandle,
-			SesameConnection connection, 
-			boolean reificationEnabled) throws OntologyLoadException  {
-		
-		Repository itsRepository = null;
-		try {
-			if (remoteHandle != null) {
-				itsRepository = connection.getRepositoryFactory().loadRemoteRepository(ontologyUri, remoteHandle);
-			} else {
-				itsRepository = connection.getRepositoryFactory().loadRepository(ontologyUri);
-			}
-			
-			if (itsRepository == null) {
-				throw new OntologyLoadException(ontologyUri, new Exception("Ontology '" + ontologyUri + "' does not exist."));
-			}
-			
-			
-			return new SesameOntology(
-					itsRepository,
-					ontologyUri,
-					connection,
-					reificationEnabled);
-		} catch (RepositoryException e) {
-			throw new OntologyLoadException(ontologyUri, e);
-		} catch (RepositoryConfigException e) {
-			throw new OntologyLoadException(ontologyUri, e);
-		}
-	}
-	
-	public static IOntology createOntology(
-			URI theOntologyUri, 
-			URI itsType, 
-			SesameRemoteRepositoryHandle remoteHandle, 
-			SesameConnection connection, 
-			boolean reificationEnabled) throws OntologyCreationException {
-		
-		Repository itsRepository = null;
-		try {
-			itsRepository = connection.getRepositoryFactory().createRepository(
-					theOntologyUri, 
-					itsType, 
-					remoteHandle);
-			
-			if (itsRepository == null) {
-				throw new OntologyCreationException(theOntologyUri);
-			}
-			
-			return new SesameOntology(
-					itsRepository,
-					theOntologyUri,
-					connection,
-					reificationEnabled);
-		} catch (OntologyCreationException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new OntologyCreationException(theOntologyUri, e);
-		}
-		
-	}
-	
-	/**
-	 * 
-	 * Creates a SesamesOntology with specific indices. 
-	 * Note, only a native RDF repository supports such indices.
-	 * 
-	 * @param theOntologyUri
-	 * @param indices
-	 * @param itsType
-	 * @param connection
-	 * @param reificationEnabled
-	 * @return ontology
-	 * @throws OntologyCreationException
-	 * @throws Exception
-	 */
-	
-	public static IOntology createOntologyWithIndex(
-			URI theOntologyUri,
-			String indices,
-			URI itsType,  
-			SesameConnection connection, 
-			boolean reificationEnabled) throws OntologyCreationException,Exception {
-		
-		Repository itsRepository = null;
-		
-		try {
-			itsRepository = connection.getRepositoryFactory().createRepositoryWithIndex(
-					theOntologyUri, 
-					itsType, 
-					indices);
-			
-			if (itsRepository == null) {
-				throw new OntologyCreationException(theOntologyUri);
-			}
-			
-			return new SesameOntology(
-					itsRepository,
-					theOntologyUri,
-					connection,
-					reificationEnabled);
-		} catch (OntologyCreationException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new OntologyCreationException(theOntologyUri, e);
-		}
 	}
 	
 	/**

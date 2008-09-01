@@ -71,7 +71,7 @@ public class ExtendedSesameDaoManager extends SesameDaoManager{
 
 	public static ExtendedSesameDaoManager getInstance(SesameSession session)
 	{
-		if(ExtendedSesameDaoManager.s_instance == null) ExtendedSesameDaoManager.s_instance = new ExtendedSesameDaoManager(session);
+		ExtendedSesameDaoManager.s_instance = new ExtendedSesameDaoManager(session);
 		return ExtendedSesameDaoManager.s_instance;
 	}
 
