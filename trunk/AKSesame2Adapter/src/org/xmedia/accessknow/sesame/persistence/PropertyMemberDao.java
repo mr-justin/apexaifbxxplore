@@ -428,7 +428,8 @@ public class PropertyMemberDao implements IPropertyMemberAxiomDao {
 			for (Statement statement : itsStatements) {
 				if (includeProvenanceStatements || !isProvenanceStatement(statement)) {
 					if(statement.getObject() != null && statement.getPredicate() != null & statement.getSubject() != null){
-						results.add(Ses2AK.getPropertyMember(statement, m_session.getOntology()));
+						IPropertyMember member = Ses2AK.getPropertyMember(statement, m_session.getOntology());
+						if (member != null) results.add(member);
 					}
 				}
 			}
