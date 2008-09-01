@@ -28,8 +28,7 @@ public class SessionFactory implements ISessionFactory{
 	private IConnectionProvider m_provider;
 
 	// the current session
-	//TODO use a session context instead, e.g. CurrentSessionContext currentSessionContext;
-	private StatelessSession m_currentSession;
+	private ISession m_currentSession;
 
 	private boolean m_isClosed = false;
 
@@ -79,7 +78,9 @@ public class SessionFactory implements ISessionFactory{
 		return m_currentSession;
 	}
 
-
+	public void setSession(ISession session) {
+		m_currentSession = session; 
+	}
 
 	public void configure(Map<String, Object> settings) {
 		m_properties = settings;

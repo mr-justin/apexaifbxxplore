@@ -1,14 +1,13 @@
 package org.xmedia.oms.model.impl;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.xmedia.oms.metaknow.IProvenance;
+import org.xmedia.oms.metaknow.Provenance;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.IIndividual;
@@ -58,8 +57,7 @@ public class PropertyMember extends Axiom implements IPropertyMember{
 			String uri,
 			IProvenance provenance) {
 		
-		this(prop, source, target, onto, type, uri, 
-				new HashSet<IProvenance>((List<IProvenance>)Arrays.asList(new IProvenance[]{provenance})));
+		this(prop, source, target, onto, type, uri, new HashSet<IProvenance>());
 		
 	}
 	
