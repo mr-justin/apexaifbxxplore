@@ -97,6 +97,16 @@ public class SesameRepositoryFactory {
 	}
 	
 	private void reloadRepositoryManager() throws RepositoryException {
+		if(theManager != null) {
+			try {
+				if(theManager.getAllRepositories().size() > 0) theManager.refresh();
+			} catch (RepositoryConfigException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			theManager.shutDown();
+		}
+		
 		theManager = new LocalRepositoryManager(new File(sesameRootPath));
 		theManager.initialize();
 	}
@@ -158,10 +168,6 @@ public class SesameRepositoryFactory {
 		
 		Repository theRepository = null;
 		String repositoryId = fsTransduceUri(theOntologyUri);
-
-		for(String id : theManager.getRepositoryIDs()){
-			System.out.println("id:"+id);
-		}
 		
 		RepositoryConfig config = RepositoryConfigUtil.getRepositoryConfig(
 				theManager.getSystemRepository(), 

@@ -396,7 +396,7 @@ public class PropertyMemberDao implements IPropertyMemberAxiomDao {
 	
 	public List<IPropertyMember> findAll() throws DatasourceException {
 		
-		return findAll(m_session.isReasoningOn(), true);
+		return findAll(m_session.isReasoningOn(), false);
 		
 	}
 	
@@ -427,6 +427,7 @@ public class PropertyMemberDao implements IPropertyMemberAxiomDao {
 			
 			for (Statement statement : itsStatements) {
 				if (includeProvenanceStatements || !isProvenanceStatement(statement)) {
+					
 					results.add(Ses2AK.getPropertyMember(statement, m_session.getOntology()));
 				}
 			}
