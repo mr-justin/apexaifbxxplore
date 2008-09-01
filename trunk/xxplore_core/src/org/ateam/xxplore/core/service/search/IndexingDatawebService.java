@@ -84,24 +84,27 @@ public class IndexingDatawebService {
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
 
 		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
-		//service.importOntology(parameters, DBLP_PATH);
-		//service.index(parameters, DBLP_SCHEMA_PATH); 
-		//service.m_sessionFactory.getCurrentSession().close();
-		//service.m_con.closeOntology(onto);
-		//service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES);
+		service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
+
+		IOntology onto = service.importOntology(parameters, DBLP_PATH);
+		service.index(parameters, DBLP_SCHEMA_PATH, onto); 
+		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
+
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(onto);
 
 		
 
 		//import swrc 
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
-		service.importOntology(parameters, SWRC_PATH);
-		service.index(parameters, SWRC_SCHEMA_PATH);
+		onto = service.importOntology(parameters, SWRC_PATH);
+		service.index(parameters, SWRC_SCHEMA_PATH, onto);
+		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES, onto);
 		service.m_sessionFactory.getCurrentSession().close();
-		//service.m_con.closeOntology(onto);
+		service.m_con.closeOntology(onto);
 		//compute instances for SWRC
-		//service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
-		//service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES);
+
 
 //		try {
 //			((SesameConnection)service.m_con).deleteAllOntologies();
@@ -117,7 +120,7 @@ public class IndexingDatawebService {
 		initConnection(repodir);
 	}
 
-	private void index(Properties parameters, String schemaPath){
+	private void index(Properties parameters, String schemaPath, IOntology onto){
 		SummaryGraphIndexServiceWithSesame2 service = new SummaryGraphIndexServiceWithSesame2();
 		WeightedPseudograph<KbVertex, KbEdge> sGraph = service.computeSummaryGraph(false, null);
 		service.writeSummaryGraphAsRDF(sGraph, schemaPath);
@@ -133,7 +136,7 @@ public class IndexingDatawebService {
 		service.computeMappings();
 	}
 
-	private void computeInstanceForMappings(String schemaMappingFilePath, String entityFilePath){
+	private void computeInstanceForMappings(String schemaMappingFilePath, String entityFilePath, IOntology onto){
 		ExtractInstancesService service = new ExtractInstancesService(schemaMappingFilePath, entityFilePath);
 		service.extractInstances();
 	}
