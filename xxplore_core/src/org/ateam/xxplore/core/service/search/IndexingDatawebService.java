@@ -10,7 +10,7 @@ import java.util.Properties;
 
 import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.ateam.xxplore.core.ExploreEnvironment;
-import org.ateam.xxplore.core.service.mapping.ExtractInstancesServiceWithSesame2;
+import org.ateam.xxplore.core.service.mapping.ExtractInstancesService;
 import org.ateam.xxplore.core.service.mapping.MappingComputationService;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.openrdf.repository.RepositoryException;
@@ -134,7 +134,7 @@ public class IndexingDatawebService {
 	}
 
 	private void computeInstanceForMappings(String schemaMappingFilePath, String entityFilePath){
-		ExtractInstancesServiceWithSesame2 service = new ExtractInstancesServiceWithSesame2(schemaMappingFilePath, entityFilePath);
+		ExtractInstancesService service = new ExtractInstancesService(schemaMappingFilePath, entityFilePath);
 		service.extractInstances();
 	}
 

@@ -34,9 +34,9 @@ import org.xmedia.oms.persistence.dao.IConceptDao;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
 import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
 
-public class ExtractInstancesServiceWithSesame2 {
+public class ExtractInstancesService {
 
-	private static Logger s_log = Logger.getLogger(ExtractInstancesServiceWithSesame2.class);
+	private static Logger s_log = Logger.getLogger(ExtractInstancesService.class);
 			
 	private BufferedReader br;
 	
@@ -44,7 +44,7 @@ public class ExtractInstancesServiceWithSesame2 {
 	private RDFXMLWriter writer;
 	
 	
-	public ExtractInstancesServiceWithSesame2(String schemaMappingFile, String extractedEntities) {
+	public ExtractInstancesService(String schemaMappingFile, String extractedEntities) {
 		new File(extractedEntities).getParentFile().mkdirs();
 		try {
 			br = new BufferedReader(new FileReader(schemaMappingFile));
