@@ -171,7 +171,7 @@ public class XXPloreCommandline {
 				//					default value
 				String location = ResourcesPlugin.getWorkspace().getRoot().getLocation().removeLastSegments(1).toString()
 				+ ExploreEnvironment.DEFAULT_RESOURCE_LOCATION_SUFFIX;
-				ExploreEnvironment.LocationHelper.setResourceLocation(location);
+				ExploreEnvironment.LocationHelper.setIndexLocation(location);
 			}
 
 			//load ontology	
