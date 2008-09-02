@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id157instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id108instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id109instance"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2003</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id28instance"/>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Grundkurs Programmieren in Java, Bd. 2: Programmierung kommerzieller Systeme</title>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id769instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id28instance"/>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3-446-22878-0</isbn>
+	<address xmlns="http://swrc.ontoware.org/ontology#">MÃ¼nchen</address>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Grundkurs Programmieren in Java - Band 1: Der Einstieg in Programmierung und Objektorientierung</title>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id108instance"/>
+	<edition xmlns="http://swrc.ontoware.org/ontology#">2., neu bearbeitete Auflage</edition>
+	<month xmlns="http://swrc.ontoware.org/ontology#">September</month>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2004</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id504instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Begriffliche Wissensverarbeitung - Methoden und Anwendungen</title>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3540663916</isbn>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2000</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id8instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id207instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id284instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id57instance"/>
+	<address xmlns="http://swrc.ontoware.org/ontology#">Heidelberg</address>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Handbook on Ontologies</title>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id6instance"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2004</year>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id1080instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<volume xmlns="http://swrc.ontoware.org/ontology#">I</volume>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2006</year>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">0-387-27630-0</isbn>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Semantic Management of Middleware</title>
+	<abstract xmlns="http://swrc.ontoware.org/ontology#">Current middleware solutions, e.g., application servers and Web services, are very complex software products that are hard to tame because of intricacies of distributed systems. Their functionalities have mostly been developed and managed with the help of administration tools and corresponding configuration files, recently in XML. Though this constitutes flexibility for developing and administrating a distributed application, the conceptual model underlying the different configurations is only implicit.
+
+To remedy such problems, Semantic Management of Middleware contributes an ontology-based approach to support the development and administration of middleware-based applications. The ontology is an explicit conceptual model with formal logic-based semantics. Its descriptions may therefore be queried, may foresight required actions, or may be checked to avoid inconsistent system configurations.
+
+This book builds a rigorous approach towards giving the declarative descriptions of components and services a well-defined meaning by specifying ontological foundations and by showing how such foundations may be realized in practical, up-and-running systems.</abstract>
+	<series xmlns="http://swrc.ontoware.org/ontology#">The Semantic Web and Beyond</series>
+	<address xmlns="http://swrc.ontoware.org/ontology#">New York</address>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id79instance"/>
+	<month xmlns="http://swrc.ontoware.org/ontology#">February</month>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id13instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2002</year>
+	<abstract xmlns="http://swrc.ontoware.org/ontology#">Proc. TC 12 Stream on Intelligent Information Processing, IFIP 17th World 
+Computer Congress, Montreal, August 2002</abstract>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Intelligent Information Processing</title>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id57instance"/>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">1-4020-7171</isbn>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id11instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id10instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id3instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<month xmlns="http://swrc.ontoware.org/ontology#">March</month>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id6instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id4instance"/>
+	<volume xmlns="http://swrc.ontoware.org/ontology#">P-10</volume>
+	<title xmlns="http://swrc.ontoware.org/ontology#">1st German Workshop on Experience Management: Sharing Experiences about the Sharing of Experience, Berlin, March 7-8, 2002, Proceedings</title>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2002</year>
+	<series xmlns="http://swrc.ontoware.org/ontology#">Lecture Notes in Informatics</series>
+	<abstract xmlns="http://swrc.ontoware.org/ontology#">Meeting of the German Fachgruppe "Knowledge Management"
+- the former Fachgruppen on Case-Based Reasoning and Knowledge Engineering -
+of the Fachbereich 1
+"Artificial Intelligence" of the German Society for Informatics.
+Gaining maximum momentum from previous experiences requires intelligent, comprehensive knowledge management methodologies and technologies like Case-based Reasoning or Knowledge Engineering. The workshop aimed to foster exchange between practitioners and researchers in intelligent systems for experience management (EM).</abstract>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id1076instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3-8334-3532-1</isbn>
+	<title xmlns="http://swrc.ontoware.org/ontology#">CONsense: Kooperatives Wissensmanagement in virtuellen Organisationen</title>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2005</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id694instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id12instance"/>
+	<address xmlns="http://swrc.ontoware.org/ontology#">Norderstedt, Germany</address>
+	<month xmlns="http://swrc.ontoware.org/ontology#">November</month>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id693instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id616instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<abstract xmlns="http://swrc.ontoware.org/ontology#">The subject of the book is the Knowledge Acquisition and Representation Language KARL which is a formal and operational specification language for knowledge-based systems. It provides language primitives to represent knowledge according to the layers of a KADS-oriented model of expertise. The main features of KARL are: It provides epistemologically adequate modelling primitives allowing knowledge specifications at the so-called knowledge level. It is a formal knowledge specification language. That is, it has a declarative semantics. It is an operational knowledge specification language which allows prototyping. Chapter one introduces the basic idea of KARL. The main object of KARL is to fill or to narrow the gap between the implementation and the conceptual description of a knowledge-based system by defining a formal and operational specification language. It is related to the symbol level because it is a language with a formal and operational semantics. It is related to the knowledge level because it abstracts from all implementational details which are concerned with the realization by an efficient implementation. Chapter two, three, and four introduce the language KARL itself. KARL consists of the two languages L-KARL and P-KARL. Chapter two introduces the language L-KARL which is used to model static knowledge. P-KARL which is used to model procedural knowledge (i.e., knowledge about the control flow of a problem-solving method) is described in chapter three. Finally, chapter four shows how these languages and their interaction are used to model the domain layer, the inference layer, and the task layer of a model of expertise. Then, the mathematical semantics of KARL is defined in chapter five. A model-theoretic semantics is defined which allows a precise and unique specification of knowledge-based systems. Besides KARL, some other languages have been developed during the last few years which aim to formalize or operationalize KADS models of expertise. Besides all technical details, the main difference between KARL and the other languages is the fact that KARL aims to be a formal and operational knowledge specification language. The object here is not only operationalization in principle, i.e., the possibility of using a kind of theorem-proving, but also an efficient evaluation to allow prototyping. In the conclusion, we compare KARL with one these languages which where developed as part of the KADS project. We also characterize some shortcomings of KARL and outline aspects of future work with it.</abstract>
+	<title xmlns="http://swrc.ontoware.org/ontology#">The Knowledge Acquisition And Representation Language KARL</title>
+	<year xmlns="http://swrc.ontoware.org/ontology#">1995</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id67instance"/>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">0-7923-9601-4</isbn>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id286instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id13instance"/>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Annotation for the Semantic Web</title>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2003</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id6instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id965instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">1-58603-523-1</isbn>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id98instance"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2005</year>
+	<volume xmlns="http://swrc.ontoware.org/ontology#">123</volume>
+	<series xmlns="http://swrc.ontoware.org/ontology#">Frontiers in Artificial Intelligence</series>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id613instance"/>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Ontology Learning from Text: Methods, Evaluation and Applications</title>
+	<month xmlns="http://swrc.ontoware.org/ontology#">July</month>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id612instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id779instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2004</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id31instance"/>
+	<address xmlns="http://swrc.ontoware.org/ontology#">Stuttgart, Leipzig, Wiesbaden</address>
+	<month xmlns="http://swrc.ontoware.org/ontology#">May</month>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3-519-00491-7</isbn>
+	<edition xmlns="http://swrc.ontoware.org/ontology#">Reihe Wirtschaftsinformatik</edition>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Business-Process- und Workflow-Management: Prozessverbesserung durch Prozess-Management</title>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id38instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id505instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2000</year>
+	<month xmlns="http://swrc.ontoware.org/ontology#">July</month>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Working with Conceptual Structures - Contributions to ICCS 2000</title>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3826576691</isbn>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id8instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id1039instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2005</year>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3-87005-067-5</isbn>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2084instance"/>
+	<editor xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id680instance"/>
+	<month xmlns="http://swrc.ontoware.org/ontology#">October</month>
+	<title xmlns="http://swrc.ontoware.org/ontology#">BegabtenfÃ¶rderung im MINT-Bereich 12</title>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id772instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id458instance"/>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Java 5.0 - Konzepte, Grundlagen und Erweiterungen in 5.0</title>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2004</year>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id2065instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id459instance"/>
+	<isbn xmlns="http://swrc.ontoware.org/ontology#">3446229469</isbn>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id456instance"/>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Publikationen/viewExternerAutorOWL/id457instance"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.aifb.uni-karlsruhe.de/Publikationen/viewPublikationOWL/id10instance">
+	<rdf:type rdf:resource="http://swrc.ontoware.org/ontology#Book"/>
+	<title xmlns="http://swrc.ontoware.org/ontology#">Wissensmanagement mit Ontologien und Metadaten (Knowledge Management with Ontologies and Metadata)</title>
+	<year xmlns="http://swrc.ontoware.org/ontology#">2002</year>
+	<note xmlns="http://swrc.ontoware.org/ontology#">Cumulative Habilitation, University of Karlsruhe, May 2002 (German survey paper, 5 English contributions, German CV)</note>
+	<author xmlns="http://swrc.ontoware.org/ontology#" rdf:resource="http://www.aifb.uni-karlsruhe.de/Personen/viewPersonOWL/id6instance"/>
+</rdf:Description>
+
+</rdf:RDF>
