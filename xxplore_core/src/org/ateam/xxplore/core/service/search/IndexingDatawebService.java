@@ -12,6 +12,7 @@ import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.mapping.ExtractInstancesService;
 import org.ateam.xxplore.core.service.mapping.MappingComputationService;
+import org.ateam.xxplore.core.service.mapping.SchemaMapping;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.openrdf.repository.RepositoryException;
 import org.xmedia.accessknow.sesame.model.SesameOntology;
@@ -64,8 +65,10 @@ public class IndexingDatawebService {
 	// uris already reserved in OWL that can cause parsing problems with KAON2 while loading schema into FOAM
 	//private static String[] NON_SUPPORTED_URIS = {};
 
-	//for schema mapping //
+	//for mapping //
 	private static String OUTPUTDIR  = "res/BTC/mapping/mappingResult";
+	private static String SCHEMA_MAPPING = "schema";
+	private static String INSTANCE_MAPPING = "instance";
 
 	//for extracting instances //
 	private static String SCHEMA_MAPPING_FILE = "res/BTC/mapping/mappingResult/dblp_schema.rdf+swrc_schema.owl.mapping"; 	
@@ -73,6 +76,7 @@ public class IndexingDatawebService {
 	private static String SWRC_ENTITIES_PATH = "res/BTC/mapping/swrc_entities.rdf"; 
 	private static String DBLP_ENTITIES = "dblp_entities"; 
 	private static String SWRC_ENTITIES = "swrc_entities"; 
+	
 	
 	public static void main(String[] args) {
 		Properties parameters = new Properties();
@@ -97,7 +101,7 @@ public class IndexingDatawebService {
 //		service.m_con.closeOntology(onto);
 
 		//compute schema mappings for SWRC
-		service.computeMappings(SWRC_SCHEMA_PATH, DBLP_SCHEMA_PATH);
+		service.computeMappings(SWRC_SCHEMA_PATH, DBLP_SCHEMA_PATH, null);
 		
 		//extract DBLP instances 
 //		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
@@ -115,7 +119,7 @@ public class IndexingDatawebService {
 		
 		
 		//compute instance mappings 
-		service.computeMappings(SWRC_ENTITIES_PATH, DBLP_ENTITIES_PATH);
+		service.computeMappings(SWRC_ENTITIES_PATH, DBLP_ENTITIES_PATH, null);
 		
 //		try {
 //			((SesameConnection)service.m_con).deleteAllOntologies();
@@ -142,9 +146,10 @@ public class IndexingDatawebService {
 
 	}
 
-	private void computeMappings(String ontology1, String ontology2){
-		MappingComputationService service = new MappingComputationService(ontology1, ontology2);
-		service.computeMappings();
+	private void computeMappings(String ontology1, String ontology2, SchemaMapping mapping){
+		MappingComputationService service = new MappingComputationService();
+		if (mapping == null) service.computeSchemaMappings(ontology1, ontology2);
+		else service.computeInstanceMappings(ontology1, ontology2, mapping);
 	}
 
 	private void computeInstanceForMappings(String schemaMappingFilePath, String entityFilePath, IOntology onto){

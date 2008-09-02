@@ -19,13 +19,9 @@ import edu.unika.aifb.foam.result.Evaluation;
 import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
-	
 
-	
-	private String ontology1;
-	private String ontology2;
 	private String explicitFile = null;
-	
+
 //	private static final int SCENARIO = Parameter.NOSCENARIO;
 	private static final int MAXITERATIONS = 5;		
 	private static final boolean INTERNALTOO = Parameter.EXTERNAL;	
@@ -39,27 +35,34 @@ public class MappingComputationService {
 	private static final boolean REMOVEDOUBLES = Parameter.REMOVEDOUBLES;	
 	private static final double CUTOFF = 0.8;  //0.25;0.31;0.35(0.7);0.9(0.95)
 	private static final String MANUALMAPPINGSFILE = "";	
-	
-	
-	public MappingComputationService(String ontology1, String ontology2){
-		this.ontology1 = ontology1;
-		this.ontology2 = ontology2;
+
+
+	public MappingComputationService(){}
+
+
+	public Collection<SchemaMapping> computeSchemaMappings(String ontology1, String ontology2){
+		Collection<SchemaMapping> results = new ArrayList<SchemaMapping>();
+		Vector mappings = align(new String[]{ontology1,ontology2}, null);
+		Iterator iter = mappings.iterator();
+		while(iter.hasNext()) {
+			String[] element = (String[]) iter.next();
+			results.add(new SchemaMapping(element[0], element[1], ontology1, ontology2, (Double.valueOf(element[2])).doubleValue()));
+		}		
+		
+		return results;
 	}
 	
-	
-	public Collection<Mapping> computeMappings(){
-		return align(new String[]{ontology1,ontology2}, null);
+	public Collection<InstanceMapping> computeInstanceMappings(String onto1, String onto2, SchemaMapping mapping){
+		return null;
 	}
-	
-	public void computeMappings(String resultFile) {
+
+	public void computeMappings(String ontology1, String ontology2, String resultFile) {
 		checkFile(resultFile);
-		saveDatasources(resultFile);
+		saveDatasources(ontology1, ontology2, resultFile);
 		align(new String[]{ontology1,ontology2}, resultFile);
 	}
-	
-	public Collection<Mapping> align(String[] ontologyFiles, String resultFile) {
-		Collection<Mapping> results = new ArrayList<Mapping>();
-		
+
+	private Vector align(String[] ontologyFiles, String resultFile){
 		Align align = new Align();								//creating the new alignment method
 		MyOntology ontologies = new MyOntology(ontologyFiles);	//assigning the ontologies
 		if (ontologies.ok == false) {System.exit(1);}
@@ -72,25 +75,21 @@ public class MappingComputationService {
 		align.p = parameter;
 		align.explicit = explicit;
 		align.align();									//process
-		
-		Vector mappings = align.cutoff;
-		
+
+		Vector mappings = null;
+		mappings = align.cutoff;
+
 		if (resultFile != null) saveVector(mappings, resultFile);
-		else {
-			Iterator iter = mappings.iterator();
-			while(iter.hasNext()) {
-				String[] element = (String[]) iter.next();
-				results.add(new SchemaMapping(element[0], element[1], null, null, (Double.valueOf(element[2])).doubleValue()));
-			}
-		}
-		
+
 		Evaluation evaluation = new Evaluation(resultFile);
 		evaluation.doEvaluation(align.ontology,align.resultListLatest,align.p.cutoff);
 		evaluation.printEvaluation();
-		
-		return results;
+
+
+		return mappings;
 	}
-	
+
+
 	private void saveVector(Vector vector, String fileName) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true));
@@ -105,8 +104,8 @@ public class MappingComputationService {
 			UserInterface.print(e.getMessage());
 		}
 	}
-	
-	public void saveDatasources(String fileName) {
+
+	public void saveDatasources(String ontology1, String ontology2, String fileName) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 			writer.write(fsTransduceUri(ontology1) + ";" + fsTransduceUri(ontology2));
@@ -117,7 +116,7 @@ public class MappingComputationService {
 			e.printStackTrace();
 		}
 	}
-	
+
 	public static void checkFile(String filename) {
 		File results = new File(filename);
 		if(!results.exists()){
@@ -130,7 +129,7 @@ public class MappingComputationService {
 			}
 		}
 	} 
-	
+
 	private static String fsTransduceUri(String uri) {
 
 		uri = StringUtils.replace(uri, ":", "COLON");
