@@ -4,6 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -22,13 +24,10 @@ public class MappingComputationService {
 	
 	private String ontology1;
 	private String ontology2;
-	private String datasource1;
-	private String datasource2;
-	private String resultFile;
-	private String explicitFile = "";
+	private String explicitFile = null;
 	
 //	private static final int SCENARIO = Parameter.NOSCENARIO;
-	private static final int MAXITERATIONS = 10;		
+	private static final int MAXITERATIONS = 5;		
 	private static final boolean INTERNALTOO = Parameter.EXTERNAL;	
 	private static final boolean EFFICIENTAGENDA = Parameter.COMPLETE;
 	private static final int STRATEGY = Parameter.DECISIONTREE;
@@ -38,34 +37,29 @@ public class MappingComputationService {
 	private static final double MAXERROR = 0.9; 
 	private static final int NUMBERQUESTIONS = 5;
 	private static final boolean REMOVEDOUBLES = Parameter.REMOVEDOUBLES;	
-	private static final double CUTOFF = 0.9;  //0.25;0.31;0.35(0.7);0.9(0.95)
+	private static final double CUTOFF = 0.8;  //0.25;0.31;0.35(0.7);0.9(0.95)
 	private static final String MANUALMAPPINGSFILE = "";	
 	
 	
-	public MappingComputationService(String[] ontologies, String[] datasources, String outputDir) {
-		this.ontology1 = ontologies[0];
-		this.ontology2 = ontologies[1];
-		this.datasource1 = datasources[0];
-		this.datasource2 = datasources[1];
-		this.resultFile = outputDir.endsWith(File.separator) ? 
-				outputDir + fsTransduceUri(datasource1) + "+" + fsTransduceUri(datasource2) : 
-				outputDir + File.separator + fsTransduceUri(datasource1) + "+" + fsTransduceUri(datasource2)
-				+ ".mapping";
- 	}
-	
-	public MappingComputationService(String[] ontologies, String[] datasources, String outputDir, String preknow) {
-		this(ontologies, datasources, outputDir);
-		this.explicitFile = preknow; 
- 	}
+	public MappingComputationService(String ontology1, String ontology2){
+		this.ontology1 = ontology1;
+		this.ontology2 = ontology2;
+	}
 	
 	
-	public void computeMappings() {
+	public Collection<Mapping> computeMappings(){
+		return align(new String[]{ontology1,ontology2}, null);
+	}
+	
+	public void computeMappings(String resultFile) {
 		checkFile(resultFile);
 		saveDatasources(resultFile);
 		align(new String[]{ontology1,ontology2}, resultFile);
 	}
 	
-	public void align(String[] ontologyFiles, String resultFile) {
+	public Collection<Mapping> align(String[] ontologyFiles, String resultFile) {
+		Collection<Mapping> results = new ArrayList<Mapping>();
+		
 		Align align = new Align();								//creating the new alignment method
 		MyOntology ontologies = new MyOntology(ontologyFiles);	//assigning the ontologies
 		if (ontologies.ok == false) {System.exit(1);}
@@ -78,10 +72,23 @@ public class MappingComputationService {
 		align.p = parameter;
 		align.explicit = explicit;
 		align.align();									//process
-		saveVector(align.cutoff, resultFile);
+		
+		Vector mappings = align.cutoff;
+		
+		if (resultFile != null) saveVector(mappings, resultFile);
+		else {
+			Iterator iter = mappings.iterator();
+			while(iter.hasNext()) {
+				String[] element = (String[]) iter.next();
+				results.add(new SchemaMapping(element[0], element[1], null, null, (Double.valueOf(element[2])).doubleValue()));
+			}
+		}
+		
 		Evaluation evaluation = new Evaluation(resultFile);
 		evaluation.doEvaluation(align.ontology,align.resultListLatest,align.p.cutoff);
 		evaluation.printEvaluation();
+		
+		return results;
 	}
 	
 	private void saveVector(Vector vector, String fileName) {
@@ -102,7 +109,7 @@ public class MappingComputationService {
 	public void saveDatasources(String fileName) {
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-			writer.write(datasource1 + ";" + datasource2);
+			writer.write(fsTransduceUri(ontology1) + ";" + fsTransduceUri(ontology2));
 			writer.newLine();
 			writer.close();
 		} catch (IOException e) {

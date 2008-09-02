@@ -65,53 +65,57 @@ public class IndexingDatawebService {
 	//private static String[] NON_SUPPORTED_URIS = {};
 
 	//for schema mapping //
-	private static String[] ONTOLOGIES = {"res/BTC/dblp_schema.rdf", "res/BTC/swrc_schema.owl"};   
-	private static String[] DATASOURCES = {"dblp_schema.rdf","swrc_schema.owl"};
 	private static String OUTPUTDIR  = "res/BTC/mapping/mappingResult";
 
 	//for extracting instances //
 	private static String SCHEMA_MAPPING_FILE = "res/BTC/mapping/mappingResult/dblp_schema.rdf+swrc_schema.owl.mapping"; 	
-	private static String DBLP_ENTITIES = "res/BTC/mapping/dblp_entities.rdf"; 
-	private static String SWRC_ENTITIES = "res/BTC/mapping/swrc_entities.rdf"; 
-
+	private static String DBLP_ENTITIES_PATH = "res/BTC/mapping/dblp_entities.rdf"; 
+	private static String SWRC_ENTITIES_PATH = "res/BTC/mapping/swrc_entities.rdf"; 
+	private static String DBLP_ENTITIES = "dblp_entities"; 
+	private static String SWRC_ENTITIES = "swrc_entities"; 
+	
 	public static void main(String[] args) {
 		Properties parameters = new Properties();
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-
-		//index DBLP 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
 		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
-		IOntology onto = service.loadOntology(parameters, DBLP_PATH);
-		service.index(parameters, DBLP_SCHEMA_PATH, onto); 
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(onto);
+
+		//index DBLP 		
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
+//		IOntology onto = service.loadOntology(parameters, DBLP_PATH);
+//		service.index(parameters, DBLP_SCHEMA_PATH, onto); 
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(onto);
 
 		//index swrc 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
-		onto = service.loadOntology(parameters, SWRC_PATH);
-		service.index(parameters, SWRC_SCHEMA_PATH, onto);
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(onto);
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+//		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
+//		onto = service.loadOntology(parameters, SWRC_PATH);
+//		service.index(parameters, SWRC_SCHEMA_PATH, onto);
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(onto);
 
 		//compute schema mappings for SWRC
-		service.computeMappings(ONTOLOGIES, DATASOURCES, OUTPUTDIR);
+		service.computeMappings(SWRC_SCHEMA_PATH, DBLP_SCHEMA_PATH);
 		
 		//extract DBLP instances 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
-		onto = service.loadOntology(parameters, DBLP_PATH);
-		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES, onto);
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(onto);
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
+//		onto = service.loadOntology(parameters, DBLP_PATH);
+//		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES_PATH, onto);
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(onto);
 
 		//extract SWRC instances 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-		onto = service.loadOntology(parameters, SWRC_PATH);
-		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES, onto);
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(onto);
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
+//		onto = service.loadOntology(parameters, SWRC_PATH);
+//		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES_PATH, onto);
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(onto);
+		
+		
+		//compute instance mappings 
+		service.computeMappings(SWRC_ENTITIES_PATH, DBLP_ENTITIES_PATH);
 		
 //		try {
 //			((SesameConnection)service.m_con).deleteAllOntologies();
@@ -138,8 +142,8 @@ public class IndexingDatawebService {
 
 	}
 
-	private void computeMappings(String[] ontologies, String[] datasources, String outputDir){
-		MappingComputationService service = new MappingComputationService(ontologies, datasources, outputDir);
+	private void computeMappings(String ontology1, String ontology2){
+		MappingComputationService service = new MappingComputationService(ontology1, ontology2);
 		service.computeMappings();
 	}
 
