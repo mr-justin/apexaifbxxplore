@@ -25,7 +25,7 @@ import org.openrdf.rio.ntriples.NTriplesUtil;
  * the RDF Test Cases document. This parser is not thread-safe, therefore its
  * public methods are synchronized.
  */
-public class MyNTriplesParser extends RDFParserBase {
+public class NTriplesParser extends RDFParserBase {
 
 	/*-----------*
 	 * Variables *
@@ -53,12 +53,12 @@ public class MyNTriplesParser extends RDFParserBase {
 	 * Creates a new MyNTriplesParser that will use a {@link ValueFactoryImpl} to
 	 * create object for resources, bNodes and literals.
 	 */
-	public MyNTriplesParser() {
+	public NTriplesParser() {
 		super();
 		this.maxTripleNo = -1;
 	}
 	
-	public MyNTriplesParser(int maxTripleNo) {
+	public NTriplesParser(int maxTripleNo) {
 		super();
 		this.maxTripleNo = maxTripleNo;
 	}
@@ -70,12 +70,12 @@ public class MyNTriplesParser extends RDFParserBase {
 	 * @param valueFactory
 	 *        A ValueFactory.
 	 */
-	public MyNTriplesParser(ValueFactory valueFactory) {
+	public NTriplesParser(ValueFactory valueFactory) {
 		super(valueFactory);
 		this.maxTripleNo = -1;
 	}
 	
-	public MyNTriplesParser(ValueFactory valueFactory, int maxTripleNo) {
+	public NTriplesParser(ValueFactory valueFactory, int maxTripleNo) {
 		super(valueFactory);
 		this.maxTripleNo = maxTripleNo;
 	}

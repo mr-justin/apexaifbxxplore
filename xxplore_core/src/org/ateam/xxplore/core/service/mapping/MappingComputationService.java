@@ -9,6 +9,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.aifb.xxplore.shared.exception.Emergency;
 import org.apache.commons.lang.StringUtils;
 
 import edu.unika.aifb.foam.input.ExplicitRelation;
@@ -20,7 +21,7 @@ import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
 
-	private String explicitFile = null;
+	private String explicitFile = "";
 
 //	private static final int SCENARIO = Parameter.NOSCENARIO;
 	private static final int MAXITERATIONS = 5;		
@@ -39,10 +40,10 @@ public class MappingComputationService {
 
 	public MappingComputationService(){}
 
-
 	public Collection<SchemaMapping> computeSchemaMappings(String ontology1, String ontology2){
 		Collection<SchemaMapping> results = new ArrayList<SchemaMapping>();
-		Vector mappings = align(new String[]{ontology1,ontology2}, null);
+		MyOntology ontologies = new MyOntology(new String[]{ontology1,ontology2});
+		Vector mappings = align(ontologies, ontology1, ontology2, null);
 		Iterator iter = mappings.iterator();
 		while(iter.hasNext()) {
 			String[] element = (String[]) iter.next();
@@ -52,23 +53,60 @@ public class MappingComputationService {
 		return results;
 	}
 	
-	public Collection<InstanceMapping> computeInstanceMappings(String onto1, String onto2, SchemaMapping mapping){
-		return null;
+	public Collection<SchemaMapping> computeSchemaMappings(MyOntology onto, String onto1, String onto2){
+		Collection<SchemaMapping> results = new ArrayList<SchemaMapping>();
+		Vector mappings = align(onto, onto1, onto2, null);
+		Iterator iter = mappings.iterator();
+		while(iter.hasNext()) {
+			String[] element = (String[]) iter.next();
+			results.add(new SchemaMapping(element[0], element[1], onto1, onto2, (Double.valueOf(element[2])).doubleValue()));
+		}		
+		
+		return results;
 	}
+	
+	public Collection<InstanceMapping> computeInstanceMappings(String onto1, String onto2, SchemaMapping mapping){
+		Emergency.checkPrecondition(mapping != null, "mapping != null");
+		Collection<InstanceMapping> results = new ArrayList<InstanceMapping>();
+		MyOntology ontologies = new MyOntology(new String[]{onto1,onto2});
+		Vector mappings = align(ontologies, onto1, onto2, null);
+		Iterator iter = mappings.iterator();
+		while(iter.hasNext()) {
+			String[] element = (String[]) iter.next();
+			results.add(new InstanceMapping(element[0], element[1], onto1, onto2, mapping, (Double.valueOf(element[2])).doubleValue()));
+		}		
+		
+		return results;
+	}
+	
+	public Collection<InstanceMapping> computeInstanceMappings(MyOntology onto, String onto1, String onto2, SchemaMapping mapping){
+		Emergency.checkPrecondition(mapping != null, "mapping != null");
+		Collection<InstanceMapping> results = new ArrayList<InstanceMapping>();
+		Vector mappings = align(onto, onto1, onto2, null);
+		Iterator iter = mappings.iterator();
+		while(iter.hasNext()) {
+			String[] element = (String[]) iter.next();
+			results.add(new InstanceMapping(element[0], element[1], onto1, onto2, mapping, (Double.valueOf(element[2])).doubleValue()));
+		}		
+		return results;
+	}
+
 
 	public void computeMappings(String ontology1, String ontology2, String resultFile) {
 		checkFile(resultFile);
 		saveDatasources(ontology1, ontology2, resultFile);
-		align(new String[]{ontology1,ontology2}, resultFile);
+		MyOntology ontologies = new MyOntology(new String[]{ontology1,ontology2});
+		align(ontologies, ontology1, ontology2, resultFile);
 	}
 
-	private Vector align(String[] ontologyFiles, String resultFile){
+	private Vector align(MyOntology ontologies, String onto1, String onto2, String resultFile){
 		Align align = new Align();								//creating the new alignment method
-		MyOntology ontologies = new MyOntology(ontologyFiles);	//assigning the ontologies
+
 		if (ontologies.ok == false) {System.exit(1);}
 		ExplicitRelation explicit = new ExplicitRelation(explicitFile,ontologies);	//assigning pre-known alignments
 //		Parameter parameter = new Parameter(Parameter.NOSCENARIO,ONTOLOGYFILES); 
-		Parameter parameter = new Parameter(MAXITERATIONS,STRATEGY,INTERNALTOO,EFFICIENTAGENDA,CLASSIFIERFILE,RULESFILE,SEMI,MAXERROR,NUMBERQUESTIONS,REMOVEDOUBLES,CUTOFF,ontologyFiles);	//assigning the parameters
+		Parameter parameter = new Parameter(MAXITERATIONS,STRATEGY,INTERNALTOO,EFFICIENTAGENDA,CLASSIFIERFILE,RULESFILE,SEMI,
+				MAXERROR,NUMBERQUESTIONS,REMOVEDOUBLES,CUTOFF,new String[] {onto1, onto2});	//assigning the parameters
 		parameter.manualmappingsFile = MANUALMAPPINGSFILE;
 		align.name = "Application";
 		align.ontology = ontologies;	
@@ -78,17 +116,15 @@ public class MappingComputationService {
 
 		Vector mappings = null;
 		mappings = align.cutoff;
-
+		
 		if (resultFile != null) saveVector(mappings, resultFile);
-
-		Evaluation evaluation = new Evaluation(resultFile);
-		evaluation.doEvaluation(align.ontology,align.resultListLatest,align.p.cutoff);
-		evaluation.printEvaluation();
-
-
+		
 		return mappings;
+		
+//		Evaluation evaluation = new Evaluation(resultFile);
+//		evaluation.doEvaluation(align.ontology,align.resultListLatest,align.p.cutoff);
+//		evaluation.printEvaluation();
 	}
-
 
 	private void saveVector(Vector vector, String fileName) {
 		try {

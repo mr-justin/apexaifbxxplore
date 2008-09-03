@@ -31,7 +31,7 @@ import org.openrdf.sail.memory.MemoryStore;
 /**
  * 
  */
-public class MyWarcReader {
+public class WarcReader {
 	
 	private FastBufferedInputStream in;
 	private GZWarcRecord record;
@@ -58,7 +58,7 @@ public class MyWarcReader {
 	private static String repositoryDir = "D:\\sampling\\repository\\WARC";
 	private static int urls = 5;
 	
-	public MyWarcReader(String sourceDir, String repositoryDir) {
+	public WarcReader(String sourceDir, String repositoryDir) {
 		try {
 			in = new FastBufferedInputStream(new FileInputStream(new File(sourceDir)));
 			record = new GZWarcRecord();
@@ -81,7 +81,7 @@ public class MyWarcReader {
 		}
 	}
 	
-	public MyWarcReader(String sourceDir, String repositoryDir, int maxUrlCount) throws FileNotFoundException, RepositoryException{
+	public WarcReader(String sourceDir, String repositoryDir, int maxUrlCount) throws FileNotFoundException, RepositoryException{
 		this(sourceDir, repositoryDir);
 		this.maxUrlCount = maxUrlCount;
 	}
@@ -92,7 +92,7 @@ public class MyWarcReader {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		MyWarcReader reader = new MyWarcReader(sourceDir, repositoryDir, urls);
+		WarcReader reader = new WarcReader(sourceDir, repositoryDir, urls);
 		try {
 			while (reader.hasNext() && ((reader.getUrlCount() < reader.getMaxUrlCount()) || (reader.getMaxUrlCount() == -1))) {
 				WarcRecord nextRecord = reader.next();

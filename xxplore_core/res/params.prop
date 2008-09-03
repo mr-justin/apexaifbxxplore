@@ -1,0 +1,7 @@
+repodir=res/BTC/repository
+source_onto_uri=dblp
+source_onto_path=res/BTC/dblp.rdf
+source_onto_schema_path=res/BTC/dblp_schema.rdf
+target_onto_uri=swrc
+target_onto_path=res/BTC/swrc.owl
+source_onto_schema_path=res/BTC/swrc_schema.owl

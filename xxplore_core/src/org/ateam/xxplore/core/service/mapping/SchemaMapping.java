@@ -1,11 +1,8 @@
 package org.ateam.xxplore.core.service.mapping;
 
-import org.aifb.xxplore.shared.exception.Emergency;
-import org.xmedia.oms.model.api.IEntity;
-import org.xmedia.oms.model.api.INamedConcept;
-import org.xmedia.oms.model.api.IProperty;
 
 public class SchemaMapping extends Mapping{
+	public static final String SEPERATOR = "_";
 	public SchemaMapping(String source, String target, String sourceDsURI, String targetDsUri, double confidence) { 
 		setSource(source);
 		setTarget(target);
@@ -15,7 +12,28 @@ public class SchemaMapping extends Mapping{
 	}
 
 	public String toString(){
-		return getSourceDsURI()+getTargetDsURI();
+		return getSource()+SEPERATOR+getTarget()+SEPERATOR+getSourceDsURI()+
+		SEPERATOR+getTargetDsURI()+SEPERATOR+getConfidence();
+	}
+	
+	public static SchemaMapping getMappingFromString(String mapping){
+		String source = mapping.substring(0,mapping.indexOf(SEPERATOR));
+		mapping = mapping.substring(mapping.indexOf(SEPERATOR), mapping.length());
+		
+		String targtet = mapping.substring(0,mapping.indexOf(SEPERATOR));
+		mapping = mapping.substring(mapping.indexOf(SEPERATOR), mapping.length());
+		
+		String sourceDS = mapping.substring(0,mapping.indexOf(SEPERATOR));
+		mapping = mapping.substring(mapping.indexOf(SEPERATOR), mapping.length());
+		
+		String targtetDS = mapping.substring(0,mapping.indexOf(SEPERATOR));
+		
+		String conf = mapping.substring(mapping.indexOf(SEPERATOR), mapping.length());
+		
+		double confValue = Double.valueOf(conf);
+		
+		return new SchemaMapping(source, targtet, sourceDS, targtetDS, confValue);
+		
 	}
 }
 

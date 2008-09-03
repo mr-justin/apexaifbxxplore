@@ -2,20 +2,23 @@ package org.ateam.xxplore.core.service.search;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.Collection;
 import java.util.Properties;
 
 import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.mapping.ExtractInstancesService;
+import org.ateam.xxplore.core.service.mapping.InstanceMapping;
 import org.ateam.xxplore.core.service.mapping.MappingComputationService;
+import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.mapping.SchemaMapping;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.openrdf.repository.RepositoryException;
-import org.xmedia.accessknow.sesame.model.SesameOntology;
+import org.semanticweb.kaon2.api.KAON2Exception;
+import org.semanticweb.kaon2.api.Ontology;
+import org.semanticweb.kaon2.api.formatting.OntologyFileFormat;
 import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
 import org.xmedia.accessknow.sesame.persistence.SesameConnection;
 import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
@@ -35,100 +38,114 @@ import org.xmedia.oms.persistence.OntologyDeletionException;
 import org.xmedia.oms.persistence.OntologyLoadException;
 import org.xmedia.oms.persistence.OpenSessionException;
 import org.xmedia.oms.persistence.PersistenceUtil;
-import org.xmedia.oms.persistence.SessionFactory;
+import org.xmedia.oms.persistence.dao.IDaoManager;
 import org.xmedia.uris.impl.XMURIFactoryInsulated;
 
-import sun.print.resources.serviceui;
+import edu.unika.aifb.foam.input.MyOntology;
 
 
 public class IndexingDatawebService {
 
 	private IKbConnection m_con; 
 	private ISessionFactory m_sessionFactory;
+	private IDaoManager m_dao;
 
+	private static String REPOSITORY_DIR = "repodir";
+	private static String SOURCE_ONTO_URI = "source_onto_uri";
+	private static String SOURCE_ONTO_PATH = "source_onto_path";
+	private static String SOURCE_ONTO_SCHEMA_PATH = "source_onto_schema_path";
+	private static String TARGET_ONTO_URI = "target_onto_uri";
+	private static String TARGET_ONTO_PATH = "target_onto_path";
+	private static String TARGET_ONTO_SCHEMA_PATH = "target_onto_schema_path";
+	
 	private static String BASE_URI = "";
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
 	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDF_NATIVE;
 
-	// ontologies //
-	private static String DBLP_URI = "dblp"; // repository name
-	private static String DBLP_PATH = "res/BTC/dblp.rdf";
-	private static String DBLP_SCHEMA_PATH = "res/BTC/dblp_schema.rdf";
-
-	private static String SWRC_URI = "swrc"; // repository name
-	private static String SWRC_PATH = "res/BTC/swrc.owl";
-	private static String SWRC_SCHEMA_PATH = "res/BTC/swrc_schema.owl";
-
-
-	private static String REPOSITORY_DIR = "res/BTC/repository";
-	private static String STRUCTURE_INDEX_DIR = "res/BTC/structureIndex";
-	// uris already reserved in OWL that can cause parsing problems with KAON2 while loading schema into FOAM
-	//private static String[] NON_SUPPORTED_URIS = {};
-
-	//for mapping //
-	private static String OUTPUTDIR  = "res/BTC/mapping/mappingResult";
-	private static String SCHEMA_MAPPING = "schema";
-	private static String INSTANCE_MAPPING = "instance";
-
-	//for extracting instances //
-	private static String SCHEMA_MAPPING_FILE = "res/BTC/mapping/mappingResult/dblp_schema.rdf+swrc_schema.owl.mapping"; 	
-	private static String DBLP_ENTITIES_PATH = "res/BTC/mapping/dblp_entities.rdf"; 
-	private static String SWRC_ENTITIES_PATH = "res/BTC/mapping/swrc_entities.rdf"; 
-	private static String DBLP_ENTITIES = "dblp_entities"; 
-	private static String SWRC_ENTITIES = "swrc_entities"; 
+	private static String TEMP_ENTITIES_PATH = "res/BTC/mapping/entities.temp";
 	
-	
+	private MappingComputationService m_mapper = new MappingComputationService();
+	private SummaryGraphIndexService m_summarizer = new SummaryGraphIndexService();
+	private MappingIndexService m_indexer = null; 
+	private ExtractInstancesService m_extractor = new ExtractInstancesService();
+
+	private static String propertyFile = "res/params.prop";
 	public static void main(String[] args) {
-		Properties parameters = new Properties();
+		//Properties parameters = PropertyUtils.readFromPropertiesFile(args[0]);
+		
+		Properties parameters = PropertyUtils.readFromPropertiesFile(propertyFile);
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
 		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
+		
+		service.m_indexer = new MappingIndexService(parameters.getProperty(REPOSITORY_DIR));
+		
+		IOntology omsOnto = null;
 
 		//index DBLP 		
-//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
-//		IOntology onto = service.loadOntology(parameters, DBLP_PATH);
-//		service.index(parameters, DBLP_SCHEMA_PATH, onto); 
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(onto);
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(SOURCE_ONTO_PATH));
+		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+		service.index(parameters, parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH), omsOnto); 
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(omsOnto);
 
 		//index swrc 
-//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-//		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, SWRC_PATH);
-//		onto = service.loadOntology(parameters, SWRC_PATH);
-//		service.index(parameters, SWRC_SCHEMA_PATH, onto);
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(onto);
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(TARGET_ONTO_PATH));
+		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+		service.index(parameters, parameters.getProperty(TARGET_ONTO_SCHEMA_PATH), omsOnto);
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(omsOnto);
+
 
 		//compute schema mappings for SWRC
-		service.computeMappings(SWRC_SCHEMA_PATH, DBLP_SCHEMA_PATH, null);
-		
-		//extract DBLP instances 
-//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, DBLP_URI);
-//		onto = service.loadOntology(parameters, DBLP_PATH);
-//		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, DBLP_ENTITIES_PATH, onto);
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(onto);
+		Collection<SchemaMapping> sMappings = service.m_mapper.computeSchemaMappings(
+				parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH), 
+				parameters.getProperty(TARGET_ONTO_SCHEMA_PATH));
+		if (sMappings != null && sMappings.size() > 0){
+			for (SchemaMapping m : sMappings){
+				service.m_indexer.indexMappings(m);
 
-		//extract SWRC instances 
-//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, SWRC_URI);
-//		onto = service.loadOntology(parameters, SWRC_PATH);
-//		service.computeInstanceForMappings(SCHEMA_MAPPING_FILE, SWRC_ENTITIES_PATH, onto);
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(onto);
-		
-		
-		//compute instance mappings 
-		service.computeMappings(SWRC_ENTITIES_PATH, DBLP_ENTITIES_PATH, null);
-		
-//		try {
-//			((SesameConnection)service.m_con).deleteAllOntologies();
-//			service.m_con.close();
-//		} catch (SQLException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
+				parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
+				omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+				Ontology sourceOnto= service.m_extractor.extractInstances(m.getSource(), service.m_dao);
+				service.m_sessionFactory.getCurrentSession().close();
+				service.m_con.closeOntology(omsOnto);
+				
+				//mapping is indeed a concept mapping
+				if(sourceOnto != null){
+					try {
+						parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
+						omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+						Ontology targetOnto = service.m_extractor.extractInstances(m.getTarget(), service.m_dao);
+						File temp = new File(TEMP_ENTITIES_PATH);
+						targetOnto.saveOntology(OntologyFileFormat.OWL_XML,temp,"ISO-8859-1");
+						sourceOnto.importContentsFrom(temp, null);
+						service.m_sessionFactory.getCurrentSession().close();
+						service.m_con.closeOntology(omsOnto);
+					} catch (KAON2Exception e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					//compute instance mappings 
+					Collection<InstanceMapping> iMappings = service.m_mapper.computeInstanceMappings(new MyOntology(sourceOnto), m.getSourceDsURI(), m.getTargetDsURI(), m);
+					if (iMappings != null && iMappings.size() > 0){
+						for (InstanceMapping mi : iMappings){
+							service.m_indexer.indexMappings(mi);
+						}
+					}
+				}
 
+			}
+		}
 	}
 
 	public IndexingDatawebService(String repodir){
@@ -136,25 +153,13 @@ public class IndexingDatawebService {
 	}
 
 	private void index(Properties parameters, String schemaPath, IOntology onto){
-		SummaryGraphIndexServiceWithSesame2 service = new SummaryGraphIndexServiceWithSesame2();
-		WeightedPseudograph<KbVertex, KbEdge> sGraph = service.computeSummaryGraph(false, null);
-		service.writeSummaryGraphAsRDF(sGraph, schemaPath);
+		WeightedPseudograph<KbVertex, KbEdge> sGraph = m_summarizer.computeSummaryGraph(false, null);
+		m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);
+		String dir = parameters.getProperty(REPOSITORY_DIR);
+		String path = (dir.endsWith(File.separator) ? dir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
+			dir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
+		m_summarizer.writeSummaryGraph(sGraph, path);
 
-		String path = (STRUCTURE_INDEX_DIR.endsWith(File.separator) ? STRUCTURE_INDEX_DIR + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
-			STRUCTURE_INDEX_DIR + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
-		service.writeSummaryGraph(sGraph, path);
-
-	}
-
-	private void computeMappings(String ontology1, String ontology2, SchemaMapping mapping){
-		MappingComputationService service = new MappingComputationService();
-		if (mapping == null) service.computeSchemaMappings(ontology1, ontology2);
-		else service.computeInstanceMappings(ontology1, ontology2, mapping);
-	}
-
-	private void computeInstanceForMappings(String schemaMappingFilePath, String entityFilePath, IOntology onto){
-		ExtractInstancesService service = new ExtractInstancesService(schemaMappingFilePath, entityFilePath);
-		service.extractInstances();
 	}
 
 	private void initConnection(String repodir){
@@ -176,7 +181,7 @@ public class IndexingDatawebService {
 		IOntology onto = null;
 		try {
 			onto = m_con.loadOntology(PropertyUtils.convertToMap(parameters));
-			
+
 		} catch (OntologyLoadException e) {
 			try {
 				onto = m_con.createOntology(PropertyUtils.convertToMap(parameters));
@@ -208,7 +213,8 @@ public class IndexingDatawebService {
 		try {
 			ISession session = m_sessionFactory.openSession(m_con, onto);
 			PersistenceUtil.setSession(session);
-			PersistenceUtil.setDaoManager(ExtendedSesameDaoManager.getInstance((SesameSession)session));
+			m_dao = ExtendedSesameDaoManager.getInstance((SesameSession)session);
+			PersistenceUtil.setDaoManager(m_dao);
 		} catch (OpenSessionException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
