@@ -45,8 +45,9 @@ public class MyOntology implements Structure{
 			"265","266","301","302","303","304"};*/	
 	private String type;	
 	public Ontology ontology;
-	public AnnotationProperty owlxlabel;
-	public AnnotationProperty owlxcomment;
+	public AnnotationProperty owlxlabel = KAON2Manager.factory().annotationProperty("http://www.w3.org/2000/01/rdf-schema#label");
+	public AnnotationProperty owlxcomment = KAON2Manager.factory().annotationProperty("http://www.w3.org/2000/01/rdf-schema#comment");
+;
 	public boolean ok = true;
 
 	public MyOntology() {
@@ -86,12 +87,12 @@ public class MyOntology implements Structure{
 		} catch (Exception e) {
 			UserInterface.print(e.getMessage());
 			ok = false;
-		}
-		owlxlabel = KAON2Manager.factory().annotationProperty("http://www.w3.org/2000/01/rdf-schema#label");
-		owlxcomment = KAON2Manager.factory().annotationProperty("http://www.w3.org/2000/01/rdf-schema#comment");
+		}		
 	}		
 	
-	public MyOntology(InputStream[] ontologyStreams) {
+	public MyOntology(Ontology onto){
+		ontology = onto;
+		type = "KAON2 Ontology";
 	}
 	
 	public String type() {

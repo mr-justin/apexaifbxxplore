@@ -108,7 +108,7 @@ public class Main {
 	private static final int NUMBERQUESTIONS = 5;
 	private static final boolean REMOVEDOUBLES = Parameter.REMOVEDOUBLES;	
 	private static final String RESULTFILE = "C:/FOAM/details.txt";	//output
-	private static final double CUTOFF = 0.9;  //0.25;0.31;0.35(0.7);0.9(0.95)
+	private static final double CUTOFF = 0.5;  //0.25;0.31;0.35(0.7);0.9(0.95)
 	private static final String QUESTIONFILE = "C:/FOAM/doubt.txt";
 //	private static final String MANUALMAPPINGSFILE = "C:/FOAM/ontologies/animalsABMapCSV.txt";		
 	private static final String MANUALMAPPINGSFILE = "C:/FOAM/ontologies/people+petsABMapCSV.txt";		
