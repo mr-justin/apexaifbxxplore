@@ -21,7 +21,9 @@ import org.apache.commons.lang.StringUtils;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.model.definition.ModelDefinition;
 import org.ateam.xxplore.core.service.IService;
+import org.ateam.xxplore.core.service.search.KbEdge;
 import org.ateam.xxplore.core.service.search.KbElement;
+import org.ateam.xxplore.core.service.search.KbVertex;
 import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
 import org.ateam.xxplore.core.service.search.NextQueryIntepretationService;
 import org.ateam.xxplore.core.service.search.QueryTranslationService;
@@ -34,6 +36,7 @@ import org.eclipse.jface.window.Window;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.MessageBox;
+import org.jgrapht.graph.WeightedPseudograph;
 import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.query.ConceptMemberPredicate;
 import org.xmedia.oms.query.IQueryResult;
@@ -453,7 +456,9 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 	private void makeGraphIndex(final String datasourceUri) {
 		Display.getCurrent().asyncExec(new Runnable() {
 			public void run() {
-				new SummaryGraphIndexService().indexSummaryGraph(datasourceUri);
+				SummaryGraphIndexService service = new SummaryGraphIndexService();
+				WeightedPseudograph<KbVertex, KbEdge> graph = service.computeSummaryGraph(true, null);
+				service.writeSummaryGraph(graph, ExploreEnvironment.GRAPH_INDEX_DIR);
 			}
 		});
 	}
@@ -464,7 +469,9 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 	}
 	
 	public void makeGraphIndexCommandLineVersion(String datasourceUri) {
-		new SummaryGraphIndexService().indexSummaryGraph(datasourceUri);
+		SummaryGraphIndexService service = new SummaryGraphIndexService();
+		WeightedPseudograph<KbVertex, KbEdge> graph = service.computeSummaryGraph(true, null);
+		service.writeSummaryGraph(graph, ExploreEnvironment.GRAPH_INDEX_DIR);
 	}
 
 	public static class ModelDefinitionContentProviderSingleTonHolder {
