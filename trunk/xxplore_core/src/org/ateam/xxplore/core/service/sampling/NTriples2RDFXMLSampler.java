@@ -16,10 +16,10 @@ import org.openrdf.rio.RDFParseException;
 import org.openrdf.rio.helpers.RDFHandlerBase;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 
-public class MyNTriples2RDFXMLWriter {
+public class NTriples2RDFXMLSampler {
 	
 	private BufferedReader br;
-	private MyNTriplesParser parser;
+	private NTriplesParser parser;
 	
 	private BufferedWriter bw;
 	private RDFXMLWriter writer;
@@ -32,10 +32,10 @@ public class MyNTriples2RDFXMLWriter {
 	private static String targetDir = "res/BTC/target.rdf";
 	private static int maxTripleCount = 10000;
 	
-	public MyNTriples2RDFXMLWriter(String sourceDir, String targetDir) {
+	public NTriples2RDFXMLSampler(String sourceDir, String targetDir) {
 		try {
 			br = new BufferedReader(new FileReader(sourceDir));
-			parser = new MyNTriplesParser();
+			parser = new NTriplesParser();
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
 			new File(targetDir).getParentFile().mkdirs();
@@ -50,10 +50,10 @@ public class MyNTriples2RDFXMLWriter {
 		} 
 	}
 	
-	public MyNTriples2RDFXMLWriter(String sourceDir, String targetDir, int maxTripleCount) {
+	public NTriples2RDFXMLSampler(String sourceDir, String targetDir, int maxTripleCount) {
 		try {
 			br = new BufferedReader(new FileReader(sourceDir));
-			parser = new MyNTriplesParser(maxTripleCount);
+			parser = new NTriplesParser(maxTripleCount);
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
 			new File(targetDir).getParentFile().mkdirs();
@@ -73,7 +73,7 @@ public class MyNTriples2RDFXMLWriter {
 	 * @throws FileNotFoundException
 	 */
 	public static void main(String[] args) {
-		MyNTriples2RDFXMLWriter writer = new MyNTriples2RDFXMLWriter(sourceDir, targetDir, maxTripleCount);;
+		NTriples2RDFXMLSampler writer = new NTriples2RDFXMLSampler(sourceDir, targetDir, maxTripleCount);;
 		try {
 			String baseURI = "http://example.org";
 			writer.parse(baseURI);

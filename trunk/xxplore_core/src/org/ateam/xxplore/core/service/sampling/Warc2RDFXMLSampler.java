@@ -34,7 +34,7 @@ import org.openrdf.rio.ntriples.NTriplesParser;
 import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.openrdf.sail.memory.MemoryStore;
 
-public class MyWarc2RDFXMLWriter {
+public class Warc2RDFXMLSampler {
 	
 	private FastBufferedInputStream in;
 	private GZWarcRecord record;
@@ -63,7 +63,7 @@ public class MyWarc2RDFXMLWriter {
 	private static String targetDir = "res/BTC/watson/";
 	private static int urls = 20;
 	
-	public MyWarc2RDFXMLWriter(String sourceDir, String targetDir) {
+	public Warc2RDFXMLSampler(String sourceDir, String targetDir) {
 		try {
 			in = new FastBufferedInputStream(new FileInputStream(new File(sourceDir)));
 			record = new GZWarcRecord();
@@ -81,7 +81,7 @@ public class MyWarc2RDFXMLWriter {
 		} 
 	}
 	
-	public MyWarc2RDFXMLWriter(String sourceDir, String targetDir, int maxUrlCount) throws FileNotFoundException, RepositoryException{
+	public Warc2RDFXMLSampler(String sourceDir, String targetDir, int maxUrlCount) throws FileNotFoundException, RepositoryException{
 		this(sourceDir, targetDir);
 		this.maxUrlCount = maxUrlCount;
 	}
@@ -92,7 +92,7 @@ public class MyWarc2RDFXMLWriter {
 	 */
 	public static void main(String[] args) throws Exception {
 		
-		MyWarc2RDFXMLWriter writer = new MyWarc2RDFXMLWriter(sourceDir, targetDir, urls);
+		Warc2RDFXMLSampler writer = new Warc2RDFXMLSampler(sourceDir, targetDir, urls);
 		try {
 			while (writer.hasNext() && ((writer.getUrlCount() < writer.getMaxUrlCount()) || (writer.getMaxUrlCount() == -1))) {
 				WarcRecord nextRecord = writer.next();

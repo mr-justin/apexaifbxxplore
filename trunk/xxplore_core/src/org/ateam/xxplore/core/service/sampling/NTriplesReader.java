@@ -16,11 +16,11 @@ import org.openrdf.sail.memory.MemoryStore;
 /**
  * 
  */
-public class MyNTriplesReader {
+public class NTriplesReader {
 
 	public BufferedReader br;
 	
-	private MyNTriplesParser parser;
+	private NTriplesParser parser;
 	private CountHandler countHandler;
 
 	private Repository myRepository;
@@ -35,10 +35,10 @@ public class MyNTriplesReader {
 	private static String repositoryDir = "D:\\sampling\\repository\\NT";
 	private static int maxTripleCount = 100;
 	
-	public MyNTriplesReader(String sourceDir, String repositoryDir) {
+	public NTriplesReader(String sourceDir, String repositoryDir) {
 		try {
 			br = new BufferedReader(new FileReader(sourceDir));
-			parser = new MyNTriplesParser();
+			parser = new NTriplesParser();
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
 			myRepository = new SailRepository(new MemoryStore(new File(repositoryDir)));
@@ -54,15 +54,15 @@ public class MyNTriplesReader {
 		}
 	}
 	
-	public MyNTriplesReader(String sourceDir, String repositoryDir, String context) {
+	public NTriplesReader(String sourceDir, String repositoryDir, String context) {
 		this(sourceDir, repositoryDir);
 		this.context = context;
 	}
 	
-	public MyNTriplesReader(String fileName, String repositoryDir, int maxTripleCount) {
+	public NTriplesReader(String fileName, String repositoryDir, int maxTripleCount) {
 		try {
 			br = new BufferedReader(new FileReader(fileName));
-			parser = new MyNTriplesParser(maxTripleCount);
+			parser = new NTriplesParser(maxTripleCount);
 			countHandler = new CountHandler();
 			parser.setRDFHandler(countHandler);
 			myRepository = new SailRepository(new MemoryStore(new File(repositoryDir)));
@@ -78,7 +78,7 @@ public class MyNTriplesReader {
 		}
 	}
 	
-	public MyNTriplesReader(String fileName, String repositoryDir, int maxTripleCount, String context) {
+	public NTriplesReader(String fileName, String repositoryDir, int maxTripleCount, String context) {
 		this(sourceDir, repositoryDir, maxTripleCount);
 		this.context = context;
 	}
@@ -88,7 +88,7 @@ public class MyNTriplesReader {
 	 * @throws FileNotFoundException
 	 */
 	public static void main(String[] args) {
-		MyNTriplesReader reader = new MyNTriplesReader(sourceDir, repositoryDir, maxTripleCount);;
+		NTriplesReader reader = new NTriplesReader(sourceDir, repositoryDir, maxTripleCount);;
 		try {
 			String baseURI = "http://example.org";
 			reader.parse(baseURI);

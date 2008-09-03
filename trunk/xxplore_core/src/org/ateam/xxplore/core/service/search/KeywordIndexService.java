@@ -60,7 +60,7 @@ import org.xmedia.uris.impl.XMURIFactoryInsulated;
 
 public class KeywordIndexService {
 	
-	private static Logger s_log = Logger.getLogger(SummaryGraphIndexServiceWithSesame2.class);
+	private static Logger s_log = Logger.getLogger(SummaryGraphIndexService.class);
 	
 	private static final String SYN_INDEX_DIR = "D:\\BTC\\sampling\\synIndex";
 		
