@@ -21,4 +21,4 @@ Export-Package: org.aifb.xxplore.shared.exception,
  org.hsqldb.types,
  org.hsqldb.util
 Bundle-ClassPath: lib/hsqldb.jar
-Require-Bundle: org.apache.commons_logging
+Require-Bundle: org.apache.commons.logging
