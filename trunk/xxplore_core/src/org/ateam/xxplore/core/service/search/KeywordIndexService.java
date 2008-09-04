@@ -1,33 +1,36 @@
 package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
-import org.aifb.xxplore.shared.util.Pair;
-import org.aifb.xxplore.shared.util.PropertyUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryParser.QueryParser;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
 import org.ateam.xxplore.core.ExploreEnvironment;
-import org.xmedia.accessknow.sesame.persistence.ExtendedSesameDaoManager;
-import org.xmedia.accessknow.sesame.persistence.SesameConnection;
-import org.xmedia.accessknow.sesame.persistence.SesameRepositoryFactory;
-import org.xmedia.accessknow.sesame.persistence.SesameSession;
-import org.xmedia.accessknow.sesame.persistence.SesameSessionFactory;
+import org.ateam.xxplore.core.service.IService;
+import org.ateam.xxplore.core.service.IServiceListener;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.IIndividual;
@@ -35,45 +38,39 @@ import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IObjectProperty;
-import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
-import org.xmedia.oms.model.api.OntologyImportException;
+import org.xmedia.oms.model.impl.DataProperty;
+import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
+import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.PropertyMember;
-import org.xmedia.oms.persistence.DatasourceException;
-import org.xmedia.oms.persistence.ISession;
-import org.xmedia.oms.persistence.ISessionFactory;
-import org.xmedia.oms.persistence.InvalidParameterException;
+import org.xmedia.oms.model.impl.Resource;
 import org.xmedia.oms.persistence.KbEnvironment;
-import org.xmedia.oms.persistence.MissingParameterException;
-import org.xmedia.oms.persistence.OntologyCreationException;
-import org.xmedia.oms.persistence.OntologyLoadException;
-import org.xmedia.oms.persistence.OpenSessionException;
 import org.xmedia.oms.persistence.PersistenceUtil;
-import org.xmedia.oms.persistence.SessionFactory;
 import org.xmedia.oms.persistence.dao.IConceptDao;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
 import org.xmedia.oms.persistence.dao.ILiteralDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
-import org.xmedia.uris.impl.XMURIFactoryInsulated;
 
-public class KeywordIndexService {
+public class KeywordIndexService implements IService{
 	
-	private static Logger s_log = Logger.getLogger(SummaryGraphIndexService.class);
+	private static Logger s_log = Logger.getLogger(KeywordIndexService.class);
 	
 	private static final String SYN_INDEX_DIR = "D:\\BTC\\sampling\\synIndex";
 		
-	private IndexWriter indexWriter;
+	private IndexWriter m_indexWriter;
 	private StandardAnalyzer m_analyzer;
+	private Searcher m_searcher;
 	
 	public KeywordIndexService(Properties parameters, String repositoryDir, String keywordIndexDir, String datasource, boolean create) {
 		m_analyzer = new StandardAnalyzer();
+		
 		File indexDir = new File(keywordIndexDir);
 		if (!indexDir.exists())
 			indexDir.mkdirs();
 		try {
-			indexWriter = new IndexWriter(indexDir, m_analyzer, create);
+			m_indexWriter = new IndexWriter(indexDir, m_analyzer, create);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -96,16 +93,16 @@ public class KeywordIndexService {
 		try {
 			IndexSearcher indexSearcher = new IndexSearcher(SYN_INDEX_DIR);
 
-			indexDataSourceByConcept(indexWriter, indexSearcher);
-			indexDataSourceByProperty(indexWriter, indexSearcher);
+			indexDataSourceByConcept(m_indexWriter, indexSearcher);
+			indexDataSourceByProperty(m_indexWriter, indexSearcher);
 
 			indexSearcher.close();
 
-			indexDataSourceByLiteral(indexWriter);
-			indexDataSourceByIndividual(indexWriter);
+			indexDataSourceByLiteral(m_indexWriter);
+			indexDataSourceByIndividual(m_indexWriter);
 
-			indexWriter.optimize();
-			indexWriter.close();
+			m_indexWriter.optimize();
+			m_indexWriter.close();
 		}
 
 		catch (IOException e) {
@@ -227,7 +224,7 @@ public class KeywordIndexService {
 		try{
 			for (Object literal:literals){
 //				System.out.println(i + ": " + ((ILiteral)literal).getLabel());
-				i++;
+//				i++;
 				
 				Document doc = new Document();
 				doc.add(new Field("type", LITERAL, Field.Store.YES, Field.Index.NO));
@@ -301,4 +298,176 @@ public class KeywordIndexService {
 			e.printStackTrace();
 		} 
 	}
+	
+	public Map<String,Collection<KbElement>> searchKb(String query, String datasource){
+		Map<String,Collection<KbElement>> ress = new LinkedHashMap<String,Collection<KbElement>>();
+		try {
+			if (m_searcher ==null){
+				s_log.debug("Open index " + ExploreEnvironment.KB_INDEX_DIR + " and init kb searcher!");
+				m_searcher = new IndexSearcher(ExploreEnvironment.KB_INDEX_DIR + "/" + datasource);
+			}
+			QueryParser parser = new QueryParser("label", m_analyzer);
+			Query q = parser.parse(query);
+			if (q instanceof BooleanQuery){
+				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
+				for(int i = 0; i < clauses.length; i++){
+					Query clauseQ = clauses[i].getQuery();
+					System.out.println(clauseQ.toString("label"));
+					searchWithClause(clauseQ,ress);
+					System.out.println();
+				}
+			}
+			//is variations of phrase or term query 
+			else{
+				searchWithClause(q,ress);
+			}
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+//		System.out.println(ress);
+		return ress;
+	}
+
+	private void searchWithClause(Query clausequery, Map<String,Collection<KbElement>> ress){
+		try {
+			Hits results = m_searcher.search(clausequery);
+			if ((results == null) || (results.length() == 0)){
+				Set<Term> term = new HashSet<Term>();
+				clausequery.extractTerms(term);
+				//if clause query is a term query
+				if(term.size() == 1){
+					results = m_searcher.search(new FuzzyQuery(term.iterator().next()));
+				}
+			}
+			
+			if((results != null) && (results.length() > 0)){
+				System.out.println("results.length(): " + results.length());
+				Collection<KbElement> res = new LinkedHashSet<KbElement>();
+				ress.put(clausequery.toString("label"), res);
+				for(int i = 0; i < results.length(); i++){
+		        	Document doc = results.doc(i);
+		        	float score = results.score(i);
+		        	if(score >= 0.9){
+		        		if(doc != null){
+		        			String type = doc.get("type");
+		        			if(type.equals(LITERAL)){
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("label: " + doc.get("label"));
+		        				ILiteral lit = new Literal(pruneString(doc.get("label")));
+		        				KbVertex vvertex = new KbVertex(lit,KbElement.VVERTEX,score,1);
+		        				res.add(vvertex);
+		        				
+		        				Term term = new Term("literal",lit.getLabel());
+		        		        TermQuery query = new TermQuery(term);
+		        		        Hits hits = m_searcher.search(query);
+		        		        if((hits != null) && (hits.length() > 0)){
+		        		        	for(int j = 0; j < hits.length(); j++){
+		        		        		Document docu = hits.doc(j);
+		        		        		if(docu != null){
+		        		        			IDataProperty prop = new DataProperty(pruneString(docu.get("attribute")));
+		        		        			INamedConcept con = new NamedConcept(pruneString(docu.get("concept")));
+		        		        			KbVertex cvertex = new KbVertex(con,KbElement.CVERTEX,1);
+		        		        			res.add(new KbEdge(cvertex, vvertex, prop, KbElement.AEDGE,1));
+		        		        		}
+		        		        	}
+		        		        }
+		        			}
+		        			else if(type.equals(CONCEPT)){
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("uri: " + doc.get("uri"));
+		        				INamedConcept con = new NamedConcept(pruneString(doc.get("uri")));
+		        				res.add(new KbVertex(con,KbElement.CVERTEX,score,1));
+		        			}
+		        			else if(type.equals(DATAPROPERTY)){
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("uri: " + doc.get("uri"));
+		        				DataProperty dataProp = new DataProperty(pruneString(doc.get("uri")));
+		        				KbVertex vvertex = new KbVertex(new Resource("dummy"),KbElement.DUMMY,score,2);
+		        				res.add(vvertex);
+		        				
+		        				String str = dataProp.getLabel();
+		        				Term term = new Term("attribute",str);
+		        		        TermQuery query = new TermQuery(term);
+		        		        Hits hits = m_searcher.search(query);
+		        		        if((hits != null) && (hits.length() > 0)){
+		        		        	for(int j = 0; j < hits.length(); j++){
+		        		        		Document docu = hits.doc(j);
+		        		        		if(docu != null){
+		        		        			INamedConcept con = new NamedConcept(pruneString(docu.get("concept")));
+		        		        			KbVertex cvertex = new KbVertex(con,KbElement.CVERTEX,1);
+		        		        			res.add(new KbEdge(cvertex, vvertex, dataProp, KbElement.AEDGE,1));
+		        		        		}
+		        		        	}
+		        		        }
+		        			}
+		        			else if(type.equals(OBJECTPROPERTY)){
+		        				System.out.println("type: " + type);
+			        			System.out.println("score: " + score);
+		        				System.out.println("uri: " + doc.get("uri"));
+		        				IObjectProperty objProp = new ObjectProperty(pruneString(doc.get("uri")));
+		        				String str = objProp.getLabel();
+		        				Term term = new Term("relation",str);
+		        		        TermQuery query = new TermQuery(term);
+		        		        Hits hits = m_searcher.search(query);
+		        		        if((hits != null) && (hits.length() > 0)){
+		        		        	for(int j = 0; j < hits.length(); j++){
+		        		        		Document docu = hits.doc(j);
+		        		        		if(docu != null){
+		        		        			INamedConcept dcon = new NamedConcept(pruneString(docu.get("domain")));
+		        		        			INamedConcept rcon = new NamedConcept(pruneString(docu.get("range")));
+		        		        			KbVertex dvertex = new KbVertex(dcon,KbElement.CVERTEX,score,1);
+		        		        			KbVertex rvertex = new KbVertex(rcon,KbElement.CVERTEX,score,1);
+		        		        			res.add(new KbEdge(dvertex, rvertex, objProp, KbElement.REDGE,0));
+		        		        		}
+		        		        	}
+		        		        }
+		        			}
+		        		}
+		        	}
+		        }
+			} 
+				
+		} 
+		
+		catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+
+	private String pruneString(String str) {
+		return str.replace("\"", "");
+	}
+	
+	public void callService(IServiceListener listener, Object... params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void disposeService() {
+		try {
+			m_indexWriter.close();
+			m_searcher.close();
+			m_analyzer = null;
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void init(Object... params) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
