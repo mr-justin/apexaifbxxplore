@@ -31,7 +31,7 @@ import org.xmedia.oms.persistence.KbEnvironment;
  * write to an index named 'syn_index' in the current dir.
  * See constants at the bottom of this file to change these.
  */
-public final class Syns2Index
+public final class WordnetSynsIndexService
 {
 	/**
 	 * Take optional arg of prolog file name.

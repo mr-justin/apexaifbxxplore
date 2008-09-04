@@ -222,5 +222,28 @@ public class IndexingDatawebService {
 
 		return onto;
 	}
+	
+	
+//	private boolean isIndexingRequired(String datasourceUri){
+//		if (!m_indexedDS.contains(datasourceUri)){
+//			File file = new File(ExploreEnvironment.KB_INDEX_DIR);
+//			//TODO check of the knowledgebase has been changed instead 
+//			if ((file.list() == null) || (file.list().length <= 2)) {
+//				return true;
+//			}
+//		}
+//
+//		return false;
+//	}
+//
+//	private boolean isWordNetIndexingRequired(){
+//		File file = new File(ExploreEnvironment.SYN_INDEX_DIR);
+//		//TODO check of the knowledgebase has been changed instead 
+//		if ((file.list() == null) || (file.list().length <= 2)) {
+//			return true;
+//		}
+//		
+//		return false;
+//	}
 
 }
