@@ -24,7 +24,8 @@ import org.ateam.xxplore.core.service.IService;
 import org.ateam.xxplore.core.service.search.KbEdge;
 import org.ateam.xxplore.core.service.search.KbElement;
 import org.ateam.xxplore.core.service.search.KbVertex;
-import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
+import org.ateam.xxplore.core.service.search.DocumentIndexService;
+import org.ateam.xxplore.core.service.search.KeywordIndexService;
 import org.ateam.xxplore.core.service.search.NextQueryIntepretationService;
 import org.ateam.xxplore.core.service.search.QueryTranslationService;
 import org.ateam.xxplore.core.service.search.SummaryGraphIndexService;
@@ -51,7 +52,7 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 
 	private ModelDefinition m_modeldefinition;
 
-	private NextLuceneQueryService m_search_service;
+	private KeywordIndexService m_search_service;
 
 	private NextQueryIntepretationService m_interpretator;
 
@@ -63,12 +64,12 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 
 	private Collection<OWLPredicate> selectedQuery;
 
-	private ModelDefinitionContentProvider(IService queryservice,
+	private ModelDefinitionContentProvider(KeywordIndexService queryservice,
 			NextQueryIntepretationService interpretor,
 			QueryTranslationService translator) {
 		super();
 		m_viewers = new HashSet<Viewer>();
-		m_search_service = (NextLuceneQueryService) queryservice;
+		m_search_service = queryservice;
 		m_interpretator = interpretor;
 		m_translator = translator;
 	}
@@ -120,8 +121,7 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 						m_modeldefinition);
 
 				if (m_modeldefinition.getDataSource() instanceof IOntology) {
-					makeKbIndex(fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
-							.getUri()));
+					makeKbIndex();
 					makeGraphIndex(fsTransduceUri(((IOntology) m_modeldefinition.getDataSource())
 							.getUri()));
 					System.out.println(((IOntology) m_modeldefinition
@@ -445,10 +445,10 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 		return query;
 	}
 
-	private void makeKbIndex(final String datasourceUri) {
+	private void makeKbIndex() {
 		Display.getCurrent().asyncExec(new Runnable() {
 			public void run() {
-				m_search_service.indexDataSource(datasourceUri);
+				m_search_service.indexKeywords();
 			}
 		});
 	}
@@ -465,7 +465,7 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 
 	// used by XXPloreCommandLine only ...
 	public void makeKbIndexCommandLineVersion(String datasourceUri) {
-		m_search_service.indexDataSource(datasourceUri);
+		m_search_service.indexKeywords();
 	}
 	
 	public void makeGraphIndexCommandLineVersion(String datasourceUri) {
@@ -484,7 +484,7 @@ public class ModelDefinitionContentProvider implements ITreeContentProvider {
 				NextQueryIntepretationService interpretator = new NextQueryIntepretationService();
 				QueryTranslationService translator = new QueryTranslationService();
 				m_modelDefinitionContentProvider = new ModelDefinitionContentProvider(
-						NextLuceneQueryService.getInstance(), interpretator,
+						new KeywordIndexService(ExploreEnvironment.KB_INDEX_DIR,true), interpretator,
 						translator);
 			}
 

@@ -6,7 +6,7 @@ import org.aifb.xxplore.model.ResultViewContentProvider;
 import org.aifb.xxplore.views.DocumentResultsViewer;
 import org.apache.log4j.Logger;
 import org.ateam.xxplore.core.ExploreEnvironment;
-import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
+import org.ateam.xxplore.core.service.search.DocumentIndexService;
 import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.StructuredSelection;
@@ -89,7 +89,7 @@ public class DocumentResultView extends ViewPart{
 		m_composite = parent;
 		
 		m_viewer = new DocumentResultsViewer(parent);
-		m_provider = new ResultViewContentProvider(NextLuceneQueryService.getInstance());
+		m_provider = new ResultViewContentProvider(DocumentIndexService.getInstance());
 		
 		m_viewer.setContentProvider(m_provider);
 		getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(m_defViewlistener);
