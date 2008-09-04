@@ -7,7 +7,7 @@ import org.apache.lucene.search.Hits;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.model.definition.IModelDefinition;
 import org.ateam.xxplore.core.model.definition.ModelDefinition;
-import org.ateam.xxplore.core.service.search.NextLuceneQueryService;
+import org.ateam.xxplore.core.service.search.DocumentIndexService;
 import org.eclipse.jface.util.Assert;
 import org.eclipse.jface.viewers.IContentProvider;
 import org.eclipse.jface.viewers.Viewer;
@@ -16,7 +16,7 @@ import org.eclipse.swt.widgets.Display;
 public class ResultViewContentProvider implements IContentProvider {
 
 	private String m_docResultViewQuery;
-	private NextLuceneQueryService m_search_service;
+	private DocumentIndexService m_search_service;
 	private ModelDefinition m_def; 
 	private DocumentResultsViewer m_viewer;
 	private long m_lastSelectionTime;
@@ -25,7 +25,7 @@ public class ResultViewContentProvider implements IContentProvider {
 //	private static Logger s_log = Logger.getLogger(ResultViewContentProvider.class);
 
 	
-	public ResultViewContentProvider(NextLuceneQueryService service){
+	public ResultViewContentProvider(DocumentIndexService service){
 		m_search_service = service;		
 		makeFileIndex(true);
 		m_lastSelectionTime = -1;

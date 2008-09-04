@@ -63,7 +63,7 @@ public class KeywordIndexService implements IService{
 	private StandardAnalyzer m_analyzer;
 	private Searcher m_searcher;
 	
-	public KeywordIndexService(Properties parameters, String repositoryDir, String keywordIndexDir, String datasource, boolean create) {
+	public KeywordIndexService(String keywordIndexDir, boolean create) {
 		m_analyzer = new StandardAnalyzer();
 		
 		File indexDir = new File(keywordIndexDir);
@@ -75,10 +75,6 @@ public class KeywordIndexService implements IService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	}
-	
-	public KeywordIndexService(Properties parameters, String repositoryDir, String keywordIndexDir, boolean create) {
-		this(parameters,repositoryDir,keywordIndexDir, parameters.getProperty(KbEnvironment.ONTOLOGY_URI),create);
 	}
 	
 	public static String CONCEPT = "concept";

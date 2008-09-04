@@ -48,7 +48,7 @@ public final class KbEnvironment {
 	 * Knowledge Representation Language 
 	 */
 	public static final String KR_LANGUAGE ="kr.language";
-	
+		
 	/**
 	 * the uri of the ontology
 	 */
