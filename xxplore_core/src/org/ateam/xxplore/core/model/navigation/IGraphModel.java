@@ -24,8 +24,6 @@ public interface IGraphModel{
 	 */
 	public void addData(ISchema data);
 	
-	public void addData(Collection<IResource> graphelements);
-	
 	public Node addNode(IResource res);
 	
 	public Edge addEdge(IResource from, IResource to, IProperty property, String label);

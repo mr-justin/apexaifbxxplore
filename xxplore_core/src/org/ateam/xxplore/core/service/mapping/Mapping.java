@@ -1,6 +1,5 @@
 package org.ateam.xxplore.core.service.mapping;
 
-import org.xmedia.oms.model.api.IEntity;
 
 public abstract class Mapping{
 	private String m_source;

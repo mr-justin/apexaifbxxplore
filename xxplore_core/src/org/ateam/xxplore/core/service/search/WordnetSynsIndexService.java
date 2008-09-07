@@ -1,14 +1,22 @@
 package org.ateam.xxplore.core.service.search;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.PrintStream;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
-import org.apache.lucene.analysis.*;
-import org.apache.lucene.analysis.standard.*;
-import org.apache.lucene.index.*;
-import org.apache.lucene.document.*;
+import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.document.Document;
+import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexWriter;
 import org.ateam.xxplore.core.ExploreEnvironment;
-import org.xmedia.oms.persistence.KbEnvironment;
 
 /**
  * Convert the prolog file wn_s.pl from the wordnet prolog download
@@ -33,6 +41,9 @@ import org.xmedia.oms.persistence.KbEnvironment;
  */
 public final class WordnetSynsIndexService
 {
+	public static final String WORD_FIELD = "word";
+	public static final String SYN_FIELD = "syn";
+
 	/**
 	 * Take optional arg of prolog file name.
 	 */
@@ -148,7 +159,7 @@ public final class WordnetSynsIndexService
 			int n = index( word2Nums, num2Words, g, doc);
 			if ( n > 0)
 			{
-				doc.add(new Field("word", g, Field.Store.YES, Field.Index.UN_TOKENIZED));
+				doc.add(new Field(WORD_FIELD, g, Field.Store.YES, Field.Index.UN_TOKENIZED));
 				if ( (++row % mod) == 0)
 				{
 					o.println( "row=" +row + " doc= " + doc);
@@ -186,7 +197,7 @@ public final class WordnetSynsIndexService
 			String cur = (String) it.next();
 			if ( ! isDecent( cur)) continue; // don't store things like 'pit bull' -> 'american pit bull'
 			num++;
-			doc.add(new Field("syn" , cur, Field.Store.YES, Field.Index.NO));
+			doc.add(new Field(SYN_FIELD , cur, Field.Store.YES, Field.Index.NO));
 		}
 		return num;
 	}

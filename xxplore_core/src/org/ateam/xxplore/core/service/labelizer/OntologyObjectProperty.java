@@ -1,9 +1,7 @@
 package org.ateam.xxplore.core.service.labelizer;
 
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;

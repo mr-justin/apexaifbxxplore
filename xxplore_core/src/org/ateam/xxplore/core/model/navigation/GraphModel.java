@@ -3,7 +3,6 @@
 package org.ateam.xxplore.core.model.navigation;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -16,8 +15,6 @@ import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.URIHelper;
 import org.apache.log4j.Logger;
 import org.ateam.xxplore.core.ExploreEnvironment;
-import org.ateam.xxplore.core.service.search.KbEdge;
-import org.jgrapht.graph.SimpleDirectedGraph;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.IDatatype;
@@ -32,7 +29,6 @@ import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.api.ISchema;
 import org.xmedia.oms.model.impl.NamedConcept;
-import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.Variable;
 
 import prefuse.data.Edge;
@@ -238,54 +234,8 @@ public class GraphModel implements IGraphModel {
 		}
 		while (index < queue.size());
 	}
-
-	public void addData(Collection data) {
-//		Emergency.checkPrecondition(data != null, "data != null");
-
-//		for (Object res : data){
-//		// consider only resources not already processed 
-//		if (res instanceof IResource && !m_processed.containsKey(((IResource)res).getOid())){
-//		if(res instanceof INamedConcept ) processClass((INamedConcept)res);
-//		else if(res instanceof IProperty) processProperty((IProperty)res);
-//		else if (res instanceof INamedIndividual) processInstance((INamedIndividual)res);
-
-//		m_processed.put(((IResource)res).getOid(), (IResource)res);
-//		}
-//		} 
-	}
-
-	public void addData(SimpleDirectedGraph<IResource, KbEdge>resourcegraph, Collection<OWLPredicate> predicategraph){
-
-//		int row; 		
-//		for(IResource v : resourcegraph.vertexSet()){
-//			row = m_nodetable.addRow();
-//			initNode(m_nodetable.getTuple(row), v);
-//			s_log.debug("Node " + v + " has been added.");
-//		}
-//		for(KbEdge e : resourcegraph.edgeSet()){
-//			row = m_edgetable.addRow();
-//			IResource source = e.getVertex1();
-//			IResource target = e.getVertex2();
-//			IProperty prop = e.getProperty();
-//			initEdge(m_edgetable.getTuple(row), source, target, prop, prop.getLabel());
-//			s_log.debug("Edge " + source + " " + prop + " " + target + " has been added.");
-//		}
-//
-//		if(predicategraph == null) return;
-//		for (OWLPredicate pred : predicategraph) {
-//			if (pred instanceof PropertyMemberPredicate){
-//				m_highlightedResources.add(((PropertyMemberPredicate)pred).getProperty());
-//				m_highlightedResources.add(((PropertyMemberPredicate)pred).getFirstTerm());
-//				m_highlightedResources.add(((PropertyMemberPredicate)pred).getSecondTerm());
-//			}
-//			else{ //Concept member 
-//				m_highlightedResources.add(Property.IS_INSTANCE_OF);
-//				m_highlightedResources.add(((ConceptMemberPredicate)pred).getConcept());
-//				m_highlightedResources.add(((ConceptMemberPredicate)pred).getTerm());
-//			}
-//		}
-	}
-
+	
+	
 	public Node addNode(IResource res) {
 		
 		if(res instanceof IProperty)

@@ -2,21 +2,18 @@ package org.ateam.xxplore.core.service.labelizer;
 
 import java.io.File;
 import java.io.IOException;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
 
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.apache.log4j.Logger;
@@ -29,10 +26,6 @@ import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 import org.w3c.dom.DOMImplementation;
 import org.xmedia.businessobject.IBusinessObject;
-//import org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConceptDao;
-//import org.xmedia.oms.adapter.kaon2.persistence.Kaon2DaoManager;
-//import org.xmedia.oms.adapter.kaon2.persistence.Kaon2DatatypeDao;
-//import org.xmedia.oms.adapter.kaon2.persistence.Kaon2PropertyMemberDao;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.INamedIndividual;

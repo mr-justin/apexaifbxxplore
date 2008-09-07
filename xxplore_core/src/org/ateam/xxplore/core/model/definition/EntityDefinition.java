@@ -3,7 +3,6 @@ package org.ateam.xxplore.core.model.definition;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.exception.Emergency;
-import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.owl.api.ICompositeConcept;
 import org.xmedia.oms.persistence.IDataSource;

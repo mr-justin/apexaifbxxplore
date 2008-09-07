@@ -1,6 +1,5 @@
 package org.ateam.xxplore.core.service.labelizer;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;

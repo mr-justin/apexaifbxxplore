@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.SQLException;
 import java.util.Collection;
 import java.util.Properties;
 
@@ -14,7 +13,7 @@ import org.ateam.xxplore.core.service.mapping.InstanceMapping;
 import org.ateam.xxplore.core.service.mapping.MappingComputationService;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.mapping.SchemaMapping;
-import org.jgrapht.graph.WeightedPseudograph;
+import org.jgrapht.graph.Pseudograph;
 import org.openrdf.repository.RepositoryException;
 import org.semanticweb.kaon2.api.KAON2Exception;
 import org.semanticweb.kaon2.api.Ontology;
@@ -34,7 +33,6 @@ import org.xmedia.oms.persistence.InvalidParameterException;
 import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.persistence.MissingParameterException;
 import org.xmedia.oms.persistence.OntologyCreationException;
-import org.xmedia.oms.persistence.OntologyDeletionException;
 import org.xmedia.oms.persistence.OntologyLoadException;
 import org.xmedia.oms.persistence.OpenSessionException;
 import org.xmedia.oms.persistence.PersistenceUtil;
@@ -153,7 +151,7 @@ public class IndexingDatawebService {
 	}
 
 	private void index(Properties parameters, String schemaPath, IOntology onto){
-		WeightedPseudograph<KbVertex, KbEdge> sGraph = m_summarizer.computeSummaryGraph(false, null);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph = m_summarizer.computeSummaryGraph(false);
 		m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);
 		String dir = parameters.getProperty(REPOSITORY_DIR);
 		String path = (dir.endsWith(File.separator) ? dir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 

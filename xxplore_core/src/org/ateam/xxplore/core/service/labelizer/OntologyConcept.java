@@ -2,6 +2,7 @@ package org.ateam.xxplore.core.service.labelizer;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xmedia.oms.model.api.INamedConcept;
