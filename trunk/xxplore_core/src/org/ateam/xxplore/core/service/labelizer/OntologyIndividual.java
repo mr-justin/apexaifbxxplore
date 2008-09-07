@@ -9,7 +9,6 @@ import java.util.Set;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xmedia.oms.model.api.INamedConcept;
-import org.xmedia.oms.model.impl.NamedConcept;
 
 
 public class OntologyIndividual extends OntologyElement {

@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.ateam.xxplore.core.ExploreEnvironment;
-import org.ateam.xxplore.core.service.datafiltering.ITaskPolicyDao;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;

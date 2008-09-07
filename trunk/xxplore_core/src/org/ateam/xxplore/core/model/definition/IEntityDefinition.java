@@ -2,7 +2,6 @@ package org.ateam.xxplore.core.model.definition;
 
 import java.util.Set;
 
-import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IResource;
 
 public interface IEntityDefinition extends IDefinition {

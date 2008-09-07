@@ -16,7 +16,6 @@ import edu.unika.aifb.foam.input.ExplicitRelation;
 import edu.unika.aifb.foam.input.MyOntology;
 import edu.unika.aifb.foam.main.Align;
 import edu.unika.aifb.foam.main.Parameter;
-import edu.unika.aifb.foam.result.Evaluation;
 import edu.unika.aifb.foam.util.UserInterface;
 
 public class MappingComputationService {
