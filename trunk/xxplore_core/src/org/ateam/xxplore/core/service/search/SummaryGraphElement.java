@@ -19,8 +19,6 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 
 	public static final int CONCEPT = 0;
 
-	public static final int VALUE = 1;
-
 	public static final int DATATYPE = 5;
 	
 	public static final int ATTRIBUTE = 2;
