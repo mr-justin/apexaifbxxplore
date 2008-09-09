@@ -2,11 +2,9 @@ package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.Map;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.exception.Emergency;
-import org.aifb.xxplore.shared.util.Pair;
 import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -44,17 +41,16 @@ import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IObjectProperty;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
-import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.DataProperty;
 import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
-import org.xmedia.oms.model.impl.Resource;
+import org.xmedia.oms.model.impl.PropertyMember;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.dao.IConceptDao;
+import org.xmedia.oms.persistence.dao.IIndividualDao;
 import org.xmedia.oms.persistence.dao.ILiteralDao;
 import org.xmedia.oms.persistence.dao.IPropertyDao;
-import org.xmedia.oms.persistence.dao.IPropertyMemberAxiomDao;
 
 public class KeywordIndexService implements IService{
 
@@ -77,6 +73,7 @@ public class KeywordIndexService implements IService{
 	private static final String DS_FIELD =  "ds";
 	private static final String CONCEPT_FIELD =  "concept";
 	private static final String ATTRIBUTE_FIELD =  "attr";
+	private static final String LITERAL_FIELD = "value";
 
 	private static final double THRESHOLD_SCORE = 0.9;
 
@@ -106,6 +103,7 @@ public class KeywordIndexService implements IService{
 			indexSearcher.close();
 
 			indexDataSourceByLiteral(m_indexWriter, datasourceURI);
+			indexDataSourceByIndividual(m_indexWriter, datasourceURI);
 
 			m_indexWriter.optimize();
 			m_indexWriter.close();
@@ -225,47 +223,54 @@ public class KeywordIndexService implements IService{
 		} 
 	}
 
-	@SuppressWarnings("deprecation")
 	protected  void indexDataSourceByLiteral(IndexWriter indexWriter, String ds){
 		ILiteralDao literalDao = (ILiteralDao) PersistenceUtil.getDaoManager().getAvailableDao(ILiteralDao.class);
-		IPropertyMemberAxiomDao propDao = (IPropertyMemberAxiomDao) PersistenceUtil.getDaoManager().getAvailableDao(IPropertyMemberAxiomDao.class);
 		List literals = literalDao.findAll();
+		
 		try{
 			for (Object literal:literals){
 				Document doc = new Document();
 				doc.add(new Field(DS_FIELD, ds, Field.Store.NO, Field.Index.NO));
 				doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(LABEL_FIELD, ((ILiteral)literal).getLabel(), Field.Store.YES, Field.Index.TOKENIZED));
-				Set<String> propUris = new HashSet<String>();
-				if (literal instanceof ILiteral){
-					Set<IPropertyMember> members = propDao.findByTargetValue((ILiteral)literal);
-					if (members != null && members.size() > 0){
-						for (IPropertyMember member : members){
-							propUris.add(member.getUri());
-							IResource source = member.getSource();
-							if (source instanceof IIndividual){
-								Set<IConcept> cons = ((IIndividual)source).getTypes();
-								if (cons != null && cons.size() > 0){									
-									for(IConcept con : cons){
-										if (con instanceof INamedConcept)
-											doc.add(new Field(CONCEPT_FIELD, ((INamedConcept)con).getUri(), Field.Store.YES, Field.Index.NO));
-									}
-								}
-							}
-						}
-					}
-				}
-				if (propUris.size() > 0){
-					for (String uri : propUris){
-						doc.add(new Field(ATTRIBUTE_FIELD, uri,Field.Store.YES, Field.Index.NO));
-					}
-				}
-
+				
 				indexWriter.addDocument(doc);
 			}
 		}
 		catch (IOException e) {
 			s_log.error("Exception occurred while making index: " + e);
+			//TODO handle excpetion
+			e.printStackTrace();
+		} 
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void indexDataSourceByIndividual (IndexWriter indexWriter, String ds){
+		IIndividualDao individualDao = (IIndividualDao) PersistenceUtil.getDaoManager().getAvailableDao(IIndividualDao.class);
+		List individuals = individualDao.findAll();
+		try{
+			for (Object souceIndividual:individuals){
+				if (souceIndividual instanceof IIndividual) {
+					Set<IConcept> sourceConcepts = ((IIndividual)souceIndividual).getTypes();
+					Set<IPropertyMember> propmembers = ((IIndividual)souceIndividual).getPropertyFromValues();
+					for(IPropertyMember propmember : propmembers){
+						if(propmember.getType() == PropertyMember.DATA_PROPERTY_MEMBER && propmember.getTarget() instanceof ILiteral){
+							Document attrdoc = new Document();
+							attrdoc.add(new Field(LITERAL_FIELD, propmember.getTarget().getLabel(), Field.Store.YES, Field.Index.UN_TOKENIZED));
+							attrdoc.add(new Field(ATTRIBUTE_FIELD, propmember.getProperty().getUri(),Field.Store.YES,Field.Index.UN_TOKENIZED));
+							attrdoc.add(new Field(DS_FIELD, ds, Field.Store.NO, Field.Index.NO));
+							for(IConcept scon : sourceConcepts){
+								attrdoc.add(new Field(CONCEPT_FIELD, ((INamedConcept)scon).getUri(),Field.Store.YES, Field.Index.NO));
+							}
+							indexWriter.addDocument(attrdoc);
+						}	
+					}
+				}
+			}
+		}
+		catch (IOException e) {
+			s_log.error("Exception occurred while making index: " + e);
+			//TODO handle excpetion
 			e.printStackTrace();
 		} 
 	}
@@ -333,21 +338,28 @@ public class KeywordIndexService implements IService{
 							ILiteral lit = new Literal(pruneString(doc.get(LABEL_FIELD)));
 							SummaryGraphElement vvertex = new SummaryGraphElement(lit,SummaryGraphElement.VALUE, score);
 							res.add(vvertex);
-							String[] props = doc.getValues(ATTRIBUTE_FIELD);	
-							for (int j = 0; j < props.length; j++){
-								IDataProperty prop = new DataProperty(pruneString(props[i]));
-								SummaryGraphElement pvertex = new SummaryGraphElement(prop, SummaryGraphElement.ATTRIBUTE);
-								String[] cons = doc.getValues(CONCEPT_FIELD);	
-								for (int k = 0; k < cons.length; k++){
-									INamedConcept con = new NamedConcept(pruneString(cons[k]));
-									SummaryGraphElement cvertex = new SummaryGraphElement(con,SummaryGraphElement.CONCEPT);
-									Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
-									SummaryGraphEdge domain = new SummaryGraphEdge(cvertex, pvertex, SummaryGraphEdge.DOMAIN_EDGE);
-									SummaryGraphEdge range = new SummaryGraphEdge(pvertex, vvertex, SummaryGraphEdge.RANGE_EDGE);
-									sumGraph.addEdge(domain.getSource(), domain.getTarget(), domain);
-									sumGraph.addEdge(range.getSource(), range.getTarget(), range);
-								}
-							}
+							Term term = new Term(LITERAL_FIELD,lit.getLabel());
+	        		        TermQuery query = new TermQuery(term);
+	        		        Hits results = m_searcher.search(query);
+	        		        if((results != null) && (results.length() > 0)){
+	        		        	for(int j = 0; j < results.length(); j++){
+	        		        		Document docu = results.doc(j);
+	        		        		if(docu != null){
+	        		        			IDataProperty prop = new DataProperty(pruneString(docu.get(ATTRIBUTE_FIELD)));
+	    								SummaryGraphElement pvertex = new SummaryGraphElement(prop, SummaryGraphElement.ATTRIBUTE);
+	        		        			String[] cons = docu.getValues(CONCEPT_FIELD);
+	        		        			for (int k = 0; k < cons.length; k++){
+	    									INamedConcept con = new NamedConcept(pruneString(cons[k]));
+	    									SummaryGraphElement cvertex = new SummaryGraphElement(con,SummaryGraphElement.CONCEPT);
+	    									Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
+	    									SummaryGraphEdge domain = new SummaryGraphEdge(cvertex, pvertex, SummaryGraphEdge.DOMAIN_EDGE);
+	    									SummaryGraphEdge range = new SummaryGraphEdge(pvertex, vvertex, SummaryGraphEdge.RANGE_EDGE);
+	    									sumGraph.addEdge(domain.getSource(), domain.getTarget(), domain);
+	    									sumGraph.addEdge(range.getSource(), range.getTarget(), range);
+	    								}
+	        		        		}
+	        		        	}
+	        		        }
 							updateScore(sumGraph, vvertex, score);
 						}
 						else if(type.equals(CONCEPT)){
@@ -378,10 +390,9 @@ public class KeywordIndexService implements IService{
 							updateScore(sumGraph, pvertex, score);
 						}
 					}
-
 				}
 			}
-		} 
+		}
 
 		catch (IOException e) {
 			e.printStackTrace();
