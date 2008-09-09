@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
@@ -336,8 +337,10 @@ public class KeywordIndexService implements IService{
 						String type = doc.get(TYPE_FIELD);
 						if(type.equals(LITERAL)){
 							ILiteral lit = new Literal(pruneString(doc.get(LABEL_FIELD)));
-							SummaryGraphElement vvertex = new SummaryGraphElement(lit,SummaryGraphElement.VALUE, score);
-							res.add(vvertex);
+							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit, score);
+							vvertex.setDatasource(DS_FIELD);
+							
+							Map<IDataProperty, Collection<INamedConcept>> neighbors = new HashMap<IDataProperty, Collection<INamedConcept>>();
 							Term term = new Term(LITERAL_FIELD,lit.getLabel());
 	        		        TermQuery query = new TermQuery(term);
 	        		        Hits results = m_searcher.search(query);
@@ -346,46 +349,47 @@ public class KeywordIndexService implements IService{
 	        		        		Document docu = results.doc(j);
 	        		        		if(docu != null){
 	        		        			IDataProperty prop = new DataProperty(pruneString(docu.get(ATTRIBUTE_FIELD)));
-	    								SummaryGraphElement pvertex = new SummaryGraphElement(prop, SummaryGraphElement.ATTRIBUTE);
+	        		        			Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
 	        		        			String[] cons = docu.getValues(CONCEPT_FIELD);
 	        		        			for (int k = 0; k < cons.length; k++){
 	    									INamedConcept con = new NamedConcept(pruneString(cons[k]));
-	    									SummaryGraphElement cvertex = new SummaryGraphElement(con,SummaryGraphElement.CONCEPT);
-	    									Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
-	    									SummaryGraphEdge domain = new SummaryGraphEdge(cvertex, pvertex, SummaryGraphEdge.DOMAIN_EDGE);
-	    									SummaryGraphEdge range = new SummaryGraphEdge(pvertex, vvertex, SummaryGraphEdge.RANGE_EDGE);
-	    									sumGraph.addEdge(domain.getSource(), domain.getTarget(), domain);
-	    									sumGraph.addEdge(range.getSource(), range.getTarget(), range);
+	    									concepts.add(con);
 	    								}
+	        		        			neighbors.put(prop, concepts);
 	        		        		}
 	        		        	}
 	        		        }
+	        		        vvertex.setNeighbors(neighbors);
+	        		        res.add(vvertex);
 							updateScore(sumGraph, vvertex, score);
 						}
 						else if(type.equals(CONCEPT)){
 							INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
 							SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT, score);
+							cvertex.setDatasource(doc.get(DS_FIELD));
 							Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
 							res.add(cvertex);
 							updateScore(sumGraph, cvertex, score);
 						}
 						else if(type.equals(DATAPROPERTY)){
 							IDataProperty prop = new DataProperty(pruneString(doc.get(URI_FIELD)));
-							SummaryGraphElement pVertex = new SummaryGraphElement(prop,SummaryGraphElement.ATTRIBUTE, score);
-							res.add(pVertex);
+							SummaryGraphAttributeElement pVertex = new SummaryGraphAttributeElement(prop,SummaryGraphElement.ATTRIBUTE, score);
+							pVertex.setDatasource(doc.get(DS_FIELD));
+							
+							Collection<INamedConcept> neighborConcepts = new HashSet<INamedConcept>();
 							String[] cons = doc.getValues(CONCEPT_FIELD);	
 							for (int k = 0; k < cons.length; k++){
 								INamedConcept con = new NamedConcept(pruneString(cons[k]));
-								SummaryGraphElement cvertex = new SummaryGraphElement(con,SummaryGraphElement.CONCEPT);
-								Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
-								SummaryGraphEdge domain = new SummaryGraphEdge(cvertex, pVertex, SummaryGraphEdge.DOMAIN_EDGE);
-								sumGraph.addEdge(cvertex, pVertex, domain);
+								neighborConcepts.add(con);
 							}
+							pVertex.setNeighborConcepts(neighborConcepts);
+							res.add(pVertex);
 							updateScore(sumGraph, pVertex, score);
 						}
 						else if(type.equals(OBJECTPROPERTY)){
 							IObjectProperty objProp = new ObjectProperty(pruneString(doc.get(URI_FIELD)));
 							SummaryGraphElement pvertex = new SummaryGraphElement (objProp,SummaryGraphElement.RELATION, score);
+							pvertex.setDatasource(doc.get(DS_FIELD));
 							res.add(pvertex);
 							updateScore(sumGraph, pvertex, score);
 						}
