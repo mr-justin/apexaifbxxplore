@@ -18,6 +18,8 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	private static final long serialVersionUID = 1L;
 
 	public static final int CONCEPT = 0;
+	
+	public static final int VALUE = 1;
 
 	public static final int DATATYPE = 5;
 	
@@ -34,19 +36,21 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	public static final String SUBCLASS_ELEMENT_URI = "http://subclass_uri";
 
 	public static final double SUBCLASS_ELEMENT_DEFAULT_SCORE = 0;
-
+	
 	public static final SummaryGraphElement SUBCLASS = new SummaryGraphElement(
 			new ObjectProperty(SUBCLASS_ELEMENT_URI), RELATION, SUBCLASS_ELEMENT_DEFAULT_SCORE);
 
-	private IResource resource;
+	protected IResource resource;
 
-	private double cost;
+	protected double cost;
 
-	private float score;
+	protected float score;
 
-	private int type;
+	protected int type;
+	
+	protected String datasource;
 
-	private Map<String,Queue<Cursor>> cursors;
+	protected Map<String,Queue<Cursor>> cursors;
 
 	public SummaryGraphElement(){}
 
@@ -93,6 +97,14 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 
 	public float getScore(){
 		return score;
+	}
+	
+	public void setDatasource(String datasrouce){
+		this.datasource = datasrouce;
+	}
+	
+	public String getDatasource(){
+		return datasource;
 	}
 
 	public boolean equals(Object object){
@@ -204,6 +216,12 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 			+ "\n";
 		}
 		
+	}
+
+
+	public String getDataSource() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
