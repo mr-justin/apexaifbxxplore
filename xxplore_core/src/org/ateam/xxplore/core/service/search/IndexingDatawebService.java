@@ -150,6 +150,12 @@ public class IndexingDatawebService {
 		initConnection(repodir);
 	}
 
+	public static String getSummaryGraphFilePath(String datasource){
+		//TODO
+		return null;
+	}
+
+	
 	private void index(Properties parameters, String schemaPath, IOntology onto){
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph = m_summarizer.computeSummaryGraph(false);
 		m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);

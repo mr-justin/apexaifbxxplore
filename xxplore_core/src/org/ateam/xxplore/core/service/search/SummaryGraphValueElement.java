@@ -9,6 +9,10 @@ import org.xmedia.oms.model.api.IResource;
 
 public class SummaryGraphValueElement extends SummaryGraphElement{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Map<IDataProperty, Collection<INamedConcept>> neighbors;
 	
 	public SummaryGraphValueElement(IResource resource){
