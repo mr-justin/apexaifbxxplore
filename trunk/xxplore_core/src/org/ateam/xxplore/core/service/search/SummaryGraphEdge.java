@@ -12,17 +12,20 @@ public class SummaryGraphEdge {
 	
 	public static final String SUPERCLASS_EDGE = "superclass_edge";
 	
+	public static final String MAPPING_EDGE = "mapping_edge";
+	
 	private SummaryGraphElement m_source = null;
 	private SummaryGraphElement m_target = null;
 	
 	private String m_edgeLabel = "";
 	
 	public SummaryGraphEdge(SummaryGraphElement source, SummaryGraphElement target, String type){
-		Emergency.checkPrecondition(type == RANGE_EDGE || type == SUBCLASS_EDGE || type == SUPERCLASS_EDGE || type == DOMAIN_EDGE , 
+		Emergency.checkPrecondition(type == RANGE_EDGE || type == SUBCLASS_EDGE || type == MAPPING_EDGE || type == SUPERCLASS_EDGE || type == DOMAIN_EDGE , 
 				"type == RANGE_EDGE || type == SUBCLASS_EDGE || type == SPERCLASS_EDGE || type == DOMAIN_EDGE");
 		if (type == RANGE_EDGE) m_edgeLabel = RANGE_EDGE;
 		else if (type == SUBCLASS_EDGE) m_edgeLabel = SUBCLASS_EDGE;
 		else if (type == SUPERCLASS_EDGE) m_edgeLabel = SUPERCLASS_EDGE;
+		else if (type == MAPPING_EDGE) m_edgeLabel = MAPPING_EDGE;
 		else m_edgeLabel = DOMAIN_EDGE;
 		m_source = source; 
 		m_target = target;

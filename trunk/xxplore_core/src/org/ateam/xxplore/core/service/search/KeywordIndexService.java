@@ -337,7 +337,8 @@ public class KeywordIndexService implements IService{
 						String type = doc.get(TYPE_FIELD);
 						if(type.equals(LITERAL)){
 							ILiteral lit = new Literal(pruneString(doc.get(LABEL_FIELD)));
-							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit, score);
+							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
+							vvertex.setMatchingScore(score);
 							vvertex.setDatasource(DS_FIELD);
 							
 							Map<IDataProperty, Collection<INamedConcept>> neighbors = new HashMap<IDataProperty, Collection<INamedConcept>>();
@@ -361,19 +362,19 @@ public class KeywordIndexService implements IService{
 	        		        }
 	        		        vvertex.setNeighbors(neighbors);
 	        		        res.add(vvertex);
-							updateScore(sumGraph, vvertex, score);
 						}
 						else if(type.equals(CONCEPT)){
 							INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
-							SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT, score);
+							SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
+							cvertex.setMatchingScore(score);
 							cvertex.setDatasource(doc.get(DS_FIELD));
 							Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
 							res.add(cvertex);
-							updateScore(sumGraph, cvertex, score);
 						}
 						else if(type.equals(DATAPROPERTY)){
 							IDataProperty prop = new DataProperty(pruneString(doc.get(URI_FIELD)));
-							SummaryGraphAttributeElement pVertex = new SummaryGraphAttributeElement(prop,SummaryGraphElement.ATTRIBUTE, score);
+							SummaryGraphAttributeElement pVertex = new SummaryGraphAttributeElement(prop,SummaryGraphElement.ATTRIBUTE);
+							pVertex.setMatchingScore(score);
 							pVertex.setDatasource(doc.get(DS_FIELD));
 							
 							Collection<INamedConcept> neighborConcepts = new HashSet<INamedConcept>();
@@ -384,14 +385,13 @@ public class KeywordIndexService implements IService{
 							}
 							pVertex.setNeighborConcepts(neighborConcepts);
 							res.add(pVertex);
-							updateScore(sumGraph, pVertex, score);
 						}
 						else if(type.equals(OBJECTPROPERTY)){
 							IObjectProperty objProp = new ObjectProperty(pruneString(doc.get(URI_FIELD)));
-							SummaryGraphElement pvertex = new SummaryGraphElement (objProp,SummaryGraphElement.RELATION, score);
+							SummaryGraphElement pvertex = new SummaryGraphElement (objProp,SummaryGraphElement.RELATION);
+							pvertex.setMatchingScore(score);
 							pvertex.setDatasource(doc.get(DS_FIELD));
 							res.add(pvertex);
-							updateScore(sumGraph, pvertex, score);
 						}
 					}
 				}
@@ -404,19 +404,7 @@ public class KeywordIndexService implements IService{
 		return result;
 	}
 
-	//TODO this is not so efficient when graph is huge...
-	private void updateScore(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, SummaryGraphElement e, double score){
-		Set<SummaryGraphElement> vertices = graph.vertexSet();
-		if (vertices != null && vertices.size() > 0){
-			for (SummaryGraphElement v : vertices){
-				if(v.equals(e)){
-					// score = 1 / (EF/IDF*matchingscore)
-					v.setCost(1/(v.getCost() * score));
-				}
-			}
-		}
-	}
-
+	
 	private Document addConceptsToDataPropertyDoc(Document doc, IDataProperty prop, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemaGraph){
 		if (schemaGraph == null){
 			//use schema 

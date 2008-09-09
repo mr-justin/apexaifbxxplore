@@ -18,9 +18,9 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	private static final long serialVersionUID = 1L;
 
 	public static final int CONCEPT = 0;
-	
-	public static final int VALUE = 1;
 
+	public static final int VALUE = 1;
+	
 	public static final int DATATYPE = 5;
 	
 	public static final int ATTRIBUTE = 2;
@@ -36,15 +36,17 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	public static final String SUBCLASS_ELEMENT_URI = "http://subclass_uri";
 
 	public static final double SUBCLASS_ELEMENT_DEFAULT_SCORE = 0;
-	
+
 	public static final SummaryGraphElement SUBCLASS = new SummaryGraphElement(
 			new ObjectProperty(SUBCLASS_ELEMENT_URI), RELATION, SUBCLASS_ELEMENT_DEFAULT_SCORE);
 
 	protected IResource resource;
 
 	protected double cost;
-
-	protected float score;
+	
+	private double m_totalScore;
+	
+	private double m_matchingScore;
 
 	protected int type;
 	
@@ -68,7 +70,7 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	public SummaryGraphElement(IResource resource, int type, float score, double weight) {
 		this.resource = resource;
 		this.type = type;
-		this.score = score;
+		this.m_matchingScore = score;
 		this.cost = weight;
 	}
 
@@ -87,18 +89,18 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		this.cost = weight;
 	}
 
-	public double getCost(){
+	public double getEF(){
 		return cost;
 	}
 
-	public void setScore(float score){
-		this.score = score;
+	public void setMatchingScore(double score){
+		this.m_matchingScore = score;
 	}
 
-	public float getScore(){
-		return score;
+	public double getMatchingScore(){
+		return m_matchingScore;
 	}
-	
+		
 	public void setDatasource(String datasrouce){
 		this.datasource = datasrouce;
 	}
@@ -224,5 +226,11 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		return null;
 	}
 
+	public double getTotalScore() {
+		return m_totalScore;
+	}
 
+	public void setTotalScore(double score) {
+		m_totalScore = score;
+	}
 }
