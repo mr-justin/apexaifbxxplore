@@ -243,7 +243,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		
 		ExpansionQueue expansionQueue = new ExpansionQueue(new HashMap<String, PriorityQueue<Cursor>>());
 		PriorityQueue<Subgraph> subgraphQueue  = new PriorityQueue<Subgraph>();
-		Collection<Subgraph> topKGraphs = new ArrayList<Subgraph>();
 
 		Set<String> keywords = elements.keySet();
 		for(String keyword : keywords){
@@ -254,7 +253,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 		
 		while (!expansionQueue.isEmpty()){
-			Cursor c = expansionQueue.peekMinCostCursor();
+			Cursor c = expansionQueue.pollMinCostCursor();
 			
 			if(c.getLength() < distance){
 				SummaryGraphElement e = c.getElement();
@@ -262,8 +261,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				if(e.getCursors() == null) e.initCursorQueues(keywords);
 				e.addCursor(c, keyword);
 				if(e.isConnectingElement()){
-					Cursor[][] cursors = e.getCursorCombinations();
-					Collection<Subgraph> subgraphs = computeSubgraphs(cursors);
+					Cursor[][] combinations = e.getNewCursorCombinations();
+					e.addExploredCursorCombinations(combinations); 					
+					subgraphQueue.addAll(computeSubgraphs(combinations));
 					
 				}
 				
@@ -277,18 +277,13 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				}
 				
 			}
-			//TODO check if peek also remove cursor from queue
-			
-			
-			
-
 		}
 		
-		return topKGraphs;
+		return null;
 	}
 	
 	private Collection<Subgraph> computeSubgraphs(Cursor[][] cursors){
-//		for(int i = 0; i < cursors.length; i++){
+		for(int i = 0; i < cursors.length; i++){
 //			Cursor[] curs = cursors[i];
 //			edges.addAll(cursor.getPath());
 //			
@@ -325,7 +320,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //					}
 //				}
 //			}
-//		}
+		}
 		return null;
 	}
 
@@ -497,10 +492,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //	return vars; 
 //	}
 
-
-
-
-	class Subgraph implements Comparable {
+	public class Subgraph implements Comparable {
 
 		private SummaryGraphElement connectingVertex;
 
@@ -569,8 +561,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			+ "\n" + "Paths: " + paths
 			+ "\n";
 		}
-	}
-	
+	}	
 	class ExpansionQueue{
 		Map<String, PriorityQueue<Cursor>> m_queue;
 		Set<String> m_keywords;
@@ -598,12 +589,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			return true;
 		}
 		
-		private Cursor peekMinCostCursor(){
-			PriorityQueue<Cursor> minCostQ = new PriorityQueue<Cursor>();
+		private Cursor pollMinCostCursor(){
+			if(m_queues == null || m_queues.size() == 0) return null;
+			PriorityQueue<Cursor> minCostQ = null;
+			double minCost = 0; 
 			for (PriorityQueue<Cursor> q : m_queues){
-				minCostQ.add(q.peek());
+				double cCost = q.peek().getCost();
+				if(cCost < minCost || minCost == 0) {
+					minCost = cCost;
+					minCostQ = q;
+				}
 			}
-			return minCostQ.peek();
+			return minCostQ.poll();
 		}
 	}
 }
