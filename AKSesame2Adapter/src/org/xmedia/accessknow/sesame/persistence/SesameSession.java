@@ -10,6 +10,7 @@ import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
+import org.openrdf.repository.RepositoryResult;
 import org.xmedia.accessknow.sesame.model.SesameOntology;
 import org.xmedia.accessknow.sesame.persistence.converter.AK2Ses;
 import org.xmedia.oms.metaknow.IProvenance;
@@ -203,6 +204,14 @@ public class SesameSession implements ISession {
 		
 		return repositoryConnection.getStatements(null, null, null, false, getValueFactory().createURI(aContext)).asList();
 	}
+	
+	
+	public RepositoryResult<Statement> getAllStatements() throws Exception
+	{
+		return repositoryConnection.getStatements(null, null, null, false);
+	}
+	
+	
 	
 	protected List<Statement> getStatements(Resource subj, URI pred, Value obj, boolean includeInferred) throws RepositoryException {
 		

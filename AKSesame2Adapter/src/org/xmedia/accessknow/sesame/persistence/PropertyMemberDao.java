@@ -399,6 +399,17 @@ public class PropertyMemberDao implements IPropertyMemberAxiomDao {
 		return findAll(m_session.isReasoningOn(), false);
 
 	}
+	
+	public RepositoryResult<Statement> findAllStatements() throws DatasourceException {
+
+		try {
+			return m_session.getAllStatements();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+
+	}
 
 	private boolean isProvenanceStatement(Statement statement) {
 
