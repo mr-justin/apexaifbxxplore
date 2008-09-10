@@ -174,7 +174,8 @@ public class SummaryGraphIndexService {
 		Emergency.checkPrecondition((graph.vertexSet() != null || graph.vertexSet().size() > 0 || graph.edgeSet() != null || graph.edgeSet().size() > 0) , "Graph " + graph  + " is empty!");
 		StatelessSession session = (StatelessSession)SessionFactory.getInstance().getCurrentSession();
 		IOntology onto = session.getOntology();
-
+		
+		//it is not efficient
 		int numIndividual = onto.getNumberOfIndividual();
 		s_log.debug("number of Individual: " + numIndividual);
 
@@ -274,7 +275,7 @@ public class SummaryGraphIndexService {
 						predicate = new URIImpl(((IProperty)edge.getTarget().getResource()).getUri());
 						domain = new URIImpl(((INamedConcept)edge.getSource().getResource()).getUri());
 					}
-					else {
+					else if(type == SummaryGraphEdge.RANGE_EDGE){
 						predicate = new URIImpl(((IProperty)edge.getSource().getResource()).getUri());
 						range = new URIImpl(((INamedConcept)edge.getTarget().getResource()).getUri());
 					}
@@ -338,7 +339,7 @@ public class SummaryGraphIndexService {
 
 	private void addGraphElement(SummaryGraphElement vertex1, SummaryGraphElement vertex2, IProperty property, Pseudograph<SummaryGraphElement,SummaryGraphEdge> graph){
 		IObjectProperty objectProperty = new ObjectProperty(property.getUri());
-		Emergency.checkPrecondition(vertex2.getType() == SummaryGraphElement.CONCEPT && vertex1.getType() == SummaryGraphElement.CONCEPT, "vertex2.getType() == KbElement.CVERTEX && vertex1.getType() == KbElement.CVERTEX");
+		Emergency.checkPrecondition((vertex2.getType() == SummaryGraphElement.CONCEPT || vertex2.getType() == SummaryGraphElement.DATATYPE) && vertex1.getType() == SummaryGraphElement.CONCEPT, "vertex2.getType() == KbElement.CVERTEX && vertex1.getType() == KbElement.CVERTEX");
 		if(objectProperty.equals(Property.SUBCLASS_OF)) {
 			graph.addEdge(vertex1, SummaryGraphElement.SUBCLASS, 
 					new SummaryGraphEdge(vertex1, SummaryGraphElement.SUBCLASS, SummaryGraphEdge.SUBCLASS_EDGE));
