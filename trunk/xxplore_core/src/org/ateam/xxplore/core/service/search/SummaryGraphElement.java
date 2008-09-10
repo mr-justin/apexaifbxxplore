@@ -1,5 +1,6 @@
 package org.ateam.xxplore.core.service.search;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,6 +9,7 @@ import java.util.Queue;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.exception.Emergency;
+import org.ateam.xxplore.core.service.search.QueryInterpretationService.Subgraph;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.Datatype;
 import org.xmedia.oms.model.impl.NamedConcept;
@@ -20,6 +22,8 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
+	private Cursor[][] m_exploredCursorCombinations; 
 
 	public static final int CONCEPT = 0;
 
@@ -131,6 +135,8 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 
 
 	public boolean isConnectingElement() {
+		if(m_exploredCursorCombinations != null && m_exploredCursorCombinations.length > 0) return true;
+		
 		if(cursors == null || cursors.size() == 0) return false;
 		for(Queue<Cursor> queue : cursors.values()){
 			if(queue.isEmpty()){
@@ -141,7 +147,18 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	}
 	
 	
-	public Cursor[][] getCursorCombinations() {
+	public void addExploredCursorCombinations(Cursor[][] combinations){
+		//TODO
+	}
+	
+	public Cursor[][] getExploredCursorCombinations(){
+		return m_exploredCursorCombinations;
+	}
+	
+	
+	public Cursor[][] getAllCursorCombination() {
+		if(!isConnectingElement()) return null;
+		
 		int size = cursors.size();
 		int[] guard = new int[size];
 		int i = 0;
@@ -173,7 +190,17 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 //		}
 		while(index[size-1] < guard[size-1]);
 
-		return entries;
+		return null;
+	}
+	
+	/**
+	 * Return only the subgraphs that not have been explored before, i.e. only those 
+	 * that are not in the list of explored subgraphs (getExploredCursorCombinations())
+	 * 
+	 */
+	public Cursor[][] getNewCursorCombinations(){
+		return null;
+		
 	}
 	
 	private int mul(int a[],int n){
