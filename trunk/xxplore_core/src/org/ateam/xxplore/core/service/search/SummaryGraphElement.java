@@ -1,20 +1,20 @@
 package org.ateam.xxplore.core.service.search;
 
-import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
+import org.aifb.xxplore.shared.exception.Emergency;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.Datatype;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
 
-public class SummaryGraphElement implements ISummaryGraphElement, Serializable {
+public class SummaryGraphElement implements ISummaryGraphElement {
 
 	/**
 	 * 
@@ -64,7 +64,7 @@ public class SummaryGraphElement implements ISummaryGraphElement, Serializable {
 		this.resource = resource;
 		this.type = type;
 	}
-	
+
 	public SummaryGraphElement(IResource resource, int type, double weight) {
 		this.resource = resource;
 		this.type = type;
@@ -126,11 +126,63 @@ public class SummaryGraphElement implements ISummaryGraphElement, Serializable {
 		else if(resource instanceof Property && vertex.getResource() instanceof Property)
 			return ((Property)resource).getUri().equals(((Property)vertex.getResource()).getUri());
 //		============================================by Kaifeng Xu============================================
-		//if (!resource.equals(vertex.getResource()))  return false;
 		return false;
 	}
 
 
+	public boolean isConnectingElement() {
+		if(cursors == null || cursors.size() == 0) return false;
+		for(Queue<Cursor> queue : cursors.values()){
+			if(queue.isEmpty()){
+				return false;
+			}	
+		}
+		return true;
+	}
+	
+	
+	public Cursor[][] getCursorCombinations() {
+		int size = cursors.size();
+		int[] guard = new int[size];
+		int i = 0;
+		for(Collection<Cursor> list : cursors.values()){
+			guard[i++] = list.size()-1;
+		}
+		
+		int entrySize = mul(guard,size);
+		Cursor[][] entries = new Cursor[entrySize][size];
+
+		int[] index = new int[size];
+		for(int p : index) {
+			p = 0;
+		} 
+		guard[size-1]++;
+		i = 0;
+//		do {
+//			for(int m = 0; m < size; m++){
+//				entries[i][m] = cursors.get(m).get(index[m]);
+//			}
+//			i++;
+//			index[0]++;
+//			for(int j = 0; j < size; j++){
+//				if(index[j] > guard[j]){
+//					index[j] = 0;
+//					index[j+1]++; 
+//				}
+//			}
+//		}
+		while(index[size-1] < guard[size-1]);
+
+		return entries;
+	}
+	
+	private int mul(int a[],int n){
+		return n>0?((a[n-1]+1)*mul(a,--n)):1;
+	}
+
+	
+	
+	
 	public int hashCode(){
 		return resource.hashCode();
 	}
@@ -142,99 +194,21 @@ public class SummaryGraphElement implements ISummaryGraphElement, Serializable {
 
 
 
-	public void createCursors(Set<String> keywords){
+	public void initCursorQueues(Set<String> keywords){
 		cursors = new HashMap<String,Queue<Cursor>>();
 		for(String keyword : keywords){
 			cursors.put(keyword, new PriorityQueue<Cursor>());
 		}
 	}
+	
+	public void addCursor(Cursor cursor, String keyword){
+		Emergency.checkPrecondition(cursors != null && cursors.size() > 0, "Cursor queues not initialized!");
+		Queue<Cursor> q = cursors.get(keyword);
+		q.add(cursor);
+	}
 
 	public Map<String,Queue<Cursor>> getCursors(){
 		return cursors;
-	}
-
-
-	class Cursor implements Comparable {
-
-		private SummaryGraphElement m_matching;
-
-		private double cost;
-
-		List<SummaryGraphEdge> edges;
-
-		public Cursor(){}
-
-		public Cursor(SummaryGraphElement matchingElement, double cost, List<SummaryGraphEdge> edges){
-			this.m_matching = matchingElement;
-			this.cost = cost;
-			this.edges = edges;
-		} 
-
-		public double getCost(){
-			return cost;
-		}
-
-		public List<SummaryGraphEdge> getPath(){
-			return edges;
-		}
-
-		public SummaryGraphElement getMatchingVertex(){
-			return m_matching;
-		}
-
-		public int compareTo(Object o) {
-			Cursor other = (Cursor)o;
-			if(cost > other.cost) {
-				return 1;
-			}
-			if(cost < other.cost) {
-				return -1;
-			}
-			return 0;
-		}
-
-		@Override
-		public boolean equals(Object o){
-			if(this == o) {
-				return true;
-			}
-			if(!(o instanceof Cursor)) {
-				return false;
-			}
-			Cursor other = (Cursor)o;
-			if(cost != other.getCost()) {
-				return false;
-			}
-			if(!(m_matching.equals(other.getMatchingVertex()))) {
-				return false;
-			}
-			if(!(edges.equals(other.getPath()))) {
-				return false;
-			}
-			return true;
-		}
-
-		@Override
-		public int hashCode(){
-			int code = 0;
-			code += 7*m_matching.hashCode() + 13*edges.hashCode();
-			return code;
-		}
-
-		@Override
-		public String toString(){
-			return "cost: " + cost 
-			+ "\n" + "matchingVertex: " + m_matching
-			+ "\n" + "Path: " + edges
-			+ "\n";
-		}
-		
-	}
-
-
-	public String getDataSource() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	public double getTotalScore() {

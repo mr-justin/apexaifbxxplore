@@ -6,7 +6,7 @@ public interface ISummaryGraphElement extends Serializable {
 	
 	public int getType();
 	
-	public String getDataSource();
+	public String getDatasource();
 	
 	public double getEF();
 	
