@@ -1,8 +1,10 @@
 package org.ateam.xxplore.core.service.search;
 
+import java.io.Serializable;
+
 import org.aifb.xxplore.shared.exception.Emergency;
 
-public class SummaryGraphEdge {
+public class SummaryGraphEdge implements Serializable{
 	
 	public static final String RANGE_EDGE = "range_edge";
 	
@@ -20,13 +22,15 @@ public class SummaryGraphEdge {
 	private String m_edgeLabel = "";
 	
 	public SummaryGraphEdge(SummaryGraphElement source, SummaryGraphElement target, String type){
-		Emergency.checkPrecondition(type == RANGE_EDGE || type == SUBCLASS_EDGE || type == MAPPING_EDGE || type == SUPERCLASS_EDGE || type == DOMAIN_EDGE , 
-				"type == RANGE_EDGE || type == SUBCLASS_EDGE || type == SPERCLASS_EDGE || type == DOMAIN_EDGE");
+
+//		Emergency.checkPrecondition(type == RANGE_EDGE || type == SUBCLASS_EDGE || type == MAPPING_EDGE || type == SUPERCLASS_EDGE || type == DOMAIN_EDGE , 
+//				"type == RANGE_EDGE || type == SUBCLASS_EDGE || type == SPERCLASS_EDGE || type == DOMAIN_EDGE");
 		if (type == RANGE_EDGE) m_edgeLabel = RANGE_EDGE;
 		else if (type == SUBCLASS_EDGE) m_edgeLabel = SUBCLASS_EDGE;
 		else if (type == SUPERCLASS_EDGE) m_edgeLabel = SUPERCLASS_EDGE;
+		else if (type == DOMAIN_EDGE) m_edgeLabel = DOMAIN_EDGE;
 		else if (type == MAPPING_EDGE) m_edgeLabel = MAPPING_EDGE;
-		else m_edgeLabel = DOMAIN_EDGE;
+
 		m_source = source; 
 		m_target = target;
 	}

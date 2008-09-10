@@ -1,5 +1,6 @@
 package org.ateam.xxplore.core.service.search;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,9 +9,12 @@ import java.util.Queue;
 import java.util.Set;
 
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.model.impl.Datatype;
+import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
+import org.xmedia.oms.model.impl.Property;
 
-public class SummaryGraphElement implements ISummaryGraphElement {
+public class SummaryGraphElement implements ISummaryGraphElement, Serializable {
 
 	/**
 	 * 
@@ -60,7 +64,7 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		this.resource = resource;
 		this.type = type;
 	}
-
+	
 	public SummaryGraphElement(IResource resource, int type, double weight) {
 		this.resource = resource;
 		this.type = type;
@@ -114,9 +118,16 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		if(object == null) return false;
 		if(!(object instanceof SummaryGraphElement)) return false;
 		SummaryGraphElement vertex = (SummaryGraphElement)object;
-
-		if (!resource.equals(vertex.getResource()))  return false;
-		return true;
+//		============================================by Kaifeng Xu============================================
+		if(resource instanceof NamedConcept && vertex.getResource() instanceof NamedConcept)
+			return ((NamedConcept)resource).getUri().equals(((NamedConcept)vertex.getResource()).getUri());
+		else if(resource instanceof Datatype && vertex.getResource() instanceof Datatype)
+			return ((Datatype)resource).getUri().equals(((Datatype)vertex.getResource()).getUri());
+		else if(resource instanceof Property && vertex.getResource() instanceof Property)
+			return ((Property)resource).getUri().equals(((Property)vertex.getResource()).getUri());
+//		============================================by Kaifeng Xu============================================
+		//if (!resource.equals(vertex.getResource()))  return false;
+		return false;
 	}
 
 
