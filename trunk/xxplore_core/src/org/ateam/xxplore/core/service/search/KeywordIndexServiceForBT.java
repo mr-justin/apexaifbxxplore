@@ -59,7 +59,7 @@ import org.xmedia.oms.persistence.dao.IConceptDao;
 
 public class KeywordIndexServiceForBT implements IService{
 
-	private static Logger s_log = Logger.getLogger(KeywordIndexService.class);
+	private static Logger s_log = Logger.getLogger(KeywordIndexServiceForBT.class);
 
 	private IndexWriter m_indexWriter;
 	private StandardAnalyzer m_analyzer;

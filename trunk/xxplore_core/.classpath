@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
 	<classpathentry kind="src" path="src"/>
+	<classpathentry exported="true" kind="lib" path="lib/openrdf-sesame-2.1.3-onejar.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/jgrapht-jdk1.5.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/lucene-core-2.0.0.jar"/>
 	<classpathentry exported="true" kind="lib" path="lib/prefuse.jar"/>

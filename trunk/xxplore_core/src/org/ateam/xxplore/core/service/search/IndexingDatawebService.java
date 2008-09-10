@@ -55,30 +55,30 @@ public class IndexingDatawebService {
 	private static String TARGET_ONTO_URI = "target_onto_uri";
 	private static String TARGET_ONTO_PATH = "target_onto_path";
 	private static String TARGET_ONTO_SCHEMA_PATH = "target_onto_schema_path";
-	
+
 	private static String BASE_URI = "";
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
 	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDF_NATIVE;
 
 	private static String TEMP_ENTITIES_PATH = "res/BTC/mapping/entities.temp";
-	
+
 	private MappingComputationService m_mapper = new MappingComputationService();
-	private SummaryGraphIndexService m_summarizer = new SummaryGraphIndexService();
+	private SummaryGraphIndexServiceForBT m_summarizer = new SummaryGraphIndexServiceForBT();
 	private MappingIndexService m_indexer = null; 
 	private ExtractInstancesService m_extractor = new ExtractInstancesService();
 
 	private static String propertyFile = "res/params.prop";
 	public static void main(String[] args) {
 		//Properties parameters = PropertyUtils.readFromPropertiesFile(args[0]);
-		
+
 		Properties parameters = PropertyUtils.readFromPropertiesFile(propertyFile);
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
 		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
-		
+
 		service.m_indexer = new MappingIndexService(parameters.getProperty(REPOSITORY_DIR));
-		
+
 		IOntology omsOnto = null;
 
 		//index DBLP 		
@@ -111,7 +111,7 @@ public class IndexingDatawebService {
 				Ontology sourceOnto= service.m_extractor.extractInstances(m.getSource(), service.m_dao);
 				service.m_sessionFactory.getCurrentSession().close();
 				service.m_con.closeOntology(omsOnto);
-				
+
 				//mapping is indeed a concept mapping
 				if(sourceOnto != null){
 					try {
@@ -155,14 +155,21 @@ public class IndexingDatawebService {
 		return null;
 	}
 
-	
+
 	private void index(Properties parameters, String schemaPath, IOntology onto){
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph = m_summarizer.computeSummaryGraph(false);
-		m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);
-		String dir = parameters.getProperty(REPOSITORY_DIR);
-		String path = (dir.endsWith(File.separator) ? dir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
-			dir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
-		m_summarizer.writeSummaryGraph(sGraph, path);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph;
+		try {
+			sGraph = m_summarizer.computeSummaryGraph(false);
+
+			m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);
+			String dir = parameters.getProperty(REPOSITORY_DIR);
+			String path = (dir.endsWith(File.separator) ? dir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
+				dir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
+			m_summarizer.writeSummaryGraph(sGraph, path);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -226,28 +233,28 @@ public class IndexingDatawebService {
 
 		return onto;
 	}
-	
-	
+
+
 //	private boolean isIndexingRequired(String datasourceUri){
-//		if (!m_indexedDS.contains(datasourceUri)){
-//			File file = new File(ExploreEnvironment.KB_INDEX_DIR);
-//			//TODO check of the knowledgebase has been changed instead 
-//			if ((file.list() == null) || (file.list().length <= 2)) {
-//				return true;
-//			}
-//		}
-//
-//		return false;
+//	if (!m_indexedDS.contains(datasourceUri)){
+//	File file = new File(ExploreEnvironment.KB_INDEX_DIR);
+//	//TODO check of the knowledgebase has been changed instead 
+//	if ((file.list() == null) || (file.list().length <= 2)) {
+//	return true;
 //	}
-//
+//	}
+
+//	return false;
+//	}
+
 //	private boolean isWordNetIndexingRequired(){
-//		File file = new File(ExploreEnvironment.SYN_INDEX_DIR);
-//		//TODO check of the knowledgebase has been changed instead 
-//		if ((file.list() == null) || (file.list().length <= 2)) {
-//			return true;
-//		}
-//		
-//		return false;
+//	File file = new File(ExploreEnvironment.SYN_INDEX_DIR);
+//	//TODO check of the knowledgebase has been changed instead 
+//	if ((file.list() == null) || (file.list().length <= 2)) {
+//	return true;
+//	}
+
+//	return false;
 //	}
 
 }
