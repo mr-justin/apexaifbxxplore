@@ -44,7 +44,7 @@ import org.xmedia.oms.persistence.StatelessSession;
 
 public class SummaryGraphIndexServiceForBT {
 
-	private static Logger s_log = Logger.getLogger(SummaryGraphIndexService.class);
+	private static Logger s_log = Logger.getLogger(SummaryGraphIndexServiceForBT.class);
 	private static String PREFIX = "http://www.w3.org/2001/XMLSchema#";
 	private int DEFAULT_EF_TOP = 2; 
 
