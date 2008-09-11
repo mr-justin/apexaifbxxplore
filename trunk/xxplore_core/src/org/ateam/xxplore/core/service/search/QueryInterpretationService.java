@@ -11,29 +11,33 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.exception.Emergency;
+import org.aifb.xxplore.shared.util.Pair;
+import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.apache.log4j.Logger;
 import org.ateam.xxplore.core.service.IServiceListener;
 import org.ateam.xxplore.core.service.mapping.Mapping;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
-import org.jgrapht.Graph;
-import org.jgrapht.Graphs;
+import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.Pseudograph;
 import org.jgrapht.graph.WeightedPseudograph;
-import org.jgrapht.traverse.ClosestFirstIterator;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
+import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.model.impl.Property;
+import org.xmedia.oms.query.ConceptMemberPredicate;
 import org.xmedia.oms.query.OWLPredicate;
+import org.xmedia.oms.query.PropertyMemberPredicate;
+import org.xmedia.oms.query.Variable;
 
 public class QueryInterpretationService implements IQueryInterpretationService {
 
@@ -41,10 +45,11 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private WeightedPseudograph<SummaryGraphElement,SummaryGraphEdge> resourceGraph;
 
-	private Collection<String> m_datasources = new ArrayList<String>();
+	//store datasources and coverage
+	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
 
 	private Set<SummaryGraphElement> m_startingElements = new HashSet<SummaryGraphElement>();
-	
+
 	private Map<String, Pseudograph<SummaryGraphElement, SummaryGraphEdge>> m_DsGraphMap = new HashMap<String, Pseudograph<SummaryGraphElement,SummaryGraphEdge>>(); 
 
 	public void callService(IServiceListener listener, Object... params) {
@@ -59,28 +64,35 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		// TODO Auto-generated method stub
 	}
 
-	public Collection<Collection<OWLPredicate>> computeQueries(Map<String,Collection<SummaryGraphElement>> elements, MappingIndexService index, int distance) {
+	public Collection<Map<String,Collection<OWLPredicate>>> computeQueries(Map<String,Collection<SummaryGraphElement>> elements, 
+			MappingIndexService index, int distance, int k) {
 
 		if (elements == null) return null;
+
+		Collection<Map<String,Collection<OWLPredicate>>> results = new ArrayList<Map<String,Collection<OWLPredicate>>>();
+
 
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
 		getAugmentedSummaryGraphs(sumGraphs, elements);
 		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
 
-		getTopKSubgraphs(resourceGraph, elements, distance);
+		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph, elements, distance, k);
+		if((subgraphs == null) || (subgraphs.size() == 0)) 
+			return null;
 
-//		connectingElements = new LinkedHashSet<SummaryGraphElement>();
+		for (Subgraph g : subgraphs){
+			Map<String,Collection<OWLPredicate>> query = new HashMap<String, Collection<OWLPredicate>>();
+			Collection<QueryGraph> qGraphs = getQuerygraphs(g);{
+				if(qGraphs == null || qGraphs.size() == 0){
+					for(QueryGraph qg : qGraphs){
+						query.put(qg.getDatasource(), computeQuery(qg));
+					}
+				}
+			}
+			results.add(query);
+		}
 
-//		subgraphs = computeSubgraphs(resources);
-//		if((subgraphs == null) || (subgraphs.size() == 0)) {
-//		return null;
-//		}
-//		queries = computeQueries(subgraphs);
-//		if((queries == null) || (queries.size() == 0)) {
-//		return null;
-//		}
-
-		return null;
+		return results;
 	}
 
 	private Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>retrieveSummaryGraphs(Map<String, Collection<SummaryGraphElement>> elements){
@@ -91,9 +103,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for (Collection<SummaryGraphElement> c : gElements){
 			for (SummaryGraphElement e : c){
 				String dsURI = e.getDatasource();
-				//store the datasource URI; this will be used later to collect mappings
-				m_datasources.add(dsURI);
 
+				//store and update ds coverage
+				updateDsCoverage(dsURI);
+				
 				String dsDFileName = IndexingDatawebService.getSummaryGraphFilePath(dsURI);
 				File graphIndex = new File(dsDFileName);
 				ObjectInputStream in;
@@ -116,7 +129,20 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return result;
 	}
 
-
+	private void updateDsCoverage(String ds){
+		Integer cover = m_datasources.get(ds);
+		if (cover != null){
+			cover = new Integer(cover.intValue() + 1);
+		}
+		else m_datasources.put(ds, new Integer(1));
+	}
+	
+	private int getDsCoverage(SummaryGraphElement e){
+		String ds = e.getDatasource();
+		Emergency.checkPrecondition(ds != null, "No datasource stored for element:" + e);
+		return m_datasources.get(ds).intValue();
+	}
+	
 	private void getAugmentedSummaryGraphs(Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs, Map<String, Collection<SummaryGraphElement>> keywords){
 		if(graphs == null || graphs.size() == 0) return;
 		Set<String> keys = keywords.keySet();
@@ -164,7 +190,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	private WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> getIntegratedSummaryGraph(Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs, MappingIndexService index){
 		if(m_datasources == null || m_datasources.size() == 0) return null;
 		Collection<Mapping> mappings = new ArrayList<Mapping>();
-		for(String ds : m_datasources){
+		for(String ds : m_datasources.keySet()){
 			mappings.addAll(index.searchMappingsForDS(ds, MappingIndexService.SEARCH_SOURCE_DS_ONLY));
 		}
 
@@ -219,6 +245,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					}
 					// score = 1 / (EF/IDF*matchingscore)
 					v.setTotalScore(1/(v.getEF() * score));
+					v.applyCoverage(getDsCoverage(v));
 				}
 			}
 		}
@@ -239,80 +266,138 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 
 	private Collection<Subgraph> getTopKSubgraphs(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph, 
-			Map<String,Collection<SummaryGraphElement>> elements, int distance){
-		
+			Map<String,Collection<SummaryGraphElement>> elements, int distance, int k){
+
 		ExpansionQueue expansionQueue = new ExpansionQueue(new HashMap<String, PriorityQueue<Cursor>>());
-		PriorityQueue<Subgraph> subgraphQueue  = new PriorityQueue<Subgraph>();
+		List<Subgraph> subgraphList  = new ArrayList<Subgraph>();
 
 		Set<String> keywords = elements.keySet();
 		for(String keyword : keywords){
 			for(SummaryGraphElement element : elements.get(keyword)){
-				Cursor cursor = new Cursor(element, element, null, keyword, element.getTotalScore());
+				Cursor cursor = new Cursor(element, element, null, null, keyword, element.getTotalScore());
 				expansionQueue.addCursor(cursor, keyword);
 			}
 		}
-		
+
 		while (!expansionQueue.isEmpty()){
 			Cursor c = expansionQueue.pollMinCostCursor();
-			
+
 			if(c.getLength() < distance){
 				SummaryGraphElement e = c.getElement();
 				String keyword = c.getKeyword();
 				if(e.getCursors() == null) e.initCursorQueues(keywords);
 				e.addCursor(c, keyword);
+
+				// add new subgraphs 
 				if(e.isConnectingElement()){
 					Set<Set<Cursor>> combinations = e.getNewCursorCombinations();
 					if(combinations != null && combinations.size() != 0){
 						e.addExploredCursorCombinations(combinations); 
 						e.clearNewCursorCombinations();
-						subgraphQueue.addAll(computeSubgraphs(e,combinations));
+						subgraphList.addAll(computeSubgraphs(e,combinations));
+
+						//check for top-k
+						if(subgraphList.size() >= k){
+							Collections.sort(subgraphList);
+							if (subgraphList.get(k).getCost() < expansionQueue.getApproximateMinCostOfCandidates())
+								return subgraphList;
+						}
 					}
 				}
-				
+
 				//add cursors to queue 
-				Set<SummaryGraphElement> neighbors = getNonVisitedNeighbors(iGraph, e, c);
-				for (SummaryGraphElement n : neighbors){
-					Cursor nextCursor = new Cursor(n, c.getMatchingElement(), c, keyword, 
-							//need to multiply with coverage
-							n.getTotalScore() + c.getCost());
-					expansionQueue.addCursor(nextCursor, keyword);
+				Set<Cursor> neighbors = getNonVisitedNeighbors(iGraph, e, c);
+				for (Cursor n : neighbors){
+					expansionQueue.addCursor(n, keyword);
 				}
-				
+
 			}
 		}
-		
-		return null;
+
+		return subgraphList;
 	}
-	
+
 	private Collection<Subgraph> computeSubgraphs(SummaryGraphElement connectingElement, Set<Set<Cursor>> cursors){
 		Collection<Subgraph> subgraphs = new HashSet<Subgraph>();
 		for(Set<Cursor> cursorsOfSubgraph : cursors){
-			Set<List<SummaryGraphElement>> paths = new HashSet<List<SummaryGraphElement>>();
+			Set<List<SummaryGraphEdge>> paths = new HashSet<List<SummaryGraphEdge>>();
 			double cost = 0; 
 			for(Cursor cursor : cursorsOfSubgraph){
 				paths.add(cursor.getPath());
 				cost += cursor.getCost();  
 			}
-			subgraphs.add(new Subgraph(connectingElement, paths, cost));
+			Subgraph g = new Subgraph(SummaryGraphEdge.class);
+			g.setCost(cost);
+			g.setPaths(paths);
+			g.setConnectingElement(connectingElement);
+			subgraphs.add(g);
 		}
-		
+
 		return subgraphs;
 	}
 
+	private Collection<QueryGraph> getQuerygraphs(Subgraph graph){
+		if(graph == null) return null;
+		Collection<QueryGraph> graphs = new ArrayList<QueryGraph>();
 
-	private Set<SummaryGraphElement> getNonVisitedNeighbors(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph, SummaryGraphElement e, Cursor c)
+		ConnectivityInspector<SummaryGraphElement, SummaryGraphEdge> connectedInsp = new ConnectivityInspector<SummaryGraphElement, SummaryGraphEdge>(graph);
+		Emergency.checkPrecondition(connectedInsp.isGraphConnected(), "Computed Subgraphs must be weakly connected!!!");
+
+		//split: remove all mapping edges
+		for (SummaryGraphEdge e: graph.edgeSet()){
+			if (e.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE)
+				graph.removeEdge(e);
+		}		
+
+		//build graphs from maximal connected component
+		//each connected component correspond to one datasource 
+		ConnectivityInspector<SummaryGraphElement, SummaryGraphEdge> compInsp = new ConnectivityInspector<SummaryGraphElement, SummaryGraphEdge>(graph);
+		List<Set<SummaryGraphElement>> components = compInsp.connectedSets();
+		for(Set<SummaryGraphElement> comp : components){
+			QueryGraph qg = new QueryGraph();
+			Collection<QueryGraphEdge> qgEdges = new ArrayList<QueryGraphEdge>();
+			for(SummaryGraphElement e : comp){
+				//relation and attribute elements should have exactly one incoming and one outgoing edge (since mapping edge has been removed)
+				if(e.getType() == SummaryGraphElement.RELATION || e.getType() == SummaryGraphElement.ATTRIBUTE){
+					Set<SummaryGraphEdge> inEdges = graph.incomingEdgesOf(e);
+					Emergency.checkPrecondition(inEdges.size() == 1,"relation and attribute elements should have exactly one incoming edge!");
+					SummaryGraphEdge inEdge = inEdges.iterator().next();					
+
+					Set<SummaryGraphEdge> outEdges = graph.outgoingEdgesOf(e);
+					Emergency.checkPrecondition(outEdges.size() == 1,"relation and attribute elements should have exactly one outgoing edge!");
+					SummaryGraphEdge outEdge = outEdges.iterator().next();
+
+					qgEdges.add(new QueryGraphEdge(inEdge.getSource().getResource(), 
+							outEdge.getTarget().getResource(), (IProperty)e.getResource(), e.getType()));
+				}
+
+			}
+			qg.setEdges(qgEdges);
+			//each connected component correspond to one datasource, i.e. every elements of one component belongs to same ds
+			qg.setDatasource(comp.iterator().next().getDatasource());
+			graphs.add(qg);
+		}
+		return graphs;
+	}
+
+	private Set<Cursor> getNonVisitedNeighbors(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph, SummaryGraphElement e, Cursor c)
 	{
-		Set<SummaryGraphElement> neighbors = new HashSet<SummaryGraphElement>();
+		Set<Cursor> neighbors = new HashSet<Cursor>();
 		Set<SummaryGraphEdge> edges = iGraph.incomingEdgesOf(e);
+		Cursor nextCursor = null;
 		for (SummaryGraphEdge edge : edges){
-			
+
 			SummaryGraphElement source = edge.getSource();
 			if(!c.hasVisited(source)) {
 				if(edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE){
 					// update score: (EF/EDF*matchingscore) + mappingScore
-					source.setTotalScore(source.getTotalScore() + iGraph.getEdgeWeight(edge));
+					source.setTotalScore(source.getTotalScore() + (iGraph.getEdgeWeight(edge)));
 				}
-				neighbors.add(source);
+				nextCursor = new Cursor(source, c.getMatchingElement(), edge, c, c.getKeyword(), 
+						//need to multiply with coverage
+						source.getTotalScore() + c.getCost());
+
+				neighbors.add(nextCursor);
 			}
 		}
 		edges = iGraph.outgoingEdgesOf(e);
@@ -320,10 +405,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			SummaryGraphElement target = edge.getTarget();
 			if(!c.hasVisited(target)) {
 				if(edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE){
-					// update score: (EF/EDF*matchingscore) + mappingScore
+					// update score: (EF/EDF*matchingscore) +  mappingScore
 					target.setTotalScore(target.getTotalScore() + iGraph.getEdgeWeight(edge));
 				}
-				neighbors.add(target);
+				nextCursor = new Cursor(target, c.getMatchingElement(), edge, c, c.getKeyword(), 
+						//need to multiply with coverage
+						target.getTotalScore() + c.getCost());
+
+				neighbors.add(nextCursor);
 			}
 		}
 		return neighbors;
@@ -331,164 +420,219 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 
 
-//	private Collection<Collection<OWLPredicate>> computeQueries(Collection<Collection<SummaryGraphProperty>> subgraphs) {
-//	Collection<Collection<OWLPredicate>> queries = new LinkedHashSet<Collection<OWLPredicate>>();
-//	for(Collection<SummaryGraphProperty> subgraph : subgraphs){
-//	Collection<OWLPredicate> query = new LinkedHashSet<OWLPredicate>();
-//	queries.add(query);
-//	Map<Pair, Variable> labelVar = new LinkedHashMap<Pair, Variable>();
-//	UniqueIdGenerator.getInstance().resetVarIds();
-//	for(SummaryGraphProperty edge : subgraph){
-//	if((edge.getType() == ISummaryGraphElement.ATTRIBUTE) && (edge.getVertex2().getType() != ISummaryGraphElement.DUMMY_VALUE)){
-//	IProperty p = edge.getProperty();
-//	IResource v1 = edge.getVertex1().getResource();
-//	IResource v2 = edge.getVertex2().getResource();
-//	IResource t;
-//	String conceptLabel = v1.getLabel();
-//	String literalLabel = v2.getLabel();
-//	Pair label = new Pair(conceptLabel,literalLabel);
-//	Variable var = labelVar.get(label); 
-//	if (var == null) {
-//	t = getNewVariable();
-//	labelVar.put(label, (Variable)t);
-//	query.add(new ConceptMemberPredicate(v1, t));
-//	} else {
-//	t = var;
-//	}
+	private Collection<OWLPredicate> computeQuery(QueryGraph subgraph) {
+		Collection<OWLPredicate>  query  = new LinkedHashSet<OWLPredicate>();
+		UniqueIdGenerator.getInstance().resetVarIds();
+		for(QueryGraphEdge edge : subgraph.getEdges()){
+			Map<Pair, Variable> labelVar = new LinkedHashMap<Pair, Variable>();
+			IResource target = edge.getTarget();
 
-//	query.add(new PropertyMemberPredicate(p, t,v2));
-//	}
-//	}
-//	for(SummaryGraphProperty edge : subgraph){
-//	if((edge.getType() == ISummaryGraphElement.RELATION) && (!edge.getProperty().equals(Property.SUBCLASS_OF))){
-//	IProperty p = edge.getProperty();
-//	IResource v1 = edge.getVertex1().getResource();
-//	IResource v2 = edge.getVertex2().getResource();
+			if(edge.getType() == SummaryGraphElement.ATTRIBUTE && 
+					!(target.getLabel() == SummaryGraphElement.DUMMY_VALUE_LABEL)){
+				IProperty p = edge.getProperty();
+				IResource source  = edge.getSource();
+				IResource t;
+				String conceptLabel = source.getLabel();
+				String literalLabel = target.getLabel();
+				Pair label = new Pair(conceptLabel,literalLabel);
+				Variable var = labelVar.get(label); 
+				if (var == null) {
+					t = getNewVariable();
+					labelVar.put(label, (Variable)t);
+					query.add(new ConceptMemberPredicate(source, t));
+				} else {
+					t = var;
+				}
 
-//	Set<IResource> t1 = new LinkedHashSet<IResource>();
-//	String label1 = v1.getLabel();
-//	for(Pair pair : labelVar.keySet()){
-//	if(pair.getHead().equals(label1)) {
-//	t1.add(labelVar.get(pair));
-//	}
-//	}
-//	if(t1.size() == 0) {
-//	Variable var = getNewVariable();
-//	t1.add(var);
-//	labelVar.put(new Pair(label1,null), var);
-//	query.add(new ConceptMemberPredicate(v1, var));
-//	}
+				query.add(new PropertyMemberPredicate(p, t,target));
+			}
+
+			else if(edge.getType() == SummaryGraphElement.ATTRIBUTE && 
+					target.getLabel() == SummaryGraphElement.DUMMY_VALUE_LABEL){
+				IProperty p = edge.getProperty();
+				IResource v1 = edge.getSource();
+
+				Set<IResource> t1 = new LinkedHashSet<IResource>();
+				String label1 = v1.getLabel();
+				for(Pair pair : labelVar.keySet()){
+					if(pair.getHead().equals(label1)) {
+						t1.add(labelVar.get(pair));
+					}
+				}
+				if(t1.size() == 0) {
+					Variable var = getNewVariable();
+					t1.add(var);
+					labelVar.put(new Pair(label1,null), var);
+					query.add(new ConceptMemberPredicate(v1, var));
+				}
+
+				for(IResource resource1 : t1){
+					query.add(new PropertyMemberPredicate(p, resource1,getNewVariable()));
+				}
+			}
+
+			else if(edge.getType() == SummaryGraphElement.RELATION && 
+					!(edge.getProperty().equals(Property.SUBCLASS_OF))){
+				IProperty p = edge.getProperty();
+				IResource v1 = edge.getSource();
+
+				Set<IResource> t1 = new LinkedHashSet<IResource>();
+				String label1 = v1.getLabel();
+				for(Pair pair : labelVar.keySet()){
+					if(pair.getHead().equals(label1)) {
+						t1.add(labelVar.get(pair));
+					}
+				}
+				if(t1.size() == 0) {
+					Variable var = getNewVariable();
+					t1.add(var);
+					labelVar.put(new Pair(label1,null), var);
+					query.add(new ConceptMemberPredicate(v1, var));
+				}
 
 
-//	Set<IResource> t2 = new LinkedHashSet<IResource>();
-//	String label2 = v2.getLabel();
-//	for(Pair pair : labelVar.keySet()){
-//	if(pair.getHead().equals(label2)) {
-//	t2.add(labelVar.get(pair));
-//	}
-//	}
-//	if(t2.size() == 0) {
-//	Variable var = getNewVariable();
-//	t2.add(var);
-//	labelVar.put(new Pair(label2,null), var);
-//	query.add(new ConceptMemberPredicate(v2, var));
-//	}
+				Set<IResource> t2 = new LinkedHashSet<IResource>();
+				String label2 = target.getLabel();
+				for(Pair pair : labelVar.keySet()){
+					if(pair.getHead().equals(label2)) {
+						t2.add(labelVar.get(pair));
+					}
+				}
+				if(t2.size() == 0) {
+					Variable var = getNewVariable();
+					t2.add(var);
+					labelVar.put(new Pair(label2,null), var);
+					query.add(new ConceptMemberPredicate(target, var));
+				}
 
-//	for(IResource resource1 : t1){
-//	for(IResource resource2 : t2) {
-//	query.add(new PropertyMemberPredicate(p, resource1,resource2));
-//	}
-//	}
+				for(IResource resource1 : t1){
+					for(IResource resource2 : t2) {
+						query.add(new PropertyMemberPredicate(p, resource1,resource2));
+					}
+				}
 
-//	}
-//	}
-//	for(SummaryGraphProperty edge : subgraph){
-//	if((edge.getType() == ISummaryGraphElement.ATTRIBUTE) && (edge.getVertex2().getType() == ISummaryGraphElement.DUMMY_VALUE)){
-//	IProperty p = edge.getProperty();
-//	IResource v1 = edge.getVertex1().getResource();
-//	IResource v2 = edge.getVertex2().getResource();
+			}
 
-//	Set<IResource> t1 = new LinkedHashSet<IResource>();
-//	String label1 = v1.getLabel();
-//	for(Pair pair : labelVar.keySet()){
-//	if(pair.getHead().equals(label1)) {
-//	t1.add(labelVar.get(pair));
-//	}
-//	}
-//	if(t1.size() == 0) {
-//	Variable var = getNewVariable();
-//	t1.add(var);
-//	labelVar.put(new Pair(label1,null), var);
-//	query.add(new ConceptMemberPredicate(v1, var));
-//	}
+		}
+		return query;
+	}
 
-//	for(IResource resource1 : t1){
-//	query.add(new PropertyMemberPredicate(p, resource1,getNewVariable()));
-//	}
-//	}
-//	}
-//	}
+	private Variable getNewVariable(){
+		String var = String.valueOf(UniqueIdGenerator.getInstance().getNewVarId());
+		return new Variable("x" + var);
+	}
 
-//	return queries;
-//	}
 
-//	private Variable getNewVariable(){
-//	String var = String.valueOf(UniqueIdGenerator.getInstance().getNewVarId());
-//	return new Variable("x" + var);
-//	}
+	private class QueryGraph{
+		Collection<QueryGraphEdge> edges;
 
-//	public Set<Variable> getRankedVariables(Collection<OWLPredicate> query){
-//	Set<Variable> vars = new LinkedHashSet<Variable>();
-//	if((query == null) || (query.size() == 0)) {
-//	return null;
-//	} 
+		String datasource; 
 
-//	//TODO perform the ranking
-//	for (OWLPredicate p : query) {
-//	IResource var1 = null;
-//	IResource var2 = null;
+		public QueryGraph(){};
 
-//	if (p instanceof PropertyMemberPredicate) {
-//	var1 = ((PropertyMemberPredicate)p).getFirstTerm();
-//	var2 = ((PropertyMemberPredicate)p).getSecondTerm();
-//	}
-//	else if (p instanceof ConceptMemberPredicate) {
-//	var1 = ((ConceptMemberPredicate)p).getConcept();
-//	var2 = ((ConceptMemberPredicate)p).getTerm();
-//	}
-//	if(var1 instanceof Variable) {
-//	vars.add((Variable)var1);
-//	}
-//	if(var2 instanceof Variable) {
-//	vars.add((Variable)var2);
-//	}
-//	}
+		public QueryGraph (Collection<QueryGraphEdge> edges){
+			this.edges = edges;
+		}
 
-//	return vars; 
-//	}
+		public void setEdges(Collection<QueryGraphEdge> edges){
+			this.edges = edges;
+		}
 
-	public class Subgraph implements Comparable {
-	
+		public void setDatasource(String ds){
+			datasource = ds;
+		}
+
+		public String getDatasource(){
+			return datasource;
+		}
+		
+		public Collection<QueryGraphEdge> getEdges(){
+			return edges;
+		}
+	}
+
+
+	private class QueryGraphEdge{
+		IResource source;
+		IResource target;
+		IProperty edge;
+		int type; 
+
+		public QueryGraphEdge(IResource source, IResource target, IProperty edge, int type){
+			this.source = source;
+			this.target = target;
+			this.edge = edge;
+			this.type = type;
+		}
+
+		public int getType(){
+			return type;
+		}
+
+		public IResource getSource() {
+			return source;
+		}
+		public void setSource(IResource source) {
+			this.source = source;
+		}
+		public IResource getTarget() {
+			return target;
+		}
+		public IProperty getProperty(){
+			return edge;
+		}
+		public void setTarget(IResource target) {
+			this.target = target;
+		}
+		public IProperty getEdge() {
+			return edge;
+		}
+		public void setEdge(IProperty edge) {
+			this.edge = edge;
+		}
+	}
+
+
+	private class Subgraph extends WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> implements Comparable {
+
 		private SummaryGraphElement connectingVertex;
 
-		private Set<List<SummaryGraphElement>> paths;
+		private Set<List<SummaryGraphEdge>> paths;
+
+		private boolean pathIsSet = false;
 
 		double cost;
 
-		public Subgraph(SummaryGraphElement connectingVertex, Set<List<SummaryGraphElement>> paths, double cost){
-			this.connectingVertex = connectingVertex;
-			this.cost = cost;
-			this.paths = paths;
+		public Subgraph(Class<? extends SummaryGraphEdge> edgeclass){
+			super(edgeclass);
 		}
 
-		public Set<List<SummaryGraphElement>> getPaths(){
+		public Set<List<SummaryGraphEdge>> getPaths(){
 			return paths;
+		}
+
+		public void setPaths(Set<List<SummaryGraphEdge>> paths){
+			Emergency.checkPrecondition(!pathIsSet, "Set path can be invoked only once to initialized the graph!!!");
+			if (paths == null || paths.size() == 0) return;
+			for (List<SummaryGraphEdge> path : paths){
+				if(path.size() == 0) continue;
+				for(SummaryGraphEdge e : path){
+					addVertex(e.getSource());
+					addVertex(e.getTarget());
+					addEdge(e.getSource(), e.getTarget(), e);
+				}
+			}
 		}
 
 		public SummaryGraphElement getConnectingVertex(){
 			return connectingVertex;
 		}
-		
+
+		public void setConnectingElement(SummaryGraphElement connectingE){
+			connectingVertex = connectingE;
+		}
+
+
 		public void setCost(double cost){
 			this.cost = cost;
 		}
@@ -535,14 +679,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			+ "\n" + "Connecting vertex: " + connectingVertex
 			+ "\n" + "Paths: " + paths
 			+ "\n";
-		}
+		}		
 	}	
-	
-	class ExpansionQueue{
+
+	private class ExpansionQueue{
 		Map<String, PriorityQueue<Cursor>> m_queue;
 		Set<String> m_keywords;
 		Collection<PriorityQueue<Cursor>> m_queues;
-		
+
 		private ExpansionQueue(Map<String, PriorityQueue<Cursor>> queue){
 			m_queue = queue;
 			m_keywords = queue.keySet();
@@ -551,12 +695,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				m_queues.add(queue.get(k));
 			}
 		}
-		
+
 		private void addCursor(Cursor c, String keyword){
 			PriorityQueue<Cursor> q = m_queue.get(keyword);
 			q.add(c);
 		}
-		
+
 		private boolean isEmpty(){
 			if (m_queue.isEmpty()) return true;
 			for (PriorityQueue<Cursor> q : m_queues){
@@ -564,7 +708,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 			return true;
 		}
-		
+
 		private Cursor pollMinCostCursor(){
 			if(m_queues == null || m_queues.size() == 0) return null;
 			PriorityQueue<Cursor> minCostQ = null;
@@ -577,6 +721,36 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				}
 			}
 			return minCostQ.poll();
+		}
+
+		/**
+		 * Simple return the cost of the min cost cursor in the queues. 
+		 * @return
+		 */
+		private double getMinCostOfCandidadates(){
+			double minCost = -1; 
+			if(m_queues == null || m_queues.size() == 0) return minCost;
+			for (PriorityQueue<Cursor> q : m_queues){
+				double cCost = q.peek().getCost();
+				if(cCost < minCost || minCost == 0) {
+					minCost = cCost;
+				}
+			}
+			return minCost;
+		}
+
+
+		/**
+		 * Approximation. Returns the sum of the cost of the first cursor in each queue
+		 * @return
+		 */
+		private double getApproximateMinCostOfCandidates(){
+			double minCost = -1; 
+			if(m_queues == null || m_queues.size() == 0) return minCost;
+			for (PriorityQueue<Cursor> q : m_queues){
+				minCost = + q.peek().getCost();
+			}
+			return minCost;
 		}
 	}
 }

@@ -64,6 +64,8 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	
 	private Set<Set<Cursor>> m_newCursorCombinations;
 
+	private boolean m_coverageApplied = false; 
+	
 	public SummaryGraphElement(){}
 
 	public SummaryGraphElement(IResource resource, int type) {
@@ -103,6 +105,10 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		return cost;
 	}
 
+	public void applyCoverage(int coverage){
+		if (!m_coverageApplied) m_totalScore = m_totalScore * coverage; 
+	}
+	
 	public void setMatchingScore(double score){
 		this.m_matchingScore = score;
 	}
@@ -233,15 +239,18 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		if(this == object) return true;
 		if(object == null) return false;
 		if(!(object instanceof SummaryGraphElement)) return false;
+		
+		//need to create unique Relation and Attribute Element 
 		SummaryGraphElement vertex = (SummaryGraphElement)object;
-//		============================================by Kaifeng Xu============================================
+		if(vertex.getType() == RELATION || vertex.getType() == ATTRIBUTE) return false;
+		
+		
 		if(resource instanceof NamedConcept && vertex.getResource() instanceof NamedConcept)
 			return ((NamedConcept)resource).getUri().equals(((NamedConcept)vertex.getResource()).getUri());
 		else if(resource instanceof Datatype && vertex.getResource() instanceof Datatype)
 			return ((Datatype)resource).getUri().equals(((Datatype)vertex.getResource()).getUri());
 		else if(resource instanceof Property && vertex.getResource() instanceof Property)
 			return ((Property)resource).getUri().equals(((Property)vertex.getResource()).getUri());
-//		============================================by Kaifeng Xu============================================
 		return false;
 	}
 	

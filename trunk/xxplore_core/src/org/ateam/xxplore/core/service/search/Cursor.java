@@ -14,21 +14,23 @@ class Cursor implements Comparable {
 	
 	private double cost;
 	
-	private LinkedList<SummaryGraphElement> m_path;
+	private SummaryGraphEdge incomingEdge; 
+	
+	private LinkedList<SummaryGraphEdge> m_path;
 	
 	private Cursor m_parent;
 	
 	public Cursor(){}
 
-	public Cursor(SummaryGraphElement element, SummaryGraphElement matchingElement, Cursor parent, String keyword, double cost){
+	public Cursor(SummaryGraphElement element, SummaryGraphElement matchingElement, SummaryGraphEdge incomingedge, Cursor parent, String keyword, double cost){
 		this.m_matching = matchingElement;
 		this.cost = cost;
+		this.incomingEdge = incomingedge;
 		m_parent = parent;
 		m_element = element;
 		m_keyword = keyword;
-		LinkedList<SummaryGraphElement> path = new LinkedList<SummaryGraphElement>();
-		path.addFirst(m_element);
-		m_path = getVisitedPath(path, parent);
+		LinkedList<SummaryGraphEdge> path = new LinkedList<SummaryGraphEdge>();
+		m_path = getVisitedPath(path, incomingEdge, parent);
 	} 
 	
 	/**
@@ -37,10 +39,10 @@ class Cursor implements Comparable {
 	 * @param parent
 	 * @return
 	 */
-	private LinkedList<SummaryGraphElement> getVisitedPath(LinkedList<SummaryGraphElement> path, Cursor parent){
-		if(parent == null) return path;
-		path.addFirst(parent.getElement());
-		return getVisitedPath(path, parent.getParent());
+	private LinkedList<SummaryGraphEdge> getVisitedPath(LinkedList<SummaryGraphEdge> path, SummaryGraphEdge edge, Cursor parent){
+		if(edge == null || parent == null) return path;
+		path.addFirst(edge);
+		return getVisitedPath(path, parent.getEdge(), parent.getParent());
 	}
 
 	public boolean hasVisited(SummaryGraphElement e){
@@ -48,11 +50,15 @@ class Cursor implements Comparable {
 	}
 	
 	
+	public SummaryGraphEdge getEdge(){
+		return incomingEdge;
+	}
+	
 	public double getCost(){
 		return cost;
 	}
 
-	public LinkedList<SummaryGraphElement> getPath(){
+	public LinkedList<SummaryGraphEdge> getPath(){
 		return m_path;
 	}
 
