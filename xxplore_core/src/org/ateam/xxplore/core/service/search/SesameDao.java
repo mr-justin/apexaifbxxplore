@@ -39,7 +39,8 @@ public class SesameDao {
 	private RepositoryResult<Statement> res;
 	private Statement stmt;
 	public static String root = "D:\\semplore\\";
-	public static String indexRoot = root+"dblp";
+//	public static String indexRoot = root+"dblp";
+	public static String indexRoot = "res/BTC/repository";
 	public static String CONCEPT="concept", INDIVIDUAL="individual", LITERAL="literal", PROPERTY="property"//subj & obj type
 		, DATATYPEPROP="datatypeprop", OBJPROP="objprop", RDFSPROP="rdfsprop";//predicate type
 	private static String[] rdfsEdge = new String[]{"http://www.w3.org/1999/02/22-rdf-syntax-ns#type",//c
@@ -64,7 +65,7 @@ public class SesameDao {
 	public SesameDao(String index) throws Exception
 	{
 		if(!new File(index).exists())
-			new File(index).mkdir();
+			new File(index).mkdirs();
 		repository = new SailRepository(new NativeStore(new File(index)));
 		revision = new ValueStoreRevision(new ValueStore(new File(index)));
 		repository.initialize();
@@ -220,8 +221,10 @@ public class SesameDao {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		SesameDao se = new SesameDao("d:/semplore/dblp");
-		se.insertNTFile("D:\\semplore\\dblp.rdf");
+		SesameDao se1 = new SesameDao("res/BTC/repository/dblp");
+		se1.insertNTFile("res/BTC/dblp.rdf");
+		SesameDao se2 = new SesameDao("res/BTC/repository/swrc");
+		se2.insertNTFile("res/BTC/swrc.owl");
 		//se.findTypes("http://www.w3.org/2006/03/wn/wn20/schema/Word");
 //		se.findProperties("1",null,"http://www.w3.org/2001/XMLSchema#nonNegativeInteger");
 //		//System.out.println(se.hasNext());

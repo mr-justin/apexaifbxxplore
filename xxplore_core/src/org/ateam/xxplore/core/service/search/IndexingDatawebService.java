@@ -84,18 +84,18 @@ public class IndexingDatawebService {
 		//index DBLP 		
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(SOURCE_ONTO_PATH));
-		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
-		service.index(parameters, parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH), omsOnto); 
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(omsOnto);
+//		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+		service.index(parameters, parameters.getProperty(REPOSITORY_DIR) + File.separator + parameters.getProperty(SOURCE_ONTO_URI),  parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH), omsOnto); 
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(omsOnto);
 
 		//index swrc 
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(TARGET_ONTO_PATH));
-		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
-		service.index(parameters, parameters.getProperty(TARGET_ONTO_SCHEMA_PATH), omsOnto);
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(omsOnto);
+//		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+		service.index(parameters,parameters.getProperty(REPOSITORY_DIR) + File.separator + parameters.getProperty(TARGET_ONTO_URI), parameters.getProperty(TARGET_ONTO_SCHEMA_PATH), omsOnto);
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(omsOnto);
 
 
 		//compute schema mappings for SWRC
@@ -156,10 +156,10 @@ public class IndexingDatawebService {
 	}
 
 
-	private void index(Properties parameters, String schemaPath, IOntology onto){
+	private void index(Properties parameters, String repositoryPath, String schemaPath, IOntology onto){
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph;
 		try {
-			sGraph = m_summarizer.computeSummaryGraph(false);
+			sGraph = m_summarizer.computeSummaryGraph(repositoryPath,false);
 
 			m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);
 			String dir = parameters.getProperty(REPOSITORY_DIR);
@@ -172,6 +172,7 @@ public class IndexingDatawebService {
 		}
 
 	}
+
 
 	private void initConnection(String repodir){
 		try {
