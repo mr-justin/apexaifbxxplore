@@ -261,10 +261,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				if(e.getCursors() == null) e.initCursorQueues(keywords);
 				e.addCursor(c, keyword);
 				if(e.isConnectingElement()){
-					Cursor[][] combinations = e.getNewCursorCombinations();
-					e.addExploredCursorCombinations(combinations); 					
-					subgraphQueue.addAll(computeSubgraphs(combinations));
-					
+					Set<Set<Cursor>> combinations = e.getNewCursorCombinations();
+					if(combinations != null && combinations.size() != 0){
+						e.addExploredCursorCombinations(combinations); 
+						e.clearNewCursorCombinations();
+						subgraphQueue.addAll(computeSubgraphs(e,combinations));
+					}
 				}
 				
 				//add cursors to queue 
@@ -282,46 +284,19 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return null;
 	}
 	
-	private Collection<Subgraph> computeSubgraphs(Cursor[][] cursors){
-		for(int i = 0; i < cursors.length; i++){
-//			Cursor[] curs = cursors[i];
-//			edges.addAll(cursor.getPath());
-//			
-//			boolean isSubgraph = false;
-//			if((keywordREdgeMap != null) && (keywordREdgeMap.size() != 0)){
-//				for(Collection<ISummaryGraphElement> collection : keywordREdgeMap.values()){
-//					isSubgraph = !Collections.disjoint(edges, collection);
-//					if(!isSubgraph) {
-//						break;
-//					}
-//				}
-//			} else {
-//				isSubgraph = true;
-//			}
-//			if(isSubgraph){
-//				Subgraph subgraph = new Subgraph(endVertex, edges, cost);
-//				if(!subgraphQueue.contains(subgraph)) {
-//					if(subgraphQueue.size() < K_TOP) {
-//						subgraphQueue.add(subgraph);
-//					} else {
-//						double highestCost = subgraphQueue.peek().getCost();
-//						if(subgraph.getCost() < highestCost) {
-//							subgraphQueue.poll();
-//							subgraphQueue.add(subgraph);
-//						}
-//					}	
-//				}
-//				else {
-//					for(Subgraph sub : subgraphQueue){
-//						if(sub.equals(subgraph)){
-//							if(sub.getCost() > subgraph.getCost())
-//								sub.setCost(subgraph.getCost());
-//						}
-//					}
-//				}
-//			}
+	private Collection<Subgraph> computeSubgraphs(SummaryGraphElement connectingElement, Set<Set<Cursor>> cursors){
+		Collection<Subgraph> subgraphs = new HashSet<Subgraph>();
+		for(Set<Cursor> cursorsOfSubgraph : cursors){
+			Set<List<SummaryGraphElement>> paths = new HashSet<List<SummaryGraphElement>>();
+			double cost = 0; 
+			for(Cursor cursor : cursorsOfSubgraph){
+				paths.add(cursor.getPath());
+				cost += cursor.getCost();  
+			}
+			subgraphs.add(new Subgraph(connectingElement, paths, cost));
 		}
-		return null;
+		
+		return subgraphs;
 	}
 
 
@@ -493,27 +468,27 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //	}
 
 	public class Subgraph implements Comparable {
-
+	
 		private SummaryGraphElement connectingVertex;
 
-		private Set<SummaryGraphElement> paths;
+		private Set<List<SummaryGraphElement>> paths;
 
 		double cost;
 
-		public Subgraph(SummaryGraphElement connectingVertex, Set<SummaryGraphElement> paths, double cost){
+		public Subgraph(SummaryGraphElement connectingVertex, Set<List<SummaryGraphElement>> paths, double cost){
 			this.connectingVertex = connectingVertex;
 			this.cost = cost;
 			this.paths = paths;
 		}
 
-		public Set<SummaryGraphElement> getPaths(){
+		public Set<List<SummaryGraphElement>> getPaths(){
 			return paths;
 		}
 
 		public SummaryGraphElement getConnectingVertex(){
 			return connectingVertex;
 		}
-
+		
 		public void setCost(double cost){
 			this.cost = cost;
 		}
@@ -562,6 +537,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			+ "\n";
 		}
 	}	
+	
 	class ExpansionQueue{
 		Map<String, PriorityQueue<Cursor>> m_queue;
 		Set<String> m_keywords;

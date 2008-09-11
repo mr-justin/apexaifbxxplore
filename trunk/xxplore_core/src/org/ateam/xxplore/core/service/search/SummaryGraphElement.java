@@ -1,15 +1,15 @@
 package org.ateam.xxplore.core.service.search;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
 import org.aifb.xxplore.shared.exception.Emergency;
-import org.ateam.xxplore.core.service.search.QueryInterpretationService.Subgraph;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.Datatype;
 import org.xmedia.oms.model.impl.NamedConcept;
@@ -22,8 +22,6 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private Cursor[][] m_exploredCursorCombinations; 
 
 	public static final int CONCEPT = 0;
 
@@ -61,6 +59,10 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	protected String datasource;
 
 	protected Map<String,Queue<Cursor>> cursors;
+
+	private Set<Set<Cursor>> m_exploredCursorCombinations;
+	
+	private Set<Set<Cursor>> m_newCursorCombinations;
 
 	public SummaryGraphElement(){}
 
@@ -116,7 +118,117 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	public String getDatasource(){
 		return datasource;
 	}
+	
+	public String toString(){
+		if(resource != null) return resource.toString();
+		else return super.toString();
+	}
 
+	public Map<String,Queue<Cursor>> getCursors(){
+		return cursors;
+	}
+
+	public double getTotalScore() {
+		return m_totalScore;
+	}
+
+	public void setTotalScore(double score) {
+		m_totalScore = score;
+	}
+
+	public void initCursorQueues(Set<String> keywords){
+		cursors = new HashMap<String,Queue<Cursor>>();
+		for(String keyword : keywords){
+			cursors.put(keyword, new PriorityQueue<Cursor>());
+		}
+	}
+	
+	public void addCursor(Cursor cursor, String keyword){
+		Emergency.checkPrecondition(cursors != null && cursors.size() > 0, "Cursor queues not initialized!");
+		Queue<Cursor> q = cursors.get(keyword);
+		q.add(cursor);
+		if(isConnectingElement()){
+			processCursorCombinations(cursor,keyword);
+		}
+	}
+	
+	public void processCursorCombinations(Cursor cursor, String keyword){
+		int size = cursors.size();
+		int[] guard = new int[size];
+		int i = 0;
+		Set<String> keywords = cursors.keySet();
+		List<List<Cursor>> lists = new ArrayList<List<Cursor>>();
+		for(String key : keywords){
+			if(key.equals(keyword)){
+				List<Cursor> list = new ArrayList<Cursor>();
+				list.add(cursor);
+				lists.add(list);
+				guard[i++] = 0;
+			}
+			else {
+				lists.add(new ArrayList<Cursor>(cursors.get(key)));
+				guard[i++] = cursors.get(key).size() - 1;
+			}
+		}
+		m_newCursorCombinations = new HashSet<Set<Cursor>>();
+		
+		int[] index = new int[size];
+		for(int p : index) {
+			p = 0;
+		} 
+		guard[size-1]++;
+		do {
+			Set<Cursor> combination = new HashSet<Cursor>();
+			for(int m = 0; m < size; m++){
+				combination.add(lists.get(m).get(index[m]));
+			}
+			m_newCursorCombinations.add(combination);
+			index[0]++;
+			for(int j = 0; j < size; j++){
+				if(index[j] > guard[j]){
+					index[j] = 0;
+					index[j+1]++; 
+				}
+			}
+		}
+		while(index[size-1] < guard[size-1]);
+	}
+	
+	public boolean isConnectingElement() {
+		if(m_exploredCursorCombinations != null && m_exploredCursorCombinations.size() > 0) return true;
+		
+		if(cursors == null || cursors.size() == 0) return false;
+		for(Queue<Cursor> queue : cursors.values()){
+			if(queue.isEmpty()){
+				return false;
+			}	
+		}
+		return true;
+	}
+	
+	
+	public void addExploredCursorCombinations(Set<Set<Cursor>> combinations){
+		if(combinations != null && combinations.size() != 0)
+			m_exploredCursorCombinations.addAll(combinations);
+	}
+	
+	public Set<Set<Cursor>> getExploredCursorCombinations(){
+		return m_exploredCursorCombinations;
+	}
+	
+	/**
+	 * Return only the subgraphs that not have been explored before, i.e. only those 
+	 * that are not in the list of explored subgraphs (getExploredCursorCombinations())
+	 * 
+	 */
+	public Set<Set<Cursor>> getNewCursorCombinations(){
+		return m_newCursorCombinations;
+	}
+	
+	public void clearNewCursorCombinations() {
+		m_newCursorCombinations = null;
+	}
+	
 	public boolean equals(Object object){
 		if(this == object) return true;
 		if(object == null) return false;
@@ -132,117 +244,9 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 //		============================================by Kaifeng Xu============================================
 		return false;
 	}
-
-
-	public boolean isConnectingElement() {
-		if(m_exploredCursorCombinations != null && m_exploredCursorCombinations.length > 0) return true;
-		
-		if(cursors == null || cursors.size() == 0) return false;
-		for(Queue<Cursor> queue : cursors.values()){
-			if(queue.isEmpty()){
-				return false;
-			}	
-		}
-		return true;
-	}
-	
-	
-	public void addExploredCursorCombinations(Cursor[][] combinations){
-		//TODO
-	}
-	
-	public Cursor[][] getExploredCursorCombinations(){
-		return m_exploredCursorCombinations;
-	}
-	
-	
-	public Cursor[][] getAllCursorCombination() {
-		if(!isConnectingElement()) return null;
-		
-		int size = cursors.size();
-		int[] guard = new int[size];
-		int i = 0;
-		for(Collection<Cursor> list : cursors.values()){
-			guard[i++] = list.size()-1;
-		}
-		
-		int entrySize = mul(guard,size);
-		Cursor[][] entries = new Cursor[entrySize][size];
-
-		int[] index = new int[size];
-		for(int p : index) {
-			p = 0;
-		} 
-		guard[size-1]++;
-		i = 0;
-//		do {
-//			for(int m = 0; m < size; m++){
-//				entries[i][m] = cursors.get(m).get(index[m]);
-//			}
-//			i++;
-//			index[0]++;
-//			for(int j = 0; j < size; j++){
-//				if(index[j] > guard[j]){
-//					index[j] = 0;
-//					index[j+1]++; 
-//				}
-//			}
-//		}
-		while(index[size-1] < guard[size-1]);
-
-		return null;
-	}
-	
-	/**
-	 * Return only the subgraphs that not have been explored before, i.e. only those 
-	 * that are not in the list of explored subgraphs (getExploredCursorCombinations())
-	 * 
-	 */
-	public Cursor[][] getNewCursorCombinations(){
-		return null;
-		
-	}
-	
-	private int mul(int a[],int n){
-		return n>0?((a[n-1]+1)*mul(a,--n)):1;
-	}
-
-	
-	
 	
 	public int hashCode(){
 		return resource.hashCode();
 	}
 
-	public String toString(){
-		if(resource != null) return resource.toString();
-		else return super.toString();
-	}
-
-
-
-	public void initCursorQueues(Set<String> keywords){
-		cursors = new HashMap<String,Queue<Cursor>>();
-		for(String keyword : keywords){
-			cursors.put(keyword, new PriorityQueue<Cursor>());
-		}
-	}
-	
-	public void addCursor(Cursor cursor, String keyword){
-		Emergency.checkPrecondition(cursors != null && cursors.size() > 0, "Cursor queues not initialized!");
-		Queue<Cursor> q = cursors.get(keyword);
-		q.add(cursor);
-	}
-
-	public Map<String,Queue<Cursor>> getCursors(){
-		return cursors;
-	}
-
-	public double getTotalScore() {
-		return m_totalScore;
-	}
-
-	public void setTotalScore(double score) {
-		m_totalScore = score;
-	}
 }
