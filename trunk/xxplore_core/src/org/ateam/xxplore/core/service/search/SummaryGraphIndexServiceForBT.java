@@ -50,12 +50,12 @@ public class SummaryGraphIndexServiceForBT {
 
 	public SummaryGraphIndexServiceForBT() {}
 
-	public Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeSummaryGraph(boolean withScores) throws Exception {
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeSummaryGraph(String repositoryPath, boolean withScores) throws Exception {
 
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>resourceGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		
-		SesameDao sd = new SesameDao(SesameDao.indexRoot);
-		SesameDao sdd = new SesameDao(SesameDao.indexRoot);
+		SesameDao sd = new SesameDao(repositoryPath);
+		SesameDao sdd = new SesameDao(repositoryPath);
 //		IPropertyMemberAxiomDao propertyMemberDao = (IPropertyMemberAxiomDao)PersistenceUtil.getDaoManager().getAvailableDao(IPropertyMemberAxiomDao.class);
 //		List<IPropertyMember> propertyMembers = propertyMemberDao.findAll();
 
@@ -157,17 +157,17 @@ public class SummaryGraphIndexServiceForBT {
 	 * @return
 	 * @throws Exception 
 	 */
-	public Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeSchemaGraph(Pseudograph graph, List<String> foamReserveURIs) throws Exception {
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeSchemaGraph(String repositoryPath, Pseudograph graph, List<String> foamReserveURIs) throws Exception {
 
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph = graph==null?computeSummaryGraph(false):graph;
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph = graph==null?computeSummaryGraph(repositoryPath, false):graph;
 
 //		IPropertyMemberAxiomDao propertyMemberDao = (IPropertyMemberAxiomDao)PersistenceUtil.getDaoManager().getAvailableDao(IPropertyMemberAxiomDao.class);
 //		List<IPropertyMember> propertyMembers = propertyMemberDao.findAll();	
 //		for(IPropertyMember propMem : propertyMembers) {
 //			IResource source = propMem.getSource();
 //			IProperty property = propMem.getProperty();
-		SesameDao sd = new SesameDao(SesameDao.indexRoot);
-		SesameDao sdd = new SesameDao(SesameDao.indexRoot);
+		SesameDao sd = new SesameDao(repositoryPath);
+		SesameDao sdd = new SesameDao(repositoryPath);
 		sd.findAllTriples();
 		int count = 0;
 		while(sd.hasNext())
@@ -504,22 +504,22 @@ public class SummaryGraphIndexServiceForBT {
 		return numProMem/noPropMembers;
 	}  
 	
-	public static void main(String[]args) throws Exception
-	{
-		//new SummaryGraphIndexServiceForBT().computeSummaryGraph(false);
-		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
-		Pseudograph graph = sss.computeSummaryGraph(true);
-//		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary.obj");
-//		graph = sss.computeEFScores(graph);
-		sss.writeSummaryGraph(graph, SesameDao.root+"summary-dblp.obj");
-		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"summary-dblp.owl");
-//		visit(graph);
-		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
-		graph = sss.computeSchemaGraph(graph, null);
-		sss.writeSummaryGraph(graph, SesameDao.root+"schema-dblp.obj");
-		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"schema-dblp.owl");
-		
-	}
+//	public static void main(String[]args) throws Exception
+//	{
+//		//new SummaryGraphIndexServiceForBT().computeSummaryGraph(false);
+//		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
+//		Pseudograph graph = sss.computeSummaryGraph(true);
+////		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary.obj");
+////		graph = sss.computeEFScores(graph);
+//		sss.writeSummaryGraph(graph, SesameDao.root+"summary-dblp.obj");
+//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"summary-dblp.owl");
+////		visit(graph);
+//		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
+//		graph = sss.computeSchemaGraph(graph, null);
+//		sss.writeSummaryGraph(graph, SesameDao.root+"schema-dblp.obj");
+//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"schema-dblp.owl");
+//		
+//	}
 	public static void visit(Pseudograph graph)
 	{
 		Set<SummaryGraphEdge> edges = graph.edgeSet();
