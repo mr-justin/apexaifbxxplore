@@ -2,8 +2,6 @@ package org.ateam.xxplore.core.service.search;
 
 import java.io.Serializable;
 
-import org.aifb.xxplore.shared.exception.Emergency;
-
 public class SummaryGraphEdge implements Serializable{
 	
 	public static final String RANGE_EDGE = "range_edge";

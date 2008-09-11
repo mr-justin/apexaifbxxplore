@@ -1,8 +1,6 @@
 package org.ateam.xxplore.core.service.search;
 
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.Set;
 
 class Cursor implements Comparable {
 

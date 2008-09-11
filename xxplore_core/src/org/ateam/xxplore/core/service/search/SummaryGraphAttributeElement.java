@@ -1,9 +1,7 @@
 package org.ateam.xxplore.core.service.search;
 
 import java.util.Collection;
-import java.util.Map;
 
-import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IResource;
 
