@@ -253,7 +253,7 @@ public class SesameDao {
 		System.out.println("part2 schema finished!");
 		//part3
 		graph = sss.readGraphIndexFromFile(SesameDao.root+datasource+"-schema.obj");
-		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(datasource, graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
+		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(SesameDao.indexRoot, datasource, graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
 		System.out.println("part3 finished!");
 	}
 }
