@@ -90,7 +90,7 @@ public class KeywordIndexServiceForBT implements IService{
 	}
 
 
-	public void indexKeywords(String datasourceURI, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemaGraph, String synIndexdir) {
+	public void indexKeywords(String dsPath, String datasourceURI, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemaGraph, String synIndexdir) {
 
 		try {
 			IndexSearcher indexSearcher = null;
@@ -100,9 +100,9 @@ public class KeywordIndexServiceForBT implements IService{
 			indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 
 			indexSearcher.close();
-
-			indexDataSourceByLiteral(m_indexWriter, datasourceURI);
-			indexDataSourceByIndividual(m_indexWriter, datasourceURI);
+			SesameDao sd = new SesameDao(dsPath);
+			indexDataSourceByLiteral(m_indexWriter, datasourceURI, sd);
+			indexDataSourceByIndividual(m_indexWriter, datasourceURI, sd);
 
 			m_indexWriter.optimize();
 			m_indexWriter.close();
@@ -268,12 +268,11 @@ public class KeywordIndexServiceForBT implements IService{
 		}
 	}
 
-	protected  void indexDataSourceByLiteral(IndexWriter indexWriter, String ds) throws Exception{
+	protected  void indexDataSourceByLiteral(IndexWriter indexWriter, String ds, SesameDao sd) throws Exception{
 //		ILiteralDao literalDao = (ILiteralDao) PersistenceUtil.getDaoManager().getAvailableDao(ILiteralDao.class);
 //		List literals = literalDao.findAll();
 		System.out.println("start indexing by literal");
 		try{
-			SesameDao sd = new SesameDao(SesameDao.indexRoot);
 			sd.findAllTriples();
 			int count = 0;
 			HashSet<String> litSet = new HashSet<String>();
@@ -304,10 +303,8 @@ public class KeywordIndexServiceForBT implements IService{
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void indexDataSourceByIndividual (IndexWriter indexWriter, String ds) throws Exception{
+	public void indexDataSourceByIndividual (IndexWriter indexWriter, String ds, SesameDao sd) throws Exception{
 		HashSet<String> indSet = new HashSet<String>();
-		SesameDao sd = new SesameDao(SesameDao.indexRoot);
-		SesameDao sdd = new SesameDao(SesameDao.indexRoot);
 		sd.findAllTriples();
 		int count = 0;
 		while (sd.hasNext()) {
@@ -317,7 +314,7 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println(count);
 			if(!sd.getObjectType().equals(SesameDao.LITERAL))
 				continue;
-			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sdd);
+			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sd);
 		}
 		indSet.clear();
 	}
@@ -370,8 +367,8 @@ public class KeywordIndexServiceForBT implements IService{
 	 * @param prune
 	 * @return
 	 */
-	public Map<String,Collection<ISummaryGraphElement>> searchKb(String query, Pseudograph<SummaryGraphElement, SummaryGraphEdge> sumGraph, double prune){
-		Map<String,Collection<ISummaryGraphElement>> ress = new LinkedHashMap<String,Collection<ISummaryGraphElement>>();
+	public Map<String,Collection<SummaryGraphElement>> searchKb(String query, double prune){
+		Map<String,Collection<SummaryGraphElement>> ress = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			if (m_searcher ==null){
 				s_log.debug("Open index " + ExploreEnvironment.KB_INDEX_DIR + " and init kb searcher!");
@@ -383,13 +380,13 @@ public class KeywordIndexServiceForBT implements IService{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-					Map<String, Collection<ISummaryGraphElement>> partialRes = searchWithClause(clauseQ, sumGraph, prune);
+					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
 			}
 			//is a phrase or term query 
 			else{
-				ress = searchWithClause(q, sumGraph, prune);
+				ress = searchWithClause(q, prune);
 			}
 
 		} catch (IOException e) {
@@ -400,8 +397,8 @@ public class KeywordIndexServiceForBT implements IService{
 		return ress;
 	}
 
-	private Map<String,Collection<ISummaryGraphElement>> searchWithClause(Query clausequery, Pseudograph<SummaryGraphElement, SummaryGraphEdge> sumGraph, double prune){
-		Map<String,Collection<ISummaryGraphElement>> result = new LinkedHashMap<String,Collection<ISummaryGraphElement>>();
+	private Map<String,Collection<SummaryGraphElement>> searchWithClause(Query clausequery, double prune){
+		Map<String,Collection<SummaryGraphElement>> result = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			Hits hits = m_searcher.search(clausequery);
 			if ((hits == null) || (hits.length() == 0)){
@@ -415,7 +412,7 @@ public class KeywordIndexServiceForBT implements IService{
 
 			if((hits != null) && (hits.length() > 0)){
 				s_log.debug("results.length(): " + hits.length());
-				Collection<ISummaryGraphElement> res = new LinkedHashSet<ISummaryGraphElement>();	
+				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 				result.put(clausequery.toString("label"), res);
 				for(int i = 0; i < hits.length(); i++){
 					Document doc = hits.doc(i);
@@ -455,7 +452,6 @@ public class KeywordIndexServiceForBT implements IService{
 							SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
 							cvertex.setMatchingScore(score);
 							cvertex.setDatasource(doc.get(DS_FIELD));
-							Emergency.checkPrecondition(sumGraph.containsVertex(cvertex), "Classvertex must be contained in summary graph:" + cvertex.toString());
 							res.add(cvertex);
 						}
 						else if(type.equals(DATAPROPERTY)){
@@ -545,7 +541,8 @@ public class KeywordIndexServiceForBT implements IService{
 	public static void main(String[] args) throws Exception
 	{
 		Pseudograph graph = new SummaryGraphIndexServiceForBT().readGraphIndexFromFile(SesameDao.root+"schema-dblp.obj");
-		new KeywordIndexServiceForBT(SesameDao.root+"keywordIndex", true).indexKeywords("dblp", graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
+		String path  = null;
+		new KeywordIndexServiceForBT(SesameDao.root+"keywordIndex", true).indexKeywords(path, "dblp", graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
 //		concept & property test
 		IndexSearcher searcher = new IndexSearcher(SesameDao.root+"keywordIndex");
 		//System.out.println(hits.length());

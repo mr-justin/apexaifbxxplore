@@ -1,9 +1,14 @@
 package org.ateam.xxplore.core.service.search;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Properties;
 
 import org.aifb.xxplore.shared.util.PropertyUtils;
@@ -49,80 +54,211 @@ public class IndexingDatawebService {
 	private IDaoManager m_dao;
 
 	private static String REPOSITORY_DIR = "repodir";
+	private static String KEYWORDINDEX_DIR = "keyword_index_dir";
+	private static String MAPINGINDEX_DIR = "mapping_index_dir";
+
+	private static String WRITE_SOURCE_ONTO_SCHEMA = "write_source_onto_schema";
+	private static String WRITE_TARGET_ONTO_SCHEMA = "write_target_onto_schema";
+	private static String WRITE_SOURCE_ONTO_SUMMARY = "write_source_onto_summary";
+	private static String WRITE_TARGET_ONTO_SUMMARY = "write_target_onto_summary";
 	private static String SOURCE_ONTO_URI = "source_onto_uri";
 	private static String SOURCE_ONTO_PATH = "source_onto_path";
 	private static String SOURCE_ONTO_SCHEMA_PATH = "source_onto_schema_path";
+	private static String SOURCE_ONTO_SUMMARY_PATH = "source_onto_summary_path";
 	private static String TARGET_ONTO_URI = "target_onto_uri";
 	private static String TARGET_ONTO_PATH = "target_onto_path";
 	private static String TARGET_ONTO_SCHEMA_PATH = "target_onto_schema_path";
+	private static String TARGET_ONTO_SUMMARY_PATH = "target_onto_summary_path";
 
 	private static String BASE_URI = "";
 	private static String LANGUAGE = IOntology.RDF_XML_LANGUAGE;
 	private static String ONTOLOGY_TYPE = SesameRepositoryFactory.RDF_NATIVE;
 
+	private static String COMPUTE_MAPPING = "compute_mapping";
 	private static String TEMP_ENTITIES_PATH = "res/BTC/mapping/entities.temp";
 
-	private MappingComputationService m_mapper = new MappingComputationService();
-	private SummaryGraphIndexServiceForBT m_summarizer = new SummaryGraphIndexServiceForBT();
-	private MappingIndexService m_indexer = null; 
-	private ExtractInstancesService m_extractor = new ExtractInstancesService();
-
+	private static Map<String,String> physicalURIsOfSummaryGraphs = new HashMap<String, String>();
+	private KeywordIndexServiceForBT m_kIndexer = null;
+	private MappingIndexService m_mIndexer = null;
+	
 	private static String propertyFile = "res/params.prop";
 	public static void main(String[] args) {
+
 		//Properties parameters = PropertyUtils.readFromPropertiesFile(args[0]);
 
 		Properties parameters = PropertyUtils.readFromPropertiesFile(propertyFile);
+		IndexingDatawebService service = new IndexingDatawebService(parameters.getProperty(REPOSITORY_DIR));
+		service.process(parameters);
+
+
+	}
+
+	public IndexingDatawebService(String repodir){
+		initConnection(repodir);
+	}
+
+	public void process(Properties parameters){
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-		IndexingDatawebService service = new IndexingDatawebService(REPOSITORY_DIR);
 
-		service.m_indexer = new MappingIndexService(parameters.getProperty(REPOSITORY_DIR));
+		IndexingDatawebService service = new IndexingDatawebService(parameters.getProperty(REPOSITORY_DIR));
 
+		service.indexSummaries(parameters);
+		service.indexElements(parameters);
+		if(parameters.get(COMPUTE_MAPPING) == "true")
+			service.computeMappings(parameters);
+		
+		QueryInterpretationService inter = new QueryInterpretationService();	
+		inter.computeQueries(m_kIndexer.searchKb("thanh 2007", 0.9), m_mIndexer, 6, 10);
+	}
+
+	public static String getSummaryGraphFilePath(String datasource){
+		return physicalURIsOfSummaryGraphs.get(datasource);
+	}
+
+
+	private void indexSummaries(Properties parameters){
+		String sourcePath = parameters.getProperty(SOURCE_ONTO_PATH);
+		String sourceURI = parameters.getProperty(SOURCE_ONTO_URI);
+		String targetPath = parameters.getProperty(TARGET_ONTO_PATH);
+		String targetURI = parameters.getProperty(TARGET_ONTO_URI);
+		
+		SummaryGraphIndexServiceForBT summarizer = new SummaryGraphIndexServiceForBT();
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph = null;
+		if(parameters.get(WRITE_SOURCE_ONTO_SUMMARY) == "true"){			
+			try {
+				sGraph = summarizer.computeSummaryGraph(sourcePath, true);
+				summarizer.writeSummaryGraph(sGraph, parameters.getProperty(SOURCE_ONTO_SUMMARY_PATH));
+				physicalURIsOfSummaryGraphs.put(sourceURI, parameters.getProperty(SOURCE_ONTO_SUMMARY_PATH));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if(parameters.get(WRITE_SOURCE_ONTO_SCHEMA) == "true"){
+			try {
+				if(sGraph == null) sGraph = summarizer.computeSummaryGraph(sourcePath, true);
+				Pseudograph<SummaryGraphElement, SummaryGraphEdge> schema 
+				= summarizer.computeSchemaGraph(sourcePath, sGraph, null);
+				summarizer.writeSummaryGraphAsRDF(schema, parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		if(parameters.get(WRITE_TARGET_ONTO_SUMMARY) == "true"){			
+			try {
+				sGraph = summarizer.computeSummaryGraph(targetPath, true);
+				summarizer.writeSummaryGraph(sGraph, parameters.getProperty(TARGET_ONTO_SUMMARY_PATH));
+				physicalURIsOfSummaryGraphs.put(targetURI, parameters.getProperty(TARGET_ONTO_SUMMARY_PATH));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		if(parameters.get(WRITE_TARGET_ONTO_SCHEMA) == "true"){
+			try {
+				if(sGraph == null) sGraph = summarizer.computeSummaryGraph(targetPath, true);
+				Pseudograph<SummaryGraphElement, SummaryGraphEdge> schema 
+				= summarizer.computeSchemaGraph(targetPath, sGraph, null);
+				summarizer.writeSummaryGraphAsRDF(schema, parameters.getProperty(TARGET_ONTO_SCHEMA_PATH));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+
+	private void indexElements(Properties parameters){
+		String sourcePath = parameters.getProperty(SOURCE_ONTO_PATH);
+		String sourceURI = parameters.getProperty(SOURCE_ONTO_URI);
+		String targetPath = parameters.getProperty(TARGET_ONTO_PATH);
+		String targetURI = parameters.getProperty(TARGET_ONTO_URI);
+		String repoDir = parameters.getProperty(KEYWORDINDEX_DIR);
+
+		m_kIndexer = new KeywordIndexServiceForBT(repoDir, true);
+			
+		try {
+			String summary = getSummaryGraphFilePath(sourceURI);
+			File graphIndex = new File(summary);
+			ObjectInputStream in;
+			Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = null;
+			in = new ObjectInputStream(new FileInputStream(graphIndex));
+			graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>)in.readObject();
+			in.close();
+			m_kIndexer.indexKeywords(sourcePath, sourceURI, graph, null);
+			
+			summary = getSummaryGraphFilePath(targetURI);
+			graphIndex = new File(summary);
+			in = new ObjectInputStream(new FileInputStream(graphIndex));
+			graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>)in.readObject();
+			in.close();
+			m_kIndexer.indexKeywords(targetPath, targetURI, graph, null);
+
+		} catch (FileNotFoundException ex) {
+			ex.printStackTrace();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		} catch (ClassNotFoundException ex) {
+			ex.printStackTrace();
+		}		
+	}
+
+
+	private void index(Properties parameters){
 		IOntology omsOnto = null;
 
-		//index DBLP 		
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(SOURCE_ONTO_PATH));
-//		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
-		service.index(parameters, parameters.getProperty(REPOSITORY_DIR) + File.separator + parameters.getProperty(SOURCE_ONTO_URI),  parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH), omsOnto); 
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(omsOnto);
+		omsOnto = loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+		//TODO do the indexing with SummaryGraphIndexService
+		m_sessionFactory.getCurrentSession().close();
+		m_con.closeOntology(omsOnto);
 
-		//index swrc 
+		//index target
 		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
 		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(TARGET_ONTO_PATH));
-//		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
-		service.index(parameters,parameters.getProperty(REPOSITORY_DIR) + File.separator + parameters.getProperty(TARGET_ONTO_URI), parameters.getProperty(TARGET_ONTO_SCHEMA_PATH), omsOnto);
-//		service.m_sessionFactory.getCurrentSession().close();
-//		service.m_con.closeOntology(omsOnto);
+		omsOnto = loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+		//TODO do the indexing with SummaryGraphIndexService
+		m_sessionFactory.getCurrentSession().close();
+		m_con.closeOntology(omsOnto);
+	}
 
+	private void computeMappings(Properties parameters){
+		MappingComputationService mapper = new MappingComputationService();
+		m_mIndexer = new MappingIndexService(parameters.getProperty(MAPINGINDEX_DIR)); 
+		ExtractInstancesService extractor = new ExtractInstancesService();
 
-		//compute schema mappings for SWRC
-		Collection<SchemaMapping> sMappings = service.m_mapper.computeSchemaMappings(
+		Collection<SchemaMapping> sMappings = mapper.computeSchemaMappings(
 				parameters.getProperty(SOURCE_ONTO_SCHEMA_PATH), 
 				parameters.getProperty(TARGET_ONTO_SCHEMA_PATH));
 		if (sMappings != null && sMappings.size() > 0){
 			for (SchemaMapping m : sMappings){
-				service.m_indexer.indexMappings(m);
+				m_mIndexer.indexMappings(m);
 
 				parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
-				omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
-				Ontology sourceOnto= service.m_extractor.extractInstances(m.getSource(), service.m_dao);
-				service.m_sessionFactory.getCurrentSession().close();
-				service.m_con.closeOntology(omsOnto);
+				IOntology omsOnto = loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+				Ontology sourceOnto= extractor.extractInstances(m.getSource(), m_dao);
+				m_sessionFactory.getCurrentSession().close();
+				m_con.closeOntology(omsOnto);
 
 				//mapping is indeed a concept mapping
 				if(sourceOnto != null){
 					try {
 						parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
-						omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
-						Ontology targetOnto = service.m_extractor.extractInstances(m.getTarget(), service.m_dao);
+						omsOnto = loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+						Ontology targetOnto = extractor.extractInstances(m.getTarget(), m_dao);
 						File temp = new File(TEMP_ENTITIES_PATH);
 						targetOnto.saveOntology(OntologyFileFormat.OWL_XML,temp,"ISO-8859-1");
 						sourceOnto.importContentsFrom(temp, null);
-						service.m_sessionFactory.getCurrentSession().close();
-						service.m_con.closeOntology(omsOnto);
+						m_sessionFactory.getCurrentSession().close();
+						m_con.closeOntology(omsOnto);
 					} catch (KAON2Exception e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -134,45 +270,16 @@ public class IndexingDatawebService {
 						e.printStackTrace();
 					}
 					//compute instance mappings 
-					Collection<InstanceMapping> iMappings = service.m_mapper.computeInstanceMappings(new MyOntology(sourceOnto), m.getSourceDsURI(), m.getTargetDsURI(), m);
+					Collection<InstanceMapping> iMappings = mapper.computeInstanceMappings(new MyOntology(sourceOnto), m.getSourceDsURI(), m.getTargetDsURI(), m);
 					if (iMappings != null && iMappings.size() > 0){
 						for (InstanceMapping mi : iMappings){
-							service.m_indexer.indexMappings(mi);
+							m_mIndexer.indexMappings(mi);
 						}
 					}
 				}
-
 			}
 		}
 	}
-
-	public IndexingDatawebService(String repodir){
-		initConnection(repodir);
-	}
-
-	public static String getSummaryGraphFilePath(String datasource){
-		//TODO
-		return null;
-	}
-
-
-	private void index(Properties parameters, String repositoryPath, String schemaPath, IOntology onto){
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph;
-		try {
-			sGraph = m_summarizer.computeSummaryGraph(repositoryPath,false);
-
-			m_summarizer.writeSummaryGraphAsRDF(sGraph, schemaPath);
-			String dir = parameters.getProperty(REPOSITORY_DIR);
-			String path = (dir.endsWith(File.separator) ? dir + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph" : 
-				dir + File.separator + parameters.getProperty(KbEnvironment.ONTOLOGY_URI) + ".graph");
-			m_summarizer.writeSummaryGraph(sGraph, path);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-
 
 	private void initConnection(String repodir){
 		try {
@@ -190,6 +297,7 @@ public class IndexingDatawebService {
 
 	private IOntology loadOntology(Properties parameters, String filepath){
 		//load ontology
+		if(m_con == null) initConnection(parameters.getProperty(REPOSITORY_DIR));
 		IOntology onto = null;
 		try {
 			onto = m_con.loadOntology(PropertyUtils.convertToMap(parameters));
@@ -239,20 +347,10 @@ public class IndexingDatawebService {
 //	private boolean isIndexingRequired(String datasourceUri){
 //	if (!m_indexedDS.contains(datasourceUri)){
 //	File file = new File(ExploreEnvironment.KB_INDEX_DIR);
-//	//TODO check of the knowledgebase has been changed instead 
+////	TODO check of the knowledgebase has been changed instead 
 //	if ((file.list() == null) || (file.list().length <= 2)) {
 //	return true;
 //	}
-//	}
-
-//	return false;
-//	}
-
-//	private boolean isWordNetIndexingRequired(){
-//	File file = new File(ExploreEnvironment.SYN_INDEX_DIR);
-//	//TODO check of the knowledgebase has been changed instead 
-//	if ((file.list() == null) || (file.list().length <= 2)) {
-//	return true;
 //	}
 
 //	return false;

@@ -64,6 +64,13 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		// TODO Auto-generated method stub
 	}
 
+	public static void main(String[] args){
+		
+		QueryInterpretationService inter = new QueryInterpretationService();
+		
+		
+	}
+	
 	public Collection<Map<String,Collection<OWLPredicate>>> computeQueries(Map<String,Collection<SummaryGraphElement>> elements, 
 			MappingIndexService index, int distance, int k) {
 
