@@ -190,7 +190,7 @@ public class SummaryGraphIndexServiceForBT {
 					if(!datatype.equals("") && datatype.charAt(0)=='^')
 					{
 						datatype = datatype.substring(datatype.lastIndexOf('^')+1);
-						System.out.println(datatype);
+						//System.out.println(datatype);
 					}
 					else datatype = PREFIX+"label";
 					
@@ -482,7 +482,7 @@ public class SummaryGraphIndexServiceForBT {
 			indivSet.add(sd.getSubject());
 		}
 		int numIndividual = indivSet.size();
-		System.out.println(numIndividual+" | "+noInds);
+		//System.out.println(numIndividual+" | "+noInds);
 		if(numIndividual == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
@@ -500,10 +500,28 @@ public class SummaryGraphIndexServiceForBT {
 		if(numProMem == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
-		System.out.println("=="+numProMem+" | "+noPropMembers);
+		//System.out.println("=="+numProMem+" | "+noPropMembers);
 		return numProMem/noPropMembers;
 	}  
 	
+
+	public static void main(String[]args) throws Exception
+	{
+		//new SummaryGraphIndexServiceForBT().computeSummaryGraph(false);
+		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
+//		Pseudograph graph = sss.computeSummaryGraph(true);
+		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\wordnet-summary.obj");
+//		graph = sss.computeEFScores(graph);
+		//sss.writeSummaryGraph(graph, SesameDao.root+"summary-dblp.obj");
+		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"wordnet-summary.rdf1");
+//		visit(graph);
+		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
+//		graph = sss.computeSchemaGraph(graph, null);
+//		sss.writeSummaryGraph(graph, SesameDao.root+"schema-dblp.obj");
+//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"schema-dblp.owl");
+		
+	}
+
 //	public static void main(String[]args) throws Exception
 //	{
 //		//new SummaryGraphIndexServiceForBT().computeSummaryGraph(false);
@@ -520,6 +538,7 @@ public class SummaryGraphIndexServiceForBT {
 //		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"schema-dblp.owl");
 //		
 //	}
+
 	public static void visit(Pseudograph graph)
 	{
 		Set<SummaryGraphEdge> edges = graph.edgeSet();

@@ -96,12 +96,12 @@ public class KeywordIndexServiceForBT implements IService{
 			IndexSearcher indexSearcher = null;
 			if (synIndexdir != null) indexSearcher = new IndexSearcher(synIndexdir);
 
-			//indexDataSourceByConcept(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
-			//indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
+			indexDataSourceByConcept(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
+			indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 
 			indexSearcher.close();
 
-			//indexDataSourceByLiteral(m_indexWriter, datasourceURI);
+			indexDataSourceByLiteral(m_indexWriter, datasourceURI);
 			indexDataSourceByIndividual(m_indexWriter, datasourceURI);
 
 			m_indexWriter.optimize();
