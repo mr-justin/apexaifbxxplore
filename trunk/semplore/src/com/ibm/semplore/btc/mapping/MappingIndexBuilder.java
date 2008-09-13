@@ -51,6 +51,7 @@ public class MappingIndexBuilder {
 				pos ++;
 			}
 		}
+		if (lastid!=null) fmap.writeInt(-1);
 		fhead.close();
 		fmap.close();
 	}
