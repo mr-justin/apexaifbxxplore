@@ -21,8 +21,8 @@ public class PropertyMemberPredicate extends OWLPredicate {
 	
 	public PropertyMemberPredicate(IProperty prop, IResource term1, IResource term2){
 		super();
-		Emergency.checkPrecondition(term1 instanceof Individual || term1 instanceof ILiteral ||
-				term1 instanceof Variable, "term1 instanceof NamedIndividual || term1 instanceof ILiteral || term1 instanceof Variable");	
+		Emergency.checkPrecondition(term1 instanceof Individual || 
+				term1 instanceof Variable, "term1 instanceof NamedIndividual || term1 instanceof Variable");	
 		Emergency.checkPrecondition(term2 instanceof Individual || term2 instanceof ILiteral ||
 				term2 instanceof Variable, "term2 instanceof NamedIndividual || term2 instanceof ILiteral || term2 instanceof Variable");	
 		
