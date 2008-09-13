@@ -1,9 +1,12 @@
 package org.ateam.xxplore.core.service.mappingA;
 
+
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.zip.ZipInputStream;
 
 /**
@@ -38,7 +41,6 @@ public class DirZipReader implements IDataSourceReader {
 	public String readLine() throws Exception {
 		String ret = br.readLine();
 		while (ret == null) {
-			br.close();
 			while (zipinput.getNextEntry() == null) {
 				fileIndex++;
 				if (fileIndex >= files.length) return null;
@@ -50,4 +52,13 @@ public class DirZipReader implements IDataSourceReader {
 		return ret;
 	}
 
+	public static void main(String[] args) throws Exception {
+		String testFile = "E:\\billiontriples\\testDir\\";
+		DirZipReader dzr = new DirZipReader(testFile);
+		dzr.init();
+		PrintWriter pw = new PrintWriter(new FileWriter("E:\\billiontriples\\testDir.contents"));
+		for (String line = dzr.readLine(); line != null; line = dzr.readLine()) pw.println(line);
+		dzr.close();
+		pw.close();
+	}
 }
