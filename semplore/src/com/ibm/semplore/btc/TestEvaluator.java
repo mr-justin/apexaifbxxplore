@@ -22,24 +22,23 @@ public class TestEvaluator {
 		Graph graph = new GraphImpl();
 		//Concepts
 		graph.add(schemaFactory.createKeywordCategory("Princeton"));	//0
-//		graph.add(schemaFactory.createUniversalCategory());				//1
-//		graph.add(schemaFactory.createUniversalCategory());				//2
-//		graph.add(schemaFactory.createAttributeKeywordCategory("label","Wiles"));	//0
-//		graph.add(schemaFactory.createUniversalCategory());				//3
+		graph.add(schemaFactory.createUniversalCategory());				//1
+		graph.add(schemaFactory.createUniversalCategory());				//2
+		graph.add(schemaFactory.createUniversalCategory());				//3
 		//Relations
+		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
+				"<http://dbpedia.org/property/workInstitutions>")), 1, 0);
 //		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
-//				"<http://dbpedia.org/property/workInstitutions>")), 1, 0);
-//		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
-//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 1, 0);
+//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
 		//IEdge
-//		graph.addIEdges(new Edge(1,2,null));
+		graph.addIEdges(new Edge(1,2,null));
 		//target
-		graph.setTargetVariable(0);
+		graph.setTargetVariable(2);
 		//datasource
 		graph.setDataSource(0, "dbpedia");
-//		graph.setDataSource(1, "dbpedia");
-//		graph.setDataSource(0, "dblp");
-//		graph.setDataSource(1, "dblp");
+		graph.setDataSource(1, "dbpedia");
+		graph.setDataSource(2, "dblp");
+		graph.setDataSource(3, "dblp");
 		
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
@@ -49,7 +48,7 @@ public class TestEvaluator {
 
 		Hashtable<String, File> dsmap = new Hashtable<String,File>();
 		dsmap.put("dbpedia", new File("y:\\btc\\dbpedia_s\\index"));
-		dsmap.put("dblp", new File("y:\\btc\\doc\\dblp\\index"));
+		dsmap.put("dblp", new File("y:\\btc\\dblp\\index"));
 		File mappath = new File("y:\\SSModel");
 		eval.setPathOfDataSource(dsmap);
 		eval.setPathOfMappingIndex(mappath);

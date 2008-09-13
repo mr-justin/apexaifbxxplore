@@ -87,7 +87,7 @@ public class SortUnique extends Configured implements Tool {
    */
   public int run(String[] args) throws Exception {
 
-    JobConf jobConf = new JobConf(getConf(), Sort.class);
+    JobConf jobConf = new JobConf(getConf(), SortUnique.class);
     jobConf.setJobName("sorter");
 
     jobConf.setMapperClass(SortMapper.class);        

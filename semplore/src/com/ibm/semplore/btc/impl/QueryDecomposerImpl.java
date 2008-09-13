@@ -67,6 +67,7 @@ public class QueryDecomposerImpl implements QueryDecomposer {
 		for (Iterator<Edge> itr = graph.getIEdges(gid); itr.hasNext(); ) {
 			Edge e = itr.next();
 			if (e.getFromNode() == gid) {
+				if (visit_gid.contains(e.getToNode())) continue;
 				int newQID = map.size();
 				traverse(e.getToNode(), newQID);
 				

@@ -149,8 +149,9 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		TreeSet<Integer> results = new TreeSet<Integer>();
 		RandomAccessFile fmap = new RandomAccessFile(
 				mappingIndex.getPath() + File.separatorChar + fromDS+"_" + toDS + "_index.map", "r");
-		
-		while (from.next()) {
+
+		from.init();
+		for (int i=0; i<from.getLen(); i++, from.next()) {
 			int doc1 = from.doc();
 			Integer pos = head.get(doc1);
 			if (pos==null) continue;
@@ -163,7 +164,10 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		
 		if (to != null) {
 			TreeSet<Integer> toset = new TreeSet<Integer>();
-			while (to.next()) toset.add(to.doc());
+			to.init();
+			for (int i=0; i<to.getLen(); i++, to.next()) {
+				toset.add(to.doc());
+			}
 			results.retainAll(toset);
 		}
 		DocStream resultStream = new TreeSetDocStream(results);

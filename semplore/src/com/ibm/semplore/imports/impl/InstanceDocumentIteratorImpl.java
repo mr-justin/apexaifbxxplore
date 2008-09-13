@@ -17,6 +17,7 @@ import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.AbstractMap;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
@@ -48,8 +49,7 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 	Long lastID = null;
 	
 	int objLocalID, sbjLocalID, relLocalID, invRelLocalID, catLocalID;
-	HashMap<String, AbstractMap<Long, Integer>> idMap = new HashMap<String,AbstractMap<Long, Integer>>();
-	HashMap<String, ArrayList<Long>> idMap1 = new HashMap<String,ArrayList<Long>>();
+	HashMap<String, long[]> idMap = new HashMap<String,long[]>();
 
 	InstanceDocumentImpl instance;
 
@@ -72,8 +72,8 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 	}
 
 	int findInFile(String filename, long rel) {
-		if (idMap1.get(filename)!=null) {
-			int i = Collections.binarySearch(idMap1.get(filename),rel);
+		if (idMap.get(filename)!=null) {
+			int i = Arrays.binarySearch(idMap.get(filename),rel);
 			if (i<0) return -1; else return i;
 		}
 //		System.out.print("Read "+filename);
@@ -83,54 +83,24 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		}
-		ArrayList<Long> list = null;
+		long[] list = null;
 		try {
 			File f = new File(filename);
 			long len = f.length()/8;
-			list = new ArrayList<Long>((int)len);
+//			System.out.print("["+len+"]");
+			list = new long[(int)len];
 			for (int i=0; i<len ; i++) {
 				long l = file.readLong();
-				list.add(l);
+				list[i]=l;
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		idMap1.put(filename, list);
-//		System.out.println(".");
-		int j = Collections.binarySearch(list,rel);
+//		System.out.print(".");
+		idMap.put(filename, list);
+//		System.out.print(".");
+		int j = Arrays.binarySearch(list,rel);
 		if (j<0) return -1; else return j;
-	}
-	int findInFile0(String filename, long rel) {
-		if (idMap.get(filename)!=null) {
-			Integer i =idMap.get(filename).get(rel);
-			if (i==null) return -1; else return i;
-		}
-//		System.out.print("Read "+filename);
-		DataInputStream file = null;
-		try {
-			file = new DataInputStream(new BufferedInputStream(new FileInputStream(filename)));
-		} catch (FileNotFoundException e1) {
-			e1.printStackTrace();
-		}
-		TreeMap<Long, Integer> map = null;
-		try {
-			File f = new File(filename);
-			long len = f.length()/8;
-			map = new TreeMap<Long, Integer>();
-			for (int i=0; i<len ; i++) {
-				long l = file.readLong();
-				map.put(l, i);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		idMap.put(filename, map);
-//		System.out.println(".");
-		Integer i = map.get(rel);
-		if (i==null) {
-			throw new Error(filename + ": " + rel + " not found");
-		}
-		return i;
 	}
 
 	InstanceDocumentIteratorImpl(Scanner dataReader) {
@@ -229,6 +199,9 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 		Config.dir = config.getProperty(Config.DATA_FOR_INDEX_DIR)+"/";
 	}
 	public static void main(String args[]) throws Exception {
+		InstanceDocumentIteratorImpl i = new InstanceDocumentIteratorImpl((Scanner)null);
+		i.findInFile("d:\\User\\xrsun\\btc\\uscensus\\data/RO_4271085579369040925", 0);
+		if (true) return;
 		InstanceDocumentIteratorImpl ins = new InstanceDocumentIteratorImpl(args[0]);
 		long sbj = 2695145;
 		long rel = 3680827;
