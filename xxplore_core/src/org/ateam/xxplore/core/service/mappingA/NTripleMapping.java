@@ -7,15 +7,14 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.net.URLDecoder;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
 
 import com.ice.tar.TarInputStream;
-import java.util.*;
-
-import java.net.URLDecoder;
 
 /**
  * Mapping the class and property of NTriple.

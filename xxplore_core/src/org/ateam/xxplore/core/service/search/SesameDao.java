@@ -1,19 +1,12 @@
 package org.ateam.xxplore.core.service.search;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Enumeration;
 import java.util.HashSet;
-import java.util.List;
 
-import org.apache.lucene.document.Field;
-import org.apache.lucene.search.IndexSearcher;
 import org.jgrapht.graph.Pseudograph;
 import org.openrdf.model.Statement;
 import org.openrdf.repository.Repository;
 import org.openrdf.repository.RepositoryConnection;
-import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.RepositoryResult;
 import org.openrdf.repository.sail.SailRepository;
 import org.openrdf.rio.RDFFormat;
@@ -22,16 +15,6 @@ import org.openrdf.sail.nativerdf.ValueStore;
 import org.openrdf.sail.nativerdf.ValueStoreRevision;
 import org.openrdf.sail.nativerdf.model.NativeLiteral;
 import org.openrdf.sail.nativerdf.model.NativeURI;
-import org.xmedia.oms.model.api.IConcept;
-import org.xmedia.oms.model.api.IIndividual;
-import org.xmedia.oms.model.api.INamedConcept;
-import org.xmedia.oms.model.api.IProperty;
-import org.xmedia.oms.model.api.IResource;
-import org.xmedia.oms.model.impl.DataProperty;
-import org.xmedia.oms.model.impl.Literal;
-import org.xmedia.oms.model.impl.NamedConcept;
-import org.xmedia.oms.model.impl.NamedIndividual;
-import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
 
 public class SesameDao {

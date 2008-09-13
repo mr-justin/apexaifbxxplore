@@ -13,10 +13,8 @@ import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
-import org.aifb.xxplore.shared.exception.Emergency;
 import org.apache.log4j.Logger;
 import org.jgrapht.graph.Pseudograph;
 import org.openrdf.model.URI;
@@ -30,7 +28,6 @@ import org.openrdf.rio.rdfxml.RDFXMLWriter;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IObjectProperty;
-import org.xmedia.oms.model.api.IOntology;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.DataProperty;
@@ -38,8 +35,6 @@ import org.xmedia.oms.model.impl.Datatype;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
-import org.xmedia.oms.persistence.SessionFactory;
-import org.xmedia.oms.persistence.StatelessSession;
 
 
 public class SummaryGraphIndexServiceForBT {

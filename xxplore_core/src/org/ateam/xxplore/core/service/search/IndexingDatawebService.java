@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -102,12 +101,10 @@ public class IndexingDatawebService {
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
 
-		IndexingDatawebService service = new IndexingDatawebService(parameters.getProperty(REPOSITORY_DIR));
-
-		service.indexSummaries(parameters);
-		service.indexElements(parameters);
+		indexSummaries(parameters);
+		indexElements(parameters);
 		if(parameters.get(COMPUTE_MAPPING) == "true")
-			service.computeMappings(parameters);
+			computeMappings(parameters);
 		
 		QueryInterpretationService inter = new QueryInterpretationService();	
 		inter.computeQueries(m_kIndexer.searchKb("thanh 2007", 0.9), m_mIndexer, 6, 10);
@@ -126,7 +123,7 @@ public class IndexingDatawebService {
 		
 		SummaryGraphIndexServiceForBT summarizer = new SummaryGraphIndexServiceForBT();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph = null;
-		if(parameters.get(WRITE_SOURCE_ONTO_SUMMARY) == "true"){			
+		if(parameters.get(WRITE_SOURCE_ONTO_SUMMARY).equals("true")){			
 			try {
 				sGraph = summarizer.computeSummaryGraph(sourcePath, true);
 				summarizer.writeSummaryGraph(sGraph, parameters.getProperty(SOURCE_ONTO_SUMMARY_PATH));
@@ -137,7 +134,7 @@ public class IndexingDatawebService {
 			}
 		}
 		
-		if(parameters.get(WRITE_SOURCE_ONTO_SCHEMA) == "true"){
+		if(parameters.get(WRITE_SOURCE_ONTO_SCHEMA).equals("true")){
 			try {
 				if(sGraph == null) sGraph = summarizer.computeSummaryGraph(sourcePath, true);
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> schema 
@@ -149,7 +146,7 @@ public class IndexingDatawebService {
 			}
 		}
 
-		if(parameters.get(WRITE_TARGET_ONTO_SUMMARY) == "true"){			
+		if(parameters.get(WRITE_TARGET_ONTO_SUMMARY).equals("true")){			
 			try {
 				sGraph = summarizer.computeSummaryGraph(targetPath, true);
 				summarizer.writeSummaryGraph(sGraph, parameters.getProperty(TARGET_ONTO_SUMMARY_PATH));
@@ -160,7 +157,7 @@ public class IndexingDatawebService {
 			}
 		}
 
-		if(parameters.get(WRITE_TARGET_ONTO_SCHEMA) == "true"){
+		if(parameters.get(WRITE_TARGET_ONTO_SCHEMA).equals("true")){
 			try {
 				if(sGraph == null) sGraph = summarizer.computeSummaryGraph(targetPath, true);
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> schema 
