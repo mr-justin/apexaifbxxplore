@@ -2,7 +2,9 @@ package org.ateam.xxplore.core.service.mappingA;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.util.zip.GZIPInputStream;
 
 import com.ice.tar.TarInputStream;
@@ -41,4 +43,13 @@ public class TarGzReader implements IDataSourceReader {
 		return ret;
 	}
 
+	public static void main(String[] args) throws Exception {
+		String testFile = "E:\\billiontriples\\law-1.4-src.tar.gz";
+		TarGzReader tgr = new TarGzReader(testFile);
+		tgr.init();
+		PrintWriter pw = new PrintWriter(new FileWriter("E:\\billiontriples\\law-1.4-src.contents"));
+		for (String line = tgr.readLine(); line != null; line = tgr.readLine()) pw.println(line);
+		tgr.close();
+		pw.close();
+	}
 }
