@@ -140,7 +140,7 @@ public class SummaryGraphIndexServiceForBT {
 		}
 
 
-		if(withScores) resourceGraph = computeEFScores(resourceGraph);
+		if(withScores) resourceGraph = computeEFScores(repositoryPath, resourceGraph);
 		return resourceGraph;	
 	}
 
@@ -219,7 +219,7 @@ public class SummaryGraphIndexServiceForBT {
 	}
 
 
-	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeEFScores(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)throws Exception{
+	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeEFScores(String repositoryPath, Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)throws Exception{
 		//Emergency.checkPrecondition((graph.vertexSet() != null || graph.vertexSet().size() > 0 || graph.edgeSet() != null || graph.edgeSet().size() > 0) , "Graph " + graph  + " is empty!");
 		//StatelessSession session = (StatelessSession)SessionFactory.getInstance().getCurrentSession();
 		//IOntology onto = session.getOntology();
@@ -229,7 +229,7 @@ public class SummaryGraphIndexServiceForBT {
 
 		//int numoPropertyMember = onto.getNumberOfObjectPropertyMember();
 		//s_log.debug("number of ObjectPropertyMember: " + numoPropertyMember);
-		SesameDao sd = new SesameDao(SesameDao.indexRoot);
+		SesameDao sd = new SesameDao(repositoryPath);
 		sd.findAllTriples();
 		Set indivSet = new HashSet<String>();
 		int propSize = 0;
