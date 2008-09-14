@@ -56,16 +56,17 @@ public class SesameDao {
 	 */
 	public SesameDao(String index) throws Exception
 	{
-		if(!new File(index).exists())
+		File file = new File(index);
+		if(!file.exists())
 			new File(index).mkdirs();
-		repository = new SailRepository(new NativeStore(new File(index)));
-		revision = new ValueStoreRevision(new ValueStore(new File(index)));
+		repository = new SailRepository(new NativeStore(file));
+		revision = new ValueStoreRevision(new ValueStore(file));
 		repository.initialize();
 	}
 	/*
 	 * build the index from fn (file or dir)
 	 */
-	public void insertNTFile(String fn) throws Exception
+	public void insertNTFile(String fn, RDFFormat format) throws Exception
 	{
 		con = repository.getConnection();
 		File dir = new File(fn);
@@ -74,7 +75,7 @@ public class SesameDao {
 			File[] nt = dir.listFiles();
 			for(File ntt: nt)
 			{
-				con.add(ntt, "", RDFFormat.N3);
+				con.add(ntt, "", format);
 				System.out.println("insert "+ntt.getName());
 			}
 		}
@@ -216,7 +217,7 @@ public class SesameDao {
 		
 //		part1 indexing sourcedata
 		SesameDao se = new SesameDao(indexRoot);
-		se.insertNTFile(sourceFile);
+		se.insertNTFile(sourceFile, RDFFormat.N3);
 		System.out.println("part1 finished!");
 		
 		//part2 constructing summary & schema graph

@@ -117,10 +117,6 @@ public class IndexingDatawebService {
 	}
 
 	public void process(Properties parameters){
-		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
-		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
-		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-
 		indexSummaries(parameters);
 		indexElements(parameters);
 		if(parameters.get(COMPUTE_MAPPING) == "true")
