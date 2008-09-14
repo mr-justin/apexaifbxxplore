@@ -75,6 +75,8 @@ public class IndexingDatawebService {
 
 	private static String COMPUTE_MAPPING = "compute_mapping";
 	private static String TEMP_ENTITIES_PATH = "res/BTC/mapping/entities.temp";
+	
+	private static final String SESAME_REPO_DIR = "/OpenRDF Sesame/repositories/";
 
 	private static Map<String,String> physicalURIsOfSummaryGraphs = new HashMap<String, String>();
 	private KeywordIndexServiceForBT m_kIndexer = null;
@@ -86,7 +88,25 @@ public class IndexingDatawebService {
 		//Properties parameters = PropertyUtils.readFromPropertiesFile(args[0]);
 
 		Properties parameters = PropertyUtils.readFromPropertiesFile(propertyFile);
+		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
+		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
+		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
 		IndexingDatawebService service = new IndexingDatawebService(parameters.getProperty(REPOSITORY_DIR));
+		
+		IOntology omsOnto = null;
+//		index DBLP 		
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(SOURCE_ONTO_PATH));
+		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(omsOnto);
+//		index swrc 
+		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
+		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(TARGET_ONTO_PATH));
+		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+		service.m_sessionFactory.getCurrentSession().close();
+		service.m_con.closeOntology(omsOnto);
+		
 		service.process(parameters);
 
 
@@ -116,9 +136,9 @@ public class IndexingDatawebService {
 
 
 	private void indexSummaries(Properties parameters){
-		String sourcePath = parameters.getProperty(SOURCE_ONTO_PATH);
+		String sourcePath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(SOURCE_ONTO_URI);
 		String sourceURI = parameters.getProperty(SOURCE_ONTO_URI);
-		String targetPath = parameters.getProperty(TARGET_ONTO_PATH);
+		String targetPath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(TARGET_ONTO_URI);
 		String targetURI = parameters.getProperty(TARGET_ONTO_URI);
 		
 		SummaryGraphIndexServiceForBT summarizer = new SummaryGraphIndexServiceForBT();
@@ -173,9 +193,9 @@ public class IndexingDatawebService {
 
 
 	private void indexElements(Properties parameters){
-		String sourcePath = parameters.getProperty(SOURCE_ONTO_PATH);
+		String sourcePath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(SOURCE_ONTO_URI);
 		String sourceURI = parameters.getProperty(SOURCE_ONTO_URI);
-		String targetPath = parameters.getProperty(TARGET_ONTO_PATH);
+		String targetPath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(TARGET_ONTO_URI);
 		String targetURI = parameters.getProperty(TARGET_ONTO_URI);
 		String repoDir = parameters.getProperty(KEYWORDINDEX_DIR);
 
