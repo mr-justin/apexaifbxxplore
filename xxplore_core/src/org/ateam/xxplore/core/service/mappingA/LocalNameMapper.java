@@ -241,23 +241,29 @@ public class LocalNameMapper {
 		classMap("d:\\freebaseUscensusInstanceMap.txt", "d:\\freebaseUscensusClassMap.txt");
 		System.out.println("finish mapping freebase and uscensus classes");
 
-		new IntersectionUnionCalculator().calculate("d:\\dbpediaFreebaseClassMap.txt", "d:\\dbpediaFreebaseClassMapIU.txt");
-		System.out.println("dbpedia freebase mapping finished");
+		new IURemoveCalculator().calculate("d:\\dbpediaFreebaseClassMap.txt", 
+				"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\mapping\\dbpedia_freebase\\dbpedia_freebase_concept", 
+				"d:\\dbpediaFreebaseClassMapIUr.txt");
 
-		new IntersectionUnionCalculator().calculate("d:\\dbpediaUscensusClassMap.txt", "d:\\dbpediaUscensusClassMapIU.txt");
-		System.out.println("dbpedia uscensus mapping finished");
+		new IURemoveCalculator().calculate("d:\\dbpediaUscensusClassMap.txt", 
+				"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\mapping\\dbpedia_uscensus\\dbpedia_uscensus_concept", 
+				"d:\\dbpediaUscensusClassMapIUr.txt");
+
+		new IURemoveCalculator().calculate("d:\\dbpediaDblpClassMap.txt", 
+				"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\mapping\\dbpedia_dblp\\dbpedia_dblp_concept", 
+				"d:\\dbpediaDblpClassMapIUr.txt");
+
+		new IURemoveCalculator().calculate("d:\\dblpFreebaseClassMap.txt", 
+				"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\mapping\\freebase_dblp\\freebase_dblp_concept", 
+				"d:\\dblpFreebaseClassMapIUr.txt");
+
+		new IURemoveCalculator().calculate("d:\\dblpUscensusClassMap.txt", 
+				"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\mapping\\dblp_uscensus\\dblp_uscensus_concept", 
+				"d:\\uscensusDblpClassMapIUr.txt");
 		
-		new IntersectionUnionCalculator().calculate("d:\\dbpediaDblpClassMap.txt", "d:\\dbpediaDblpClassMapIU.txt");
-		System.out.println("dbpedia dblp mapping finished");
-		
-		new IntersectionUnionCalculator().calculate("d:\\dblpFreebaseClassMap.txt", "d:\\dblpFreebaseClassMapIU.txt");
-		System.out.println("dblp freebase mapping finished");
-
-		new IntersectionUnionCalculator().calculate("d:\\dblpUscensusClassMap.txt", "d:\\uscensusDblpClassMapIU.txt");
-		System.out.println("uscensus dblp mapping finished");
-
-		new IntersectionUnionCalculator().calculate("d:\\freebaseUscensusClassMap.txt", "d:\\uscensusFreebaseClassMapIU.txt");
-		System.out.println("uscensus freebase mapping finished");
+		new IURemoveCalculator().calculate("d:\\freebaseUscensusClassMap.txt", 
+				"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\mapping\\freebase_uscensus\\freebase_uscensus_concept", 
+				"d:\\uscensusFreebaseClassMapIUr.txt");
 
 	}
 	
