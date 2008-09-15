@@ -506,9 +506,13 @@ public class SummaryGraphIndexServiceForBT {
 		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
 //		Pseudograph graph = sss.computeSummaryGraph(true);
 		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\wordnet-summary.obj");
+		Set<SummaryGraphElement> elemSet = graph.vertexSet();
+		for(SummaryGraphElement sge: elemSet)
+			if(sge.getResource() instanceof NamedConcept)
+			System.out.println(((NamedConcept)sge.getResource()).getUri());
 //		graph = sss.computeEFScores(graph);
 		//sss.writeSummaryGraph(graph, SesameDao.root+"summary-dblp.obj");
-		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"wordnet-summary.rdf1");
+//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+"wordnet-summary.rdf1");
 //		visit(graph);
 		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
 //		graph = sss.computeSchemaGraph(graph, null);
