@@ -1,5 +1,6 @@
 package org.ateam.xxplore.core.service.mappingA;
 
+
 public interface IClassSimilarityCalculator {
 
 	/**
@@ -10,5 +11,5 @@ public interface IClassSimilarityCalculator {
 	 * @param output is the name of the output file
 	 * @throws Exception
 	 */
-	public void calculate(String rawClassMap, String classSummary1, String classSummary2, String output) throws Exception;
+	public void calculate(String rawClassMap, String output) throws Exception;
 }
