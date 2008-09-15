@@ -24,16 +24,16 @@ import com.ibm.semplore.btc.Visit;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
+import com.ibm.semplore.search.DocStreamHintImpl;
 import com.ibm.semplore.search.SearchFactory;
 import com.ibm.semplore.search.SearchHelper;
+import com.ibm.semplore.search.XFacetedQuery;
 import com.ibm.semplore.search.XFacetedResultSet;
 import com.ibm.semplore.search.XFacetedSearchService;
 import com.ibm.semplore.search.XFacetedSearchable;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
 import com.ibm.semplore.search.impl.XFacetedSearchableImpl;
 import com.ibm.semplore.xir.DocStream;
-import com.ibm.semplore.xir.FieldType;
-import com.ibm.semplore.xir.Term;
 import com.ibm.semplore.xir.TermFactory;
 import com.ibm.semplore.xir.TreeSetDocStream;
 import com.ibm.semplore.xir.impl.DebugIndex;
@@ -93,17 +93,23 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 				SearchHelper helper = searchFactory.createSearchHelper();
 				HashMap<Integer, DocStream> mappings = result.get(g);
 				for (Entry<Integer, DocStream> i: mappings.entrySet())
-					helper.setHint(SearchHelper.START_CACHE_HINT, i.getKey(), i.getValue());
+					helper.setHint(SearchHelper.START_CACHE_HINT, i.getKey(), new DocStreamHintImpl(i.getValue()));
 				//after that, mapping conditions can be freed from memory
 				mappings = null;
 				result.remove(g); 
 				
 				if (parent==null) {
 					//need facet if isRoot
-					targetResult = searcher.search(converter.convertQuery(g), helper);
+					XFacetedQuery q = converter.convertQuery(g);
+					long time = System.currentTimeMillis();
+					targetResult = searcher.search(q, helper);
+					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 				}
 				else {
-					DocStream ans = searcher.evaluate(converter.convertQuery(g), helper); 
+					XFacetedQuery q = converter.convertQuery(g);
+					long time = System.currentTimeMillis();
+					DocStream ans = searcher.evaluate(q, helper); 
+					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 					
 					//find the edge that link to its parent
 					DocStream origResult = null;
@@ -118,7 +124,13 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 						}
 					}
 					//convert ans from this subgraph's ID's to its parent's
+					time = System.currentTimeMillis();
+					int origLen = ans.getLen();
 					ans = convertID(g.getDataSource(),parent.getDataSource(), ans, origResult);
+					System.out.println(String.format("%s(%d)->%s(%d): %dms", 
+							g.getDataSource(), origLen, 
+							parent.getDataSource(),	ans.getLen(), System.currentTimeMillis()-time));
+					
 					parentResults.put(parentNode.getNodeID(), ans);
 
 				}
@@ -170,6 +182,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			}
 			results.retainAll(toset);
 		}
+		
 		DocStream resultStream = new TreeSetDocStream(results);
 		
 		return resultStream;

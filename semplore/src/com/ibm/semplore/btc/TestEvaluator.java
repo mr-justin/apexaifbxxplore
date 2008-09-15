@@ -28,18 +28,19 @@ public class TestEvaluator {
 		//Relations
 		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
 				"<http://dbpedia.org/property/workInstitutions>")), 1, 0);
-//		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
-//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
+		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
+				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
 		//IEdge
 		graph.addIEdges(new Edge(1,2,null));
 		//target
-		graph.setTargetVariable(2);
+		graph.setTargetVariable(3);
 		//datasource
 		graph.setDataSource(0, "dbpedia");
 		graph.setDataSource(1, "dbpedia");
 		graph.setDataSource(2, "dblp");
 		graph.setDataSource(3, "dblp");
 		
+		long time = System.currentTimeMillis();
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
 		QueryPlanner planner = new QueryPlannerImpl();
@@ -53,7 +54,9 @@ public class TestEvaluator {
 		eval.setPathOfDataSource(dsmap);
 		eval.setPathOfMappingIndex(mappath);
 		
+		System.out.println("Begin Evaluation");
 		XFacetedResultSet result = eval.evaluate(planner);
+		System.out.println("Total Evaluation time(ms): "+(System.currentTimeMillis()-time));
 		TestSearch.showResultSet(result, null);
 	}
 	

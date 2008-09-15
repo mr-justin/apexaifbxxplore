@@ -91,4 +91,7 @@ public class SubGraphImpl implements SubGraph {
 		return id;
 	}
 
+	public String toString() {
+		return crgraph.toString();
+	}
 }
