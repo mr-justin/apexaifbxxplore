@@ -64,4 +64,17 @@ public class WarcReader implements IDataSourceReader{
 	public void close() throws Exception {
 		br.close();
 	}
+	
+	public static void main(String[] args) throws Exception {
+		String testFile = "\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\geonames.warc";
+		WarcReader wr = new WarcReader(testFile);
+		wr.init();
+		int lineCount = 0;
+		for (String line = wr.readLine(); line != null; line = wr.readLine()) {
+			lineCount++;
+			if (lineCount%1000000 == 0) System.out.println(lineCount + " : " + line);
+		}
+		wr.close();
+		System.out.println(lineCount + " lines in all");
+	}
 }
