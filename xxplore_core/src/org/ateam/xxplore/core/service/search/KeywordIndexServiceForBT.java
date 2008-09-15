@@ -539,22 +539,41 @@ public class KeywordIndexServiceForBT implements IService{
 
 	public static void main(String[] args) throws Exception
 	{
-		Pseudograph graph = new SummaryGraphIndexServiceForBT().readGraphIndexFromFile(SesameDao.root+"schema-dblp.obj");
-		String path  = null;
-		new KeywordIndexServiceForBT(SesameDao.root+"keywordIndex", true).indexKeywords(path, "dblp", graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
+		//Pseudograph graph = new SummaryGraphIndexServiceForBT().readGraphIndexFromFile(SesameDao.root+"schema-dblp.obj");
+		//String path  = null;
+		//new KeywordIndexServiceForBT(SesameDao.root+"keywordIndex", true).indexKeywords(path, "dblp", graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
 //		concept & property test
-		IndexSearcher searcher = new IndexSearcher(SesameDao.root+"keywordIndex");
+		IndexSearcher searcher = new IndexSearcher("D:\\semplore\\wordnet-keywordIndex");
 		//System.out.println(hits.length());
 		for(int i=0; i<searcher.maxDoc(); i++)
 		{
-			System.out.println("Doc:"+searcher.doc(i).toString());
+			
 			Enumeration flist = searcher.doc(i).fields();
+			if(searcher.doc(i).get(LITERAL_FIELD)!=null)// || !searcher.doc(i).get(TYPE_FIELD).equals(LITERAL))
+				continue;
+			System.out.println("Doc:"+searcher.doc(i).toString());
 			while(flist.hasMoreElements())
 			{
 				Field field = (Field)flist.nextElement();
 				System.out.println("\t"+field.name()+": "+field.stringValue());
 			}
 		}
+		System.out.println("====================================");
+//		TermQuery query = new TermQuery(new Term(LABEL_FIELD, "plants"));
+////		
+//		Hits hits = searcher.search(query);
+//		for(int i=0; i<hits.length(); i++)
+//		{
+//			Enumeration flist = hits.doc(i).fields();
+//			if(hits.doc(i).get(TYPE_FIELD)==null || !hits.doc(i).get(TYPE_FIELD).equals(LITERAL))
+//			continue;
+//			System.out.println("Doc:"+searcher.doc(i).toString());
+//			while(flist.hasMoreElements())
+//			{
+//				Field field = (Field)flist.nextElement();
+//				System.out.println("\t"+field.name()+": "+field.stringValue());
+//			}
+//		}
 //		//literal test
 //		TermQuery query = new TermQuery(new Term(LABEL_FIELD,"world"));
 //		Hits hits = searcher.search(query);
