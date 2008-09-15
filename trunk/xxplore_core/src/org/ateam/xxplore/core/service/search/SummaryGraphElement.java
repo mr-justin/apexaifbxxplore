@@ -242,7 +242,7 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 		
 		//need to create unique Relation and Attribute Element 
 		SummaryGraphElement vertex = (SummaryGraphElement)object;
-		if(vertex.getType() == RELATION || vertex.getType() == ATTRIBUTE) return false;
+//		if(vertex.getType() == RELATION || vertex.getType() == ATTRIBUTE) return false;
 		
 		
 		if(resource instanceof NamedConcept && vertex.getResource() instanceof NamedConcept)
