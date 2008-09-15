@@ -240,6 +240,30 @@ public class LocalNameMapper {
 		classMap("d:\\freebaseUscensusInstanceMap.txt", "d:\\freebaseUscensusClassMap.txt");
 		System.out.println("finish mapping freebase and uscensus classes");
 
+		new IntersectionUnionCalculator().calculate("d:\\dbpediaFreebaseClassMap.txt", "d:\\dbpediaSummary.txt", 
+				"d:\\freebaseSummary.txt", "d:\\dbpediaFreebaseClassMapIU.txt");
+		System.out.println("dbpedia freebase mapping finished");
+
+		new IntersectionUnionCalculator().calculate("d:\\dbpediaUscensusClassMap.txt", "d:\\dbpediaSummary.txt", 
+				"d:\\uscensusSummary.txt", "d:\\dbpediaUscensusClassMapIU.txt");
+		System.out.println("dbpedia uscensus mapping finished");
+		
+		new IntersectionUnionCalculator().calculate("d:\\dbpediaDblpClassMap.txt", "d:\\dbpediaSummary.txt", 
+				"d:\\dblpSummary.txt", "d:\\dbpediaDblpClassMapIU.txt");
+		System.out.println("dbpedia dblp mapping finished");
+		
+		new IntersectionUnionCalculator().calculate("d:\\dblpFreebaseClassMap.txt", "d:\\dblpSummary.txt", 
+				"d:\\freebaseSummary.txt", "d:\\dblpFreebaseClassMapIU.txt");
+		System.out.println("dblp freebase mapping finished");
+
+		new IntersectionUnionCalculator().calculate("d:\\dblpUscensusClassMap.txt", "d:\\uscensusSummary.txt", 
+				"d:\\dblpSummary.txt", "d:\\uscensusDblpClassMapIU.txt");
+		System.out.println("uscensus dblp mapping finished");
+
+		new IntersectionUnionCalculator().calculate("d:\\freebaseUscensusClassMap.txt", "d:\\uscensusSummary.txt", 
+				"d:\\freebaseSummary.txt", "d:\\uscensusFreebaseClassMapIU.txt");
+		System.out.println("uscensus freebase mapping finished");
+
 	}
 	
 }
