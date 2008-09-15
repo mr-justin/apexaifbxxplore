@@ -256,8 +256,9 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.ibm.semplore.search.XFacetedSearchable#search(com.ibm.semplore.search.XFacetedQuery,
-	 *      com.ibm.semplore.search.SearchHelper)
+	 * @see
+	 * com.ibm.semplore.search.XFacetedSearchable#search(com.ibm.semplore.search
+	 * .XFacetedQuery, com.ibm.semplore.search.SearchHelper)
 	 */
 
 	protected static final String TERM_STR_FOR_ROOT = "root";
@@ -372,7 +373,9 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.ibm.semplore.search.XFacetedSearchable#search(com.ibm.semplore.search.XFacetedQuery)
+	 * @see
+	 * com.ibm.semplore.search.XFacetedSearchable#search(com.ibm.semplore.search
+	 * .XFacetedQuery)
 	 */
 	public XFacetedResultSet search(XFacetedQuery facetedQuery)
 			throws Exception {
@@ -382,7 +385,8 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.ibm.semplore.search.Searchable#search(com.ibm.semplore.search.Query)
+	 * @see
+	 * com.ibm.semplore.search.Searchable#search(com.ibm.semplore.search.Query)
 	 */
 	public ResultSet search(Query query) throws Exception {
 		if (query instanceof XFacetedQuery)
@@ -465,7 +469,8 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.ibm.semplore.search.impl.XFacetedSearchableImpl.Evaluator#evaluateTarget()
+		 * @seecom.ibm.semplore.search.impl.XFacetedSearchableImpl.Evaluator#
+		 * evaluateTarget()
 		 */
 		public DocStream evaluateTarget() throws IOException {
 			HashSet<Edge> checkedEdges = new HashSet<Edge>();
@@ -520,14 +525,18 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 
 			// cal the instances of the category of this node
 			GeneralCategory cat = graph.getNode(node);
+			DocStream catStream = null;
 			if (isUniversalCategory(cat)) {
 				// when processing UC, nothing put into nodeResults
 			} else {
-				DocStream startStream = getStartCacheHint(searchHelper, node);
-				DocStream catStream = evaluateGeneralCategory(cat);
-				if (startStream != null)
-					catStream = AUManager.binaryInter_Score(catStream,
-							startStream, true, -1);
+				catStream = evaluateGeneralCategory(cat);
+			}
+			DocStream startStream = getStartCacheHint(searchHelper, node);
+			if (startStream != null) {
+				catStream = AUManager.binaryInter_Score(catStream, startStream,
+						true, -1);
+			}
+			if (catStream != null) {
 				nodeResults.put(node, catStream);
 			}
 
@@ -590,7 +599,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 					}
 
 					// integrate the result of relation expansion into the node
-					DocStream catStream = nodeResults.get(node);
+					catStream = nodeResults.get(node);
 					result = AUManager.binaryInter_Score(result, catStream,
 							true, -1);
 					nodeResults.put(node, result);
@@ -611,7 +620,8 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.ibm.semplore.search.impl.XFacetedSearchableImpl.Evaluator#evaluateTarget()
+		 * @seecom.ibm.semplore.search.impl.XFacetedSearchableImpl.Evaluator#
+		 * evaluateTarget()
 		 */
 		public DocStream evaluateTarget() throws IOException {
 			CategoryRelationExp prefixExp = schemaFactory
