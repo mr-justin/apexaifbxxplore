@@ -1,10 +1,14 @@
 package org.ateam.xxplore.core.service.mappingA;
 
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 public class IntersectionUnionCalculator implements IClassSimilarityCalculator {
 
@@ -15,7 +19,13 @@ public class IntersectionUnionCalculator implements IClassSimilarityCalculator {
 		HashMap<String, Integer> classSize1 = loadMap(classSummary1);
 		HashMap<String, Integer> classSize2 = loadMap(classSummary2);
 		BufferedReader br = new BufferedReader(new FileReader(rawClassMap));
-		PrintWriter pw = new PrintWriter(new FileWriter(output));
+		TreeMap<Double, ArrayList<String>> tm = new TreeMap<Double, ArrayList<String>>(new Comparator<Double>() {
+			public int compare(Double a, Double b) {
+				if (a < b) return 1;
+				if (a > b) return -1;
+				return 0;
+			}
+		});
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			String[] part = line.split("\t");
 			int intersection = Integer.parseInt(part[2]);
@@ -23,9 +33,17 @@ public class IntersectionUnionCalculator implements IClassSimilarityCalculator {
 			int size2 = classSize2.get(part[1]);
 			int union = size1+size2-intersection;
 			double sim = (intersection+1.0)/(union+1.0);
-			pw.printf("%s\t%s\t%0.6f\n", part[0], part[1], sim);
+			if (tm.keySet().contains(sim)) tm.get(sim).add(part[0] + "\t" + part[1]);
+			else {
+				ArrayList<String> list = new ArrayList<String>();
+				list.add(part[0] + "\t" + part[1]);
+				tm.put(sim, list);
+			}
 		}
 		br.close();
+		
+		PrintWriter pw = new PrintWriter(new FileWriter(output));
+		for (Double d : tm.keySet()) for (String s : tm.get(d)) pw.printf("%s\t%.6f\n", s, d);
 		pw.close();
 	}
 
