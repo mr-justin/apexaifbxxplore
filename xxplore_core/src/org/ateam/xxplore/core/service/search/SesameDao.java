@@ -143,6 +143,7 @@ public class SesameDao {
 			}
 		}
 		pw2.close();
+		br.close();
 	}
 	public void close() throws Exception
 	{
