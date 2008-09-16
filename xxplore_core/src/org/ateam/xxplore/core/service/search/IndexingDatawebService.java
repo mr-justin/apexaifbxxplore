@@ -111,7 +111,7 @@ public class IndexingDatawebService {
 //		service.m_sessionFactory.getCurrentSession().close();
 //		service.m_con.closeOntology(omsOnto);
 
-		service.process(parameters);
+//		service.process(parameters);
 
 		QueryInterpretationService inter = new QueryInterpretationService();	
 		inter.computeQueries(service.getKeywordIndexSearcher().searchKb("thanh 2007", 0.9), service.getMappingIndexSearcher(), 6, 10);
@@ -123,6 +123,9 @@ public class IndexingDatawebService {
 	public IndexingDatawebService(Properties params){
 		m_graphIndexDir = params.getProperty(GRAPHINDEX_DIR);		
 		initConnection(params.getProperty(REPOSITORY_DIR));
+		String repoDir = params.getProperty(KEYWORDINDEX_DIR);
+		m_kIndexer = new KeywordIndexServiceForBT(repoDir, true);
+		m_mIndexer = new MappingIndexService(params.getProperty(MAPINGINDEX_DIR)); 
 	}
 
 	public void process(Properties parameters){
@@ -134,7 +137,7 @@ public class IndexingDatawebService {
 
 	public static String getSummaryGraphFilePath(String datasource){
 		if(physicalURIsOfSummaryGraphs == null){
-			File graphIndex = new File(m_graphIndexDir+".index");
+			File graphIndex = new File(m_graphIndexDir+"summaries.index");
 			ObjectInputStream in;
 			try {
 				in = new ObjectInputStream(new FileInputStream(graphIndex));
@@ -226,7 +229,7 @@ public class IndexingDatawebService {
 		}
 		
 		
-		File graphIndexDir = new File(m_graphIndexDir+".index");
+		File graphIndexDir = new File(m_graphIndexDir+"summaries.index");
 		if(!graphIndexDir.exists()){
 			graphIndexDir.getParentFile().mkdirs();
 			try {
@@ -257,9 +260,6 @@ public class IndexingDatawebService {
 		String sourceURI = parameters.getProperty(SOURCE_ONTO_URI);
 		String targetPath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(TARGET_ONTO_URI);
 		String targetURI = parameters.getProperty(TARGET_ONTO_URI);
-		String repoDir = parameters.getProperty(KEYWORDINDEX_DIR);
-
-		m_kIndexer = new KeywordIndexServiceForBT(repoDir, true);
 
 		try {
 			String summary = getSummaryGraphFilePath(sourceURI);
@@ -309,7 +309,6 @@ public class IndexingDatawebService {
 
 	private void computeMappings(Properties parameters){
 		MappingComputationService mapper = new MappingComputationService();
-		m_mIndexer = new MappingIndexService(parameters.getProperty(MAPINGINDEX_DIR)); 
 		ExtractInstancesService extractor = new ExtractInstancesService();
 
 		Collection<SchemaMapping> sMappings = mapper.computeSchemaMappings(
