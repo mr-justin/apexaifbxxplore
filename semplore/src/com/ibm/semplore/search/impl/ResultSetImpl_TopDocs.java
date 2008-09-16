@@ -125,4 +125,8 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 		return this;
 	}
 
+	public DocStream getResultStream() {
+		return (DocStream)resultStream.clone();
+	}
+
 }

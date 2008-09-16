@@ -7,6 +7,7 @@
 package com.ibm.semplore.search;
 
 import com.ibm.semplore.model.SchemaObjectInfo;
+import com.ibm.semplore.xir.DocStream;
 
 /**
  * The ResultSet interface contains the search results for the executed query. A ResultSet instance is returned by the search method of the Searchable interface upon the completion of query evaluation. In addition to the results of the query, the ResultSet contains the number of search results that are available.
@@ -45,4 +46,10 @@ public interface ResultSet {
     public String getSnippet(int index) throws Exception;
     
     public ResultSet setSnippetKeyword(String keyword);		
+    
+    /**
+     * Return the result doc stream so that it can be cached. 
+     * @return
+     */
+    public DocStream getResultStream();
 }

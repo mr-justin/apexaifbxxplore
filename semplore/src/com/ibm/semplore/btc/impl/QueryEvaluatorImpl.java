@@ -16,6 +16,8 @@ import java.util.Properties;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import com.ibm.semplore.btc.DecomposedGraph;
+import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.NodeInSubGraph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.QueryPlanner;
@@ -24,13 +26,13 @@ import com.ibm.semplore.btc.Visit;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ibm.semplore.search.DocStreamHintImpl;
 import com.ibm.semplore.search.SearchFactory;
 import com.ibm.semplore.search.SearchHelper;
 import com.ibm.semplore.search.XFacetedQuery;
 import com.ibm.semplore.search.XFacetedResultSet;
 import com.ibm.semplore.search.XFacetedSearchService;
 import com.ibm.semplore.search.XFacetedSearchable;
+import com.ibm.semplore.search.impl.DocStreamHintImpl;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
 import com.ibm.semplore.search.impl.XFacetedSearchableImpl;
 import com.ibm.semplore.xir.DocStream;
@@ -235,5 +237,18 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		eva.setPathOfMappingIndex(new File("."));
 		DocStream result = eva.convertID("dbpedia", "dblp", doc, null);
 		DebugIndex.printDocStream(indexReader2, result);
+	}
+
+	public XFacetedResultSet evaluate(Graph graph) throws Exception {
+		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
+		DecomposedGraph dgraph = decomposer.decompose(graph);
+		QueryPlanner planner = new QueryPlannerImpl();
+		planner.setDecomposedGraph(dgraph);
+		return evaluate(planner);
+	}
+
+	public XFacetedResultSet evaluate(Graph graph, SearchHelper helper) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
