@@ -31,7 +31,6 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.FSDirectory;
-import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.IService;
 import org.ateam.xxplore.core.service.IServiceListener;
 import org.jgrapht.graph.Pseudograph;
@@ -77,13 +76,12 @@ public class KeywordIndexServiceForBT implements IService{
 
 	private static final double THRESHOLD_SCORE = 0.9;
 
-	public KeywordIndexServiceForBT()
-	{
-		m_analyzer = new StandardAnalyzer();
-	}
+	private  String m_IndexDir = null;
+	
 	public KeywordIndexServiceForBT(String keywordIndexDir, boolean create) {
 		m_analyzer = new StandardAnalyzer();
-
+		m_IndexDir = keywordIndexDir;
+		
 		File indexDir = new File(keywordIndexDir);
 		if (!indexDir.exists())
 			indexDir.mkdirs();
@@ -101,12 +99,12 @@ public class KeywordIndexServiceForBT implements IService{
 		try {
 			IndexSearcher indexSearcher = null;
 			if (synIndexdir != null) indexSearcher = new IndexSearcher(synIndexdir);
+
 			indexDataSourceByConcept(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 			indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 
-			indexSearcher.close();
+			if(indexSearcher != null) indexSearcher.close();
 			SesameDao sd = new SesameDao(dsPath);
-
 			indexDataSourceByLiteral(m_indexWriter, datasourceURI, sd);
 			indexDataSourceByIndividual(m_indexWriter, datasourceURI, sd);
 
@@ -125,7 +123,7 @@ public class KeywordIndexServiceForBT implements IService{
 	@SuppressWarnings("deprecation")
 	protected  void indexDataSourceByConcept(IndexWriter indexWriter,IndexSearcher searcher, String ds, Pseudograph graph) throws Exception{
 		System.out.println("start indexing by concept");
-	
+
 		Set<SummaryGraphElement> nodes = graph.vertexSet();
 		Iterator<SummaryGraphElement> nodeIter = nodes.iterator();
 		String lastURI = "", lastEdge = "", lastRangeURI = "";
@@ -159,53 +157,56 @@ public class KeywordIndexServiceForBT implements IService{
 						indexWriter.addDocument(dpdoc);
 					} else if (toNode.type == SummaryGraphElement.RELATION) {
 //						if (edge.originDirection) {
-//							Node range = nodeMap.get(Integer
-//									.valueOf(edge.to_id));
-//							String range_uri = baseURI + range.name;
-//							if (lastEdge.equals(edge.name) && lastURI.equals(uri) && lastRangeURI.equals(range_uri))
-//								continue;
-////							System.out.println(edge.name + "\t" + uri + "\t" + range_uri);
-//							lastEdge = edge.name;
-//							lastURI = uri;
-//							lastRangeURI = range_uri;
-							Document opdoc = new Document();
-							String lab = ((ObjectProperty)toNode.getResource()).getUri();
-							opdoc.add(new Field(RELATION_FIELD, lab.substring(lab.lastIndexOf('/')+1),
-									Field.Store.YES, Field.Index.UN_TOKENIZED));
-							if(edge.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE))
-								opdoc.add(new Field(DOMAIN_FIELD, uri, Field.Store.YES,
+//						Node range = nodeMap.get(Integer
+//						.valueOf(edge.to_id));
+//						String range_uri = baseURI + range.name;
+//						if (lastEdge.equals(edge.name) && lastURI.equals(uri) && lastRangeURI.equals(range_uri))
+//						continue;
+////						System.out.println(edge.name + "\t" + uri + "\t" + range_uri);
+//						lastEdge = edge.name;
+//						lastURI = uri;
+//						lastRangeURI = range_uri;
+						Document opdoc = new Document();
+						String lab = ((ObjectProperty)toNode.getResource()).getUri();
+						opdoc.add(new Field(RELATION_FIELD, lab.substring(lab.lastIndexOf('/')+1),
+								Field.Store.YES, Field.Index.UN_TOKENIZED));
+						if(edge.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE))
+							opdoc.add(new Field(DOMAIN_FIELD, uri, Field.Store.YES,
 									Field.Index.NO));
-							else if(edge.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE))
-								opdoc.add(new Field(RANGE_FIELD, uri,
+						else if(edge.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE))
+							opdoc.add(new Field(RANGE_FIELD, uri,
 									Field.Store.YES, Field.Index.NO));
-							opdoc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-							indexWriter.addDocument(opdoc);
-						
+						opdoc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+						indexWriter.addDocument(opdoc);
+
 					}
 				}
-				Set<String> values = new HashSet<String>();
-				Term term = new Term(WordnetSynsIndexService.WORD_FIELD, label.toLowerCase());
-				TermQuery termQuery = new TermQuery(term);
-				Hits results = searcher.search(termQuery);
-				if (results != null && results.length() > 0) {
-					for (int i = 0; i < results.length(); i++) {
-						Document docu = results.doc(i);
-						values.addAll(Arrays.asList(docu.getValues(WordnetSynsIndexService.SYN_FIELD)));
+				if(searcher != null){
+					Set<String> values = new HashSet<String>();
+					Term term = new Term(WordnetSynsIndexService.WORD_FIELD, label.toLowerCase());
+					TermQuery termQuery = new TermQuery(term);
+					Hits results = searcher.search(termQuery);
+					if (results != null && results.length() > 0) {
+						for (int i = 0; i < results.length(); i++) {
+							Document docu = results.doc(i);
+							values.addAll(Arrays.asList(docu.getValues(WordnetSynsIndexService.SYN_FIELD)));
+						}
 					}
+
+					// System.out.println(uri + ": " + values);
+					for (String value : values) {
+						Document docu = new Document();
+						docu.add(new Field(TYPE_FIELD, CONCEPT,
+								Field.Store.YES, Field.Index.NO));
+						docu.add(new Field(LABEL_FIELD, value, Field.Store.NO,
+								Field.Index.TOKENIZED));
+						docu.add(new Field(URI_FIELD, uri, Field.Store.YES,
+								Field.Index.NO));
+						docu.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+						indexWriter.addDocument(docu);
+					}
+					values.clear();
 				}
-				// System.out.println(uri + ": " + values);
-				for (String value : values) {
-					Document docu = new Document();
-					docu.add(new Field(TYPE_FIELD, CONCEPT,
-							Field.Store.YES, Field.Index.NO));
-					docu.add(new Field(LABEL_FIELD, value, Field.Store.NO,
-							Field.Index.TOKENIZED));
-					docu.add(new Field(URI_FIELD, uri, Field.Store.YES,
-							Field.Index.NO));
-					docu.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-					indexWriter.addDocument(docu);
-				}
-				values.clear();
 			}
 		}
 	}
@@ -214,64 +215,66 @@ public class KeywordIndexServiceForBT implements IService{
 	protected  void indexDataSourceByProperty(IndexWriter indexWriter,IndexSearcher searcher, String ds, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemagraph) throws Exception{
 //		Collection<Edge> edges = graph.edges.values();
 //		Iterator<Edge> edgeIter = edges.iterator();
-		System.out.println("start indexing by property");
 		Set<SummaryGraphElement> edges = schemagraph.vertexSet();
 		Set<String> relSet = new HashSet<String>();
 		Set<String> attrSet = new HashSet<String>();
 		for(SummaryGraphElement edge: edges) {
 			if(edge.type == SummaryGraphElement.ATTRIBUTE || edge.type == SummaryGraphElement.RELATION){
-			String uri = ((Property)edge.getResource()).getUri();
-			String label = uri.substring(uri.lastIndexOf('/')+1);
-			Document doc = new Document();
-			doc.add(new Field(LABEL_FIELD, label, Field.Store.NO,
-					Field.Index.TOKENIZED));
+				String uri = ((Property)edge.getResource()).getUri();
+				String label = uri.substring(uri.lastIndexOf('/')+1);
+				Document doc = new Document();
+				doc.add(new Field(LABEL_FIELD, label, Field.Store.NO,
+						Field.Index.TOKENIZED));
 
-			doc.add(new Field(URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
-			if (edge.type == SummaryGraphElement.RELATION) {
-				if (relSet.contains(label))
-					continue;
-				relSet.add(label);
-				doc.add(new Field(TYPE_FIELD, OBJECTPROPERTY,
-						Field.Store.YES, Field.Index.NO));
-				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-				indexWriter.addDocument(doc);
-			} else if (edge.type == SummaryGraphElement.ATTRIBUTE) {
-				if (attrSet.contains(label))
-					continue;
-				attrSet.add(label);
-				doc.add(new Field(TYPE_FIELD, DATAPROPERTY,
-						Field.Store.YES, Field.Index.NO));
-				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-				indexWriter.addDocument(doc);
-			}
-			//System.out.println(label);
-			Set<String> values = new HashSet<String>();
-			Term term = new Term(WordnetSynsIndexService.WORD_FIELD, label.toLowerCase());
-			TermQuery termQuery = new TermQuery(term);
-			Hits results = searcher.search(termQuery);
-			if (results != null && results.length() > 0) {
-				for (int i = 0; i < results.length(); i++) {
-					Document docu = results.doc(i);
-					values.addAll(Arrays.asList(docu.getValues(WordnetSynsIndexService.SYN_FIELD)));
+				doc.add(new Field(URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
+				if (edge.type == SummaryGraphElement.RELATION) {
+					if (relSet.contains(label))
+						continue;
+					relSet.add(label);
+					doc.add(new Field(TYPE_FIELD, OBJECTPROPERTY,
+							Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+					indexWriter.addDocument(doc);
+				} else if (edge.type == SummaryGraphElement.ATTRIBUTE) {
+					if (attrSet.contains(label))
+						continue;
+					attrSet.add(label);
+					doc.add(new Field(TYPE_FIELD, DATAPROPERTY,
+							Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+					indexWriter.addDocument(doc);
+				}
+
+				if(searcher != null){
+					//System.out.println(label);
+					Set<String> values = new HashSet<String>();
+					Term term = new Term(WordnetSynsIndexService.WORD_FIELD, label.toLowerCase());
+					TermQuery termQuery = new TermQuery(term);
+					Hits results = searcher.search(termQuery);
+					if (results != null && results.length() > 0) {
+						for (int i = 0; i < results.length(); i++) {
+							Document docu = results.doc(i);
+							values.addAll(Arrays.asList(docu.getValues(WordnetSynsIndexService.SYN_FIELD)));
+						}
+					}
+					for (String value : values) {
+						Document docu = new Document();
+						docu.add(new Field(LABEL_FIELD, value, Field.Store.NO,
+								Field.Index.TOKENIZED));
+						docu.add(new Field(URI_FIELD, uri, Field.Store.YES,
+								Field.Index.NO));
+						if (edge.type == SummaryGraphElement.RELATION)
+							docu.add(new Field(TYPE_FIELD, OBJECTPROPERTY,
+									Field.Store.YES, Field.Index.NO));
+						else if(edge.type == SummaryGraphElement.ATTRIBUTE)
+							docu.add(new Field(TYPE_FIELD, DATAPROPERTY,
+									Field.Store.YES, Field.Index.NO));
+						docu.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+						indexWriter.addDocument(docu);
+					}
+					values.clear();
 				}
 			}
-			for (String value : values) {
-				Document docu = new Document();
-				docu.add(new Field(LABEL_FIELD, value, Field.Store.NO,
-						Field.Index.TOKENIZED));
-				docu.add(new Field(URI_FIELD, uri, Field.Store.YES,
-								Field.Index.NO));
-				if (edge.type == SummaryGraphElement.RELATION)
-					docu.add(new Field(TYPE_FIELD, OBJECTPROPERTY,
-							Field.Store.YES, Field.Index.NO));
-				else if(edge.type == SummaryGraphElement.ATTRIBUTE)
-					docu.add(new Field(TYPE_FIELD, DATAPROPERTY,
-							Field.Store.YES, Field.Index.NO));
-				docu.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-				indexWriter.addDocument(docu);
-			}
-			values.clear();
-		}
 		}
 	}
 
@@ -298,7 +301,7 @@ public class KeywordIndexServiceForBT implements IService{
 				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(LABEL_FIELD, literal.substring(1, literal.lastIndexOf('"')), Field.Store.YES, Field.Index.TOKENIZED));
-				
+
 				indexWriter.addDocument(doc);
 			}
 		}
@@ -308,15 +311,12 @@ public class KeywordIndexServiceForBT implements IService{
 			e.printStackTrace();
 		} 
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public void indexDataSourceByIndividual (IndexWriter indexWriter, String ds, SesameDao sd) throws Exception{
-		
-		System.out.println("start indexing by individual");
 		HashSet<String> indSet = new HashSet<String>();
-		SesameDao sdd = new SesameDao(SesameDao.indexRoot);
-		int count = 0;
 		sd.findAllTriples();
+		int count = 0;
 		while (sd.hasNext()) {
 			sd.next();
 			count++;
@@ -324,52 +324,51 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println(count);
 			if(!sd.getObjectType().equals(SesameDao.LITERAL))
 				continue;
-			
-			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sdd);
+			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sd);
 		}
 		indSet.clear();
 	}
 	private void indexDataSourcePerIndividual(IndexWriter indexWriter, String ind, String ds, SesameDao sd) throws Exception {
 
-//			RepositoryConnection conn = repository.getConnection();
-			sd.findPropertyAndIndividual(ind);
-			Set<String> concepts = new HashSet<String>();
-			Map<String, String> av_map = new HashMap<String, String>();
-			while (sd.hasNext()) {
-				sd.next();
-				if (sd.getObjectType().equals(SesameDao.CONCEPT)) {
-					concepts.add(sd.getObject());
-//					System.out.println(stmt.getObject().stringValue());
-				} else if (sd.getObjectType().equals(SesameDao.LITERAL)) {
-					av_map.put(sd.getPredicate(), sd.getObject().substring(1,sd.getObject().lastIndexOf('"')));
-				}
+//		RepositoryConnection conn = repository.getConnection();
+		sd.findPropertyAndIndividual(ind);
+		Set<String> concepts = new HashSet<String>();
+		Map<String, String> av_map = new HashMap<String, String>();
+		while (sd.hasNext()) {
+			sd.next();
+			if (sd.getObjectType().equals(SesameDao.CONCEPT)) {
+				concepts.add(sd.getObject());
+//				System.out.println(stmt.getObject().stringValue());
+			} else if (sd.getObjectType().equals(SesameDao.LITERAL)) {
+				av_map.put(sd.getPredicate(), sd.getObject().substring(1,sd.getObject().lastIndexOf('"')));
 			}
-			Iterator<String> av_iter = av_map.keySet().iterator();
-			
-			while (av_iter.hasNext()) {
-				String attr = av_iter.next();
-				String lit = av_map.get(attr);
+		}
+		Iterator<String> av_iter = av_map.keySet().iterator();
+
+		while (av_iter.hasNext()) {
+			String attr = av_iter.next();
+			String lit = av_map.get(attr);
+//			if (lit.equals("The Hungry Stones And Other Stories"))
+//			System.out.println(lit); 
+			Iterator<String> con_iter = concepts.iterator();
+			while (con_iter.hasNext()) {
+				String concept = con_iter.next();
+				Document doc = new Document();
+				doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
 //				if (lit.equals("The Hungry Stones And Other Stories"))
-//					System.out.println(lit); 
-				Iterator<String> con_iter = concepts.iterator();
-				while (con_iter.hasNext()) {
-					String concept = con_iter.next();
-					Document doc = new Document();
-					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-//					if (lit.equals("The Hungry Stones And Other Stories"))
-//						System.out.println(lit); 
-					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-					doc.add(new Field(CONCEPT_FIELD, concept,Field.Store.YES, Field.Index.NO));
-					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-					indexWriter.addDocument(doc);
-				}
+//				System.out.println(lit); 
+				doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
+				doc.add(new Field(CONCEPT_FIELD, concept,Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+				indexWriter.addDocument(doc);
 			}
-			concepts.clear();
-			concepts = null;
-			av_map.clear();
-			av_map = null;
-			
-		
+		}
+		concepts.clear();
+		concepts = null;
+		av_map.clear();
+		av_map = null;
+
+
 	}
 	/**
 	 * Search for keyword elements and augment the summary graph.
@@ -382,9 +381,8 @@ public class KeywordIndexServiceForBT implements IService{
 		Map<String,Collection<SummaryGraphElement>> ress = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			if (m_searcher ==null){
-//				s_log.debug("Open index " + ExploreEnvironment.KB_INDEX_DIR + " and init kb searcher!");
-//				m_searcher = new IndexSearcher(ExploreEnvironment.KB_INDEX_DIR);
-				m_searcher = new IndexSearcher(SesameDao.root+"wordnet-keywordIndex");
+				s_log.debug("Open index " + m_IndexDir + " and init kb searcher!");
+				m_searcher = new IndexSearcher(m_IndexDir);
 			}
 			QueryParser parser = new QueryParser("label", m_analyzer);
 			Query q = parser.parse(query);
@@ -392,18 +390,7 @@ public class KeywordIndexServiceForBT implements IService{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-					
 					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
-//					for(String str: partialRes.keySet())
-//					{
-//						System.out.println(str);
-//						for(SummaryGraphElement elem: partialRes.get(str))
-//							if(elem.getResource() instanceof NamedConcept)
-//							System.out.println(((NamedConcept)elem.getResource()).getUri());
-//							else if(elem.getResource() instanceof Property)
-//								System.out.println(((Property)elem.getResource()).getUri());
-//							else System.out.println(((Literal)elem.getResource()).getValue());
-//					}
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
 			}
@@ -434,7 +421,7 @@ public class KeywordIndexServiceForBT implements IService{
 			}
 
 			if((hits != null) && (hits.length() > 0)){
-//				s_log.debug("results.length(): " + hits.length());
+				s_log.debug("results.length(): " + hits.length());
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 				result.put(clausequery.toString("label"), res);
 				for(int i = 0; i < hits.length(); i++){
@@ -446,34 +433,29 @@ public class KeywordIndexServiceForBT implements IService{
 							ILiteral lit = new Literal(pruneString(doc.get(LABEL_FIELD)));
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
 							vvertex.setMatchingScore(score);
-//							=======================by kaifengxu
-//							bug->vvertex.setDatasource(DS_FIELD);
-							vvertex.setDatasource(doc.get(DS_FIELD));
-							
+							vvertex.setDatasource(DS_FIELD);
+
 							Map<IDataProperty, Collection<INamedConcept>> neighbors = new HashMap<IDataProperty, Collection<INamedConcept>>();
 							Term term = new Term(LITERAL_FIELD,lit.getLabel());
-	        		        TermQuery query = new TermQuery(term);
-	        		        //System.out.println(term);
-	        		        Hits results = m_searcher.search(query);
-	        		        //System.out.println(results.length());
-	        		        if((results != null) && (results.length() > 0)){
-	        		        	for(int j = 0; j < results.length(); j++){
-	        		        		Document docu = results.doc(j);
-	        		        		if(docu != null){
-	        		        			IDataProperty prop = new DataProperty(pruneString(docu.get(ATTRIBUTE_FIELD)));
-	        		        			Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
-	        		        			String[] cons = docu.getValues(CONCEPT_FIELD);
-	        		        			for (int k = 0; k < cons.length; k++){
-	    									INamedConcept con = new NamedConcept(pruneString(cons[k]));
-	    									concepts.add(con);
-	    								}
-	        		        			neighbors.put(prop, concepts);
-	        		        		}
-	        		        	}
-	        		        }
-	        		       
-	        		        vvertex.setNeighbors(neighbors);
-	        		        res.add(vvertex);
+							TermQuery query = new TermQuery(term);
+							Hits results = m_searcher.search(query);
+							if((results != null) && (results.length() > 0)){
+								for(int j = 0; j < results.length(); j++){
+									Document docu = results.doc(j);
+									if(docu != null){
+										IDataProperty prop = new DataProperty(pruneString(docu.get(ATTRIBUTE_FIELD)));
+										Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
+										String[] cons = docu.getValues(CONCEPT_FIELD);
+										for (int k = 0; k < cons.length; k++){
+											INamedConcept con = new NamedConcept(pruneString(cons[k]));
+											concepts.add(con);
+										}
+										neighbors.put(prop, concepts);
+									}
+								}
+							}
+							vvertex.setNeighbors(neighbors);
+							res.add(vvertex);
 						}
 						else if(type.equals(CONCEPT)){
 							INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
@@ -487,7 +469,7 @@ public class KeywordIndexServiceForBT implements IService{
 							SummaryGraphAttributeElement pVertex = new SummaryGraphAttributeElement(prop,SummaryGraphElement.ATTRIBUTE);
 							pVertex.setMatchingScore(score);
 							pVertex.setDatasource(doc.get(DS_FIELD));
-							
+
 							Collection<INamedConcept> neighborConcepts = new HashSet<INamedConcept>();
 							String[] cons = doc.getValues(CONCEPT_FIELD);	
 							for (int k = 0; k < cons.length; k++){
@@ -515,7 +497,7 @@ public class KeywordIndexServiceForBT implements IService{
 		return result;
 	}
 
-	
+
 	private Document addConceptsToDataPropertyDoc(Document doc, IDataProperty prop, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemaGraph){
 		if (schemaGraph == null){
 			//use schema 
@@ -568,8 +550,6 @@ public class KeywordIndexServiceForBT implements IService{
 
 	public static void main(String[] args) throws Exception
 	{
-//		SesameDao.root = "D:\\semplore\\";
-//		new KeywordIndexServiceForBT().searchKb("word net", 0);
 		//Pseudograph graph = new SummaryGraphIndexServiceForBT().readGraphIndexFromFile(SesameDao.root+"schema-dblp.obj");
 		//String path  = null;
 		//new KeywordIndexServiceForBT(SesameDao.root+"keywordIndex", true).indexKeywords(path, "dblp", graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
@@ -578,9 +558,9 @@ public class KeywordIndexServiceForBT implements IService{
 		//System.out.println(hits.length());
 		for(int i=0; i<searcher.maxDoc(); i++)
 		{
-			
+
 			Enumeration flist = searcher.doc(i).fields();
-			if(searcher.doc(i).get(LITERAL_FIELD)==null)// || !searcher.doc(i).get(TYPE_FIELD).equals(LITERAL))
+			if(searcher.doc(i).get(LITERAL_FIELD)!=null)// || !searcher.doc(i).get(TYPE_FIELD).equals(LITERAL))
 				continue;
 			System.out.println("Doc:"+searcher.doc(i).toString());
 			while(flist.hasMoreElements())
@@ -589,32 +569,32 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println("\t"+field.name()+": "+field.stringValue());
 			}
 		}
-//		System.out.println("====================================");
+		System.out.println("====================================");
 //		TermQuery query = new TermQuery(new Term(LABEL_FIELD, "plants"));
-////		
+
 //		Hits hits = searcher.search(query);
 //		for(int i=0; i<hits.length(); i++)
 //		{
-//			Enumeration flist = hits.doc(i).fields();
-//			if(hits.doc(i).get(TYPE_FIELD)==null || !hits.doc(i).get(TYPE_FIELD).equals(LITERAL))
-//			continue;
-//			System.out.println("Doc:"+searcher.doc(i).toString());
-//			while(flist.hasMoreElements())
-//			{
-//				Field field = (Field)flist.nextElement();
-//				System.out.println("\t"+field.name()+": "+field.stringValue());
-//			}
+//		Enumeration flist = hits.doc(i).fields();
+//		if(hits.doc(i).get(TYPE_FIELD)==null || !hits.doc(i).get(TYPE_FIELD).equals(LITERAL))
+//		continue;
+//		System.out.println("Doc:"+searcher.doc(i).toString());
+//		while(flist.hasMoreElements())
+//		{
+//		Field field = (Field)flist.nextElement();
+//		System.out.println("\t"+field.name()+": "+field.stringValue());
+//		}
 //		}
 //		//literal test
 //		TermQuery query = new TermQuery(new Term(LABEL_FIELD,"world"));
 //		Hits hits = searcher.search(query);
 //		for(int i=0; i<hits.length(); i++)
-//			if(hits.doc(i).get(TYPE_FIELD).equals(LITERAL))
-//			{
-//				System.out.println(hits.doc(i).get(LABEL_FIELD));
-//			}
+//		if(hits.doc(i).get(TYPE_FIELD).equals(LITERAL))
+//		{
+//		System.out.println(hits.doc(i).get(LABEL_FIELD));
+//		}
 //		//individual test
-		
-		
+
+
 	}
 }
