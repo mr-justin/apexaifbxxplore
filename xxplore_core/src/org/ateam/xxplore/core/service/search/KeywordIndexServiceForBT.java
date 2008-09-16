@@ -17,6 +17,7 @@ import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.queryParser.ParseException;
@@ -29,6 +30,7 @@ import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.store.FSDirectory;
 import org.ateam.xxplore.core.ExploreEnvironment;
 import org.ateam.xxplore.core.service.IService;
 import org.ateam.xxplore.core.service.IServiceListener;
@@ -75,6 +77,10 @@ public class KeywordIndexServiceForBT implements IService{
 
 	private static final double THRESHOLD_SCORE = 0.9;
 
+	public KeywordIndexServiceForBT()
+	{
+		m_analyzer = new StandardAnalyzer();
+	}
 	public KeywordIndexServiceForBT(String keywordIndexDir, boolean create) {
 		m_analyzer = new StandardAnalyzer();
 
@@ -82,6 +88,7 @@ public class KeywordIndexServiceForBT implements IService{
 		if (!indexDir.exists())
 			indexDir.mkdirs();
 		try {
+			IndexReader.unlock(FSDirectory.getDirectory(indexDir,false)); 
 			m_indexWriter = new IndexWriter(indexDir, m_analyzer, create);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -94,12 +101,12 @@ public class KeywordIndexServiceForBT implements IService{
 		try {
 			IndexSearcher indexSearcher = null;
 			if (synIndexdir != null) indexSearcher = new IndexSearcher(synIndexdir);
-
 			indexDataSourceByConcept(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 			indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 
 			indexSearcher.close();
 			SesameDao sd = new SesameDao(dsPath);
+
 			indexDataSourceByLiteral(m_indexWriter, datasourceURI, sd);
 			indexDataSourceByIndividual(m_indexWriter, datasourceURI, sd);
 
@@ -207,6 +214,7 @@ public class KeywordIndexServiceForBT implements IService{
 	protected  void indexDataSourceByProperty(IndexWriter indexWriter,IndexSearcher searcher, String ds, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemagraph) throws Exception{
 //		Collection<Edge> edges = graph.edges.values();
 //		Iterator<Edge> edgeIter = edges.iterator();
+		System.out.println("start indexing by property");
 		Set<SummaryGraphElement> edges = schemagraph.vertexSet();
 		Set<String> relSet = new HashSet<String>();
 		Set<String> attrSet = new HashSet<String>();
@@ -303,9 +311,12 @@ public class KeywordIndexServiceForBT implements IService{
 	
 	@SuppressWarnings("deprecation")
 	public void indexDataSourceByIndividual (IndexWriter indexWriter, String ds, SesameDao sd) throws Exception{
+		
+		System.out.println("start indexing by individual");
 		HashSet<String> indSet = new HashSet<String>();
-		sd.findAllTriples();
+		SesameDao sdd = new SesameDao(SesameDao.indexRoot);
 		int count = 0;
+		sd.findAllTriples();
 		while (sd.hasNext()) {
 			sd.next();
 			count++;
@@ -313,7 +324,8 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println(count);
 			if(!sd.getObjectType().equals(SesameDao.LITERAL))
 				continue;
-			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sd);
+			
+			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sdd);
 		}
 		indSet.clear();
 	}
@@ -370,8 +382,9 @@ public class KeywordIndexServiceForBT implements IService{
 		Map<String,Collection<SummaryGraphElement>> ress = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			if (m_searcher ==null){
-				s_log.debug("Open index " + ExploreEnvironment.KB_INDEX_DIR + " and init kb searcher!");
-				m_searcher = new IndexSearcher(ExploreEnvironment.KB_INDEX_DIR);
+//				s_log.debug("Open index " + ExploreEnvironment.KB_INDEX_DIR + " and init kb searcher!");
+//				m_searcher = new IndexSearcher(ExploreEnvironment.KB_INDEX_DIR);
+				m_searcher = new IndexSearcher(SesameDao.root+"wordnet-keywordIndex");
 			}
 			QueryParser parser = new QueryParser("label", m_analyzer);
 			Query q = parser.parse(query);
@@ -379,7 +392,18 @@ public class KeywordIndexServiceForBT implements IService{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
+					
 					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
+//					for(String str: partialRes.keySet())
+//					{
+//						System.out.println(str);
+//						for(SummaryGraphElement elem: partialRes.get(str))
+//							if(elem.getResource() instanceof NamedConcept)
+//							System.out.println(((NamedConcept)elem.getResource()).getUri());
+//							else if(elem.getResource() instanceof Property)
+//								System.out.println(((Property)elem.getResource()).getUri());
+//							else System.out.println(((Literal)elem.getResource()).getValue());
+//					}
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
 			}
@@ -410,7 +434,7 @@ public class KeywordIndexServiceForBT implements IService{
 			}
 
 			if((hits != null) && (hits.length() > 0)){
-				s_log.debug("results.length(): " + hits.length());
+//				s_log.debug("results.length(): " + hits.length());
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 				result.put(clausequery.toString("label"), res);
 				for(int i = 0; i < hits.length(); i++){
@@ -422,12 +446,16 @@ public class KeywordIndexServiceForBT implements IService{
 							ILiteral lit = new Literal(pruneString(doc.get(LABEL_FIELD)));
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
 							vvertex.setMatchingScore(score);
-							vvertex.setDatasource(DS_FIELD);
+//							=======================by kaifengxu
+//							bug->vvertex.setDatasource(DS_FIELD);
+							vvertex.setDatasource(doc.get(DS_FIELD));
 							
 							Map<IDataProperty, Collection<INamedConcept>> neighbors = new HashMap<IDataProperty, Collection<INamedConcept>>();
 							Term term = new Term(LITERAL_FIELD,lit.getLabel());
 	        		        TermQuery query = new TermQuery(term);
+	        		        //System.out.println(term);
 	        		        Hits results = m_searcher.search(query);
+	        		        //System.out.println(results.length());
 	        		        if((results != null) && (results.length() > 0)){
 	        		        	for(int j = 0; j < results.length(); j++){
 	        		        		Document docu = results.doc(j);
@@ -443,6 +471,7 @@ public class KeywordIndexServiceForBT implements IService{
 	        		        		}
 	        		        	}
 	        		        }
+	        		       
 	        		        vvertex.setNeighbors(neighbors);
 	        		        res.add(vvertex);
 						}
@@ -539,6 +568,8 @@ public class KeywordIndexServiceForBT implements IService{
 
 	public static void main(String[] args) throws Exception
 	{
+//		SesameDao.root = "D:\\semplore\\";
+//		new KeywordIndexServiceForBT().searchKb("word net", 0);
 		//Pseudograph graph = new SummaryGraphIndexServiceForBT().readGraphIndexFromFile(SesameDao.root+"schema-dblp.obj");
 		//String path  = null;
 		//new KeywordIndexServiceForBT(SesameDao.root+"keywordIndex", true).indexKeywords(path, "dblp", graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
@@ -549,7 +580,7 @@ public class KeywordIndexServiceForBT implements IService{
 		{
 			
 			Enumeration flist = searcher.doc(i).fields();
-			if(searcher.doc(i).get(LITERAL_FIELD)!=null)// || !searcher.doc(i).get(TYPE_FIELD).equals(LITERAL))
+			if(searcher.doc(i).get(LITERAL_FIELD)==null)// || !searcher.doc(i).get(TYPE_FIELD).equals(LITERAL))
 				continue;
 			System.out.println("Doc:"+searcher.doc(i).toString());
 			while(flist.hasMoreElements())
@@ -558,7 +589,7 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println("\t"+field.name()+": "+field.stringValue());
 			}
 		}
-		System.out.println("====================================");
+//		System.out.println("====================================");
 //		TermQuery query = new TermQuery(new Term(LABEL_FIELD, "plants"));
 ////		
 //		Hits hits = searcher.search(query);
