@@ -1,5 +1,5 @@
 repodir=res/BTC/repository
-graph_index_dir=res/BTC/graph
+graph_index_dir=res/BTC/graph/
 keyword_index_dir=res/BTC/keyword
 mapping_index_dir=res/BTC/mapping
 source_onto_uri=dblp
