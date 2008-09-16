@@ -1,6 +1,11 @@
 package org.ateam.xxplore.core.service.search;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.HashSet;
 
 import org.jgrapht.graph.Pseudograph;
@@ -41,7 +46,16 @@ public class SesameDao {
 													"http://www.w3.org/2000/01/rdf-schema#comment",
 													"http://www.w3.org/2002/07/owl#ObjectProperty",
 													"http://www.w3.org/2002/07/owl#Class"};//c
-	private static HashSet<String> rdfsEdgeSet;
+	private static String[] containerEdge = new String[]{
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag",
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#Alt",
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#List",
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#first",
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#rest",
+		"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil",
+	};
+	private static HashSet<String> rdfsEdgeSet, conEdgeSet;
  	/*
  	 * intital the predefined rdfs edge set
  	 */
@@ -50,6 +64,9 @@ public class SesameDao {
 		rdfsEdgeSet = new HashSet<String>();
 		for(String str: rdfsEdge)
 			rdfsEdgeSet.add(str);
+		conEdgeSet = new HashSet<String>();
+		for(String str: containerEdge)
+			conEdgeSet.add(str);
 	}
 	/*
 	 * load the index
@@ -83,6 +100,50 @@ public class SesameDao {
 		else con.add(new File(fn), "", RDFFormat.N3);
 		con.close();
 	}
+	/*
+	 * remove the blank nodes in nt file with the rule s1 r1 nb & nb r2 s2 where r2 is container or collection predicates
+	 */
+	public void removeBlankNode(String fn) throws Exception
+	{
+		String blankNode = "_:node";
+		String blankNodeFile = fn.substring(0, fn.lastIndexOf('.'))+".blanknode";
+		String noBlankNodeFile = fn.substring(0, fn.lastIndexOf('.'))+"_noblanknode.nt";
+		HashMap<String, String> blankNodeMap = new HashMap<String, String>();
+		HashSet<String> bnMeansCollection = new HashSet<String>();
+		BufferedReader br = new BufferedReader(new FileReader(fn));
+		PrintWriter pw1 = new PrintWriter(new FileWriter(blankNodeFile));
+		PrintWriter pw2 = new PrintWriter(new FileWriter(noBlankNodeFile));
+		String line;
+		while((line = br.readLine())!=null)
+		{
+			String[] parts = line.replaceAll("<", "").replaceAll(">", "").split(" ");
+			if(parts[0].startsWith(blankNode) && !parts[2].startsWith(blankNode))
+			{
+				if(bnMeansCollection.contains(parts[0]))
+					pw1.println(line);
+				else if(parts[1].equals(rdfsEdge[0]) && conEdgeSet.contains(parts[2]))
+					bnMeansCollection.add(parts[0]);
+				
+			}
+			else if(!parts[0].startsWith(blankNode) && parts[2].startsWith(blankNode))
+				blankNodeMap.put(parts[2], "<"+parts[0]+"> <"+parts[1]+">");
+			else if(!parts[0].startsWith(blankNode) && !parts[2].startsWith(blankNode))
+				pw2.println(line);
+		}
+		br.close();
+		pw1.close();
+		br = new BufferedReader(new FileReader(blankNodeFile));
+		while((line = br.readLine())!=null)
+		{
+			String[] parts = line.split(" ");
+			if(blankNodeMap.containsKey(parts[0]))
+			{
+				pw2.println(blankNodeMap.get(parts[0])+" "+parts[2]+" .");
+//				System.out.println(blankNodeMap.get(parts[0])+" "+parts[2]+" .");
+			}
+		}
+		pw2.close();
+	}
 	public void close() throws Exception
 	{
 		con.close();
@@ -92,6 +153,7 @@ public class SesameDao {
 	 */
 	public void findAllTriples() throws Exception
 	{
+//		con = repository.getConnection();
 		res = con.getStatements(null, null, null, false);
 	}
 	
@@ -203,36 +265,59 @@ public class SesameDao {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		//define path (need to be set)
+//		PrintWriter pw = new PrintWriter("D:\\semplore\\dblp.nt");
+//		SesameDao sd = new SesameDao("D:\\semplore\\apexaifbxxplore\\xxplore_core\\res\\BTC\\repository\\OpenRDF Sesame\\repositories\\dblp");
+//		sd.findAllTriples();
+//		while(sd.hasNext())
+//		{
+//			sd.next();
+//			//System.out.println(sd.getSubject()+" "+sd.getPredicate()+" "+sd.getObject());
+////			if(sd.getSubject().startsWith("_:node")||sd.getObject().startsWith("_:node"))
+////				continue;
+//			String subj = sd.getSubject();
+//			if(subj.startsWith("http"))
+//				subj = "<"+subj+">";
+//			String obj = sd.getObject();
+//			int loc = obj.indexOf("^^");
+//			if(loc!=-1)
+//				obj = obj.substring(0, loc)+"^^<"+obj.substring(loc+2)+">";
+//			else if(obj.startsWith("http"))
+//				obj = "<"+obj+">";
+//
+//			pw.println(subj+" <"+sd.getPredicate()+"> "+obj+" .");
+//		}
+//		pw.close();
+////		//define path (need to be set)
 		root = "D:\\semplore\\";
-		String datasource = "wordnet";
+		String datasource = "dblp_noblanknode";
 		indexRoot = root+datasource;
-		String sourceFile = root+"wordnet.nt";
-		//no need to modify
-		
-//		part1 indexing sourcedata
+		String sourceFile = root+"dblp_noblanknode.nt";
+//		//no need to modify
+//		
+//		//part1 indexing sourcedata
 		SesameDao se = new SesameDao(indexRoot);
-		se.insertNTFile(sourceFile, RDFFormat.N3);
-		System.out.println("part1 finished!");
-		
-		//part2 constructing summary & schema graph
-		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
-		Pseudograph graph = sss.computeSummaryGraph(SesameDao.indexRoot, true);
-//		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary.obj");
-		//write to obj and rdf
-		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-summary.obj");
-		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-summary.rdf");
-		System.out.println("part2 summray finished!");
-
-		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
-		graph = sss.computeSchemaGraph(SesameDao.indexRoot, graph, null);
-		//write to obj and rdf
-		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-schema.obj");
-		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-schema.rdf");
-		System.out.println("part2 schema finished!");
+		se.removeBlankNode(sourceFile);
+//		se.insertNTFile(sourceFile, RDFFormat.N3);
+//		System.out.println("part1 finished!");
+//		
+//		//part2 constructing summary & schema graph
+//		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
+//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = sss.computeSummaryGraph(SesameDao.indexRoot, true);
+////		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary.obj");
+//		//write to obj and rdf
+//		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-summary.obj");
+//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-summary.rdf");
+//		System.out.println("part2 summray finished!");
+//
+//		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
+//		graph = sss.computeSchemaGraph(SesameDao.indexRoot, graph, null);
+//		//write to obj and rdf
+//		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-schema.obj");
+//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-schema.rdf");
+//		System.out.println("part2 schema finished!");
 		//part3
-		graph = sss.readGraphIndexFromFile(SesameDao.root+datasource+"-schema.obj");
-		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(SesameDao.indexRoot, datasource, graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
-		System.out.println("part3 finished!");
+//		Pseudograph graph = sss.readGraphIndexFromFile(SesameDao.root+datasource+"-schema.obj");
+//		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(SesameDao.indexRoot, datasource, graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
+//		System.out.println("part3 finished!");
 	}
 }
