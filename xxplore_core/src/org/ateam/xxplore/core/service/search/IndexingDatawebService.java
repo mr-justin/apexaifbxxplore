@@ -2,9 +2,11 @@ package org.ateam.xxplore.core.service.search;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -55,7 +57,8 @@ public class IndexingDatawebService {
 	private static String REPOSITORY_DIR = "repodir";
 	private static String KEYWORDINDEX_DIR = "keyword_index_dir";
 	private static String MAPINGINDEX_DIR = "mapping_index_dir";
-
+	private static String GRAPHINDEX_DIR = "graph_index_dir";
+	
 	private static String WRITE_SOURCE_ONTO_SCHEMA = "write_source_onto_schema";
 	private static String WRITE_TARGET_ONTO_SCHEMA = "write_target_onto_schema";
 	private static String WRITE_SOURCE_ONTO_SUMMARY = "write_source_onto_summary";
@@ -75,13 +78,14 @@ public class IndexingDatawebService {
 
 	private static String COMPUTE_MAPPING = "compute_mapping";
 	private static String TEMP_ENTITIES_PATH = "res/BTC/mapping/entities.temp";
-	
+
 	private static final String SESAME_REPO_DIR = "/OpenRDF Sesame/repositories/";
 
 	private static Map<String,String> physicalURIsOfSummaryGraphs = new HashMap<String, String>();
 	private KeywordIndexServiceForBT m_kIndexer = null;
 	private MappingIndexService m_mIndexer = null;
-	
+	private static String m_graphIndexDir = null;
+
 	private static String propertyFile = "res/params.prop";
 	public static void main(String[] args) {
 
@@ -91,52 +95,77 @@ public class IndexingDatawebService {
 		parameters.setProperty(ExploreEnvironment.BASE_ONTOLOGY_URI, BASE_URI);
 		parameters.setProperty(ExploreEnvironment.SERIALIZATION_FORMAT, LANGUAGE);
 		parameters.setProperty(KbEnvironment.ONTOLOGY_TYPE, ONTOLOGY_TYPE);
-		IndexingDatawebService service = new IndexingDatawebService(parameters.getProperty(REPOSITORY_DIR));
-		
+		IndexingDatawebService service = new IndexingDatawebService(parameters);
+
 		IOntology omsOnto = null;
-//		index DBLP 		
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(SOURCE_ONTO_PATH));
-		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(omsOnto);
-//		index swrc 
-		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
-		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(TARGET_ONTO_PATH));
-		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
-		service.m_sessionFactory.getCurrentSession().close();
-		service.m_con.closeOntology(omsOnto);
-		
+		//load DBLP 		
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(SOURCE_ONTO_URI));
+//		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(SOURCE_ONTO_PATH));
+//		omsOnto = service.loadOntology(parameters, parameters.getProperty(SOURCE_ONTO_PATH));
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(omsOnto);
+		//load swrc 
+//		parameters.setProperty(KbEnvironment.ONTOLOGY_URI, parameters.getProperty(TARGET_ONTO_URI));
+//		parameters.setProperty(ExploreEnvironment.ONTOLOGY_FILE_PATH, parameters.getProperty(TARGET_ONTO_PATH));
+//		omsOnto = service.loadOntology(parameters, parameters.getProperty(TARGET_ONTO_PATH));
+//		service.m_sessionFactory.getCurrentSession().close();
+//		service.m_con.closeOntology(omsOnto);
+
 		service.process(parameters);
+
+		QueryInterpretationService inter = new QueryInterpretationService();	
+		inter.computeQueries(service.getKeywordIndexSearcher().searchKb("thanh 2007", 0.9), service.getMappingIndexSearcher(), 6, 10);
+
 
 
 	}
 
-	public IndexingDatawebService(String repodir){
-		initConnection(repodir);
+	public IndexingDatawebService(Properties params){
+		m_graphIndexDir = params.getProperty(GRAPHINDEX_DIR);		
+		initConnection(params.getProperty(REPOSITORY_DIR));
 	}
 
 	public void process(Properties parameters){
 		indexSummaries(parameters);
 		indexElements(parameters);
 		if(parameters.get(COMPUTE_MAPPING) == "true")
-			computeMappings(parameters);
-		
-		QueryInterpretationService inter = new QueryInterpretationService();	
-		inter.computeQueries(m_kIndexer.searchKb("thanh 2007", 0.9), m_mIndexer, 6, 10);
+			computeMappings(parameters);		
 	}
 
 	public static String getSummaryGraphFilePath(String datasource){
+		if(physicalURIsOfSummaryGraphs == null){
+			File graphIndex = new File(m_graphIndexDir+".index");
+			ObjectInputStream in;
+			try {
+				in = new ObjectInputStream(new FileInputStream(graphIndex));
+				physicalURIsOfSummaryGraphs = (HashMap<String, String>) in.readObject();
+				in.close();
+			} catch (FileNotFoundException ex) {
+				ex.printStackTrace();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			} catch (ClassNotFoundException ex) {
+				ex.printStackTrace();
+			}
+		}
+
 		return physicalURIsOfSummaryGraphs.get(datasource);
 	}
 
+	public KeywordIndexServiceForBT getKeywordIndexSearcher(){
+		return m_kIndexer;
+	}
+
+	public MappingIndexService getMappingIndexSearcher(){
+		return m_mIndexer;
+	}
 
 	private void indexSummaries(Properties parameters){
 		String sourcePath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(SOURCE_ONTO_URI);
 		String sourceURI = parameters.getProperty(SOURCE_ONTO_URI);
 		String targetPath = parameters.getProperty(REPOSITORY_DIR) + SESAME_REPO_DIR + parameters.getProperty(TARGET_ONTO_URI);
 		String targetURI = parameters.getProperty(TARGET_ONTO_URI);
-		
+
 		SummaryGraphIndexServiceForBT summarizer = new SummaryGraphIndexServiceForBT();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sGraph = null;
 		if(parameters.get(WRITE_SOURCE_ONTO_SUMMARY).equals("true")){			
@@ -149,7 +178,7 @@ public class IndexingDatawebService {
 				e.printStackTrace();
 			}
 		}
-		
+
 		if(parameters.get(WRITE_SOURCE_ONTO_SCHEMA).equals("true")){
 			try {
 				if(sGraph == null) sGraph = summarizer.computeSummaryGraph(sourcePath, true);
@@ -184,6 +213,41 @@ public class IndexingDatawebService {
 				e.printStackTrace();
 			}
 		}
+		
+		File graphIndex = new File(m_graphIndexDir);
+		if(!graphIndex.exists()){
+			graphIndex.getParentFile().mkdirs();
+			try {
+				graphIndex.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		
+		File graphIndexDir = new File(m_graphIndexDir+".index");
+		if(!graphIndexDir.exists()){
+			graphIndexDir.getParentFile().mkdirs();
+			try {
+				graphIndexDir.createNewFile();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		ObjectOutputStream out;
+		try {
+			out = new ObjectOutputStream(new FileOutputStream(graphIndexDir));
+			out.writeObject(physicalURIsOfSummaryGraphs);
+			out.close();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 
@@ -196,7 +260,7 @@ public class IndexingDatawebService {
 		String repoDir = parameters.getProperty(KEYWORDINDEX_DIR);
 
 		m_kIndexer = new KeywordIndexServiceForBT(repoDir, true);
-			
+
 		try {
 			String summary = getSummaryGraphFilePath(sourceURI);
 			File graphIndex = new File(summary);
@@ -206,7 +270,7 @@ public class IndexingDatawebService {
 			graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>)in.readObject();
 			in.close();
 			m_kIndexer.indexKeywords(sourcePath, sourceURI, graph, null);
-			
+
 			summary = getSummaryGraphFilePath(targetURI);
 			graphIndex = new File(summary);
 			in = new ObjectInputStream(new FileInputStream(graphIndex));
