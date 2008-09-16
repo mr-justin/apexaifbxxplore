@@ -85,8 +85,9 @@ public class Config
     public static Properties readConfigFile(String filename) throws Exception {
         BufferedReader in = new BufferedReader(new FileReader(filename));
         String str = null;
-        System.out.println("================config begin==================");
+        System.err.println("================config begin==================");
         Properties config = new Properties();
+        int i =0;
         while ((str=in.readLine()) != null) {
             if (str.indexOf('=') < 0) 
                 continue;
@@ -94,10 +95,12 @@ public class Config
             String name = str.substring(0,str.indexOf('=')).trim();
             String value = str.substring(str.indexOf('=')+1,str.length()).trim();
             config.put(name, value);
-            System.out.println(name+" = "+value);
+            config.put(name+"_i", i);
+            i++;
+            System.err.println(name+" = "+value);
         }
         in.close();
-        System.out.println("================config end==================");
+        System.err.println("================config end==================");
         return config;
     }
      
