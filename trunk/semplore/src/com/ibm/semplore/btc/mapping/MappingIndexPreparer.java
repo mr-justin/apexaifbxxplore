@@ -11,9 +11,14 @@ import com.ibm.semplore.config.Config;
  */
 public class MappingIndexPreparer {
 	InputStream input;
+	String ds1;
+	String ds2;
+	int ds1_i;
+	int ds2_i;
 	File path_of_ds1;
 	File path_of_ds2;
 	int strategy;
+	DatasourceCollector dsCollector;
 	
 	public void build() throws Exception {
 		throw new Exception("Not Implemented");
@@ -23,17 +28,23 @@ public class MappingIndexPreparer {
 			int strategy) {
 		this.input = input;
 		this.strategy = strategy;
+		this.ds1 = ds1;
+		this.ds2 = ds2;
+		this.dsCollector = new DatasourceCollector(new File("."));
+		
 		try {
 			Properties config = Config.readConfigFile(datasrc.getAbsolutePath());
 			path_of_ds1 = new File(config.getProperty(ds1));
 			path_of_ds2 = new File(config.getProperty(ds2));
+			ds1_i = (Integer) config.get(ds1+"_i");
+			ds2_i = (Integer) config.get(ds2+"_i");
 		} catch (Exception e) {
 			System.err.println(String.format("Error while reading datasrc.cfg for %s, %s", ds1, ds2));
 		}
 	}
 
 	public static void main(String[] args) throws Exception {
-		if (args.length != 3) {
+		if (args.length != 4) {
 			System.out
 					.println("Usage: cat mapping.data | java MappingIndexPreparer datasrc.cfg <name_of_ds1> <name_of_ds2> <strategy>");
 			System.out.println("  mapping.data: <uri1>\t<uri2>");

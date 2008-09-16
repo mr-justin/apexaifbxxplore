@@ -105,6 +105,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
+					//TODO compute datasource facet
 					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 				}
 				else {
