@@ -1,11 +1,5 @@
 package org.ateam.xxplore.core.service.mappingA;
 
-/**
- * 
- * @author jqchen
- * descript a triple
- * 
- */
 public class Statement {
 	public String subject;
 	public String predicate;

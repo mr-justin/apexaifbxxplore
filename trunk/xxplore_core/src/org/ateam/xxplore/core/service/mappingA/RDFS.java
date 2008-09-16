@@ -1,9 +1,7 @@
 package org.ateam.xxplore.core.service.mappingA;
 
-/**
+/*
  * Define the rdf constant.
- * @author jqchen
- *
  */
 public class RDFS {
 	public static final String type = "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
