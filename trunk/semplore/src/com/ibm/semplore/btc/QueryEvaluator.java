@@ -4,6 +4,7 @@
 package com.ibm.semplore.btc;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Hashtable;
 
 import com.ibm.semplore.search.SearchHelper;
@@ -47,4 +48,23 @@ public interface QueryEvaluator {
 	public void setPathOfDataSource(Hashtable<String, File> map);
 	
 	public void setPathOfMappingIndex(File path);
+	
+	/**
+	 * get instances which has mapping to given instance
+	 * @param ds
+	 * @param instance
+	 */
+	public ArrayList<String> getSeeAlso(String ds, String instance);
+	
+	/**
+	 * get information about given instance 
+	 * @param ds
+	 * @param instance
+	 */
+	public String getArraySnippet(String ds, String instance);
+
+	/**
+	 * get datasource facet of last evaluation
+	 */
+	public ArrayList<String> getDatasourceFacet();	
 }
