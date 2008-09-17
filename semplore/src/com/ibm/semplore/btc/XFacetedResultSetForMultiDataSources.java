@@ -17,4 +17,10 @@ public interface XFacetedResultSetForMultiDataSources extends XFacetedResultSet 
 	 * count).
 	 */
 	public HashMap<String, Integer> getDataSourceFacets();
+	
+	/**
+	 * Return the data source of the current results.
+	 * @return
+	 */
+	public String getCurrentDataSource();
 }
