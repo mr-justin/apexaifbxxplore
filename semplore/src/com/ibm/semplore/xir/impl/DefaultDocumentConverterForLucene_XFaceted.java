@@ -71,7 +71,7 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		HashMap<String, String> attributes = insDoc.getAttributes();
 		StringBuffer text = new StringBuffer();
 		for (Entry<String, String> entry : attributes.entrySet()) {
-			doc.add(new Field(entry.getKey(), entry.getValue(), Field.Store.COMPRESS, Field.Index.TOKENIZED));
+			doc.add(new Field(entry.getKey(), entry.getValue(), Field.Store.NO, Field.Index.TOKENIZED));
 			text.append(entry.getValue()+" ");
 		}
 		text.append(insDoc.getSchemaObjectInfo().getLabel());
