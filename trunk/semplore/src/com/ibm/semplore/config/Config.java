@@ -10,6 +10,8 @@ package com.ibm.semplore.config;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.Properties;
 
 /**
@@ -85,8 +87,33 @@ public class Config
     public static Properties readConfigFile(String filename) throws Exception {
         BufferedReader in = new BufferedReader(new FileReader(filename));
         String str = null;
-        System.err.println("================config begin==================");
+        System.out.println("================config begin==================");
         Properties config = new Properties();
+        while ((str=in.readLine()) != null) {
+            if (str.indexOf('=') < 0) 
+                continue;
+            str = str.trim();
+            String name = str.substring(0,str.indexOf('=')).trim();
+            String value = str.substring(str.indexOf('=')+1,str.length()).trim();
+            config.put(name, value);
+            System.out.println(name+" = "+value);
+        }
+        in.close();
+        System.out.println("================config end==================");
+        return config;
+    }
+
+    /**
+     * Read the configuration for datasource and assign value
+     * @param filename
+     * @return ds_name<->id
+     * @throws Exception
+     */
+    public static HashMap readDSConfigFile(String filename) throws IOException {
+        BufferedReader in = new BufferedReader(new FileReader(filename));
+        String str = null;
+        System.err.println("================config begin==================");
+        HashMap config = new HashMap();
         int i =0;
         while ((str=in.readLine()) != null) {
             if (str.indexOf('=') < 0) 
@@ -95,7 +122,8 @@ public class Config
             String name = str.substring(0,str.indexOf('=')).trim();
             String value = str.substring(str.indexOf('=')+1,str.length()).trim();
             config.put(name, value);
-            config.put(name+"_i", i);
+            config.put(name+".i", i);
+            config.put(i, name);
             i++;
             System.err.println(name+" = "+value);
         }
@@ -103,5 +131,5 @@ public class Config
         System.err.println("================config end==================");
         return config;
     }
-     
+
 }

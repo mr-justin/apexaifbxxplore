@@ -53,6 +53,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 
 	QueryConverter4SemploreImpl converter = new QueryConverter4SemploreImpl();
 	Hashtable<String, File> pathOfDataSource;
+	Hashtable<Integer, String> dataSources;
 
 	//stores ResultSets inside SubGraphs
 	private HashMap<SubGraph, HashMap<Integer, DocStream>> result;
@@ -190,6 +191,26 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		
 		return resultStream;
 	}
+
+	public QueryEvaluatorImpl()  {
+		
+	}
+	
+	/**
+	 * read datasrc configuration file for each datasource's index location AND mapping index location 
+	 * @param datasrc
+	 * @throws IOException 
+	 */
+	public QueryEvaluatorImpl(File datasrc) throws IOException {
+		HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
+		pathOfDataSource = new Hashtable<String, File>();
+		dataSources = new Hashtable<Integer, String>();
+		for (Object o :config.keySet()) {
+			if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
+			else if (o instanceof String) pathOfDataSource.put((String)o, new File((String)config.get(o)));
+		}
+		mappingIndex = pathOfDataSource.get("mapping");
+	}
 	
 	/* (non-Javadoc)
 	 * @see com.ibm.semplore.btc.QueryEvaluator#setPathOfDataSource(java.util.Hashtable)
@@ -249,7 +270,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	}
 
 	public XFacetedResultSet evaluate(Graph graph, SearchHelper helper) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
+		DecomposedGraph dgraph = decomposer.decompose(graph);
+		QueryPlanner planner = new QueryPlannerImpl();
+		planner.setDecomposedGraph(dgraph);
+		//TODO use helper
+		return evaluate(planner);
 	}
 }
