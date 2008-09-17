@@ -1,15 +1,15 @@
 package org.team.xxplore.core.service.search.session;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.Map.Entry;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import org.pdfbox.pdfviewer.MapEntry;
+import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
+import org.team.xxplore.core.service.search.datastructure.SeeAlso;
 
-import org.team.xxplore.core.service.search.datastructure.*;
-
-import searchsession.SemplorePool;
 import sjtu.apex.searchWebDB.dataStructures.Facet;
 import sjtu.apex.searchWebDB.dataStructures.Keywords;
 import sjtu.apex.searchWebDB.dataStructures.Query;
@@ -20,8 +20,9 @@ import sjtu.apex.searchWebDB.dataStructures.Source;
 
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
-import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
+import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
+import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
 import com.ibm.semplore.search.SearchFactory;
 import com.ibm.semplore.search.SearchHelper;
@@ -148,6 +149,56 @@ public class SearchSessionService {
 		
 	}
 
+	protected ResultPage transform(XFacetedResultSetForMultiDataSources xres, int pageNum, int nbResultsPerPage) {
+		try {
+			//set active source
+			Source activeSource = new Source(xres.getCurrentDataSource(), null, xres.getLength());
+			LinkedList<Facet> facetList = new LinkedList<Facet>();
+			//add category facets
+			com.ibm.semplore.search.Facet[] semploreFacets = xres.getCategoryFacets();
+			for (int i=0; i<semploreFacets.length; i++) {
+				SchemaObjectInfo info = semploreFacets[i].getInfo();
+				Facet facet = new Facet(info.getLabel(), info.getURI(), activeSource);
+				facetList.add(facet);
+			}
+			//add relation facets
+			semploreFacets = xres.getRelationFacets();
+			for (int i=0; i<semploreFacets.length; i++) {
+				SchemaObjectInfo info = semploreFacets[i].getInfo();
+				Facet facet = new Facet(info.getLabel(), info.getURI(), activeSource);
+				facetList.add(facet);
+			}
+			activeSource.setFacetList(facetList);
+			
+			//always make the active source the first element of the source list
+			LinkedList<Source> sourceList = new LinkedList<Source>();
+			sourceList.add(activeSource);
+			
+			//set the other sources of the source list
+			for (Entry<String, Integer> entry:xres.getDataSourceFacets().entrySet()) {
+				Source s = new Source(entry.getKey(),null,entry.getValue());
+				sourceList.add(s);
+			}
+			
+			//set result item list
+			LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
+			//e.g. pageNum=2, nbResultsPerPage=5 ==> start=5, end=10
+			int start = (pageNum-1)*nbResultsPerPage;
+			int end = start+nbResultsPerPage;
+			for (int i=start; i<end; i++) {
+				SchemaObjectInfo info = xres.getResult(i);
+				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), activeSource, "text document", info.getLabel(), xres.getSnippet(i));
+				resultItemList.add(item);
+			}
+			
+			ResultPage page = new ResultPage(resultItemList, sourceList, activeSource, pageNum);
+			return page;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	/**
 	 * This method returns a ResultPage object representing the first page matching the query for
 	 * the best source and respecting the number of result items per page. This ResultPage object
