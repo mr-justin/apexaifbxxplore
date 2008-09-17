@@ -3,6 +3,8 @@
  */
 package com.ibm.semplore.imports.impl.data.load;
 
+import com.ibm.semplore.util.TestUnicode;
+
 
 /**
  * @author lql
@@ -88,4 +90,42 @@ public class Util4NT {
 		Util4NT.ns_ins = ns_ins;
 		Util4NT.ns_att = ns_att;
 	}
+	
+	public static void processTripleLine(String line) {
+		//Split..java
+		String[] triple = line.replaceAll("\t", " ").split(" ");
+		int i = 3;
+		while (triple.length > i) {
+			if (triple[i].equals(".")) // TODO sxr:what if attribute contains a " . " in the middle? 
+				break;
+			triple[2] = triple[2] + " " + triple[i];
+			i++;
+		}
+		if (triple.length < 3)
+			return;
+		line = triple[0] + "\t" + triple[1] + "\t" + triple[2] + "\t.";
+		triple = line.split("\t");
+
+		String tripletype = Util4NT.checkTripleType(triple);
+		//InstanceDocumentIter..java
+		if (tripletype==Util4NT.ATTRIBUTE)
+			triple[2] = TestUnicode.parse(triple[2]);
+		
+		//InstanceDocument..java
+		//ignore language, e.g. "A sense of an adjective word."@en-us --> A sense of an adjective word.
+		if (triple[2].matches(".*\".*\"@.*")) {
+			triple[2] = triple[2].substring(triple[2].indexOf("\"")+1,triple[2].lastIndexOf("@")-1);
+		}
+		
+		//ignore datatype, e.g. "1"^^<http://www.w3.org/2001/XMLSchema#nonNegativeInteger> --> 1		
+		if (triple[2].matches(".*\".*\"\\^\\^<.*")) {
+			triple[2] = triple[2].substring(triple[2].indexOf("\"")+1,triple[2].lastIndexOf("^^")-1);
+		}
+		
+		//ignore "", e.g. "1" --> 1
+		if (triple[2].matches("\".*\"")) {
+			triple[2] = triple[2].substring(1,triple[2].length()-1);
+		}
+	}
+
 }
