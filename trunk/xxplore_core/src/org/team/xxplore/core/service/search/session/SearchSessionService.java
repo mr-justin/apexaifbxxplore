@@ -8,13 +8,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.team.xxplore.core.service.search.datastructure.*;
+
+import searchsession.SemplorePool;
+import sjtu.apex.searchWebDB.dataStructures.Facet;
+import sjtu.apex.searchWebDB.dataStructures.Keywords;
+import sjtu.apex.searchWebDB.dataStructures.Query;
+import sjtu.apex.searchWebDB.dataStructures.QueryGraph;
+import sjtu.apex.searchWebDB.dataStructures.ResultItem;
+import sjtu.apex.searchWebDB.dataStructures.ResultPage;
+import sjtu.apex.searchWebDB.dataStructures.Source;
+
+import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
+import com.ibm.semplore.btc.impl.GraphImpl;
+import com.ibm.semplore.model.impl.SchemaFactoryImpl;
+import com.ibm.semplore.search.SearchFactory;
+import com.ibm.semplore.search.SearchHelper;
 import com.ibm.semplore.search.XFacetedResultSet;
+import com.ibm.semplore.search.impl.DocStreamHintImpl;
+import com.ibm.semplore.search.impl.SearchFactoryImpl;
 
 public class SearchSessionService {
 
+	private LinkedList<XFacetedResultSet> resultHistory = new LinkedList<XFacetedResultSet>();
 	private XFacetedResultSet currentResult;
+	private XFacetedResultSet lastResult;
 	
 	public void setString(String str) {
 		AMFContext context = AMFContext.getCurrentContext();
@@ -56,8 +75,44 @@ public class SearchSessionService {
 	 * @return a ResultPage object, representing the first page matching the query for the best
 	 *         source and respecting the number of result items per page.
 	 */
-	public ResultPage search(Query query, int nbResultsPerPage) {
-		return null;
+	public ResultPage search(Query query, int nbResultsPerPage) throws Exception {
+		if (query instanceof QueryGraph) {
+			// TODO translate QueryGraph to GraphImpl for Semplore QueryEvaluator to execute
+			return null;
+		} else if (query instanceof Keywords) {
+			Graph graph = new GraphImpl();
+			Keywords k = (Keywords)query;
+			LinkedList<String> wordList = k.getWordList();
+			if (wordList.isEmpty()) return null;
+			Iterator<String> it = wordList.iterator();
+			String str = it.next();
+			for (; it.hasNext(); ) str += " " + it.next();
+			graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(str));	//0
+			graph.setTargetVariable(0);
+			int id = SemplorePool.acquire();
+			QueryEvaluator eval = SemplorePool.getEvaluator(id);
+			currentResult = eval.evaluate(graph);
+			ArrayList<ResultItem> result = getResultList(currentResult);
+			
+			//TODO get facet and result count
+			
+			ResultPage ret = new ResultPage();
+			ret.setActiveSource(new Source(graph.getDataSource(0), new LinkedList<Facet>(), 0));
+			ret.setPageNum(1);
+			LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
+			for (int i = 0; i < nbResultsPerPage; i++) resultItemList.add(result.get(i));
+			ret.setResultItemList(resultItemList);
+			LinkedList<Source> sourceList = new LinkedList<Source>();
+			HashSet<Source> sourceSet = new HashSet<Source>();
+			for (Source s : sourceList) sourceSet.add(s);
+			for (Source s : sourceSet) sourceList.add(s);
+			ret.setSourceList(sourceList);
+			SemplorePool.release(id);
+			return ret;
+		} else {
+			return null;
+		}
+		
 	}
 
 	/**
@@ -71,15 +126,26 @@ public class SearchSessionService {
 	 * @param source
 	 *            The name of the source to consider.
 	 * @param pageNum
-	 *            Number identifying the page to be served.
+	 *            Number identifying the page to be served. Number 1 is the first page
 	 * @param nbResultsPerPage
 	 *            The number of results that should appear on each page.
 	 * @param needFacets
 	 *            True if the facets associated with the source shall be provided.
 	 * @return a page of results that matches the current query for the source specified.
 	 */
-	public ResultPage getPage(String source, int pageNum, int nbResultsPerPage, Boolean needFacets) {
-		return null;
+	public ResultPage getPage(String source, int pageNum, int nbResultsPerPage, Boolean needFacets) throws Exception {
+		ArrayList<ResultItem> result = getResultList(currentResult);
+		ResultPage ret = new ResultPage();
+		if (!needFacets) ret.setActiveSource(new Source(source, new LinkedList<Facet>(), 0));
+		else {
+			//TODO
+		}
+		ret.setPageNum(pageNum);
+		LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
+		for (int i = (pageNum-1)*nbResultsPerPage; i < pageNum*nbResultsPerPage; i++) resultItemList.add(result.get(i));
+		ret.setResultItemList(resultItemList);
+		return ret;
+		
 	}
 
 	/**
@@ -100,7 +166,50 @@ public class SearchSessionService {
 	 * @return
 	 */
 	public ResultPage refine(Query query, int nbResultsPerPage) {
-		return null;
+		lastResult = currentResult;
+		if (query instanceof QueryGraph) {
+			//TODO
+			return null;
+		} else if (query instanceof Keywords) {
+			Graph graph = new GraphImpl();
+			Keywords k = (Keywords)query;
+			LinkedList<String> wordList = k.getWordList();
+			if (wordList.isEmpty()) return null;
+			Iterator<String> it = wordList.iterator();
+			String str = it.next();
+			for (; it.hasNext(); ) str += " " + it.next();
+			graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(str));	//0
+			graph.setTargetVariable(0);
+			SearchFactory searchFactory = SearchFactoryImpl.getInstance();
+			SearchHelper helper = searchFactory.createSearchHelper();
+			
+			helper.setHint(SearchHelper.START_CACHE_HINT, 0, new DocStreamHintImpl(currentResult.getResultStream()));
+			int id = SemplorePool.acquire();
+			QueryEvaluator eval = SemplorePool.getEvaluator(id);
+			currentResult = eval.evaluate(graph, helper);
+
+			ArrayList<ResultItem> result = getResultList(currentResult);
+			
+			//TODO get facet and result count
+			
+			ResultPage ret = new ResultPage();
+			ret.setActiveSource(new Source(graph.getDataSource(0), new LinkedList<Facet>(), 0));
+			ret.setPageNum(1);
+			LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
+			for (int i = 0; i < nbResultsPerPage; i++) resultItemList.add(result.get(i));
+			ret.setResultItemList(resultItemList);
+			LinkedList<Source> sourceList = new LinkedList<Source>();
+			HashSet<Source> sourceSet = new HashSet<Source>();
+			for (Source s : sourceList) sourceSet.add(s);
+			for (Source s : sourceSet) sourceList.add(s);
+			ret.setSourceList(sourceList);
+			SemplorePool.release(id);
+			return ret;
+
+		} else {
+			return null;
+		}
+		
 	}
 
 	/**
@@ -118,7 +227,23 @@ public class SearchSessionService {
 	 * @return
 	 */
 	public ResultPage undoLastRefinement(int nbResultsPerPage) {
-		return null;
+		currentResult = lastResult;
+		ArrayList<ResultItem> result = getResultList(currentResult);
+		
+		//TODO get facet and result count
+		
+		ResultPage ret = new ResultPage();
+		ret.setActiveSource(new Source(graph.getDataSource(0), new LinkedList<Facet>(), 0));
+		ret.setPageNum(1);
+		LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
+		for (int i = 0; i < nbResultsPerPage; i++) resultItemList.add(result.get(i));
+		ret.setResultItemList(resultItemList);
+		LinkedList<Source> sourceList = new LinkedList<Source>();
+		HashSet<Source> sourceSet = new HashSet<Source>();
+		for (Source s : sourceList) sourceSet.add(s);
+		for (Source s : sourceSet) sourceList.add(s);
+		ret.setSourceList(sourceList);
+
 	}
 	
 	/**
