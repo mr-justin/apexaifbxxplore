@@ -442,29 +442,38 @@ public class SummaryGraphIndexServiceForBT {
 		if(property.getUri().equals(Property.SUBCLASS_OF.getUri())) {
 			if(!graph.containsVertex(SummaryGraphElement.SUBCLASS))
 				graph.addVertex(SummaryGraphElement.SUBCLASS);
-			graph.addEdge(vertex1, SummaryGraphElement.SUBCLASS, 
-					new SummaryGraphEdge(vertex1, SummaryGraphElement.SUBCLASS, SummaryGraphEdge.SUBCLASS_EDGE));
-			graph.addEdge(SummaryGraphElement.SUBCLASS, vertex2,  
-					new SummaryGraphEdge(SummaryGraphElement.SUBCLASS, vertex2, SummaryGraphEdge.SUPERCLASS_EDGE));
+			SummaryGraphEdge edge1 = new SummaryGraphEdge(vertex1, SummaryGraphElement.SUBCLASS, SummaryGraphEdge.SUBCLASS_EDGE);
+			if(!graph.containsEdge(edge1))
+				graph.addEdge(vertex1, SummaryGraphElement.SUBCLASS, edge1);
+			SummaryGraphEdge edge2 = new SummaryGraphEdge(SummaryGraphElement.SUBCLASS, vertex2, SummaryGraphEdge.SUPERCLASS_EDGE);
+			if(!graph.containsEdge(edge2))
+				graph.addEdge(SummaryGraphElement.SUBCLASS, vertex2,  edge2);
 
 		} else if(property instanceof ObjectProperty){
 			IObjectProperty objectProperty = new ObjectProperty(property.getUri());
 			SummaryGraphElement prop = new SummaryGraphElement(objectProperty, SummaryGraphElement.RELATION);
 			graph.addVertex(prop);
-			graph.addEdge(vertex1, prop, 
-					new SummaryGraphEdge(vertex1, prop, SummaryGraphEdge.DOMAIN_EDGE));
-			graph.addEdge(prop, vertex2,  
-					new SummaryGraphEdge(prop, vertex2, SummaryGraphEdge.RANGE_EDGE));
+			SummaryGraphEdge edge1 = new SummaryGraphEdge(vertex1, prop, SummaryGraphEdge.DOMAIN_EDGE);
+			if(!graph.containsEdge(edge1))
+				graph.addEdge(vertex1, prop,edge1);
+			SummaryGraphEdge edge2 = new SummaryGraphEdge(prop, vertex2, SummaryGraphEdge.RANGE_EDGE);
+			if(!graph.containsEdge(edge2))
+			{
+				//System.out.println((prop.getResource()));
+				graph.addEdge(prop, vertex2, edge2);
+			}
 
 		} else if(property instanceof DataProperty)
 		{
 			IDataProperty dataProperty = new DataProperty(property.getUri());
 			SummaryGraphElement prop = new SummaryGraphElement(dataProperty, SummaryGraphElement.ATTRIBUTE);
 			graph.addVertex(prop);
-			graph.addEdge(vertex1, prop, 
-					new SummaryGraphEdge(vertex1, prop, SummaryGraphEdge.DOMAIN_EDGE));
-			graph.addEdge(prop, vertex2,  
-					new SummaryGraphEdge(prop, vertex2, SummaryGraphEdge.RANGE_EDGE));
+			SummaryGraphEdge edge1 = new SummaryGraphEdge(vertex1, prop, SummaryGraphEdge.DOMAIN_EDGE);
+			if(!graph.containsEdge(edge1))
+				graph.addEdge(vertex1, prop, edge1);
+			SummaryGraphEdge edge2 = new SummaryGraphEdge(prop, vertex2, SummaryGraphEdge.RANGE_EDGE);
+			if(!graph.containsEdge(edge2))
+				graph.addEdge(prop, vertex2,edge2);
 		}
 	}
 

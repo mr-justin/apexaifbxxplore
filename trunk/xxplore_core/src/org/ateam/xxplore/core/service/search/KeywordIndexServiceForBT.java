@@ -423,6 +423,7 @@ public class KeywordIndexServiceForBT implements IService{
 			if((hits != null) && (hits.length() > 0)){
 				s_log.debug("results.length(): " + hits.length());
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
+
 				result.put(clausequery.toString("label"), res);
 				for(int i = 0; i < hits.length(); i++){
 					Document doc = hits.doc(i);
@@ -433,10 +434,11 @@ public class KeywordIndexServiceForBT implements IService{
 							ILiteral lit = new Literal(pruneString(doc.get(LABEL_FIELD)));
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
 							vvertex.setMatchingScore(score);
-							vvertex.setDatasource(DS_FIELD);
+							vvertex.setDatasource(doc.get(DS_FIELD));
 
 							Map<IDataProperty, Collection<INamedConcept>> neighbors = new HashMap<IDataProperty, Collection<INamedConcept>>();
 							Term term = new Term(LITERAL_FIELD,lit.getLabel());
+
 							TermQuery query = new TermQuery(term);
 							Hits results = m_searcher.search(query);
 							if((results != null) && (results.length() > 0)){
@@ -448,8 +450,10 @@ public class KeywordIndexServiceForBT implements IService{
 										String[] cons = docu.getValues(CONCEPT_FIELD);
 										for (int k = 0; k < cons.length; k++){
 											INamedConcept con = new NamedConcept(pruneString(cons[k]));
+//											System.out.println(con.getUri());
 											concepts.add(con);
 										}
+//										System.out.println(((HashSet)concepts).iterator().next());
 										neighbors.put(prop, concepts);
 									}
 								}

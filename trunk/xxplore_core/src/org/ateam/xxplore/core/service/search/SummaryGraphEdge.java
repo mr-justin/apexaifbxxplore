@@ -39,9 +39,12 @@ public class SummaryGraphEdge implements Serializable{
 		if(!(object instanceof SummaryGraphEdge)) return false;
 		SummaryGraphEdge edge = (SummaryGraphEdge)object;
 		
+
+		
 		if (!m_edgeLabel.equals(edge.getEdgeLabel()))  return false;
 		if (!getSource().equals(edge.getSource())) return false;
 		if (!getTarget().equals(edge.getTarget())) return false;
+		
 		return true;
 	}
 
