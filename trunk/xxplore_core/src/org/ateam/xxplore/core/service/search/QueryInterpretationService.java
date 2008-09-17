@@ -39,6 +39,8 @@ import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
 import org.xmedia.oms.query.Variable;
 
+import sun.dc.pr.PRError;
+
 public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger.getLogger(QueryInterpretationService.class);
@@ -340,7 +342,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	private Collection<Subgraph> getTopKSubgraphs(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph, 
 			Map<String,Collection<SummaryGraphElement>> elements, int distance, int k){
 
-		ExpansionQueue expansionQueue = new ExpansionQueue(new HashMap<String, PriorityQueue<Cursor>>());
+		ExpansionQueue expansionQueue = new ExpansionQueue(elements);
+		
 		List<Subgraph> subgraphList  = new ArrayList<Subgraph>();
 
 		Set<String> keywords = elements.keySet();
@@ -759,18 +762,19 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		Set<String> m_keywords;
 		Collection<PriorityQueue<Cursor>> m_queues;
 
-		private ExpansionQueue(Map<String, PriorityQueue<Cursor>> queue){
-			m_queue = queue;
-			m_keywords = queue.keySet();
+		private ExpansionQueue(Map<String,Collection<SummaryGraphElement>> elements){
+			m_queue = new HashMap<String, PriorityQueue<Cursor>>();
+			m_keywords = elements.keySet();
 			m_queues = new ArrayList<PriorityQueue<Cursor>>();
-			for (String k : m_keywords){
-				m_queues.add(queue.get(k));
+			for (String k : elements.keySet()){
+				PriorityQueue<Cursor> q = new PriorityQueue<Cursor>();
+				m_queue.put(k, q);
+				m_queues.add(q);
 			}
 		}
 
 		private void addCursor(Cursor c, String keyword){
 			PriorityQueue<Cursor> q = m_queue.get(keyword);
-//			================by kaifengxu
 			if(q==null)
 			{
 				q = new PriorityQueue<Cursor>();
