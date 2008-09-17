@@ -3,17 +3,18 @@
  */
 package com.ibm.semplore.btc;
 
-import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.ibm.semplore.search.XFacetedResultSet;
 
 /**
  * @author xrsun
- *
+ * 
  */
 public interface XFacetedResultSetForMultiDataSources extends XFacetedResultSet {
 	/**
-	 * @return the list of datasource names
+	 * Return the data source facets, each facet consists of (data source name,
+	 * count).
 	 */
-	public ArrayList<String> getDataSourceFacet();
+	public HashMap<String, Integer> getDataSourceFacet();
 }
