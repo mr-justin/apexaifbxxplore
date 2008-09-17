@@ -1,19 +1,19 @@
 package org.team.xxplore.core.service.search.datastructure;
 
-import org.dom4j.Document;
-
 /**
  * This class represents a facet that may be used to specify queries. A facet represents an RDF element
  * @author tpenin
  */
-public class Facet implements Query, XMLSerializable {
+public class Facet implements Query {
 	
 	// The label can be displayed by the interface
-	protected String label;
+	public String label;
 	// The URI identifies the facet in a unique manner
-	protected String URI;
+	public String URI;
 	// The data source from which originates the facet
-	protected Source source;
+	public Source source;
+	// Number of results associated with a facet
+	public int resultNb;
    
 	/**
 	 * Default constructor
@@ -22,6 +22,7 @@ public class Facet implements Query, XMLSerializable {
 		this.label = "";
 		this.URI = "";
 		this.source = new Source();
+		this.resultNb = 0;
 	}
 	
 	/**
@@ -33,14 +34,6 @@ public class Facet implements Query, XMLSerializable {
 		this.label = label;
 		this.URI = uri;
 		this.source = source;
-	}
-
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
@@ -83,5 +76,19 @@ public class Facet implements Query, XMLSerializable {
 	 */
 	public void setURI(String URI) {
 		this.URI = URI;
+	}
+
+	/**
+	 * @return the resultNb
+	 */
+	public int getResultNb() {
+		return resultNb;
+	}
+
+	/**
+	 * @param resultNb the resultNb to set
+	 */
+	public void setResultNb(int resultNb) {
+		this.resultNb = resultNb;
 	}
 }

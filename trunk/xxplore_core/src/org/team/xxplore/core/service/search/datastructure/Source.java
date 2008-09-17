@@ -2,20 +2,18 @@ package org.team.xxplore.core.service.search.datastructure;
 
 import java.util.LinkedList;
 
-import org.dom4j.Document;
-
 /**
  * Class representing a data source associated with results
  * @author tpenin
  */
-public class Source implements XMLSerializable {
+public class Source {
 	
 	// The name of the source
-	private String name;
+	public String name;
 	// The list of facets associated with this source
-	private LinkedList<Facet> facetList;
+	public LinkedList<Facet> facetList;
 	// The number of results associated with this source returned by the search engine
-	private int resultCount;
+	public int resultCount;
    
 	/**
 	 * Default constructor
@@ -38,14 +36,6 @@ public class Source implements XMLSerializable {
 		this.resultCount = resultCount;
 	}
 	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * @return the facetList
 	 */

@@ -2,8 +2,6 @@ package org.team.xxplore.core.service.search.datastructure;
 
 import java.util.LinkedList;
 
-import org.dom4j.Document;
-
 /**
  * This class represents a ResultPage. It is related to a Result object, contains all its lists but only a subset
  * of its results for a given page and a given source.
@@ -12,9 +10,9 @@ import org.dom4j.Document;
 public class ResultPage extends Result {
 	
 	// The source for the current page
-	private Source activeSource;
+	public Source activeSource;
 	// The number of the current page
-	private int pageNum;
+	public int pageNum;
    
 	/**
 	 * Default Constructor
@@ -35,14 +33,6 @@ public class ResultPage extends Result {
 		super(resultItemList, sourceList);
 		this.activeSource = activeSource;
 		this.pageNum = pageNum;
-	}
-	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**

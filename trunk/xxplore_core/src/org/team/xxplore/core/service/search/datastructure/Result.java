@@ -2,19 +2,17 @@ package org.team.xxplore.core.service.search.datastructure;
 
 import java.util.LinkedList;
 
-import org.dom4j.Document;
-
 /**
  * This class represents all the results returned by the search engine for a given query, independently from the data
  * source or the page to display
  * @author tpenin
  */
-public class Result implements XMLSerializable {
+public class Result {
 	
 	// The list of all the result items that were found by the search engine
-	protected LinkedList<ResultItem> resultItemList;
+	public LinkedList<ResultItem> resultItemList;
 	// The list of all the sources that have contributed to the results
-	protected LinkedList<Source> sourceList;
+	public LinkedList<Source> sourceList;
 	
 	/**
 	 * Default constructor
@@ -34,14 +32,6 @@ public class Result implements XMLSerializable {
 		this.sourceList = sourceList;
 	}
 	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	/**
 	 * @return the resultItemList
 	 */

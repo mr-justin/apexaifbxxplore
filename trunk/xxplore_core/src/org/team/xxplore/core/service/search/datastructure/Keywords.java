@@ -2,16 +2,14 @@ package org.team.xxplore.core.service.search.datastructure;
 
 import java.util.LinkedList;
 
-import org.dom4j.Document;
-
 /**
  * This class represents a list of keywords, that can be handled like a query.
  * @author tpenin
  */
-public class Keywords implements Query, XMLSerializable {
+public class Keywords implements Query {
    
 	// The list of the keywords
-	private LinkedList<String> wordList;
+	public LinkedList<String> wordList;
    
 	/**
 	 * Default constructor
@@ -26,14 +24,6 @@ public class Keywords implements Query, XMLSerializable {
 	 */
 	public Keywords(LinkedList<String> list) {
 		this.wordList = list;
-	}
-	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**
