@@ -1,12 +1,43 @@
 package org.team.xxplore.core.service.search.session;
 
-import sjtu.apex.searchWebDB.dataStructures.ArraySnippet;
-import sjtu.apex.searchWebDB.dataStructures.Query;
-import sjtu.apex.searchWebDB.dataStructures.ResultPage;
-import sjtu.apex.searchWebDB.dataStructures.SeeAlso;
+import java.util.*;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.team.xxplore.core.service.search.datastructure.*;
+import com.ibm.semplore.btc.QueryEvaluator;
+import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
+import com.ibm.semplore.search.XFacetedResultSet;
 
 public class SearchSessionService {
 
+	private XFacetedResultSet currentResult;
+	
+	public void setString(String str) {
+		AMFContext context = AMFContext.getCurrentContext();
+		HttpSession HttpSession = context.getSession();
+		ServletContext ServletContext = context.getServletContext();
+
+		HttpServletRequest request = context.getRequest();
+		HttpServletResponse response = context.getResponse();
+
+		context.setSessionAttribute("attr",str);
+	}
+	
+	public String getString() {
+		AMFContext context = AMFContext.getCurrentContext();
+		HttpSession HttpSession = context.getSession();
+		ServletContext ServletContext = context.getServletContext();
+
+		HttpServletRequest request = context.getRequest();
+		HttpServletResponse response = context.getResponse();
+
+		return (String)context.getSessionAttribute("attr");
+	}
+	
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
 	 * the best source and respecting the number of result items per page. This ResultPage object
@@ -108,6 +139,27 @@ public class SearchSessionService {
 	 * @return the SeeAlso object associated with the result item.
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
+//		int id = SemplorePool.acquire();
+//		QueryEvaluator eval = SemplorePool.getEvaluator(id);
+//		ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso("dblp", 1, resultItemURL);
+//		SemplorePool.release(id);
+//		
+//		SeeAlso seeAlso = new SeeAlso();
+//		
+//		LinkedList ll = new LinkedList();
+//		for(SchemaObjectInfoForMultiDataSources s : array) {
+//			Instance ins = new Instance();
+//			ins.setLabel(s.getLabel());
+//			Source source = new Source();
+//			source.setName(s.getDataSource());
+//			ins.setSource(source);
+//			ins.setURI(s.getURI());
+//			ll.add(ins);
+//		}
+//		seeAlso.setFacetList(ll);
+//		ResultPage rp;
+//		seeAlso.setResultItem(this.currentResult);
+//		return seeAlso;
 		return null;
 	}
 
@@ -121,6 +173,16 @@ public class SearchSessionService {
 	 * @return the ArraySnippet object associated with the result item.
 	 */
 	public ArraySnippet getArraySnippet(int resultItemURL) {
+//		int id = SemplorePool.acquire();
+//		QueryEvaluator eval = SemplorePool.getEvaluator(id);
+//		
+//		eval.getArraySnippet(, this.currentResult.getDocID(3), resultItemURL);
+//		SemplorePool.release(id);
+//		
+//		ArraySnippet as = new ArraySnippet();
+//		as.get
+//		
+		
 		return null;
 	}
 
