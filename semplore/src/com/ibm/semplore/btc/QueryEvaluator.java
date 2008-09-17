@@ -65,7 +65,7 @@ public interface QueryEvaluator {
 	 * @param URI
 	 * @return
 	 */
-	public ArrayList<SchemaObjectInfo> getSeeAlso(String dataSource, int docID,
+	public ArrayList<SchemaObjectInfoForMultiDataSources> getSeeAlso(String dataSource, int docID,
 			String URI);
 
 	/**

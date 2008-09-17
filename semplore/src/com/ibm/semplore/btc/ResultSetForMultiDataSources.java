@@ -4,7 +4,7 @@ import java.util.HashMap;
 
 import com.ibm.semplore.search.XFacetedResultSet;
 
-public interface ResultSetFromMultiDataSources extends XFacetedResultSet {
+public interface ResultSetForMultiDataSources extends XFacetedResultSet {
 
 	/**
 	 * Return the data source facets, each facet consists of (data source name,
