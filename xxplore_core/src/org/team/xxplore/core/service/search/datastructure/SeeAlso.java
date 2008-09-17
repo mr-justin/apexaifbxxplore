@@ -2,18 +2,16 @@ package org.team.xxplore.core.service.search.datastructure;
 
 import java.util.LinkedList;
 
-import org.dom4j.Document;
-
 /**
  * This class contains the elements to implement the "see also" fonctionality
  * @author tpenin
  */
-public class SeeAlso implements XMLSerializable {
+public class SeeAlso {
 	
 	// The result item this SeeAlso object is attached to
-	private ResultItem resultItem;
+	public ResultItem resultItem;
 	// The list of instances attaached to the result item
-	private LinkedList<Instance> facetList;
+	public LinkedList<Instance> facetList;
    
 	/**
 	 * Default constructor
@@ -31,14 +29,6 @@ public class SeeAlso implements XMLSerializable {
 	public SeeAlso(ResultItem resultItem, LinkedList<Instance> facetList) {
 		this.resultItem = resultItem;
 		this.facetList = facetList;
-	}
-	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**

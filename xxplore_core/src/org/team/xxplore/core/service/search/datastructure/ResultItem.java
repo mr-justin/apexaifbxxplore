@@ -1,25 +1,23 @@
 package org.team.xxplore.core.service.search.datastructure;
 
-import org.dom4j.Document;
-
 /**
  * This class represent a result item, that is to say a single document found by the engine
  * @author tpenin
  */
-public class ResultItem implements XMLSerializable {
+public class ResultItem {
 
 	// The URL that uniquely identify the result item
-	private String URL;
+	public String URL;
 	// The score of this result item in its source according to the ranking algorithm of the search engine
-	private double score;
+	public double score;
 	// The source of this result item
-	private Source source;
+	public Source source;
 	// The type of this result item (text document, picture, etc.)
-	private String type;
+	public String type;
 	// The title of this result item as it will be displayed
-	private String title;
+	public String title;
 	// The text snippet associated with the result item
-	private String snippet;
+	public String snippet;
 	
 	/**
 	 * Default constructor
@@ -49,14 +47,6 @@ public class ResultItem implements XMLSerializable {
 		this.type = type;
 		this.title = title;
 		this.snippet = snippet;
-	}
-	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	/**

@@ -9,6 +9,8 @@ import org.jgrapht.Graphs;
  */
 public class QueryGraph extends Graphs implements Query {
    
+	public String NLText;
+	
 	/**
 	 * Default constructor
 	 */

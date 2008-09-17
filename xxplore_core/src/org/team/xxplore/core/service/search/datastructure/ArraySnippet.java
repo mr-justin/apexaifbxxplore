@@ -2,30 +2,28 @@ package org.team.xxplore.core.service.search.datastructure;
 
 import java.util.LinkedList;
 
-import org.dom4j.Document;
-
 /**
  * This class contains the elements to implement the "array snippet" fonctionality
  * @author tpenin
  */
-public class ArraySnippet implements XMLSerializable  {
+public class ArraySnippet  {
 	
 	// The result item this ArraySnippet object is attached to
-	private ResultItem resultItem;
+	public ResultItem resultItem;
 	// The list of relation-attribute couples attached to this result item
-	private LinkedList<Couple<Relation, Attribute>> relation_attribute;
+	public LinkedList<Couple> relation_attribute;
 	// The list of attribute-value couples attached to this result item. Note that the value can be a litteral or not
-	private LinkedList<Couple<Attribute, Facet>> attribute_value;
+	public LinkedList<Couple> attribute_value;
 	// The list of the classes attached to this result item
-	private LinkedList<Concept> classeList;
+	public LinkedList<Concept> classeList;
 	
 	/**
 	 * Default constructor
 	 */
 	public ArraySnippet() {
 		this.resultItem = null;
-		this.relation_attribute = new LinkedList<Couple<Relation, Attribute>>();
-		this.attribute_value = new LinkedList<Couple<Attribute, Facet>>();
+		this.relation_attribute = new LinkedList<Couple>();
+		this.attribute_value = new LinkedList<Couple>();
 		this.classeList = new LinkedList<Concept>();
 	}
 
@@ -37,32 +35,24 @@ public class ArraySnippet implements XMLSerializable  {
 	 * that the value can be a litteral or not
 	 * @param classeList The list of the classes attached to this result item
 	 */
-	public ArraySnippet(ResultItem resultItem, LinkedList<Couple<Relation, Attribute>> relation_attribute, LinkedList<Couple<Attribute, Facet>> attribute_value, LinkedList<Concept> classeList) {
+	public ArraySnippet(ResultItem resultItem, LinkedList<Couple> relation_attribute, LinkedList<Couple> attribute_value, LinkedList<Concept> classeList) {
 		this.resultItem = resultItem;
 		this.relation_attribute = relation_attribute;
 		this.attribute_value = attribute_value;
 		this.classeList = classeList;
 	}
-	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
-	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	/**
 	 * @return the attribute_value
 	 */
-	public LinkedList<Couple<Attribute, Facet>> getAttribute_value() {
+	public LinkedList<Couple> getAttribute_value() {
 		return this.attribute_value;
 	}
 
 	/**
 	 * @param attribute_value the attribute_value to set
 	 */
-	public void setAttribute_value(LinkedList<Couple<Attribute, Facet>> attribute_value) {
+	public void setAttribute_value(LinkedList<Couple> attribute_value) {
 		this.attribute_value = attribute_value;
 	}
 
@@ -83,7 +73,7 @@ public class ArraySnippet implements XMLSerializable  {
 	/**
 	 * @return the relation_attribute
 	 */
-	public LinkedList<Couple<Relation, Attribute>> getRelation_attribute() {
+	public LinkedList<Couple> getRelation_attribute() {
 		return this.relation_attribute;
 	}
 
@@ -91,7 +81,7 @@ public class ArraySnippet implements XMLSerializable  {
 	 * @param relation_attribute the relation_attribute to set
 	 */
 	public void setRelation_attribute(
-			LinkedList<Couple<Relation, Attribute>> relation_attribute) {
+			LinkedList<Couple> relation_attribute) {
 		this.relation_attribute = relation_attribute;
 	}
 
