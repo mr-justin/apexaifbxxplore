@@ -25,7 +25,7 @@ public interface QueryEvaluator {
 	 * @return
 	 * @throws Exception
 	 */
-	public XFacetedResultSet evaluate(QueryPlanner planner) throws Exception;
+	public XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner) throws Exception;
 
 	/**
 	 * Evaluate a query given its graph.
@@ -34,7 +34,7 @@ public interface QueryEvaluator {
 	 * @return
 	 * @throws Exception
 	 */
-	public XFacetedResultSet evaluate(Graph graph) throws Exception;
+	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception;
 
 	/**
 	 * Evaluate a query given its graph and some start cache, each cache
@@ -45,7 +45,7 @@ public interface QueryEvaluator {
 	 * @return
 	 * @throws Exception
 	 */
-	public XFacetedResultSet evaluate(Graph graph,
+	public XFacetedResultSetForMultiDataSources evaluate(Graph graph,
 			HashMap<Integer, DocStream> startCache) throws Exception;
 
 	/**
