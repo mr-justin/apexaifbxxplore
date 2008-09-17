@@ -1,6 +1,7 @@
 package com.ibm.semplore.btc.mapping;
 import java.io.File;
 import java.io.InputStream;
+import java.util.HashMap;
 import java.util.Properties;
 
 import com.ibm.semplore.config.Config;
@@ -33,11 +34,11 @@ public class MappingIndexPreparer {
 		this.dsCollector = new DatasourceCollector(new File("."));
 		
 		try {
-			Properties config = Config.readConfigFile(datasrc.getAbsolutePath());
-			path_of_ds1 = new File(config.getProperty(ds1));
-			path_of_ds2 = new File(config.getProperty(ds2));
-			ds1_i = (Integer) config.get(ds1+"_i");
-			ds2_i = (Integer) config.get(ds2+"_i");
+			HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
+			path_of_ds1 = new File((String)config.get(ds1));
+			path_of_ds2 = new File((String)config.get(ds2));
+			ds1_i = (Integer) config.get(ds1+".i");
+			ds2_i = (Integer) config.get(ds2+".i");
 		} catch (Exception e) {
 			System.err.println(String.format("Error while reading datasrc.cfg for %s, %s", ds1, ds2));
 		}
