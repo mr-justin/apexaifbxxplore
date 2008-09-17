@@ -12,6 +12,7 @@ import java.util.Set;
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.Datatype;
+import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
@@ -251,6 +252,10 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 			return ((Datatype)resource).getUri().equals(((Datatype)vertex.getResource()).getUri());
 		else if(resource instanceof Property && vertex.getResource() instanceof Property)
 			return ((Property)resource).getUri().equals(((Property)vertex.getResource()).getUri());
+		else if(resource instanceof Literal&& vertex.getResource() instanceof Literal)
+			return ((Literal)resource).getLiteral().equals(((Literal)vertex.getResource()).getLiteral());
+//		if(resource.getClass().equals(vertex.getResource().getClass()))
+//		System.out.println(resource.getClass());
 		return false;
 	}
 	

@@ -28,10 +28,11 @@ public class SummaryGraphValueElement extends SummaryGraphElement{
 	}
 	
 	public Map<IDataProperty, Collection<INamedConcept>> getNeighbors(){
-		return null;
+//		System.out.println(neighbors==null);
+		return neighbors;
 	}	
 	
 	public void setNeighbors(Map<IDataProperty, Collection<INamedConcept>> neighbor) {
-		this.neighbors = neighbors;
+		this.neighbors = neighbor;
 	}
 }
