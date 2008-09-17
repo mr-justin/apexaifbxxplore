@@ -16,5 +16,5 @@ public interface XFacetedResultSetForMultiDataSources extends XFacetedResultSet 
 	 * Return the data source facets, each facet consists of (data source name,
 	 * count).
 	 */
-	public HashMap<String, Integer> getDataSourceFacet();
+	public HashMap<String, Integer> getDataSourceFacets();
 }
