@@ -5,66 +5,78 @@ package com.ibm.semplore.btc;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 
-import com.ibm.semplore.search.SearchHelper;
+import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.search.XFacetedResultSet;
+import com.ibm.semplore.xir.DocStream;
 
 /**
  * @author linna
  * 
  */
 public interface QueryEvaluator {
-	
+
 	/**
 	 * Evaluate a query given its query planner.
+	 * 
 	 * @param facetedQuery
 	 * @return
 	 * @throws Exception
 	 */
 	public XFacetedResultSet evaluate(QueryPlanner planner) throws Exception;
-	
+
 	/**
 	 * Evaluate a query given its graph.
+	 * 
 	 * @param graph
 	 * @return
 	 * @throws Exception
 	 */
 	public XFacetedResultSet evaluate(Graph graph) throws Exception;
-	
+
 	/**
-	 * Evaluate a query given its graph and some start cache.
+	 * Evaluate a query given its graph and some start cache, each cache
+	 * consists of (index of node, result doc stream).
+	 * 
 	 * @param graph
-	 * @param helper
+	 * @param cache
 	 * @return
 	 * @throws Exception
 	 */
-	public XFacetedResultSet evaluate(Graph graph, SearchHelper helper) throws Exception;
-	
+	public XFacetedResultSet evaluate(Graph graph,
+			HashMap<Integer, DocStream> startCache) throws Exception;
+
 	/**
 	 * 
 	 * @param map
 	 */
 	public void setPathOfDataSource(Hashtable<String, File> map);
-	
+
 	public void setPathOfMappingIndex(File path);
-	
-	/**
-	 * get instances which has mapping to given instance
-	 * @param ds
-	 * @param instance
-	 */
-	public ArrayList<String> getSeeAlso(String ds, String instance);
-	
-	/**
-	 * get information about given instance 
-	 * @param ds
-	 * @param instance
-	 */
-	public String getArraySnippet(String ds, String instance);
 
 	/**
-	 * get datasource facet of last evaluation
+	 * Get instances which has mapping to given an instance that is represented
+	 * by (data source, doc id, URI).
+	 * 
+	 * @param dataSource
+	 * @param docID
+	 * @param URI
+	 * @return
 	 */
-	public ArrayList<String> getDatasourceFacet();	
+	public ArrayList<SchemaObjectInfo> getSeeAlso(String dataSource, int docID,
+			String URI);
+
+	/**
+	 * Get information about given an instance that is represented by (data
+	 * source, doc id, URI).
+	 * 
+	 * @param dataSource
+	 * @param docID
+	 * @param URI
+	 * @return
+	 */
+	public String getArraySnippet(String dataSource, int docID, String URI);
+
 }

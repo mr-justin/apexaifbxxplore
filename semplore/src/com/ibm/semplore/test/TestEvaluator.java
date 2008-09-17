@@ -1,8 +1,10 @@
-package com.ibm.semplore.btc;
+package com.ibm.semplore.test;
 
 import java.io.File;
 import java.util.Hashtable;
 
+import com.ibm.semplore.btc.Graph;
+import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 import com.ibm.semplore.model.Edge;
@@ -13,7 +15,6 @@ import com.ibm.semplore.search.SearchHelper;
 import com.ibm.semplore.search.XFacetedResultSet;
 import com.ibm.semplore.search.impl.DocStreamHintImpl;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
-import com.ibm.semplore.test.TestSearch;
 import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 
 public class TestEvaluator {
