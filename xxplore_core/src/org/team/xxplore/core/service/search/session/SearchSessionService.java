@@ -270,7 +270,11 @@ public class SearchSessionService {
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
 		try {
-			XFacetedResultSetForMultiDataSources currentResult = (XFacetedResultSetForMultiDataSources)FlexContext.getFlexSession().getAttribute("currentResult");
+			if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
+				(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+			XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
+			
 			ArrayList<ResultItem> result = getResultList(currentResult);
 			int index;
 			for(index = 0;index < result.size();index++) {
@@ -320,7 +324,11 @@ public class SearchSessionService {
 	 */
 	public ArraySnippet getArraySnippet(String resultItemURL) {
 		try {
-			XFacetedResultSetForMultiDataSources currentResult = (XFacetedResultSetForMultiDataSources)FlexContext.getFlexSession().getAttribute("currentResult");
+			if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
+				(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+			XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
+			
 			ArrayList<ResultItem> result = getResultList(currentResult);
 			int index;
 			for(index = 0;index < result.size();index++) {
