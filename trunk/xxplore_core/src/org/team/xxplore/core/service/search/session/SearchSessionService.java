@@ -20,6 +20,7 @@ import org.team.xxplore.core.service.search.datastructure.Source;
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
+import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -323,6 +324,10 @@ public class SearchSessionService {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+	
+	private ArrayList<ResultItem> getResultList(XFacetedResultSet xrs) {
 		return null;
 	}
 
