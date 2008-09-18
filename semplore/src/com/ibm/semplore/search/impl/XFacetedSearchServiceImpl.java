@@ -57,7 +57,7 @@ public class XFacetedSearchServiceImpl implements XFacetedSearchService
      */
     public XFacetedSearchable getXFacetedSearchable() throws Exception
     {
-        IndexReader insIR = indexService.getIndexReader(IndexService.IndexType.Instance);        
+        IndexReader insIR = indexService.getReadOnlyIndexReader(IndexService.IndexType.Instance);        
         return new XFacetedSearchableImpl(insIR, config);
     }
 

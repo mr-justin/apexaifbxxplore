@@ -54,6 +54,14 @@ public interface IndexService {
 	public IndexReader getIndexReader(IndexType indexType) throws IOException;
 
 	/**
+	 * Return an read only index reader(without obtaining lock), given the index path.
+	 * @param indexType
+	 * @return
+	 * @throws IOException
+	 */
+	public IndexReader getReadOnlyIndexReader(IndexType indexType) throws IOException;
+	
+	/**
 	 * Returns an index writer, given the index path.
 	 * @param indexType  the index id that want to write
 	 * @param create True to overwrite existing, false to add on existing
