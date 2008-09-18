@@ -302,8 +302,51 @@ public class SearchSessionService {
 		return null;
 	}
 	
-	private ArrayList<ResultItem> getResultList(XFacetedResultSet xrs) {
-		return null;
+	private ArrayList<ResultItem> getResultList(XFacetedResultSetForMultiDataSources xres) {
+		try {
+			//set active source
+			Source activeSource = new Source(xres.getCurrentDataSource(), null, xres.getLength());
+			LinkedList<Facet> facetList = new LinkedList<Facet>();
+			//add category facets
+			com.ibm.semplore.search.Facet[] semploreFacets = xres.getCategoryFacets();
+			for (int i=0; i<semploreFacets.length; i++) {
+				SchemaObjectInfo info = semploreFacets[i].getInfo();
+				Facet facet = new Facet(info.getLabel(), info.getURI(), activeSource);
+				facetList.add(facet);
+			}
+			//add relation facets
+			semploreFacets = xres.getRelationFacets();
+			for (int i=0; i<semploreFacets.length; i++) {
+				SchemaObjectInfo info = semploreFacets[i].getInfo();
+				Facet facet = new Facet(info.getLabel(), info.getURI(), activeSource);
+				facetList.add(facet);
+			}
+			activeSource.setFacetList(facetList);
+			
+			//always make the active source the first element of the source list
+			LinkedList<Source> sourceList = new LinkedList<Source>();
+			sourceList.add(activeSource);
+			
+			//set the other sources of the source list
+			for (Entry<String, Integer> entry:xres.getDataSourceFacets().entrySet()) {
+				Source s = new Source(entry.getKey(),null,entry.getValue());
+				sourceList.add(s);
+			}
+			
+			//set result item list
+			ArrayList<ResultItem> resultItemList = new ArrayList<ResultItem>();
+			//e.g. pageNum=2, nbResultsPerPage=5 ==> start=5, end=10
+
+			for (int i=0; i<xres.getLength(); i++) {
+				SchemaObjectInfo info = xres.getResult(i);
+				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), activeSource, "text document", info.getLabel(), xres.getSnippet(i));
+				resultItemList.add(item);
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
