@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -21,8 +22,10 @@ import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.NodeInSubGraph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.QueryPlanner;
+import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.SubGraph;
 import com.ibm.semplore.btc.Visit;
+import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -58,6 +61,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	//stores ResultSets inside SubGraphs
 	private HashMap<SubGraph, HashMap<Integer, DocStream>> result;
 	private XFacetedResultSet targetResult;
+	private String targetDataSource;
 	//visited subgraphs' IDs
 	private HashSet<Integer> visited;
 	private File mappingIndex;
@@ -68,12 +72,12 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	 * @see com.ibm.semplore.btc.QueryEvaluator#evaluate(com.ibm.semplore.btc.QueryPlanner)
 	 */
 	@Override
-	public XFacetedResultSet evaluate(QueryPlanner planner) throws Exception {
+	public XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner) throws Exception {
 		result = new HashMap<SubGraph, HashMap<Integer, DocStream>>();
 		visited = new HashSet<Integer>();
 		targetResult = null;
 		planner.startTraverse(new PreVisit(), new PostVisit());
-		return targetResult;
+		return new XFacetedResultSetForMultiDataSourcesImpl(computeDSFacet(), targetResult);
 	}
 
 	private class PreVisit implements Visit {
@@ -103,10 +107,10 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 				
 				if (parent==null) {
 					//need facet if isRoot
+					targetDataSource = g.getDataSource();
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
-					//TODO compute datasource facet
 					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 				}
 				else {
@@ -130,7 +134,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					//convert ans from this subgraph's ID's to its parent's
 					time = System.currentTimeMillis();
 					int origLen = ans.getLen();
-					ans = convertID(g.getDataSource(),parent.getDataSource(), ans, origResult);
+					ans = convertID(g.getDataSource()+"_"+parent.getDataSource()+"_index", ans, origResult);
 					System.out.println(String.format("%s(%d)->%s(%d): %dms", 
 							g.getDataSource(), origLen, 
 							parent.getDataSource(),	ans.getLen(), System.currentTimeMillis()-time));
@@ -144,10 +148,10 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		}
 	}
 	
-	private HashMap<Integer, Integer> loadIndexHead(String fromDS, String toDS) throws IOException {
-		if (indexhead_cache.get(fromDS+"_"+toDS)!=null) indexhead_cache.get(fromDS+"_"+toDS);
+	private HashMap<Integer, Integer> loadIndexHead(String file) throws IOException {
+		if (indexhead_cache.get(file)!=null) indexhead_cache.get(file);
 		DataInputStream fhead = new DataInputStream(new BufferedInputStream(new FileInputStream(
-				mappingIndex.getPath() + File.separatorChar + fromDS+"_" + toDS + "_index.head")));
+				mappingIndex.getPath() + File.separatorChar + file + ".head")));
 		int len = fhead.available()/8;
 		HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
 		for (int i=0; i<len; i++) {
@@ -156,15 +160,15 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			map.put(docid, pos);
 		}
 		fhead.close();
-		indexhead_cache.put(fromDS+"_"+toDS, map);
+		indexhead_cache.put(file, map);
 		return map;
 	}
 	
-	private DocStream convertID(String fromDS, String toDS, DocStream from, DocStream to) throws Exception {
-		HashMap<Integer, Integer> head = loadIndexHead(fromDS, toDS);
+	private DocStream convertID(String file, DocStream from, DocStream to) throws Exception {
+		HashMap<Integer, Integer> head = loadIndexHead(file);
 		TreeSet<Integer> results = new TreeSet<Integer>();
 		RandomAccessFile fmap = new RandomAccessFile(
-				mappingIndex.getPath() + File.separatorChar + fromDS+"_" + toDS + "_index.map", "r");
+				mappingIndex.getPath() + File.separatorChar + file +".map", "r");
 
 		from.init();
 		for (int i=0; i<from.getLen(); i++, from.next()) {
@@ -190,6 +194,17 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		DocStream resultStream = new TreeSetDocStream(results);
 		
 		return resultStream;
+	}
+	
+	private ArrayList<String> computeDSFacet() throws Exception {
+		DocStream doc = convertID(targetDataSource+"_ds", targetResult.getResultStream(), null);
+		
+		ArrayList<String> arr = new ArrayList<String>();
+		doc.init();
+		for (int i=0; i<doc.getLen(); i++, doc.next()) {
+			arr.add(dataSources.get( doc.doc() ));
+		}
+		return arr;
 	}
 
 	public QueryEvaluatorImpl()  {
@@ -257,11 +272,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		
 		QueryEvaluatorImpl eva = new QueryEvaluatorImpl();
 		eva.setPathOfMappingIndex(new File("."));
-		DocStream result = eva.convertID("dbpedia", "dblp", doc, null);
+		DocStream result = eva.convertID("dbpedia_dblp_index", doc, null);
 		DebugIndex.printDocStream(indexReader2, result);
 	}
 
-	public XFacetedResultSet evaluate(Graph graph) throws Exception {
+	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception {
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
 		QueryPlanner planner = new QueryPlannerImpl();
@@ -269,7 +284,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		return evaluate(planner);
 	}
 
-	public XFacetedResultSet evaluate(Graph graph, SearchHelper helper) throws Exception {
+	public XFacetedResultSetForMultiDataSources evaluate(Graph graph, HashMap<Integer, DocStream> startCache) throws Exception {
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
 		QueryPlanner planner = new QueryPlannerImpl();
@@ -277,4 +292,18 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		//TODO use helper
 		return evaluate(planner);
 	}
+
+	@Override
+	public String getArraySnippet(String dataSource, int docID, String URI) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SchemaObjectInfoForMultiDataSources> getSeeAlso(
+			String dataSource, int docID, String URI) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
