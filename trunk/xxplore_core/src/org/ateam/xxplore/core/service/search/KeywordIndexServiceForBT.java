@@ -314,9 +314,11 @@ public class KeywordIndexServiceForBT implements IService{
 
 	@SuppressWarnings("deprecation")
 	public void indexDataSourceByIndividual (IndexWriter indexWriter, String ds, SesameDao sd) throws Exception{
+		System.out.println("start indexing by individual");
 		HashSet<String> indSet = new HashSet<String>();
 		sd.findAllTriples();
 		int count = 0;
+		SesameDao sdd = new SesameDao(SesameDao.indexRoot);
 		while (sd.hasNext()) {
 			sd.next();
 			count++;
@@ -324,7 +326,7 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println(count);
 			if(!sd.getObjectType().equals(SesameDao.LITERAL))
 				continue;
-			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sd);
+			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sdd);
 		}
 		indSet.clear();
 	}
