@@ -290,7 +290,7 @@ public class KeywordIndexServiceForBT implements IService{
 			while(sd.hasNext()){
 				sd.next();
 				count++;
-				if(count%1000==0)
+				if(count%10000==0)
 					System.out.println(count);
 				if(!sd.getObjectType().equals(SesameDao.LITERAL))continue;
 				String literal = sd.getObject();
