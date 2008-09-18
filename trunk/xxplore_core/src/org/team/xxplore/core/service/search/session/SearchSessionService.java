@@ -269,7 +269,7 @@ public class SearchSessionService {
 	 * or when the users session expires.
 	 */
 	public void clear() {
-		
+		FlexContext.getFlexSession().setAttribute("resultHistory", null);
 	}
 	
 	/**
@@ -283,9 +283,18 @@ public class SearchSessionService {
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
 		try {
+			XFacetedResultSetForMultiDataSources currentResult = (XFacetedResultSetForMultiDataSources)FlexContext.getFlexSession().getAttribute("currentResult");
+			ArrayList<ResultItem> result = getResultList(currentResult);
+			int index;
+			for(index = 0;index < result.size();index++) {
+				if(result.get(index).getURL().equals(resultItemURL)) {
+					break;
+				}
+			}
+			
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso("dblp", 1, resultItemURL);
+			ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 			SemplorePool.release(id);
 			
 			SeeAlso seeAlso = new SeeAlso();
@@ -301,13 +310,7 @@ public class SearchSessionService {
 				ll.add(ins);
 			}
 			seeAlso.setFacetList(ll);
-			ArrayList<ResultItem> result = getResultList(currentResult);
-			for(ResultItem ri : result) {
-				if(ri.getURL().equals(resultItemURL)) {
-					seeAlso.setResultItem(ri);
-					break;
-				}
-			}
+
 			return seeAlso;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -330,10 +333,18 @@ public class SearchSessionService {
 	 */
 	public ArraySnippet getArraySnippet(String resultItemURL) {
 		try {
-			Graph graph = new GraphImpl();
+			XFacetedResultSetForMultiDataSources currentResult = (XFacetedResultSetForMultiDataSources)FlexContext.getFlexSession().getAttribute("currentResult");
+			ArrayList<ResultItem> result = getResultList(currentResult);
+			int index;
+			for(index = 0;index < result.size();index++) {
+				if(result.get(index).getURL().equals(resultItemURL)) {
+					break;
+				}
+			}
+			
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			String snippet_str = eval.getArraySnippet(graph.getDataSource(0), this.currentResult.getDocID(3), resultItemURL);
+			String snippet_str = eval.getArraySnippet(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 			SemplorePool.release(id);
 			
 			ArraySnippet as = this.getSnippet(snippet_str);
