@@ -71,11 +71,11 @@ public class SearchSessionService {
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
 			XFacetedResultSetForMultiDataSources result = eval.evaluate(graph);
+			SemplorePool.release(id);
 			LinkedList<XFacetedResultSetForMultiDataSources> toSession = new LinkedList<XFacetedResultSetForMultiDataSources>();
 			toSession.add(result);
 			ResultPage ret = transform(result, 1, nbResultsPerPage);
 			FlexContext.getFlexSession().setAttribute("resultHistory", toSession);
-			SemplorePool.release(id);
 			return ret;
 		} else {
 			return null;
