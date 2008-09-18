@@ -18,8 +18,6 @@ import org.team.xxplore.core.service.search.datastructure.ResultPage;
 import org.team.xxplore.core.service.search.datastructure.SeeAlso;
 import org.team.xxplore.core.service.search.datastructure.Source;
 
-import searchsession.SemplorePool;
-
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
@@ -342,7 +340,7 @@ public class SearchSessionService {
 				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), activeSource, "text document", info.getLabel(), xres.getSnippet(i));
 				resultItemList.add(item);
 			}
-			
+			return resultItemList;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
