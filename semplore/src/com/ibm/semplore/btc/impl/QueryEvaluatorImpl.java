@@ -73,18 +73,55 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	 */
 	@Override
 	public XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner) throws Exception {
+		return evaluate(planner, null);
+	}
+
+	protected XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner, HashMap<NodeInSubGraph, DocStream> startCache) throws Exception {
 		result = new HashMap<SubGraph, HashMap<Integer, DocStream>>();
+		if (startCache!=null) {
+			for (Entry<NodeInSubGraph, DocStream> i: startCache.entrySet()) {
+				NodeInSubGraph n = i.getKey();
+				HashMap<Integer, DocStream> map = result.get(
+						planner.getDecomposedGraph().getSubGraph(n.getSubGraphID()));
+				if(map==null) {
+					map = new HashMap<Integer, DocStream>();
+					result.put(
+							planner.getDecomposedGraph().getSubGraph(n.getSubGraphID()), map);
+				}
+				map.put(n.getNodeID(), i.getValue());
+			}
+		}
 		visited = new HashSet<Integer>();
 		targetResult = null;
 		planner.startTraverse(new PreVisit(), new PostVisit());
-		return new XFacetedResultSetForMultiDataSourcesImpl(computeDSFacet(), targetResult);
+		return new XFacetedResultSetForMultiDataSourcesImpl(targetDataSource, computeDSFacet(), targetResult);
+	}
+
+	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception {
+		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
+		DecomposedGraph dgraph = decomposer.decompose(graph);
+		QueryPlanner planner = new QueryPlannerImpl();
+		planner.setDecomposedGraph(dgraph);
+		return evaluate(planner);
+	}
+
+	public XFacetedResultSetForMultiDataSources evaluate(Graph graph, HashMap<Integer, DocStream> startCache) throws Exception {
+		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
+		DecomposedGraph dgraph = decomposer.decompose(graph);
+		QueryPlanner planner = new QueryPlannerImpl();
+		planner.setDecomposedGraph(dgraph);
+		HashMap<NodeInSubGraph, DocStream> cache = new HashMap<NodeInSubGraph, DocStream>();
+		for (Entry<Integer, DocStream> i: startCache.entrySet())
+			cache.put(decomposer.convertToInternalID(i.getKey()), i.getValue());
+		return evaluate(planner, cache);
 	}
 
 	private class PreVisit implements Visit {
 		public void visit(Object p, Object o) {
 			SubGraph parent = (SubGraph) p;
 			SubGraph g = (SubGraph)o;
-			result.put(g, new HashMap<Integer, DocStream>());
+			if (result.get(g)==null)
+				result.put(g, new HashMap<Integer, DocStream>());
 		}
 	}
 	private class PostVisit implements Visit {
@@ -111,6 +148,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
+					if (result.get(g).get(0)!=null) {
+						//root has startCache
+						DocStream root = result.get(g).get(0);
+						//TODO
+					}
 					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 				}
 				else {
@@ -196,14 +238,29 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		return resultStream;
 	}
 	
-	private ArrayList<String> computeDSFacet() throws Exception {
-		DocStream doc = convertID(targetDataSource+"_ds", targetResult.getResultStream(), null);
+	private HashMap<String, Integer> computeDSFacet() throws Exception {
+		HashMap<String, Integer> arr = new HashMap<String, Integer>();
 		
-		ArrayList<String> arr = new ArrayList<String>();
-		doc.init();
-		for (int i=0; i<doc.getLen(); i++, doc.next()) {
-			arr.add(dataSources.get( doc.doc() ));
+		HashMap<Integer, Integer> head = loadIndexHead(targetDataSource+"_ds");
+		RandomAccessFile fmap = new RandomAccessFile(
+				mappingIndex.getPath() + File.separatorChar + targetDataSource+"_ds" +".map", "r");
+
+		DocStream from = targetResult.getResultStream();
+		from.init();
+		for (int i=0; i<from.getLen(); i++, from.next()) {
+			int doc1 = from.doc();
+			Integer pos = head.get(doc1);
+			if (pos==null) continue;
+			fmap.seek(pos*4);
+			int doc2;
+			while ((doc2=fmap.readInt())!=-1) {
+				String ds = dataSources.get(doc2);
+				if (arr.get(ds)==null) arr.put(ds,1);
+				else arr.put(ds, arr.get(ds)+1);
+			}
 		}
+		fmap.close();
+		
 		return arr;
 	}
 
@@ -247,6 +304,18 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		mappingIndex = path;
 	}
 	
+	@Override
+	public String getArraySnippet(String dataSource, int docID, String URI) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<SchemaObjectInfoForMultiDataSources> getSeeAlso(
+			String dataSource, int docID, String URI) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	public static void main(String[] args) throws Exception {
 		SearchFactory searchFactory = SearchFactoryImpl.getInstance();
@@ -274,36 +343,6 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		eva.setPathOfMappingIndex(new File("."));
 		DocStream result = eva.convertID("dbpedia_dblp_index", doc, null);
 		DebugIndex.printDocStream(indexReader2, result);
-	}
-
-	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception {
-		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
-		DecomposedGraph dgraph = decomposer.decompose(graph);
-		QueryPlanner planner = new QueryPlannerImpl();
-		planner.setDecomposedGraph(dgraph);
-		return evaluate(planner);
-	}
-
-	public XFacetedResultSetForMultiDataSources evaluate(Graph graph, HashMap<Integer, DocStream> startCache) throws Exception {
-		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
-		DecomposedGraph dgraph = decomposer.decompose(graph);
-		QueryPlanner planner = new QueryPlannerImpl();
-		planner.setDecomposedGraph(dgraph);
-		//TODO use helper
-		return evaluate(planner);
-	}
-
-	@Override
-	public String getArraySnippet(String dataSource, int docID, String URI) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<SchemaObjectInfoForMultiDataSources> getSeeAlso(
-			String dataSource, int docID, String URI) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

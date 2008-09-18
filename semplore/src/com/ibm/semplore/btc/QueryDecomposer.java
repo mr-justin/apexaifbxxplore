@@ -18,4 +18,11 @@ public interface QueryDecomposer {
 	 */
 	public DecomposedGraph decompose(Graph graph);
 
+	/**
+	 * Convert an global id to its internal id
+	 * @param subgraph
+	 * @param gid
+	 * @return
+	 */
+	public NodeInSubGraph convertToInternalID(int gid);
 }

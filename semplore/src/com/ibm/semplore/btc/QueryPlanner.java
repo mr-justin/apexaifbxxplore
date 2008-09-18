@@ -17,6 +17,8 @@ public interface QueryPlanner {
 	 * @param degraph
 	 */
 	public void setDecomposedGraph(DecomposedGraph degraph);
+	
+	public DecomposedGraph getDecomposedGraph();
 
 	/**
 	 * @see com.ibm.semplore.btc.DecomposedGraph.startTraverse(); 

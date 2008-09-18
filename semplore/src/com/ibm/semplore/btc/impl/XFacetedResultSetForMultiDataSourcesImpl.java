@@ -4,6 +4,7 @@
 package com.ibm.semplore.btc.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.model.SchemaObjectInfo;
@@ -18,21 +19,23 @@ import com.ibm.semplore.xir.DocStream;
 public class XFacetedResultSetForMultiDataSourcesImpl implements
 		XFacetedResultSetForMultiDataSources {
 
-	public XFacetedResultSetForMultiDataSourcesImpl(ArrayList<String> ds,
+	public XFacetedResultSetForMultiDataSourcesImpl(String ds, HashMap<String, Integer> dsfacet,
 			XFacetedResultSet rs) {
 		this.ds = ds;
+		this.dsfacet = dsfacet;
 		this.rs = rs;
 	}
 
+	private String ds;
 	private XFacetedResultSet rs;
-	private ArrayList<String> ds;
+	private HashMap<String, Integer> dsfacet;
 	
 	/* (non-Javadoc)
 	 * @see com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources#getDataSourceFacet()
 	 */
 	@Override
-	public ArrayList<String> getDataSourceFacet() {
-		return ds;
+	public HashMap<String, Integer> getDataSourceFacets() {
+		return dsfacet;
 	}
 
 	/* (non-Javadoc)
@@ -153,6 +156,11 @@ public class XFacetedResultSetForMultiDataSourcesImpl implements
 	@Override
 	public String getSnippet(int index) throws Exception {
 		return rs.getSnippet(index);
+	}
+
+	@Override
+	public String getCurrentDataSource() {
+		return ds;
 	}
 
 }

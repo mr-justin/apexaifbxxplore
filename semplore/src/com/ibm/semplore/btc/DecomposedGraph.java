@@ -24,6 +24,8 @@ public interface DecomposedGraph {
 	 */
 	public Collection<SubGraph> getSubgraphs();
 	
+	public SubGraph getSubGraph(int subGraphID);
+	
 	/**
 	 * Set the target variable of the query graph.
 	 * @param node
