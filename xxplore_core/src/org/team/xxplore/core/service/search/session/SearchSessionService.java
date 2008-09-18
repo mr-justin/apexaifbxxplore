@@ -17,6 +17,8 @@ import org.team.xxplore.core.service.search.datastructure.ResultPage;
 import org.team.xxplore.core.service.search.datastructure.SeeAlso;
 import org.team.xxplore.core.service.search.datastructure.Source;
 
+import searchsession.SemplorePool;
+
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
@@ -30,12 +32,10 @@ import com.ibm.semplore.search.XFacetedResultSet;
 import com.ibm.semplore.search.impl.DocStreamHintImpl;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
 
+import flex.messaging.FlexContext;
+
 public class SearchSessionService {
 
-	private LinkedList<XFacetedResultSet> resultHistory = new LinkedList<XFacetedResultSet>();
-	private XFacetedResultSet currentResult;
-	private XFacetedResultSet lastResult;
-	
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
 	 * the best source and respecting the number of result items per page. This ResultPage object
@@ -55,7 +55,6 @@ public class SearchSessionService {
 	 *         source and respecting the number of result items per page.
 	 */
 	public ResultPage search(Query query, int nbResultsPerPage) throws Exception {
-
 		if (query instanceof QueryGraph) {
 			// TODO translate QueryGraph to GraphImpl for Semplore QueryEvaluator to execute
 			return null;
@@ -71,22 +70,11 @@ public class SearchSessionService {
 			graph.setTargetVariable(0);
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			currentResult = eval.evaluate(graph);
-			ArrayList<ResultItem> result = getResultList(currentResult);
-			
-			//TODO get facet and result count
-			
-			ResultPage ret = new ResultPage();
-			ret.setActiveSource(new Source(graph.getDataSource(0), new LinkedList<Facet>(), 0));
-			ret.setPageNum(1);
-			LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
-			for (int i = 0; i < nbResultsPerPage; i++) resultItemList.add(result.get(i));
-			ret.setResultItemList(resultItemList);
-			LinkedList<Source> sourceList = new LinkedList<Source>();
-			HashSet<Source> sourceSet = new HashSet<Source>();
-			for (Source s : sourceList) sourceSet.add(s);
-			for (Source s : sourceSet) sourceList.add(s);
-			ret.setSourceList(sourceList);
+			XFacetedResultSetForMultiDataSources result = eval.evaluate(graph);
+			LinkedList<XFacetedResultSetForMultiDataSources> toSession = new LinkedList<XFacetedResultSetForMultiDataSources>();
+			toSession.add(result);
+			ResultPage ret = transform(result, 1, nbResultsPerPage);
+			FlexContext.getFlexSession().setAttribute("resultHistory", toSession);
 			SemplorePool.release(id);
 			return ret;
 		} else {
