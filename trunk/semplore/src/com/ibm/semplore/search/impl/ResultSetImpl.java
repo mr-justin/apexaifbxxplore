@@ -127,6 +127,11 @@ public class ResultSetImpl implements ResultSet
 		return null;
 	}
 
+	@Override
+	public DocStream getResultStream() {
+		return resultStream;
+	}
+
 }
 
 /**

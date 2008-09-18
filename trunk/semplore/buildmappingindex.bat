@@ -19,4 +19,4 @@ cat %2.ds.sort | java -cp bin com.ibm.semplore.btc.mapping.MappingIndexBuilder %
 cat %3.ds.sort | java -cp bin com.ibm.semplore.btc.mapping.MappingIndexBuilder %3_ds.head %3_ds.map
 
 @rem cleanup
-del mapping.hash mapping.sort mapping.prepared %2_%3 %3_%2 %2.ds %3.ds %2.ds.sort %3.ds.sort
+del mapping.hash mapping.sort mapping.prepared %2_%3 %3_%2 %2.ds.sort %3.ds.sort

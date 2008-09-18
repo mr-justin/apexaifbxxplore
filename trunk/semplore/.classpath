@@ -8,12 +8,12 @@
 	<classpathentry kind="lib" path="lib/jakarta-commons-httpclient-3.0.1.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-commons-lang-2.3.jar"/>
 	<classpathentry kind="lib" path="lib/jakarta-commons-logging-1.1.jar"/>
-	<classpathentry kind="lib" path="lib/je-3.2.21.jar"/>
 	<classpathentry kind="lib" path="lib/law-1.4.jar"/>
 	<classpathentry kind="lib" path="lib/log4j-1.2.14.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-core-2.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/openrdf-sesame-2.2-beta2-onejar.jar"/>
 	<classpathentry kind="lib" path="lib/tar.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
+	<classpathentry kind="lib" path="lib/je-3.3.69.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
