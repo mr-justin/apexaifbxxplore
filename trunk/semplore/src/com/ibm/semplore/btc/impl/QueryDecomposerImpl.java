@@ -23,6 +23,7 @@ import com.ibm.semplore.model.GeneralCategory;
 public class QueryDecomposerImpl implements QueryDecomposer {
 	Graph graph;
 	
+	int numSubGraph = 0;
 	// the map from subquery id to subgraph
 	HashMap<Integer, SubGraph> map = new HashMap<Integer, SubGraph>();
 	// the map from one subquery id to its internal id mapping
@@ -30,6 +31,11 @@ public class QueryDecomposerImpl implements QueryDecomposer {
 	                   //global_id -> local_id
 	HashSet<Integer> visit_gid;
 
+	public NodeInSubGraph convertToInternalID(int gid) {
+		for (int i=0; i<numSubGraph; i++)
+			if (id.get(i).get(gid)!=null) return new NodeInSubGraphImpl( id.get(i).get(gid), i); 
+		return null;
+	}
 	
 	private void traverse(int gid, int qid) {
 		visit_gid.add(gid);
@@ -96,8 +102,10 @@ public class QueryDecomposerImpl implements QueryDecomposer {
 		traverse(graph.getTargetVariable(), 0); 
 
 		DecomposedGraphImpl dgraph = new DecomposedGraphImpl();
+		numSubGraph = 0;
 		for (SubGraph g:map.values()) {
 			dgraph.addSubGraph(g);
+			numSubGraph ++;
 		}
 		dgraph.setTargetVariable(new NodeInSubGraphImpl(0,0)); //(0,0) is because target is the first to visit
 		return dgraph;

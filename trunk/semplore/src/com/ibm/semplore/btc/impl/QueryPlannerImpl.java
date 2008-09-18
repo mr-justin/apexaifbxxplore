@@ -20,4 +20,9 @@ public class QueryPlannerImpl implements QueryPlanner {
 		degraph.startTraverse(pre, post);
 	}
 
+	@Override
+	public DecomposedGraph getDecomposedGraph() {
+		return degraph;
+	}
+
 }

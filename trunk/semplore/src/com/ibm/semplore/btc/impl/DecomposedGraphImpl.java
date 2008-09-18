@@ -5,9 +5,9 @@ package com.ibm.semplore.btc.impl;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.TreeMap;
 
 import com.ibm.semplore.btc.DecomposedGraph;
 import com.ibm.semplore.btc.NodeInSubGraph;
@@ -19,7 +19,7 @@ import com.ibm.semplore.btc.Visit;
  *
  */
 public class DecomposedGraphImpl implements DecomposedGraph {
-	TreeMap<Integer, SubGraph> subgraphs = new TreeMap<Integer, SubGraph>(); 
+	HashMap<Integer, SubGraph> subgraphs = new HashMap<Integer, SubGraph>(); 
 //	ArrayList<SubGraph> subgraphs = new ArrayList<SubGraph>();
 	NodeInSubGraph targetVariable;
 
@@ -80,5 +80,10 @@ public class DecomposedGraphImpl implements DecomposedGraph {
 			}
 		}
 		return arr;
+	}
+
+	@Override
+	public SubGraph getSubGraph(int subGraphID) {
+		return subgraphs.get(subGraphID);
 	}
 }
