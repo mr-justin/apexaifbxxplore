@@ -13,6 +13,7 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
@@ -23,11 +24,11 @@ import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.apache.log4j.Logger;
 import org.ateam.xxplore.core.service.IServiceListener;
-import org.ateam.xxplore.core.service.mapping.Mapping;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.Pseudograph;
 import org.jgrapht.graph.WeightedPseudograph;
+import org.team.xxplore.core.service.search.datastructure.QueryGraph;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -38,8 +39,6 @@ import org.xmedia.oms.query.ConceptMemberPredicate;
 import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
 import org.xmedia.oms.query.Variable;
-
-import sun.dc.pr.PRError;
 
 public class QueryInterpretationService implements IQueryInterpretationService {
 
@@ -70,23 +69,23 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		
 		QueryInterpretationService inter = new QueryInterpretationService();
 		SesameDao.root = "D:\\semplore\\";
-		Collection<Map<String,Collection<OWLPredicate>>> res = inter.computeQueries(new KeywordIndexServiceForBT("D:\\semplore\\wordnet-keywordIndex",false).searchKb("word net", 0),null,0,0);
+		LinkedList<Subgraph> res = inter.computeQueries(new KeywordIndexServiceForBT("D:\\semplore\\wordnet-keywordIndex",false).searchKb("word net", 0),null,10,10);
 //		System.out.println(res==null);
-		for(Map<String,Collection<OWLPredicate>> map: res)
-		{
-			System.out.println("=====================");
-			for(String name: map.keySet())
-			{
-				System.out.println("<<<"+name);
-				Collection<OWLPredicate> preds = map.get(name);
-				for(OWLPredicate pred: preds)
-					System.out.println(pred);
-			}
-		}
+//		for(Map<String,Collection<OWLPredicate>> map: res)
+//		{
+//			System.out.println("=====================");
+//			for(String name: map.keySet())
+//			{
+//				System.out.println("<<<"+name);
+//				Collection<OWLPredicate> preds = map.get(name);
+//				for(OWLPredicate pred: preds)
+//					System.out.println(pred);
+//			}
+//		}
 		
 	}
 	
-	public Collection<Map<String,Collection<OWLPredicate>>> computeQueries(Map<String,Collection<SummaryGraphElement>> elements, 
+	public LinkedList<Subgraph> computeQueries(Map<String,Collection<SummaryGraphElement>> elements, 
 			MappingIndexService index, int distance, int k) {
 
 		if (elements == null) return null;
@@ -97,11 +96,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //				if(elem instanceof SummaryGraphValueElement)
 //					System.out.println(((SummaryGraphValueElement)elem).getNeighbors()==null);
 //		}
-		Collection<Map<String,Collection<OWLPredicate>>> results = new ArrayList<Map<String,Collection<OWLPredicate>>>();
+//		Collection<Map<String,Collection<OWLPredicate>>> results = new ArrayList<Map<String,Collection<OWLPredicate>>>();
 
 
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements); 
-		
+		if(sumGraphs == null)
+			return null;
 //		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph: sumGraphs)
 //		{
 //			System.out.println("===================");
@@ -114,25 +114,27 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //		==============by kaifengxu
 //		resourceGraph = (WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge>) ((ArrayList)sumGraphs).get(0);
 		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
+		if(resourceGraph == null)
+			return null;
 
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph, elements, distance, k);
 
 		if((subgraphs == null) || (subgraphs.size() == 0)) 
 			return null;
+		return (LinkedList<Subgraph>)subgraphs;
+//		for (Subgraph g : subgraphs){
+//			Map<String,Collection<OWLPredicate>> query = new HashMap<String, Collection<OWLPredicate>>();
+//			Collection<QueryGraph> qGraphs = getQuerygraphs(g);{
+//				if(qGraphs == null || qGraphs.size() == 0){
+//					for(QueryGraph qg : qGraphs){
+//						query.put(qg.getDatasource(), computeQuery(qg));
+//					}
+//				}
+//			}
+//			results.add(query);
+//		}
 
-		for (Subgraph g : subgraphs){
-			Map<String,Collection<OWLPredicate>> query = new HashMap<String, Collection<OWLPredicate>>();
-			Collection<QueryGraph> qGraphs = getQuerygraphs(g);{
-				if(qGraphs == null || qGraphs.size() == 0){
-					for(QueryGraph qg : qGraphs){
-						query.put(qg.getDatasource(), computeQuery(qg));
-					}
-				}
-			}
-			results.add(query);
-		}
-
-		return results;
+//		return results;
 	}
 
 	private Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>retrieveSummaryGraphs(Map<String, Collection<SummaryGraphElement>> elements){
@@ -344,7 +346,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 		ExpansionQueue expansionQueue = new ExpansionQueue(elements);
 		
-		List<Subgraph> subgraphList  = new ArrayList<Subgraph>();
+		List<Subgraph> subgraphList  = new LinkedList<Subgraph>();
 
 		Set<String> keywords = elements.keySet();
 		for(String keyword : keywords){
@@ -353,6 +355,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				expansionQueue.addCursor(cursor, keyword);
 			}
 		}
+		
 //		System.out.println(expansionQueue.isEmpty());
 		while (!expansionQueue.isEmpty()){
 			Cursor c = expansionQueue.pollMinCostCursor();
@@ -441,7 +444,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					Set<SummaryGraphEdge> outEdges = graph.outgoingEdgesOf(e);
 					Emergency.checkPrecondition(outEdges.size() == 1,"relation and attribute elements should have exactly one outgoing edge!");
 					SummaryGraphEdge outEdge = outEdges.iterator().next();
-
+					
 					qgEdges.add(new QueryGraphEdge(inEdge.getSource().getResource(), 
 							outEdge.getTarget().getResource(), (IProperty)e.getResource(), e.getType()));
 				}
@@ -796,6 +799,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			PriorityQueue<Cursor> minCostQ = null;
 			double minCost = 0; 
 			for (PriorityQueue<Cursor> q : m_queues){
+//				============by kaifengxu
+				if(q.peek()==null) continue;
 				double cCost = q.peek().getCost();
 				if(cCost < minCost || minCost == 0) {
 					minCost = cCost;
@@ -813,6 +818,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			double minCost = -1; 
 			if(m_queues == null || m_queues.size() == 0) return minCost;
 			for (PriorityQueue<Cursor> q : m_queues){
+
 				double cCost = q.peek().getCost();
 				if(cCost < minCost || minCost == 0) {
 					minCost = cCost;
