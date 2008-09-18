@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
 import org.team.xxplore.core.service.search.datastructure.Facet;
+import org.team.xxplore.core.service.search.datastructure.Instance;
 import org.team.xxplore.core.service.search.datastructure.Keywords;
 import org.team.xxplore.core.service.search.datastructure.Query;
 import org.team.xxplore.core.service.search.datastructure.QueryGraph;
@@ -18,6 +19,7 @@ import org.team.xxplore.core.service.search.datastructure.Source;
 
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
+import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -32,28 +34,6 @@ public class SearchSessionService {
 	private LinkedList<XFacetedResultSet> resultHistory = new LinkedList<XFacetedResultSet>();
 	private XFacetedResultSet currentResult;
 	private XFacetedResultSet lastResult;
-	
-//	public void setString(String str) {
-//		AMFContext context = AMFContext.getCurrentContext();
-//		HttpSession HttpSession = context.getSession();
-//		ServletContext ServletContext = context.getServletContext();
-//
-//		HttpServletRequest request = context.getRequest();
-//		HttpServletResponse response = context.getResponse();
-//
-//		context.setSessionAttribute("attr",str);
-//	}
-//	
-//	public String getString() {
-//		AMFContext context = AMFContext.getCurrentContext();
-//		HttpSession HttpSession = context.getSession();
-//		ServletContext ServletContext = context.getServletContext();
-//
-//		HttpServletRequest request = context.getRequest();
-//		HttpServletResponse response = context.getResponse();
-//
-//		return (String)context.getSessionAttribute("attr");
-//	}
 	
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
@@ -74,6 +54,7 @@ public class SearchSessionService {
 	 *         source and respecting the number of result items per page.
 	 */
 	public ResultPage search(Query query, int nbResultsPerPage) throws Exception {
+
 		if (query instanceof QueryGraph) {
 			// TODO translate QueryGraph to GraphImpl for Semplore QueryEvaluator to execute
 			return null;
@@ -296,7 +277,7 @@ public class SearchSessionService {
 	
 	/**
 	 * This method clears all results previously stored. This is typically done before a new search
-	 * or when the user¡¯s session expires.
+	 * or when the users session expires.
 	 */
 	public void clear() {
 		
@@ -312,27 +293,36 @@ public class SearchSessionService {
 	 * @return the SeeAlso object associated with the result item.
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
-//		int id = SemplorePool.acquire();
-//		QueryEvaluator eval = SemplorePool.getEvaluator(id);
-//		ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso("dblp", 1, resultItemURL);
-//		SemplorePool.release(id);
-//		
-//		SeeAlso seeAlso = new SeeAlso();
-//		
-//		LinkedList ll = new LinkedList();
-//		for(SchemaObjectInfoForMultiDataSources s : array) {
-//			Instance ins = new Instance();
-//			ins.setLabel(s.getLabel());
-//			Source source = new Source();
-//			source.setName(s.getDataSource());
-//			ins.setSource(source);
-//			ins.setURI(s.getURI());
-//			ll.add(ins);
-//		}
-//		seeAlso.setFacetList(ll);
-//		ResultPage rp;
-//		seeAlso.setResultItem(this.currentResult);
-//		return seeAlso;
+		try {
+			int id = SemplorePool.acquire();
+			QueryEvaluator eval = SemplorePool.getEvaluator(id);
+			ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso("dblp", 1, resultItemURL);
+			SemplorePool.release(id);
+			
+			SeeAlso seeAlso = new SeeAlso();
+			
+			LinkedList ll = new LinkedList();
+			for(SchemaObjectInfoForMultiDataSources s : array) {
+				Instance ins = new Instance();
+				ins.setLabel(s.getLabel());
+				Source source = new Source();
+				source.setName(s.getDataSource());
+				ins.setSource(source);
+				ins.setURI(s.getURI());
+				ll.add(ins);
+			}
+			seeAlso.setFacetList(ll);
+			ArrayList<ResultItem> result = getResultList(currentResult);
+			for(ResultItem ri : result) {
+				if(ri.getURL().equals(resultItemURL)) {
+					seeAlso.setResultItem(ri);
+					break;
+				}
+			}
+			return seeAlso;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -345,18 +335,24 @@ public class SearchSessionService {
 	 *            URL identifying the result item.
 	 * @return the ArraySnippet object associated with the result item.
 	 */
-	public ArraySnippet getArraySnippet(int resultItemURL) {
-//		int id = SemplorePool.acquire();
-//		QueryEvaluator eval = SemplorePool.getEvaluator(id);
-//		
-//		eval.getArraySnippet(, this.currentResult.getDocID(3), resultItemURL);
-//		SemplorePool.release(id);
-//		
-//		ArraySnippet as = new ArraySnippet();
-//		as.get
-//		
+	public ArraySnippet getArraySnippet(String resultItemURL) {
+		try {
+			Graph graph = new GraphImpl();
+			int id = SemplorePool.acquire();
+			QueryEvaluator eval = SemplorePool.getEvaluator(id);
+			String snippet_str = eval.getArraySnippet(graph.getDataSource(0), this.currentResult.getDocID(3), resultItemURL);
+			SemplorePool.release(id);
+			
+			ArraySnippet as = this.getSnippet(snippet_str);
+			return as;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return null;
 	}
-
+	
+	private ArraySnippet getSnippet(String snippet_str) {
+		return null;
+	}
 }
