@@ -311,4 +311,10 @@ public class IndexServiceImpl implements IndexService {
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public IndexReader getReadOnlyIndexReader(IndexType indexType)
+			throws IOException {
+		return new IndexReaderImpl(instanceIndexPath, indexType, true);
+	}
 }

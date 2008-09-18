@@ -24,6 +24,7 @@ import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.search.BooleanClause.Occur;
+import org.apache.lucene.store.FSDirectory;
 
 import com.ibm.semplore.xir.CompoundTerm;
 import com.ibm.semplore.xir.DocPositionStream;
@@ -41,6 +42,7 @@ public class IndexReaderImpl implements IndexReader {
 
 	protected final org.apache.lucene.index.IndexReader reader;
 	protected final IndexType type;
+	protected final FSDirectory directory;
 	
 	public org.apache.lucene.index.IndexReader getReader() {
 		return reader;
@@ -49,6 +51,14 @@ public class IndexReaderImpl implements IndexReader {
 	public IndexReaderImpl(String indexPath, IndexType type) throws IOException {
 		reader = org.apache.lucene.index.IndexReader.open(indexPath);
 		this.type = type;
+		directory = null;
+	}
+	
+	public IndexReaderImpl(String indexPath, IndexType type, boolean doDisableLocks) throws IOException {
+		directory = FSDirectory.getDirectory(indexPath);
+		directory.setDisableLocks(doDisableLocks);
+		reader = org.apache.lucene.index.IndexReader.open(directory);
+		this.type = type;
 	}
 	
 	/* (non-Javadoc)
@@ -56,6 +66,8 @@ public class IndexReaderImpl implements IndexReader {
 	 */
 	public void close() throws IOException {
 		reader.close();
+		if (directory!=null)
+			directory.close();
 	}
 
 	/* (non-Javadoc)
