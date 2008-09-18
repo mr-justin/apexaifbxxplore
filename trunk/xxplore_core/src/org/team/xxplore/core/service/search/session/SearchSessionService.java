@@ -232,22 +232,15 @@ public class SearchSessionService {
 	 * @return
 	 */
 	public ResultPage undoLastRefinement(int nbResultsPerPage) {
-		currentResult = lastResult;
-		ArrayList<ResultItem> result = getResultList(currentResult);
-		
-		//TODO get facet and result count
-		
-		ResultPage ret = new ResultPage();
-		ret.setActiveSource(new Source(graph.getDataSource(0), new LinkedList<Facet>(), 0));
-		ret.setPageNum(1);
-		LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
-		for (int i = 0; i < nbResultsPerPage; i++) resultItemList.add(result.get(i));
-		ret.setResultItemList(resultItemList);
-		LinkedList<Source> sourceList = new LinkedList<Source>();
-		HashSet<Source> sourceSet = new HashSet<Source>();
-		for (Source s : sourceList) sourceSet.add(s);
-		for (Source s : sourceSet) sourceList.add(s);
-		ret.setSourceList(sourceList);
+		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
+			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+		if (resultHistory.isEmpty()) return null;
+		resultHistory.removeLast();
+		XFacetedResultSetForMultiDataSources result = resultHistory.getLast();
+		ResultPage ret = transform(result, 1, nbResultsPerPage);
+		FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+		return ret;
 
 	}
 	
