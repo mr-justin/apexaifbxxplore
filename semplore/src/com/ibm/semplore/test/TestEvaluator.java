@@ -1,7 +1,7 @@
 package com.ibm.semplore.test;
 
 import java.io.File;
-import java.util.Hashtable;
+import java.util.HashMap;
 
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
@@ -16,6 +16,7 @@ import com.ibm.semplore.search.XFacetedResultSet;
 import com.ibm.semplore.search.impl.DocStreamHintImpl;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
 import com.ibm.semplore.util.Md5_BloomFilter_64bit;
+import com.ibm.semplore.xir.DocStream;
 
 public class TestEvaluator {
 	public static SchemaFactory schemaFactory = SchemaFactoryImpl.getInstance();
@@ -23,7 +24,7 @@ public class TestEvaluator {
 	public static void main(String[] args) throws Exception {
 		Graph graph = new GraphImpl();
 		//Concepts
-		graph.add(schemaFactory.createKeywordCategory("Princeton"));	//0
+		graph.add(schemaFactory.createKeywordCategory("University"));	//0
 		graph.add(schemaFactory.createUniversalCategory());				//1
 		graph.add(schemaFactory.createUniversalCategory());				//2
 		graph.add(schemaFactory.createUniversalCategory());				//3
@@ -43,15 +44,8 @@ public class TestEvaluator {
 		graph.setDataSource(3, "dblp");
 		
 		long time = System.currentTimeMillis();
-		QueryEvaluator eval = new QueryEvaluatorImpl();
+		QueryEvaluator eval = new QueryEvaluatorImpl(new File(args[0])); //points to config/datasrc.cfg
 
-		Hashtable<String, File> dsmap = new Hashtable<String,File>();
-		dsmap.put("dbpedia", new File("y:\\btc\\dbpedia_s\\index"));
-		dsmap.put("dblp", new File("y:\\btc\\dblp\\index"));
-		File mappath = new File("y:\\SSModel");
-		eval.setPathOfDataSource(dsmap);
-		eval.setPathOfMappingIndex(mappath);
-		
 		System.out.println("Begin Evaluation");
 		XFacetedResultSet result = eval.evaluate(graph);
 		System.out.println("Total Evaluation time(ms): "+(System.currentTimeMillis()-time));
@@ -61,15 +55,14 @@ public class TestEvaluator {
 		graph = new GraphImpl();
 		//Concepts
 		graph.add(schemaFactory.createCategory(Md5_BloomFilter_64bit.URItoID(
-		"<dblp/Category:Books>")));	//0
+			"<http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings>")));	//0
 		//target
 		graph.setTargetVariable(0);
 		//datasource
 		graph.setDataSource(0, "dblp");			
-		SearchFactory searchFactory = SearchFactoryImpl.getInstance();
-		SearchHelper helper = searchFactory.createSearchHelper();
-		helper.setHint(SearchHelper.START_CACHE_HINT, 0, new DocStreamHintImpl(result.getResultStream()));
-		eval.evaluate(graph, helper);		
+		HashMap<Integer, DocStream> cache = new HashMap<Integer, DocStream>();
+		cache.put(0, result.getResultStream());
+		result = eval.evaluate(graph, cache);		
 		TestSearch.showResultSet(result, null);		
 	}
 	

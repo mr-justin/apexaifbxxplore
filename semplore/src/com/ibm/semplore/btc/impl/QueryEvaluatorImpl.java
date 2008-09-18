@@ -148,11 +148,6 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
-					if (result.get(g).get(0)!=null) {
-						//root has startCache
-						DocStream root = result.get(g).get(0);
-						//TODO
-					}
 					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 				}
 				else {
@@ -279,7 +274,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		dataSources = new Hashtable<Integer, String>();
 		for (Object o :config.keySet()) {
 			if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
-			else if (o instanceof String) pathOfDataSource.put((String)o, new File((String)config.get(o)));
+			else if (o instanceof String && (config.get(o) instanceof String)) pathOfDataSource.put((String)o, new File((String)config.get(o)));
 		}
 		mappingIndex = pathOfDataSource.get("mapping");
 	}
