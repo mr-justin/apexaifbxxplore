@@ -1,6 +1,7 @@
 package org.team.xxplore.core.service.search.session;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -31,6 +32,7 @@ import com.ibm.semplore.search.SearchHelper;
 import com.ibm.semplore.search.XFacetedResultSet;
 import com.ibm.semplore.search.impl.DocStreamHintImpl;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
+import com.ibm.semplore.xir.DocStream;
 
 import flex.messaging.FlexContext;
 
@@ -178,7 +180,7 @@ public class SearchSessionService {
 	 *            The number of results that should appear on each page.
 	 * @return
 	 */
-	public ResultPage refine(Query query, int nbResultsPerPage) {
+	public ResultPage refine(Query query, int nbResultsPerPage) throws Exception {
 		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
 			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
@@ -196,32 +198,17 @@ public class SearchSessionService {
 			for (; it.hasNext(); ) str += " " + it.next();
 			graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(str));	//0
 			graph.setTargetVariable(0);
-			SearchFactory searchFactory = SearchFactoryImpl.getInstance();
-			SearchHelper helper = searchFactory.createSearchHelper();
+			HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+			helper.put(0, currentResult.getResultStream());
 			
-			helper.setHint(SearchHelper.START_CACHE_HINT, 0, new DocStreamHintImpl(currentResult.getResultStream()));
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			
-			//TODO
 			XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
-
-			ArrayList<ResultItem> result = getResultList(currentResult);
-			
-			//TODO get facet and result count
-			
-			ResultPage ret = new ResultPage();
-			ret.setActiveSource(new Source(graph.getDataSource(0), new LinkedList<Facet>(), 0));
-			ret.setPageNum(1);
-			LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
-			for (int i = 0; i < nbResultsPerPage; i++) resultItemList.add(result.get(i));
-			ret.setResultItemList(resultItemList);
-			LinkedList<Source> sourceList = new LinkedList<Source>();
-			HashSet<Source> sourceSet = new HashSet<Source>();
-			for (Source s : sourceList) sourceSet.add(s);
-			for (Source s : sourceSet) sourceList.add(s);
-			ret.setSourceList(sourceList);
 			SemplorePool.release(id);
+			
+			ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+			resultHistory.add(newResult);
+			FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
 			return ret;
 
 		} else {
