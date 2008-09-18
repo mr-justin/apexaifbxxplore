@@ -1,8 +1,10 @@
 package org.team.xxplore.core.service.search.session;
-import java.util.concurrent.*;
+import java.io.File;
+import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
 import com.ibm.semplore.btc.QueryEvaluator;
+import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 
 public class SemplorePool {
 	public static int semplore_num = 5;
@@ -13,6 +15,11 @@ public class SemplorePool {
 	static {
 		for(int i=0;i<semplore_num;i++) {
 			locks[i] = new ReentrantLock();
+			try {
+				pool[i] = new QueryEvaluatorImpl(new File("config/datasrc.cfg"));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
