@@ -100,8 +100,8 @@ public class KeywordIndexServiceForBT implements IService{
 			IndexSearcher indexSearcher = null;
 			if (synIndexdir != null) indexSearcher = new IndexSearcher(synIndexdir);
 
-			indexDataSourceByConcept(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
-			indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
+//			indexDataSourceByConcept(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
+//			indexDataSourceByProperty(m_indexWriter, indexSearcher, datasourceURI, schemaGraph);
 
 			if(indexSearcher != null) indexSearcher.close();
 			SesameDao sd = new SesameDao(dsPath);
@@ -290,7 +290,7 @@ public class KeywordIndexServiceForBT implements IService{
 			while(sd.hasNext()){
 				sd.next();
 				count++;
-				if(count%10000==0)
+				if(count%1000==0)
 					System.out.println(count);
 				if(!sd.getObjectType().equals(SesameDao.LITERAL))continue;
 				String literal = sd.getObject();
@@ -326,6 +326,11 @@ public class KeywordIndexServiceForBT implements IService{
 				System.out.println(count);
 			if(!sd.getObjectType().equals(SesameDao.LITERAL))
 				continue;
+//			important
+			if(indSet.contains(sd.getSubject()))
+				continue;
+			indSet.add(sd.getSubject());
+//			important
 			indexDataSourcePerIndividual(indexWriter, sd.getSubject(), ds, sdd);
 		}
 		indSet.clear();
@@ -392,6 +397,7 @@ public class KeywordIndexServiceForBT implements IService{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
+					System.out.println(clauseQ.toString());
 					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
