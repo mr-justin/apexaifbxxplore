@@ -102,16 +102,11 @@ public class SearchSessionService {
 	 * @return a page of results that matches the current query for the source specified.
 	 */
 	public ResultPage getPage(String source, int pageNum, int nbResultsPerPage, Boolean needFacets) throws Exception {
-		ArrayList<ResultItem> result = getResultList(currentResult);
-		ResultPage ret = new ResultPage();
-		if (!needFacets) ret.setActiveSource(new Source(source, new LinkedList<Facet>(), 0));
-		else {
-			//TODO
-		}
-		ret.setPageNum(pageNum);
-		LinkedList<ResultItem> resultItemList = new LinkedList<ResultItem>();
-		for (int i = (pageNum-1)*nbResultsPerPage; i < pageNum*nbResultsPerPage; i++) resultItemList.add(result.get(i));
-		ret.setResultItemList(resultItemList);
+		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
+			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+		XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
+		ResultPage ret = transform(currentResult, pageNum, nbResultsPerPage);
 		return ret;
 		
 	}
@@ -184,7 +179,10 @@ public class SearchSessionService {
 	 * @return
 	 */
 	public ResultPage refine(Query query, int nbResultsPerPage) {
-		lastResult = currentResult;
+		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
+			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+		XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
 		if (query instanceof QueryGraph) {
 			//TODO
 			return null;
@@ -204,7 +202,9 @@ public class SearchSessionService {
 			helper.setHint(SearchHelper.START_CACHE_HINT, 0, new DocStreamHintImpl(currentResult.getResultStream()));
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			currentResult = eval.evaluate(graph, helper);
+			
+			//TODO
+			XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
 
 			ArrayList<ResultItem> result = getResultList(currentResult);
 			
