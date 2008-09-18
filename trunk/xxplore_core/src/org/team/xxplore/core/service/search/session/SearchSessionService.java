@@ -33,27 +33,27 @@ public class SearchSessionService {
 	private XFacetedResultSet currentResult;
 	private XFacetedResultSet lastResult;
 	
-	public void setString(String str) {
-		AMFContext context = AMFContext.getCurrentContext();
-		HttpSession HttpSession = context.getSession();
-		ServletContext ServletContext = context.getServletContext();
-
-		HttpServletRequest request = context.getRequest();
-		HttpServletResponse response = context.getResponse();
-
-		context.setSessionAttribute("attr",str);
-	}
-	
-	public String getString() {
-		AMFContext context = AMFContext.getCurrentContext();
-		HttpSession HttpSession = context.getSession();
-		ServletContext ServletContext = context.getServletContext();
-
-		HttpServletRequest request = context.getRequest();
-		HttpServletResponse response = context.getResponse();
-
-		return (String)context.getSessionAttribute("attr");
-	}
+//	public void setString(String str) {
+//		AMFContext context = AMFContext.getCurrentContext();
+//		HttpSession HttpSession = context.getSession();
+//		ServletContext ServletContext = context.getServletContext();
+//
+//		HttpServletRequest request = context.getRequest();
+//		HttpServletResponse response = context.getResponse();
+//
+//		context.setSessionAttribute("attr",str);
+//	}
+//	
+//	public String getString() {
+//		AMFContext context = AMFContext.getCurrentContext();
+//		HttpSession HttpSession = context.getSession();
+//		ServletContext ServletContext = context.getServletContext();
+//
+//		HttpServletRequest request = context.getRequest();
+//		HttpServletResponse response = context.getResponse();
+//
+//		return (String)context.getSessionAttribute("attr");
+//	}
 	
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
