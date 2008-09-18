@@ -442,10 +442,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					SummaryGraphEdge outEdge = null;
 					while (edges.iterator().hasNext()){
 						SummaryGraphEdge edge = edges.iterator().next();
-						if(edge.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE)){
+						if(edge.getTarget().equals(e)){
 							inEdge = edge;
 						}
-						else if(edge.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE)){
+						else if(edge.getSource().equals(e)){
 							outEdge = edge;
 						}
 					}
