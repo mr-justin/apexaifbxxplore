@@ -6,21 +6,18 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
 
-import org.pdfbox.pdfviewer.MapEntry;
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
+import org.team.xxplore.core.service.search.datastructure.Facet;
+import org.team.xxplore.core.service.search.datastructure.Keywords;
+import org.team.xxplore.core.service.search.datastructure.Query;
+import org.team.xxplore.core.service.search.datastructure.QueryGraph;
+import org.team.xxplore.core.service.search.datastructure.ResultItem;
+import org.team.xxplore.core.service.search.datastructure.ResultPage;
 import org.team.xxplore.core.service.search.datastructure.SeeAlso;
-
-import sjtu.apex.searchWebDB.dataStructures.Facet;
-import sjtu.apex.searchWebDB.dataStructures.Keywords;
-import sjtu.apex.searchWebDB.dataStructures.Query;
-import sjtu.apex.searchWebDB.dataStructures.QueryGraph;
-import sjtu.apex.searchWebDB.dataStructures.ResultItem;
-import sjtu.apex.searchWebDB.dataStructures.ResultPage;
-import sjtu.apex.searchWebDB.dataStructures.Source;
+import org.team.xxplore.core.service.search.datastructure.Source;
 
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
-import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
