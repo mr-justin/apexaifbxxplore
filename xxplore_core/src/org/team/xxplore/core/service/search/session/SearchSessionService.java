@@ -2,7 +2,6 @@ package org.team.xxplore.core.service.search.session;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Map.Entry;
@@ -25,11 +24,6 @@ import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ibm.semplore.search.SearchFactory;
-import com.ibm.semplore.search.SearchHelper;
-import com.ibm.semplore.search.XFacetedResultSet;
-import com.ibm.semplore.search.impl.DocStreamHintImpl;
-import com.ibm.semplore.search.impl.SearchFactoryImpl;
 import com.ibm.semplore.xir.DocStream;
 
 import flex.messaging.FlexContext;
@@ -68,14 +62,16 @@ public class SearchSessionService {
 			for (; it.hasNext(); ) str += " " + it.next();
 			graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(str));	//0
 			graph.setTargetVariable(0);
+			graph.setDataSource(0, "dbpedia");
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
+			if (eval == null) System.err.println("Evaluator not exist");
 			XFacetedResultSetForMultiDataSources result = eval.evaluate(graph);
 			SemplorePool.release(id);
 			LinkedList<XFacetedResultSetForMultiDataSources> toSession = new LinkedList<XFacetedResultSetForMultiDataSources>();
 			toSession.add(result);
 			ResultPage ret = transform(result, 1, nbResultsPerPage);
-			FlexContext.getFlexSession().setAttribute("resultHistory", toSession);
+			if (FlexContext.getFlexSession() != null) FlexContext.getFlexSession().setAttribute("resultHistory", toSession);
 			return ret;
 		} else {
 			return null;
@@ -387,5 +383,38 @@ public class SearchSessionService {
 	
 	private ArraySnippet getSnippet(String snippet_str) {
 		return null;
+	}
+	
+	public static void main(String[] args) throws Exception {
+		LinkedList<String> keywords = new LinkedList<String>();
+		keywords.add("test");
+		ResultPage rp = new SearchSessionService().search(new Keywords(keywords), 10);
+		System.out.println("Result Page:");
+		Source s = rp.getActiveSource();
+		System.out.println("\tActive Source:" + s.getName());
+		LinkedList<Facet> facetList = s.getFacetList();
+		System.out.println("\t\tFacets:");
+		for (Facet f : facetList) {
+			System.out.println("\t\t\t" + f.getLabel() + "\t" + f.getResultNb() + "\t" + f.getURI());
+		}
+		System.out.println("\t\tResult count:" + s.getResultCount());
+		int pageNum = rp.getPageNum();
+		System.out.println("\tPage Num:" + pageNum);
+		LinkedList<ResultItem> resultItemList = rp.getResultItemList();
+		System.out.println("\tResult Items:");
+		for (ResultItem ri : resultItemList) {
+			System.out.println("\t\t" + ri.getScore() + "\t" + ri.getSnippet() + "\t" + ri.getTitle() + "\t" + ri.getType() + "\t" + ri.getURL());
+		}
+		LinkedList<Source> sourceList = rp.getSourceList();
+		System.out.println("\tSources:");
+		for (Source ss : sourceList) {
+			System.out.println("\t\t" + ss.getName());
+			LinkedList<Facet> fl = ss.getFacetList();
+			System.out.println("\t\tFacets:");
+			for (Facet f : fl) {
+				System.out.println("\t\t\t" + f.getLabel() + "\t" + f.getResultNb() + "\t" + f.getURI());
+			}
+			System.out.println("\t\tResult count:" + ss.getResultCount());
+		}
 	}
 }
