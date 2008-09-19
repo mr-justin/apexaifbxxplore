@@ -7,7 +7,7 @@
 package com.ibm.semplore.xir;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.ibm.semplore.model.Category;
 import com.ibm.semplore.model.LocalCategoryList;
@@ -15,6 +15,7 @@ import com.ibm.semplore.model.LocalInstanceList;
 import com.ibm.semplore.model.LocalRelationList;
 import com.ibm.semplore.model.Relation;
 import com.ibm.semplore.model.SchemaObject;
+import com.ibm.semplore.xir.impl.AttributeValue;
 
 /**
  * This interface builds a virtual document for an instance, based on the categories it belongs to, its relations with other instances, and its attributes. 
@@ -73,5 +74,5 @@ public interface InstanceDocument extends Document {
 	 * Return all the attributes in form of (String attribute, String value);
 	 * @return
 	 */
-	public HashMap<String,String> getAttributes();
+	public LinkedList<AttributeValue> getAttributes();
 }

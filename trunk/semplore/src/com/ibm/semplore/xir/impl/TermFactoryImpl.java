@@ -58,7 +58,7 @@ public class TermFactoryImpl implements TermFactory {
 		if( cat instanceof Category )
 			return createTerm( String.valueOf(((Category)cat).getIDofURI()), FieldType.INSTANCE_TYPE_OF );
 		if (cat instanceof AttributeKeywordCategory)
-			return createTerm( ((AttributeKeywordCategory)cat).getKeyword(), FieldType.toFieldType(((AttributeKeywordCategory)cat).getAttribute()) );
+			return createTerm( new AttributeValue(((AttributeKeywordCategory)cat).getAttribute(), ((AttributeKeywordCategory)cat).getKeyword()).getCombination(), FieldType.TEXT);
 		if( cat instanceof KeywordCategory )
 			return createTerm( ((KeywordCategory)cat).getKeyword(), FieldType.TEXT );
 		if( cat instanceof CompoundCategory ){

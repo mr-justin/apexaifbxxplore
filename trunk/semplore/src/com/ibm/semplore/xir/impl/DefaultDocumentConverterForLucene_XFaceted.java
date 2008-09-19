@@ -10,6 +10,7 @@ package com.ibm.semplore.xir.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import org.apache.lucene.document.Document;
@@ -68,17 +69,21 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		doc.add(field);
 
 		// build index of attributes, field=attribute, term=value(tokenized)
-		HashMap<String, String> attributes = insDoc.getAttributes();
-		StringBuffer text = new StringBuffer();
-		for (Entry<String, String> entry : attributes.entrySet()) {
+//		HashMap<String, String> attributes = insDoc.getAttributes();
+//		StringBuffer text = new StringBuffer();
+//		for (Entry<String, String> entry : attributes.entrySet()) {
 //			doc.add(new Field(entry.getKey(), entry.getValue(), Field.Store.NO, Field.Index.TOKENIZED));
-			text.append(entry.getValue()+" ");
-		}
-		text.append(insDoc.getSchemaObjectInfo().getLabel());
+//			text.append(entry.getValue()+" ");
+//		}
+//		text.append(insDoc.getSchemaObjectInfo().getLabel());
 		
 		// build index taking text as field value: for keyword search
-		doc.add(new Field(FieldType.TEXT.toString(), text.toString(),
-				Field.Store.NO, Field.Index.TOKENIZED));
+		LinkedList<AttributeValue> attrVals = insDoc.getAttributes();
+		doc.add(new Field(FieldType.TEXT.toString(),
+				new SemploreAnalyzer().tokenStream(
+						FieldType.TEXT, new SemploreTermReader4Attributes(
+								attrVals))));
+
 
 		if (insDoc.checkThisSchemaObjectType(Instance.class)) {
 			// Index category: class hierarchy

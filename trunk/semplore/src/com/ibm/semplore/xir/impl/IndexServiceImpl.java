@@ -13,6 +13,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Properties;
 
 import com.ibm.semplore.config.Config;
@@ -190,7 +191,11 @@ public class IndexServiceImpl implements IndexService {
 	 * @return
 	 */
 	protected SchemaObjectInfo getSchemaObjectInfo(long id, String uri,
-			HashMap<String, String> attributes) {
+			LinkedList<AttributeValue> attrVals) {
+		HashMap<String,String> attributes = new HashMap<String,String>();
+		for (AttributeValue attrVal:attrVals) {
+			attributes.put(attrVal.getAttribute(), attrVal.getValue());
+		}
 		String[] labelProperties = config.getProperty(Config.LABEL,
 				"http://www.w3.org/2000/01/rdf-schema#label").split("[ \t,]");
 		String label = null;
