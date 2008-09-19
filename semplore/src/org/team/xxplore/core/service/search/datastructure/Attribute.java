@@ -12,4 +12,8 @@ public class Attribute extends Facet {
 	public Attribute() { 
 		super(); 
 	}
+	
+	public Attribute(String label, String uri, Source source) {
+		super(label, uri, source);
+	}
 }

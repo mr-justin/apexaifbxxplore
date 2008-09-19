@@ -12,4 +12,8 @@ public class Concept extends Facet {
 	public Concept() {
 		super();
 	}
+	
+	public Concept(String label, String uri, Source source) {
+		super(label, uri, source);
+	}
 }

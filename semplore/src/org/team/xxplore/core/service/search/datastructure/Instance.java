@@ -12,4 +12,9 @@ public class Instance extends Facet {
 	public Instance() {
 	   super();
    	}
+	
+	public Instance(String label, String uri, Source source) {
+		super(label, uri, source);
+	}
+
 }
