@@ -59,6 +59,9 @@ public class SemploreAnalyzer extends StandardAnalyzer {
 			) {
 			return new Tokenizer4SemploreTermPositionReader(reader);
 		}
+		if (fieldType == FieldType.TEXT) {
+			return new Tokenizer4SemploreTermReader4Attributes(reader);
+		}
 		return super.tokenStream("", reader);
 	}
 	
@@ -116,4 +119,23 @@ public class SemploreAnalyzer extends StandardAnalyzer {
 		}
 	}
 
+    class Tokenizer4SemploreTermReader4Attributes extends Tokenizer {
+		public Tokenizer4SemploreTermReader4Attributes(Reader input) {
+			super(input);
+		}
+
+		/* (non-Javadoc)
+		 * @see org.apache.lucene.analysis.TokenStream#next()
+		 */
+		public Token next() throws IOException {	
+			SemploreTermReader4Attributes myinput = (SemploreTermReader4Attributes)input;
+			String str = myinput.next();
+			if (str==null)
+				return null;
+			else 
+				return new Token(str, 0, 0);
+		}
+		
+	} 
+    
 }

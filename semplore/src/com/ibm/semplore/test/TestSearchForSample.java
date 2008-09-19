@@ -53,7 +53,7 @@ public class TestSearchForSample extends TestSearch {
 
 					 //query3: find all the instances related to keyword "tom".
 					 searchInstance(schemaFactory.createCatRelGraph()
-					 .add(schemaFactory.createKeywordCategory("tom"))
+					 .add(schemaFactory.createAttributeKeywordCategory("<http://purl.org/dc/elements/1.1/identifier>", "http://research.microsoft.com/users/lamport/tla/book.html"))
 					 ,0);
 					
 					 //query4: find all the films that are directed by American film directors named "Tom".

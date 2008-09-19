@@ -2,6 +2,7 @@ package com.ibm.semplore.imports.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 
 import com.ibm.semplore.model.Category;
 import com.ibm.semplore.model.Instance;
@@ -17,6 +18,7 @@ import com.ibm.semplore.model.impl.LocalInstanceListImpl;
 import com.ibm.semplore.model.impl.LocalRelationListImpl;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
 import com.ibm.semplore.xir.InstanceDocument;
+import com.ibm.semplore.xir.impl.AttributeValue;
 import com.ibm.semplore.xir.impl.DocumentImpl;
 
 public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocument {
@@ -74,7 +76,7 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 		return schemaObject;
 	}
 
-	public HashMap<String,String> getAttributes() {
+	public LinkedList<AttributeValue> getAttributes() {
 		return attributes;
 	}
 
@@ -179,11 +181,11 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 		this.info = info;
 
 	}
-	HashMap<String,String> attributes;
+	LinkedList<AttributeValue> attributes;
 	
 	public InstanceDocumentImpl(Instance ins) {
 		this.schemaObject = ins;
-		attributes = new HashMap<String, String>();
+		attributes = new LinkedList<AttributeValue>();
 	}
 	
 	public void setURI(String URI) {
@@ -206,13 +208,7 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 			attr = attr.substring(1,attr.length()-1);
 		}
 		
-		//an attribute may have multiple values
-		String val = attributes.get(name);
-		if (val==null)
-			val = attr;
-		else if (!val.contains(attr))
-			val = val+" "+attr;
-		attributes.put(name, val);
+		attributes.add(new AttributeValue(name, attr));
 	}
 	
 	public void addCategory(Category c, int catLocalID) {
