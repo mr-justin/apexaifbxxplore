@@ -12,4 +12,9 @@ public class Litteral extends Facet {
 	public Litteral() {
 		super();
 	}
+	
+	public Litteral(String label, String uri, Source source) {
+		super(label, uri, source);
+	}
+
 }

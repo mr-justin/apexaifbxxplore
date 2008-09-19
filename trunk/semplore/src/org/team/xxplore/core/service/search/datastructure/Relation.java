@@ -12,4 +12,9 @@ public class Relation extends Facet {
 	public Relation() {
 		super();
 	}
+	
+	public Relation(String label, String uri, Source source) {
+		super(label, uri, source);
+	}
+
 }
