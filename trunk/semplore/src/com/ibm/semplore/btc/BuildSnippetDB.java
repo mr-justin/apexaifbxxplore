@@ -5,7 +5,9 @@ package com.ibm.semplore.btc;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 
 import com.sleepycat.je.DatabaseException;
@@ -40,14 +42,15 @@ public class BuildSnippetDB {
 		myDbEnvironment = new Environment(new File(args[0]), envConfig);
 		EntityStore store = new EntityStore(myDbEnvironment, "EntityStore",
 				storeConfig);
-		PrimaryIndex<String, InstanceEntityClass> pidx = store.getPrimaryIndex(String.class, InstanceEntityClass.class);
+		PrimaryIndex<String, InstanceSnippetEntityClass> pidx = store.getPrimaryIndex(String.class, InstanceSnippetEntityClass.class);
 
 
-		
-		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		InputStream ins = System.in;
+		if (args.length==2) ins = new FileInputStream(args[1]);
+		BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 		String line;
 		String last = null;
-		InstanceEntityClass ent = new InstanceEntityClass();
+		InstanceSnippetEntityClass ent = new InstanceSnippetEntityClass();
 		while ((line=reader.readLine())!=null) {
 			String[] triple = line.replaceAll("\t", " ").split(" ");
 			int i = 3;
@@ -62,7 +65,7 @@ public class BuildSnippetDB {
 
 			if (last==null || !triple[0].equals(last)) {
 				if (last!=null) pidx.put(ent);
-				ent = new InstanceEntityClass();
+				ent = new InstanceSnippetEntityClass();
 				ent.setPKey(triple[0]);
 				last = triple[0];
 			}
@@ -74,28 +77,4 @@ public class BuildSnippetDB {
 		myDbEnvironment.close();
 	}
 
-}
-
-@Entity
-class InstanceEntityClass {
-	// Primary key is pKey
-	@PrimaryKey
-	private String uri;
-	private String data = "";
-
-	public void setPKey(String data) {
-		uri = data;
-	}
-
-	public String getPKey() {
-		return uri;
-	}
-	
-	public void addSnippet(String s) {
-		data += s + "\n";
-	}
-	
-	public String getData() {
-		return data;
-	}
 }
