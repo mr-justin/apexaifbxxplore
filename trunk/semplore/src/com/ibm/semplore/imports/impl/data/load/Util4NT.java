@@ -90,7 +90,7 @@ public class Util4NT {
 		Util4NT.ns_att = ns_att;
 	}
 
-	public static void processTripleLine(String line) {
+	public static String[] processTripleLine(String line) {
 		// Split..java
 		String[] triple = line.replaceAll("\t", " ").split(" ");
 		int i = 3;
@@ -102,7 +102,7 @@ public class Util4NT {
 			i++;
 		}
 		if (triple.length < 3)
-			return;
+			return null;
 		line = triple[0] + "\t" + triple[1] + "\t" + triple[2] + "\t.";
 		triple = line.split("\t");
 
@@ -131,6 +131,7 @@ public class Util4NT {
 				triple[2] = triple[2].substring(1, triple[2].length() - 1);
 			}
 		}
+		return triple;
 	}
 
 }
