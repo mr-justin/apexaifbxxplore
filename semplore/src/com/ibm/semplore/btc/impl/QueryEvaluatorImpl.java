@@ -187,8 +187,13 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	
 	private HashMap<Integer, Integer> loadIndexHead(String file) throws IOException {
 		if (indexhead_cache.get(file)!=null) indexhead_cache.get(file);
-		DataInputStream fhead = new DataInputStream(new BufferedInputStream(new FileInputStream(
-				mappingIndex.getPath() + File.separatorChar + file + ".head")));
+		DataInputStream fhead;
+		try {
+			fhead = new DataInputStream(new BufferedInputStream(new FileInputStream(
+					mappingIndex.getPath() + File.separatorChar + file + ".head")));
+		} catch (Exception e) {
+			return null;
+		}
 		int len = fhead.available()/8;
 		HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
 		for (int i=0; i<len; i++) {
@@ -237,6 +242,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		HashMap<String, Integer> arr = new HashMap<String, Integer>();
 		
 		HashMap<Integer, Integer> head = loadIndexHead(targetDataSource+"_ds");
+		if (head==null) return arr;
 		RandomAccessFile fmap = new RandomAccessFile(
 				mappingIndex.getPath() + File.separatorChar + targetDataSource+"_ds" +".map", "r");
 
