@@ -7,11 +7,13 @@ import java.util.LinkedList;
 import java.util.Map.Entry;
 
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
+import org.team.xxplore.core.service.search.datastructure.Concept;
 import org.team.xxplore.core.service.search.datastructure.Facet;
 import org.team.xxplore.core.service.search.datastructure.Instance;
 import org.team.xxplore.core.service.search.datastructure.Keywords;
 import org.team.xxplore.core.service.search.datastructure.Query;
 import org.team.xxplore.core.service.search.datastructure.QueryGraph;
+import org.team.xxplore.core.service.search.datastructure.Relation;
 import org.team.xxplore.core.service.search.datastructure.ResultItem;
 import org.team.xxplore.core.service.search.datastructure.ResultPage;
 import org.team.xxplore.core.service.search.datastructure.SeeAlso;
@@ -116,14 +118,16 @@ public class SearchSessionService {
 			com.ibm.semplore.search.Facet[] semploreFacets = xres.getCategoryFacets();
 			for (int i=0; i<semploreFacets.length; i++) {
 				SchemaObjectInfo info = semploreFacets[i].getInfo();
-				Facet facet = new Facet(info.getLabel(), info.getURI(), activeSource);
+				Facet facet = new Concept(info.getLabel(), info.getURI(), activeSource);
+				facet.setResultNb(semploreFacets[i].getCount());
 				facetList.add(facet);
 			}
 			//add relation facets
 			semploreFacets = xres.getRelationFacets();
 			for (int i=0; i<semploreFacets.length; i++) {
 				SchemaObjectInfo info = semploreFacets[i].getInfo();
-				Facet facet = new Facet(info.getLabel(), info.getURI(), activeSource);
+				Facet facet = new Relation(info.getLabel(), info.getURI(), activeSource);
+				facet.setResultNb(semploreFacets[i].getCount());
 				facetList.add(facet);
 			}
 			activeSource.setFacetList(facetList);
