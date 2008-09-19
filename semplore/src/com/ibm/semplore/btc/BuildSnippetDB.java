@@ -71,9 +71,10 @@ public class BuildSnippetDB {
 			}
 			ent.addSnippet(triple[1]+"\t"+triple[2]);
 		}
+		if (last!=null) pidx.put(ent);
 
 		store.close();
-		myDbEnvironment.cleanLog();
+//		myDbEnvironment.cleanLog();
 		myDbEnvironment.close();
 	}
 
