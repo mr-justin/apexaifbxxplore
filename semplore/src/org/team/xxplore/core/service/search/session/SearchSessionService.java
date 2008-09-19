@@ -62,7 +62,7 @@ public class SearchSessionService {
 			for (; it.hasNext(); ) str += " " + it.next();
 			graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(str));	//0
 			graph.setTargetVariable(0);
-			graph.setDataSource(0, "dbpedia");
+			graph.setDataSource(0, "wordnet");
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
 			if (eval == null) System.err.println("Evaluator not exist");
@@ -385,10 +385,10 @@ public class SearchSessionService {
 		return null;
 	}
 	
-	public static void main(String[] args) throws Exception {
-		LinkedList<String> keywords = new LinkedList<String>();
-		keywords.add("test");
-		ResultPage rp = new SearchSessionService().search(new Keywords(keywords), 10);
+	public static void testSearch(String keywords) throws Exception {
+		LinkedList<String> kwords = new LinkedList<String>();
+		kwords.add(keywords);
+		ResultPage rp = new SearchSessionService().search(new Keywords(kwords), 10);
 		System.out.println("Result Page:");
 		Source s = rp.getActiveSource();
 		System.out.println("\tActive Source:" + s.getName());
@@ -416,5 +416,10 @@ public class SearchSessionService {
 			}
 			System.out.println("\t\tResult count:" + ss.getResultCount());
 		}
+
+	}
+	
+	public static void main(String[] args) throws Exception {
+		testSearch("test");
 	}
 }

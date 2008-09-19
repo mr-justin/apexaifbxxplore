@@ -16,7 +16,7 @@ public class SemplorePool {
 		for(int i=0;i<semplore_num;i++) {
 			locks[i] = new ReentrantLock();
 			try {
-				pool[i] = new QueryEvaluatorImpl(new File("res/datasrc.cfg"));
+				pool[i] = new QueryEvaluatorImpl(new File("config/datasrc.cfg"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
