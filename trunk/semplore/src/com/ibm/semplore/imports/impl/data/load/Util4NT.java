@@ -134,4 +134,15 @@ public class Util4NT {
 		return triple;
 	}
 
+	public static void printTriple(String[] triple) {
+		if (triple!=null)
+			System.out.println(String.format("%s;%s;%s",triple[0],triple[1],triple[2]));
+		else System.out.println("null");
+	}
+	public static void main(String[] args) {
+		printTriple(processTripleLine("<a> <b> c."));
+		printTriple(processTripleLine("<a> <b> \"c.\""));
+		printTriple(processTripleLine("<a> <b> c. ."));
+		printTriple(processTripleLine("<a> <b> \"c.\" ."));
+	}
 }
