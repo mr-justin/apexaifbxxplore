@@ -147,7 +147,7 @@ public class SearchSessionService {
 			//e.g. pageNum=2, nbResultsPerPage=5 ==> start=5, end=10
 			int start = (pageNum-1)*nbResultsPerPage;
 			int end = start+nbResultsPerPage;
-			for (int i=start; i<end; i++) {
+			for (int i=start; i<end && i < xres.getLength(); i++) {
 				SchemaObjectInfo info = xres.getResult(i);
 				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), activeSource, "text document", info.getLabel(), xres.getSnippet(i));
 				resultItemList.add(item);
