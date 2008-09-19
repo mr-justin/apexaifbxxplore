@@ -55,7 +55,7 @@ public class SesameDao {
 		"http://www.w3.org/1999/02/22-rdf-syntax-ns#rest",
 		"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil",
 	};
-	private static HashSet<String> rdfsEdgeSet, conEdgeSet;
+	public static HashSet<String> rdfsEdgeSet, conEdgeSet;
  	/*
  	 * intital the predefined rdfs edge set
  	 */
@@ -195,7 +195,7 @@ public class SesameDao {
 	}
 	public String getObjectType()
 	{
-		if(getPredicateType().equals(SesameDao.RDFSPROP))
+		if(getPredicate().equals(rdfsEdge[0]))
 			return SesameDao.CONCEPT;
 		else if(getPredicateType().equals(SesameDao.OBJPROP))
 			return SesameDao.INDIVIDUAL;
@@ -297,28 +297,34 @@ public class SesameDao {
 //		
 //		//part1 indexing sourcedata
 		SesameDao se = new SesameDao(indexRoot);
-		se.removeBlankNode(sourceFile);
-//		se.insertNTFile(sourceFile, RDFFormat.N3);
+//		se.findAllTriples();
+//		while(se.hasNext())
+//		{
+//			se.next();
+//			System.out.println(se.getSubject()+" "+se.getPredicate()+" "+se.getObject());
+//		}
+//		se.removeBlankNode(sourceFile);
+		se.insertNTFile(sourceFile, RDFFormat.N3);
 //		System.out.println("part1 finished!");
-//		
-//		//part2 constructing summary & schema graph
-//		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
-//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = sss.computeSummaryGraph(SesameDao.indexRoot, true);
-////		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary.obj");
-//		//write to obj and rdf
-//		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-summary.obj");
-//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-summary.rdf");
-//		System.out.println("part2 summray finished!");
+		
+		//part2 constructing summary & schema graph
+		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = sss.computeSummaryGraph(SesameDao.indexRoot, true);
+//		Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary.obj");
+		//write to obj and rdf
+		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-summary.obj");
+		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-summary.rdf");
+		System.out.println("part2 summray finished!");
 //
 //		//Pseudograph graph = sss.readGraphIndexFromFile("D:\\semplore\\summary-weighted.obj");
-//		graph = sss.computeSchemaGraph(SesameDao.indexRoot, graph, null);
-//		//write to obj and rdf
-//		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-schema.obj");
-//		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-schema.rdf");
-//		System.out.println("part2 schema finished!");
-		//part3
-//		Pseudograph graph = sss.readGraphIndexFromFile(SesameDao.root+datasource+"-schema.obj");
-//		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(SesameDao.indexRoot, datasource, graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
-//		System.out.println("part3 finished!");
+		graph = sss.computeSchemaGraph(SesameDao.indexRoot, graph, null);
+		//write to obj and rdf
+		sss.writeSummaryGraph(graph, SesameDao.root+datasource+"-schema.obj");
+		sss.writeSummaryGraphAsRDF(graph,SesameDao.root+datasource+"-schema.rdf");
+		System.out.println("part2 schema finished!");
+//		part3
+		graph = sss.readGraphIndexFromFile(SesameDao.root+datasource+"-schema.obj");
+		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(SesameDao.indexRoot, datasource, graph,SesameDao.root+"apexaifbxxplore\\keywordsearch\\syn_index");
+		System.out.println("part3 finished!");
 	}
 }
