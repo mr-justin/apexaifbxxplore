@@ -89,17 +89,13 @@ public class SearchSessionService {
 	 * called for an existing search. If it is impossible to return the result page, then returns
 	 * null.
 	 * 
-	 * @param source
-	 *            The name of the source to consider.
 	 * @param pageNum
 	 *            Number identifying the page to be served. Number 1 is the first page
 	 * @param nbResultsPerPage
 	 *            The number of results that should appear on each page.
-	 * @param needFacets
-	 *            True if the facets associated with the source shall be provided.
 	 * @return a page of results that matches the current query for the source specified.
 	 */
-	public ResultPage getPage(String source, int pageNum, int nbResultsPerPage, Boolean needFacets) throws Exception {
+	public ResultPage getPage(int pageNum, int nbResultsPerPage) throws Exception {
 		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
 			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
@@ -149,11 +145,11 @@ public class SearchSessionService {
 			int end = start+nbResultsPerPage;
 			for (int i=start; i<end && i < xres.getLength(); i++) {
 				SchemaObjectInfo info = xres.getResult(i);
-				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), activeSource, "text document", info.getLabel(), xres.getSnippet(i));
+				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), "text document", info.getLabel(), xres.getSnippet(i));
 				resultItemList.add(item);
 			}
 			
-			ResultPage page = new ResultPage(resultItemList, sourceList, activeSource, pageNum);
+			ResultPage page = new ResultPage(resultItemList, activeSource, pageNum);
 			return page;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -337,7 +333,7 @@ public class SearchSessionService {
 
 			for (int i=0; i<xres.getLength(); i++) {
 				SchemaObjectInfo info = xres.getResult(i);
-				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), activeSource, "text document", info.getLabel(), xres.getSnippet(i));
+				ResultItem item = new ResultItem(info.getURI(), xres.getScore(i), "text document", info.getLabel(), xres.getSnippet(i));
 				resultItemList.add(item);
 			}
 			return resultItemList;
@@ -394,8 +390,8 @@ public class SearchSessionService {
 		kwords.add(keywords);
 		ResultPage rp = new SearchSessionService().search(new Keywords(kwords), 10);
 		System.out.println("Result Page:");
-		Source s = rp.getActiveSource();
-		System.out.println("\tActive Source:" + s.getName());
+		Source s = rp.getSource();
+		System.out.println("\tSource:" + s.getName());
 		LinkedList<Facet> facetList = s.getFacetList();
 		System.out.println("\t\tFacets:");
 		for (Facet f : facetList) {
@@ -408,17 +404,6 @@ public class SearchSessionService {
 		System.out.println("\tResult Items:");
 		for (ResultItem ri : resultItemList) {
 			System.out.println("\t\t" + ri.getScore() + "\t" + ri.getSnippet() + "\t" + ri.getTitle() + "\t" + ri.getType() + "\t" + ri.getURL());
-		}
-		LinkedList<Source> sourceList = rp.getSourceList();
-		System.out.println("\tSources:");
-		for (Source ss : sourceList) {
-			System.out.println("\t\t" + ss.getName());
-			LinkedList<Facet> fl = ss.getFacetList();
-			System.out.println("\t\tFacets:");
-			for (Facet f : fl) {
-				System.out.println("\t\t\t" + f.getLabel() + "\t" + f.getResultNb() + "\t" + f.getURI());
-			}
-			System.out.println("\t\tResult count:" + ss.getResultCount());
 		}
 
 	}
