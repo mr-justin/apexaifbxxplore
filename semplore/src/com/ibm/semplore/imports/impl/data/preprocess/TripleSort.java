@@ -5,6 +5,7 @@ import java.io.BufferedWriter;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -20,12 +21,12 @@ public class TripleSort {
 		ArrayList<TripleURI> arr = new ArrayList<TripleURI>();
 		String temp;
 		int count = 0;
-		long s,p,o;
+		String s,p,o;
 		
 		System.out.println("Reading " + tripleFile + "...");
 		while (rd.hasNext()) {
 //		while ((temp = rd.readLine()) != null) {
-			s = rd.nextLong(); p = rd.nextLong(); o = rd.nextLong();
+			s = rd.next(); p = rd.next(); o = rd.next();
 			count ++;
 			if (count % 50000 == 0) System.out.println(count);
 //			System.out.println(temp);
@@ -50,13 +51,13 @@ public class TripleSort {
 	}
 	
 	public static void main(String[] args) {
-		TripleSort ts = new TripleSort();
-		
-		try {
-			ts.sort(args[0], args[1], args[2]);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		String test = "1;2\t3;4\t5;6\n7;8\t9;-1\t2;3\n";
+		Scanner rd = new Scanner(new StringReader(test));
+		String s,p,o;
+		while (rd.hasNext()) {
+			s = rd.next();	p = rd.next();	o = rd.next();
+			System.out.println(String.format("%s^%s^%s", s,p,o));
 		}
+
 	}
 }
