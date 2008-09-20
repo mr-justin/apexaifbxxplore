@@ -55,7 +55,7 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 					+ insDoc.getThisSchemaObject().getIDofURI());
 			doc.add(new Field(FieldType.URI.toString(), "null",
 					Field.Store.COMPRESS, Field.Index.NO));
-			return doc;
+//			return doc;
 		} else {
 			doc.add(new Field(FieldType.URI.toString(), insDoc.getURI(),
 					Field.Store.COMPRESS, Field.Index.NO));
