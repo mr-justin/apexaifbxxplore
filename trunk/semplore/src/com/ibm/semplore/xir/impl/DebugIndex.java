@@ -63,10 +63,10 @@ public class DebugIndex {
 			XFacetedSearchableImpl searcher = (XFacetedSearchableImpl)searchService.getXFacetedSearchable();
 			IndexReaderImpl indexReader = (IndexReaderImpl)searcher.getInsIndexReader();
 			
-/*			System.out.println(String.format("relations: %d, categories: %d",
+			System.out.println(String.format("relations: %d, categories: %d",
 					indexReader.getDocStream(termFactory.createTermForRootRelations()).getLen(),
 					indexReader.getDocStream(termFactory.createTermForRootCategories()).getLen()));
-*/
+
 			if (args.length==2) {
 				int doc = Integer.parseInt(args[1]);
 				System.out.println(indexReader.reader.document(doc));
