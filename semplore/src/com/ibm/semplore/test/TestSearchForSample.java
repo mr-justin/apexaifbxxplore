@@ -30,10 +30,10 @@ public class TestSearchForSample extends TestSearch {
 				searcher = searchService.getXFacetedSearchable();
 
 				// category facets
-				showCatFacets(System.out);
+//				showCatFacets(System.out);
 
 				// relation facets
-				showRelFacets(System.out);
+//				showRelFacets(System.out);
 
 				boolean quit = false;
 
@@ -43,7 +43,7 @@ public class TestSearchForSample extends TestSearch {
 
 					//query1: find all the instances.
 					 searchInstance(schemaFactory.createCatRelGraph()
-							 .add(schemaFactory.createCategory(Md5_BloomFilter_64bit.URItoID("<TOP>")))
+							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID("<http://www.freebase.com/resource/Princeton/guid/9202a8c04000641f8000000003b4e0ac>"))))
 							 ,0);
 
 					 //query2: find all the instances of category <American_film_directors>. 
@@ -53,7 +53,12 @@ public class TestSearchForSample extends TestSearch {
 
 					 //query3: find all the instances related to keyword "tom".
 					 searchInstance(schemaFactory.createCatRelGraph()
-					 .add(schemaFactory.createAttributeKeywordCategory("<http://purl.org/dc/elements/1.1/identifier>", "http://research.microsoft.com/users/lamport/tla/book.html"))
+					 .add(schemaFactory.createAttributeKeywordCategory("<http://www.w3.org/2000/01/rdf-schema#label>", "Letter to the Editor"))
+					 ,0);
+					
+					 //query3: find all the instances related to keyword "tom".
+					 searchInstance(schemaFactory.createCatRelGraph()
+					 .add(schemaFactory.createKeywordCategory("world wide web"))
 					 ,0);
 					
 					 //query4: find all the films that are directed by American film directors named "Tom".
