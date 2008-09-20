@@ -62,9 +62,9 @@ public class SortUnique extends Configured implements Tool {
 		
 	}
 
-	public static class SortReducer extends MapReduceBase implements Reducer<LongWritable, Text, LongWritable, Text> {
-		public void reduce(LongWritable key, Iterator<Text> values,
-				OutputCollector<LongWritable, Text> output, Reporter reporter)
+	public static class SortReducer extends MapReduceBase implements Reducer<Text, Text, Text, Text> {
+		public void reduce(Text key, Iterator<Text> values,
+				OutputCollector<Text, Text> output, Reporter reporter)
 				throws IOException {
 			HashSet<String> set = new HashSet<String>();
 			try {
@@ -90,7 +90,7 @@ public class SortUnique extends Configured implements Tool {
     JobConf jobConf = new JobConf(getConf(), SortUnique.class);
     jobConf.setJobName("sorter");
 
-    jobConf.setMapperClass(SortMapper.class);        
+    jobConf.setMapperClass(IdentityMapper.class);        
     jobConf.setReducerClass(SortReducer.class);
 
     // Set user-supplied (possibly default) job configs
@@ -99,7 +99,7 @@ public class SortUnique extends Configured implements Tool {
     jobConf.setInputFormat(KeyValueTextInputFormat.class);
 //    jobConf.setOutputFormat(outputFormatClass);
 
-    jobConf.setOutputKeyClass(LongWritable.class);
+    jobConf.setOutputKeyClass(Text.class);
     jobConf.setOutputValueClass(Text.class);
 
 //    jobConf.setInputPath(new Path("sorted/"));
