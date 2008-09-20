@@ -15,5 +15,10 @@
 	<classpathentry kind="lib" path="lib/tar.jar"/>
 	<classpathentry kind="lib" path="lib/xercesImpl.jar"/>
 	<classpathentry kind="lib" path="lib/je-3.3.69.jar"/>
+	<classpathentry kind="lib" path="lib/dom4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="lib/flex-messaging-core.jar"/>
+	<classpathentry kind="lib" path="lib/flex-messaging-remoting.jar"/>
+	<classpathentry kind="lib" path="lib/je-3.2.21.jar"/>
+	<classpathentry kind="lib" path="lib/jgrapht-jdk1.5.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

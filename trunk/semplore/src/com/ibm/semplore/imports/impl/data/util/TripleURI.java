@@ -3,16 +3,18 @@ package com.ibm.semplore.imports.impl.data.util;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import com.ibm.semplore.util.HashID;
+
 /**
  * 
  * 比较大小重载...
  *
  */
 public class TripleURI implements Comparable {
-	public long sub, pred, obj; 
+	public HashID sub, pred, obj; 
 	public String sort;
-	public TripleURI(long s, long p, long o, String sort) {
-		sub = s; pred = p; obj = o; this.sort = sort;
+	public TripleURI(String s, String p, String o, String sort) {
+		sub = new HashID(s); pred = new HashID(p); obj = new HashID(o); this.sort = sort;
 	}
 	public int compareTo(Object arg0) {
 		TripleURI a = (TripleURI)arg0;
@@ -22,25 +24,22 @@ public class TripleURI implements Comparable {
 		if (sort.equals("ROS")) return compareTo(a.pred, pred, a.obj, obj, a.sub, sub);
 		throw new Error("sort="+sort);
 	}
-	private int compareTo(long a0, long a1, long b0, long b1, long c0, long c1){
-		if (a1!=a0) return a1>a0?1:-1;
-		if (b1!=b0) return b1>b0?1:-1;
-		if (c1!=c0) return c1>c0?1:-1;
+	private int compareTo(HashID a0, HashID a1, HashID b0, HashID b1, HashID c0, HashID c1){
+		int c;
+		if ((c=a1.compareTo(a0))!=0) return c;
+		if ((c=b1.compareTo(b0))!=0) return c;
+		if ((c=c1.compareTo(c0))!=0) return c;
 		return 0;
 	}
-
 	public static void main(String[] args) {
 		ArrayList<TripleURI> arr = new ArrayList<TripleURI>();
-		arr.add(new TripleURI(4675473174458233343l,-8754609171607444120l,-4603906380473991850l,"RSO"));
-		arr.add(new TripleURI(4862355692397456787l,-8754609171607444120l,2659168930109911440l,"RSO"));
-		arr.add(new TripleURI(-413620939553944700l,8441574982497024798l,1120342977635256628l,"RSO"));
-		arr.add(new TripleURI(-5158064180516699198l,-8754609171607444120l,3847424603389965712l,"RSO"));
-		arr.add(new TripleURI(350261081197924613l,-7076502849930521836l,-131684385676710998l,"RSO"));
+		arr.add(new TripleURI("1;2","3;4","5;6","RSO"));
+		arr.add(new TripleURI("1;2","-1;4","5;6","RSO"));
+		arr.add(new TripleURI("5;2","3;4","5;6","RSO"));
 		Collections.sort(arr);
 		for (int i = 0; i < arr.size(); i++) {
 			TripleURI tu = arr.get(i);
 			System.out.print(tu.sub + "\t" + tu.pred + "\t" + tu.obj + "\n");
 		}
-
 	}
 }

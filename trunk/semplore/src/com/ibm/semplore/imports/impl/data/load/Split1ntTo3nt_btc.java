@@ -1,25 +1,22 @@
 package com.ibm.semplore.imports.impl.data.load;
 
 import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Hashtable;
 
-import com.ibm.semplore.util.Md5_BloomFilter_64bit;
-
+import com.ibm.semplore.util.HashID;
+import com.ibm.semplore.util.Md5_BloomFilter_128bit;
 
 /**
  * @author lql
  * 
  */
 public class Split1ntTo3nt_btc {
-	static Md5_BloomFilter_64bit md5;
+	static Md5_BloomFilter_128bit md5;
 	public static String catFile;
 	public static String relInsFile;
 	public static String relFile;
@@ -43,7 +40,7 @@ public class Split1ntTo3nt_btc {
 		return null;
 	}
 
-	public static void processTripleLine(String line) {
+	public static void processTripleLine(String line) throws Exception {
 		// check nt gramma
 //		System.out.println(line);
 		String[] triple = line.replaceAll("\t", " ").split(" ");
@@ -64,16 +61,19 @@ public class Split1ntTo3nt_btc {
 		if (tripletype == null)
 			return;
 
-		long[] hash = new long[3];
+		String[] hash = new String[3];
+		long[] hashid = new long[2];
 		for (int j=0; j<3; j++) {
 			if (tripletype == Util4NT.ATTRIBUTE && j==2) break;
 			boolean dup = md5.set(triple[j]);
-			hash[j] = md5.getLongID_set();
+			hashid[0] = md5.getLongIDhigh_set();
+			hashid[1] = md5.getLongIDlow_set();
+			hash[j] = HashID.encode(hashid);
 			if (!dup) {
 				//this URI appears first time
-				outh.println(String.format("%d\tURI\t%d\t%s", hash[j], Md5_BloomFilter_64bit.HASH_URI, triple[j]));
+				outh.println(String.format("%s\tURI\t%s\t%s", hash[j], Md5_BloomFilter_128bit.HASH_URI, triple[j]));
 				if (j==0) {	//assume all subjects are at first instances
-					outh.println(String.format("%d\tTYPE\t%d\t%d", hash[j], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_INSTANCE));
+					outh.println(String.format("%s\tTYPE\t%s\t%s", hash[j], Md5_BloomFilter_128bit.HASH_TYPE, Md5_BloomFilter_128bit.HASH_TYPE_INSTANCE));
 					instanceSize++;
 				}
 //				else if (j==1 && tripletype == Util4NT.RELATION) {
@@ -83,22 +83,22 @@ public class Split1ntTo3nt_btc {
 //					outh.println(String.format("%d\tTYPE\t%d\t%d", hash[j], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_CATEGORY));
 //				}
 				else if (j==2 && tripletype == Util4NT.RELATION) {
-					outh.println(String.format("%d\tTYPE\t%d\t%d", hash[j], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_INSTANCE));
+					outh.println(String.format("%s\tTYPE\t%s\t%s", hash[j], Md5_BloomFilter_128bit.HASH_TYPE, Md5_BloomFilter_128bit.HASH_TYPE_INSTANCE));
 					instanceSize++;
 				}
 				else if (j==1 && tripletype == Util4NT.CATEGORY) {
-					outh.println(String.format("%d\tTYPE\t%d\t%d", hash[j], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_INSTANCE));
+					outh.println(String.format("%s\tTYPE\t%s\t%s", hash[j], Md5_BloomFilter_128bit.HASH_TYPE, Md5_BloomFilter_128bit.HASH_TYPE_INSTANCE));
 																//TODO this instance should not be search
 				}
 				else if (j==1 && tripletype == Util4NT.ATTRIBUTE) {
-					outh.println(String.format("%d\tTYPE\t%d\t%d", hash[j], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_INSTANCE));
+					outh.println(String.format("%s\tTYPE\t%s\t%s", hash[j], Md5_BloomFilter_128bit.HASH_TYPE, Md5_BloomFilter_128bit.HASH_TYPE_INSTANCE));
 				}
 			}
 		}
 		if (tripletype == Util4NT.CATEGORY) {// category
 			catInsSize++;
-			outh.println(String.format("%d\t%s\t%d\t%d", hash[0], tripletype, hash[1], hash[2]));
-			outh.println(String.format("%d\tTYPE\t%d\t%d", hash[2], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_CATEGORY));
+			outh.println(String.format("%s\t%s\t%s\t%s", hash[0], tripletype, hash[1], hash[2]));
+			outh.println(String.format("%s\tTYPE\t%s\t%s", hash[2], Md5_BloomFilter_128bit.HASH_TYPE, Md5_BloomFilter_128bit.HASH_TYPE_CATEGORY));
 			out1.println(hash[2]+"\t.");
 //			out1.println(line);
 			if (!eg_cats.containsKey(triple[2])) {
@@ -111,10 +111,10 @@ public class Split1ntTo3nt_btc {
 			}
 		} else if (tripletype == Util4NT.RELATION) {// relation
 			relInsSize++;
-			outh.println(String.format("%d\t%s\t%d\t%d", hash[0], tripletype, hash[1], hash[2]));
-			outh.println(String.format("%d\t%s\t%d\t%d", hash[2], Util4NT.INVRELATION, hash[1], hash[0]));
-			outh.println(String.format("%d\tTYPE\t%d\t%d", hash[1], Md5_BloomFilter_64bit.HASH_TYPE, Md5_BloomFilter_64bit.HASH_TYPE_RELATION));
-			out2.println(String.format("%d\t%d\t%d", hash[0], hash[1], hash[2]));
+			outh.println(String.format("%s\t%s\t%s\t%s", hash[0], tripletype, hash[1], hash[2]));
+			outh.println(String.format("%s\t%s\t%s\t%s", hash[2], Util4NT.INVRELATION, hash[1], hash[0]));
+			outh.println(String.format("%s\tTYPE\t%s\t%s", hash[1], Md5_BloomFilter_128bit.HASH_TYPE, Md5_BloomFilter_128bit.HASH_TYPE_RELATION));
+			out2.println(String.format("%s\t%s\t%s", hash[0], hash[1], hash[2]));
 			out3.println(hash[1]+"\t.");
 //			out2.println(line);
 			if (!eg_rels.containsKey(triple[1])) {
@@ -127,7 +127,7 @@ public class Split1ntTo3nt_btc {
 			}
 		} else if (tripletype == Util4NT.ATTRIBUTE) {// attribute
 			attrInsSize++;
-			outh.println(String.format("%d\t%s\t%s\t%s", hash[0], tripletype, triple[1], triple[2]));
+			outh.println(String.format("%s\t%s\t%s\t%s", hash[0], tripletype, triple[1], triple[2]));
 //			out3.println(line);
 			if (!eg_attrs.containsKey(triple[1])) {
 				count_attrs.put(triple[1], new Pair(triple[1], 1));
@@ -166,7 +166,7 @@ public class Split1ntTo3nt_btc {
 	public static void main(String nt_dir, String catFile,
 			String relInsFile, String relFile, String hashdataFile) throws Exception {
 		System.out.println("Initializing Dictionary");
-		Split1ntTo3nt_btc.md5 = new Md5_BloomFilter_64bit();
+		Split1ntTo3nt_btc.md5 = new Md5_BloomFilter_128bit();
 		
 		Split1ntTo3nt_btc.catFile = catFile;
 		Split1ntTo3nt_btc.relInsFile = relInsFile;

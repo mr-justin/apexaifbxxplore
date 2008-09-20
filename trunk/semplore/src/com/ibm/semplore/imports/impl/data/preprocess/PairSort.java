@@ -23,14 +23,14 @@ public class PairSort {
 		BufferedWriter wr = new BufferedWriter(new FileWriter(newFile));
 		ArrayList<PairURI> arr = new ArrayList<PairURI>();
 		int count = 0;
-		long ins;
+		String ins;
 		String temp;
 		PairURI last = null;
 		
 		System.out.println("Reading " + pairFile + "...");
 		while (rd.hasNext()) {
-			ins = rd.nextLong();
-			temp = rd.nextLine();
+			ins = rd.next();
+			temp = rd.next();
 			count ++;
 			if (count % 50000 == 0) System.out.println(count);
 			arr.add(new PairURI(ins, temp));
@@ -45,10 +45,10 @@ public class PairSort {
 			if (unique) {
 				if (last==null || tu.compareTo(last)!=0) {
 					last = tu;
-					wr.write(tu.instance + /*"\t" +*/ tu.category + "\n");
+					wr.write(tu.instance + "\t" + tu.category + "\n");
 				}
 			} else
-				wr.write(tu.instance + /*"\t" +*/ tu.category + "\n");
+				wr.write(tu.instance + "\t" + tu.category + "\n");
 		}
 		wr.close();
 		rd.close();
