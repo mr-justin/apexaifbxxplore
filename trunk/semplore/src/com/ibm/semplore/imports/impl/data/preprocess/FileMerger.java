@@ -23,12 +23,12 @@ public class FileMerger {
 		com.ibm.semplore.imports.impl.data.util.Heap h = new com.ibm.semplore.imports.impl.data.util.Heap();
 		BufferedWriter wr = new BufferedWriter(new FileWriter(output));
 		int count = 0;
-		String s,p,o;
+		long s,p,o;
 		TripleURI last = null;
 
 		for (int i = 0; i < fileCount; i++) {
 			rd[i] = new Scanner(new BufferedReader(new FileReader(prefix + i)));
-			s = rd[i].next(); p = rd[i].next(); o = rd[i].next();
+			s = rd[i].nextLong(); p = rd[i].nextLong(); o = rd[i].nextLong();
 			h.insert(new ReaderTriple(rd[i], new TripleURI(s,p,o, sort)));
 		}
 
@@ -40,7 +40,7 @@ public class FileMerger {
 				wr.write(rt.triple.sub + "\t" + rt.triple.pred + "\t" + rt.triple.obj + "\n");
 			}
 			if (rt.reader.hasNext()) {
-				s = rt.reader.next(); p = rt.reader.next(); o = rt.reader.next();
+				s = rt.reader.nextLong(); p = rt.reader.nextLong(); o = rt.reader.nextLong();
 				h.insert(new ReaderTriple(rt.reader, new TripleURI(s,p,o,sort)));
 			}
 		}
@@ -55,13 +55,13 @@ public class FileMerger {
 		com.ibm.semplore.imports.impl.data.util.Heap h = new com.ibm.semplore.imports.impl.data.util.Heap();
 		BufferedWriter wr = new BufferedWriter(new FileWriter(output));
 		int count = 0;
-		String ins;
+		long ins;
 		String temp;
 		PairURI last = null;
 
 		for (int i = 0; i < fileCount; i++) {
 			rd[i] = new Scanner(new BufferedReader(new FileReader(prefix + i)));
-			ins = rd[i].next(); temp = rd[i].next();
+			ins = rd[i].nextLong(); temp = rd[i].nextLine();
 			h.insert(new ReaderPair(rd[i], new PairURI(ins, temp)));
 		}
 
@@ -69,11 +69,11 @@ public class FileMerger {
 			ReaderPair rt = (ReaderPair) h.remove();
 			if (last==null || rt.pair.compareTo(last)!=0) {
 				if (++count % 500000 == 0) System.out.println(count);
-				wr.write(rt.pair.instance + "\t" + rt.pair.category + "\n");
+				wr.write(rt.pair.instance + /*"\t" +*/ rt.pair.category + "\n");
 				last = rt.pair;
 			}
 			if (rt.reader.hasNext()) {
-				ins = rt.reader.next(); temp = rt.reader.next();
+				ins = rt.reader.nextLong(); temp = rt.reader.nextLine();
 				h.insert(new ReaderPair(rt.reader, new PairURI(ins, temp)));
 			}
 		}
