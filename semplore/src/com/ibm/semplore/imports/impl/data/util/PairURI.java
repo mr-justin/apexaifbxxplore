@@ -3,27 +3,24 @@ package com.ibm.semplore.imports.impl.data.util;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import com.ibm.semplore.util.HashID;
-
 public class PairURI implements Comparable{
-	public HashID instance;
+	public long instance;
 	public String category;
-	public PairURI(String ins, String cat) {
-		instance = new HashID(ins);
+	public PairURI(long ins, String cat) {
+		instance = ins;
 		category = cat;
 	}
 	public int compareTo(Object arg0) {
 		PairURI a = (PairURI)arg0;
-		int c = instance.compareTo(a.instance);
-		if (c!=0) return c;
+		if (instance != a.instance) return instance > a.instance ? 1 : -1;
 		else return category.compareTo(a.category);
 	}
 	
 	public static void main(String[] args) {
 		ArrayList<PairURI> arr = new ArrayList<PairURI>();
-		arr.add(new PairURI("1;2", "."));
-		arr.add(new PairURI("1;3", "."));
-		arr.add(new PairURI("-1;3", "."));
+		arr.add(new PairURI(1, "2"));
+		arr.add(new PairURI(1, "1"));
+		arr.add(new PairURI(3, "3"));
 		Collections.sort(arr);
 		for (int i = 0; i < arr.size(); i++) {
 			PairURI tu = arr.get(i);

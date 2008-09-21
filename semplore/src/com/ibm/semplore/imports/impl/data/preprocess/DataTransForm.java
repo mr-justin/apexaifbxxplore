@@ -8,7 +8,6 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 import com.ibm.semplore.config.Config;
-import com.ibm.semplore.util.HashID;
 
 public class DataTransForm {
 
@@ -43,11 +42,8 @@ public class DataTransForm {
 			writer = new DataOutputStream(new FileOutputStream(outputFileName));
 			reader = new Scanner(new BufferedReader(new FileReader(inputDir+tempFile.getName())));	
 			String temp;
-			HashID id;
 			while (reader.hasNext()) {
-				id = new HashID(reader.next());
-				writer.writeLong(id.id[0]);
-				writer.writeLong(id.id[1]);
+				writer.writeLong(reader.nextLong());
 			}
 			writer.close();
 		}

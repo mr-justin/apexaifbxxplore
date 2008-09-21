@@ -27,11 +27,11 @@ public class HashTupleSort {
 		System.out.println("Reading " + tripleFile + "...");
 		while (rd.hasNextLong()) {
 //		while ((temp = rd.readLine()) != null) {
+			try {
 			s = rd.nextLong(); type = rd.next(); p = rd.nextLong(); obj = rd.nextLine();
 			count ++;
 			if (count % 50000 == 0) System.out.println(count);
 //			System.out.println(temp);
-			try {
 				arr.add(new HashTuple(s,type, p,obj));
 			}
 			catch (Exception e) {
