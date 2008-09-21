@@ -28,6 +28,7 @@ import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.Pseudograph;
 import org.jgrapht.graph.WeightedPseudograph;
+import org.xmedia.accessknow.sesame.model.NamedConcept;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -62,6 +63,30 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	public void init(Object... params) {
 		// TODO Auto-generated method stub
+	}
+	
+	/**
+	 * change all the concept in Subgraph to http://www.w3.org/2002/07/owl#Thing
+	 * 
+	 * @author jqchen - jqchen@apex.sjtu.edu.cn
+	 * @param sub_graph
+	 */
+	public void changeConcept2Thing(Subgraph sub_graph) {
+		for(SummaryGraphElement ele : sub_graph.vertexSet()) {
+			if( ele.type == SummaryGraphElement.CONCEPT ) {
+				sub_graph.vertexSet().remove(ele);
+			}
+		}
+		SummaryGraphElement thing = new SummaryGraphElement(NamedConcept.TOP,SummaryGraphElement.CONCEPT);
+		sub_graph.addVertex(thing);
+		for(SummaryGraphEdge edge : sub_graph.edgeSet()) {
+			if( edge.getSource().type == SummaryGraphElement.CONCEPT ) {
+				edge.setSource(thing);
+			}
+			if( edge.getTarget().type == SummaryGraphElement.CONCEPT) {
+				edge.setTarget(thing);
+			}
+		}
 	}
 
 	public static void main(String[] args){
