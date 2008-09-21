@@ -2,10 +2,13 @@ package com.ibm.semplore.util;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -218,5 +221,13 @@ public class Md5_BloomFilter_64bit {
 		l=(l<<8)|(index[1] & 0x000000FF);
 		l=(l<<8)|(index[0] & 0x000000FF);
 		return l;
+	}
+	
+	public static void main(String[] args) throws NoSuchAlgorithmException, IOException {
+		BufferedReader r = new BufferedReader(new InputStreamReader(System.in));
+		String line;
+		while ((line=r.readLine())!=null) {
+			System.out.println(URItoID(line));
+		}
 	}
 }

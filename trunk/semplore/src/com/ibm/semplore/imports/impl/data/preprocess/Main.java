@@ -46,7 +46,7 @@ public class Main {
 	void sort(String hashdataFile, String oriCat, String oriRel, String oriAtt) throws Exception {
 			FileSort filesort = new FileSort();
 
-//			filesort.sortHashTuple(hashdataFile, hashdataFile+".sort");
+			filesort.sortHashTuple(hashdataFile, hashdataFile+".sort");
 
 			//for relation
 			filesort.sortTriple(oriRel, RSO, "RSO");
