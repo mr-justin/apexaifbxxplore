@@ -29,6 +29,7 @@ import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
+import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 import com.ibm.semplore.xir.DocStream;
 
 import flex.messaging.FlexContext;
@@ -212,8 +213,8 @@ public class SearchSessionService {
 			if (query instanceof Concept) {
 				Graph graph = new GraphImpl();
 				Concept c = (Concept)query;
-				graph.add(SchemaFactoryImpl.getInstance().createCategory(0));	//0
-				//TODO how to apply Concept (label, uri, source) restriction to a node?
+				graph.add(SchemaFactoryImpl.getInstance()
+						.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
 				graph.setTargetVariable(0);
 				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 				helper.put(0, currentResult.getResultStream());
@@ -233,9 +234,8 @@ public class SearchSessionService {
 				Relation r = (Relation)query;
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
-				graph.add(SchemaFactoryImpl.getInstance().createRelation(0), 0, 1);
-				//TODO how to deal with relation(label, uri, source) restriction?
-				graph.setTargetVariable(0);
+				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
+				graph.setTargetVariable(1);
 				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 				helper.put(0, currentResult.getResultStream());
 
@@ -254,9 +254,44 @@ public class SearchSessionService {
 			}
 		} else if (query instanceof Suggestion) {
 			if (query instanceof ConceptSuggestion) {
-				//TODO how to deal with ConceptSuggestion(label, source, uri)?
+				Graph graph = new GraphImpl();
+				ConceptSuggestion c = (ConceptSuggestion)query;
+				graph.add(SchemaFactoryImpl.getInstance()
+						.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
+				graph.setTargetVariable(0);
+				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+				helper.put(0, currentResult.getResultStream());
+
+				int id = SemplorePool.acquire();
+				QueryEvaluator eval = SemplorePool.getEvaluator(id);
+				XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
+				SemplorePool.release(id);
+
+				ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+				resultHistory.add(newResult);
+				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+				return ret;
+				
 			} else if (query instanceof RelationSuggestion) {
-				//TODO how to deal with RelationSuggestion(label, source, uri)?
+				Graph graph = new GraphImpl();
+				RelationSuggestion r = (RelationSuggestion)query;
+				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
+				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
+				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
+				graph.setTargetVariable(1);
+				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+				helper.put(0, currentResult.getResultStream());
+
+				int id = SemplorePool.acquire();
+				QueryEvaluator eval = SemplorePool.getEvaluator(id);
+				XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
+				SemplorePool.release(id);
+
+				ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+				resultHistory.add(newResult);
+				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+				return ret;
+				
 			} else {
 				return null;
 			}
