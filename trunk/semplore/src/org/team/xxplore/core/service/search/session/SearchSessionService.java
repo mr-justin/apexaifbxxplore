@@ -8,16 +8,19 @@ import java.util.Map.Entry;
 
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
 import org.team.xxplore.core.service.search.datastructure.Concept;
+import org.team.xxplore.core.service.search.datastructure.ConceptSuggestion;
 import org.team.xxplore.core.service.search.datastructure.Facet;
 import org.team.xxplore.core.service.search.datastructure.Instance;
 import org.team.xxplore.core.service.search.datastructure.Keywords;
 import org.team.xxplore.core.service.search.datastructure.Query;
 import org.team.xxplore.core.service.search.datastructure.QueryGraph;
 import org.team.xxplore.core.service.search.datastructure.Relation;
+import org.team.xxplore.core.service.search.datastructure.RelationSuggestion;
 import org.team.xxplore.core.service.search.datastructure.ResultItem;
 import org.team.xxplore.core.service.search.datastructure.ResultPage;
 import org.team.xxplore.core.service.search.datastructure.SeeAlso;
 import org.team.xxplore.core.service.search.datastructure.Source;
+import org.team.xxplore.core.service.search.datastructure.Suggestion;
 
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.QueryEvaluator;
@@ -205,7 +208,60 @@ public class SearchSessionService {
 			FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
 			return ret;
 
-		} else {
+		} else if (query instanceof Facet) {
+			if (query instanceof Concept) {
+				Graph graph = new GraphImpl();
+				Concept c = (Concept)query;
+				graph.add(SchemaFactoryImpl.getInstance().createCategory(0));	//0
+				//TODO how to apply Concept (label, uri, source) restriction to a node?
+				graph.setTargetVariable(0);
+				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+				helper.put(0, currentResult.getResultStream());
+
+				int id = SemplorePool.acquire();
+				QueryEvaluator eval = SemplorePool.getEvaluator(id);
+				XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
+				SemplorePool.release(id);
+
+				ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+				resultHistory.add(newResult);
+				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+				return ret;
+
+			} else if (query instanceof Relation) {
+				Graph graph = new GraphImpl();
+				Relation r = (Relation)query;
+				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
+				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
+				graph.add(SchemaFactoryImpl.getInstance().createRelation(0), 0, 1);
+				//TODO how to deal with relation(label, uri, source) restriction?
+				graph.setTargetVariable(0);
+				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+				helper.put(0, currentResult.getResultStream());
+
+				int id = SemplorePool.acquire();
+				QueryEvaluator eval = SemplorePool.getEvaluator(id);
+				XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
+				SemplorePool.release(id);
+
+				ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+				resultHistory.add(newResult);
+				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+				return ret;
+				
+			} else {
+				return null;
+			}
+		} else if (query instanceof Suggestion) {
+			if (query instanceof ConceptSuggestion) {
+				//TODO how to deal with ConceptSuggestion(label, source, uri)?
+			} else if (query instanceof RelationSuggestion) {
+				//TODO how to deal with RelationSuggestion(label, source, uri)?
+			} else {
+				return null;
+			}
+		}
+		else {
 			return null;
 		}
 		
