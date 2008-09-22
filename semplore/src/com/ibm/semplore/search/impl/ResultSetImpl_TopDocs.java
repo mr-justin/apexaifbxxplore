@@ -53,7 +53,7 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 		resultStream = (DocStream)resultStream.clone();
 		resultStream.init();
 		for (int i=0; i<resultStream.getLen(); i++) {
-			collector.collect(resultStream.doc(), resultStream.score());
+			collector.collect(resultStream.doc(), (float)(resultStream.score()+0.01));
 			resultStream.next();
 		};
 		topDocs = collector.topDocs();
