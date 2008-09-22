@@ -106,4 +106,10 @@ public class CompoundCategoryImpl implements CompoundCategory
         }
         return false;
     }
+
+	@Override
+	public CompoundCategory removeComponentCategory(GeneralCategory cat) {
+		components.remove(cat);
+		return this;
+	}
 }
