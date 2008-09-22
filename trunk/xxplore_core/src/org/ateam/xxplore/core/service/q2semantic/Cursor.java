@@ -14,7 +14,7 @@ class Cursor implements Comparable {
 	
 	private SummaryGraphEdge incomingEdge; 
 	
-	private LinkedList<SummaryGraphEdge> m_path;
+	private LinkedList m_path;
 	
 	private Cursor m_parent;
 	
@@ -27,8 +27,8 @@ class Cursor implements Comparable {
 		m_parent = parent;
 		m_element = element;
 		m_keyword = keyword;
-		LinkedList<SummaryGraphEdge> path = new LinkedList<SummaryGraphEdge>();
-		m_path = getVisitedPath(path, incomingEdge, parent);
+		LinkedList path = new LinkedList();
+		m_path = getVisitedPath(path, element, incomingEdge, parent);
 	} 
 	
 	/**
@@ -37,10 +37,11 @@ class Cursor implements Comparable {
 	 * @param parent
 	 * @return
 	 */
-	private LinkedList<SummaryGraphEdge> getVisitedPath(LinkedList<SummaryGraphEdge> path, SummaryGraphEdge edge, Cursor parent){
+	private LinkedList getVisitedPath(LinkedList path, SummaryGraphElement element, SummaryGraphEdge edge, Cursor parent){
+		path.addFirst(element);
 		if(edge == null || parent == null) return path;
 		path.addFirst(edge);
-		return getVisitedPath(path, parent.getEdge(), parent.getParent());
+		return getVisitedPath(path, parent.getElement(), parent.getEdge(), parent.getParent());
 	}
 
 	public boolean hasVisited(SummaryGraphElement e){
