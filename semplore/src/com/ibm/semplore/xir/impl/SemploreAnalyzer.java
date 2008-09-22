@@ -59,7 +59,7 @@ public class SemploreAnalyzer extends StandardAnalyzer {
 			) {
 			return new Tokenizer4SemploreTermPositionReader(reader);
 		}
-		if (fieldType == FieldType.TEXT) {
+		if (fieldType == FieldType.ATTRIBUTE_VALUE) {
 			return new Tokenizer4SemploreTermReader4Attributes(reader);
 		}
 		return super.tokenStream("", reader);

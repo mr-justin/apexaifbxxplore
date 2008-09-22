@@ -68,23 +68,23 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		field.setBoost(5.0f);
 		doc.add(field);
 
-		// build index of attributes, field=attribute, term=value(tokenized)
-//		HashMap<String, String> attributes = insDoc.getAttributes();
-//		StringBuffer text = new StringBuffer();
-//		for (Entry<String, String> entry : attributes.entrySet()) {
-//			doc.add(new Field(entry.getKey(), entry.getValue(), Field.Store.NO, Field.Index.TOKENIZED));
-//			text.append(entry.getValue()+" ");
-//		}
-//		text.append(insDoc.getSchemaObjectInfo().getLabel());
-		
-		// build index taking text as field value: for keyword search
+		// build index of attributes, term=attribute###value
 		LinkedList<AttributeValue> attrVals = insDoc.getAttributes();
-		doc.add(new Field(FieldType.TEXT.toString(),
+		doc.add(new Field(FieldType.ATTRIBUTE_VALUE.toString(),
 				new SemploreAnalyzer().tokenStream(
-						FieldType.TEXT, new SemploreTermReader4Attributes(
+						FieldType.ATTRIBUTE_VALUE, new SemploreTermReader4Attributes(
 								attrVals))));
 
+		// build index of text, term=value1+value2+...(tokenized)
+		StringBuffer text = new StringBuffer();
+		for (AttributeValue attrVal:attrVals) {
+			text.append(attrVal.getValue()+" ");
+		}
+		text.append(insDoc.getSchemaObjectInfo().getLabel());		
+		doc.add(new Field(FieldType.TEXT.toString(), text.toString(), Field.Store.NO,
+				Field.Index.TOKENIZED));
 
+		
 		if (insDoc.checkThisSchemaObjectType(Instance.class)) {
 			// Index category: class hierarchy
 			ArrayList<Category> cates = insDoc.getCategories();
