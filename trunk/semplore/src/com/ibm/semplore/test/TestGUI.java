@@ -15,6 +15,7 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -45,6 +46,7 @@ public class TestGUI extends JFrame{
 	private Toolkit toolkit;
     JTextField input;
     JTextArea area;
+    JLabel timeLabel;
     JComboBox box;
     PrintStream out;
     
@@ -98,6 +100,9 @@ public class TestGUI extends JFrame{
     	JButton search = new JButton("Search");
      	panel.add(search);
 
+     	timeLabel = new JLabel();
+     	panel.add(timeLabel);
+     	
      	area = new JTextArea();
      	JScrollPane spane = new JScrollPane(area);
      	panel.add(spane);
@@ -106,7 +111,9 @@ public class TestGUI extends JFrame{
     	     public void actionPerformed(ActionEvent event) {
     	    	 area.setText("");
     	    	 try {
+    	    		 long time = System.currentTimeMillis();
 					actions[box.getSelectedIndex()].action(input.getText());
+					timeLabel.setText(String.format("total time: %dms", System.currentTimeMillis()-time));
 				} catch (Exception e) {
 					e.printStackTrace(out);
 				}
