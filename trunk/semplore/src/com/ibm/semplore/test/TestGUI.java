@@ -28,6 +28,7 @@ import com.ibm.semplore.search.SearchFactory;
 import com.ibm.semplore.search.XFacetedSearchService;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
 import com.ibm.semplore.search.impl.XFacetedSearchableImpl;
+import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 import com.ibm.semplore.xir.TermFactory;
 import com.ibm.semplore.xir.impl.DebugIndex;
 import com.ibm.semplore.xir.impl.IndexReaderImpl;
@@ -52,10 +53,31 @@ public class TestGUI extends JFrame{
     
     private BoxAction[] actions = {
     		new BoxAction() {
-				public void action(String input) {
-					// TODO Auto-generated method stub
+				public void action(String input) throws Exception{
+					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
+							 .add(schemaFactory.createEnumerationCategory().
+									 addInstanceElement(
+											 schemaFactory.createInstance(
+													 Md5_BloomFilter_64bit.URItoID(input))))
+							 ,0);
 				}
-				public String getName() {return "search instance by URI";}
+				public String getName() {return "search instances by URI";}
+    		},
+    		new BoxAction() {
+				public void action(String input) throws Exception{
+					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
+							 .add(schemaFactory.createKeywordCategory(input))
+							 ,0);
+				}
+				public String getName() {return "search instances by keyword";}
+    		},
+    		new BoxAction() {
+				public void action(String input) throws Exception{
+					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
+							 .add(schemaFactory.createAttributeKeywordCategory(input.split("\t")[0],input.split("\t")[1]))
+							 ,0);
+				}
+				public String getName() {return "search instances by attribute-value pair, sep with TAB";}
     		},
     		new BoxAction() {
 				public void action(String input) throws IOException, Exception {
@@ -133,6 +155,8 @@ public class TestGUI extends JFrame{
 				.getXFacetedSearchService(config);
 		XFacetedSearchableImpl searcher = (XFacetedSearchableImpl)searchService.getXFacetedSearchable();
 		indexReader = (IndexReaderImpl)searcher.getInsIndexReader();
+		TestSearch.schemaSearcher = searchService.getSchemaSearchable();
+		TestSearch.searcher = searchService.getXFacetedSearchable();
 	}
 
 }
