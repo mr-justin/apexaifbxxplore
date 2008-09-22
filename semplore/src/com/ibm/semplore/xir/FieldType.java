@@ -150,6 +150,10 @@ public class FieldType {
 	 */
 	public static final FieldType ATTRIBUTE_RANGE_TYPE = new FieldType("attribute_range_type", FOR.Attribute);
 	
+	/**
+	 * Field tag for (attribute,value) pair;
+	 */
+	public static final FieldType ATTRIBUTE_VALUE = new FieldType("attribute_value", FOR.Attribute);
 	
 	/**
 	 * Enumeration on for which kind of index a {@link FieldType} is designed.
