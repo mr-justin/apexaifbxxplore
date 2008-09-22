@@ -51,7 +51,7 @@ public class KeywordCategoryImpl implements KeywordCategory
     
     public boolean equals(Object obj) {
         if (obj instanceof KeywordCategoryImpl) {
-            return keyword == ((KeywordCategoryImpl)obj).keyword;
+            return keyword.equals(((KeywordCategoryImpl)obj).keyword);
         }
         return false;
     }
