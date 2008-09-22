@@ -41,14 +41,19 @@ public class TestSearchForSample extends TestSearch {
 
 				while (!quit) {
 
-					//query1: find all the instances.
+					//query1: find all the instances.				
+					
 					 searchInstance(schemaFactory.createCatRelGraph()
 							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID(args[1]))))
 							 ,0);
 
+					 searchInstance(schemaFactory.createCatRelGraph()
+							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(args[1])))
+							 ,0);
+
 					 //query2: find all the instances of category <American_film_directors>. 
 					 searchInstance(schemaFactory.createCatRelGraph()
-							 .add(schemaFactory.createCategory(Md5_BloomFilter_64bit.URItoID("<American_film_directors>")))
+							 .add(schemaFactory.createCategory(new Long(args[2]).longValue()))
 							 ,0);
 
 					 //query3: find all the instances related to keyword "tom".

@@ -174,7 +174,7 @@ public class IndexReaderImpl implements IndexReader {
 				String field = FieldType.TEXT.toString();
 				String text = term.getString();				
 			      try {
-						if (true) throw new Exception("attribute+value");
+//						if (true) throw new Exception("attribute+value");
 					    Analyzer analyzer = new StandardAnalyzer();
 					    TokenStream tokenstream = analyzer.tokenStream(field, new StringReader(text));
 	  					  PhraseQuery query = new PhraseQuery();
