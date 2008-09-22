@@ -1,17 +1,15 @@
 package org.team.xxplore.core.service.search.datastructure;
 
-import org.dom4j.Document;
-import org.jgrapht.Graphs;
-import org.jgrapht.graph.WeightedPseudograph;
+import java.util.LinkedList;
 
 /**
  * This class represents query graphs
  * @author tpenin
  */
-public class QueryGraph extends Graphs implements Query {
+public class QueryGraph implements Query {
    
-	public String NLText;
-	private WeightedPseudograph queryGraph;
+	// The list of edges of the graph
+	public LinkedList<GraphEdge> edgeList;
 	
 	/**
 	 * Default constructor
@@ -19,30 +17,25 @@ public class QueryGraph extends Graphs implements Query {
 	public QueryGraph() {
 		super();
    	}
-	
+
 	/**
-	 * set the queryGraph built from Q2Semantic
-	 * @param qg
+	 * @param edgeList
 	 */
-	public void setQueryGraph(WeightedPseudograph qg)
-	{
-		queryGraph = qg;
+	public QueryGraph(LinkedList<GraphEdge> edgeList) {
+		this.edgeList = edgeList;
 	}
-	
+
 	/**
-	 * get the queryGraph built from Q2Semantic
-	 * @return
+	 * @return the edgeList
 	 */
-	public WeightedPseudograph getQUeryGraph()
-	{
-		return queryGraph;
+	public LinkedList<GraphEdge> getEdgeList() {
+		return edgeList;
 	}
-	
-	/* (non-Javadoc)
-	 * @see dataStructures.XMLSerializable#toXML()
+
+	/**
+	 * @param edgeList the edgeList to set
 	 */
-	public Document toXML() {
-		// TODO Auto-generated method stub
-		return null;
+	public void setEdgeList(LinkedList<GraphEdge> edgeList) {
+		this.edgeList = edgeList;
 	}
 }

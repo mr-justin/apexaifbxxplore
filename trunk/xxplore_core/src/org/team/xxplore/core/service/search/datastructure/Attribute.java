@@ -12,4 +12,14 @@ public class Attribute extends Facet {
 	public Attribute() { 
 		super(); 
 	}
+	
+	/**
+	 * Constructor
+	 * @param label The label of the attribute
+	 * @param uri The URI of the attribute
+	 * @param source The source of the attribute
+	 */
+	public Attribute(String label, String uri, Source source) {
+		super(label, uri, source);
+	}
 }

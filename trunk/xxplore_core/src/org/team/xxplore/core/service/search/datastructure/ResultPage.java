@@ -4,13 +4,11 @@ import java.util.LinkedList;
 
 /**
  * This class represents a ResultPage. It is related to a Result object, contains all its lists but only a subset
- * of its results for a given page and a given source.
+ * of its results for a given page.
  * @author tpenin
  */
 public class ResultPage extends Result {
 	
-	// The source for the current page
-	public Source activeSource;
 	// The number of the current page
 	public int pageNum;
    
@@ -24,29 +22,13 @@ public class ResultPage extends Result {
 	/**
 	 * Usual constructor
 	 * @param resultItemList List of result items for this page
-	 * @param sourceList List of the sources of all results, not only from this page
-	 * @param activeSource Source of the results of this page
+	 * @param source The source of the results
 	 * @param pageNum Number of this page of result within results from its source
 	 */
-	public ResultPage(LinkedList<ResultItem> resultItemList, LinkedList<Source> sourceList, Source activeSource, int pageNum) {
+	public ResultPage(LinkedList<ResultItem> resultItemList, Source source, int pageNum) {
 		// Call to the Result constructor
-		super(resultItemList, sourceList);
-		this.activeSource = activeSource;
+		super(resultItemList, source);
 		this.pageNum = pageNum;
-	}
-
-	/**
-	 * @return the activeSource
-	 */
-	public Source getActiveSource() {
-		return this.activeSource;
-	}
-
-	/**
-	 * @param activeSource the activeSource to set
-	 */
-	public void setActiveSource(Source activeSource) {
-		this.activeSource = activeSource;
 	}
 
 	/**

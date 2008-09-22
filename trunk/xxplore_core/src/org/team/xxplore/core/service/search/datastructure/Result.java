@@ -3,8 +3,8 @@ package org.team.xxplore.core.service.search.datastructure;
 import java.util.LinkedList;
 
 /**
- * This class represents all the results returned by the search engine for a given query, independently from the data
- * source or the page to display
+ * This class represents all the results returned by the search engine for a given query, independently from the page 
+ * to display
  * @author tpenin
  */
 public class Result {
@@ -12,24 +12,24 @@ public class Result {
 	// The list of all the result items that were found by the search engine
 	public LinkedList<ResultItem> resultItemList;
 	// The list of all the sources that have contributed to the results
-	public LinkedList<Source> sourceList;
+	public Source source;
 	
 	/**
 	 * Default constructor
 	 */
 	public Result() {
 		this.resultItemList = new LinkedList<ResultItem>();
-		this.sourceList = new LinkedList<Source>();
+		this.source = null;
 	}
 	
 	/**
 	 * Constructor
 	 * @param resultItemList The result items that were found by the search engine
-	 * @param sourceList The list of the sources that have contributed to the results
+	 * @param source The current source
 	 */
-	public Result(LinkedList<ResultItem> resultItemList, LinkedList<Source> sourceList) {
+	public Result(LinkedList<ResultItem> resultItemList, Source source) {
 		this.resultItemList = resultItemList;
-		this.sourceList = sourceList;
+		this.source = source;
 	}
 	
 	/**
@@ -47,16 +47,16 @@ public class Result {
 	}
 
 	/**
-	 * @return the sourceList
+	 * @return the source
 	 */
-	public LinkedList<Source> getSourceList() {
-		return sourceList;
+	public Source getSource() {
+		return source;
 	}
 
 	/**
-	 * @param sourceList the sourceList to set
+	 * @param source the source to set
 	 */
-	public void setSourceList(LinkedList<Source> sourceList) {
-		this.sourceList = sourceList;
+	public void setSource(Source source) {
+		this.source = source;
 	}
 }

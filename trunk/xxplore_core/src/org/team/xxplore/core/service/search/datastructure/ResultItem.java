@@ -10,8 +10,6 @@ public class ResultItem {
 	public String URL;
 	// The score of this result item in its source according to the ranking algorithm of the search engine
 	public double score;
-	// The source of this result item
-	public Source source;
 	// The type of this result item (text document, picture, etc.)
 	public String type;
 	// The title of this result item as it will be displayed
@@ -25,7 +23,6 @@ public class ResultItem {
 	public ResultItem() {
 		this.URL = "";
 		this.score = 0.0;
-		this.source = null;
 		this.type = "";
 		this.title = "";
 		this.snippet = "";
@@ -35,15 +32,13 @@ public class ResultItem {
 	 * Constructor
 	 * @param url The URL that uniquely identify the result item
 	 * @param score The score of this result item in its source according to the ranking algorithm of the search engine
-	 * @param source The source of this result item
 	 * @param type The type of this result item (text document, picture, etc.)
 	 * @param title The title of this result item as it will be displayed
 	 * @param snippet The text snippet associated with the result item
 	 */
-	public ResultItem(String url, double score, Source source, String type, String title, String snippet) {
+	public ResultItem(String url, double score, String type, String title, String snippet) {
 		this.URL = url;
 		this.score = score;
-		this.source = source;
 		this.type = type;
 		this.title = title;
 		this.snippet = snippet;
@@ -75,20 +70,6 @@ public class ResultItem {
 	 */
 	public void setSnippet(String snippet) {
 		this.snippet = snippet;
-	}
-
-	/**
-	 * @return the source
-	 */
-	public Source getSource() {
-		return this.source;
-	}
-
-	/**
-	 * @param source the source to set
-	 */
-	public void setSource(Source source) {
-		this.source = source;
 	}
 
 	/**

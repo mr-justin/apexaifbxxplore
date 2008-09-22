@@ -22,4 +22,32 @@ public class Couple {
 		this.element1 = element1;
 		this.element2 = element2;
 	}
+
+	/**
+	 * @return the element1
+	 */
+	public Facet getElement1() {
+		return element1;
+	}
+
+	/**
+	 * @param element1 the element1 to set
+	 */
+	public void setElement1(Facet element1) {
+		this.element1 = element1;
+	}
+
+	/**
+	 * @return the element2
+	 */
+	public Facet getElement2() {
+		return element2;
+	}
+
+	/**
+	 * @param element2 the element2 to set
+	 */
+	public void setElement2(Facet element2) {
+		this.element2 = element2;
+	}
 }
