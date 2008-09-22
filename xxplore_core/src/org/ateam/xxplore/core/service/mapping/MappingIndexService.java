@@ -34,6 +34,9 @@ public class MappingIndexService {
 	public static final String SEARCH_SOURCE_DS_ONLY  = "sourceOnly";
 	public static final String SEARCH_TARGET_DS_ONLY  = "targetOnly";
 	public static final String SEARCH_TARGET_AND_SOURCE_DS = "both";
+	
+	public static final int SEARCH_SOURCE = 0;
+	public static final int SEARCH_TARGET = 1;
 
 	private String m_indexDir = null; 
 
@@ -81,7 +84,35 @@ public class MappingIndexService {
 		}
 
 	}
-
+	public Collection<Mapping> searchMappingsForSource(String URI, String dsURI, int type) throws Exception
+	{
+		ArrayList<Mapping> res = new ArrayList<Mapping>();
+		Query query = new BooleanQuery();
+		if(type == MappingIndexService.SEARCH_SOURCE)
+		{
+			((BooleanQuery)query).add(new BooleanClause(new TermQuery(new Term(SOURCE_DS_FIELD, dsURI)), BooleanClause.Occur.MUST));
+			((BooleanQuery)query).add(new BooleanClause(new TermQuery(new Term(SOURCE_FIELD, URI)), BooleanClause.Occur.MUST));
+		}
+		else if(type == MappingIndexService.SEARCH_TARGET)
+		{
+			((BooleanQuery)query).add(new BooleanClause(new TermQuery(new Term(TARGET_DS_FIELD, dsURI)), BooleanClause.Occur.MUST));
+			((BooleanQuery)query).add(new BooleanClause(new TermQuery(new Term(TARGET_FIELD, URI)), BooleanClause.Occur.MUST));
+		}
+		Hits hits = m_searcher.search(query);
+		if((hits != null) && (hits.length() > 0)){
+			for(int i = 0; i < hits.length(); i++){
+				Document doc = hits.doc(i);
+				String source = doc.get(SOURCE_FIELD);
+				String target = doc.get(TARGET_FIELD);
+				String targetDS  = doc.get(TARGET_DS_FIELD);
+				String sourceDS = doc.get(SOURCE_DS_FIELD);
+				double conf = Double.parseDouble(doc.get(CONFIDENCE_FIELD));
+				res.add(new SchemaMapping(source, target, sourceDS, targetDS, conf));
+			}
+		}
+		return res;
+	}
+	
 	public Collection<Mapping> searchMappingsForDS(String dsURI, String type){
 		Emergency.checkPrecondition(type == SEARCH_SOURCE_DS_ONLY || type == SEARCH_TARGET_DS_ONLY  || 
 				type == SEARCH_TARGET_AND_SOURCE_DS, "type == SEARCH_SOURCE_DS_ONLY || type == SEARCH_TARGET_DS_ONLY  ||" + 
