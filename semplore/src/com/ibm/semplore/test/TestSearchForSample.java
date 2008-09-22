@@ -22,8 +22,8 @@ import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 public class TestSearchForSample extends TestSearch {
 	public static void main(String[] args) {
 		try {
-			for (int ii = 0; ii < args.length; ii++) {
-				Properties config = Config.readConfigFile(args[ii]);
+			{
+				Properties config = Config.readConfigFile(args[0]);
 				XFacetedSearchService searchService = searchFactory
 						.getXFacetedSearchService(config);
 				schemaSearcher = searchService.getSchemaSearchable();
@@ -43,7 +43,7 @@ public class TestSearchForSample extends TestSearch {
 
 					//query1: find all the instances.
 					 searchInstance(schemaFactory.createCatRelGraph()
-							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID("<http://www.freebase.com/resource/Princeton/guid/9202a8c04000641f8000000003b4e0ac>"))))
+							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID(args[1]))))
 							 ,0);
 
 					 //query2: find all the instances of category <American_film_directors>. 
