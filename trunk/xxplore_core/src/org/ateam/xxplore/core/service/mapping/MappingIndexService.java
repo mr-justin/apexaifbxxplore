@@ -40,6 +40,8 @@ public class MappingIndexService {
 	
 	public static final int SEARCH_SOURCE = 0;
 	public static final int SEARCH_TARGET = 1;
+	
+	private static final String MAPPING_INDEX_DIR = "z:/mapping/index/"
 
 	private String m_indexDir = null; 
 
@@ -148,7 +150,7 @@ public class MappingIndexService {
 		
 		
 		MappingIndexService service = new MappingIndexService();
-		service.init4CreateIndex("z:/mapping/index/");
+		service.init4CreateIndex(MAPPING_INDEX_DIR);
 		service.createIndex(t);
 		service.finishCreateIndex();
 	}
@@ -180,7 +182,7 @@ public class MappingIndexService {
 	
 //	public static void main(String[] args) throws Exception {
 //		MappingIndexService service = new MappingIndexService();
-//		service.init4Search("z:/mapping/index/");
+//		service.init4Search(MAPPING_INDEX_DIR);
 //		Collection<Mapping> t = service.searchMappings("<http://www.freebase.com/property/contains>", "freebase", MappingIndexService.SEARCH_SOURCE);
 //		for(Mapping m : t) {
 //			System.out.println(m.getSource() + "\t" + m.getTarget() +"\t" + m.getTargetDsURI());
