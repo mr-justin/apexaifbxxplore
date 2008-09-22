@@ -102,8 +102,8 @@ public class MassUnionAU_BV_XFacet extends MassUnionAU
          
         res = new int[setCount];
     	resScore = new float[setCount];
-        ResultProcedure resP = new ResultProcedure(CobjStream);
-        bv.forEachIndexFromToInState(0, bv.size()-1, true, resP);
+//        ResultProcedure resP = new ResultProcedure(CobjStream);
+//        bv.forEachIndexFromToInState(0, bv.size()-1, true, resP);
         return new MEMDocStream_Score(res,resScore, res.length);
     }
 }
