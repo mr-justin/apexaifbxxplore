@@ -1,7 +1,9 @@
 package org.ateam.xxplore.core.service.mapping;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -60,6 +62,60 @@ public class MappingIndexService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public boolean checkName(String filename) {
+		return filename.indexOf("attribute") != -1 || filename.indexOf("concept") != -1 ||
+				filename.indexOf("relation") != -1 || filename.indexOf("IUrm") != -1 ||
+				filename.indexOf("propertymapping") != -1;
+	}
+		
+	public void createIndex(ArrayList<File> subdir) throws IOException {
+		
+		for(File i_dir : subdir) {
+			String tokens [] = i_dir.getName().split("_");
+			String ds1 = tokens[0];
+			String ds2 = tokens[1];
+			System.out.println("date source :" + ds1 + "\t" + ds2);
+			
+			for(File i_file : i_dir.listFiles()) {
+				if(this.checkName(i_file.getName())) {
+					System.out.println(i_file.getName());
+					BufferedReader br = new BufferedReader(new FileReader(i_file));
+					String line;
+					while( (line = br.readLine()) != null ) {
+						tokens = line.split("\t");
+						System.out.println("tokens :" + tokens[0] + "\t" + tokens[1]);
+						Mapping t = new SchemaMapping(tokens[0],tokens[1],ds1,ds2,1);
+						this.indexMappings(t);										
+					}
+					br.close();
+				}
+			}
+		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		String root_dir = "z:/mapping";
+		File root = new File(root_dir);
+		ArrayList<File> t = new ArrayList();
+		for(File f : root.listFiles()) {
+			if(f.getName().indexOf("_") != -1) {
+				if(f.getName().indexOf("mapping") == -1) {
+					t.add(f);
+				}
+			}
+		}
+		
+		System.out.println(t.size());
+		
+		for(File f : t) {
+			System.out.println(f.getName());
+		}
+		
+		
+		MappingIndexService service = new MappingIndexService("z:/mapping/index");
+		service.createIndex(t);
 	}
 
 	public void indexMappings(Mapping mapping){
