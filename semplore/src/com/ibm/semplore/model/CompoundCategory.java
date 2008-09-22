@@ -48,4 +48,11 @@ public interface CompoundCategory extends GeneralCategory {
 	 */
 	public CompoundCategory addComponentCategory(GeneralCategory cat);
 	
+	/**
+	 * Remove a component.
+	 * @param cat
+	 * @return
+	 */
+	public CompoundCategory removeComponentCategory(GeneralCategory cat);
+	
 }
