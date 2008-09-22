@@ -73,20 +73,21 @@ public class SearchSessionService {
 			graph.add(cc);	//0
 			graph.setTargetVariable(0);
 			graph.setDataSource(0, "wordnet");
+			
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
 			if (eval == null) System.err.println("Evaluator not exist");
 			XFacetedResultSetForMultiDataSources result = eval.evaluate(graph);
 			SemplorePool.release(id);
+			
+			LinkedList<Operation> operationHistory = new LinkedList<Operation>();
+			operationHistory.add(new KeywordsOperation(k));
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory 
 				= new LinkedList<XFacetedResultSetForMultiDataSources>();
 			resultHistory.add(result);
-			LinkedList<Operation> operationHistory = new LinkedList<Operation>();
-			operationHistory.add(new KeywordsOperation(k));
-			LinkedList<Graph> graphHistory = new LinkedList<Graph>();
-			graphHistory.add(graph);
 			if (FlexContext.getFlexSession() != null) {
 				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+				FlexContext.getFlexSession().setAttribute("currentGraph", graph);
 				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
 			}
 			ResultPage ret = transform(result, 1, nbResultsPerPage);
@@ -112,9 +113,11 @@ public class SearchSessionService {
 	 * @return a page of results that matches the current query for the source specified.
 	 */
 	public ResultPage getPage(int pageNum, int nbResultsPerPage) throws Exception {
-		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		if (FlexContext.getFlexSession() == null 
+				|| FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
-			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession()
+				.getAttribute("resultHistory");
 		XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
 		ResultPage ret = transform(currentResult, pageNum, nbResultsPerPage);
 		return ret;
@@ -191,7 +194,13 @@ public class SearchSessionService {
 	 * @return
 	 */
 	public ResultPage refine(Query query, int nbResultsPerPage) throws Exception {
-		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		if (FlexContext.getFlexSession() == null 
+				|| FlexContext.getFlexSession().getAttribute("operationHistory") == null
+				|| FlexContext.getFlexSession().getAttribute("currentGraph") == null
+				|| FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		LinkedList<Operation> operationHistory = (LinkedList<Operation>)FlexContext.getFlexSession()
+			.getAttribute("operationHistory");
+		Graph currentGraph = (Graph)FlexContext.getFlexSession().getAttribute("currentGraph");
 		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory
 			= (LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession()
 				.getAttribute("resultHistory");
@@ -201,8 +210,14 @@ public class SearchSessionService {
 			//TODO
 			return null;
 		} else if (query instanceof Keywords) {
-			Graph graph = new GraphImpl();
 			Keywords k = (Keywords)query;
+			KeywordsOperation ko = new KeywordsOperation(k);
+			currentGraph = ko.applyTo(currentGraph);
+			operationHistory.add(ko);
+			FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+			FlexContext.getFlexSession().setAttribute("currentGraph", currentGraph);
+			
+			Graph graph = new GraphImpl();
 			LinkedList<String> wordList = k.getWordList();
 			if (wordList.isEmpty()) return null;
 			Iterator<String> it = wordList.iterator();
