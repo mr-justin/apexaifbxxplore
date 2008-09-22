@@ -21,6 +21,7 @@ import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.TermQuery;
+import org.apache.lucene.store.FSDirectory;
 
 public class MappingIndexService {
 
@@ -45,15 +46,30 @@ public class MappingIndexService {
 	private IndexWriter m_writer;
 	private StandardAnalyzer m_analyzer;
 	private IndexSearcher m_searcher;
-
-
-	public MappingIndexService(String mappingIndexDir){
+	
+	public void init4Search(String mappingIndexDir) {
+		try {
+			File indexDir = new File(mappingIndexDir);
+			if (!indexDir.exists()) {
+				System.err.println(indexDir);
+				indexDir.mkdirs();
+			}
+			FSDirectory directory = FSDirectory.getDirectory(indexDir,false);
+	        m_searcher = new IndexSearcher(directory);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+	
+	public void init4CreateIndex(String mappingIndexDir) {
 		try {
 			m_analyzer = new StandardAnalyzer();
 			m_indexDir = mappingIndexDir;
 			File indexDir = new File(mappingIndexDir);
-			if (!indexDir.exists())
+			if (!indexDir.exists()) {
+				System.err.println(indexDir);
 				indexDir.mkdirs();
+			}
 			m_writer = new IndexWriter(indexDir, m_analyzer, true);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -62,6 +78,10 @@ public class MappingIndexService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+
+	public MappingIndexService(){
 	}
 	
 	public boolean checkName(String filename) {
@@ -85,6 +105,9 @@ public class MappingIndexService {
 					String line;
 					while( (line = br.readLine()) != null ) {
 						tokens = line.split("\t");
+						if(tokens[0].equals("<http://www.freebase.com/property/contains>")) {
+							System.err.println("equals");
+						}
 						System.out.println("tokens :" + tokens[0] + "\t" + tokens[1]);
 						Mapping t = new SchemaMapping(tokens[0],tokens[1],ds1,ds2,1);
 						this.indexMappings(t);										
@@ -92,6 +115,16 @@ public class MappingIndexService {
 					br.close();
 				}
 			}
+		}
+		
+	}
+	
+	public void finishCreateIndex() {
+		try {
+			m_writer.optimize();
+			m_writer.close();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 	
@@ -114,13 +147,18 @@ public class MappingIndexService {
 		}
 		
 		
-		MappingIndexService service = new MappingIndexService("z:/mapping/index");
+		MappingIndexService service = new MappingIndexService();
+		service.init4CreateIndex("z:/mapping/index/");
 		service.createIndex(t);
+		service.finishCreateIndex();
 	}
 
 	public void indexMappings(Mapping mapping){
 
 		Document doc = new Document();
+		if(mapping.getSource().equals("<http://www.freebase.com/property/contains>")) {
+			System.err.println("mapping equals");
+		}
 		doc.add(new Field(SOURCE_FIELD, mapping.getSource(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 		doc.add(new Field(TARGET_FIELD, mapping.getTarget(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 		doc.add(new Field(CONFIDENCE_FIELD, String.valueOf(mapping.getConfidence()), Field.Store.YES, Field.Index.NO));
@@ -133,16 +171,26 @@ public class MappingIndexService {
 		try{
 			m_writer.addDocument(doc);
 
-			m_writer.optimize();
-			m_writer.close();
+
 		} catch (Exception e){
 			e.printStackTrace();
 		}
 
 	}
-	public Collection<Mapping> searchMappingsForSource(String URI, String dsURI, int type) throws Exception
+	
+//	public static void main(String[] args) throws Exception {
+//		MappingIndexService service = new MappingIndexService();
+//		service.init4Search("z:/mapping/index/");
+//		Collection<Mapping> t = service.searchMappings("<http://www.freebase.com/property/contains>", "freebase", MappingIndexService.SEARCH_SOURCE);
+//		for(Mapping m : t) {
+//			System.out.println(m.getSource() + "\t" + m.getTarget() +"\t" + m.getTargetDsURI());
+//		}	
+//	}
+	
+	public Collection<Mapping> searchMappings(String URI, String dsURI, int type) throws Exception
 	{
 		ArrayList<Mapping> res = new ArrayList<Mapping>();
+
 		Query query = new BooleanQuery();
 		if(type == MappingIndexService.SEARCH_SOURCE)
 		{
@@ -154,7 +202,9 @@ public class MappingIndexService {
 			((BooleanQuery)query).add(new BooleanClause(new TermQuery(new Term(TARGET_DS_FIELD, dsURI)), BooleanClause.Occur.MUST));
 			((BooleanQuery)query).add(new BooleanClause(new TermQuery(new Term(TARGET_FIELD, URI)), BooleanClause.Occur.MUST));
 		}
+
 		Hits hits = m_searcher.search(query);
+		System.out.println(hits.length());
 		if((hits != null) && (hits.length() > 0)){
 			for(int i = 0; i < hits.length(); i++){
 				Document doc = hits.doc(i);
