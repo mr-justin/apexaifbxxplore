@@ -41,7 +41,7 @@ public class MappingIndexService {
 	public static final int SEARCH_SOURCE = 0;
 	public static final int SEARCH_TARGET = 1;
 	
-	private static final String MAPPING_INDEX_DIR = "z:/mapping/index/"
+	private static final String MAPPING_INDEX_DIR = "z:/mapping/index/";
 
 	private String m_indexDir = null; 
 
