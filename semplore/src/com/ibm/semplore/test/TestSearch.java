@@ -164,6 +164,11 @@ public abstract class TestSearch {
 
 	public static void showResultSet(ResultSet resultSet, Class cls)
 			throws IOException {
+		if (resultSet instanceof XFacetedResultSet) {
+			XFacetedResultSet xr = (XFacetedResultSet) resultSet;
+			System.out.println("query time(ms): " + xr.getResultTime());
+			System.out.println("facet time(ms): " + xr.getFacetTime());
+		}
 		System.out.println("query results: " + resultSet.getLength());
 		int tmp = showResults;
 		if (tmp < 0 || tmp > resultSet.getLength())
