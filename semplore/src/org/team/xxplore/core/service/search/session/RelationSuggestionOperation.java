@@ -34,6 +34,17 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 
 	@Override
 	public Graph undo(Graph graph) {
+		try {
+			int newTarget = graph.removeRelation(SchemaFactoryImpl.getInstance().
+					createRelation(Md5_BloomFilter_64bit.URItoID(relationSuggestion.getURI())),
+					graph.getTargetVariable());
+			graph.setTargetVariable(newTarget);
+			graph.setDataSource(newTarget, originalSource);
+			return graph;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return graph;
 		
 	}
 
