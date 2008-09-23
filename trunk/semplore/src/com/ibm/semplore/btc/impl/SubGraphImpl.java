@@ -94,4 +94,8 @@ public class SubGraphImpl implements SubGraph {
 	public String toString() {
 		return crgraph.toString();
 	}
+	@Override
+	public int removeRelation(Relation rel, int nodeIndex) {
+		return crgraph.removeRelation(rel, nodeIndex);
+	}
 }
