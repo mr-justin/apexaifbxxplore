@@ -18,7 +18,7 @@ public class RelationSuggestion extends Suggestion {
 	 * @param source
 	 * @param uri
 	 */
-	public RelationSuggestion(String label, Source source, String uri) {
-		super(label, source, uri);
+	public RelationSuggestion(String label, Source source, String uri, double score) {
+		super(label, source, uri, score);
 	}
 }

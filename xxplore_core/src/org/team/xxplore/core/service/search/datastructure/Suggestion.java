@@ -4,7 +4,7 @@ package org.team.xxplore.core.service.search.datastructure;
  * This class represents a suggestion. That is to say, a facet from another source than the current source
  * @author tpenin
  */
-public class Suggestion {
+public class Suggestion implements Comparable{
 	
 	// Label that will be displayed
 	public String label;
@@ -12,6 +12,8 @@ public class Suggestion {
 	public Source source;
 	// URI of the element
 	public String URI;
+	// Confidence of the suggestion
+	public double conf;
 	
 	/**
 	 * Default constructor
@@ -27,10 +29,11 @@ public class Suggestion {
 	 * @param source
 	 * @param uri
 	 */
-	public Suggestion(String label, Source source, String uri) {
+	public Suggestion(String label, Source source, String uri, double conf) {
 		this.label = label;
 		this.source = source;
 		URI = uri;
+		this.conf = conf;
 	}
 
 	/**
@@ -73,5 +76,23 @@ public class Suggestion {
 	 */
 	public void setURI(String uri) {
 		URI = uri;
+	}
+
+	public double getConf() {
+		return conf;
+	}
+
+	public void setConf(double conf) {
+		this.conf = conf;
+	}
+	
+	public int compareTo(Object arg0) {
+		// TODO Auto-generated method stub
+		double confidence = ((Suggestion)arg0).getConf();
+		if(confidence < conf)
+			return -1;
+		else if(confidence > conf)
+			return 1;
+		return 0;
 	}
 }
