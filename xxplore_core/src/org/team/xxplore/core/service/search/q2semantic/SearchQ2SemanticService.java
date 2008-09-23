@@ -57,7 +57,7 @@ public class SearchQ2SemanticService {
 		for(String str: sugg)
 		{
 			String[] part = str.split("\t");
-			if(part.length!=3) continue;
+			if(part.length!=4) continue;
 			String label = part[0].substring(part[0].lastIndexOf('/')+1);
 			if(part[3].equals("c"))
 				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
