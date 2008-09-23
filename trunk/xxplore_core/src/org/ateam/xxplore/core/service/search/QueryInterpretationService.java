@@ -24,6 +24,7 @@ import org.aifb.xxplore.shared.util.Pair;
 import org.aifb.xxplore.shared.util.UniqueIdGenerator;
 import org.apache.log4j.Logger;
 import org.ateam.xxplore.core.service.IServiceListener;
+import org.ateam.xxplore.core.service.mapping.Mapping;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.Pseudograph;
@@ -33,6 +34,7 @@ import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.query.ConceptMemberPredicate;
 import org.xmedia.oms.query.OWLPredicate;
@@ -294,6 +296,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph: graphs)
 		{
 			for(SummaryGraphElement v : graph.vertexSet()){
+				if(v.getResource().getClass().toString().contains("org.xmedia.oms.model.impl.Literal"))
+					if(v.getResource().toString().contains("catch with a net"))System.out.println(v.getResource().toString());;
 				iGraph.addVertex(v);	
 			}
 			for(SummaryGraphEdge e : graph.edgeSet()){
@@ -303,6 +307,46 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return iGraph;
 	}
 
+	public Set<String> getSuggestion(List<String> concept, String ds, MappingIndexService index) throws Exception
+	{
+		HashMap<String, String> mappedConcept = new HashMap<String, String>();
+		Collection<Mapping> mapping;
+		for(String con: concept)
+		{
+			mapping = index.searchMappings(con, ds, MappingIndexService.SEARCH_SOURCE);
+			for(Mapping map: mapping)
+				mappedConcept.put(map.getTarget(), map.getTargetDsURI());
+			mapping = index.searchMappings(con, ds, MappingIndexService.SEARCH_TARGET);
+			for(Mapping map: mapping)
+				mappedConcept.put(map.getSource(), map.getSourceDsURI());
+		}
+		SummaryGraphIndexServiceForBT sss = new SummaryGraphIndexServiceForBT();
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph;
+		Set<String> res = new HashSet<String>();
+		for(String uri: mappedConcept.keySet())
+		{
+			String datasource = mappedConcept.get(uri);
+			String objFile = SesameDao.root + datasource+"-schema.obj";
+			graph = sss.readGraphIndexFromFile(objFile);
+			for(SummaryGraphEdge edge: graph.edgeSet())
+			{
+				SummaryGraphElement source = edge.getSource(), target = edge.getTarget();
+				if(source.getResource() instanceof NamedConcept && ((NamedConcept)source.getResource()).getUri().equals(uri)
+						&& target.getType()==SummaryGraphElement.RELATION)
+				{
+					res.add(((NamedConcept)source.getResource()).getUri()+"\t"+source.getDatasource()+"\t"+source.getTotalScore()+"\tc");
+					res.add(((Property)target.getResource()).getUri()+"\t"+target.getDatasource()+"\t"+target.getTotalScore()+"\tp");
+				}
+				else if(target.getResource() instanceof NamedConcept && ((NamedConcept)target.getResource()).getUri().equals(uri)
+						&& source.getType()==SummaryGraphElement.RELATION)
+				{
+					res.add(((NamedConcept)target.getResource()).getUri()+"\t"+target.getDatasource()+"\t"+target.getTotalScore()+"\tc");
+					res.add(((Property)source.getResource()).getUri()+"\t"+source.getDatasource()+"\t"+source.getTotalScore()+"\tp");
+				}
+			}
+		}
+		return res;
+	}
 
 	//TODO this is not so efficient when graph is huge...
 	private void updateScore(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, SummaryGraphElement e, Collection<SummaryGraphElement> keywords){
@@ -361,6 +405,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 			if(c.getLength() < distance){
 				SummaryGraphElement e = c.getElement();
+//				System.out.println(e.getResource().getClass());
 				String keyword = c.getKeyword();
 				if(e.getCursors() == null) e.initCursorQueues(keywords);
 				e.addCursor(c, keyword);
