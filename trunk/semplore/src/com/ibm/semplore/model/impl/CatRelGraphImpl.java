@@ -99,4 +99,18 @@ public class CatRelGraphImpl implements CatRelGraph
         }
         return res.toString();
     }
+
+	@Override
+	public int removeRelation(Relation rel, int nodeIndex) {
+		HashSet<Edge> rels = this.edgeHash.get(nodeIndex);
+		Edge edge = rels.iterator().next();//only one edge
+		int nodeIndex2;
+		if (edge.getFromNode()==nodeIndex) 
+			nodeIndex2 = edge.getToNode();
+		else  
+			nodeIndex2 = edge.getFromNode();		
+		rels.remove(edge);
+		this.edgeHash.get(nodeIndex2).remove(edge);
+		return nodeIndex2;
+	}
 }
