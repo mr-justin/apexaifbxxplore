@@ -240,8 +240,14 @@ public class SearchSessionService {
 
 		} else if (query instanceof Facet) {
 			if (query instanceof Concept) {
-				Graph graph = new GraphImpl();
 				Concept c = (Concept)query;
+				ConceptOperation co = new ConceptOperation(c);
+				currentGraph = co.applyTo(currentGraph);
+				operationHistory.add(co);
+				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+				FlexContext.getFlexSession().setAttribute("currentGraph", currentGraph);
+				
+				Graph graph = new GraphImpl();
 				graph.add(SchemaFactoryImpl.getInstance()
 						.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
 				graph.setTargetVariable(0);
@@ -259,8 +265,14 @@ public class SearchSessionService {
 				return ret;
 
 			} else if (query instanceof Relation) {
-				Graph graph = new GraphImpl();
 				Relation r = (Relation)query;
+				RelationOperation ro = new RelationOperation(r);
+				currentGraph = ro.applyTo(currentGraph);
+				operationHistory.add(ro);
+				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+				FlexContext.getFlexSession().setAttribute("currentGraph", currentGraph);
+				
+				Graph graph = new GraphImpl();
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
 				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
@@ -284,7 +296,14 @@ public class SearchSessionService {
 		} else if (query instanceof Suggestion) {
 			if (query instanceof ConceptSuggestion) {
 				ConceptSuggestion c = (ConceptSuggestion)query;
-				if (c.getSource().getName().equals(currentGraph.getDataSource(currentGraph.getTargetVariable()))) {
+				ConceptSuggestionOperation cso = new ConceptSuggestionOperation(c);
+				String currentDataSource = currentGraph.getDataSource(currentGraph.getTargetVariable());
+				currentGraph = cso.applyTo(currentGraph);
+				operationHistory.add(cso);
+				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+				FlexContext.getFlexSession().setAttribute("currentGraph", currentGraph);
+				
+				if (c.getSource().getName().equals(currentDataSource)) {
 					Graph graph = new GraphImpl();
 					graph.add(SchemaFactoryImpl.getInstance()
 							.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
@@ -302,36 +321,57 @@ public class SearchSessionService {
 					FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
 					return ret;
 				} else {
-					int numNodes = currentGraph.numOfNodes();
-					currentGraph.add(SchemaFactoryImpl.getInstance()
-							.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//numNodes
-					currentGraph.addIEdges(new Edge(currentGraph.getTargetVariable(), numNodes, null));
-					currentGraph.setTargetVariable(numNodes);
-					currentGraph.setDataSource(numNodes, c.getSource().getName());
-					currentGraph.
+					int id = SemplorePool.acquire();
+					QueryEvaluator eval = SemplorePool.getEvaluator(id);
+					XFacetedResultSetForMultiDataSources newResult = eval.evaluate(currentGraph);
+					SemplorePool.release(id);
+					
+					ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+					resultHistory.add(newResult);
+					FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+					return ret;
+					
 				}
 				
 			} else if (query instanceof RelationSuggestion) {
-				Graph graph = new GraphImpl();
 				RelationSuggestion r = (RelationSuggestion)query;
+				RelationSuggestionOperation rso = new RelationSuggestionOperation(r);
+				String currentDataSource = currentGraph.getDataSource(currentGraph.getTargetVariable());
+				currentGraph = rso.applyTo(currentGraph);
+				operationHistory.add(rso);
+				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+				FlexContext.getFlexSession().setAttribute("currentGraph", currentGraph);
 				
-				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
-				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
-				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
-				graph.setTargetVariable(1);
-				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
-				helper.put(0, currentResult.getResultStream());
-
-				int id = SemplorePool.acquire();
-				QueryEvaluator eval = SemplorePool.getEvaluator(id);
-				XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
-				SemplorePool.release(id);
-
-				ResultPage ret = transform(newResult, 1, nbResultsPerPage);
-				resultHistory.add(newResult);
-				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
-				return ret;
-				
+				if (r.getSource().getName().equals(currentDataSource)) {
+					Graph graph = new GraphImpl();
+					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
+					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
+					graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
+					graph.setTargetVariable(1);
+					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+					helper.put(0, currentResult.getResultStream());
+	
+					int id = SemplorePool.acquire();
+					QueryEvaluator eval = SemplorePool.getEvaluator(id);
+					XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
+					SemplorePool.release(id);
+	
+					ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+					resultHistory.add(newResult);
+					FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+					return ret;
+				} else {
+					int id = SemplorePool.acquire();
+					QueryEvaluator eval = SemplorePool.getEvaluator(id);
+					XFacetedResultSetForMultiDataSources newResult = eval.evaluate(currentGraph);
+					SemplorePool.release(id);
+					
+					ResultPage ret = transform(newResult, 1, nbResultsPerPage);
+					resultHistory.add(newResult);
+					FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+					return ret;
+					
+				}
 			} else {
 				return null;
 			}
@@ -357,14 +397,24 @@ public class SearchSessionService {
 	 * @return
 	 */
 	public ResultPage undoLastRefinement(int nbResultsPerPage) {
-		if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+		if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 		LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
 			(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
+		LinkedList<Operation> operationHistory = (LinkedList<Operation>)FlexContext.getFlexSession().getAttribute("operationHistory");
+		Graph currentGraph = (Graph)FlexContext.getFlexSession().getAttribute("currentGraph");
+		
 		if (resultHistory.isEmpty()) return null;
+		if (operationHistory.isEmpty()) return null;
+		if (currentGraph == null) return null;
+		
 		resultHistory.removeLast();
+		Operation lastOperation = operationHistory.removeLast();
+		currentGraph = lastOperation.undo(currentGraph);
 		XFacetedResultSetForMultiDataSources result = resultHistory.getLast();
 		ResultPage ret = transform(result, 1, nbResultsPerPage);
 		FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+		FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+		FlexContext.getFlexSession().setAttribute("currentGraph", currentGraph);
 		return ret;
 
 	}
