@@ -5,7 +5,7 @@ import com.sleepycat.persist.model.PrimaryKey;
 
 
 @Entity
-public class InstanceSnippetEntityClass {
+public class InstanceEntityClass {
 	// Primary key is pKey
 	@PrimaryKey
 	private String uri;

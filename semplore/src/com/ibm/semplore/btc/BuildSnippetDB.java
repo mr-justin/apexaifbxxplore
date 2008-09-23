@@ -42,7 +42,7 @@ public class BuildSnippetDB {
 		myDbEnvironment = new Environment(new File(args[0]), envConfig);
 		EntityStore store = new EntityStore(myDbEnvironment, "EntityStore",
 				storeConfig);
-		PrimaryIndex<String, InstanceSnippetEntityClass> pidx = store.getPrimaryIndex(String.class, InstanceSnippetEntityClass.class);
+		PrimaryIndex<String, InstanceEntityClass> pidx = store.getPrimaryIndex(String.class, InstanceEntityClass.class);
 
 
 		InputStream ins = System.in;
@@ -50,7 +50,7 @@ public class BuildSnippetDB {
 		BufferedReader reader = new BufferedReader(new InputStreamReader(ins));
 		String line;
 		String last = null;
-		InstanceSnippetEntityClass ent = new InstanceSnippetEntityClass();
+		InstanceEntityClass ent = new InstanceEntityClass();
 		while ((line=reader.readLine())!=null) {
 			String[] triple = line.replaceAll("\t", " ").split(" ");
 			int i = 3;
@@ -65,7 +65,7 @@ public class BuildSnippetDB {
 
 			if (last==null || !triple[0].equals(last)) {
 				if (last!=null) pidx.put(ent);
-				ent = new InstanceSnippetEntityClass();
+				ent = new InstanceEntityClass();
 				ent.setPKey(triple[0]);
 				last = triple[0];
 			}

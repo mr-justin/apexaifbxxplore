@@ -21,20 +21,26 @@ import com.sleepycat.persist.StoreConfig;
  *
  */
 public class QuerySnippetDB {
-	static HashMap<String, PrimaryIndex<String, InstanceSnippetEntityClass>> pidxs = null;
+	static HashMap<String, PrimaryIndex<String, InstanceEntityClass>> pidxs = null;
 	static File snippetLoc = null;
 
 	public static void init(File datasrc) throws IOException {
 		HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
-		snippetLoc = new File((String)config.get("snippet"));
+		init((String)config.get("snippet"));
+	}
+	public static void init(String snippetloc)  {
+		snippetLoc = new File(snippetloc);
+		pidxs = new HashMap<String, PrimaryIndex<String,InstanceEntityClass>>();
 	}
 	
-	public static InstanceSnippetEntityClass getSnippet(String ds, String uri) throws DatabaseException {
-		PrimaryIndex<String, InstanceSnippetEntityClass> pidx = pidxs.get(ds);
+	public static InstanceEntityClass getSnippet(String ds, String uri) throws DatabaseException {
+		PrimaryIndex<String, InstanceEntityClass> pidx = pidxs.get(ds);
 		if (pidx==null)	{
 			try {
 				pidx = loaddb(new File(snippetLoc.getPath()+File.separatorChar+ds));
+				System.out.println("Loaded SnippetDB of " + ds);
 			} catch (Exception e) {
+				e.printStackTrace();
 				return null;
 			}
 			pidxs.put(ds, pidx);
@@ -42,7 +48,7 @@ public class QuerySnippetDB {
 		return pidx.get(uri);
 	}
 	
-	public static PrimaryIndex<String, InstanceSnippetEntityClass> loaddb(File db) throws EnvironmentLockedException, DatabaseException {
+	public static PrimaryIndex<String, InstanceEntityClass> loaddb(File db) throws EnvironmentLockedException, DatabaseException {
 		Environment myDbEnvironment = null;
 		EnvironmentConfig envConfig = new EnvironmentConfig();
 		StoreConfig storeConfig = new StoreConfig();
@@ -51,7 +57,7 @@ public class QuerySnippetDB {
 		myDbEnvironment = new Environment(db, envConfig);
 		EntityStore store = new EntityStore(myDbEnvironment, "EntityStore",
 				storeConfig);
-		return store.getPrimaryIndex(String.class, InstanceSnippetEntityClass.class);
+		return store.getPrimaryIndex(String.class, InstanceEntityClass.class);
 	}
 	
 	public static void close() {
@@ -68,7 +74,14 @@ public class QuerySnippetDB {
 		//must be called at beginning of servlet
 		init(new File("config"+File.separatorChar+"datasrc.cfg"));
 		
-		System.out.println(getSnippet("dbpedia", "<a>"));
+//		System.out.println(getSnippet("dbpedia", "<http://dbpedia.org/resource/Epol/Apple>"));
+//		System.out.println(getSnippet("dbpedia", "<http://dbpedia.org/resource/apple>"));
+		System.out.println(getSnippet("wordnet", "<http://www.w3.org/2006/03/wn/wn20/instances/wordsense-tom-tom-noun-1>").getData());
+		System.out.println(getSnippet("wordnet", "<http://www.w3.org/2006/03/wn/wn20/instances/word-Tom>").getData());
+		
+		System.out.println(getSnippet("dblp", "<http://www.informatik.uni-trier.de/~ley/db/indices/a-tree/a/Andrew:A=.html>").getData());
+		
+
 		
 		close();
 	}
