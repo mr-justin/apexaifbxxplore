@@ -425,6 +425,8 @@ public class SearchSessionService {
 	 */
 	public void clear() {
 		FlexContext.getFlexSession().setAttribute("resultHistory", null);
+		FlexContext.getFlexSession().setAttribute("operationHistory", null);
+		FlexContext.getFlexSession().setAttribute("currentGraph", null);
 	}
 	
 	/**
@@ -438,7 +440,7 @@ public class SearchSessionService {
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
 		try {
-			if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+			if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
 				(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
 			XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
@@ -535,7 +537,7 @@ public class SearchSessionService {
 	 */
 	public ArraySnippet getArraySnippet(String resultItemURL) {
 		try {
-			if (FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
+			if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
 				(LinkedList<XFacetedResultSetForMultiDataSources>)FlexContext.getFlexSession().getAttribute("resultHistory");
 			XFacetedResultSetForMultiDataSources currentResult = resultHistory.getLast();
