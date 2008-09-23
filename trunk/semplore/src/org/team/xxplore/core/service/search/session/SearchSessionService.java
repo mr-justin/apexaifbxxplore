@@ -212,6 +212,7 @@ public class SearchSessionService {
 		} else if (query instanceof Keywords) {
 			Keywords k = (Keywords)query;
 			KeywordsOperation ko = new KeywordsOperation(k);
+			String ds = currentGraph.getDataSource(currentGraph.getTargetVariable());
 			currentGraph = ko.applyTo(currentGraph);
 			operationHistory.add(ko);
 			FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
@@ -225,6 +226,7 @@ public class SearchSessionService {
 			for (; it.hasNext(); ) str += " " + it.next();
 			graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(str));	//0
 			graph.setTargetVariable(0);
+			graph.setDataSource(0, ds);
 			HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 			helper.put(0, currentResult.getResultStream());
 			
@@ -242,6 +244,7 @@ public class SearchSessionService {
 			if (query instanceof Concept) {
 				Concept c = (Concept)query;
 				ConceptOperation co = new ConceptOperation(c);
+				String ds = currentGraph.getDataSource(currentGraph.getTargetVariable());
 				currentGraph = co.applyTo(currentGraph);
 				operationHistory.add(co);
 				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
@@ -251,6 +254,7 @@ public class SearchSessionService {
 				graph.add(SchemaFactoryImpl.getInstance()
 						.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
 				graph.setTargetVariable(0);
+				graph.setDataSource(0, ds);
 				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 				helper.put(0, currentResult.getResultStream());
 
@@ -267,6 +271,7 @@ public class SearchSessionService {
 			} else if (query instanceof Relation) {
 				Relation r = (Relation)query;
 				RelationOperation ro = new RelationOperation(r);
+				String ds = currentGraph.getDataSource(currentGraph.getTargetVariable());
 				currentGraph = ro.applyTo(currentGraph);
 				operationHistory.add(ro);
 				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
@@ -277,6 +282,7 @@ public class SearchSessionService {
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
 				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
 				graph.setTargetVariable(1);
+				graph.setDataSource(1, ds);
 				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 				helper.put(0, currentResult.getResultStream());
 
@@ -308,6 +314,7 @@ public class SearchSessionService {
 					graph.add(SchemaFactoryImpl.getInstance()
 							.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
 					graph.setTargetVariable(0);
+					graph.setDataSource(0, currentDataSource);
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 					helper.put(0, currentResult.getResultStream());
 	
@@ -348,6 +355,7 @@ public class SearchSessionService {
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
 					graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
 					graph.setTargetVariable(1);
+					graph.setDataSource(1, currentDataSource);
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 					helper.put(0, currentResult.getResultStream());
 	
