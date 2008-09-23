@@ -24,6 +24,7 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 			graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(relationSuggestion.getURI())), 
 					target, graph.numOfNodes()-1);
 			graph.setTargetVariable(graph.numOfNodes()-1);
+			graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
