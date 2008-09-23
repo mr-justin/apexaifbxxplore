@@ -63,4 +63,12 @@ public interface Graph extends CatRelGraph {
 	public Graph setDataSource(int nodeIndex, String ds);
 	
 	public String getDataSource(int nodeIndex);
+
+	/**
+     * Remove a relation, given a end node's index, return the other node's index.
+     * @param rel
+     * @param nodeIndex
+     * @return
+     */
+    public int removeRelation(Relation rel, int nodeIndex);
 }
