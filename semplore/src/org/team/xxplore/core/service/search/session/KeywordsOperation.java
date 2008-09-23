@@ -18,7 +18,12 @@ public class KeywordsOperation implements Operation {
 	public KeywordsOperation(Keywords k) {
 		keywords = k;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * Only used to create a new query
+	 * @see org.team.xxplore.core.service.search.session.Operation#applyTo(com.ibm.semplore.btc.Graph)
+	 */
 	@Override
 	public Graph applyTo(Graph graph) {
 		LinkedList<String> wordList = keywords.getWordList();
