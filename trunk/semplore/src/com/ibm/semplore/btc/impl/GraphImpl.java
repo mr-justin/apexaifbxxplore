@@ -13,7 +13,6 @@ import com.ibm.semplore.model.GeneralCategory;
 import com.ibm.semplore.model.Relation;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ice.tar.tar;
 
 /**
  * @author xrsun
@@ -128,5 +127,7 @@ public class GraphImpl implements Graph {
 		return this;
 	}
 
-
+	public int removeRelation(Relation rel, int nodeIndex) {
+		return graphs.removeRelation(rel, nodeIndex);
+	}
 }
