@@ -274,29 +274,10 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				searchHelper);
 		if (resultStream == null)
 			resultStream = new MEMDocStream_Score(new int[0], new float[0], 0);
-		else {
-			/*
-			 * Compute static score of each result.
-			 */
-			// String filename = config.getProperty(Config.STATIC_SCORE_FILE);
-			// if (filename!=null) {
-			// DocStream newresult = (DocStream) resultStream.clone();
-			// int[] result_ids = new int[resultStream.getLen()];
-			// float[] result_scores = new float[resultStream.getLen()];
-			// newresult.init();
-			// int max = getMax(filename);
-			// for (int i = 0; i < newresult.getLen(); i++,newresult.next()) {
-			// result_ids[i] = newresult.doc();
-			// int count = 0;
-			// if (result_ids[i]<Config.MaxLanOfInstance)
-			// count = getCount(filename, result_ids[i]);
-			// result_scores[i] = strategy(newresult.score(), count, max);
-			// }
-			// resultStream = new MEMDocStream_Score(result_ids, result_scores,
-			// resultStream.getLen());
-			// }
-		}
 		long resultTime = System.currentTimeMillis() - time_begin;
+		long time_end = System.currentTimeMillis();
+		System.out.println("1 compute of result stream: " + (time_end - time_begin)
+				+ " ms");
 
 		DocPositionStream cat, rel_obj, rel_sbj;
 		// all the categories and relations(Cobjects)
@@ -316,16 +297,24 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		// mass-union
 		DocStream catStream = AUManager.massUnion_BV_Facet(cat,
 				(DocStream) resultStream.clone(), catDoc);
+		time_end = System.currentTimeMillis();
+		System.out.println("2 compute category facet stream " + (time_end - time_begin)
+				+ " ms");
 		DocStream rel_objStream = AUManager.massUnion_BV_Facet(rel_obj,
 				(DocStream) resultStream.clone(), (DocStream) relDoc.clone());
+		time_end = System.currentTimeMillis();
+		System.out.println("3 compute relation facet stream " + (time_end - time_begin)
+				+ " ms");
 		DocStream rel_subStream = AUManager.massUnion_BV_Facet(rel_sbj,
 				(DocStream) resultStream.clone(), relDoc);
+		time_end = System.currentTimeMillis();
+		System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)
+				+ " ms");
 		long facetTime = System.currentTimeMillis() - time_begin - resultTime;
 
 		// facets
 		ResultSetImpl_TopDocs catResult = new ResultSetImpl_TopDocs(catStream,
 				insIndexReader);
-		Facet[] catFacet = resultSet2Facet(catResult);
 		/**
 		 * ************************combine relation and inverse relation
 		 * facets*********************
@@ -334,6 +323,12 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				rel_objStream, insIndexReader);
 		ResultSetImpl_TopDocs rel_sbjResult = new ResultSetImpl_TopDocs(
 				rel_subStream, insIndexReader);
+		
+		time_end = System.currentTimeMillis();
+		System.out.println("5 sort facet streams " + (time_end - time_begin)
+				+ " ms");
+
+		Facet[] catFacet = resultSet2Facet(catResult);
 		Facet[] relFacet_obj = resultSet2Facet(rel_objResult);
 		Facet[] relFacet_sub = resultSet2Facet(rel_sbjResult);
 		Facet[] relFacet = new Facet[relFacet_sub.length + relFacet_obj.length];
@@ -359,14 +354,17 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		// traverse.init();
 		// for (int i = 0; i < traverse.getLen(); i++)
 		// traverse.next();
-		long time_end = System.currentTimeMillis();
-		System.out.println("searching finished in " + (time_end - time_begin)
-				+ " ms");
 
+		time_end = System.currentTimeMillis();
+		System.out.println("6 facet streams to facet URIs " + (time_end - time_begin)
+				+ " ms");
 		XFacetedResultSet result = new XFacetedResultSetImpl(resultStream,
 				insIndexReader, catFacet, relFacet, catStream.getLen(),
 				rel_objStream.getLen() + rel_subStream.getLen(), resultTime,
-				facetTime).setSnippetKeyword(facetedQuery.getSnippetKeyword());
+				facetTime).setSnippetKeyword("");
+		time_end = System.currentTimeMillis();
+		System.out.println("7 searching finished in " + (time_end - time_begin)
+				+ " ms");
 		return result;
 	}
 
