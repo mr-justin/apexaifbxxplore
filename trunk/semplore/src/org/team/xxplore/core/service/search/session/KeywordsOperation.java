@@ -40,13 +40,8 @@ public class KeywordsOperation implements Operation {
 		String str = it.next();
 		for (; it.hasNext(); ) str += " " + it.next();
 		CompoundCategory cc = (CompoundCategory)graph.getNode(graph.getTargetVariable());
-		GeneralCategory[] gc = cc.getComponentCategories();
-		for (GeneralCategory c : gc) {
-			if (c instanceof KeywordCategory && ((KeywordCategory)c).getKeyword().equals(str)) {
-				//TODO cc.remove(c);
-				break;
-			}
-		}
+		KeywordCategory kc = SchemaFactoryImpl.getInstance().createKeywordCategory(str);
+		cc.removeComponentCategory(kc);
 		return graph;
 	}
 
