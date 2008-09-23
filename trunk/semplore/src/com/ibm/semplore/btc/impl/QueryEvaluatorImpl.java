@@ -22,6 +22,7 @@ import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.NodeInSubGraph;
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.QueryPlanner;
+import com.ibm.semplore.btc.QuerySnippetDB;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.SubGraph;
 import com.ibm.semplore.btc.Visit;
@@ -44,6 +45,7 @@ import com.ibm.semplore.xir.TreeSetDocStream;
 import com.ibm.semplore.xir.impl.DebugIndex;
 import com.ibm.semplore.xir.impl.IndexReaderImpl;
 import com.ibm.semplore.xir.impl.TermFactoryImpl;
+import com.sleepycat.je.DatabaseException;
 
 /**
  * @author xrsun
@@ -282,6 +284,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
 			else if (o instanceof String && (config.get(o) instanceof String)) pathOfDataSource.put((String)o, new File((String)config.get(o)));
 		}
+		QuerySnippetDB.init(pathOfDataSource.get("snippet"));
 		mappingIndex = pathOfDataSource.get("mapping");
 	}
 	
@@ -307,7 +310,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	
 	@Override
 	public String getArraySnippet(String dataSource, int docID, String URI) {
-		// TODO Auto-generated method stub
+		try {
+			return QuerySnippetDB.getSnippet(dataSource, URI).getData();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
