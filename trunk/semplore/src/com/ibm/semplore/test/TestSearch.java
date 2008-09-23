@@ -135,18 +135,19 @@ public abstract class TestSearch {
 
 	public static ResultSet searchInstance(CatRelConstraint exp, int target)
 			throws Exception {
+		long time_b = System.currentTimeMillis();
 		System.out.println("query expression: " + exp.toString());
 		XFacetedQuery xfacetedQ = searchFactory.createXFacetedQuery();
 		xfacetedQ.setQueryConstraint(exp);
-		XFacetedResultSpec resultSpec = searchFactory
-				.createXFacetedResultSpec();
-		resultSpec.setCategoryFacetsInfo(false, null);
-		resultSpec.setRelationFacetsInfo(false, null);
+//		XFacetedResultSpec resultSpec = searchFactory
+//				.createXFacetedResultSpec();
+//		resultSpec.setCategoryFacetsInfo(false, null);
+//		resultSpec.setRelationFacetsInfo(false, null);
 		// resultSpec.setCategoryFacetsInfo(false,
 		// schemaSearcher.getRootCategories());
-		resultSpec.setRelationFacetsInfo(false, schemaSearcher
-				.getRootRelations());
-		xfacetedQ.setResultSpec(resultSpec);
+//		resultSpec.setRelationFacetsInfo(false, schemaSearcher
+//				.getRootRelations());
+//		xfacetedQ.setResultSpec(resultSpec);
 		xfacetedQ.setSearchTarget(target);
 		// xfacetedQ.setRequestedNumberOfResults(requiredNumberOfResults);
 
@@ -154,7 +155,11 @@ public abstract class TestSearch {
 		for (int i = 0; i < 1; i++) {
 			resultSet = searcher.search(xfacetedQ, searchHelper);
 		}
+		long time_e = System.currentTimeMillis();
+		System.out.println("TestSearch2: "+(time_e-time_b)+" ms");
 		showResultSet(resultSet, Instance.class);
+		time_e = System.currentTimeMillis();
+		System.out.println("TestSearch3: "+(time_e-time_b)+" ms");
 		return resultSet;
 	}
 
@@ -173,6 +178,7 @@ public abstract class TestSearch {
 		int tmp = showResults;
 		if (tmp < 0 || tmp > resultSet.getLength())
 			tmp = resultSet.getLength();
+		long time_b = System.currentTimeMillis();
 		try {
 			for (int i = 0; i < tmp; i++) {
 				resultSet.getResult(i).getLabel();
@@ -204,6 +210,8 @@ public abstract class TestSearch {
 			e.printStackTrace();
 		}
 		System.out.println();
+		long time_e = System.currentTimeMillis();
+		System.out.println("get result information: "+(time_e-time_b)+" ms");
 
 		if (resultSet instanceof XFacetedResultSet) {
 			// catFacets
