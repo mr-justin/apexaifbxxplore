@@ -31,7 +31,7 @@ public interface XFacetedQuery extends Query {
 	 * 
 	 * @return
 	 */
-	public XFacetedResultSpec getResultSpec();
+//	public XFacetedResultSpec getResultSpec();
 
 	/**
 	 * Set the query constraint of this XFQ.
