@@ -312,7 +312,7 @@ public class KeywordIndexServiceForBT implements IService{
 	 * @param writer
 	 * @throws Exception
 	 */
-	public static void indexDataSourceByLiteralandIndividual( IndexWriter writer, String ntFile, String ds) throws Exception
+	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, String ntFile, String ds) throws Exception
 	{
 
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
