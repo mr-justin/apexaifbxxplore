@@ -3,16 +3,14 @@
  */
 package com.ibm.semplore.btc.impl;
 
-import java.io.BufferedInputStream;
-import java.io.DataInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Properties;
 import java.util.TreeSet;
 import java.util.Map.Entry;
@@ -27,6 +25,8 @@ import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.SubGraph;
 import com.ibm.semplore.btc.Visit;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
+import com.ibm.semplore.btc.mapping.MappingIndexReader;
+import com.ibm.semplore.btc.mapping.MappingIndexReaderFactory;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -67,8 +67,6 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	//visited subgraphs' IDs
 	private HashSet<Integer> visited;
 	private File mappingIndex;
-	//              ds1_ds2       docid1 -> pos_in_index_map
-	private HashMap<String, HashMap<Integer, Integer>> indexhead_cache = new HashMap<String, HashMap<Integer, Integer>>();
 
 	/* (non-Javadoc)
 	 * @see com.ibm.semplore.btc.QueryEvaluator#evaluate(com.ibm.semplore.btc.QueryPlanner)
@@ -187,44 +185,17 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		}
 	}
 	
-	private HashMap<Integer, Integer> loadIndexHead(String file) throws IOException {
-		if (indexhead_cache.get(file)!=null) indexhead_cache.get(file);
-		DataInputStream fhead;
-		try {
-			fhead = new DataInputStream(new BufferedInputStream(new FileInputStream(
-					mappingIndex.getPath() + File.separatorChar + file + ".head")));
-		} catch (Exception e) {
-			return null;
-		}
-		int len = fhead.available()/8;
-		HashMap<Integer,Integer> map = new HashMap<Integer, Integer>();
-		for (int i=0; i<len; i++) {
-			int docid = fhead.readInt();
-			int pos = fhead.readInt();
-			map.put(docid, pos);
-		}
-		fhead.close();
-		indexhead_cache.put(file, map);
-		return map;
-	}
-	
 	private DocStream convertID(String file, DocStream from, DocStream to) throws Exception {
-		HashMap<Integer, Integer> head = loadIndexHead(file);
+		MappingIndexReader reader = MappingIndexReaderFactory.getMappingIndexReader(file);
+		
 		TreeSet<Integer> results = new TreeSet<Integer>();
-		RandomAccessFile fmap = new RandomAccessFile(
-				mappingIndex.getPath() + File.separatorChar + file +".map", "r");
 
 		from.init();
 		for (int i=0; i<from.getLen(); i++, from.next()) {
 			int doc1 = from.doc();
-			Integer pos = head.get(doc1);
-			if (pos==null) continue;
-			fmap.seek(pos*4);
-			int doc2;
-			while ((doc2=fmap.readInt())!=-1)
-				results.add(doc2);
+			Iterator<Integer> itr = reader.getMappings(doc1);
+			while (itr.hasNext()) results.add(itr.next());
 		}
-		fmap.close();
 		
 		if (to != null) {
 			TreeSet<Integer> toset = new TreeSet<Integer>();
@@ -242,28 +213,24 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	
 	private HashMap<String, Integer> computeDSFacet() throws Exception {
 		HashMap<String, Integer> arr = new HashMap<String, Integer>();
-		
-		HashMap<Integer, Integer> head = loadIndexHead(targetDataSource+"_ds");
-		if (head==null) return arr;
-		RandomAccessFile fmap = new RandomAccessFile(
-				mappingIndex.getPath() + File.separatorChar + targetDataSource+"_ds" +".map", "r");
+		MappingIndexReader reader;
+		try {
+			reader = MappingIndexReaderFactory.getMappingIndexReader(targetDataSource+"_ds");
+		} catch (Exception e) {
+			return arr;
+		}
 
 		DocStream from = targetResult.getResultStream();
 		from.init();
 		for (int i=0; i<from.getLen(); i++, from.next()) {
 			int doc1 = from.doc();
-			Integer pos = head.get(doc1);
-			if (pos==null) continue;
-			fmap.seek(pos*4);
-			int doc2;
-			while ((doc2=fmap.readInt())!=-1) {
-				String ds = dataSources.get(doc2);
+			Iterator<Integer> itr = reader.getMappings(doc1);
+			while (itr.hasNext()) {
+				String ds = dataSources.get(itr.next());
 				if (arr.get(ds)==null) arr.put(ds,1);
 				else arr.put(ds, arr.get(ds)+1);
 			}
 		}
-		fmap.close();
-		
 		return arr;
 	}
 
