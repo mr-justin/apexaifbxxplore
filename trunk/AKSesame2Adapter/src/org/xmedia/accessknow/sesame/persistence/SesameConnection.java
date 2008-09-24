@@ -12,9 +12,12 @@ import java.sql.Blob;
 import java.sql.CallableStatement;
 import java.sql.Clob;
 import java.sql.DatabaseMetaData;
+import java.sql.NClob;
 import java.sql.PreparedStatement;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
 import java.sql.Struct;
@@ -685,6 +688,31 @@ public class SesameConnection extends AbstractConnection {
 			e.printStackTrace();
 		}
 		theSesameFactory = null;
+	}
+
+	@Override
+	public NClob createNClob() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public SQLXML createSQLXML() throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void setClientInfo(Properties arg0) throws SQLClientInfoException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void setClientInfo(String arg0, String arg1)
+			throws SQLClientInfoException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
