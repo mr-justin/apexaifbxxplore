@@ -11,7 +11,7 @@ import java.util.PriorityQueue;
 import java.util.Set;
 
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
-import org.ateam.xxplore.core.service.search.KeywordIndexServiceForBT;
+import org.ateam.xxplore.core.service.q2semantic.KeywordIndexServiceForBT;
 import org.ateam.xxplore.core.service.search.QueryInterpretationService;
 import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
 import org.ateam.xxplore.core.service.search.SummaryGraphElement;
