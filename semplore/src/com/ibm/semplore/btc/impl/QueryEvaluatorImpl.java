@@ -272,7 +272,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	}
 	
 	/**
-	 * read datasrc configuration file for each datasource's index location AND mapping index location 
+	 * read datasrc configuration file for each datasource's index location AND mapping index location AND snippet index location 
 	 * @param datasrc
 	 * @throws IOException 
 	 */
@@ -314,6 +314,8 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			return QuerySnippetDB.getSnippet(dataSource, URI).getData();
 		} catch (DatabaseException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e1) {
+			return null;
 		}
 		return null;
 	}
