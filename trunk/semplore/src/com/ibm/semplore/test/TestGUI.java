@@ -21,6 +21,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
+import com.ibm.semplore.btc.QuerySnippetDB;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -43,6 +44,7 @@ public class TestGUI extends JFrame{
 	public static SchemaFactory schemaFactory = SchemaFactoryImpl.getInstance();
 	public static TermFactory termFactory = TermFactoryImpl.getInstance();
 	private static IndexReaderImpl indexReader;
+	private static String dataSource;
 	
 	private Toolkit toolkit;
     JTextField input;
@@ -96,6 +98,16 @@ public class TestGUI extends JFrame{
 					DebugIndex.printDocStream(indexReader, indexReader.getDocStream(termFactory.createTermForRootRelations()));
 				}
 				public String getName() {return "search all relations";}
+    		},
+    		new BoxAction() {
+				public void action(String input) throws Exception{
+					try {
+						System.out.println(QuerySnippetDB.getSnippet(dataSource, input).getData());
+					} catch (Exception e) {
+						System.out.println("null");
+					}
+				}
+				public String getName() {return "get snippet by URI";}
     		}
     }; 
     
@@ -151,12 +163,18 @@ public class TestGUI extends JFrame{
 		g.setVisible(true);
 		
 		Properties config = Config.readConfigFile(args[0]);
+		Properties indexconfig = new Properties();
+		indexconfig.put(Config.INDEX_PATH, config.get(args[1]));
+		dataSource = args[1];
+		
 		XFacetedSearchService searchService = searchFactory
-				.getXFacetedSearchService(config);
+				.getXFacetedSearchService(indexconfig);
 		XFacetedSearchableImpl searcher = (XFacetedSearchableImpl)searchService.getXFacetedSearchable();
 		indexReader = (IndexReaderImpl)searcher.getInsIndexReader();
 		TestSearch.schemaSearcher = searchService.getSchemaSearchable();
 		TestSearch.searcher = searchService.getXFacetedSearchable();
+		
+		QuerySnippetDB.init(config.getProperty("snippet"));
 	}
 
 }
