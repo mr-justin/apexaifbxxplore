@@ -15,6 +15,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
+import org.ateam.xxplore.core.service.search.SummaryGraphElement;
 import org.jgrapht.graph.Pseudograph;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.StatementImpl;
@@ -192,7 +194,7 @@ public class SummaryGraphIndexServiceForBT {
 	}
 
 
-	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeEFScores(String repositoryPath, Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)throws Exception{
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge> computeEFScores(String repositoryPath, Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)throws Exception{
 		//Emergency.checkPrecondition((graph.vertexSet() != null || graph.vertexSet().size() > 0 || graph.edgeSet() != null || graph.edgeSet().size() > 0) , "Graph " + graph  + " is empty!");
 
 		SesameDao sd = new SesameDao(repositoryPath);
@@ -450,7 +452,7 @@ public class SummaryGraphIndexServiceForBT {
 		if(numIndividual == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
-		return numIndividual/noInds;
+		return (double)numIndividual/noInds;
 	}
 
 	private double computeEF(IProperty property, int noPropMembers, SesameDao sd) throws Exception{
@@ -464,7 +466,7 @@ public class SummaryGraphIndexServiceForBT {
 		if(numProMem == 0) {
 			return Double.POSITIVE_INFINITY;
 		}
-		return numProMem/noPropMembers;
+		return (double)numProMem/noPropMembers;
 	}  
 
 	public static void visit(Pseudograph graph)

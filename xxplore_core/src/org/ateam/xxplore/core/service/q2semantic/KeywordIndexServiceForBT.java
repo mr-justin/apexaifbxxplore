@@ -34,6 +34,11 @@ import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.FSDirectory;
 import org.ateam.xxplore.core.service.IService;
 import org.ateam.xxplore.core.service.IServiceListener;
+import org.ateam.xxplore.core.service.search.SummaryGraphAttributeElement;
+import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
+import org.ateam.xxplore.core.service.search.SummaryGraphElement;
+import org.ateam.xxplore.core.service.search.SummaryGraphValueElement;
+import org.ateam.xxplore.core.service.search.WordnetSynsIndexService;
 import org.jgrapht.graph.Pseudograph;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.ILiteral;
@@ -143,7 +148,7 @@ public class KeywordIndexServiceForBT implements IService{
 		Iterator<SummaryGraphElement> nodeIter = nodes.iterator();
 		while (nodeIter.hasNext()) {
 			SummaryGraphElement node = nodeIter.next();
-			if (node.type == SummaryGraphElement.CONCEPT) {
+			if (node.getType() == SummaryGraphElement.CONCEPT) {
 				String uri = ((NamedConcept)node.getResource()).getUri();
 				String label = uri.substring(uri.lastIndexOf('/')+1);
 //				System.out.println(uri);
@@ -159,7 +164,7 @@ public class KeywordIndexServiceForBT implements IService{
 				Set<SummaryGraphEdge> edges = graph.edgesOf(node);
 				for (SummaryGraphEdge edge:edges) {
 					SummaryGraphElement toNode = edge.getSource().equals(node)?edge.getTarget():edge.getSource();
-					if (toNode.type == SummaryGraphElement.ATTRIBUTE) {
+					if (toNode.getType() == SummaryGraphElement.ATTRIBUTE) {
 						Document dpdoc = new Document();
 //						System.out.println(edge.name + "\t" + uri);
 						String lab = ((DataProperty)toNode.getResource()).getUri();
@@ -169,7 +174,7 @@ public class KeywordIndexServiceForBT implements IService{
 								Field.Index.NO));
 						dpdoc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 						indexWriter.addDocument(dpdoc);
-					} else if (toNode.type == SummaryGraphElement.RELATION) {
+					} else if (toNode.getType() == SummaryGraphElement.RELATION) {
 //						if (edge.originDirection) {
 //						Node range = nodeMap.get(Integer
 //						.valueOf(edge.to_id));
@@ -240,7 +245,7 @@ public class KeywordIndexServiceForBT implements IService{
 		Set<String> relSet = new HashSet<String>();
 		Set<String> attrSet = new HashSet<String>();
 		for(SummaryGraphElement edge: edges) {
-			if(edge.type == SummaryGraphElement.ATTRIBUTE || edge.type == SummaryGraphElement.RELATION){
+			if(edge.getType() == SummaryGraphElement.ATTRIBUTE || edge.getType() == SummaryGraphElement.RELATION){
 				String uri = ((Property)edge.getResource()).getUri();
 				String label = uri.substring(uri.lastIndexOf('/')+1);
 				Document doc = new Document();
@@ -248,7 +253,7 @@ public class KeywordIndexServiceForBT implements IService{
 						Field.Index.TOKENIZED));
 
 				doc.add(new Field(URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
-				if (edge.type == SummaryGraphElement.RELATION) {
+				if (edge.getType() == SummaryGraphElement.RELATION) {
 					if (relSet.contains(label))
 						continue;
 					relSet.add(label);
@@ -256,7 +261,7 @@ public class KeywordIndexServiceForBT implements IService{
 							Field.Store.YES, Field.Index.NO));
 					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 					indexWriter.addDocument(doc);
-				} else if (edge.type == SummaryGraphElement.ATTRIBUTE) {
+				} else if (edge.getType() == SummaryGraphElement.ATTRIBUTE) {
 					if (attrSet.contains(label))
 						continue;
 					attrSet.add(label);
@@ -284,10 +289,10 @@ public class KeywordIndexServiceForBT implements IService{
 								Field.Index.TOKENIZED));
 						docu.add(new Field(URI_FIELD, uri, Field.Store.YES,
 								Field.Index.NO));
-						if (edge.type == SummaryGraphElement.RELATION)
+						if (edge.getType() == SummaryGraphElement.RELATION)
 							docu.add(new Field(TYPE_FIELD, OBJECTPROPERTY,
 									Field.Store.YES, Field.Index.NO));
-						else if(edge.type == SummaryGraphElement.ATTRIBUTE)
+						else if(edge.getType() == SummaryGraphElement.ATTRIBUTE)
 							docu.add(new Field(TYPE_FIELD, DATAPROPERTY,
 									Field.Store.YES, Field.Index.NO));
 						docu.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
