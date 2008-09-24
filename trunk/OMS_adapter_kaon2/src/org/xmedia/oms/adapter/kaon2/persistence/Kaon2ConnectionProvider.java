@@ -1,13 +1,20 @@
 //$Id: DatasourceConnectionProvider.java 10075 2006-07-01 12:50:34 +0000 (Sa, 01 Jul 2006) epbernard $
 package org.xmedia.oms.adapter.kaon2.persistence;
 
+import java.sql.Array;
+import java.sql.Blob;
 import java.sql.CallableStatement;
+import java.sql.Clob;
 import java.sql.DatabaseMetaData;
+import java.sql.NClob;
 import java.sql.PreparedStatement;
+import java.sql.SQLClientInfoException;
 import java.sql.SQLException;
 import java.sql.SQLWarning;
+import java.sql.SQLXML;
 import java.sql.Savepoint;
 import java.sql.Statement;
+import java.sql.Struct;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
@@ -421,6 +428,88 @@ public class Kaon2ConnectionProvider implements IConnectionProvider {
 
 		public Namespaces getNamespaces(){
 			return m_namespaces;
+		}
+
+		@Override
+		public Array createArrayOf(String arg0, Object[] arg1)
+				throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Blob createBlob() throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Clob createClob() throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public NClob createNClob() throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public SQLXML createSQLXML() throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Struct createStruct(String arg0, Object[] arg1)
+				throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public Properties getClientInfo() throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public String getClientInfo(String arg0) throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public boolean isValid(int arg0) throws SQLException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public void setClientInfo(Properties arg0)
+				throws SQLClientInfoException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void setClientInfo(String arg0, String arg1)
+				throws SQLClientInfoException {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public boolean isWrapperFor(Class<?> arg0) throws SQLException {
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+		@Override
+		public <T> T unwrap(Class<T> arg0) throws SQLException {
+			// TODO Auto-generated method stub
+			return null;
 		}
 	}
 }
