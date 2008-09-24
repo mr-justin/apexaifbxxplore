@@ -13,10 +13,5 @@ sort -g -k 2 mapping.prepared | gawk "BEGIN {OFS=\"\t\"} {print $2,$1}" > %3_%2
 cat %2_%3 | java -cp bin com.ibm.semplore.btc.mapping.MappingIndexBuilder %2_%3_index.head %2_%3_index.map
 cat %3_%2 | java -cp bin com.ibm.semplore.btc.mapping.MappingIndexBuilder %3_%2_index.head %3_%2_index.map
 
-sort -g -k 1 %2.ds > %2.ds.sort
-sort -g -k 1 %3.ds > %3.ds.sort
-cat %2.ds.sort | java -cp bin com.ibm.semplore.btc.mapping.MappingIndexBuilder %2_ds.head %2_ds.map
-cat %3.ds.sort | java -cp bin com.ibm.semplore.btc.mapping.MappingIndexBuilder %3_ds.head %3_ds.map
-
 @rem cleanup
-del mapping.hash mapping.sort mapping.prepared %2_%3 %3_%2 %2.ds.sort %3.ds.sort
+del mapping.hash mapping.sort mapping.prepared %2_%3 %3_%2
