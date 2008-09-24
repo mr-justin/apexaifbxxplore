@@ -19,7 +19,7 @@ public class MappingIndexPreparer {
 	File path_of_ds1;
 	File path_of_ds2;
 	int strategy;
-	DatasourceCollector dsCollector;
+//	DatasourceCollector dsCollector;
 	
 	public void build() throws Exception {
 		throw new Exception("Not Implemented");
@@ -31,7 +31,7 @@ public class MappingIndexPreparer {
 		this.strategy = strategy;
 		this.ds1 = ds1;
 		this.ds2 = ds2;
-		this.dsCollector = new DatasourceCollector(new File("."));
+//		this.dsCollector = new DatasourceCollector(new File("."));
 		
 		try {
 			HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());

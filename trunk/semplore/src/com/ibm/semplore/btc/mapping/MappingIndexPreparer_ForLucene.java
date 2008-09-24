@@ -70,12 +70,12 @@ public class MappingIndexPreparer_ForLucene extends MappingIndexPreparer {
 				if (!docs.next()) continue;
 				d2 = docs.doc();
 				System.out.println(d2);
-				dsCollector.collect(ds1, d1, ds2_i);
-				dsCollector.collect(ds2, d2, ds1_i);
+//				dsCollector.collect(ds1, d1, ds2_i);
+//				dsCollector.collect(ds2, d2, ds1_i);
 			}
 			
 		}
-		dsCollector.close();
+//		dsCollector.close();
 		
 		System.err.println("Time(ms): " + String.valueOf(System.currentTimeMillis()-time_a));
 		System.err.println("Line: " + String.valueOf(lineno));

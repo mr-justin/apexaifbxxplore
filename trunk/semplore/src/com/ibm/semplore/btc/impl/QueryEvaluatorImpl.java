@@ -96,7 +96,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		visited = new HashSet<Integer>();
 		targetResult = null;
 		planner.startTraverse(new PreVisit(), new PostVisit());
-		return new XFacetedResultSetForMultiDataSourcesImpl(targetDataSource, computeDSFacet(), targetResult);
+		return new XFacetedResultSetForMultiDataSourcesImpl(targetDataSource, null, targetResult);
 	}
 
 	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception {
