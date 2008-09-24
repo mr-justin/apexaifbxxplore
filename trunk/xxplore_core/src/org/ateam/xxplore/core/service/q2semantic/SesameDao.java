@@ -36,6 +36,9 @@ public class SesameDao {
 	public static String datasource;
 	public static String indexRoot;
 	public static String source;
+	public static String summaryObj, schemaObj;
+	public static String summaryRDF, schemaRDF;
+	public static String keywordIndex, synIndex;
 	//CONSTANT
 	public static String CONCEPT="concept", 
 						INDIVIDUAL="individual", 
@@ -65,6 +68,7 @@ public class SesameDao {
 													"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil",};
 	public static HashSet<String> rdfsEdgeSet, conEdgeSet;
 	public static String noBlankNodeNT = "_noblanknode.nt";
+
 	
  	/*
  	 * intital the predefined rdfs edge set
@@ -279,6 +283,12 @@ public class SesameDao {
 		datasource = prop.getProperty("domain");
 		indexRoot = root+File.separator+datasource;
 		source = prop.getProperty("source");
+		summaryObj = root+datasource+"-summary.obj";
+		schemaObj = root+datasource+"-schema.obj";
+		summaryRDF = root+datasource+"-summary.rdf";
+		schemaRDF = root+datasource+"-schema.rdf";
+		keywordIndex = root+datasource+"-keywordIndex";
+		synIndex = root+"apexaifbxxplore\\keywordsearch\\syn_index";
 		System.out.println("Root:"+root+"\r\nDataSource:"+datasource+"\r\nIndexRoot:"+indexRoot+"\r\nFileSource:"+source);
 	}
 	public static void main(String[] args) throws Exception {
@@ -299,21 +309,21 @@ public class SesameDao {
 		System.out.println("part2 summray begin!");
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = sss.computeSummaryGraph(indexRoot, true);
 //		write summary to obj and rdf
-		sss.writeSummaryGraph(graph, root+datasource+"-summary.obj");
-		sss.writeSummaryGraphAsRDF(graph, root+datasource+"-summary.rdf");
+		sss.writeSummaryGraph(graph, summaryObj);
+		sss.writeSummaryGraphAsRDF(graph, summaryRDF);
 		System.out.println("part2 summray finished!");
 
 		System.out.println("part2 schema begin!");
 		graph = sss.computeSchemaGraph(indexRoot, graph, null);
 //		write schema to obj and rdf
-		sss.writeSummaryGraph(graph, root+datasource+"-schema.obj");
-		sss.writeSummaryGraphAsRDF(graph, root+datasource+"-schema.rdf");
+		sss.writeSummaryGraph(graph, schemaObj);
+		sss.writeSummaryGraphAsRDF(graph, schemaRDF);
 		System.out.println("part2 schema finished!");
 		
 		/* part3 build keywordindex */
 		System.out.println("part3 begin!");
-		graph = sss.readGraphIndexFromFile(root+datasource+"-schema.obj");
-		new KeywordIndexServiceForBT(SesameDao.root+datasource+"-keywordIndex", true).indexKeywords(sourceFile, datasource, graph, root+"apexaifbxxplore\\keywordsearch\\syn_index");
+		graph = sss.readGraphIndexFromFile(schemaRDF);
+		new KeywordIndexServiceForBT(keywordIndex, true).indexKeywords(sourceFile, datasource, graph, synIndex);
 		System.out.println("part3 finished!");
 	}
 }
