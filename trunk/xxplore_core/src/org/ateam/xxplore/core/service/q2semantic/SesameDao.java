@@ -2,12 +2,18 @@ package org.ateam.xxplore.core.service.q2semantic;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Properties;
 
+import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
+import org.ateam.xxplore.core.service.search.SummaryGraphElement;
 import org.jgrapht.graph.Pseudograph;
 import org.openrdf.model.Statement;
 import org.openrdf.repository.Repository;
@@ -27,6 +33,9 @@ public class SesameDao {
 
 	//ROOT PATH
 	public static String root;
+	public static String datasource;
+	public static String indexRoot;
+	public static String source;
 	//CONSTANT
 	public static String CONCEPT="concept", 
 						INDIVIDUAL="individual", 
@@ -261,13 +270,21 @@ public class SesameDao {
 		res = con.getStatements(new NativeURI(revision, individual),null,null , false);
 	}
 	
+	public static void getConfiguation(String fn) throws Exception
+	{
+		Properties prop = new Properties();
+		InputStream is = new FileInputStream(fn);
+		prop.load(is);
+		root = prop.getProperty("root");
+		datasource = prop.getProperty("domain");
+		indexRoot = root+File.separator+datasource;
+		source = prop.getProperty("source");
+		System.out.println("Root:"+root+"\r\nDataSource:"+datasource+"\r\nIndexRoot:"+indexRoot+"\r\nFileSource:"+source);
+	}
 	public static void main(String[] args) throws Exception {
 
-		root = "D:\\semplore\\";
-		String datasource = "wordnet";
-		String indexRoot = root+datasource;
-		String source = root+"wordnet.nt";
-	
+
+		getConfiguation("D:/semplore/path.prop");
 		/* part1 indexing sourcedata */
 		System.out.println("part1 begin!");
 		SesameDao sd = new SesameDao(indexRoot);
