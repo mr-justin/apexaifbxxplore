@@ -314,15 +314,15 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 
 		// facets
 		ResultSetImpl_TopDocs catResult = new ResultSetImpl_TopDocs(catStream,
-				insIndexReader);
+				insIndexReader,10);
 		/**
 		 * ************************combine relation and inverse relation
 		 * facets*********************
 		 */
 		ResultSetImpl_TopDocs rel_objResult = new ResultSetImpl_TopDocs(
-				rel_objStream, insIndexReader);
+				rel_objStream, insIndexReader,10);
 		ResultSetImpl_TopDocs rel_sbjResult = new ResultSetImpl_TopDocs(
-				rel_subStream, insIndexReader);
+				rel_subStream, insIndexReader,10);
 		
 		time_end = System.currentTimeMillis();
 		System.out.println("5 sort facet streams " + (time_end - time_begin)

@@ -6,6 +6,7 @@ package com.ibm.semplore.test;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
@@ -111,7 +112,7 @@ public class TestGUI extends JFrame{
     		}
     }; 
     
-	public TestGUI() {
+	public TestGUI() throws FileNotFoundException {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setSize(500, 400);
@@ -154,7 +155,7 @@ public class TestGUI extends JFrame{
     	     }
     	 });
     	
-		out = new PrintStream( new TextAreaOutputStream( area ) );
+		out = new PrintStream( new TextAreaOutputStream( area , new PrintStream("gui.log")) );
 		System.setOut(out);
 	}
 	
@@ -186,6 +187,7 @@ interface BoxAction {
 
 class TextAreaOutputStream extends OutputStream {
     private JTextArea textControl;
+    private PrintStream log;
     
     /**
      * Creates a new instance of TextAreaOutputStream which writes
@@ -195,8 +197,9 @@ class TextAreaOutputStream extends OutputStream {
      *                  control to which the output must be redirected
      *                  to.
      */
-    public TextAreaOutputStream( JTextArea control ) {
+    public TextAreaOutputStream( JTextArea control, PrintStream log ) {
         textControl = control;
+        this.log = log;
     }
     
     /**
@@ -209,5 +212,7 @@ class TextAreaOutputStream extends OutputStream {
     public void write( int b ) throws IOException {
         // append the data as characters to the JTextArea control
         textControl.append( String.valueOf( ( char )b ) );
+        log.print(String.valueOf( ( char )b ));
+        
     }  
 }

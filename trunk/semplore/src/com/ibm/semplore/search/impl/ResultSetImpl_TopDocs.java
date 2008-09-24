@@ -38,7 +38,7 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 		this(resultStream, indexReader, 50);
 	}
 
-	private ResultSetImpl_TopDocs(DocStream resultStream,
+	protected ResultSetImpl_TopDocs(DocStream resultStream,
 			IndexReader indexReader, int topCount) throws Exception {
 		this.resultStream = resultStream;
 		this.indexReader = indexReader;
