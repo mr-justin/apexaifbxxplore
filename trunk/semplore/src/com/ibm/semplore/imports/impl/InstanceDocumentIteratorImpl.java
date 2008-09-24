@@ -118,14 +118,20 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 		
 		do {
 			tmpIns = null;
-			s = dataReader.nextLong();
-			itype = dataReader.next();
-			dataReader.skip(pattern);
-			if (itype.equals(Util4NT.ATTRIBUTE))
-				attr = dataReader.next();
-			else 
-				p = dataReader.nextLong();
-			dataReader.skip(pattern);
+			try {
+				s = dataReader.nextLong();
+				itype = dataReader.next();
+				dataReader.skip(pattern);
+				if (itype.equals(Util4NT.ATTRIBUTE))
+					attr = dataReader.next();
+				else 
+					p = dataReader.nextLong();
+				dataReader.skip(pattern);
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println(lineno);
+				continue;
+			}
 			obj = null;
 			
 			if (lastID==null) {

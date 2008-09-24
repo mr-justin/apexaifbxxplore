@@ -145,6 +145,13 @@ public class TestGUI extends JFrame{
     	search.addActionListener(new ActionListener() {
     	     public void actionPerformed(ActionEvent event) {
     	    	 area.setText("");
+    	     	
+    	 		try {
+					out = new PrintStream( new TextAreaOutputStream( area , new PrintStream(input.getText())) );
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
+    	 		System.setOut(out);
     	    	 try {
     	    		 long time = System.currentTimeMillis();
 					actions[box.getSelectedIndex()].action(input.getText());
@@ -154,9 +161,6 @@ public class TestGUI extends JFrame{
 				}
     	     }
     	 });
-    	
-		out = new PrintStream( new TextAreaOutputStream( area , new PrintStream("gui.log")) );
-		System.setOut(out);
 	}
 	
 	public static void main(String[] args) throws Exception {
