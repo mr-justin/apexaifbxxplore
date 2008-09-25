@@ -43,8 +43,17 @@ class Cursor implements Comparable {
 		return getVisitedPath(path, parent.getEdge(), parent.getParent());
 	}
 
-	public boolean hasVisited(SummaryGraphElement e){
+	public boolean hasVisited(SummaryGraphEdge e){
+//		System.out.println(m_path.contains(e));
+//		System.out.println(m_path.size());
 		return m_path.contains(e);
+//		for(SummaryGraphEdge edge: m_path)
+//			if(edge.getSource().equals(e)||edge.getTarget().equals(e))
+//			{//System.out.println("aaa");
+//				return true;
+//			}
+//	
+//		return false;
 	}
 	
 	
