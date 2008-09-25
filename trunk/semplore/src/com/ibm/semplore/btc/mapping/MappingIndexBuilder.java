@@ -1,14 +1,12 @@
 package com.ibm.semplore.btc.mapping;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 
 /**
  * 
@@ -22,8 +20,8 @@ public class MappingIndexBuilder {
 	File indexhead;
 	File indexmap;
 
-	public void build() throws IOException {
-		BufferedReader fin = new BufferedReader(new InputStreamReader(System.in));
+	public void build(InputStream dataStream) throws IOException {
+		BufferedReader fin = new BufferedReader(new InputStreamReader(dataStream));
 		DataOutputStream fhead = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(indexhead))); 
 		DataOutputStream fmap = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(indexmap))); 
 		
@@ -68,7 +66,7 @@ public class MappingIndexBuilder {
 			System.out.println("  mapping.prepared: <docid1>\t<docid2>   sorted by docid1");
 			return;
 		}
-		(new MappingIndexBuilder(new File(args[0]), new File(args[1]))).build();
+		(new MappingIndexBuilder(new File(args[0]), new File(args[1]))).build(System.in);
 	}
 
 }
