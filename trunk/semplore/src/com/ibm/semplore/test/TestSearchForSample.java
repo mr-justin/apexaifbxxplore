@@ -47,10 +47,6 @@ public class TestSearchForSample extends TestSearch {
 							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID(args[1]))))
 							 ,0);
 
-					 searchInstance(schemaFactory.createCatRelGraph()
-							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(args[1])))
-							 ,0);
-
 					 //query2: find all the instances of category <American_film_directors>. 
 					 searchInstance(schemaFactory.createCatRelGraph()
 							 .add(schemaFactory.createCategory(new Long(args[2]).longValue()))
