@@ -19,6 +19,8 @@ import org.ateam.xxplore.core.service.mapping.InstanceMapping;
 import org.ateam.xxplore.core.service.mapping.MappingComputationService;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.mapping.SchemaMapping;
+import org.ateam.xxplore.core.service.q2semantic.KeywordIndexServiceForBT;
+import org.ateam.xxplore.core.service.q2semantic.SummaryGraphIndexServiceForBT;
 import org.jgrapht.graph.Pseudograph;
 import org.openrdf.repository.RepositoryException;
 import org.semanticweb.kaon2.api.KAON2Exception;
@@ -125,7 +127,8 @@ public class IndexingDatawebService {
 		initConnection(params.getProperty(REPOSITORY_DIR));
 		String repoDir = params.getProperty(KEYWORDINDEX_DIR);
 		m_kIndexer = new KeywordIndexServiceForBT(repoDir, true);
-		m_mIndexer = new MappingIndexService(params.getProperty(MAPINGINDEX_DIR)); 
+		m_mIndexer = new MappingIndexService(); 
+		m_mIndexer.init4Search(params.getProperty(MAPINGINDEX_DIR));
 	}
 
 	public void process(Properties parameters){
