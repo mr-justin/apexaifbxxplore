@@ -127,7 +127,16 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	}
 	
 	public String toString(){
-		if(resource != null) return resource.toString();
+//		if(resource != null) return resource.toString();
+		if(resource == null)return null;
+		if(resource instanceof NamedConcept)
+			return ((NamedConcept)resource).getUri();
+		else if(resource instanceof Datatype )
+			return ((Datatype)resource).getUri();
+		else if(resource instanceof Property )
+			return ((Property)resource).getUri();
+		else if(resource instanceof Literal)
+			return ((Literal)resource).getLiteral();
 		else return super.toString();
 	}
 
@@ -216,7 +225,10 @@ public class SummaryGraphElement implements ISummaryGraphElement {
 	
 	public void addExploredCursorCombinations(Set<Set<Cursor>> combinations){
 		if(combinations != null && combinations.size() != 0)
+		{
+			if(m_exploredCursorCombinations==null)m_exploredCursorCombinations = new HashSet<Set<Cursor>>();
 			m_exploredCursorCombinations.addAll(combinations);
+		}
 	}
 	
 	public Set<Set<Cursor>> getExploredCursorCombinations(){
