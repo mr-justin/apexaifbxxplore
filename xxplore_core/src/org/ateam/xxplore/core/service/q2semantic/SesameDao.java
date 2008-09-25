@@ -293,15 +293,15 @@ public class SesameDao {
 	}
 	public static void main(String[] args) throws Exception {
 
-
-		getConfiguation("D:/semplore/path.prop");
+//		give configuation file from args[0]
+		getConfiguation(args[0]);
 		/* part1 indexing sourcedata */
 		System.out.println("part1 begin!");
-		SesameDao sd = new SesameDao(indexRoot);
-		sd.removeBlankNode(source);
-		//if no balnknode need to be removed then sourceFile = source
-		String sourceFile = source + noBlankNodeNT;
-		sd.insertNTFile(sourceFile, RDFFormat.N3);
+//		SesameDao sd = new SesameDao(indexRoot);
+//		sd.removeBlankNode(source);
+//		//if no balnknode need to be removed then sourceFile = source
+//		String sourceFile = source + noBlankNodeNT;
+//		sd.insertNTFile(sourceFile, RDFFormat.N3);
 		System.out.println("part1 finished!");
 		
 		/* part2 constructing summary & schema graph */
@@ -322,8 +322,8 @@ public class SesameDao {
 		
 		/* part3 build keywordindex */
 		System.out.println("part3 begin!");
-		graph = sss.readGraphIndexFromFile(schemaRDF);
-		new KeywordIndexServiceForBT(keywordIndex, true).indexKeywords(sourceFile, datasource, graph, synIndex);
+//		graph = sss.readGraphIndexFromFile(schemaRDF);
+//		new KeywordIndexServiceForBT(keywordIndex, true).indexKeywords(sourceFile, datasource, graph, synIndex);
 		System.out.println("part3 finished!");
 	}
 }
