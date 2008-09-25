@@ -147,7 +147,7 @@ public class TestGUI extends JFrame{
     	    	 area.setText("");
     	     	
     	 		try {
-					out = new PrintStream( new TextAreaOutputStream( area , new PrintStream(input.getText())) );
+					out = new PrintStream( new TextAreaOutputStream( area , new PrintStream(dataSource+"_"+input.getText().replaceAll("[/\\:<>]", "_"))) );
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
 				}
