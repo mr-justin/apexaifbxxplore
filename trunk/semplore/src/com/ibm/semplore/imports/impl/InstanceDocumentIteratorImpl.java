@@ -109,7 +109,8 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 	}
 
 	public InstanceDocumentImpl next() {
-		long s, p = 0, o;
+		boolean error;
+		long s=0, p = 0, o;
 		String itype;
 		String attr = null;
 		String obj;
@@ -118,20 +119,28 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 		
 		do {
 			tmpIns = null;
+			error = false;
 			try {
 				s = dataReader.nextLong();
+			} catch (Exception e) {
+				e.printStackTrace();
+				System.err.println(lineno);
+				error=true;
+			}
 				itype = dataReader.next();
 				dataReader.skip(pattern);
 				if (itype.equals(Util4NT.ATTRIBUTE))
 					attr = dataReader.next();
-				else 
-					p = dataReader.nextLong();
+				else
+					try {
+						p = dataReader.nextLong();
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.err.println(lineno);
+						error=true;
+					}
 				dataReader.skip(pattern);
-			} catch (Exception e) {
-				e.printStackTrace();
-				System.err.println(lineno);
-				continue;
-			}
+			if (error) continue;
 			obj = null;
 			
 			if (lastID==null) {
