@@ -37,6 +37,7 @@ import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.query.ConceptMemberPredicate;
@@ -93,7 +94,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			MappingIndexService index, int distance, int k) {
 
 		if (elements == null) return null;
-
+		
 //		for(Collection<SummaryGraphElement> elemCol: elements.values())
 //		{
 //		for(SummaryGraphElement elem: elemCol)
@@ -102,7 +103,11 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //		}
 //		Collection<Map<String,Collection<OWLPredicate>>> results = new ArrayList<Map<String,Collection<OWLPredicate>>>();
 
-
+//		for(String keyword: elements.keySet())
+//		{
+//			System.out.println(keyword);
+//			System.out.println(elements.get(keyword).size());
+//		}
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements); 
 		if(sumGraphs == null)
 			return null;
@@ -113,6 +118,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //		System.out.println("aa");
 //		}
 		getAugmentedSummaryGraphs(sumGraphs, elements);
+//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g: sumGraphs)
+//			System.out.println("==="+g.vertexSet().size()+"\t"+g.edgeSet().size());
 //		System.out.println("============");
 //		System.out.println(sumGraphs.size());
 //		==============by kaifengxu
@@ -147,7 +154,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		
 		if((subgraphs == null) || (subgraphs.size() == 0)) 
 			return null;
-		return (LinkedList<Subgraph>)subgraphs;
+		LinkedList<Subgraph> results = new LinkedList<Subgraph>();
+		for(int i=0; i<k&&i<subgraphs.size(); i++)
+			results.add(((List<Subgraph>)subgraphs).get(i));
+//		return resultRefinement((LinkedList<Subgraph>)subgraphs, k);
 //		for (Subgraph g : subgraphs){
 //		Map<String,Collection<OWLPredicate>> query = new HashMap<String, Collection<OWLPredicate>>();
 //		Collection<QueryGraph> qGraphs = getQuerygraphs(g);{
@@ -160,7 +170,85 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //		results.add(query);
 //		}
 
-//		return results;
+		return results;
+	}
+
+	private LinkedList<Subgraph> resultRefinement(LinkedList<Subgraph> subgraphs, int k) {
+		// TODO Auto-generated method stub
+		LinkedList<Subgraph> res = new LinkedList<Subgraph>();
+		for(int i=0; i<subgraphs.size(); i++)
+		{
+			if(i<k)
+			{
+				Subgraph graph = subgraphs.get(i);
+				//remove concept
+				HashSet<SummaryGraphElement> removeSet = new HashSet<SummaryGraphElement>();
+				for(SummaryGraphElement node: graph.vertexSet())
+					if(node.getType()==SummaryGraphElement.CONCEPT)
+						removeSet.add(node);
+				graph.removeAllVertices(removeSet);
+				//add top concept
+				SummaryGraphElement top = new SummaryGraphElement(NamedConcept.TOP, SummaryGraphElement.CONCEPT);
+				graph.addVertex(top);
+				//change the edge
+				for(SummaryGraphEdge edge: graph.edgeSet())
+				{
+					if(edge.getSource().getType() == SummaryGraphElement.CONCEPT)
+						edge.setSource(top);
+					if(edge.getTarget().getType() == SummaryGraphElement.CONCEPT)
+						edge.setTarget(top);
+				}
+				//add missing domain or range
+				boolean hasDomain, hasRange;
+				HashMap<SummaryGraphElement, String> addMap = new HashMap<SummaryGraphElement, String>();
+				for(SummaryGraphElement node: graph.vertexSet())
+				{
+					hasDomain = false; hasRange = false;
+					if(node.getType()==SummaryGraphElement.ATTRIBUTE || node.getType() == SummaryGraphElement.RELATION)
+					{System.out.println(((Property)node.getResource()).getUri());
+//						Set<SummaryGraphEdge> edges = graph.edgesOf(node);
+//						System.out.println(edges.size());
+						for(SummaryGraphEdge edge: graph.edgeSet())
+						{
+							if(edge.getTarget().equals(node) && edge.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE))
+								hasDomain = true;
+							else if(edge.getSource().equals(node) && edge.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE))
+								hasRange = true;
+						}
+						System.out.println(hasDomain+"\t"+hasRange);
+						if(!hasDomain) addMap.put(node, SummaryGraphEdge.DOMAIN_EDGE);//graph.addEdge(top, node, new SummaryGraphEdge(top, node, SummaryGraphEdge.DOMAIN_EDGE));
+						if(!hasRange) addMap.put(node, SummaryGraphEdge.RANGE_EDGE);//graph.addEdge(node, top, new SummaryGraphEdge(node, top, SummaryGraphEdge.RANGE_EDGE));
+					}
+				}
+				System.out.println("=====");
+				for(SummaryGraphElement node: addMap.keySet())
+				{
+//					System.out.println(i);
+//					System.out.println(graph.edgeSet().size());
+					if(addMap.get(node).equals(SummaryGraphEdge.DOMAIN_EDGE))
+						graph.addEdge(top, node, new SummaryGraphEdge(top, node, SummaryGraphEdge.DOMAIN_EDGE));
+					else if(addMap.get(node).equals(SummaryGraphEdge.RANGE_EDGE))
+						graph.addEdge(node, top, new SummaryGraphEdge(node, top, SummaryGraphEdge.RANGE_EDGE));
+//					System.out.println(graph.edgeSet().size());
+				}
+				res.add(graph);
+			}
+		}
+		
+		for(Subgraph g: res)
+		{
+			System.out.println("========= Top Refine ==========");
+			for(SummaryGraphEdge edge: g.edgeSet())
+			{
+				if(edge.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE))
+					System.out.println(((NamedConcept)edge.getSource().getResource()).getUri()+" c->p "+((Property)edge.getTarget().getResource()).getUri());
+				else if(edge.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && edge.getTarget().getType() == SummaryGraphElement.CONCEPT)
+					System.out.println(((Property)edge.getSource().getResource()).getUri()+" r->c "+((NamedConcept)edge.getTarget().getResource()).getUri());
+				else if(edge.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && edge.getTarget().getType() == SummaryGraphElement.VALUE)
+					System.out.println(((Property)edge.getSource().getResource()).getUri()+" a->v "+((Literal)edge.getTarget().getResource()).getLabel());
+			}
+		}
+		return res;
 	}
 
 	private Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>retrieveSummaryGraphs(Map<String, Collection<SummaryGraphElement>> elements){
@@ -185,6 +273,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				try {
 					in = new ObjectInputStream(new FileInputStream(graphIndex));
 					graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>)in.readObject();
+//					System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
 //					================by kaifengxu
 					for(SummaryGraphElement elem: graph.vertexSet())
 						elem.setDatasource(dsURI);
@@ -224,6 +313,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for (String key : keys){
 			m_startingElements.addAll(keywords.get(key));
 		}			
+//		int count = 0;
 		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs){
 			for (SummaryGraphElement e : m_startingElements){
 				if (e instanceof SummaryGraphValueElement){
@@ -232,6 +322,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					Map<IDataProperty, Collection<INamedConcept>> neighbors = ((SummaryGraphValueElement)e).getNeighbors();	
 					Set<IDataProperty> props = neighbors.keySet();
 					Iterator<IDataProperty> propIter = props.iterator();
+					
 					while (propIter.hasNext()){
 						IDataProperty prop = propIter.next();
 						SummaryGraphElement pvertex = new SummaryGraphElement(prop, SummaryGraphElement.ATTRIBUTE);
@@ -278,6 +369,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //				by kaifeng xu
 //				updateScore(graph, e, m_startingElements);
 			}
+//			System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
+//			System.out.println(count);
 		}
 	}
 
@@ -329,6 +422,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				iGraph.addVertex(v);	
 			}
 			for(SummaryGraphEdge e : graph.edgeSet()){
+//				if(!graph.vertexSet().contains(e.getSource()) || !graph.vertexSet().contains(e.getTarget()))
+//					System.err.print("not contain");
 				iGraph.addEdge(e.getSource(), e.getTarget(), e);
 			}
 		}
