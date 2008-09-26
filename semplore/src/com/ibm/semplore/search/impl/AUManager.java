@@ -124,6 +124,10 @@ public class AUManager
         massUnionAU_Score.setParameters(relationStream, subjectStream, CobjStream);
         return massUnionAU_Score.getResult();
     }
+    public DocStream massUnion_Facet(String ds, String type, DocPositionStream relationStream, DocStream subjectStream, DocStream CobjectStream) throws IOException {
+    	if (subjectStream.getLen()>10000) return massUnion_BV_Facet(relationStream, subjectStream, CobjectStream);
+    	else return massUnion_Mapping_Facet(ds,type,subjectStream,CobjectStream);
+    }
     public DocStream massUnion_BV_Facet(DocPositionStream relationStream, DocStream subjectStream, DocStream CobjectStream) throws IOException {
         massUnion_BV_Facet.setParameters(relationStream, subjectStream, CobjectStream);
         return massUnion_BV_Facet.getResult();
