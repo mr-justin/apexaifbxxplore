@@ -55,6 +55,7 @@ public class QuerySnippetDB {
 		envConfig.setReadOnly(true);
 		envConfig.setAllowCreate(false);
 		storeConfig.setAllowCreate(false);
+		storeConfig.setReadOnly(true);
 		myDbEnvironment = new Environment(db, envConfig);
 		EntityStore store = new EntityStore(myDbEnvironment, "EntityStore",
 				storeConfig);
