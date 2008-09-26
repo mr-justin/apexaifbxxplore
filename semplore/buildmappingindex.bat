@@ -5,7 +5,7 @@
  
 java -cp bin Hashify < %1 > mapping.hash
 @rem only need sorting when using lucene index
-sort -g -k 1 mapping.hash > mapping.sort 
+sort -g -k 1 mapping.hash | uniq > mapping.sort 
 
 cat mapping.sort | java -cp bin;./lib/lucene-core-2.3.2.jar com.ibm.semplore.btc.mapping.MappingIndexPreparer config\datasrc.cfg %2 %3 %4 > mapping.prepared
 sort -g -k 1 mapping.prepared > %2_%3

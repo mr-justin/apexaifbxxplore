@@ -17,16 +17,24 @@ import java.io.InputStreamReader;
  *
  */
 public class MappingIndexBuilder {
+	public static final int INTERVAL = 100;  
 	File indexhead;
 	File indexmap;
 
-	public void build(InputStream dataStream) throws IOException {
+	public void build(InputStream dataStream, boolean twolevel) throws IOException {
 		BufferedReader fin = new BufferedReader(new InputStreamReader(dataStream));
-		DataOutputStream fhead = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(indexhead))); 
+		DataOutputStream fhead = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(indexhead)));
+		DataOutputStream fhead2 = null;
+		if (twolevel) fhead2 = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(indexhead.getAbsoluteFile()+".2")));
 		DataOutputStream fmap = new DataOutputStream(new BufferedOutputStream(new FileOutputStream(indexmap))); 
 		
 		Integer lastid = null;
 		int pos = 0;
+		int pos1 = 0;
+		int d1count = 0;
+
+		fhead.writeInt(twolevel? 1:0);
+		pos1++;
 		
 		String line;
 		while ((line=fin.readLine())!=null) {
@@ -39,8 +47,18 @@ public class MappingIndexBuilder {
 					pos ++;
 				}
 				lastid=d1;
+				if (twolevel) {
+					if (d1count++%INTERVAL==0) {
+						fhead.writeInt(0);
+						fhead.writeInt(-1);
+						pos1+=2;
+						fhead2.writeInt(d1);
+						fhead2.writeInt(pos1);
+					}
+				}
 				fhead.writeInt(d1);
 				fhead.writeInt(pos);
+				pos1 += 2;
 				fmap.writeInt(d2);
 				pos ++;
 			}
@@ -50,6 +68,7 @@ public class MappingIndexBuilder {
 			}
 		}
 		if (lastid!=null) fmap.writeInt(-1);
+		if (twolevel) fhead2.close();
 		fhead.close();
 		fmap.close();
 	}
@@ -60,13 +79,14 @@ public class MappingIndexBuilder {
 	}
 
 	public static void main(String[] args) throws IOException {
-		if (args.length != 2) {
+		if (args.length != 3) {
 			System.out
-					.println("Usage: cat mapping.prepared | java BuildMappingIndex <index.head> <index.map>");
+					.println("Usage: cat mapping.prepared | java BuildMappingIndex <index.head> <index.map> <level>");
 			System.out.println("  mapping.prepared: <docid1>\t<docid2>   sorted by docid1");
+			System.out.println("  level: 0 if not many mapping, 1 if many(>5m)");
 			return;
 		}
-		(new MappingIndexBuilder(new File(args[0]), new File(args[1]))).build(System.in);
+		(new MappingIndexBuilder(new File(args[0]), new File(args[1]))).build(System.in, args[2].equals("1"));
 	}
 
 }
