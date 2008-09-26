@@ -152,7 +152,8 @@ public class SearchSessionService {
 			sourceList.add(activeSource);
 			
 			//set the other sources of the source list
-			for (Entry<String, Integer> entry:xres.getDataSourceFacets().entrySet()) {
+			HashMap<String, Integer> sourceFacets = xres.getDataSourceFacets();
+			if (sourceFacets != null) for (Entry<String, Integer> entry:sourceFacets.entrySet()) {
 				Source s = new Source(entry.getKey(),null,entry.getValue());
 				sourceList.add(s);
 			}
