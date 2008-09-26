@@ -52,6 +52,7 @@ public class QuerySnippetDB {
 		Environment myDbEnvironment = null;
 		EnvironmentConfig envConfig = new EnvironmentConfig();
 		StoreConfig storeConfig = new StoreConfig();
+		envConfig.setReadOnly(true);
 		envConfig.setAllowCreate(false);
 		storeConfig.setAllowCreate(false);
 		myDbEnvironment = new Environment(db, envConfig);
