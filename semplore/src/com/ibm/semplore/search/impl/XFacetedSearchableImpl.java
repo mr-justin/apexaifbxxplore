@@ -265,6 +265,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 
 	public XFacetedResultSet search(XFacetedQuery facetedQuery,
 			SearchHelper searchHelper) throws Exception {
+		final boolean debugTime = false;
 		System.out.println("begin searching...");
 		long time_begin = System.currentTimeMillis();
 
@@ -276,7 +277,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 			resultStream = new MEMDocStream_Score(new int[0], new float[0], 0);
 		long resultTime = System.currentTimeMillis() - time_begin;
 		long time_end = System.currentTimeMillis();
-		System.out.println("1 compute of result stream: " + (time_end - time_begin)
+		if (debugTime) System.out.println("1 compute of result stream: " + (time_end - time_begin)
 				+ " ms");
 
 		DocPositionStream cat, rel_obj, rel_sbj;
@@ -298,17 +299,17 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		DocStream catStream = AUManager.massUnion_BV_Facet(cat,
 				(DocStream) resultStream.clone(), catDoc);
 		time_end = System.currentTimeMillis();
-		System.out.println("2 compute category facet stream " + (time_end - time_begin)
+		if (debugTime) System.out.println("2 compute category facet stream " + (time_end - time_begin)
 				+ " ms");
 		DocStream rel_objStream = AUManager.massUnion_BV_Facet(rel_obj,
 				(DocStream) resultStream.clone(), (DocStream) relDoc.clone());
 		time_end = System.currentTimeMillis();
-		System.out.println("3 compute relation facet stream " + (time_end - time_begin)
+		if (debugTime) System.out.println("3 compute relation facet stream " + (time_end - time_begin)
 				+ " ms");
 		DocStream rel_subStream = AUManager.massUnion_BV_Facet(rel_sbj,
 				(DocStream) resultStream.clone(), relDoc);
 		time_end = System.currentTimeMillis();
-		System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)
+		if (debugTime) System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)
 				+ " ms");
 		long facetTime = System.currentTimeMillis() - time_begin - resultTime;
 
@@ -325,7 +326,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				rel_subStream, insIndexReader,10);
 		
 		time_end = System.currentTimeMillis();
-		System.out.println("5 sort facet streams " + (time_end - time_begin)
+		if (debugTime) System.out.println("5 sort facet streams " + (time_end - time_begin)
 				+ " ms");
 
 		Facet[] catFacet = resultSet2Facet(catResult);
@@ -356,7 +357,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		// traverse.next();
 
 		time_end = System.currentTimeMillis();
-		System.out.println("6 facet streams to facet URIs " + (time_end - time_begin)
+		if (debugTime) System.out.println("6 facet streams to facet URIs " + (time_end - time_begin)
 				+ " ms");
 		XFacetedResultSet result = new XFacetedResultSetImpl(resultStream,
 				insIndexReader, catFacet, relFacet, catStream.getLen(),
