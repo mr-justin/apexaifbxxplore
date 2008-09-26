@@ -253,6 +253,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		}
 		QuerySnippetDB.init(pathOfDataSource.get("snippet").getAbsolutePath());
 		mappingIndex = pathOfDataSource.get("mapping");
+		MappingIndexReaderFactory.init(mappingIndex);
 	}
 	
 	/* (non-Javadoc)
