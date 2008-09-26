@@ -16,6 +16,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 
+import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.CatRelConstraint;
 import com.ibm.semplore.model.CatRelGraph;
 import com.ibm.semplore.model.Category;
@@ -51,6 +52,8 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 	protected IndexReader insIndexReader;
 
 	protected Properties config;
+	
+	protected String dataSource;
 
 	/**
 	 * The manager of all kinds of arithmetic units and the execution of their
@@ -69,6 +72,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		insIndexReader = insIR;
 		AUManager = new AUManager(config);
 		this.config = config;
+		dataSource = config.getProperty(Config.THIS_DATA_SOURCE);
 		// File file = new File(AUconfig.getProperty(Config.RESULT_PATH));
 		// if (file.exists())
 		// file.mkdirs();
@@ -296,17 +300,17 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		rel_sbj = insIndexReader.getDocPositionStream(termFactory.createTerm(
 				FieldType.RELATIONS.toString(), FieldType.RELATIONS));
 		// mass-union
-		DocStream catStream = AUManager.massUnion_BV_Facet(cat,
+		DocStream catStream = AUManager.massUnion_Mapping_Facet(dataSource, FieldType.CATEGORIES.toString(),
 				(DocStream) resultStream.clone(), catDoc);
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("2 compute category facet stream " + (time_end - time_begin)
 				+ " ms");
-		DocStream rel_objStream = AUManager.massUnion_BV_Facet(rel_obj,
+		DocStream rel_objStream = AUManager.massUnion_Mapping_Facet(dataSource,FieldType.RELATIONS.toString(),
 				(DocStream) resultStream.clone(), (DocStream) relDoc.clone());
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("3 compute relation facet stream " + (time_end - time_begin)
 				+ " ms");
-		DocStream rel_subStream = AUManager.massUnion_BV_Facet(rel_sbj,
+		DocStream rel_subStream = AUManager.massUnion_Mapping_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),
 				(DocStream) resultStream.clone(), relDoc);
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)

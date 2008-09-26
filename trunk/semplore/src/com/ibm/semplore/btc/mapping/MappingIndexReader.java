@@ -5,6 +5,7 @@ package com.ibm.semplore.btc.mapping;
 
 import java.io.BufferedInputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.RandomAccessFile;
@@ -92,7 +93,7 @@ public class MappingIndexReader {
 				head2_pos[i] = fhead2.readInt();
 			}
 			fhead2.close();
-			this.fhead = new BufferedRandomAccessFile(file+".head","r");
+			this.fhead = new BufferedRandomAccessFile(new File(file+".head"),"r",512);
 		}
 	}
 

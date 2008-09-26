@@ -19,6 +19,7 @@ import com.ibm.semplore.search.impl.alu.MassUnionAU;
 import com.ibm.semplore.search.impl.alu.MassUnionAU_BV;
 import com.ibm.semplore.search.impl.alu.MassUnionAU_BV_Score;
 import com.ibm.semplore.search.impl.alu.MassUnionAU_BV_XFacet;
+import com.ibm.semplore.search.impl.alu.MassUnionAU_Mapping_XFacet;
 import com.ibm.semplore.search.impl.alu.MassUnionThenInterAU;
 import com.ibm.semplore.search.impl.alu.MassUnionThenInterAU_BV;
 import com.ibm.semplore.search.impl.alu.MassUnionThenInterAU_BV_Score;
@@ -51,6 +52,7 @@ public class AUManager
     protected MassUnionThenInterAU massUnionThenInterAU;
     protected MassUnionThenInterAU massUnionThenInter_score;
     protected MassUnionAU massUnion_BV_Facet;
+	protected MassUnionAU_Mapping_XFacet massUnion_Mapping_Facet;
     /**
      * Create AUManager according to the configuration.
      * @param AUconfig
@@ -73,6 +75,8 @@ public class AUManager
         massUnion_BV_Facet = new MassUnionAU_BV_XFacet();
 //        massUnionThenInter_score = new MassUnionThenInterAU_BV_Score();
         massUnionThenInter_score = new MassUnionThenInterAU_BV();
+        
+        massUnion_Mapping_Facet = new MassUnionAU_Mapping_XFacet();
     }
     
     /**
@@ -123,6 +127,12 @@ public class AUManager
     public DocStream massUnion_BV_Facet(DocPositionStream relationStream, DocStream subjectStream, DocStream CobjectStream) throws IOException {
         massUnion_BV_Facet.setParameters(relationStream, subjectStream, CobjectStream);
         return massUnion_BV_Facet.getResult();
+    }
+    public DocStream massUnion_Mapping_Facet(String ds, String type, DocStream subjectStream, DocStream CobjectStream) throws IOException {
+        massUnion_Mapping_Facet.setParameters(null, subjectStream, CobjectStream);
+        massUnion_Mapping_Facet.setDataSource(ds);
+        massUnion_Mapping_Facet.setFacetType(type);
+        return massUnion_Mapping_Facet.getResult();
     }
     
     /**

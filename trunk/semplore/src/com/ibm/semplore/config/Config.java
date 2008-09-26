@@ -79,6 +79,7 @@ public class Config
      */
     public static final String MASS_UNION_THEN_INTER_AU = "com.ibm.semplore.search.impl.alu.MassUnionThenInterAU.class";
     
+    public static final String THIS_DATA_SOURCE = "this_data_source";
      /**
      * Read the configurations from the configuration file
      * @param filename

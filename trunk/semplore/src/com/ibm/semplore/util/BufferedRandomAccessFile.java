@@ -37,10 +37,6 @@ public class BufferedRandomAccessFile {
 		filePos = 0;
 	}
 
-	public BufferedRandomAccessFile(String string, String mode) throws FileNotFoundException {
-		this(new File(string), mode);
-	}
-
 	public int readInt() throws IOException {
 		if (filePos >=bufStart && filePos+4 <= bufStart + bufSize) {
 		} else {
