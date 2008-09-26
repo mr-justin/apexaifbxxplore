@@ -251,7 +251,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
 			else if (o instanceof String && (config.get(o) instanceof String)) pathOfDataSource.put((String)o, new File((String)config.get(o)));
 		}
-		QuerySnippetDB.init(pathOfDataSource.get("snippet"));
+		QuerySnippetDB.init(pathOfDataSource.get("snippet").getAbsolutePath());
 		mappingIndex = pathOfDataSource.get("mapping");
 	}
 	
