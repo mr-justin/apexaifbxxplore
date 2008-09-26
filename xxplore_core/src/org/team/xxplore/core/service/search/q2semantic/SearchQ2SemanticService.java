@@ -12,6 +12,7 @@ import java.util.Set;
 
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.q2semantic.KeywordIndexServiceForBT;
+import org.ateam.xxplore.core.service.q2semantic.SesameDao;
 import org.ateam.xxplore.core.service.search.QueryInterpretationService;
 import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
 import org.ateam.xxplore.core.service.search.SummaryGraphElement;
@@ -82,14 +83,18 @@ public class SearchQ2SemanticService {
 		int distance = 10;
 		String query = "", mappingIndex="";
 		HashSet<String> keywordIndexes = new HashSet<String>();
+		keywordIndexes.add("D:\\semplore\\wordnet-keywordIndex");
+		SesameDao.root = "D:/semplore/";
 		//merge keywords
 		for(String str: keywordList)
 			query += "\""+str+"\" ";
 		query = query.substring(0, query.length()-1);
+//		System.out.println(query);
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 		for(String keywordIndex: keywordIndexes)
 			elementsMap.putAll(new KeywordIndexServiceForBT(keywordIndex, false).searchKb(query, prune));
+//		System.out.println(elementsMap.size());
 		//search for topk querygraph
 		QueryInterpretationService inter = new QueryInterpretationService();
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
@@ -110,17 +115,25 @@ public class SearchQ2SemanticService {
 			}
 			
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
-			
+			System.out.println(con2rel.size()+"\t"+rel2con.size()+"\t"+con2attr.size()+"\t"+attr2lit.size());
 			for(Facet f: con2rel.keySet())
 				for(Facet r: con2rel.get(f))
+					if(rel2con.get(r) != null)
 					for(Facet t: rel2con.get(r))
-						graphEdges.add(new GraphEdge(f, r, t));
+						graphEdges.add(new GraphEdge(f, t, r));
+			
 			for(Facet f: con2attr.keySet())
 				for(Facet a: con2attr.get(f))
+					if(attr2lit.get(a) != null)
 					for(Facet t: attr2lit.get(a))
-						graphEdges.add(new GraphEdge(f, a, t));
+						graphEdges.add(new GraphEdge(f, t, a));
 			
 			result.add(new QueryGraph(graphEdges));
+		}
+		for(QueryGraph graph: result)
+		{
+			System.out.println("===============");
+			graph.print();
 		}
 		return result;
 	}
@@ -171,5 +184,12 @@ public class SearchQ2SemanticService {
 			set.add(t);
 			c2a.put(f, set);
 		}
+	}
+	
+	public static void main(String[] args) {
+		LinkedList ll = new LinkedList();
+		ll.add("word");
+		ll.add("net");
+		new SearchQ2SemanticService().getPossibleGraphs(ll, 10);
 	}
 }
