@@ -6,6 +6,7 @@ package com.ibm.semplore.test;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -23,6 +24,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import com.ibm.semplore.btc.QuerySnippetDB;
+import com.ibm.semplore.btc.mapping.MappingIndexReaderFactory;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.SchemaFactory;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -170,6 +172,7 @@ public class TestGUI extends JFrame{
 		Properties config = Config.readConfigFile(args[0]);
 		Properties indexconfig = new Properties();
 		indexconfig.put(Config.INDEX_PATH, config.get(args[1]));
+		indexconfig.setProperty(Config.THIS_DATA_SOURCE, args[1]);
 		dataSource = args[1];
 		
 		XFacetedSearchService searchService = searchFactory
@@ -180,6 +183,7 @@ public class TestGUI extends JFrame{
 		TestSearch.searcher = searchService.getXFacetedSearchable();
 		
 		QuerySnippetDB.init(config.getProperty("snippet"));
+		MappingIndexReaderFactory.init(new File(config.getProperty("mapping")));
 	}
 
 }

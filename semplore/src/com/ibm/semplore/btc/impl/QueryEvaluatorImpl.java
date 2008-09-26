@@ -266,6 +266,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 
 	private XFacetedSearchable getSearcher(String dataSource) throws Exception {
 		Properties config = new Properties();
+		config.setProperty(Config.THIS_DATA_SOURCE, dataSource);
 		config.setProperty(Config.INDEX_PATH, pathOfDataSource.get(dataSource).getAbsolutePath());
 		XFacetedSearchService searchService = searchFactory
 				.getXFacetedSearchService(config);
