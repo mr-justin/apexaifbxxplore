@@ -26,8 +26,8 @@ public class MappingIndexChecker {
 				itr = mr.getMappings(d1);
 				current = d1;
 			}
-			if (!itr.hasNext()) System.out.println("error!");
-			if (itr.next()!=d2) System.out.println("error!");
+			if (!itr.hasNext()) { System.out.println("error! "+d1+","+d2); continue;}
+			if (itr.next()!=d2) System.out.println("error2! "+d1+","+d2);
 		}
 		
 		long time_e = System.currentTimeMillis();
