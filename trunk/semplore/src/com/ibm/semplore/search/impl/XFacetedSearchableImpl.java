@@ -305,12 +305,12 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("2 compute category facet stream " + (time_end - time_begin)
 				+ " ms");
-		DocStream rel_objStream = AUManager.massUnion_Facet(dataSource,FieldType.RELATIONS.toString(),rel_obj,
+		DocStream rel_objStream = AUManager.massUnion_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),rel_obj,
 				(DocStream) resultStream.clone(), (DocStream) relDoc.clone());
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("3 compute relation facet stream " + (time_end - time_begin)
 				+ " ms");
-		DocStream rel_subStream = AUManager.massUnion_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),rel_sbj,
+		DocStream rel_subStream = AUManager.massUnion_Facet(dataSource,FieldType.RELATIONS.toString(),rel_sbj,
 				(DocStream) resultStream.clone(), relDoc);
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)

@@ -43,7 +43,7 @@ import com.ibm.semplore.search.impl.SearchFactoryImpl;
 public abstract class TestSearch {
 	DOMParser parser = new DOMParser();
 
-	public static int FACET_THRESHOLD = 10;
+	public static int FACET_THRESHOLD = 20;
 
 	public static int showResults = 20;
 
