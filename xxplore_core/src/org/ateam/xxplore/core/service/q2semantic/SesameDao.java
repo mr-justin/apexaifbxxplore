@@ -279,7 +279,7 @@ public class SesameDao {
 		Properties prop = new Properties();
 		InputStream is = new FileInputStream(fn);
 		prop.load(is);
-		root = prop.getProperty("root");
+		root = prop.getProperty("root")+File.separator;
 		datasource = prop.getProperty("domain");
 		indexRoot = root+File.separator+datasource;
 		source = prop.getProperty("source");
