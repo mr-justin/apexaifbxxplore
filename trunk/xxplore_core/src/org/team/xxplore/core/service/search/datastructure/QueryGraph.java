@@ -38,4 +38,14 @@ public class QueryGraph implements Query {
 	public void setEdgeList(LinkedList<GraphEdge> edgeList) {
 		this.edgeList = edgeList;
 	}
+	/**
+	 * 
+	 */
+	public void print()
+	{
+		for(GraphEdge edge: edgeList)
+		{
+			System.out.println(edge.getFrom().getURI()+" -> "+edge.getDecoration().getURI()+" -> "+edge.getTo().getURI());
+		}
+	}
 }
