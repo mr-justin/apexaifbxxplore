@@ -1,5 +1,9 @@
 package org.team.xxplore.core.service.search.q2semantic;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -8,6 +12,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Properties;
 import java.util.Set;
 
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
@@ -38,6 +43,15 @@ import org.xmedia.oms.model.impl.Property;
  */
 public class SearchQ2SemanticService {
 
+	public static String root;
+	public static String summaryObjsRoot;
+	public static String schemaObjsRoot;
+	public static String keywordIndexRoot;
+	public static String mappingIndexRoot;
+	public static HashSet<String> keywordIndexSet;
+	public static HashMap<String, String> summaryObjSet;
+	public static HashMap<String, String> schemaObjSet;
+	public static final String ConceptMark = "c", PredicateMark = "p";
 	/**
 	 * TO DO
 	 * @param concept
@@ -52,7 +66,7 @@ public class SearchQ2SemanticService {
 			con.add(c.getURI());
 		QueryInterpretationService inter = new QueryInterpretationService();
 		MappingIndexService mis = new MappingIndexService();
-		mis.init4Search(MappingIndexService.MAPPING_INDEX_DIR);
+		mis.init4Search(mappingIndexRoot);
 		Set<String> sugg = inter.getSuggestion(con, ds, mis);
 		Collection<Suggestion> res = new PriorityQueue<Suggestion>();
 		for(String str: sugg)
@@ -60,9 +74,9 @@ public class SearchQ2SemanticService {
 			String[] part = str.split("\t");
 			if(part.length!=4) continue;
 			String label = part[0].substring(part[0].lastIndexOf('/')+1);
-			if(part[3].equals("c"))
+			if(part[3].equals(ConceptMark))
 				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
-			else if(part[3].equals("p"))
+			else if(part[3].equals(PredicateMark))
 				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
 		}
 		return res;
@@ -81,10 +95,7 @@ public class SearchQ2SemanticService {
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 		double prune = 0;
 		int distance = 10;
-		String query = "", mappingIndex="";
-		HashSet<String> keywordIndexes = new HashSet<String>();
-		keywordIndexes.add("D:\\semplore\\wordnet-keywordIndex");
-		SesameDao.root = "D:/semplore/";
+		String query = "";
 		//merge keywords
 		for(String str: keywordList)
 			query += "\""+str+"\" ";
@@ -92,7 +103,7 @@ public class SearchQ2SemanticService {
 //		System.out.println(query);
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
-		for(String keywordIndex: keywordIndexes)
+		for(String keywordIndex: keywordIndexSet)
 			elementsMap.putAll(new KeywordIndexServiceForBT(keywordIndex, false).searchKb(query, prune));
 //		System.out.println(elementsMap.size());
 		//search for topk querygraph
@@ -100,7 +111,7 @@ public class SearchQ2SemanticService {
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
 		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
 		MappingIndexService mis = new MappingIndexService();
-		mis.init4Search(MappingIndexService.MAPPING_INDEX_DIR);
+		mis.init4Search(mappingIndexRoot);
 		for(WeightedPseudograph qg: inter.computeQueries(elementsMap, mis, distance, topNbGraphs))
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
@@ -136,6 +147,34 @@ public class SearchQ2SemanticService {
 			graph.print();
 		}
 		return result;
+	}
+	
+	public void loadPara(String fn) throws Exception
+	{
+		Properties prop = new Properties();
+		InputStream is = new FileInputStream(fn);
+		prop.load(is);
+		root = prop.getProperty("root")+File.separator;
+		SesameDao.root = root;
+		summaryObjsRoot = root+prop.getProperty("summaryObjsRoot")+File.separator;
+		schemaObjsRoot = root+prop.getProperty("schemaObjsRoot")+File.separator;
+		keywordIndexRoot = root+prop.getProperty("keywordIndexRoot")+File.separator;
+		mappingIndexRoot = root+prop.getProperty("mappingIndexRoot")+File.separator;
+		System.out.println("Root:"+root+"\r\nsummaryObjsRoot:"+summaryObjsRoot+"\r\nschemaObjsRoot:"+schemaObjsRoot+"\r\nkeywordIndexRoot:"+keywordIndexRoot);
+//		add keywordindexes
+		keywordIndexSet = new HashSet<String>();
+		File[] indexes = new File(keywordIndexRoot).listFiles();
+		for(File index: indexes)
+			keywordIndexSet.add(index.getAbsolutePath());
+//		add graphs
+		summaryObjSet = new HashMap<String, String>();
+		File[] summaries = new File(summaryObjsRoot).listFiles();
+		for(File summary: summaries)
+			summaryObjSet.put(summary.getName().substring(0, summary.getName().lastIndexOf('-')), summary.getAbsolutePath());
+		schemaObjSet = new HashMap<String, String>();
+		File[] schemas = new File(schemaObjsRoot).listFiles();
+		for(File schema: schemas)
+			summaryObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
 	}
 	
 	private void gether(SummaryGraphElement from, SummaryGraphElement to, Map<Facet, Set<Facet>> c2r, Map<Facet, Set<Facet>> c2a, Map<Facet, Set<Facet>> r2c, Map<Facet, Set<Facet>> a2l)
