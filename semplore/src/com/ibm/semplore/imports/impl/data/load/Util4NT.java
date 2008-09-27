@@ -81,7 +81,12 @@ public class Util4NT {
 		String[] s = new String[3];
 		s[0] = "<a>";
 		s[1] = snippet.split("\t")[0];
-		s[2] = snippet.split("\t")[1];
+		try {
+			s[2] = snippet.split("\t")[1];
+		} catch (Exception e) {
+			System.err.println(snippet);
+			e.printStackTrace();
+		}
 		return checkTripleType(s);
 	}
 
