@@ -68,7 +68,7 @@ public class TestSearchForSample extends TestSearch {
 					 .add(schemaFactory.createUniversalCategory())
 					 .add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID("<http://www.w3.org/2006/03/wn/wn20/schema/similarTo>"))
 					 , 0, 1)
-					 ,0);
+					 ,1);
 
 
 					quit = true;
