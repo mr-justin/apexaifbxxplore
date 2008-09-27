@@ -76,6 +76,14 @@ public class Util4NT {
 			return Util4NT.ATTRIBUTE;
 		return null;
 	}
+	
+	public static String checkSnippetType(String snippet) {
+		String[] s = new String[3];
+		s[0] = "<a>";
+		s[1] = snippet.split("\t")[0];
+		s[2] = snippet.split("\t")[1];
+		return checkTripleType(s);
+	}
 
 	public static void setTYPE(String TYPE) {
 		if (TYPE != null)

@@ -4,14 +4,21 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
+import javax.smartcardio.ATR;
+
+import org.openrdf.query.algebra.Str;
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
 import org.team.xxplore.core.service.search.datastructure.Concept;
 import org.team.xxplore.core.service.search.datastructure.ConceptSuggestion;
+import org.team.xxplore.core.service.search.datastructure.Couple;
 import org.team.xxplore.core.service.search.datastructure.Facet;
+import org.team.xxplore.core.service.search.datastructure.Attribute;
 import org.team.xxplore.core.service.search.datastructure.Instance;
 import org.team.xxplore.core.service.search.datastructure.Keywords;
+import org.team.xxplore.core.service.search.datastructure.Litteral;
 import org.team.xxplore.core.service.search.datastructure.Query;
 import org.team.xxplore.core.service.search.datastructure.QueryGraph;
 import org.team.xxplore.core.service.search.datastructure.Relation;
@@ -27,8 +34,8 @@ import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
+import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.CompoundCategory;
-import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
 import com.ibm.semplore.util.Md5_BloomFilter_64bit;
@@ -565,7 +572,7 @@ public class SearchSessionService {
 			String snippet_str = eval.getArraySnippet(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 			SemplorePool.release(id);
 			
-			ArraySnippet as = this.getSnippet(snippet_str);
+			ArraySnippet as = this.getSnippet(resultItemURL, snippet_str);
 			return as;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -574,8 +581,27 @@ public class SearchSessionService {
 		return null;
 	}
 	
-	private ArraySnippet getSnippet(String snippet_str) {
-		return null;
+	private ArraySnippet getSnippet(String resultItemURL, String snippet_str) {
+		ResultItem item = new ResultItem();
+		item.setURL(resultItemURL);
+		LinkedList<Couple> rel = new LinkedList<Couple>();
+		LinkedList<Couple> attr = new LinkedList<Couple>();
+		LinkedList<Concept> cat = new LinkedList<Concept>();
+		
+		StringTokenizer tok = new StringTokenizer(snippet_str,"\t");
+		while (tok.hasMoreTokens()) {
+			String token = tok.nextToken();
+			String type = Util4NT.checkSnippetType(token);
+			String[] processed = Util4NT.processTripleLine("<a> "+token);
+			if (type==Util4NT.CATEGORY) {
+				cat.add(new Concept("",processed[2],null));
+			} else if (type==Util4NT.RELATION) {
+				rel.add(new Couple(new Relation("",processed[1],null), new Instance("",processed[2],null)));
+			} else if (type==Util4NT.ATTRIBUTE) {
+				rel.add(new Couple(new Attribute("",processed[1],null), new Litteral("",processed[2],null)));
+			}
+		}
+		return new ArraySnippet(item, rel, attr, cat);
 	}
 	
 	public static void testSearch(String keywords) throws Exception {
