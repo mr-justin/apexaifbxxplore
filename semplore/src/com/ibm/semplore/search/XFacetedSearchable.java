@@ -8,6 +8,7 @@ package com.ibm.semplore.search;
 
 import com.ibm.semplore.search.impl.AUManager;
 import com.ibm.semplore.xir.DocStream;
+import com.ibm.semplore.xir.IndexReader;
 
 
 
@@ -53,4 +54,7 @@ public interface XFacetedSearchable extends Searchable {
 	 * @return
 	 */
 	public AUManager getAUManager();
+	
+	public IndexReader getInsIndexReader();
+
 }

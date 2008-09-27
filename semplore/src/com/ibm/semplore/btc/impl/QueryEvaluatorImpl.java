@@ -22,6 +22,7 @@ import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.QueryPlanner;
 import com.ibm.semplore.btc.QuerySnippetDB;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
+import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSourcesImpl;
 import com.ibm.semplore.btc.SubGraph;
 import com.ibm.semplore.btc.Visit;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
@@ -40,6 +41,8 @@ import com.ibm.semplore.search.impl.DocStreamHintImpl;
 import com.ibm.semplore.search.impl.SearchFactoryImpl;
 import com.ibm.semplore.search.impl.XFacetedSearchableImpl;
 import com.ibm.semplore.xir.DocStream;
+import com.ibm.semplore.xir.FieldType;
+import com.ibm.semplore.xir.IndexReader;
 import com.ibm.semplore.xir.TermFactory;
 import com.ibm.semplore.xir.TreeSetDocStream;
 import com.ibm.semplore.xir.impl.DebugIndex;
@@ -291,9 +294,29 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 
 	@Override
 	public ArrayList<SchemaObjectInfoForMultiDataSources> getSeeAlso(
-			String dataSource, int docID, String URI) {
-		// TODO Auto-generated method stub
-		return null;
+			String dataSource, int docID, String URI)  {
+		final FieldType[] types = new FieldType[]{FieldType.URI, FieldType.LABEL};
+
+		ArrayList<SchemaObjectInfoForMultiDataSources> arr = new ArrayList<SchemaObjectInfoForMultiDataSources>();
+		for (String s: dataSources.values()) 
+			if (s!=dataSource) {
+				IndexReader rd;
+				MappingIndexReader reader;
+				try {
+					rd = getSearcher(s).getInsIndexReader();
+					reader = MappingIndexReaderFactory.getMappingIndexReader(dataSource+"_"+s+"_index");
+
+					Iterator<Integer> itr = reader.getMappings(docID);
+					while (itr.hasNext()) {
+						int id = itr.next();
+						String[] values = rd.getFieldValues(id, types);
+						arr.add(new SchemaObjectInfoForMultiDataSourcesImpl(values[0],s,id,values[1],null,null));
+					}
+				} catch (Exception e1) {
+					continue;
+				}
+			}
+		return arr;
 	}
 	
 	public static void main(String[] args) throws Exception {
