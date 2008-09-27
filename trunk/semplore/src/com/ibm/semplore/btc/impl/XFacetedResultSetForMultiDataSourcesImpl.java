@@ -3,7 +3,7 @@
  */
 package com.ibm.semplore.btc.impl;
 
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.HashMap;
 
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
@@ -138,7 +138,7 @@ public class XFacetedResultSetForMultiDataSourcesImpl implements
 	 * @see com.ibm.semplore.search.ResultSet#getResultStream()
 	 */
 	@Override
-	public DocStream getResultStream() {
+	public DocStream getResultStream() throws IOException {
 		return rs.getResultStream();
 	}
 
