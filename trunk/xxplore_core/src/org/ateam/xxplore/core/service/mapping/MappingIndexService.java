@@ -41,7 +41,7 @@ public class MappingIndexService {
 	public static final int SEARCH_SOURCE = 0;
 	public static final int SEARCH_TARGET = 1;
 	
-	private static final String MAPPING_INDEX_DIR = "//Poseidon/team/Semantic Search/BillionTripleData/mapping/index";
+//	public static final String MAPPING_INDEX_DIR = "//Poseidon/team/Semantic Search/BillionTripleData/mapping/index";
 
 	private String m_indexDir = null; 
 
@@ -150,7 +150,7 @@ public class MappingIndexService {
 		
 		
 		MappingIndexService service = new MappingIndexService();
-		service.init4CreateIndex(MAPPING_INDEX_DIR);
+		service.init4CreateIndex("");
 		service.createIndex(t);
 		service.finishCreateIndex();
 	}
