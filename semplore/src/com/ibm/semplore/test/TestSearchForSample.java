@@ -41,7 +41,7 @@ public class TestSearchForSample extends TestSearch {
 
 				while (!quit) {
 
-					//query1: find all the instances.				
+	/*				//query1: find all the instances.				
 					
 					 searchInstance(schemaFactory.createCatRelGraph()
 							 .add(schemaFactory.createEnumerationCategory().addInstanceElement(schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID(args[1]))))
@@ -56,21 +56,19 @@ public class TestSearchForSample extends TestSearch {
 					 searchInstance(schemaFactory.createCatRelGraph()
 					 .add(schemaFactory.createAttributeKeywordCategory("<http://www.w3.org/2000/01/rdf-schema#label>", "Letter to the Editor"))
 					 ,0);
+				*/	
 					
 					 //query3: find all the instances related to keyword "tom".
 					 searchInstance(schemaFactory.createCatRelGraph()
-					 .add(schemaFactory.createKeywordCategory("world wide web"))
+					 .add(schemaFactory.createKeywordCategory("paris"))
 					 ,0);
-					
 					 //query4: find all the films that are directed by American film directors named "Tom".
 					 searchInstance(schemaFactory.createCatRelGraph()
-					 .add(schemaFactory.createCompoundCategory(CompoundCategory.TYPE_AND)
-//							 .addComponentCategory(schemaFactory.createKeywordCategory("Tom"))
-							 .addComponentCategory(schemaFactory.createCategory(Md5_BloomFilter_64bit.URItoID("<American_film_directors>"))))
+					 .add(schemaFactory.createKeywordCategory("paris"))
 					 .add(schemaFactory.createUniversalCategory())
-					 .add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID("<cinematography>"))
-					 , 1, 0)
-					 ,0);
+					 .add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID("<http://www.w3.org/2006/03/wn/wn20/schema/similarTo>"))
+					 , 0, 1)
+					 ,1);
 
 
 					quit = true;
