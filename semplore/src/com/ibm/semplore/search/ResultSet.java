@@ -6,6 +6,8 @@
  */
 package com.ibm.semplore.search;
 
+import java.io.IOException;
+
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.xir.DocStream;
 
@@ -51,5 +53,5 @@ public interface ResultSet {
      * Return the result doc stream so that it can be cached. 
      * @return
      */
-    public DocStream getResultStream();
+    public DocStream getResultStream() throws IOException;
 }
