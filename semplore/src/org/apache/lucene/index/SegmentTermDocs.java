@@ -224,6 +224,7 @@ class SegmentTermDocs implements TermDocs, DocStream {
 	}
 
 	public void init() throws IOException {
+		this.seek(termInfo, term);
 		next();
 	}
 
