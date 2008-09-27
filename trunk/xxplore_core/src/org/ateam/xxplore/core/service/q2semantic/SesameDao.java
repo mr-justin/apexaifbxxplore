@@ -292,7 +292,7 @@ public class SesameDao {
 		System.out.println("Root:"+root+"\r\nDataSource:"+datasource+"\r\nIndexRoot:"+indexRoot+"\r\nFileSource:"+source);
 	}
 	public static void main(String[] args) throws Exception {
-
+//		SesameDao sd = new SesameDao("D:\\semplore\\wordnet");
 //		give configuation file from args[0]
 		getConfiguation(args[0]);
 		/* part1 indexing sourcedata */
