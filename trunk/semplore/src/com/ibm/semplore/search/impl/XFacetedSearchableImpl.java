@@ -226,37 +226,6 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		return ans;
 	}
 
-	protected int getCount(String filename, int id) {
-		try {
-			RandomAccessFile reader = new RandomAccessFile(filename, "r");
-			reader.seek(id * 8);
-			int rid = reader.readInt();
-			int count = reader.readInt();
-			reader.close();
-			if (rid != id) {
-				System.out.println("error of RandomAccessfile: id=" + id);
-				return -1;
-			}
-			return count;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return -1;
-	}
-
-	protected float strategy(float score, int count, int max) {
-		double ans = 0;
-		double c = 0.5;
-		try {
-			ans = c * score + (1 - c) * 1 / (1 + Math.exp(-count));
-			// ans = c*score + (1-c)*Math.log(count+1)/Math.log(max+1);
-			return (float) ans;
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return 0;
-	}
-
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -301,17 +270,17 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				FieldType.RELATIONS.toString(), FieldType.RELATIONS));
 		// mass-union
 		DocStream catStream = AUManager.massUnion_Facet(dataSource, FieldType.CATEGORIES.toString(),cat,
-				(DocStream) resultStream.clone(), catDoc);
+				(DocStream) resultStream, catDoc);
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("2 compute category facet stream " + (time_end - time_begin)
 				+ " ms");
 		DocStream rel_objStream = AUManager.massUnion_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),rel_obj,
-				(DocStream) resultStream.clone(), (DocStream) relDoc.clone());
+				(DocStream) resultStream, (DocStream) relDoc);
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("3 compute relation facet stream " + (time_end - time_begin)
 				+ " ms");
 		DocStream rel_subStream = AUManager.massUnion_Facet(dataSource,FieldType.RELATIONS.toString(),rel_sbj,
-				(DocStream) resultStream.clone(), relDoc);
+				(DocStream) resultStream, relDoc);
 		time_end = System.currentTimeMillis();
 		if (debugTime) System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)
 				+ " ms");
@@ -566,7 +535,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 					// cal the relation expansion from nextNode to this node
 					DocStream result = null;
 					if (nodeResults.get(nextNode) != null)
-						result = (DocStream) nodeResults.get(nextNode).clone();
+						result = (DocStream) nodeResults.get(nextNode);
 					Relation rel = ed.getRelation();
 					if (employInverseRelations && !rel.isInverse()
 							|| !employInverseRelations && rel.isInverse()) {
