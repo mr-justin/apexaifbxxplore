@@ -21,8 +21,6 @@ public class TreeSetDocStream implements DocStream {
 
 	public TreeSetDocStream(TreeSet<Integer> set) {
 		this.set = set;
-		this.pos = 0;
-		this.itr = set.iterator();
 	}
 
     /* (non-Javadoc)
@@ -64,8 +62,9 @@ public class TreeSetDocStream implements DocStream {
 	 */
 	@Override
 	public void init() throws IOException {
+		this.pos = 0;
+		this.itr = set.iterator();
 		if (itr.hasNext()) doc = itr.next();
-		pos = 0;
 	}
 
 	/* (non-Javadoc)
