@@ -18,7 +18,7 @@ public class MappingIndexReaderFactory {
 	
 	public static void init(File _mappingIndexLoc) {
 		mappingIndexLoc = _mappingIndexLoc;
-		readerPool = new HashMap<String, MappingIndexReader>();
+		if (readerPool==null) readerPool = new HashMap<String, MappingIndexReader>();
 	}
 	
 	public static MappingIndexReader getMappingIndexReader(String file) throws IOException {
