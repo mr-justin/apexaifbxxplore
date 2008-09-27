@@ -50,7 +50,6 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 
 	private void generateTopDocs() throws Exception {
 		collector = new TopDocCollector(topcount);
-		resultStream = (DocStream)resultStream.clone();
 		resultStream.init();
 		for (int i=0; i<resultStream.getLen(); i++) {
 			collector.collect(resultStream.doc(), (float)(resultStream.score()));
@@ -125,8 +124,8 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 		return this;
 	}
 
-	public DocStream getResultStream() {
-		return (DocStream)resultStream.clone();
+	public DocStream getResultStream() throws IOException {
+		return resultStream;
 	}
 
 }
