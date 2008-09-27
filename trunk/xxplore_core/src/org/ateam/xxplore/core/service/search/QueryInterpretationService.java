@@ -32,6 +32,7 @@ import org.ateam.xxplore.core.service.q2semantic.SummaryGraphIndexServiceForBT;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.graph.Pseudograph;
 import org.jgrapht.graph.WeightedPseudograph;
+import org.team.xxplore.core.service.search.q2semantic.SearchQ2SemanticService;
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -70,8 +71,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		// TODO Auto-generated method stub
 	}
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 
+		new SearchQ2SemanticService().loadPara(args[0]);
 		QueryInterpretationService inter = new QueryInterpretationService();
 		SesameDao.root = "D:\\semplore\\";
 		LinkedList<Subgraph> res = inter.computeQueries(new KeywordIndexServiceForBT("D:\\semplore\\wordnet-keywordIndex",false).searchKb("word net", 0),null,1000,30);
@@ -264,7 +266,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //				============================by kaifengxu
 				if(m_DsGraphMap.containsKey(dsURI))
 					continue;
-				String dsDFileName = SesameDao.root+dsURI+"-summary.obj";
+				String dsDFileName = SearchQ2SemanticService.summaryObjSet.get(dsURI);//SesameDao.root+dsURI+"-summary.obj";
 //				String dsDFileName = IndexingDatawebService.getSummaryGraphFilePath(dsURI);
 
 				File graphIndex = new File(dsDFileName);
@@ -367,7 +369,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				}
 //				System.out.println(e.getDatasource());
 //				by kaifeng xu
-//				updateScore(graph, e, m_startingElements);
+				updateScore(graph, e, m_startingElements);
 			}
 //			System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
 //			System.out.println(count);
@@ -375,44 +377,44 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 
 	private WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> getIntegratedSummaryGraph(Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs, MappingIndexService index){
-//		if(m_datasources == null || m_datasources.size() == 0) return null;
-//		Collection<Mapping> mappings = new ArrayList<Mapping>();
-//		for(String ds : m_datasources.keySet()){
-//		mappings.addAll(index.searchMappingsForDS(ds, MappingIndexService.SEARCH_SOURCE_DS_ONLY));
-//		}
+		if(m_datasources == null || m_datasources.size() == 0) return null;
+		Collection<Mapping> mappings = new ArrayList<Mapping>();
+		for(String ds : m_datasources.keySet()){
+		mappings.addAll(index.searchMappingsForDS(ds, MappingIndexService.SEARCH_SOURCE_DS_ONLY));
+		}
 
-//		if (mappings.size() == 0) return null;
+		if (mappings.size() == 0) return null;
 		WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph = new WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
-//		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> addedGraphs = new ArrayList<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>(); 
+		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> addedGraphs = new ArrayList<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>(); 
 
-//		for (Mapping m : mappings){
-//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sourceGraph = m_DsGraphMap.get(m.getSourceDsURI());
-//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> targetGraph = m_DsGraphMap.get(m.getTargetDsURI());
-//		if(!addedGraphs.contains(sourceGraph)){
-//		for(SummaryGraphElement v : sourceGraph.vertexSet()){
-//		iGraph.addVertex(v);	
-//		}
-//		for(SummaryGraphEdge e : sourceGraph.edgeSet()){
-//		iGraph.addEdge(e.getSource(), e.getTarget(), e);
-//		}
-//		}
-//		addedGraphs.add(sourceGraph);
-//		if(!addedGraphs.contains(targetGraph)){
-//		for(SummaryGraphElement v : targetGraph.vertexSet()){
-//		iGraph.addVertex(v);	
-//		}
-//		for(SummaryGraphEdge e : targetGraph.edgeSet()){
-//		iGraph.addEdge(e.getSource(), e.getTarget(), e);
-//		}
-//		}
-//		addedGraphs.add(targetGraph);
+		for (Mapping m : mappings){
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> sourceGraph = m_DsGraphMap.get(m.getSourceDsURI());
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> targetGraph = m_DsGraphMap.get(m.getTargetDsURI());
+		if(!addedGraphs.contains(sourceGraph)){
+		for(SummaryGraphElement v : sourceGraph.vertexSet()){
+		iGraph.addVertex(v);	
+		}
+		for(SummaryGraphEdge e : sourceGraph.edgeSet()){
+		iGraph.addEdge(e.getSource(), e.getTarget(), e);
+		}
+		}
+		addedGraphs.add(sourceGraph);
+		if(!addedGraphs.contains(targetGraph)){
+		for(SummaryGraphElement v : targetGraph.vertexSet()){
+		iGraph.addVertex(v);	
+		}
+		for(SummaryGraphEdge e : targetGraph.edgeSet()){
+		iGraph.addEdge(e.getSource(), e.getTarget(), e);
+		}
+		}
+		addedGraphs.add(targetGraph);
 
-//		SummaryGraphElement source = getVertex(sourceGraph, m.getSource());
-//		SummaryGraphElement target = getVertex(sourceGraph, m.getTarget());
-//		SummaryGraphEdge iEdge = new SummaryGraphEdge(source, target, SummaryGraphEdge.MAPPING_EDGE);
-//		iGraph.addEdge(source, target, iEdge);
-//		iGraph.setEdgeWeight(iEdge, m.getConfidence());
-//		}
+		SummaryGraphElement source = getVertex(sourceGraph, m.getSource());
+		SummaryGraphElement target = getVertex(sourceGraph, m.getTarget());
+		SummaryGraphEdge iEdge = new SummaryGraphEdge(source, target, SummaryGraphEdge.MAPPING_EDGE);
+		iGraph.addEdge(source, target, iEdge);
+		iGraph.setEdgeWeight(iEdge, m.getConfidence());
+		}
 //		==================by kaifengxu
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph: graphs)
 		{
@@ -449,7 +451,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for(String uri: mappedConcept.keySet())
 		{
 			String datasource = mappedConcept.get(uri);
-			String objFile = SesameDao.root + datasource+"-schema.obj";
+			String objFile = SearchQ2SemanticService.schemaObjSet.get(datasource);//SesameDao.root + datasource+"-schema.obj";
 			graph = sss.readGraphIndexFromFile(objFile);
 			for(SummaryGraphEdge edge: graph.edgeSet())
 			{
@@ -457,14 +459,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				if(source.getResource() instanceof NamedConcept && ((NamedConcept)source.getResource()).getUri().equals(uri)
 						&& target.getType()==SummaryGraphElement.RELATION)
 				{
-					res.add(((NamedConcept)source.getResource()).getUri()+"\t"+source.getDatasource()+"\t"+source.getTotalScore()+"\tc");
-					res.add(((Property)target.getResource()).getUri()+"\t"+target.getDatasource()+"\t"+target.getTotalScore()+"\tp");
+					res.add(((NamedConcept)source.getResource()).getUri()+"\t"+source.getDatasource()+"\t"+source.getTotalScore()+"\t"+SearchQ2SemanticService.ConceptMark);
+					res.add(((Property)target.getResource()).getUri()+"\t"+target.getDatasource()+"\t"+target.getTotalScore()+"\t"+SearchQ2SemanticService.PredicateMark);
 				}
 				else if(target.getResource() instanceof NamedConcept && ((NamedConcept)target.getResource()).getUri().equals(uri)
 						&& source.getType()==SummaryGraphElement.RELATION)
 				{
-					res.add(((NamedConcept)target.getResource()).getUri()+"\t"+target.getDatasource()+"\t"+target.getTotalScore()+"\tc");
-					res.add(((Property)source.getResource()).getUri()+"\t"+source.getDatasource()+"\t"+source.getTotalScore()+"\tp");
+					res.add(((NamedConcept)target.getResource()).getUri()+"\t"+target.getDatasource()+"\t"+target.getTotalScore()+"\t"+SearchQ2SemanticService.ConceptMark);
+					res.add(((Property)source.getResource()).getUri()+"\t"+source.getDatasource()+"\t"+source.getTotalScore()+"\t"+SearchQ2SemanticService.PredicateMark);
 				}
 			}
 		}
@@ -486,7 +488,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					}
 					// score = 1 / (EF/IDF*matchingscore)
 //					v.setTotalScore(1/(v.getEF() * score));
-					v.setTotalScore(1/(score));
+//					v.setTotalScore(1/(score));
 //					System.out.println(v.getResource());
 					v.applyCoverage(getDsCoverage(v));
 				}
