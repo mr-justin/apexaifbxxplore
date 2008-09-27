@@ -60,6 +60,7 @@ public class CltDocStream implements DocStream {
 	 * @see com.ibm.semplore.xir.DocStream#init()
 	 */
 	public void init() throws IOException {
+        this.count = 0;
 		next();
 	}
 
