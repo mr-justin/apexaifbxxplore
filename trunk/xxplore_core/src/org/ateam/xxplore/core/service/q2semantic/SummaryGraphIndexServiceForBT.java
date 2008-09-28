@@ -383,6 +383,7 @@ public class SummaryGraphIndexServiceForBT {
 		ObjectInputStream in;
 		Pseudograph<SummaryGraphElement,SummaryGraphEdge> newResourceGraph = null;
 		try {
+//			System.out.println(filepath);
 			in = new ObjectInputStream(new FileInputStream(filepath));
 			newResourceGraph = (Pseudograph<SummaryGraphElement,SummaryGraphEdge>)in.readObject(); 
 			in.close();

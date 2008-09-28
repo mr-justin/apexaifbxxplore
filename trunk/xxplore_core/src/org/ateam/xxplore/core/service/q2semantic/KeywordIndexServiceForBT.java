@@ -241,6 +241,7 @@ public class KeywordIndexServiceForBT implements IService{
 	protected  void indexDataSourceByProperty(IndexWriter indexWriter,IndexSearcher searcher, String ds, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemagraph) throws Exception{
 //		Collection<Edge> edges = graph.edges.values();
 //		Iterator<Edge> edgeIter = edges.iterator();
+		System.out.println("start indexing by property");
 		Set<SummaryGraphElement> edges = schemagraph.vertexSet();
 		Set<String> relSet = new HashSet<String>();
 		Set<String> attrSet = new HashSet<String>();
@@ -314,7 +315,7 @@ public class KeywordIndexServiceForBT implements IService{
 	 */
 	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, String ntFile, String ds) throws Exception
 	{
-
+		System.out.println("start indexing by lit and indiv");
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		HashSet<String> litSet = new HashSet<String>();
 		HashSet<String> concept = new HashSet<String>();
