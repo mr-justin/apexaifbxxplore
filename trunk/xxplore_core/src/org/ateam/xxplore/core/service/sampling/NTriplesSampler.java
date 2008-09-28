@@ -22,7 +22,7 @@ import java.util.LinkedList;
 
 public class NTriplesSampler {
 
-	private String semsameIndex = "//hades/kaifengxu/dblpnoblank";
+	private String semsameIndex = "//192.168.3.237/kaifengxu/freebase";
 	private String summaryGraph = "//192.168.3.237/kaifengxu/freebase-summary.obj";
 	private String output_file = "c:/freebase.sample.nt";
 	
@@ -33,6 +33,16 @@ public class NTriplesSampler {
 	
 	private HashSet<String> allinstance = new HashSet<String>();
 	private LinkedList<Statement> allstmt = new LinkedList<Statement>();
+	
+	public NTriplesSampler(String sesameIndex,String summaryGraph,String output_file) {
+		this.semsameIndex = sesameIndex;
+		this.summaryGraph = summaryGraph;
+		this.output_file = output_file;
+	}
+	
+	public NTriplesSampler() {
+		// TODO Auto-generated constructor stub
+	}
 	
 	private String RDF_TYPE = "http://www.w3.org/1999/02/22-rdf-syntax-ns#type";
 	
@@ -138,18 +148,80 @@ public class NTriplesSampler {
 		PrintWriter pw = new PrintWriter(output_file);
 		for(Statement stmt : allstmt) {
 			if(!stmt.getSubject().stringValue().startsWith("node") &&
-					!stmt.getObject().stringValue().startsWith("node"))
-			pw.println(stmt.getSubject().stringValue() + " " +
-					stmt.getPredicate().stringValue() + " " +
-					stmt.getObject().stringValue());
+					!stmt.getObject().stringValue().startsWith("node")) {
+				String t1 = stmt.getSubject().stringValue();
+				String t2 = stmt.getPredicate().stringValue();
+				String t3 = stmt.getObject().stringValue();
+				
+				if(t1.indexOf("@") != -1 || t2.indexOf("@") != -1 
+					|| t3.indexOf("@") != -1) {
+					System.err.println(t1 + " " + t2 + " " + t3);
+					continue;
+				}
+				
+				if(t1.startsWith("http")) {
+					t1 = "<" + t1 + ">";
+				}
+				if(t2.startsWith("http")) {
+					t2 = "<" + t2 + ">";
+				}
+				if(t3.startsWith("http")) {
+					t3 = "<" + t2 + ">";
+				}
+				else {
+					String tokens[] = t3.split("\\^\\^");
+					if(tokens.length == 1) {
+						t3 = "\"" + tokens[0] + "\"";
+					}
+					else {
+						t3 = "\"" + tokens[0] + "\"" + "^^" + "<" + tokens[1] + ">";
+					}
+				}
+				pw.println(t1 + " " + t2 + " " + t3);
+			}
 		}
 		pw.close();
 		con.close();
 	}
 	
-	public static void main(String[] args) throws Exception {
-		new NTriplesSampler().testtripple();
+	public void testPrint() {
+		String t1 = "http://www.sjtu.edu.cn";
+		String t2 = "http://chenjunquan.edu";
+		String t3 = "chenjunquan@englist";
+		
+		if(t1.indexOf("@") != -1 || t2.indexOf("@") != -1 
+				|| t3.indexOf("@") != -1) {
+				System.err.println(t1 + " " + t2 + " " + t3);
+			}
+		
+		if(t1.startsWith("http")) {
+			t1 = "<" + t1 + ">";
+		}
+		if(t2.startsWith("http")) {
+			t2 = "<" + t2 + ">";
+		}
+		if(t3.startsWith("http")) {
+			t3 = "<" + t2 + ">";
+		}
+		else {
+			String tokens[] = t3.split("\\^\\^");
+			if(tokens.length == 1) {
+				t3 = "\"" + tokens[0] + "\"";
+			}
+			else {
+				t3 = "\"" + tokens[0] + "\"" + "^^" + "<" + tokens[1] + ">";
+			}
+		}
+		System.out.println(t1 + " " + t2 + " " + t3);
 	}
 	
-	
+	public static void main(String[] args) throws Exception {
+		if(args.length == 3) {
+			new NTriplesSampler(args[0],args[1],args[2]).sample();
+		}
+		else {
+			new NTriplesSampler().sample();
+		}
+		
+	}	
 }
