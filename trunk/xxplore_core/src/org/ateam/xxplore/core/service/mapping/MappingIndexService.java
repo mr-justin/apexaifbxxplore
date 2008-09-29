@@ -257,7 +257,9 @@ public class MappingIndexService {
 					//if(score >= 0.9){
 						if(doc != null){
 							String source = doc.get(SOURCE_FIELD);
-							String target = doc.get(SOURCE_FIELD);
+							
+							// == chenjunquan ==
+							String target = doc.get(TARGET_FIELD);
 							String targetDS  = doc.get(TARGET_DS_FIELD);
 							String sourceDS = doc.get(SOURCE_DS_FIELD);
 							double conf = -1;
