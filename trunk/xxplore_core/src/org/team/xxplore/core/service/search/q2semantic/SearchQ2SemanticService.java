@@ -21,6 +21,7 @@ import org.ateam.xxplore.core.service.q2semantic.SesameDao;
 import org.ateam.xxplore.core.service.search.QueryInterpretationService;
 import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
 import org.ateam.xxplore.core.service.search.SummaryGraphElement;
+import org.ateam.xxplore.core.service.search.QueryInterpretationService.Subgraph;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.team.xxplore.core.service.search.datastructure.Attribute;
 import org.team.xxplore.core.service.search.datastructure.Concept;
@@ -93,8 +94,16 @@ public class SearchQ2SemanticService {
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
+		
+		// == chenjunquan ==
+		try {
+			this.loadPara("config/path.prop");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		double prune = 0;
-		int distance = 10;
+		int distance = 1000;
 		String query = "";
 		//merge keywords
 		for(String str: keywordList)
@@ -103,8 +112,21 @@ public class SearchQ2SemanticService {
 //		System.out.println(query);
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
-		for(String keywordIndex: keywordIndexSet)
+		System.out.println("size " + keywordIndexSet.size());
+		
+		for(String keywordIndex: keywordIndexSet) {
+			System.out.println("keywordIndex " + keywordIndex);
 			elementsMap.putAll(new KeywordIndexServiceForBT(keywordIndex, false).searchKb(query, prune));
+		}
+		
+		// == chenjunquan ==
+		for(String key : elementsMap.keySet()) {
+			System.out.println("key " + key);
+			Collection<SummaryGraphElement> tmp = elementsMap.get(key);
+			for(SummaryGraphElement ele : tmp) {
+				System.out.println(ele.getDatasource());
+			}
+		}
 //		System.out.println(elementsMap.size());
 		//search for topk querygraph
 		QueryInterpretationService inter = new QueryInterpretationService();
@@ -112,7 +134,12 @@ public class SearchQ2SemanticService {
 		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
 		MappingIndexService mis = new MappingIndexService();
 		mis.init4Search(mappingIndexRoot);
-		for(WeightedPseudograph qg: inter.computeQueries(elementsMap, mis, distance, topNbGraphs))
+		
+		// == chenjunquan ==
+		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, mis, distance, topNbGraphs);
+		if(graphs == null) return null;
+		
+		for(WeightedPseudograph qg: graphs)
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
 			SummaryGraphElement from, to;
@@ -227,8 +254,8 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
-		ll.add("word");
-		ll.add("net");
+		ll.add("Person");
+		ll.add("ayGS85");
 		new SearchQ2SemanticService().getPossibleGraphs(ll, 10);
 	}
 }
