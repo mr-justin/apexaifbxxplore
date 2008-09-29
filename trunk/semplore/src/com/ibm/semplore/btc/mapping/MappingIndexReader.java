@@ -24,8 +24,6 @@ public class MappingIndexReader {
 	private boolean twolevel;
 	private int[] head2_d;
 	private int[] head2_pos;
-	//              docid1 -> pos_in_index_map
-	private HashMap<Integer, Integer> headmap;
 	private BufferedRandomAccessFile fhead = null;
 	private RandomAccessFile fmap = null;
 	
@@ -58,7 +56,6 @@ public class MappingIndexReader {
 	public void close() throws IOException {
 		if (fhead!=null) fhead.close();
 		fmap.close();
-		headmap = null;
 		head2_d = null;
 		head2_pos = null;
 	}
@@ -75,11 +72,11 @@ public class MappingIndexReader {
 		twolevel = fhead.readInt()==1;
 		if (!twolevel) {
 			int len = fhead.available() / 8;
-			headmap = new HashMap<Integer, Integer>();
+			head2_d = new int[len];
+			head2_pos = new int[len];
 			for (int i = 0; i < len; i++) {
-				int docid = fhead.readInt();
-				int pos = fhead.readInt();
-				headmap.put(docid, pos);
+				head2_d[i] = fhead.readInt();
+				head2_pos[i] = fhead.readInt();
 			}
 			fhead.close();
 		} else {
@@ -93,7 +90,7 @@ public class MappingIndexReader {
 				head2_pos[i] = fhead2.readInt();
 			}
 			fhead2.close();
-			this.fhead = new BufferedRandomAccessFile(new File(file+".head"),"r",512);
+			this.fhead = new BufferedRandomAccessFile(new File(file+".head"),"r",4096);
 		}
 	}
 
@@ -133,9 +130,10 @@ public class MappingIndexReader {
 				return list.iterator();
 			}
 		} else {
-			Integer pos = headmap.get(d);
-			if (pos == null)
-				return nullItr ;
+			int head2 = Arrays.binarySearch(head2_d, d);
+			int pos = 0;
+			if (head2>=0) pos = head2_pos[head2];
+			else return nullItr;
 			LinkedList<Integer> list = new LinkedList<Integer>();
 			synchronized (this) {
 				fmap.seek(pos * 4);
