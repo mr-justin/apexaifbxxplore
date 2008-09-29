@@ -30,7 +30,7 @@ public class MappingIndexService {
 	private static final String SOURCE_FIELD = "source";
 	private static final String TARGET_FIELD = "target";
 	private static final String SOURCE_DS_FIELD = "sourceDS";
-	private static final String TARGET_DS_FIELD = "sourceDS";
+	private static final String TARGET_DS_FIELD = "targetDS";
 	private static final String CONFIDENCE_FIELD = "conf";
 	private static final String MAPPING_FIELD = "mapping";
 
@@ -52,6 +52,7 @@ public class MappingIndexService {
 	public void init4Search(String mappingIndexDir) {
 		try {
 			File indexDir = new File(mappingIndexDir);
+			this.m_indexDir = mappingIndexDir;
 			if (!indexDir.exists()) {
 				System.err.println(indexDir);
 				indexDir.mkdirs();
@@ -150,7 +151,7 @@ public class MappingIndexService {
 		
 		
 		MappingIndexService service = new MappingIndexService();
-		service.init4CreateIndex("");
+		service.init4CreateIndex("z:/mapping/index2");
 		service.createIndex(t);
 		service.finishCreateIndex();
 	}
@@ -232,14 +233,14 @@ public class MappingIndexService {
 				s_log.debug("Open index " + m_indexDir + " and init kb searcher!");
 				m_searcher = new IndexSearcher(m_indexDir);
 			}
-			if(type == SEARCH_SOURCE_DS_ONLY){
+			if(type.equals(SEARCH_SOURCE_DS_ONLY)){
 				q = new TermQuery(new Term(SOURCE_DS_FIELD, dsURI));
 			}
-			else if (type == SEARCH_TARGET_DS_ONLY){
+			else if (type.equals(SEARCH_TARGET_DS_ONLY)){
 				q = new TermQuery(new Term(TARGET_DS_FIELD, dsURI));
 			}
 
-			else if (type == SEARCH_TARGET_AND_SOURCE_DS){
+			else if (type.equals(SEARCH_TARGET_AND_SOURCE_DS)){
 				q = new BooleanQuery();
 				((BooleanQuery)q).add(new BooleanClause(new TermQuery(new Term(SOURCE_DS_FIELD, dsURI)), BooleanClause.Occur.SHOULD));
 				((BooleanQuery)q).add(new BooleanClause(new TermQuery(new Term(TARGET_DS_FIELD, dsURI)), BooleanClause.Occur.SHOULD));
@@ -252,8 +253,8 @@ public class MappingIndexService {
 			if((hits != null) && (hits.length() > 0)){
 				for(int i = 0; i < hits.length(); i++){
 					Document doc = hits.doc(i);
-					float score = hits.score(i);
-					if(score >= 0.9){
+					//float score = hits.score(i);
+					//if(score >= 0.9){
 						if(doc != null){
 							String source = doc.get(SOURCE_FIELD);
 							String target = doc.get(SOURCE_FIELD);
@@ -272,7 +273,12 @@ public class MappingIndexService {
 							}
 							//is a schema mapping
 							else {
-								res.add(new SchemaMapping(source, target, sourceDS, targetDS, conf));
+//								if(sourceDS.equals(dsURI)) { 
+									res.add(new SchemaMapping(source, target, sourceDS, targetDS, conf));
+//								}
+//								else {
+//									res.add(new SchemaMapping(target,source,targetDS,sourceDS,conf));
+//								}
 
 							}
 							Emergency.checkPostcondition(source != null && target != null && sourceDS != null &&
@@ -280,7 +286,7 @@ public class MappingIndexService {
 									"targetDS != null && conf != -1"); 
 							
 						}
-					}
+					//}
 				}
 			} 
 		} catch (IOException e) {
