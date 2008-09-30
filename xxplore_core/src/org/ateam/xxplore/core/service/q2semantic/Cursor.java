@@ -2,7 +2,8 @@ package org.ateam.xxplore.core.service.q2semantic;
 
 import java.util.LinkedList;
 
-class Cursor implements Comparable {
+
+public class Cursor implements Comparable {
 
 	private SummaryGraphElement m_matching;
 
