@@ -17,7 +17,7 @@ import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
 
-public class SummaryGraphElement implements Serializable {
+public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 
 	/**
 	 * 
