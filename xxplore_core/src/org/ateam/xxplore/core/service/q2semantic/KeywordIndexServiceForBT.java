@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -417,7 +418,7 @@ public class KeywordIndexServiceForBT implements IService{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-					System.out.println(clauseQ.toString());
+					System.out.println("=======================" + clauseQ.toString());
 					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
@@ -441,6 +442,15 @@ public class KeywordIndexServiceForBT implements IService{
 	 * @return
 	 */
 	private Map<String,Collection<SummaryGraphElement>> searchWithClause(Query clausequery, double prune){
+		
+		// == chenjunquan ==
+		PrintWriter pw = null;
+		try {
+		pw = new PrintWriter("d:/searhkb_result2");
+		}
+		catch (Exception e) {
+		}
+		
 		Map<String,Collection<SummaryGraphElement>> result = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			Hits hits = m_searcher.search(clausequery);
@@ -460,6 +470,7 @@ public class KeywordIndexServiceForBT implements IService{
 				result.put(clausequery.toString("label"), res);
 				for(int i = 0; i < hits.length(); i++){
 					Document doc = hits.doc(i);
+					pw.println(doc);
 					float score = hits.score(i);
 					if(score >= prune){
 						String type = doc.get(TYPE_FIELD);
@@ -476,15 +487,19 @@ public class KeywordIndexServiceForBT implements IService{
 							TermQuery query = new TermQuery(term);
 							Hits results = m_searcher.search(query);
 							if((results != null) && (results.length() > 0)){
+								Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
 								for(int j = 0; j < results.length(); j++){
 									Document docu = results.doc(j);
+									pw.println("\t" + docu);
 									if(docu != null){
 										IDataProperty prop = new DataProperty(pruneString(docu.get(ATTRIBUTE_FIELD)));
-										Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
+//										Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
+//										System.out.println(prop.getUri());
 										String[] cons = docu.getValues(CONCEPT_FIELD);
 										for (int k = 0; k < cons.length; k++){
 											INamedConcept con = new NamedConcept(pruneString(cons[k]));
-//											System.out.println(con.getUri());
+//											System.out.println("\t" + con.getUri());
+											
 											concepts.add(con);
 										}
 //										System.out.println(((HashSet)concepts).iterator().next());
@@ -532,6 +547,9 @@ public class KeywordIndexServiceForBT implements IService{
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		pw.close();
+		
 		return result;
 	}
 	
