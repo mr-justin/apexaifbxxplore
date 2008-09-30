@@ -1,9 +1,9 @@
 //for keywordindex building
 root:D:/semplore
-domain:dblpsamp
-source:D:/semplore/dblpsamp.nt
+domain:wordnet
+source:D:/semplore/wordnet.nt
 //for q2semantic service
 summaryObjsRoot:summaryObjsRoot
-schemaObjsRoot::schemaObjsRoot
+schemaObjsRoot:schemaObjsRoot
 keywordIndexRoot:keywordIndexRoot
 mappingIndexRoot:mappingIndex
