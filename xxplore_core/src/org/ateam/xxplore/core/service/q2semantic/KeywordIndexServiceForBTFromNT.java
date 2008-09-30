@@ -556,20 +556,4 @@ public class KeywordIndexServiceForBTFromNT{
 		// TODO Auto-generated method stub
 		
 	}
-
-	public static void main(String[] args) {
-		Map<String, Collection<SummaryGraphElement>> map = new KeywordIndexServiceForBTFromNT("//demeter/user/kaifengxu/semplore/freebase-keywordIndex",false).searchKb("\"bill gates\"", 0);
-		for(String str: map.keySet())
-		{
-			Collection<SummaryGraphElement> cols = map.get(str);
-			for(SummaryGraphElement elem: cols)
-			{
-				System.out.println(elem.toString());
-//				if(elem.getType()== SummaryGraphElement.VALUE)
-//				{
-//					System.out.println(((Literal)elem.getResource()).getLabel());
-//				}
-			}
-		}
-	}
 }
