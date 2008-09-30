@@ -67,34 +67,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	public void init(Object... params) {
 		// TODO Auto-generated method stub
 	}
-
-	public static void main(String[] args) throws Exception {
-
-		new SearchQ2SemanticService().loadPara(args[0]);
-		QueryInterpretationService inter = new QueryInterpretationService();
-		MappingIndexService index = new MappingIndexService();
-		index.init4Search("//192.168.3.20/semplore/mappingIndexRoot");
-		LinkedList<Subgraph> res = inter.computeQueries(
-				new KeywordIndexServiceForBTFromNT(
-						"//demeter/User/kaifengxu/semplore/freebase-keywordIndex", false)
-						.searchKb("Person ayGS85", 0), index, 1000, 30);
-
-		System.out.println(res.size());
-
-		// System.out.println(res==null);
-		// for(Map<String,Collection<OWLPredicate>> map: res)
-		// {
-		// System.out.println("=====================");
-		// for(String name: map.keySet())
-		// {
-		// System.out.println("<<<"+name);
-		// Collection<OWLPredicate> preds = map.get(name);
-		// for(OWLPredicate pred: preds)
-		// System.out.println(pred);
-		// }
-		// }
-
-	}
 	
 	public void outputGraphInfo(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph) {
 		System.out.println("graph ========================");
