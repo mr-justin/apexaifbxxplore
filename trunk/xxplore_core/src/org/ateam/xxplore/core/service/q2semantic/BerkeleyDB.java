@@ -175,27 +175,4 @@ public class BerkeleyDB {
 			System.out.println("K: " + keyString + " | D: " + dataString);
 		}
 	}
-
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-
-		BerkeleyDB db = new BerkeleyDB();
-		db.openDB("D:\\semplore\\berkeleytest", "test");
-
-		db.put("key1", "data1");
-		db.put("key1", "data2");
-		db.put("key2", "data2");
-		db.put("key1", "data2");
-
-		db.printAllTriple();
-
-		 ArrayList<String> ls = db.search("key1");
-		 for (String str : ls)
-		 System.out.println(str);
-		db.closeDB();
-	}
-
 }
