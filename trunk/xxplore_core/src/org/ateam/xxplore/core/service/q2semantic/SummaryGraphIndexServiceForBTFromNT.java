@@ -97,28 +97,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		System.err.println("pred~"+pred);
 		return "";
 	}
-	/**
-	 * @param args
-	 * @throws Exception 
-	 */
-	public static void main(String[] args) throws Exception {
-		// TODO Auto-generated method stub
-//		arg[0] is the configuation file; arg[1] is the berkeleydb root
-		BuildQ2SemanticService.getConfiguation(args[0]);
-		SummaryGraphIndexServiceForBTFromNT ss = new SummaryGraphIndexServiceForBTFromNT();
-		new File(args[1]).delete();
-		ss.initDB(args[1]);
-		ss.firstScan();
-		ss.closeDB();
-		
-		ss.initDB(args[1]);
-		ss.secondScan();
-		ss.closeDB();
-		
-//		SummaryGraphIndexServiceForBT ss = new SummaryGraphIndexServiceForBT();
-//		
-//		ss.writeSummaryGraphAsRDF(ss.readGraphIndexFromFile(SesameDao.summaryObj), SesameDao.summaryRDF);
-	}
+
 	public void buildGraphs(String path) throws Exception
 	{	
 		initDB(path);
