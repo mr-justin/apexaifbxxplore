@@ -2,7 +2,6 @@ package org.team.xxplore.core.service.search.q2semantic;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -53,6 +52,17 @@ public class SearchQ2SemanticService {
 	public static HashMap<String, String> summaryObjSet;
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
+	
+	public SearchQ2SemanticService() {
+		// == chenjunquan ==
+		try {
+			this.loadPara("config/path.prop");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 	/**
 	 * TO DO
 	 * @param concept
@@ -95,14 +105,7 @@ public class SearchQ2SemanticService {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 		
-		// == chenjunquan ==
-		try {
-			this.loadPara("config/path.prop");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		double prune = 0;
+		double prune = 0.9;
 		int distance = 1000;
 		String query = "";
 		//merge keywords
@@ -119,14 +122,24 @@ public class SearchQ2SemanticService {
 			elementsMap.putAll(new KeywordIndexServiceForBT(keywordIndex, false).searchKb(query, prune));
 		}
 		
+	
 		// == chenjunquan ==
-		for(String key : elementsMap.keySet()) {
-			System.out.println("key " + key);
-			Collection<SummaryGraphElement> tmp = elementsMap.get(key);
-			for(SummaryGraphElement ele : tmp) {
-				System.out.println(ele.getDatasource());
-			}
-		}
+		
+//		KeywordIndexServiceForBT service = new KeywordIndexServiceForBT("d:/freebase-keywordIndex", false);
+//		
+//		Map<String, Collection<SummaryGraphElement>> tmp = service.searchKb(query, prune);
+//		
+//		
+//		elementsMap.putAll(tmp);
+		
+		// == chenjunquan ==
+//		for(String key : elementsMap.keySet()) {
+//			System.out.println("key " + key);
+//			Collection<SummaryGraphElement> tmp = elementsMap.get(key);
+//			for(SummaryGraphElement ele : tmp) {
+//				System.out.println(ele.getDatasource());
+//			}
+//		}
 //		System.out.println(elementsMap.size());
 		//search for topk querygraph
 		QueryInterpretationService inter = new QueryInterpretationService();
@@ -153,7 +166,7 @@ public class SearchQ2SemanticService {
 			}
 			
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
-			System.out.println(con2rel.size()+"\t"+rel2con.size()+"\t"+con2attr.size()+"\t"+attr2lit.size());
+//			System.out.println(con2rel.size()+"\t"+rel2con.size()+"\t"+con2attr.size()+"\t"+attr2lit.size());
 			for(Facet f: con2rel.keySet())
 				for(Facet r: con2rel.get(f))
 					if(rel2con.get(r) != null)
@@ -201,7 +214,7 @@ public class SearchQ2SemanticService {
 		schemaObjSet = new HashMap<String, String>();
 		File[] schemas = new File(schemaObjsRoot).listFiles();
 		for(File schema: schemas)
-			summaryObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
+			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
 	}
 	
 	private void gether(SummaryGraphElement from, SummaryGraphElement to, Map<Facet, Set<Facet>> c2r, Map<Facet, Set<Facet>> c2a, Map<Facet, Set<Facet>> r2c, Map<Facet, Set<Facet>> a2l)
@@ -254,8 +267,10 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
-		ll.add("Person");
-		ll.add("ayGS85");
+		ll.add("bill gates");
+		ll.add("windows");
+//		ll.add("omasicRV98");
+//		ll.add("ayGS85");
 		new SearchQ2SemanticService().getPossibleGraphs(ll, 10);
 	}
 }
