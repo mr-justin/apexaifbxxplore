@@ -216,6 +216,12 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 		categoryWithID.addCategory(c, catLocalID);
 	}
 
+	public void addAttribute(Relation r, Instance object, int relationLocalID,
+			int instanceLocalID) {
+		int index = findRelation(r, true, relationLocalID);
+		//TODO
+	}
+
 	public void addRelation(Relation r, Instance object, int relationLocalID,
 			int instanceLocalID) {
 		int index = findRelation(r, true, relationLocalID);
