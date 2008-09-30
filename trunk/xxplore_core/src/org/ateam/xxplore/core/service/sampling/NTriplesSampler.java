@@ -1,7 +1,17 @@
 package org.ateam.xxplore.core.service.sampling;
 
-import org.ateam.xxplore.core.service.search.SummaryGraphEdge;
-import org.ateam.xxplore.core.service.search.SummaryGraphElement;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.ObjectInputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedList;
+
+import org.ateam.xxplore.core.service.q2semantic.SummaryGraphEdge;
+import org.ateam.xxplore.core.service.q2semantic.SummaryGraphElement;
 import org.jgrapht.graph.Pseudograph;
 import org.openrdf.model.Statement;
 import org.openrdf.repository.RepositoryException;
@@ -13,12 +23,6 @@ import org.openrdf.sail.nativerdf.ValueStore;
 import org.openrdf.sail.nativerdf.ValueStoreRevision;
 import org.openrdf.sail.nativerdf.model.NativeURI;
 import org.xmedia.oms.model.impl.NamedConcept;
-
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.LinkedList;
 
 public class NTriplesSampler {
 
