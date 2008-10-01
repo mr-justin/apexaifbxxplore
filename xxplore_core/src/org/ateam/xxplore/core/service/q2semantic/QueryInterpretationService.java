@@ -72,23 +72,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		System.out.println("graph ========================");
 		for(SummaryGraphEdge edge : graph.edgeSet()) {
 			System.out.println( edge.getEdgeLabel()  + "\t");
-			System.out.println(this.getResourceUri(edge.getSource()));
-			System.out.println(this.getResourceUri(edge.getTarget()));
+			System.out.println(SummaryGraphUtil.getResourceUri(edge.getSource()) + " [" + edge.getSource().getEF() + "]" + " [" + edge.getSource().getMatchingScore() + "]");
+			System.out.println(SummaryGraphUtil.getResourceUri(edge.getTarget()) + " [" + edge.getTarget().getEF() + "]" + " [" + edge.getTarget().getMatchingScore() + "]");
 			System.out.println();
 		}
 	}
 	
-	public String getResourceUri(SummaryGraphElement ele) {
-		if(ele.getType() == SummaryGraphElement.CONCEPT) {
-			return  "C ^ " + ((NamedConcept)ele.getResource()).getUri() + "[" + ele.getEF() + "]" + " [" + ele.getMatchingScore() + "]";
-		}
-		else if(ele.getType() == SummaryGraphElement.ATTRIBUTE || ele.getType() == SummaryGraphElement.RELATION){
-			return "P ^ " + ((Property)ele.getResource()).getUri() + "[" + ele.getEF() + "]" + " [" + ele.getMatchingScore() + "]";
-		}
-		else {
-			return "L ^ " + ele.getResource().getLabel() + "[" + ele.getEF() + "]" + " [" + ele.getMatchingScore() + "]";
-		}
-	}
 
 	public LinkedList<Subgraph> computeQueries(
 			Map<String, Collection<SummaryGraphElement>> elements,
@@ -114,9 +103,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
 		
-		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
-			this.outputGraphInfo(g);
-		}
+//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
+//			this.outputGraphInfo(g);
+//		}
 
 		// for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph:
 		// sumGraphs)
@@ -130,6 +119,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
 			this.outputGraphInfo(g);
 		}
+		
+//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
+//			for(SummaryGraphElement ele : g.vertexSet()) {
+//				System.out.println();
+//				System.out.println("===========================************");
+//				System.out.println( SummaryGraphUtil.getResourceUri(ele) );
+//			}
+//		}
 		
 
 		// for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g: sumGraphs)
@@ -388,6 +385,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for (String key : keys) {
 			m_startingElements.addAll(keywords.get(key));
 		}
+		
+		// == chenjunquan ==
+		HashMap<String, SummaryGraphElement> vertexMap = new HashMap<String, SummaryGraphElement>();
+		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : graphs) {
+			for(SummaryGraphElement ele : g.vertexSet()) {
+				vertexMap.put(SummaryGraphUtil.getResourceUri(ele), ele);
+			}
+		}
 		// int count = 0;
 		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
 			for (SummaryGraphElement e : m_startingElements) {
@@ -401,19 +406,30 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 					while (propIter.hasNext()) {
 						IDataProperty prop = propIter.next();
-						System.out.println("prop: " + prop.getUri());
 						SummaryGraphElement pvertex = new SummaryGraphElement(
 								prop, SummaryGraphElement.ATTRIBUTE);
 						Collection<INamedConcept> cons = neighbors.get(prop);
 						Iterator<INamedConcept> conIter = cons.iterator();
 						while (conIter.hasNext()) {
 							INamedConcept con = conIter.next();
-							System.out.println("\tcon: " + con.getUri());
 							SummaryGraphElement cvertex = new SummaryGraphElement(
 									con, SummaryGraphElement.CONCEPT);
 							// Emergency.checkPrecondition(graph.containsVertex(cvertex),
 							// "Classvertex must be contained in summary graph:"
 							// + cvertex.toString());
+							
+							// == chenjunquan ==
+							if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)) != null) {
+								cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex));
+							}
+							if(vertexMap.get(SummaryGraphUtil.getResourceUri(pvertex)) != null) {
+								pvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(pvertex));
+							}
+							if(vertexMap.get(SummaryGraphUtil.getResourceUri(e)) != null) {
+								e = vertexMap.get(SummaryGraphUtil.getResourceUri(e));
+							}
+							
+							
 							SummaryGraphEdge domain = new SummaryGraphEdge(
 									cvertex, pvertex,
 									SummaryGraphEdge.DOMAIN_EDGE);
@@ -449,6 +465,15 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						// Emergency.checkPrecondition(graph.containsVertex(cvertex),
 						// "Classvertex must be contained in summary graph:" +
 						// cvertex.toString());
+						
+						// == chenjunquan ==
+						if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)) != null) {
+							cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex));
+						}
+						if(vertexMap.get(SummaryGraphUtil.getResourceUri(e)) != null) {
+							e = vertexMap.get(SummaryGraphUtil.getResourceUri(e));
+						}
+						
 						SummaryGraphEdge domain = new SummaryGraphEdge(cvertex,
 								(SummaryGraphAttributeElement) e,
 								SummaryGraphEdge.DOMAIN_EDGE);
