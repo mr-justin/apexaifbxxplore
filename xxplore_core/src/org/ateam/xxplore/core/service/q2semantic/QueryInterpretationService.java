@@ -112,9 +112,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		// System.out.println(elements.get(keyword).size());
 		// }
 		
-		// == chenjunquan ==
-		System.out.println("elements size " + elements.values().size());
-		
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
 		
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
@@ -129,6 +126,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		// System.out.println("aa");
 		// }
 		getAugmentedSummaryGraphs(sumGraphs, elements);
+		
+		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
+			this.outputGraphInfo(g);
+		}
 		
 
 		// for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g: sumGraphs)
@@ -488,18 +489,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> addedGraphs = new ArrayList<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>();
 
 		for (Mapping m : mappings) {
-
-			// == chenjunquan ==
-			if (!m.getSourceDsURI().equals("dblp")
-					&& !m.getSourceDsURI().equals("freebase")
-					|| !m.getTargetDsURI().equals("freebase")
-					&& !m.getTargetDsURI().equals("dblp")) {
-				continue;
-			}
-			Pseudograph<SummaryGraphElement, SummaryGraphEdge> sourceGraph = m_DsGraphMap
-					.get(m.getSourceDsURI());
-			Pseudograph<SummaryGraphElement, SummaryGraphEdge> targetGraph = m_DsGraphMap
-					.get(m.getTargetDsURI());
+			
+			Pseudograph<SummaryGraphElement, SummaryGraphEdge> sourceGraph = m_DsGraphMap.get(m.getSourceDsURI());
+			Pseudograph<SummaryGraphElement, SummaryGraphEdge> targetGraph = m_DsGraphMap.get(m.getTargetDsURI());
 			
 			// ==  chenjunquan ==
 			if(sourceGraph == null || targetGraph == null) {
