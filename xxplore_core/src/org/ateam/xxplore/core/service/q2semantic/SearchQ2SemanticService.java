@@ -47,11 +47,12 @@ public class SearchQ2SemanticService {
 	public static HashMap<String, String> summaryObjSet;
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
+	public static final String configFilePath = "config/path.prop";
 	
 	public SearchQ2SemanticService() {
 		// == chenjunquan ==
 		try {
-			this.loadPara("config/path.prop");
+			this.loadPara(configFilePath);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
