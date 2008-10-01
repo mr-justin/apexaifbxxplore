@@ -21,7 +21,6 @@ import org.team.xxplore.core.service.search.datastructure.Attribute;
 import org.team.xxplore.core.service.search.datastructure.Concept;
 import org.team.xxplore.core.service.search.datastructure.ConceptSuggestion;
 import org.team.xxplore.core.service.search.datastructure.Facet;
-import org.team.xxplore.core.service.search.datastructure.GraphEdge;
 import org.team.xxplore.core.service.search.datastructure.Litteral;
 import org.team.xxplore.core.service.search.datastructure.QueryGraph;
 import org.team.xxplore.core.service.search.datastructure.Relation;
@@ -82,9 +81,9 @@ public class SearchQ2SemanticService {
 			if(part.length!=4) continue;
 			String label = part[0].substring(part[0].lastIndexOf('/')+1);
 			if(part[3].equals(ConceptMark))
-				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
+				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0]));
 			else if(part[3].equals(PredicateMark))
-				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
+				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0]));
 		}
 		return res;
 	}
