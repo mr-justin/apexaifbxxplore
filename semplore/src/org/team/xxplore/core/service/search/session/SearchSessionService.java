@@ -7,15 +7,13 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
-import javax.smartcardio.ATR;
-
-import org.openrdf.query.algebra.Str;
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
+import org.team.xxplore.core.service.search.datastructure.Attribute;
 import org.team.xxplore.core.service.search.datastructure.Concept;
 import org.team.xxplore.core.service.search.datastructure.ConceptSuggestion;
 import org.team.xxplore.core.service.search.datastructure.Couple;
 import org.team.xxplore.core.service.search.datastructure.Facet;
-import org.team.xxplore.core.service.search.datastructure.Attribute;
+import org.team.xxplore.core.service.search.datastructure.GraphEdge;
 import org.team.xxplore.core.service.search.datastructure.Instance;
 import org.team.xxplore.core.service.search.datastructure.Keywords;
 import org.team.xxplore.core.service.search.datastructure.Litteral;
@@ -65,8 +63,76 @@ public class SearchSessionService {
 	 */
 	public ResultPage search(Query query, int nbResultsPerPage) throws Exception {
 		if (query instanceof QueryGraph) {
-			// TODO translate QueryGraph to GraphImpl for Semplore QueryEvaluator to execute
-			return null;
+			QueryGraph qg = (QueryGraph)query;
+			Facet targetNode = qg.getTargetVariable();
+			LinkedList<Facet> nodeList = qg.getVertexList();
+			LinkedList<GraphEdge> edgeList = qg.getEdgeList();
+			Graph graph = new GraphImpl();
+			HashMap<Facet, Integer> indexMap = new HashMap<Facet, Integer>();
+			int index = 0;
+			for (Facet f : nodeList) {
+				if (f.equals(targetNode)) {
+					CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	// AND
+					if (f instanceof Concept) {
+						Concept c = (Concept)f;
+						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));
+					} else if (f instanceof Attribute) {
+						Attribute a = (Attribute)f;
+						//TODO how to deal with Attribute node
+					} else if (f instanceof Instance) {
+						Instance i = (Instance)f;
+						//TODO how to deal with Instance node
+					} else if (f instanceof Litteral) {
+						Litteral l = (Litteral)f;
+						//TODO how to deal with Literal node
+					}
+					graph.add(cc);
+					graph.setTargetVariable(index);
+					graph.setDataSource(index, f.getSource().getName());
+				} else {
+					if (f instanceof Concept) {
+						Concept c = (Concept)f;
+						graph.add(SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));
+					} else if (f instanceof Attribute) {
+						Attribute a = (Attribute)f;
+						//TODO how to deal with Attribute node
+					} else if (f instanceof Instance) {
+						Instance i = (Instance)f;
+						//TODO how to deal with Instance node
+					} else if (f instanceof Litteral) {
+						Litteral l = (Litteral)f;
+						//TODO how to deal with Literal node
+					}
+					graph.setDataSource(index, f.getSource().getName());
+				}
+				indexMap.put(f, index);
+				index++;
+			}
+			for (GraphEdge e : edgeList) {
+				int from = indexMap.get(e.getFromElement());
+				int to = indexMap.get(e.getToElement());
+				Relation rel = (Relation)e.getDecorationElement();
+				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(rel.getURI())), from, to);
+			}
+			
+			int id = SemplorePool.acquire();
+			QueryEvaluator eval = SemplorePool.getEvaluator(id);
+			XFacetedResultSetForMultiDataSources result = eval.evaluate(graph);
+			SemplorePool.release(id);
+
+			LinkedList<Operation> operationHistory = new LinkedList<Operation>();
+			operationHistory.add(new QueryGraphOperation(new GraphImpl(), graph));
+			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory 
+				= new LinkedList<XFacetedResultSetForMultiDataSources>();
+			resultHistory.add(result);
+			if (FlexContext.getFlexSession() != null) {
+				FlexContext.getFlexSession().setAttribute("operationHistory", operationHistory);
+				FlexContext.getFlexSession().setAttribute("currentGraph", graph);
+				FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
+			}
+			ResultPage ret = transform(result, 1, nbResultsPerPage);
+			return ret;
+	
 		} else if (query instanceof Keywords) {
 			Graph graph = new GraphImpl();
 			Keywords k = (Keywords)query;
@@ -83,7 +149,6 @@ public class SearchSessionService {
 			
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			if (eval == null) System.err.println("Evaluator not exist");
 			XFacetedResultSetForMultiDataSources result = eval.evaluate(graph);
 			SemplorePool.release(id);
 			
