@@ -15,16 +15,19 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.RandomAccessFile;
+import java.util.AbstractMap;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Properties;
 import java.util.Scanner;
+import java.util.TreeMap;
 import java.util.regex.Pattern;
 
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.imports.InstanceDocumentIterator;
 import com.ibm.semplore.imports.impl.data.load.Util4NT;
-import com.ibm.semplore.model.Attribute;
 import com.ibm.semplore.model.Category;
 import com.ibm.semplore.model.Instance;
 import com.ibm.semplore.model.Relation;
@@ -126,13 +129,16 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 			}
 				itype = dataReader.next();
 				dataReader.skip(pattern);
-				try {
-					p = dataReader.nextLong();
-				} catch (Exception e) {
-					e.printStackTrace();
-					System.err.println(lineno);
-					error=true;
-				}
+				if (itype.equals(Util4NT.ATTRIBUTE))
+					attr = dataReader.next();
+				else
+					try {
+						p = dataReader.nextLong();
+					} catch (Exception e) {
+						e.printStackTrace();
+						System.err.println(lineno);
+						error=true;
+					}
 				dataReader.skip(pattern);
 			if (error) continue;
 			obj = null;
@@ -158,8 +164,6 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 					instance.setObjectType(Relation.class);
 				else if (o==Md5_BloomFilter_64bit.HASH_TYPE_INSTANCE)
 					instance.setObjectType(Instance.class);
-				else if (o==Md5_BloomFilter_64bit.HASH_TYPE_ATTRIBUTE)
-					instance.setObjectType(Attribute.class);
 				else throw new Error("wrong type hash:"+o);
 			}
 			else if (itype.equals(Util4NT.CATEGORY)) {
@@ -168,12 +172,9 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 				instance.addCategory(factory.createCategory(o), catLocalID);
 			}
 			else if (itype.equals(Util4NT.ATTRIBUTE)) {
-				o = dataReader.nextLong();
-				relLocalID = findRelLocalID(p);
-				objLocalID = findObjLocalID(p, o);
-				instance.addAttribute(factory.createRelation(p),
-						factory.createInstance(o), relLocalID,
-						objLocalID);
+				obj = dataReader.nextLine();
+				obj = TestUnicode.parse(obj);
+				instance.addAttribute(attr, obj);
 			}
 			else if (itype.equals(Util4NT.RELATION)) {
 				o = dataReader.nextLong();
