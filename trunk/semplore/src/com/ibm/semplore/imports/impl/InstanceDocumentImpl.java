@@ -2,6 +2,7 @@ package com.ibm.semplore.imports.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedList;
 
 import com.ibm.semplore.model.Category;
@@ -182,10 +183,12 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 
 	}
 	LinkedList<AttributeValue> attributes;
+	HashSet<String> attrSet;
 	
 	public InstanceDocumentImpl(Instance ins) {
 		this.schemaObject = ins;
 		attributes = new LinkedList<AttributeValue>();
+		attrSet = new HashSet<String>();
 	}
 	
 	public void setURI(String URI) {
@@ -209,6 +212,10 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 		}
 		
 		attributes.add(new AttributeValue(name, attr));
+		if (!attrSet.contains(name)) {
+			attrSet.add(name);
+			attributes.add(new AttributeValue(name,""));
+		}
 	}
 	
 	public void addCategory(Category c, int catLocalID) {
