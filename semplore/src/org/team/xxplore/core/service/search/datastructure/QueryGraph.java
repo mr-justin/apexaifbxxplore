@@ -55,5 +55,26 @@ public class QueryGraph implements Query {
 		this.edgeList = edgeList;
 	}
 	
-
+	public void print()
+	{
+		System.out.println("Target Set:");
+		if(targetVariable!=null)
+			System.out.println(targetVariable.getURI());
+		else System.out.println("null");
+		System.out.println("Vertex Set:");
+		if(vertexList!=null)
+		for(Facet nodes: vertexList)
+		{
+			System.out.println(nodes.getURI());
+		}
+		System.out.println("Edge Set:");
+		if(edgeList!=null)
+		for(GraphEdge edge: edgeList)
+		{
+			if(edge.getToElement()!=null)
+				System.out.println(edge.getFromElement().getURI()+" -> "+edge.getDecorationElement().getURI()+" -> "+edge.getToElement().getURI());
+			else System.out.println(edge.getFromElement().getURI()+" -> "+edge.getDecorationElement().getURI()+" -> null");
+			
+		}
+	}
 }

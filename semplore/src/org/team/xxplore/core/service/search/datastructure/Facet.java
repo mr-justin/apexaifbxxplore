@@ -35,7 +35,19 @@ public class Facet implements Query {
 		this.URI = uri;
 		this.source = source;
 	}
+	
+	@Override
+	public boolean equals(Object arg0) {
+		// TODO Auto-generated method stub
+		Facet other = (Facet)arg0;
+		return URI.equals(other.getURI());
+	}
 
+	@Override
+	public int hashCode() {
+		// TODO Auto-generated method stub
+		return URI.hashCode();
+	}
 	/**
 	 * @return the label
 	 */
