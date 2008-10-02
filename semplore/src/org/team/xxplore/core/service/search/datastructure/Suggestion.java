@@ -22,12 +22,14 @@ public class Suggestion implements Comparable{
 		this.label = "";
 		this.source = null;
 		this.URI = "";
+		this.conf = 0.0;
 	}
 
 	/**
 	 * @param label
 	 * @param source
 	 * @param uri
+	 * @param conf
 	 */
 	public Suggestion(String label, Source source, String uri, double conf) {
 		this.label = label;
