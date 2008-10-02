@@ -166,7 +166,7 @@ public class BuildQ2SemanticService {
 		
 //		build graphs
 		SummaryGraphIndexServiceForBTFromNT wawa = new SummaryGraphIndexServiceForBTFromNT();
-		wawa.buildGraphs(indexRoot);//db index location
+//		wawa.buildGraphs(indexRoot);//db index location
 		
 //		build keywordindex
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = wawa.readGraphIndexFromFile(schemaObj);

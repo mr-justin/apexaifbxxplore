@@ -323,7 +323,7 @@ public class KeywordIndexServiceForBTFromNT{
 				System.out.println(count);
 
 			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node"))
+			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2)
 				continue;
 //			System.out.println();
 			cur = part[0];
