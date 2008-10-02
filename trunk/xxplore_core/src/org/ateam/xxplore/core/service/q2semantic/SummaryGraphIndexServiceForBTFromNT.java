@@ -100,6 +100,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 
 	public void buildGraphs(String path) throws Exception
 	{	
+		propCount = new HashMap<String, Integer>();
+		conceptCount = new HashMap<String, Integer>();
 		initDB(path);
 		firstScan();
 		closeDB();
@@ -124,8 +126,6 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		System.out.println("=======firstScan==========");
 		indivSize = BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource)==null?
 				-1:BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource);
-		propCount = new HashMap<String, Integer>();
-		conceptCount = new HashMap<String, Integer>();
 		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
 		TreeSet<String> indivSet = new TreeSet<String>();
 		String line;
@@ -135,14 +135,9 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			count++;
 			if(count%10000==0)
 				System.out.println(count);
-			if(count%20000000==0)
-			{
-				closeDB();
-				initDB(dbpath);
-			}
 
 			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node"))
+			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
 				continue;
 //			System.out.println(part[0]+"\t"+part[1]+"\t"+part[2]);
 			if(!part[0].startsWith("<") || !part[1].startsWith("<"))
@@ -200,7 +195,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(count%10000==0)
 				System.out.println(count);
 			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node"))
+			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
 				continue;
 //			System.out.println(part[0]+"\t"+part[1]+"\t"+part[2]);
 			String subj = part[0].substring(1, part[0].length()-1);
@@ -219,7 +214,15 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(OBJPROP))
 			{
 				HashSet<SummaryGraphElement> subjParent = new HashSet<SummaryGraphElement>(), objParent = new HashSet<SummaryGraphElement>();
-				List<String> list = indiv2con.search(subj);
+				List<String> list;
+				try {
+					list= indiv2con.search(subj);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					continue;
+				}
+				
 				
 				if(list==null)
 				{
@@ -236,7 +239,15 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						else elem.setCost(i.doubleValue()/indivSize);
 						subjParent.add(elem);
 					}
-				list = indiv2con.search(obj);
+//				System.out.println(obj);
+				try {
+					list = indiv2con.search(obj);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					continue;
+				}
+				
 				if(list==null)
 				{
 					SummaryGraphElement elem = new SummaryGraphElement(NamedConcept.TOP, SummaryGraphElement.CONCEPT);
@@ -303,7 +314,15 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			else if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(DATATYPEPROP) && getObjectType(pred, obj).equals(LITERAL))
 			{
 				HashSet<String> cons = new HashSet<String>();
-				List<String> l = indiv2con.search(subj);
+				List<String> l;
+				try {
+					l= indiv2con.search(subj);
+				} catch (Exception e) {
+					// TODO: handle exception
+					e.printStackTrace();
+					continue;
+				}
+				
 				if(l==null) cons.add(NamedConcept.TOP.getUri());
 				else cons.addAll(l);
 				for(String con: cons)

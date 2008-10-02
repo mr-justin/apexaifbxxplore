@@ -17,16 +17,7 @@ import java.util.Set;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.q2semantic.QueryInterpretationService.Subgraph;
 import org.jgrapht.graph.WeightedPseudograph;
-import org.team.xxplore.core.service.search.datastructure.Attribute;
-import org.team.xxplore.core.service.search.datastructure.Concept;
-import org.team.xxplore.core.service.search.datastructure.ConceptSuggestion;
-import org.team.xxplore.core.service.search.datastructure.Facet;
-import org.team.xxplore.core.service.search.datastructure.Litteral;
-import org.team.xxplore.core.service.search.datastructure.QueryGraph;
-import org.team.xxplore.core.service.search.datastructure.Relation;
-import org.team.xxplore.core.service.search.datastructure.RelationSuggestion;
-import org.team.xxplore.core.service.search.datastructure.Source;
-import org.team.xxplore.core.service.search.datastructure.Suggestion;
+import org.team.xxplore.core.service.search.datastructure.*;
 import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
@@ -46,12 +37,11 @@ public class SearchQ2SemanticService {
 	public static HashMap<String, String> summaryObjSet;
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
-	public static final String configFilePath = "config/path.prop";
 	
-	public SearchQ2SemanticService() {
+	public SearchQ2SemanticService(String fn) {
 		// == chenjunquan ==
 		try {
-			this.loadPara(configFilePath);
+			this.loadPara(fn);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -81,9 +71,9 @@ public class SearchQ2SemanticService {
 			if(part.length!=4) continue;
 			String label = part[0].substring(part[0].lastIndexOf('/')+1);
 			if(part[3].equals(ConceptMark))
-				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0]));
+				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
 			else if(part[3].equals(PredicateMark))
-				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0]));
+				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
 		}
 		return res;
 	}
@@ -147,7 +137,7 @@ public class SearchQ2SemanticService {
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, mis, distance, topNbGraphs);
 		if(graphs == null) return null;
 		
-		for(WeightedPseudograph qg: graphs)
+		for(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
 			SummaryGraphElement from, to;
@@ -157,29 +147,39 @@ public class SearchQ2SemanticService {
 			{
 				from = edge.getSource();
 				to = edge.getTarget();
-				gether(from, to, con2rel, con2attr, rel2con, attr2lit);
+				collectEdge(from, to, con2rel, con2attr, rel2con, attr2lit);
 			}
 			
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
 //			System.out.println(con2rel.size()+"\t"+rel2con.size()+"\t"+con2attr.size()+"\t"+attr2lit.size());
 			for(Facet f: con2rel.keySet())
 				for(Facet r: con2rel.get(f))
+				{
 					if(rel2con.get(r) != null)
-					for(Facet t: rel2con.get(r))
-						graphEdges.add(new GraphEdge(f, t, r));
+						for(Facet t: rel2con.get(r))
+							graphEdges.add(new GraphEdge(f, t, r));
+					else graphEdges.add(new GraphEdge(f, null, r));
+				}
 			
 			for(Facet f: con2attr.keySet())
 				for(Facet a: con2attr.get(f))
+				{
 					if(attr2lit.get(a) != null)
-					for(Facet t: attr2lit.get(a))
-						graphEdges.add(new GraphEdge(f, t, a));
+						for(Facet t: attr2lit.get(a))
+							graphEdges.add(new GraphEdge(f, t, a));
+					else graphEdges.add(new GraphEdge(f, null, a));
+				}
 			
-			result.add(new QueryGraph(graphEdges));
+			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
+			for(SummaryGraphElement elem : qg.vertexSet())
+				graphVertexes.add(getFacet(elem));
+				
+			result.add(new QueryGraph(null, graphVertexes, graphEdges));
 		}
-		for(QueryGraph graph: result)
+		for(int i=0; i<result.size(); i++)
 		{
-			System.out.println("===============");
-			graph.print();
+			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
+			result.get(i).print();
 		}
 		return result;
 	}
@@ -211,52 +211,64 @@ public class SearchQ2SemanticService {
 			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
 	}
 	
-	private void gether(SummaryGraphElement from, SummaryGraphElement to, Map<Facet, Set<Facet>> c2r, Map<Facet, Set<Facet>> c2a, Map<Facet, Set<Facet>> r2c, Map<Facet, Set<Facet>> a2l)
+	private void collectEdge(SummaryGraphElement from, SummaryGraphElement to, Map<Facet, Set<Facet>> c2r, Map<Facet, Set<Facet>> c2a, Map<Facet, Set<Facet>> r2c, Map<Facet, Set<Facet>> a2l)
 	{
-		if(from.getType() == SummaryGraphElement.ATTRIBUTE && to.getType() == SummaryGraphElement.VALUE)
+		Facet f = getFacet(from);
+		Facet t = getFacet(to);
+		if(f instanceof Attribute && t instanceof Litteral)//from.getType() == SummaryGraphElement.ATTRIBUTE && to.getType() == SummaryGraphElement.VALUE)
 		{
-			String uri = ((Property)from.getResource()).getUri();
-			Facet f = new Attribute(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(from.getDatasource(),null,0));
-			uri = ((Literal)to.getResource()).getLabel();
-			Facet t = new Litteral(uri, uri, new Source(to.getDatasource(),null,0));
-			Set set = a2l.get(f);
+			Set<Facet> set = a2l.get(f);
 			if(set == null) set = new HashSet<Facet>();
 			set.add(t);
 			a2l.put(f, set);
 		}
-		else if(from.getType() == SummaryGraphElement.CONCEPT && to.getType() == SummaryGraphElement.RELATION)
+		else if(f instanceof Concept && t instanceof Relation)//from.getType() == SummaryGraphElement.CONCEPT && to.getType() == SummaryGraphElement.RELATION)
 		{
-			String uri = ((NamedConcept)from.getResource()).getUri();
-			Facet f = new Concept(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(from.getDatasource(),null,0));
-			uri = ((Property)to.getResource()).getUri();
-			Facet t = new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(to.getDatasource(),null,0));
-			Set set = c2r.get(f);
+			Set<Facet> set = c2r.get(f);
 			if(set == null) set = new HashSet<Facet>();
 			set.add(t);
 			c2r.put(f, set);
 		}
-		else if(from.getType() == SummaryGraphElement.RELATION && to.getType() == SummaryGraphElement.CONCEPT)
+		else if(f instanceof Relation && t instanceof Concept)//from.getType() == SummaryGraphElement.RELATION && to.getType() == SummaryGraphElement.CONCEPT)
 		{
-			String uri = ((Property)from.getResource()).getUri();
-			Facet f = new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(from.getDatasource(),null,0));
-			uri = ((NamedConcept)to.getResource()).getUri();
-			Facet t = new Concept(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(to.getDatasource(),null,0));
-			Set set = r2c.get(f);
+			Set<Facet> set = r2c.get(f);
 			if(set == null) set = new HashSet<Facet>();
 			set.add(t);
 			r2c.put(f, set);
 		}
-		else if(from.getType() == SummaryGraphElement.CONCEPT && to.getType() == SummaryGraphElement.ATTRIBUTE)
+		else if(f instanceof Concept && t instanceof Attribute)//from.getType() == SummaryGraphElement.CONCEPT && to.getType() == SummaryGraphElement.ATTRIBUTE)
 		{
-			String uri = ((NamedConcept)from.getResource()).getUri();
-			Facet f = new Concept(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(from.getDatasource(),null,0));
-			uri = ((Property)to.getResource()).getUri();
-			Facet t = new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(to.getDatasource(),null,0));
-			Set set = c2a.get(f);
+			Set<Facet> set = c2a.get(f);
 			if(set == null) set = new HashSet<Facet>();
 			set.add(t);
 			c2a.put(f, set);
 		}
+	}
+	
+	private Facet getFacet(SummaryGraphElement elem)
+	{
+		if(elem.getType() == SummaryGraphElement.ATTRIBUTE)
+		{
+			String uri = ((Property)elem.getResource()).getUri();
+			return new Attribute(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+		}
+		else if(elem.getType() == SummaryGraphElement.RELATION)
+		{
+			String uri = ((Property)elem.getResource()).getUri();
+			return new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+		}
+		else if(elem.getType() == SummaryGraphElement.CONCEPT)
+		{
+			String uri = ((NamedConcept)elem.getResource()).getUri();
+			return new Concept(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+		}
+		else if(elem.getType() == SummaryGraphElement.VALUE)
+		{
+			String uri = ((Literal)elem.getResource()).getLabel();
+			return new Litteral(uri, uri, new Source(elem.getDatasource(),null,0));
+		}
+		System.out.println("Miss matching: "+elem.getType());
+		return null;
 	}
 	
 	public static void main(String[] args) {
@@ -265,6 +277,6 @@ public class SearchQ2SemanticService {
 		ll.add("windows");
 //		ll.add("omasicRV98");
 //		ll.add("ayGS85");
-		new SearchQ2SemanticService().getPossibleGraphs(ll, 10);
+		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
 	}
 }
