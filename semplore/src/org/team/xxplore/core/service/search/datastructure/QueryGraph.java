@@ -8,34 +8,52 @@ import java.util.LinkedList;
  */
 public class QueryGraph implements Query {
    
-	// The list of edges of the graph
-	public LinkedList<Couple> edgeList;
+	// Target variable
+	public Facet targetVariable;
+	// List of nodes (Facet objects)
+	public LinkedList<Facet> vertexList;
+	// List of edges (GraphEdge objects)
+	public LinkedList<GraphEdge> edgeList;
 	
 	/**
 	 * Default constructor
 	 */
 	public QueryGraph() {
-		super();
-   	}
+		this.edgeList = new LinkedList<GraphEdge>();
+		this.vertexList = new LinkedList<Facet>();
+		this.targetVariable = null;
+	}
 
-	/**
-	 * @param edgeList
-	 */
-	public QueryGraph(LinkedList<Couple> edgeList) {
+	public QueryGraph(Facet targetVariable, LinkedList<Facet> vertexList,
+			LinkedList<GraphEdge> edgeList) {
+		this.targetVariable = targetVariable;
+		this.vertexList = vertexList;
 		this.edgeList = edgeList;
 	}
 
-	/**
-	 * @return the edgeList
-	 */
-	public LinkedList<Couple> getEdgeList() {
+	public Facet getTargetVariable() {
+		return targetVariable;
+	}
+
+	public void setTargetVariable(Facet targetVariable) {
+		this.targetVariable = targetVariable;
+	}
+
+	public LinkedList<Facet> getVertexList() {
+		return vertexList;
+	}
+
+	public void setVertexList(LinkedList<Facet> vertexList) {
+		this.vertexList = vertexList;
+	}
+
+	public LinkedList<GraphEdge> getEdgeList() {
 		return edgeList;
 	}
 
-	/**
-	 * @param edgeList the edgeList to set
-	 */
-	public void setEdgeList(LinkedList<Couple> edgeList) {
+	public void setEdgeList(LinkedList<GraphEdge> edgeList) {
 		this.edgeList = edgeList;
 	}
+	
+
 }
