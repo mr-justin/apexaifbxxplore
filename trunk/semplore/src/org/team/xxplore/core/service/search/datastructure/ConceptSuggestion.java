@@ -18,7 +18,7 @@ public class ConceptSuggestion extends Suggestion {
 	 * @param source
 	 * @param uri
 	 */
-	public ConceptSuggestion(String label, Source source, String uri) {
-		super(label, source, uri);
+	public ConceptSuggestion(String label, Source source, String uri, double score) {
+		super(label, source, uri, score);
 	}
 }
