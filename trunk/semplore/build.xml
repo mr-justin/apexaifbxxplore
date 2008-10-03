@@ -1,0 +1,18 @@
+<project name="semplore" default="compile" basedir=".">
+	<path id="compile.classpath">
+		<fileset dir="lib">
+			<include name="*.jar"/>
+		</fileset>
+	</path>
+
+	<target name="compile">
+		<mkdir dir="bin"/>
+		<javac srcdir="src" destdir="bin">
+			<classpath refid="compile.classpath"/>
+		</javac>
+	</target>
+
+	<target name="clean">
+		<delete dir="bin"/>
+	</target>
+</project>
