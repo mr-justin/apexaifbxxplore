@@ -9,6 +9,7 @@
 package com.ibm.semplore.model.impl;
 
 import com.ibm.semplore.model.AttributeKeywordCategory;
+import com.ibm.semplore.xir.impl.AttributeValue;
 
 /**
  * @author liu Qiaoling
@@ -28,7 +29,7 @@ public class AttributeKeywordCategoryImpl extends KeywordCategoryImpl implements
     }
     
     public String toString() {
-        return "ATTRIBUTE KEYWORD OF "+attribute+":"+keyword;
+        return "ATTRIBUTE KEYWORD OF "+new AttributeValue(attribute,keyword).getCombination();
     }
     
     public boolean equals(Object obj) {
@@ -44,5 +45,9 @@ public class AttributeKeywordCategoryImpl extends KeywordCategoryImpl implements
 
 	public String getAttribute() {
 		return attribute;
+	}
+	
+	public String getKeyword() {
+		return keyword;
 	}
 }
