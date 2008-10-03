@@ -26,7 +26,7 @@ public class KeywordCategoryImpl implements KeywordCategory
      * @param keyword
      */
     protected KeywordCategoryImpl(String keyword) {
-        this.keyword = keyword.toLowerCase();
+        this.keyword = keyword;
     }
     
     /* (non-Javadoc)
@@ -34,7 +34,7 @@ public class KeywordCategoryImpl implements KeywordCategory
      */
     public String getKeyword()
     {
-        return keyword;
+        return keyword.toLowerCase();
     }
 
     /* (non-Javadoc)
