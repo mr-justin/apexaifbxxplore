@@ -79,8 +79,11 @@ public class TestGUI extends JFrame{
     		new BoxAction() {
 				public void action(String input) throws Exception{
 				    String[] split = input.split("###");
+				    String split1;
+				    if (split.length()==1) split1 = "";
+				    else split1 = split[1];
 					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
-							 .add(schemaFactory.createAttributeKeywordCategory(split[0],split[1]))
+							 .add(schemaFactory.createAttributeKeywordCategory(split[0],split1))
 							 ,0);
 				}
 				public String getName() {return "search instances by attribute-value pair, sep with ###";}
