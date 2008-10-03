@@ -78,11 +78,12 @@ public class TestGUI extends JFrame{
     		},
     		new BoxAction() {
 				public void action(String input) throws Exception{
+				    String[] split = input.split("###");
 					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
-							 .add(schemaFactory.createAttributeKeywordCategory(input.split("\t")[0],input.split("\t")[1]))
+							 .add(schemaFactory.createAttributeKeywordCategory(split[0],split[1]))
 							 ,0);
 				}
-				public String getName() {return "search instances by attribute-value pair, sep with TAB";}
+				public String getName() {return "search instances by attribute-value pair, sep with ###";}
     		},
     		new BoxAction() {
 				public void action(String input) throws IOException, Exception {
