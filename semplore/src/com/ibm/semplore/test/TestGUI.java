@@ -80,7 +80,7 @@ public class TestGUI extends JFrame{
 				public void action(String input) throws Exception{
 				    String[] split = input.split("###");
 				    String split1;
-				    if (split.length()==1) split1 = "";
+				    if (split.length==1) split1 = "";
 				    else split1 = split[1];
 					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
 							 .add(schemaFactory.createAttributeKeywordCategory(split[0],split1))
