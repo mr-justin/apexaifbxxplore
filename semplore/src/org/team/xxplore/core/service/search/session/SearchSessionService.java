@@ -34,6 +34,7 @@ import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.CompoundCategory;
+import com.ibm.semplore.model.EnumerationCategory;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
 import com.ibm.semplore.util.Md5_BloomFilter_64bit;
@@ -78,13 +79,16 @@ public class SearchSessionService {
 						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));
 					} else if (f instanceof Attribute) {
 						Attribute a = (Attribute)f;
-						//TODO how to deal with Attribute node
+						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createAttributeKeywordCategory(a.getURI(), a.getLabel()));
 					} else if (f instanceof Instance) {
 						Instance i = (Instance)f;
-						//TODO how to deal with Instance node
+						EnumerationCategory ec = SchemaFactoryImpl.getInstance().createEnumerationCategory()
+							.addInstanceElement(SchemaFactoryImpl.getInstance()
+									.createInstance(Md5_BloomFilter_64bit.URItoID(i.getURI())));
+						cc.addComponentCategory(ec);
 					} else if (f instanceof Litteral) {
 						Litteral l = (Litteral)f;
-						//TODO how to deal with Literal node
+						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createKeywordCategory(l.getLabel()));
 					}
 					graph.add(cc);
 					graph.setTargetVariable(index);
@@ -95,13 +99,16 @@ public class SearchSessionService {
 						graph.add(SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));
 					} else if (f instanceof Attribute) {
 						Attribute a = (Attribute)f;
-						//TODO how to deal with Attribute node
+						graph.add(SchemaFactoryImpl.getInstance().createAttributeKeywordCategory(a.getURI(), a.getLabel()));
 					} else if (f instanceof Instance) {
 						Instance i = (Instance)f;
-						//TODO how to deal with Instance node
+						EnumerationCategory ec = SchemaFactoryImpl.getInstance().createEnumerationCategory()
+							.addInstanceElement(SchemaFactoryImpl.getInstance()
+								.createInstance(Md5_BloomFilter_64bit.URItoID(i.getURI())));
+						graph.add(ec);
 					} else if (f instanceof Litteral) {
 						Litteral l = (Litteral)f;
-						//TODO how to deal with Literal node
+						graph.add(SchemaFactoryImpl.getInstance().createKeywordCategory(l.getLabel()));
 					}
 					graph.setDataSource(index, f.getSource().getName());
 				}
