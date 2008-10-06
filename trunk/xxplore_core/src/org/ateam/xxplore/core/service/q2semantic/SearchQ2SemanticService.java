@@ -38,6 +38,8 @@ public class SearchQ2SemanticService {
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
 	
+	public SearchQ2SemanticService(){}
+	
 	public SearchQ2SemanticService(String fn) {
 		// == chenjunquan ==
 		try {
@@ -103,6 +105,8 @@ public class SearchQ2SemanticService {
 		System.out.println("size " + keywordIndexSet.size());
 		
 		for(String keywordIndex: keywordIndexSet) {
+//			if(!keywordIndex.equals("D:\\semplore\\keywordIndexRoot\\freebase-keywordIndex"))
+//				continue;
 			System.out.println("keywordIndex " + keywordIndex);
 			elementsMap.putAll(new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune));
 		}
@@ -273,8 +277,8 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
-		ll.add("bill gates");
-		ll.add("windows");
+		ll.add("yao ming");
+		ll.add("olympics");
 //		ll.add("omasicRV98");
 //		ll.add("ayGS85");
 		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
