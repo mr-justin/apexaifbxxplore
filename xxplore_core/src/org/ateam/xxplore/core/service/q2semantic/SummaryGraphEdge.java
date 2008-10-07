@@ -58,7 +58,7 @@ public class SummaryGraphEdge implements Serializable{
 	
 	public String toString(){
 		if(getSource() != null && getTarget() != null && getEdgeLabel() != null) 
-			return getSource().toString() + " " + getEdgeLabel() + " "  + getTarget().toString();
+			return getSource().toString() + "["+getSource().getEF()+"]["+getSource().getMatchingScore()+"]["+getSource().getTotalScore()+"]" + getEdgeLabel() + " "  + getTarget().toString()+"["+getTarget().getEF()+"]["+getTarget().getMatchingScore()+"]["+getTarget().getTotalScore()+"]";
 		else return super.toString();
 	}
 

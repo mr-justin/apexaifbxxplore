@@ -153,6 +153,7 @@ public class BuildQ2SemanticService {
 			System.err.println("java BuildQ2SemanticService configFilePath(String) removeBlankNode(boolean) sortNTFile(boolean)");
 			return;
 		}
+		long start = System.currentTimeMillis();
 //		load configFile
 		getConfiguation(args[0]);
 		
@@ -166,11 +167,14 @@ public class BuildQ2SemanticService {
 		
 //		build graphs
 		SummaryGraphIndexServiceForBTFromNT wawa = new SummaryGraphIndexServiceForBTFromNT();
-//		wawa.buildGraphs(indexRoot);//db index location
+		wawa.buildGraphs(indexRoot);//db index location
 		
 //		build keywordindex
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = wawa.readGraphIndexFromFile(schemaObj);
 		KeywordIndexServiceForBTFromNT lala = new KeywordIndexServiceForBTFromNT(keywordIndex, true);
 		lala.indexKeywords(source, datasource, graph, null);
+		
+		long end = System.currentTimeMillis();
+		System.out.println("Time customing: "+(end-start)+" ms");
 	}
 }

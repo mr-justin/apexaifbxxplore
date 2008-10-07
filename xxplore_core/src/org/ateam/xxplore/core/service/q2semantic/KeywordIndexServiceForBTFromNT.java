@@ -473,22 +473,31 @@ public class KeywordIndexServiceForBTFromNT{
 
 							TermQuery query = new TermQuery(term);
 							Hits results = m_searcher.search(query);
-							Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
+
+							Collection<INamedConcept> concepts;// = new HashSet<INamedConcept>();
 							if((results != null) && (results.length() > 0)){
 								for(int j = 0; j < results.length(); j++){
 									Document docu = results.doc(j);
 									if(docu != null){
-										String property = pruneString(docu.get(ATTRIBUTE_FIELD));
-//										System.out.println("Prop: " + property);
+//										by kaifengxu
+//										String property = pruneString(docu.get(ATTRIBUTE_FIELD));
+										String property = docu.get(ATTRIBUTE_FIELD);
 										IDataProperty prop = new DataProperty(property);
 //										Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
-										String[] cons = docu.getValues(CONCEPT_FIELD);
-										for (int k = 0; k < cons.length; k++){
-											INamedConcept con = new NamedConcept(pruneString(cons[k]));
+//										by kaifengxu
+//										String concept = pruneString(docu.get(CONCEPT_FIELD));
+										String concept = docu.get(CONCEPT_FIELD);
+										INamedConcept con = new NamedConcept(concept);
+//										String[] cons = docu.getValues(CONCEPT_FIELD);
+//										for (int k = 0; k < cons.length; k++){
+//											INamedConcept con = new NamedConcept(pruneString(cons[k]));
 //											System.out.println("\t" + k + ": " + cons[k]);
 //											System.out.println(con.getUri());
-											concepts.add(con);
-										}
+										concepts = neighbors.get(prop);
+										if(concepts == null)
+											concepts = new HashSet<INamedConcept>();
+										concepts.add(con);
+//										}
 //										System.out.println(((HashSet)concepts).iterator().next());
 										neighbors.put(prop, concepts);
 									}
@@ -511,11 +520,24 @@ public class KeywordIndexServiceForBTFromNT{
 							pVertex.setDatasource(doc.get(DS_FIELD));
 
 							Collection<INamedConcept> neighborConcepts = new HashSet<INamedConcept>();
-							String[] cons = doc.getValues(CONCEPT_FIELD);	
-							for (int k = 0; k < cons.length; k++){
-								INamedConcept con = new NamedConcept(pruneString(cons[k]));
-								neighborConcepts.add(con);
+							
+							Term term = new Term(ATTRIBUTE_FIELD,doc.get(LABEL_FIELD));
+							TermQuery query = new TermQuery(term);
+							Hits results = m_searcher.search(query);
+//							System.out.println(doc.get("PPP: "+LABEL_FIELD));
+							if((results != null) && (results.length() > 0)){
+								for(int j = 0; j < results.length(); j++){
+									Document docu = results.doc(j);
+//									System.out.println("\t"+docu.get(DOMAIN_FIELD));
+									String concept = docu.get(DOMAIN_FIELD);
+									neighborConcepts.add(new NamedConcept(concept));
+								}
 							}
+//							String[] cons = doc.getValues(CONCEPT_FIELD);	
+//							for (int k = 0; k < cons.length; k++){
+//								INamedConcept con = new NamedConcept(pruneString(cons[k]));
+//								neighborConcepts.add(con);
+//							}
 							pVertex.setNeighborConcepts(neighborConcepts);
 							res.add(pVertex);
 						}
@@ -554,6 +576,10 @@ public class KeywordIndexServiceForBTFromNT{
 
 	public void init(Object... params) {
 		// TODO Auto-generated method stub
+		
+	}
+	
+	public static void main(String[] args) {
 		
 	}
 }

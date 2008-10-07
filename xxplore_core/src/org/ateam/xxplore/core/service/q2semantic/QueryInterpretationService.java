@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -46,6 +47,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger
 			.getLogger(QueryInterpretationService.class);
+	private static double DEFAULT_SCORE = 0.1;
 
 	private WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
 
@@ -102,23 +104,34 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		// }
 		
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
-		
+//		System.out.println("===============retrieve graph==============");
+//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
+//			this.outputGraphInfo(g);
+//		}
 //		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
 //			this.outputGraphInfo(g);
 //		}
 
-		// for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph:
-		// sumGraphs)
-		// {
-		// System.out.println("===================");
-		// for(SummaryGraphElement elem: graph.vertexSet())
-		// System.out.println("aa");
-		// }
+//		 for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph:
+//		 sumGraphs)
+//		 {
+////		 System.out.println("===================");
+//		 for(SummaryGraphEdge edge: graph.edgeSet())
+//		 System.out.println(edge.toString());
+//		 }
+
 		getAugmentedSummaryGraphs(sumGraphs, elements);
-		
-		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
-			this.outputGraphInfo(g);
-		}
+
+//		 for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph:
+//			 sumGraphs)
+//			 {
+//		 for(SummaryGraphEdge edge: graph.edgeSet())
+//			 System.out.println(edge.toString());
+//			 }
+//		System.out.println("=================augmented graph=====================");
+//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
+//			this.outputGraphInfo(g);
+//		}
 		
 //		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
 //			for(SummaryGraphElement ele : g.vertexSet()) {
@@ -142,22 +155,63 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		
 		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
 
+
+		 
 		// by kaifengxu
-		for (SummaryGraphElement elem : resourceGraph.vertexSet()) {
-			if (elem.getMatchingScore() != 0)
-				elem.setTotalScore(elem.getEF() + (1 / elem.getMatchingScore()));
-			else {
-				elem.setTotalScore(elem.getEF());
-//				if(elem.getEF() == 0) {
-//					System.out.println("elem.getEF()=========================" + elem.getEF());
-//				}
-			}
-			
-			if(elem.getTotalScore() == 0) {
-				System.out.println("elem.getType()==================="+elem.getType());
-			}
-			
-		}
+		for(SummaryGraphEdge edge: resourceGraph.edgeSet())
+		{
+			SummaryGraphElement source = edge.getSource();
+			SummaryGraphElement target = edge.getTarget();
+			if (source.getMatchingScore() != 0)
+				source.setTotalScore(1.0 / source.getMatchingScore());
+			else if(source.getEF() != 0)
+				source.setTotalScore(source.getEF());
+			if (target.getMatchingScore() != 0)
+				target.setTotalScore(1.0 / target.getMatchingScore());
+			else if(target.getEF() != 0)
+				target.setTotalScore(target.getEF());
+		}	
+//		for (SummaryGraphElement elem : resourceGraph.vertexSet()) {
+//			if (elem.getMatchingScore() != 0)
+//				elem.setTotalScore(1 / elem.getMatchingScore());
+//			else if(elem.getEF() != 0)
+//				elem.setTotalScore(elem.getEF());
+////			else elem.setTotalScore(DEFAULT_SCORE);
+////				if(elem.getEF() == 0) {
+////					System.out.println("elem.getEF()=========================" + elem.getEF());
+////				}
+//
+//			
+////			if(elem.getTotalScore() == 0) {
+////				System.out.println("elem.getType()==================="+elem.getType());
+////			}
+//			
+//		}
+//		 for(SummaryGraphEdge edge: resourceGraph.edgeSet())
+//			 System.out.println(edge.toString());
+//		 for(SummaryGraphElement elem: resourceGraph.vertexSet())
+//			 System.out.println(SummaryGraphUtil.getResourceUri(elem)+"\t"+elem.getTotalScore());
+//		outputGraphInfo(resourceGraph);
+//		for(SummaryGraphEdge elem: resourceGraph.edgeSet())
+//			System.out.println(elem.toString());
+//		HashSet<SummaryGraphElement> elemSet = new HashSet<SummaryGraphElement>();
+//		for(SummaryGraphEdge edge: resourceGraph.edgeSet())
+//		{
+////			elemSet.add(edge.getSource()); elemSet.add(edge.getTarget());
+//			SummaryGraphElement elem = edge.getSource();
+//			if (elem.getMatchingScore() != 0)
+//				elem.setTotalScore(elem.getEF() + (1 / elem.getMatchingScore()));
+//			else if(elem.getEF() != 0)
+//				elem.setTotalScore(elem.getEF());
+//			else elem.setTotalScore(DEFAULT_SCORE);
+//			elem = edge.getTarget();
+//			if (elem.getMatchingScore() != 0)
+//				elem.setTotalScore(elem.getEF() + (1 / elem.getMatchingScore()));
+//			else if(elem.getEF() != 0)
+//				elem.setTotalScore(elem.getEF());
+//			else elem.setTotalScore(DEFAULT_SCORE);
+//		}
+//		System.out.println("seesee"+elemSet.size()+"\t"+resourceGraph.vertexSet().size());
 		// for(Collection<SummaryGraphElement> elem: elements.values())
 		// {
 		// for(SummaryGraphElement e: resourceGraph.vertexSet())
@@ -403,15 +457,19 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							.getNeighbors();
 					Set<IDataProperty> props = neighbors.keySet();
 					Iterator<IDataProperty> propIter = props.iterator();
-
+					System.out.println(((Literal)e.getResource()).getLabel());
 					while (propIter.hasNext()) {
 						IDataProperty prop = propIter.next();
+						System.out.println("==="+prop.getUri());
+//						if(prop.getUri().equals("http://www.freebase.com/property/name"))
+//							System.out.println("88888888");
 						SummaryGraphElement pvertex = new SummaryGraphElement(
 								prop, SummaryGraphElement.ATTRIBUTE);
 						Collection<INamedConcept> cons = neighbors.get(prop);
 						Iterator<INamedConcept> conIter = cons.iterator();
 						while (conIter.hasNext()) {
 							INamedConcept con = conIter.next();
+							System.out.println("\t"+con.getUri());
 							SummaryGraphElement cvertex = new SummaryGraphElement(
 									con, SummaryGraphElement.CONCEPT);
 							// Emergency.checkPrecondition(graph.containsVertex(cvertex),
@@ -440,6 +498,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							// System.out.println(domain.getSource().getResource().getClass());
 							cvertex.setDatasource(ds);
 							pvertex.setDatasource(ds);
+//							if(graph.containsVertex(cvertex) && graph.containsVertex(pvertex))
+							{
 							graph.addVertex(cvertex);
 							graph.addVertex(pvertex);
 							// System.out.println(pvertex.getMatchingScore()+" \t"+pvertex.getEF());
@@ -448,11 +508,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 									.getTarget(), domain);
 							graph.addEdge(range.getSource(), range.getTarget(),
 									range);
+							}
 						}
 					}
 				}
 				if (e instanceof SummaryGraphAttributeElement) {
-					// System.out.println("aaaaaa");
+//					System.out.println("aaaaaa");
 					Collection<INamedConcept> cons = ((SummaryGraphAttributeElement) e)
 							.getNeighborConcepts();
 					Iterator<INamedConcept> conIter = cons.iterator();
@@ -704,7 +765,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 		// System.out.println(expansionQueue.isEmpty());
 		while (!expansionQueue.isEmpty()) {
-			Cursor c = expansionQueue.pollMinCostCursor();
+//			by kaifengxu
+			Cursor c = expansionQueue.pollRoundRobinMinCostCursor();
+//			Cursor c = expansionQueue.pollMinCostCursor();
 			// System.out.println(c.getLength());
 			if (c.getLength() < distance) {
 				SummaryGraphElement e = c.getElement();
@@ -727,6 +790,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						// check for top-k
 						if (subgraphList.size() >= k) {
 							Collections.sort(subgraphList);
+							for(int i=k; i<subgraphList.size(); i++)
+								subgraphList.remove(i);
 							if (subgraphList.get(k - 1).getCost() < expansionQueue
 									.getApproximateMinCostOfCandidates())
 								return subgraphList;
@@ -769,7 +834,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			g.setConnectingElement(connectingElement);
 			subgraphs.add(g);
 		}
-
 		return subgraphs;
 	}
 
@@ -850,6 +914,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for (SummaryGraphEdge edge : edges) {
 			// incoming
 			if (edge.getTarget().equals(e)) {
+//				System.out.println(SummaryGraphUtil.getResourceUri(edge.getSource())+"\t"+edge.getSource().getTotalScore());
 				SummaryGraphElement source = edge.getSource();
 				if (!c.hasVisited(edge)) {
 					if (edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE) {
@@ -868,6 +933,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 			// outgoing
 			else if (edge.getSource().equals(e)) {
+//				System.out.println(SummaryGraphUtil.getResourceUri(edge.getTarget())+"\t"+edge.getTarget().getTotalScore());
 				SummaryGraphElement target = edge.getTarget();
 				if (!c.hasVisited(edge)) {
 					if (edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE) {
@@ -1175,6 +1241,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		Map<String, PriorityQueue<Cursor>> m_queue;
 		Set<String> m_keywords;
 		Collection<PriorityQueue<Cursor>> m_queues;
+		int roundRobin = 0;
 
 		private ExpansionQueue(
 				Map<String, Collection<SummaryGraphElement>> elements) {
@@ -1205,6 +1272,26 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 			return true;
 		}
+		
+		private Cursor pollRoundRobinMinCostCursor()
+		  {
+		   if (m_queues == null || m_queues.size() == 0)
+		    return null;
+		   PriorityQueue<Cursor>[] curs = new PriorityQueue[m_queues.size()];
+		   m_queues.toArray(curs);
+		   int rr = roundRobin;
+		   
+		   while(curs[roundRobin].isEmpty() && roundRobin != rr-1)
+		    roundRobin = ++roundRobin%curs.length;
+		   if(roundRobin == rr-1)
+		    return null;
+		   
+		   Cursor cur = curs[roundRobin].poll();
+		   roundRobin = ++roundRobin%curs.length;
+		   return cur;
+		  }
+		 
+
 
 		private Cursor pollMinCostCursor() {
 			if (m_queues == null || m_queues.size() == 0)
