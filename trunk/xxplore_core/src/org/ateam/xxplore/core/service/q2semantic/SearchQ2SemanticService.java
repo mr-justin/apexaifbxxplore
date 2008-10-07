@@ -105,8 +105,8 @@ public class SearchQ2SemanticService {
 		System.out.println("size " + keywordIndexSet.size());
 		
 		for(String keywordIndex: keywordIndexSet) {
-//			if(!keywordIndex.equals("D:\\semplore\\keywordIndexRoot\\freebase-keywordIndex"))
-//				continue;
+			if(!keywordIndex.equals("D:\\semplore\\keywordIndexRoot\\freebase-keywordIndex"))
+				continue;
 			System.out.println("keywordIndex " + keywordIndex);
 			elementsMap.putAll(new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune));
 		}

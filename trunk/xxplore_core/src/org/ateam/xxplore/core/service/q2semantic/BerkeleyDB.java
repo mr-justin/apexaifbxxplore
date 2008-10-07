@@ -1,7 +1,7 @@
 package org.ateam.xxplore.core.service.q2semantic;
 
 import java.io.File;
-import java.util.ArrayList;
+import java.util.TreeSet;
 
 import com.sleepycat.je.Cursor;
 import com.sleepycat.je.Database;
@@ -24,20 +24,6 @@ public class BerkeleyDB {
 	//refresh the db when buffer is full
 	private int buffer =  10000000, count =0;
 	private String env, name;
-
-	/**
-	 * remove the db
-	 * @param envPath
-	 * @throws Exception 
-	 */
-	public void clearDB(String envPath) throws Exception
-	{
-		closeDB();
-		File dir = new File(envPath);
-		if(dir.delete())
-			dir.mkdir();
-		else System.err.println("DB can not be deleted!");
-	}
 	
 	/**
 	 * open the db
@@ -126,9 +112,14 @@ public class BerkeleyDB {
 	 * @return
 	 * @throws Exception
 	 */
-	public ArrayList<String> search(String key) throws Exception 
+	public TreeSet<String> search(String key) throws Exception 
 	{
-		ArrayList<String> res = null;
+		if(--count%buffer==0)
+		{
+			closeDB();
+			openDB(env, name);
+		}
+		TreeSet<String> res = null;
 		DatabaseEntry foundKey = new DatabaseEntry(key.getBytes("UTF-8"));
 		DatabaseEntry foundData = new DatabaseEntry();
 
@@ -136,7 +127,7 @@ public class BerkeleyDB {
 
 		if (retVal == OperationStatus.SUCCESS && myCursor.count() >= 1)
 		{
-			res = new ArrayList<String>();
+			res = new TreeSet<String>();
 			while (retVal == OperationStatus.SUCCESS) 
 			{
 				String dataString = new String(foundData.getData(), "UTF-8");
