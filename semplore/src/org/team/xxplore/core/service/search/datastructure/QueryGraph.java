@@ -71,9 +71,11 @@ public class QueryGraph implements Query {
 		if(edgeList!=null)
 		for(GraphEdge edge: edgeList)
 		{
-			if(edge.getToElement()!=null)
-				System.out.println(edge.getFromElement().getURI()+" -> "+edge.getDecorationElement().getURI()+" -> "+edge.getToElement().getURI());
-			else System.out.println(edge.getFromElement().getURI()+" -> "+edge.getDecorationElement().getURI()+" -> null");
+			
+			String subject_str = edge.getFromElement() == null ? "null" : edge.getFromElement().getURI();
+			String object_str = edge.getToElement() == null ? "null" : edge.getToElement().getURI();
+
+			System.out.println(subject_str+" -> "+edge.getDecorationElement().getURI()+" -> "+object_str);
 			
 		}
 	}
