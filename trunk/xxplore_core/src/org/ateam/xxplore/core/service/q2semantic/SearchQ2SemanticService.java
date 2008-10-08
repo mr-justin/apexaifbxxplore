@@ -96,7 +96,7 @@ public class SearchQ2SemanticService {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 		
-		double prune = 0.7;
+		double prune = 0.99;
 		int distance = 1000;
 		String query = "";
 		//merge keywords
@@ -110,12 +110,18 @@ public class SearchQ2SemanticService {
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 		System.out.println("size " + keywordIndexSet.size());
 		
+		long start_time = System.currentTimeMillis();
+		
 		for(String keywordIndex: keywordIndexSet) {
 			if(keywordIndex.indexOf("freebase-keywordIndex") == -1)
 				continue;
 			System.out.println("keywordIndex " + keywordIndex);
 			elementsMap.putAll(new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune));
 		}
+		
+		long end_time = System.currentTimeMillis();
+		
+		System.out.println("Time: " + (end_time - start_time));
 		
 		// == chenjunquan ==
 		//if the query string number is one. This scenario will be tackled individually.
@@ -189,8 +195,11 @@ public class SearchQ2SemanticService {
 		mis.init4Search(mappingIndexRoot);
 		
 		// == chenjunquan ==
+		start_time = System.currentTimeMillis();
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, mis, distance, topNbGraphs);
 		if(graphs == null) return null;
+		end_time = System.currentTimeMillis();
+		System.out.println("Time2:" + (end_time - start_time) );
 		
 		for(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
 		{
@@ -238,22 +247,28 @@ public class SearchQ2SemanticService {
 			for(Facet fac : rel2con.keySet()) {
 				if(!rel2con.get(fac).isVisited) {
 					for(Facet con : rel2con.get(fac).sf) {
-						graphEdges.add(new GraphEdge(null,fac,con));
+						graphEdges.add(new GraphEdge(null,con,fac));
+						System.out.println("output2: " + fac.URI + "\t" + con.URI);
 					}
 				}
 			}
 			
 			for(Facet fac : attr2lit.keySet()) {
 				if(!attr2lit.get(fac).isVisited) {
-					for(Facet con : attr2lit.get(fac).sf) {
-						graphEdges.add(new GraphEdge(null,fac,con));
+					for(Facet lit : attr2lit.get(fac).sf) {
+						graphEdges.add(new GraphEdge(null,lit,fac));
+						System.out.println("output2: " + fac.URI + "\t" + lit.URI);
 					}
 				}
 			}
 			
 			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
-			for(SummaryGraphElement elem : qg.vertexSet())
-				graphVertexes.add(getFacet(elem));
+			for(SummaryGraphElement elem : qg.vertexSet()) {
+				if( elem.getType() == SummaryGraphElement.VALUE ||
+						elem.getType() == SummaryGraphElement.CONCEPT) {
+					graphVertexes.add(getFacet(elem));
+				}
+			}
 				
 			result.add(new QueryGraph(null, graphVertexes, graphEdges));
 		}
@@ -376,9 +391,13 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
-		ll.add("yao ming");
+		
+//		ll.add("word");
+//		ll.add("net");
+		
+		ll.add("paris");
 //		ll.add("fish");
-		ll.add("olympic");
+		ll.add("olympics");
 //		ll.add("omasicRV98");
 //		ll.add("ayGS85");
 		new SearchQ2SemanticService("config/path.prop").getPossibleGraphs(ll, 10);
