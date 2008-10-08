@@ -47,7 +47,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger
 			.getLogger(QueryInterpretationService.class);
-	private static double DEFAULT_SCORE = 0.1;
+	private static double DEFAULT_SCORE = 1000;
 
 	private WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
 
@@ -166,10 +166,13 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				source.setTotalScore(1.0 / source.getMatchingScore());
 			else if(source.getEF() != 0)
 				source.setTotalScore(source.getEF());
+			else source.setTotalScore(this.DEFAULT_SCORE);
+			
 			if (target.getMatchingScore() != 0)
 				target.setTotalScore(1.0 / target.getMatchingScore());
 			else if(target.getEF() != 0)
 				target.setTotalScore(target.getEF());
+			else source.setTotalScore(this.DEFAULT_SCORE);
 		}	
 //		for (SummaryGraphElement elem : resourceGraph.vertexSet()) {
 //			if (elem.getMatchingScore() != 0)
