@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import java.util.TreeSet;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
+import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
@@ -316,6 +318,7 @@ public class KeywordIndexServiceForBTFromNT{
 		String line;
 
 		int count = 0;
+		boolean isIndiv = true;
 		while((line = br.readLine())!=null)
 		{
 			count++;
@@ -328,39 +331,47 @@ public class KeywordIndexServiceForBTFromNT{
 //			System.out.println();
 			cur = part[0];
 //			System.out.println(pre+" "+cur);
+
 			if(pre!=null && !pre.equals(cur))
 			{
-				for(String con: concept)
-				{
-					con = con.substring(1, con.length()-1);
-					for(String attr: attrlit.keySet())
+				if(isIndiv)
+					for(String con: concept)
 					{
-						String lit = attrlit.get(attr);
+						con = con.substring(1, con.length()-1);
+						for(String attr: attrlit.keySet())
 						{
-							if(indivSet.contains(lit+attr+con))
-								continue;
-							indivSet.add(lit+attr+con);
-							Document doc = new Document();
-							doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-							doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-							doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
-							doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-							writer.addDocument(doc);
+							String lit = attrlit.get(attr);
+							{
+								if(indivSet.contains(lit+attr+con))
+									continue;
+								indivSet.add(lit+attr+con);
+								Document doc = new Document();
+								doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
+								doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
+								doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
+								doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+								writer.addDocument(doc);
+							}
 						}
 					}
-				}
+				isIndiv = true;
 				concept.clear();
 				concept = new HashSet<String>();
 				attrlit.clear();
 				attrlit = new HashMap<String, String>();
 			}
 //			System.out.println("="+part[2]);
-			if(part[1].substring(1, part[1].length()-1).equals("http://www.w3.org/1999/02/22-rdf-syntax-ns#type"))
-				concept.add(part[2]);//<.,..>
-			else if(!part[2].startsWith("<") && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1)))
+			if(isIndiv)
 			{
-				attrlit.put(part[1].substring(1, part[1].length()-1), part[2]);//http...>...
-				litSet.add(part[2]);//...
+				if(part[1].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[1].equals("http://www.w3.org/2002/07/owl#Class"))
+					isIndiv = false;
+				else if(part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"))
+					concept.add(part[2]);//<.,..>
+				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
+				{
+					attrlit.put(part[1].substring(1, part[1].length()-1), part[2]);//http...>...
+					litSet.add(part[2]);//...
+				}
 			}
 			pre = cur;
 		}
@@ -522,8 +533,15 @@ public class KeywordIndexServiceForBTFromNT{
 							Collection<INamedConcept> neighborConcepts = new HashSet<INamedConcept>();
 							
 							Term term = new Term(ATTRIBUTE_FIELD,doc.get(LABEL_FIELD));
+							
 							TermQuery query = new TermQuery(term);
-							Hits results = m_searcher.search(query);
+							
+//							System.out.println(query==null);
+							Hits results = null;
+							try{
+							results = m_searcher.search(query);
+							}catch(Exception e)
+							{System.out.println("guale, ni ge zt...");}
 //							System.out.println(doc.get("PPP: "+LABEL_FIELD));
 							if((results != null) && (results.length() > 0)){
 								for(int j = 0; j < results.length(); j++){
@@ -579,7 +597,21 @@ public class KeywordIndexServiceForBTFromNT{
 		
 	}
 	
-	public static void main(String[] args) {
-		
+	public static void main(String[] args) throws Exception, IOException {
+		IndexSearcher searcher = new IndexSearcher("D:\\semplore\\keywordIndexRoot\\dblp-keywordIndex");
+		TermQuery query = new TermQuery(new Term(LABEL_FIELD, "net"));
+		Hits hits = searcher.search(query);
+		for(int i=0; i<hits.length(); i++)
+		{
+			Document doc = hits.doc(i);
+			Enumeration<Field> fields = doc.fields();
+			System.out.println("====="+i);
+			while(fields.hasMoreElements())
+			{
+				Field field = fields.nextElement();
+				System.out.println(field.name());
+				System.out.println("\t"+field.stringValue());
+			}
+		}
 	}
 }
