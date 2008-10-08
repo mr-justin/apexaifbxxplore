@@ -472,7 +472,7 @@ public class KeywordIndexServiceForBTFromNT{
 					float score = hits.score(i);
 					if(score >= prune){
 						String type = doc.get(TYPE_FIELD);
-						if(type.equals(LITERAL)){
+						if(type != null && type.equals(LITERAL)){
 //							by chenjunquan
 							ILiteral lit = new Literal(doc.get(LABEL_FIELD));
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
@@ -493,6 +493,7 @@ public class KeywordIndexServiceForBTFromNT{
 //										by kaifengxu
 //										String property = pruneString(docu.get(ATTRIBUTE_FIELD));
 										String property = docu.get(ATTRIBUTE_FIELD);
+										if(property==null) continue;
 										IDataProperty prop = new DataProperty(property);
 //										Collection<INamedConcept> concepts = new HashSet<INamedConcept>();
 //										by kaifengxu
@@ -504,6 +505,8 @@ public class KeywordIndexServiceForBTFromNT{
 //											INamedConcept con = new NamedConcept(pruneString(cons[k]));
 //											System.out.println("\t" + k + ": " + cons[k]);
 //											System.out.println(con.getUri());
+//										System.out.println(prop==null);
+//										System.out.println(property);
 										concepts = neighbors.get(prop);
 										if(concepts == null)
 											concepts = new HashSet<INamedConcept>();
@@ -517,14 +520,14 @@ public class KeywordIndexServiceForBTFromNT{
 							vvertex.setNeighbors(neighbors);
 							res.add(vvertex);
 						}
-						else if(type.equals(CONCEPT)){
+						else if(type != null && type.equals(CONCEPT)){
 							INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
 							SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
 							cvertex.setMatchingScore(score);
 							cvertex.setDatasource(doc.get(DS_FIELD));
 							res.add(cvertex);
 						}
-						else if(type.equals(DATAPROPERTY)){
+						else if(type != null && type.equals(DATAPROPERTY)){
 							IDataProperty prop = new DataProperty(pruneString(doc.get(URI_FIELD)));
 							SummaryGraphAttributeElement pVertex = new SummaryGraphAttributeElement(prop,SummaryGraphElement.ATTRIBUTE);
 							pVertex.setMatchingScore(score);
@@ -559,7 +562,7 @@ public class KeywordIndexServiceForBTFromNT{
 							pVertex.setNeighborConcepts(neighborConcepts);
 							res.add(pVertex);
 						}
-						else if(type.equals(OBJECTPROPERTY)){
+						else if(type != null && type.equals(OBJECTPROPERTY)){
 							IObjectProperty objProp = new ObjectProperty(pruneString(doc.get(URI_FIELD)));
 							SummaryGraphElement pvertex = new SummaryGraphElement (objProp,SummaryGraphElement.RELATION);
 							pvertex.setMatchingScore(score);
