@@ -2,9 +2,12 @@ package org.ateam.xxplore.core.service.q2semantic;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -79,6 +82,7 @@ public class SearchQ2SemanticService {
 		}
 		return res;
 	}
+
 	/**
 	 * This method returns an ordered list of QueryGraph objects (most suitable at the head of the list) that 
 	 * are possible semantic interpretations of the ordered list of keywords (first input word at the head of the 
@@ -92,23 +96,70 @@ public class SearchQ2SemanticService {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 		
-		double prune = 0.9;
+		double prune = 0.7;
 		int distance = 1000;
 		String query = "";
 		//merge keywords
 		for(String str: keywordList)
 			query += "\""+str+"\" ";
 		query = query.substring(0, query.length()-1);
+		
+		
 //		System.out.println(query);
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 		System.out.println("size " + keywordIndexSet.size());
 		
 		for(String keywordIndex: keywordIndexSet) {
-			if(!keywordIndex.equals("D:\\semplore\\keywordIndexRoot\\freebase-keywordIndex"))
+			if(keywordIndex.indexOf("freebase-keywordIndex") == -1)
 				continue;
 			System.out.println("keywordIndex " + keywordIndex);
 			elementsMap.putAll(new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune));
+		}
+		
+		// == chenjunquan ==
+		//if the query string number is one. This scenario will be tackled individually.
+		if(keywordList.size() == 1) {
+			ArrayList<SummaryGraphElement> elements = new ArrayList<SummaryGraphElement>();
+			for(Collection<SummaryGraphElement> coll : elementsMap.values()) {
+				for(SummaryGraphElement ele : coll) {
+					elements.add(ele);
+				}
+			}
+			
+			Collections.sort(elements,new Comparator<SummaryGraphElement>() {
+				@Override
+				public int compare(SummaryGraphElement arg0,
+						SummaryGraphElement arg1) {
+					if(arg0.getMatchingScore() - arg1.getMatchingScore() > 0) {
+						return -1;
+					}
+					else if(arg0.getMatchingScore() - arg1.getMatchingScore() < 0) {
+						return 1;
+					}
+					else return 0;
+				}
+			});
+			
+			
+			LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
+
+			//ArrayList<SummaryGraphElement> elements_topk = new ArrayList<SummaryGraphElement>();
+			for(int i=0;i<Math.min(100, elements.size());i++) {
+				
+				LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
+				graphVertexes.add(getFacet(elements.get(i)));
+				QueryGraph queryGraph = new QueryGraph(null,graphVertexes,null);
+				System.out.println("output1: " + elements.get(i).getMatchingScore());
+				result.add(queryGraph);
+			}
+			
+			for(int i=0; i<result.size(); i++)
+			{
+				System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
+				result.get(i).print();
+			}
+			return result;
 		}
 		
 	
@@ -145,8 +196,9 @@ public class SearchQ2SemanticService {
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
 			SummaryGraphElement from, to;
-			Map<Facet, Set<Facet>> con2rel = new HashMap<Facet, Set<Facet>>(), con2attr = new HashMap<Facet, Set<Facet>>(),
-				rel2con = new HashMap<Facet, Set<Facet>>(), attr2lit = new HashMap<Facet, Set<Facet>>();
+			Map<Facet, Set<Facet>> con2rel = new HashMap<Facet, Set<Facet>>(), con2attr = new HashMap<Facet, Set<Facet>>();
+			HashMap<Facet, Contain> attr2lit = new HashMap<Facet, Contain>();
+			HashMap<Facet, Contain> rel2con = new HashMap<Facet, Contain>();
 			for(SummaryGraphEdge edge: edges)
 			{
 				from = edge.getSource();
@@ -156,23 +208,48 @@ public class SearchQ2SemanticService {
 			
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
 //			System.out.println(con2rel.size()+"\t"+rel2con.size()+"\t"+con2attr.size()+"\t"+attr2lit.size());
-			for(Facet f: con2rel.keySet())
-				for(Facet r: con2rel.get(f))
-				{
-					if(rel2con.get(r) != null)
-						for(Facet t: rel2con.get(r))
+			for(Facet f: con2rel.keySet()) {
+				for(Facet r: con2rel.get(f)) {
+					if(rel2con.get(r) != null) {
+						rel2con.get(r).isVisited = true;
+						for(Facet t: rel2con.get(r).sf) {
 							graphEdges.add(new GraphEdge(f, t, r));
+						}
+					}
 					else graphEdges.add(new GraphEdge(f, null, r));
 				}
+			}
 			
-			for(Facet f: con2attr.keySet())
-				for(Facet a: con2attr.get(f))
-				{
-					if(attr2lit.get(a) != null)
-						for(Facet t: attr2lit.get(a))
+			for(Facet f: con2attr.keySet()) {
+				for(Facet a: con2attr.get(f)) {
+					if(attr2lit.get(a) != null) {
+						attr2lit.get(a).isVisited = true;
+						for(Facet t: attr2lit.get(a).sf) {
 							graphEdges.add(new GraphEdge(f, t, a));
+						}
+					}
 					else graphEdges.add(new GraphEdge(f, null, a));
 				}
+			}
+			
+			
+			// == chenjunquan == 
+			// add null,(relation/attribute),(concept/literal) to the query graph.
+			for(Facet fac : rel2con.keySet()) {
+				if(!rel2con.get(fac).isVisited) {
+					for(Facet con : rel2con.get(fac).sf) {
+						graphEdges.add(new GraphEdge(null,fac,con));
+					}
+				}
+			}
+			
+			for(Facet fac : attr2lit.keySet()) {
+				if(!attr2lit.get(fac).isVisited) {
+					for(Facet con : attr2lit.get(fac).sf) {
+						graphEdges.add(new GraphEdge(null,fac,con));
+					}
+				}
+			}
 			
 			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
 			for(SummaryGraphElement elem : qg.vertexSet())
@@ -186,6 +263,26 @@ public class SearchQ2SemanticService {
 			result.get(i).print();
 		}
 		return result;
+	}
+	
+	/**
+	 * use to add a member value isVistited.
+	 * @author jqchen
+	 *
+	 */
+	class Contain{
+		Set<Facet> sf;
+		boolean isVisited;
+		
+		public Contain() {
+			this.sf = new HashSet<Facet>();
+			isVisited = false;
+		}
+		
+		public Contain(Set<Facet> sf) {
+			this.sf = sf;
+			isVisited = false;
+		}
 	}
 	
 	public void loadPara(String fn) throws Exception
@@ -215,16 +312,18 @@ public class SearchQ2SemanticService {
 			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
 	}
 	
-	private void collectEdge(SummaryGraphElement from, SummaryGraphElement to, Map<Facet, Set<Facet>> c2r, Map<Facet, Set<Facet>> c2a, Map<Facet, Set<Facet>> r2c, Map<Facet, Set<Facet>> a2l)
+	
+	private void collectEdge(SummaryGraphElement from, SummaryGraphElement to, Map<Facet, Set<Facet>> c2r, Map<Facet, Set<Facet>> c2a, HashMap<Facet, Contain> rel2con, HashMap<Facet, Contain> attr2lit)
 	{
 		Facet f = getFacet(from);
 		Facet t = getFacet(to);
 		if(f instanceof Attribute && t instanceof Litteral)//from.getType() == SummaryGraphElement.ATTRIBUTE && to.getType() == SummaryGraphElement.VALUE)
 		{
-			Set<Facet> set = a2l.get(f);
-			if(set == null) set = new HashSet<Facet>();
-			set.add(t);
-			a2l.put(f, set);
+			
+			Contain contain = attr2lit.get(f);
+			if(contain == null) contain = new Contain();
+			contain.sf.add(t);
+			attr2lit.put(f, contain);
 		}
 		else if(f instanceof Concept && t instanceof Relation)//from.getType() == SummaryGraphElement.CONCEPT && to.getType() == SummaryGraphElement.RELATION)
 		{
@@ -235,10 +334,10 @@ public class SearchQ2SemanticService {
 		}
 		else if(f instanceof Relation && t instanceof Concept)//from.getType() == SummaryGraphElement.RELATION && to.getType() == SummaryGraphElement.CONCEPT)
 		{
-			Set<Facet> set = r2c.get(f);
-			if(set == null) set = new HashSet<Facet>();
-			set.add(t);
-			r2c.put(f, set);
+			Contain contain = rel2con.get(f);
+			if(contain == null) contain = new Contain();
+			contain.sf.add(t);
+			rel2con.put(f, contain);
 		}
 		else if(f instanceof Concept && t instanceof Attribute)//from.getType() == SummaryGraphElement.CONCEPT && to.getType() == SummaryGraphElement.ATTRIBUTE)
 		{
@@ -278,9 +377,10 @@ public class SearchQ2SemanticService {
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
 		ll.add("yao ming");
-		ll.add("olympics");
+//		ll.add("fish");
+		ll.add("olympic");
 //		ll.add("omasicRV98");
 //		ll.add("ayGS85");
-		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
+		new SearchQ2SemanticService("config/path.prop").getPossibleGraphs(ll, 10);
 	}
 }
