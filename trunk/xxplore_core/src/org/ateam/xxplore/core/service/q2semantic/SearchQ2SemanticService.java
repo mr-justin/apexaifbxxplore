@@ -217,7 +217,8 @@ public class SearchQ2SemanticService {
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
 			SummaryGraphElement from, to;
-			Map<Facet, Set<Facet>> con2rel = new HashMap<Facet, Set<Facet>>(), con2attr = new HashMap<Facet, Set<Facet>>();
+			Map<Facet, Set<Facet>> con2rel = new HashMap<Facet, Set<Facet>>();
+			Map<Facet, Set<Facet>> con2attr = new HashMap<Facet, Set<Facet>>();
 			HashMap<Facet, Contain> attr2lit = new HashMap<Facet, Contain>();
 			HashMap<Facet, Contain> rel2con = new HashMap<Facet, Contain>();
 			for(SummaryGraphEdge edge: edges)
@@ -380,7 +381,7 @@ public class SearchQ2SemanticService {
 		if(elem.getType() == SummaryGraphElement.ATTRIBUTE)
 		{
 			String uri = ((Property)elem.getResource()).getUri();
-			return new Attribute(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+			return new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.RELATION)
 		{
@@ -407,7 +408,7 @@ public class SearchQ2SemanticService {
 //		ll.add("word");
 //		ll.add("net");
 		ll.add("yao ming");
-		ll.add("basketball");
+		ll.add("rocket");
 		
 //		ll.add("paris");
 
