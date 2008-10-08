@@ -113,8 +113,7 @@ public class SearchQ2SemanticService {
 		long start_time = System.currentTimeMillis();
 		
 		for(String keywordIndex: keywordIndexSet) {
-			if(keywordIndex.indexOf("freebase-keywordIndex") == -1)
-				continue;
+
 			System.out.println("keywordIndex " + keywordIndex);
 			elementsMap.putAll(new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune));
 		}
@@ -391,15 +390,13 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
-		
-//		ll.add("word");
-//		ll.add("net");
-		
-		ll.add("paris");
+
+		ll.add("yao ming");
 //		ll.add("fish");
-		ll.add("olympics");
+		ll.add("basketball");
 //		ll.add("omasicRV98");
+
 //		ll.add("ayGS85");
-		new SearchQ2SemanticService("config/path.prop").getPossibleGraphs(ll, 10);
+		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
 	}
 }
