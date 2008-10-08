@@ -115,7 +115,20 @@ public class SearchQ2SemanticService {
 		for(String keywordIndex: keywordIndexSet) {
 
 			System.out.println("keywordIndex " + keywordIndex);
-			elementsMap.putAll(new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune));
+			Map<String, Collection<SummaryGraphElement>> hm = 
+				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
+
+			// == chenjunquan ==
+			for(String key_str : hm.keySet()) {
+				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
+				if(coll == null) {
+					elementsMap.put(key_str, hm.get(key_str));
+				}
+				else {
+					coll.addAll(hm.get(key_str));
+				}
+			}
+
 		}
 		
 		long end_time = System.currentTimeMillis();
@@ -390,13 +403,20 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		LinkedList ll = new LinkedList();
-
+		
+//		ll.add("word");
+//		ll.add("net");
 		ll.add("yao ming");
-//		ll.add("fish");
 		ll.add("basketball");
+		
+//		ll.add("paris");
+
+//		ll.add("fish");
+//		ll.add("olympics");
+
 //		ll.add("omasicRV98");
 
 //		ll.add("ayGS85");
-		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
+		new SearchQ2SemanticService("config/path.prop").getPossibleGraphs(ll, 10);
 	}
 }
