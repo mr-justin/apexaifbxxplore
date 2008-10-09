@@ -104,7 +104,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 
 	public void buildGraphs(String path) throws Exception
 	{	
-//		propCount = new TreeMap<String, Integer>();
+		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		/*********using berkeleyDb***********/
 //		//preparation
@@ -183,9 +183,9 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(!getPredicateType(pred, obj).equals(RDFSPROP))
 			{
 				propSize++;
-//				Integer n = propCount.get(pred);
-//				if(n==null) n = Integer.valueOf(0);
-//				propCount.put(pred, n+1);
+				Integer n = propCount.get(pred);
+				if(n==null) n = Integer.valueOf(0);
+				propCount.put(pred, n+1);
 			}
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(CONCEPT))
 			{
