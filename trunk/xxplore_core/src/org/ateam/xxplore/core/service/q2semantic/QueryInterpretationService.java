@@ -398,7 +398,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				try {
 					in = new ObjectInputStream(new FileInputStream(graphIndex));
 					graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>) in.readObject();
-					graph = splitSummaryGraph(graph);
+//					graph = splitSummaryGraph(graph);
 					// System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
 					// ================by kaifengxu
 					for (SummaryGraphElement elem : graph.vertexSet())
@@ -422,61 +422,20 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return result;
 	}
 	
-	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
-	{
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
-		for(SummaryGraphElement prop: graph.vertexSet())
-		{
-			if(prop.getType() == SummaryGraphElement.RELATION)
-			{
-				String propUri = ((Property)prop.resource).getUri();
-				ArrayList<SummaryGraphElement> domainList = new ArrayList<SummaryGraphElement>();
-				ArrayList<SummaryGraphElement> rangeList = new ArrayList<SummaryGraphElement>();
-
-				for(SummaryGraphEdge domain: graph.edgeSet())
-					if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE) && prop.equals(domain.getTarget()))
-						domainList.add(domain.getSource());
-				for(SummaryGraphEdge range: graph.edgeSet())
-					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && prop.equals(range.getSource()))
-						rangeList.add(range.getTarget());
-				
-				double totalScore = 0;
-				for(int i=0; i<domainList.size(); i++)
-					totalScore += rangeList.size()*domainList.get(i).getEF();
-				for(int i=0; i<rangeList.size(); i++)
-					totalScore += domainList.size()*rangeList.get(i).getEF();
-				
-				for(int i=0; i<domainList.size(); i++)
-					for(int j=0; j<rangeList.size(); j++)
-					{
-						SummaryGraphElement newProp = new SummaryGraphElement(new ObjectProperty(propUri+"("+(i*rangeList.size()+j)+")"), SummaryGraphElement.RELATION);
-						newProp.setCost((domainList.get(i).getEF()+rangeList.get(j).getEF())/totalScore);
-						splitGraph.addVertex(domainList.get(i));
-						splitGraph.addVertex(rangeList.get(j));
-						splitGraph.addVertex(newProp);
-						SummaryGraphEdge edge1 = new SummaryGraphEdge(domainList.get(i), newProp, SummaryGraphEdge.DOMAIN_EDGE);
-						SummaryGraphEdge edge2 = new SummaryGraphEdge(newProp, rangeList.get(j), SummaryGraphEdge.RANGE_EDGE);
-						splitGraph.addEdge(domainList.get(i), newProp, edge1);
-						splitGraph.addEdge(newProp, rangeList.get(j), edge2);
-					}
-			}
-		}
-		
-		return splitGraph;
-	}
 	
-	public static void main(String[] args) {
-		QueryInterpretationService q = new QueryInterpretationService();
-		SummaryGraphIndexServiceForBTFromNT s = new SummaryGraphIndexServiceForBTFromNT();
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = s.readGraphIndexFromFile("D:\\semplore\\summaryObjsRoot\\dblp-summary.obj");
-		System.out.println("============before");
-		for(SummaryGraphEdge edge: graph.edgeSet())
-			System.out.println(edge.toString());
-		graph = q.splitSummaryGraph(graph);
-		System.out.println("============after");
-		for(SummaryGraphEdge edge: graph.edgeSet())
-			System.out.println(edge.toString());
-	}
+//	public static void main(String[] args) {
+//		QueryInterpretationService q = new QueryInterpretationService();
+//		SummaryGraphIndexServiceForBTFromNT s = new SummaryGraphIndexServiceForBTFromNT();
+//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = s.readGraphIndexFromFile("D:\\semplore\\summaryObjsRoot\\freebase-summary.obj");
+//		System.out.println("============before");
+//		for(SummaryGraphEdge edge: graph.edgeSet())
+//			System.out.println(edge.toString());
+//		graph = q.splitSummaryGraph(graph);
+//		System.out.println("============after");
+//		for(SummaryGraphEdge edge: graph.edgeSet())
+//			System.out.println(edge.toString());
+//		s.writeSummaryGraph(graph, "D:\\semplore\\summaryObjsRoot\\freebasesplit-summary.obj");
+//	}
 
 	private void updateDsCoverage(String ds) {
 		Integer cover = m_datasources.get(ds);
@@ -1410,6 +1369,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			if (m_queues == null || m_queues.size() == 0)
 				return minCost;
 			for (PriorityQueue<Cursor> q : m_queues) {
+				if(q.size()>0)
 				minCost += q.peek().getCost();
 			}
 			// System.out.println("aaa");

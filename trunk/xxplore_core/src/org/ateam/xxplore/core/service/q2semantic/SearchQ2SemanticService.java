@@ -111,6 +111,8 @@ public class SearchQ2SemanticService {
 		long start_time = System.currentTimeMillis();
 		
 		for(String keywordIndex: keywordIndexSet) {
+			if(!keywordIndex.contains("dblp"))
+				continue;
 			System.out.println("keywordIndex " + keywordIndex);
 			Map<String, Collection<SummaryGraphElement>> hm = 
 				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
