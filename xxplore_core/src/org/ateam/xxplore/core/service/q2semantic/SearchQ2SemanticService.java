@@ -92,13 +92,9 @@ public class SearchQ2SemanticService {
 	 * @param topNbGraphs
 	 * @return
 	 */
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance) {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
-		
-
-		double prune = 0.9;
-		int distance = 5;
 
 		String query = "";
 		//merge keywords
@@ -418,18 +414,19 @@ public class SearchQ2SemanticService {
 	}
 	
 	public static void main(String[] args) {
-		LinkedList ll = new LinkedList();
+		if(args.length<6)
+		{
+			System.out.println("SearchQ2SemanticService [path.prop(String)] [top-k(int)] [prune(double)] [distance(int)] [keyword1] [keyword2] ...");
+			return;
+		}
+		long start = System.currentTimeMillis();
+		LinkedList<String> ll = new LinkedList<String>();
 		
-//		ll.add("word");
-//		ll.add("net");
-		ll.add("yao ming");
-		ll.add("rocket");
-		
-//		ll.add("paris");
+		for(int i=4; i<args.length; i++)
+			ll.add(args[i]);
 
-//		ll.add("omasicRV98");
-
-//		ll.add("ayGS85");
-		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
+		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
+		long end = System.currentTimeMillis();
+		System.out.println("Time consuming: "+(end - start)+" ms");
 	}
 }
