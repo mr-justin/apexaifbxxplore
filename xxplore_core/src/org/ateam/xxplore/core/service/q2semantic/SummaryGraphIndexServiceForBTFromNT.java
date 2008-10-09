@@ -59,6 +59,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Integer> propCount;
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
+	public TreeMap<String, SummaryGraphElement> elemPool;
 	public int MAX_CACHE_SIZE = 10000000;
 	public int indivSize, propSize = 0;
 	public String dbpath;
@@ -106,6 +107,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	{	
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
+		elemPool = new TreeMap<String, SummaryGraphElement>();
 		/*********using berkeleyDb***********/
 //		//preparation
 //		initDB(path);
@@ -282,7 +284,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 					for(String otr: objParent)
 					{//if(o.getEF()==TOP_ELEMENT_SCORE && objParent.size()!=1)System.out.println(objParent.size());
 						SummaryGraphElement o = getElemFromUri(otr);
-						SummaryGraphElement p = new SummaryGraphElement(new ObjectProperty(pred), SummaryGraphElement.RELATION);
+						SummaryGraphElement p = getElem(pred, SummaryGraphElement.RELATION);
 //						Integer i = propCount.get(pred);
 //						if(i==null) p.setCost(Double.MAX_VALUE);
 //						else p.setCost(i.doubleValue()/propSize);
@@ -293,7 +295,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //							System.out.println("1");
 						SummaryGraphEdge edge1 = new SummaryGraphEdge(s, p, SummaryGraphEdge.DOMAIN_EDGE);
 						SummaryGraphEdge edge2 = new SummaryGraphEdge(p, o, SummaryGraphEdge.RANGE_EDGE);
-						if(summaryGraph.containsEdge(edge2) && !summaryGraph.containsEdge(edge1))
+						if(!summaryGraph.containsEdge(edge1))
 						{
 							summaryGraph.addEdge(s, p, edge1);
 						}
@@ -311,7 +313,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //			add subclass relation between concepts
 			else if(pred.equals(BuildQ2SemanticService.rdfsEdge[1]) && getSubjectType(pred, obj).equals(CONCEPT) && getObjectType(pred, obj).equals(CONCEPT))
 			{
-				SummaryGraphElement elem1 = new SummaryGraphElement(new NamedConcept(subj), SummaryGraphElement.CONCEPT);
+				SummaryGraphElement elem1 = getElem(subj, SummaryGraphElement.CONCEPT);
 				if(!summaryGraph.containsVertex(elem1))
 				{
 					Integer i = conceptCount.get(subj);
@@ -319,7 +321,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 					else elem1.setCost(i.doubleValue()/indivSize);
 					summaryGraph.addVertex(elem1);
 				}
-				SummaryGraphElement elem2 = new SummaryGraphElement(new NamedConcept(obj), SummaryGraphElement.CONCEPT);
+				SummaryGraphElement elem2 = getElem(obj, SummaryGraphElement.CONCEPT);
 				if(!summaryGraph.containsVertex(elem2))
 				{
 					Integer i = conceptCount.get(obj);
@@ -341,6 +343,9 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		writer summary graph
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj);
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
+		
+		System.out.println("write splitted summary graph");
+		writeSummaryGraph(splitSummaryGraph(summaryGraph), BuildQ2SemanticService.summaryObj);
 //		System.out.println("=========print summary===========");
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
@@ -418,15 +423,15 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			for(String attr: con2attr.get(con))
 			{
 //				System.out.println("\t"+attr);
-				SummaryGraphElement elem1 = new SummaryGraphElement(new NamedConcept(con), SummaryGraphElement.CONCEPT);
+				SummaryGraphElement elem1 = getElem(con, SummaryGraphElement.CONCEPT);
 				Integer i = conceptCount.get(con);
 				if(i==null) elem1.setCost(Double.MAX_VALUE);
 				else elem1.setCost(i.doubleValue()/indivSize);
-				SummaryGraphElement prop = new SummaryGraphElement(new DataProperty(attr), SummaryGraphElement.ATTRIBUTE);
+				SummaryGraphElement prop = getElem(attr, SummaryGraphElement.ATTRIBUTE);
 				i = propCount.get(attr);
 				if(i==null) prop.setCost(Double.MAX_VALUE);
 				else prop.setCost(i.doubleValue()/propSize);
-				SummaryGraphElement elem2 = new SummaryGraphElement(new Datatype(LABEL), SummaryGraphElement.DATATYPE);
+				SummaryGraphElement elem2 = getElem(LABEL, SummaryGraphElement.DATATYPE);
 				summaryGraph.addVertex(elem1);
 				summaryGraph.addVertex(prop);
 				summaryGraph.addVertex(elem2);
@@ -455,7 +460,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public SummaryGraphElement getElemFromUri(String uri)
 	{
 		if(uri == null)
-			return new SummaryGraphElement(NamedConcept.TOP, SummaryGraphElement.CONCEPT, TOP_ELEMENT_SCORE);
+		{
+			SummaryGraphElement elem = getElem(NamedConcept.TOP.getUri(), SummaryGraphElement.CONCEPT);
+			elem.setCost(TOP_ELEMENT_SCORE);
+			return elem;
+		}
 		else
 		{
 			double cost;
@@ -463,10 +472,71 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(i==null) cost = 0;
 			else cost = i.doubleValue()/indivSize;
 			
-			return new SummaryGraphElement(new NamedConcept(uri), SummaryGraphElement.CONCEPT, cost);
+			SummaryGraphElement elem = getElem(uri, SummaryGraphElement.CONCEPT);
+			elem.setCost(cost);
+			return elem;
 		}
 	}
 	
+	public SummaryGraphElement getElem(String uri, int type)
+	{
+		SummaryGraphElement res = elemPool.get(type+uri);
+		if(res == null)
+		{
+			if(type == SummaryGraphElement.CONCEPT)
+				res = new SummaryGraphElement(new NamedConcept(uri), SummaryGraphElement.CONCEPT);
+			else if(type == SummaryGraphElement.RELATION)
+				res = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION);
+			else if(type == SummaryGraphElement.ATTRIBUTE)
+				res = new SummaryGraphElement(new DataProperty(uri), SummaryGraphElement.ATTRIBUTE);
+			else if(type == SummaryGraphElement.DATATYPE)
+				res = new SummaryGraphElement(new Datatype(uri), SummaryGraphElement.DATATYPE);
+		}
+		elemPool.put(type+uri, res);
+		return res;
+	}
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
+	{
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
+		for(SummaryGraphElement prop: graph.vertexSet())
+		{
+			if(prop.getType() == SummaryGraphElement.RELATION)
+			{
+				String propUri = ((Property)prop.resource).getUri();
+				ArrayList<SummaryGraphElement> domainList = new ArrayList<SummaryGraphElement>();
+				ArrayList<SummaryGraphElement> rangeList = new ArrayList<SummaryGraphElement>();
+
+				for(SummaryGraphEdge domain: graph.edgeSet())
+					if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE) && prop.equals(domain.getTarget()))
+						domainList.add(domain.getSource());
+				for(SummaryGraphEdge range: graph.edgeSet())
+					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && prop.equals(range.getSource()))
+						rangeList.add(range.getTarget());
+				
+				double totalScore = 0;
+				for(int i=0; i<domainList.size(); i++)
+					totalScore += rangeList.size()*domainList.get(i).getEF();
+				for(int i=0; i<rangeList.size(); i++)
+					totalScore += domainList.size()*rangeList.get(i).getEF();
+				
+				for(int i=0; i<domainList.size(); i++)
+					for(int j=0; j<rangeList.size(); j++)
+					{
+						SummaryGraphElement newProp = getElem(propUri+"("+(i*rangeList.size()+j)+")", SummaryGraphElement.RELATION);
+						newProp.setCost((domainList.get(i).getEF()+rangeList.get(j).getEF())/totalScore);
+						splitGraph.addVertex(domainList.get(i));
+						splitGraph.addVertex(rangeList.get(j));
+						splitGraph.addVertex(newProp);
+						SummaryGraphEdge edge1 = new SummaryGraphEdge(domainList.get(i), newProp, SummaryGraphEdge.DOMAIN_EDGE);
+						SummaryGraphEdge edge2 = new SummaryGraphEdge(newProp, rangeList.get(j), SummaryGraphEdge.RANGE_EDGE);
+						splitGraph.addEdge(domainList.get(i), newProp, edge1);
+						splitGraph.addEdge(newProp, rangeList.get(j), edge2);
+					}
+			}
+		}
+		
+		return splitGraph;
+	}
 	public void writeSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, String filepath){
 		File graphIndex = new File(filepath);
 		if(!graphIndex.exists()){
