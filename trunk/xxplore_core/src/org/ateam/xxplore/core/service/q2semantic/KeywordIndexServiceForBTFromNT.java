@@ -313,7 +313,7 @@ public class KeywordIndexServiceForBTFromNT{
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		TreeSet<String> litSet = new TreeSet<String>();
 		TreeSet<String> concept = new TreeSet<String>();
-		TreeSet<String> indivSet = new TreeSet<String>();
+		TreeSet<Integer> indivSet = new TreeSet<Integer>();
 		TreeMap<String, String> attrlit = new TreeMap<String, String>();
 		String cur=null, pre=null;
 		String line;
@@ -326,6 +326,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(count%10000==0)
 			{
 				System.out.println(count);
+				if(count%5000000==0)
 				System.gc();
 			}
 
@@ -346,9 +347,9 @@ public class KeywordIndexServiceForBTFromNT{
 						{
 							String lit = attrlit.get(attr);
 							{
-								if(indivSet.contains(lit+attr+con))
+								if(indivSet.contains(lit.hashCode()+attr.hashCode()+con.hashCode()))
 									continue;
-								indivSet.add(lit+attr+con);
+								indivSet.add(lit.hashCode()+attr.hashCode()+con.hashCode());
 								Document doc = new Document();
 								doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
 								doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
@@ -387,9 +388,9 @@ public class KeywordIndexServiceForBTFromNT{
 			{
 				String lit = attrlit.get(attr);
 				{
-					if(indivSet.contains(lit+attr+con))
+					if(indivSet.contains(lit.hashCode()+attr.hashCode()+con.hashCode()))
 						continue;
-					indivSet.add(lit+attr+con);
+					indivSet.add(lit.hashCode()+attr.hashCode()+con.hashCode());
 					Document doc = new Document();
 					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
 					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
