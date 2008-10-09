@@ -96,8 +96,10 @@ public class SearchQ2SemanticService {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 		
-		double prune = 0.90;
-		int distance = 1000;
+
+		double prune = 0.9;
+		int distance = 5;
+
 		String query = "";
 		//merge keywords
 		for(String str: keywordList)
@@ -113,7 +115,6 @@ public class SearchQ2SemanticService {
 		long start_time = System.currentTimeMillis();
 		
 		for(String keywordIndex: keywordIndexSet) {
-
 			System.out.println("keywordIndex " + keywordIndex);
 			Map<String, Collection<SummaryGraphElement>> hm = 
 				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
@@ -422,16 +423,13 @@ public class SearchQ2SemanticService {
 //		ll.add("word");
 //		ll.add("net");
 		ll.add("yao ming");
-		ll.add("olympics");
+		ll.add("rocket");
 		
 //		ll.add("paris");
-
-//		ll.add("fish");
-//		ll.add("olympics");
 
 //		ll.add("omasicRV98");
 
 //		ll.add("ayGS85");
-		new SearchQ2SemanticService("config/path.prop").getPossibleGraphs(ll, 10);
+		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, 10);
 	}
 }
