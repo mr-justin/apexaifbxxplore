@@ -822,17 +822,19 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						}
 					}
 				}
-				// System.out.println(e.getTotalScore()+"\t"+e.getType());
-				// System.out.println(expansionQueue.getApproximateMinCostOfCandidates());
-				// add cursors to queue
-				Set<Cursor> neighbors;
-				neighbors = getNonVisitedNeighbors(iGraph, e, c);
-				// System.out.println(neighbors.size());
-				for (Cursor n : neighbors) {
-					// if(n.getCost()==0)System.out.println("aaa");
-					if (!map.get(keyword).contains(n.getElement())) {
-						expansionQueue.addCursor(n, keyword);
-						map.get(keyword).add(n.getElement());
+				else {
+					// System.out.println(e.getTotalScore()+"\t"+e.getType());
+					// System.out.println(expansionQueue.getApproximateMinCostOfCandidates());
+					// add cursors to queue
+					Set<Cursor> neighbors;
+					neighbors = getNonVisitedNeighbors(iGraph, e, c);
+					// System.out.println(neighbors.size());
+					for (Cursor n : neighbors) {
+						// if(n.getCost()==0)System.out.println("aaa");
+						if (!map.get(keyword).contains(n.getElement())) {
+							expansionQueue.addCursor(n, keyword);
+							map.get(keyword).add(n.getElement());
+						}
 					}
 				}
 
