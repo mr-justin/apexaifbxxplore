@@ -422,7 +422,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return result;
 	}
 	
-	
 //	public static void main(String[] args) {
 //		QueryInterpretationService q = new QueryInterpretationService();
 //		SummaryGraphIndexServiceForBTFromNT s = new SummaryGraphIndexServiceForBTFromNT();
