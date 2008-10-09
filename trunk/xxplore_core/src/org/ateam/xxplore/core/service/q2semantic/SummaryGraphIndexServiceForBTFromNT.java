@@ -341,7 +341,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		br.close();
 		System.out.println("write summary graph");
 //		writer summary graph
-		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj);
+		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj+".nosplit");
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
 		
 		System.out.println("write splitted summary graph");
