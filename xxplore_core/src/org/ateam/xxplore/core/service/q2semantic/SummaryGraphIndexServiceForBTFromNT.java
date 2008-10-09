@@ -522,19 +522,19 @@ public class SummaryGraphIndexServiceForBTFromNT {
 							continue;
 						String uri = ((ObjectProperty)rel.getResource()).getUri();
 						Integer i = relCount.get(uri);
-						if(i==null) i = Integer.valueOf(1);
+						if(i==null) i = Integer.valueOf(0);
 						relCount.put(uri, i+1);
 						uri += "("+i.intValue()+")";
-						rel.setResource(new ObjectProperty(uri));
+						SummaryGraphElement r = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION, rel.getEF());
 						splitGraph.addVertex(domain.getSource());
 						splitGraph.addVertex(range.getTarget());
-						splitGraph.addVertex(rel);
-						SummaryGraphEdge edge1 = new SummaryGraphEdge(domain.getSource(), rel, SummaryGraphEdge.DOMAIN_EDGE);
+						splitGraph.addVertex(r);
+						SummaryGraphEdge edge1 = new SummaryGraphEdge(domain.getSource(), r, SummaryGraphEdge.DOMAIN_EDGE);
 						if(!splitGraph.containsEdge(edge1))
-							splitGraph.addEdge(domain.getSource(), rel, edge1);
-						SummaryGraphEdge edge2 = new SummaryGraphEdge(rel, range.getTarget(), SummaryGraphEdge.RANGE_EDGE);
+							splitGraph.addEdge(domain.getSource(), r, edge1);
+						SummaryGraphEdge edge2 = new SummaryGraphEdge(r, range.getTarget(), SummaryGraphEdge.RANGE_EDGE);
 						if(!splitGraph.containsEdge(edge2))
-							splitGraph.addEdge(rel, range.getTarget(), edge2);
+							splitGraph.addEdge(r, range.getTarget(), edge2);
 					}
 				}
 			}
