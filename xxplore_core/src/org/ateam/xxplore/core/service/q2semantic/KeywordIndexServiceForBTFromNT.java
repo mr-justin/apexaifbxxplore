@@ -14,6 +14,7 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -310,10 +311,10 @@ public class KeywordIndexServiceForBTFromNT{
 	{
 		System.out.println("start indexing by lit and indiv");
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
-		HashSet<String> litSet = new HashSet<String>();
-		HashSet<String> concept = new HashSet<String>();
+		TreeSet<String> litSet = new TreeSet<String>();
+		TreeSet<String> concept = new TreeSet<String>();
 		TreeSet<String> indivSet = new TreeSet<String>();
-		HashMap<String, String> attrlit = new HashMap<String, String>();
+		TreeMap<String, String> attrlit = new TreeMap<String, String>();
 		String cur=null, pre=null;
 		String line;
 
@@ -323,7 +324,10 @@ public class KeywordIndexServiceForBTFromNT{
 		{
 			count++;
 			if(count%10000==0)
+			{
 				System.out.println(count);
+				System.gc();
+			}
 
 			String[] part = Util4NT.processTripleLine(line);
 			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2)
@@ -356,9 +360,9 @@ public class KeywordIndexServiceForBTFromNT{
 					}
 				isIndiv = true;
 				concept.clear();
-				concept = new HashSet<String>();
+				concept = new TreeSet<String>();
 				attrlit.clear();
-				attrlit = new HashMap<String, String>();
+				attrlit = new TreeMap<String, String>();
 			}
 //			System.out.println("="+part[2]);
 			if(isIndiv)
