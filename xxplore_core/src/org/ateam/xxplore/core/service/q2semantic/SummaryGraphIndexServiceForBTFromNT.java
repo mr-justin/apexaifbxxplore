@@ -342,11 +342,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		System.out.println("write summary graph");
 //		writer summary graph
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj+".nosplit");
-		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
+		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF+".nosplit");
 		
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(splitSummaryGraph(summaryGraph), BuildQ2SemanticService.summaryObj);
-//		System.out.println("=========print summary===========");
+		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
+		//		System.out.println("=========print summary===========");
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
 
