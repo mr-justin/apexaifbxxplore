@@ -104,7 +104,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 
 	public void buildGraphs(String path) throws Exception
 	{	
-		propCount = new TreeMap<String, Integer>();
+//		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		/*********using berkeleyDb***********/
 //		//preparation
@@ -183,9 +183,9 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(!getPredicateType(pred, obj).equals(RDFSPROP))
 			{
 				propSize++;
-				Integer n = propCount.get(pred);
-				if(n==null) n = Integer.valueOf(0);
-				propCount.put(pred, n+1);
+//				Integer n = propCount.get(pred);
+//				if(n==null) n = Integer.valueOf(0);
+//				propCount.put(pred, n+1);
 			}
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(CONCEPT))
 			{
@@ -274,7 +274,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				cache.put(obj, objParent);
 				
 				while(cache.size()>=MAX_CACHE_SIZE)
-					cache.remove(cache.keySet().iterator().next());
+					cache.clear();
 				
 				for(String str: subjParent)
 				{
@@ -283,20 +283,24 @@ public class SummaryGraphIndexServiceForBTFromNT {
 					{//if(o.getEF()==TOP_ELEMENT_SCORE && objParent.size()!=1)System.out.println(objParent.size());
 						SummaryGraphElement o = getElemFromUri(otr);
 						SummaryGraphElement p = new SummaryGraphElement(new ObjectProperty(pred), SummaryGraphElement.RELATION);
-						Integer i = propCount.get(pred);
-						if(i==null) p.setCost(Double.MAX_VALUE);
-						else p.setCost(i.doubleValue()/propSize);
-						summaryGraph.addVertex(s);
-						summaryGraph.addVertex(o);
-						summaryGraph.addVertex(p);
+//						Integer i = propCount.get(pred);
+//						if(i==null) p.setCost(Double.MAX_VALUE);
+//						else p.setCost(i.doubleValue()/propSize);
+//						summaryGraph.addVertex(s);
+//						summaryGraph.addVertex(o);
+//						summaryGraph.addVertex(p);
 //						if(((Property)p.getResource()).getUri().contains("http://lsdis.cs.uga.edu/projects/semdis/opus#author") && ((NamedConcept)o.getResource()).getUri().contains("Person"))
 //							System.out.println("1");
 						SummaryGraphEdge edge1 = new SummaryGraphEdge(s, p, SummaryGraphEdge.DOMAIN_EDGE);
 						SummaryGraphEdge edge2 = new SummaryGraphEdge(p, o, SummaryGraphEdge.RANGE_EDGE);
-						if(!summaryGraph.containsEdge(edge1))
+						if(summaryGraph.containsEdge(edge2) && !summaryGraph.containsEdge(edge1))
+						{
 							summaryGraph.addEdge(s, p, edge1);
+						}
 						if(!summaryGraph.containsEdge(edge2))
+						{
 							summaryGraph.addEdge(p, o, edge2);
+						}
 					}		
 				}
 				subjParent.clear();
@@ -393,7 +397,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				}
 				cache.put(subj, cons);
 				while(cache.size()>=MAX_CACHE_SIZE)
-					cache.remove(cache.keySet().iterator().next());
+					cache.clear();
 
 				for(String con: cons)
 				{

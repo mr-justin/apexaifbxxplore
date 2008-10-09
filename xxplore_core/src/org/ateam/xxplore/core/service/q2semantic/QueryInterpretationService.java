@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Set;
+import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.aifb.xxplore.shared.exception.Emergency;
 import org.aifb.xxplore.shared.util.Pair;
@@ -35,8 +37,10 @@ import org.xmedia.oms.model.api.IEntity;
 import org.xmedia.oms.model.api.INamedConcept;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.model.impl.DataProperty;
 import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
+import org.xmedia.oms.model.impl.ObjectProperty;
 import org.xmedia.oms.model.impl.Property;
 import org.xmedia.oms.query.ConceptMemberPredicate;
 import org.xmedia.oms.query.OWLPredicate;
@@ -394,6 +398,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				try {
 					in = new ObjectInputStream(new FileInputStream(graphIndex));
 					graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>) in.readObject();
+					graph = splitSummaryGraph(graph);
 					// System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
 					// ================by kaifengxu
 					for (SummaryGraphElement elem : graph.vertexSet())
@@ -415,6 +420,62 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 
 		return result;
+	}
+	
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
+	{
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
+		for(SummaryGraphElement prop: graph.vertexSet())
+		{
+			if(prop.getType() == SummaryGraphElement.RELATION)
+			{
+				String propUri = ((Property)prop.resource).getUri();
+				ArrayList<SummaryGraphElement> domainList = new ArrayList<SummaryGraphElement>();
+				ArrayList<SummaryGraphElement> rangeList = new ArrayList<SummaryGraphElement>();
+
+				for(SummaryGraphEdge domain: graph.edgeSet())
+					if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE) && prop.equals(domain.getTarget()))
+						domainList.add(domain.getSource());
+				for(SummaryGraphEdge range: graph.edgeSet())
+					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && prop.equals(range.getSource()))
+						rangeList.add(range.getTarget());
+				
+				double totalScore = 0;
+				for(int i=0; i<domainList.size(); i++)
+					totalScore += rangeList.size()*domainList.get(i).getEF();
+				for(int i=0; i<rangeList.size(); i++)
+					totalScore += domainList.size()*rangeList.get(i).getEF();
+				
+				for(int i=0; i<domainList.size(); i++)
+					for(int j=0; j<rangeList.size(); j++)
+					{
+						SummaryGraphElement newProp = new SummaryGraphElement(new ObjectProperty(propUri+"("+(i*rangeList.size()+j)+")"), SummaryGraphElement.RELATION);
+						newProp.setCost((domainList.get(i).getEF()+rangeList.get(j).getEF())/totalScore);
+						splitGraph.addVertex(domainList.get(i));
+						splitGraph.addVertex(rangeList.get(j));
+						splitGraph.addVertex(newProp);
+						SummaryGraphEdge edge1 = new SummaryGraphEdge(domainList.get(i), newProp, SummaryGraphEdge.DOMAIN_EDGE);
+						SummaryGraphEdge edge2 = new SummaryGraphEdge(newProp, rangeList.get(j), SummaryGraphEdge.RANGE_EDGE);
+						splitGraph.addEdge(domainList.get(i), newProp, edge1);
+						splitGraph.addEdge(newProp, rangeList.get(j), edge2);
+					}
+			}
+		}
+		
+		return splitGraph;
+	}
+	
+	public static void main(String[] args) {
+		QueryInterpretationService q = new QueryInterpretationService();
+		SummaryGraphIndexServiceForBTFromNT s = new SummaryGraphIndexServiceForBTFromNT();
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = s.readGraphIndexFromFile("D:\\semplore\\summaryObjsRoot\\dblp-summary.obj");
+		System.out.println("============before");
+		for(SummaryGraphEdge edge: graph.edgeSet())
+			System.out.println(edge.toString());
+		graph = q.splitSummaryGraph(graph);
+		System.out.println("============after");
+		for(SummaryGraphEdge edge: graph.edgeSet())
+			System.out.println(edge.toString());
 	}
 
 	private void updateDsCoverage(String ds) {
@@ -452,6 +513,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 		// int count = 0;
 		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
+			int count = 0;
 			for (SummaryGraphElement e : m_startingElements) {
 				if (e instanceof SummaryGraphValueElement) {
 					// =============by kaifengxu
@@ -461,13 +523,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					Set<IDataProperty> props = neighbors.keySet();
 					Iterator<IDataProperty> propIter = props.iterator();
 					System.out.println(((Literal)e.getResource()).getLabel());
+					
 					while (propIter.hasNext()) {
 						IDataProperty prop = propIter.next();
-						System.out.println("==="+prop.getUri());
+						System.out.println("==="+prop.getUri()+count);
 //						if(prop.getUri().equals("http://www.freebase.com/property/name"))
 //							System.out.println("88888888");
 						SummaryGraphElement pvertex = new SummaryGraphElement(
-								prop, SummaryGraphElement.ATTRIBUTE);
+								new DataProperty(prop.getUri()+"("+(count++)+")"), SummaryGraphElement.ATTRIBUTE);
 						Collection<INamedConcept> cons = neighbors.get(prop);
 						Iterator<INamedConcept> conIter = cons.iterator();
 						while (conIter.hasNext()) {
@@ -515,40 +578,40 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						}
 					}
 				}
-				if (e instanceof SummaryGraphAttributeElement) {
-//					System.out.println("aaaaaa");
-					Collection<INamedConcept> cons = ((SummaryGraphAttributeElement) e)
-							.getNeighborConcepts();
-					Iterator<INamedConcept> conIter = cons.iterator();
-					// =============by kaifengxu
-					String ds = e.getDatasource();
-					while (conIter.hasNext()) {
-						INamedConcept con = conIter.next();
-						SummaryGraphElement cvertex = new SummaryGraphElement(
-								con, SummaryGraphElement.CONCEPT);
-						// Emergency.checkPrecondition(graph.containsVertex(cvertex),
-						// "Classvertex must be contained in summary graph:" +
-						// cvertex.toString());
-						
-						// == chenjunquan ==
-						if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)) != null) {
-							cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex));
-						}
-						if(vertexMap.get(SummaryGraphUtil.getResourceUri(e)) != null) {
-							e = vertexMap.get(SummaryGraphUtil.getResourceUri(e));
-						}
-						
-						SummaryGraphEdge domain = new SummaryGraphEdge(cvertex,
-								(SummaryGraphAttributeElement) e,
-								SummaryGraphEdge.DOMAIN_EDGE);
-						// =============by kaifengxu
-						cvertex.setDatasource(ds);
-						graph.addVertex(cvertex);
-						graph.addVertex(e);
-						graph.addEdge(cvertex,
-								(SummaryGraphAttributeElement) e, domain);
-					}
-				}
+//				if (e instanceof SummaryGraphAttributeElement) {
+////					System.out.println("aaaaaa");
+//					Collection<INamedConcept> cons = ((SummaryGraphAttributeElement) e)
+//							.getNeighborConcepts();
+//					Iterator<INamedConcept> conIter = cons.iterator();
+//					// =============by kaifengxu
+//					String ds = e.getDatasource();
+//					while (conIter.hasNext()) {
+//						INamedConcept con = conIter.next();
+//						SummaryGraphElement cvertex = new SummaryGraphElement(
+//								con, SummaryGraphElement.CONCEPT);
+//						// Emergency.checkPrecondition(graph.containsVertex(cvertex),
+//						// "Classvertex must be contained in summary graph:" +
+//						// cvertex.toString());
+//						
+//						// == chenjunquan ==
+//						if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)) != null) {
+//							cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex));
+//						}
+//						if(vertexMap.get(SummaryGraphUtil.getResourceUri(e)) != null) {
+//							e = vertexMap.get(SummaryGraphUtil.getResourceUri(e));
+//						}
+//						
+//						SummaryGraphEdge domain = new SummaryGraphEdge(cvertex,
+//								(SummaryGraphAttributeElement) e,
+//								SummaryGraphEdge.DOMAIN_EDGE);
+//						// =============by kaifengxu
+//						cvertex.setDatasource(ds);
+//						graph.addVertex(cvertex);
+//						graph.addVertex(e);
+//						graph.addEdge(cvertex,
+//								(SummaryGraphAttributeElement) e, domain);
+//					}
+//				}
 				// System.out.println(e.getDatasource());
 				// by kaifeng xu
 				updateScore(graph, e, m_startingElements);
