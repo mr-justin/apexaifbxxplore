@@ -60,6 +60,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
+	public TreeMap<Integer, SummaryGraphElement> splitRelPool;
 	public int MAX_CACHE_SIZE = 10000000;
 	public int indivSize, propSize = 0;
 	public String dbpath;
@@ -108,6 +109,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		elemPool = new TreeMap<String, SummaryGraphElement>();
+		splitRelPool = new TreeMap<Integer, SummaryGraphElement>();
 		/*********using berkeleyDb***********/
 //		//preparation
 //		initDB(path);
@@ -212,7 +214,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	{
 		System.out.println("=======secondScan==========");
 		cache = new TreeMap<String, Set<String>>();
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge>summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
 		String line;
 		int count = 0;
@@ -303,6 +305,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						{
 							summaryGraph.addEdge(p, o, edge2);
 						}
+						//used for split graph into different relation
+						SummaryGraphElement splitRel =  splitRelPool.get(s.hashCode()+o.hashCode()+p.hashCode());
+						if(splitRel == null)
+							splitRel = new SummaryGraphElement(new ObjectProperty(pred), SummaryGraphElement.RELATION, 0);
+						splitRel.setCost(splitRel.getEF()+(1.0/propSize));
+						splitRelPool.put(s.hashCode()+o.hashCode()+p.hashCode(), splitRel);
 					}		
 				}
 				subjParent.clear();
@@ -344,10 +352,10 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj+".nosplit");
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF+".nosplit");
 		
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge>sg = splitSummaryGraph(summaryGraph);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph);
 		System.out.println("write splitted summary graph");
-		writeSummaryGraph(sg, BuildQ2SemanticService.summaryObj);
-		writeSummaryGraphAsRDF(sg, BuildQ2SemanticService.summaryRDF);
+		writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj);
+		writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF);
 		//		System.out.println("=========print summary===========");
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
@@ -500,44 +508,75 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
 	{
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
-		for(SummaryGraphElement prop: graph.vertexSet())
+		TreeMap<String, Integer> relCount = new TreeMap<String, Integer>();
+		for(SummaryGraphEdge domain: graph.edgeSet())
 		{
-			if(prop.getType() == SummaryGraphElement.RELATION)
+			if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE))
 			{
-				String propUri = ((Property)prop.resource).getUri();
-				ArrayList<SummaryGraphElement> domainList = new ArrayList<SummaryGraphElement>();
-				ArrayList<SummaryGraphElement> rangeList = new ArrayList<SummaryGraphElement>();
-
-				for(SummaryGraphEdge domain: graph.edgeSet())
-					if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE) && prop.equals(domain.getTarget()))
-						domainList.add(domain.getSource());
 				for(SummaryGraphEdge range: graph.edgeSet())
-					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && prop.equals(range.getSource()))
-						rangeList.add(range.getTarget());
-				
-				double totalScore = 0;
-				for(int i=0; i<domainList.size(); i++)
-					totalScore += rangeList.size()*domainList.get(i).getEF();
-				for(int i=0; i<rangeList.size(); i++)
-					totalScore += domainList.size()*rangeList.get(i).getEF();
-				
-				for(int i=0; i<domainList.size(); i++)
-					for(int j=0; j<rangeList.size(); j++)
+				{
+					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && domain.getTarget().equals(range.getSource()))
 					{
-						SummaryGraphElement newProp = getElem(propUri+"("+(i*rangeList.size()+j)+")", SummaryGraphElement.RELATION);
-						newProp.setCost((domainList.get(i).getEF()+rangeList.get(j).getEF())/totalScore);
-						splitGraph.addVertex(domainList.get(i));
-						splitGraph.addVertex(rangeList.get(j));
-						splitGraph.addVertex(newProp);
-						SummaryGraphEdge edge1 = new SummaryGraphEdge(domainList.get(i), newProp, SummaryGraphEdge.DOMAIN_EDGE);
-						SummaryGraphEdge edge2 = new SummaryGraphEdge(newProp, rangeList.get(j), SummaryGraphEdge.RANGE_EDGE);
-						splitGraph.addEdge(domainList.get(i), newProp, edge1);
-						splitGraph.addEdge(newProp, rangeList.get(j), edge2);
+						SummaryGraphElement rel = splitRelPool.get(domain.getSource().hashCode()+range.getTarget().hashCode()+domain.getTarget().hashCode());
+						if(rel == null)
+							continue;
+						String uri = ((ObjectProperty)rel.getResource()).getUri();
+						Integer i = relCount.get(uri);
+						if(i==null) i = Integer.valueOf(1);
+						relCount.put(uri, i+1);
+						uri += "("+i.intValue()+")";
+						rel.setResource(new ObjectProperty(uri));
+						splitGraph.addVertex(domain.getSource());
+						splitGraph.addVertex(range.getTarget());
+						splitGraph.addVertex(rel);
+						SummaryGraphEdge edge1 = new SummaryGraphEdge(domain.getSource(), rel, SummaryGraphEdge.DOMAIN_EDGE);
+						if(!splitGraph.containsEdge(edge1))
+							splitGraph.addEdge(domain.getSource(), rel, edge1);
+						SummaryGraphEdge edge2 = new SummaryGraphEdge(rel, range.getTarget(), SummaryGraphEdge.RANGE_EDGE);
+						if(!splitGraph.containsEdge(edge2))
+							splitGraph.addEdge(rel, range.getTarget(), edge2);
 					}
+				}
 			}
 		}
-		
 		return splitGraph;
+//		for(SummaryGraphElement prop: graph.vertexSet())
+//		{
+//			if(prop.getType() == SummaryGraphElement.RELATION)
+//			{
+//				String propUri = ((Property)prop.resource).getUri();
+//				ArrayList<SummaryGraphElement> domainList = new ArrayList<SummaryGraphElement>();
+//				ArrayList<SummaryGraphElement> rangeList = new ArrayList<SummaryGraphElement>();
+//
+//				for(SummaryGraphEdge domain: graph.edgeSet())
+//					if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE) && prop.equals(domain.getTarget()))
+//						domainList.add(domain.getSource());
+//				for(SummaryGraphEdge range: graph.edgeSet())
+//					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && prop.equals(range.getSource()))
+//						rangeList.add(range.getTarget());
+//				
+//				double totalScore = 0;
+//				for(int i=0; i<domainList.size(); i++)
+//					totalScore += rangeList.size()*domainList.get(i).getEF();
+//				for(int i=0; i<rangeList.size(); i++)
+//					totalScore += domainList.size()*rangeList.get(i).getEF();
+//				
+//				for(int i=0; i<domainList.size(); i++)
+//					for(int j=0; j<rangeList.size(); j++)
+//					{
+//						SummaryGraphElement newProp = getElem(propUri+"("+(i*rangeList.size()+j)+")", SummaryGraphElement.RELATION);
+//						newProp.setCost((domainList.get(i).getEF()+rangeList.get(j).getEF())/totalScore);
+//						splitGraph.addVertex(domainList.get(i));
+//						splitGraph.addVertex(rangeList.get(j));
+//						splitGraph.addVertex(newProp);
+//						SummaryGraphEdge edge1 = new SummaryGraphEdge(domainList.get(i), newProp, SummaryGraphEdge.DOMAIN_EDGE);
+//						SummaryGraphEdge edge2 = new SummaryGraphEdge(newProp, rangeList.get(j), SummaryGraphEdge.RANGE_EDGE);
+//						splitGraph.addEdge(domainList.get(i), newProp, edge1);
+//						splitGraph.addEdge(newProp, rangeList.get(j), edge2);
+//					}
+//			}
+//		}
+	
 	}
 	
 	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>cleanSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
