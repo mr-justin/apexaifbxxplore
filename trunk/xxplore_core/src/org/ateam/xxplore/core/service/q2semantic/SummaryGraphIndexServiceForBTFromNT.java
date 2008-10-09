@@ -285,12 +285,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 					{//if(o.getEF()==TOP_ELEMENT_SCORE && objParent.size()!=1)System.out.println(objParent.size());
 						SummaryGraphElement o = getElemFromUri(otr);
 						SummaryGraphElement p = getElem(pred, SummaryGraphElement.RELATION);
-//						Integer i = propCount.get(pred);
-//						if(i==null) p.setCost(Double.MAX_VALUE);
-//						else p.setCost(i.doubleValue()/propSize);
-//						summaryGraph.addVertex(s);
-//						summaryGraph.addVertex(o);
-//						summaryGraph.addVertex(p);
+						Integer i = propCount.get(pred);
+						if(i==null) p.setCost(Double.MAX_VALUE);
+						else p.setCost(i.doubleValue()/propSize);
+						summaryGraph.addVertex(s);
+						summaryGraph.addVertex(o);
+						summaryGraph.addVertex(p);
 //						if(((Property)p.getResource()).getUri().contains("http://lsdis.cs.uga.edu/projects/semdis/opus#author") && ((NamedConcept)o.getResource()).getUri().contains("Person"))
 //							System.out.println("1");
 						SummaryGraphEdge edge1 = new SummaryGraphEdge(s, p, SummaryGraphEdge.DOMAIN_EDGE);
@@ -344,9 +344,10 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj+".nosplit");
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF+".nosplit");
 		
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge>sg = splitSummaryGraph(summaryGraph);
 		System.out.println("write splitted summary graph");
-		writeSummaryGraph(splitSummaryGraph(summaryGraph), BuildQ2SemanticService.summaryObj);
-		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
+		writeSummaryGraph(sg, BuildQ2SemanticService.summaryObj);
+		writeSummaryGraphAsRDF(sg, BuildQ2SemanticService.summaryRDF);
 		//		System.out.println("=========print summary===========");
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
@@ -538,6 +539,38 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		
 		return splitGraph;
 	}
+	
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>cleanSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
+	{
+		TreeMap<String, SummaryGraphElement> hm = new TreeMap<String, SummaryGraphElement>();
+		Set<SummaryGraphElement> vertexSet = graph.vertexSet();
+		
+		for(SummaryGraphElement ele : vertexSet) {
+			hm.put(ele.getType()+SummaryGraphUtil.getResourceUri(ele),ele);
+		}
+		
+		for(SummaryGraphEdge edge : graph.edgeSet()) {
+			String uri = SummaryGraphUtil.getResourceUri(edge.getSource());
+			SummaryGraphElement ele = hm.get(edge.getSource().getType()+uri);
+			if(uri != null) {
+				edge.setSource(ele);
+			}
+			else {
+				System.err.println(uri);
+			}
+			
+			uri = SummaryGraphUtil.getResourceUri(edge.getTarget());
+			ele = hm.get(edge.getTarget().getType()+uri);
+			if(ele != null) {
+				edge.setTarget(ele);
+			}
+			else {
+				System.err.println(uri);
+			}
+		}
+		return graph;
+	}
+	
 	public void writeSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, String filepath){
 		File graphIndex = new File(filepath);
 		if(!graphIndex.exists()){
