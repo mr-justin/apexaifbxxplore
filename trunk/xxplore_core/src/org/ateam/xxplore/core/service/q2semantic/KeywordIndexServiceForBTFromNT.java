@@ -313,7 +313,7 @@ public class KeywordIndexServiceForBTFromNT{
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		TreeSet<String> litSet = new TreeSet<String>();
 		TreeSet<String> concept = new TreeSet<String>();
-		TreeSet<Integer> indivSet = new TreeSet<Integer>();
+		TreeSet<String> indivSet = new TreeSet<String>();
 		TreeMap<String, String> attrlit = new TreeMap<String, String>();
 		String cur=null, pre=null;
 		String line;
@@ -381,25 +381,26 @@ public class KeywordIndexServiceForBTFromNT{
 			pre = cur;
 		}
 //		write the rest
-		for(String con: concept)
-		{
-			con = con.substring(1, con.length()-1);
-			for(String attr: attrlit.keySet())
+		if(isIndiv)
+			for(String con: concept)
 			{
-				String lit = attrlit.get(attr);
+				con = con.substring(1, con.length()-1);
+				for(String attr: attrlit.keySet())
 				{
-					if(indivSet.contains(lit.hashCode()+attr.hashCode()+con.hashCode()))
-						continue;
-					indivSet.add(lit.hashCode()+attr.hashCode()+con.hashCode());
-					Document doc = new Document();
-					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
-					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-					writer.addDocument(doc);
+					String lit = attrlit.get(attr);
+					{
+						if(indivSet.contains(lit.hashCode()+attr.hashCode()+con.hashCode()))
+							continue;
+						indivSet.add(lit.hashCode()+attr.hashCode()+con.hashCode());
+						Document doc = new Document();
+						doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
+						doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
+						doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
+						doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+						writer.addDocument(doc);
+					}
 				}
 			}
-		}
 		indivSet.clear();
 		indivSet = null;
 //		index literal
