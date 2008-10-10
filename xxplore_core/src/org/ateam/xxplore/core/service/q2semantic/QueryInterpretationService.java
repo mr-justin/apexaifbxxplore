@@ -642,7 +642,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 		}
 		// ==================by kaifengxu
+//		this.addvertex(addedGraphs, iGraph);
 		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
+			
 			for (SummaryGraphElement v : graph.vertexSet()) {
 				// if(v.getResource().getClass().toString().contains("org.xmedia.oms.model.impl.Literal"))
 				// if(v.getResource().toString().contains("catch with a net"))System.out.println(v.getResource().toString());;
@@ -657,6 +659,25 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 		return iGraph;
 	}
+	
+//	public void addvertex(Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs,
+//			WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph) {
+//		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
+//			
+//			for (SummaryGraphElement v : graph.vertexSet()) {
+//				// if(v.getResource().getClass().toString().contains("org.xmedia.oms.model.impl.Literal"))
+//				// if(v.getResource().toString().contains("catch with a net"))System.out.println(v.getResource().toString());;
+//				iGraph.addVertex(v);
+//			}
+//			for (SummaryGraphEdge e : graph.edgeSet()) {
+//				// if(!graph.vertexSet().contains(e.getSource()) ||
+//				// !graph.vertexSet().contains(e.getTarget()))
+//				// System.err.print("not contain");
+//				iGraph.addEdge(e.getSource(), e.getTarget(), e);
+//			}
+//		}
+//		
+//	}
 
 	public Set<String> getSuggestion(List<String> concept, String ds,
 			MappingIndexService index) throws Exception {
@@ -826,7 +847,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					// System.out.println(e.getTotalScore()+"\t"+e.getType());
 					// System.out.println(expansionQueue.getApproximateMinCostOfCandidates());
 					// add cursors to queue
-					Set<Cursor> neighbors;
+					Collection<Cursor> neighbors;
 					neighbors = getNonVisitedNeighbors(iGraph, e, c);
 					// System.out.println(neighbors.size());
 					for (Cursor n : neighbors) {
@@ -923,10 +944,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return graphs;
 	}
 
-	private Set<Cursor> getNonVisitedNeighbors(
+	private Collection<Cursor> getNonVisitedNeighbors(
 			WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph,
 			SummaryGraphElement e, Cursor c) {// System.out.println(c.getLength());
-		Set<Cursor> neighbors = new HashSet<Cursor>();
+		Collection<Cursor> neighbors = new ArrayList<Cursor>();
 		// == chenjunquan ==
 		//if(e.getDatasource().equals("freebase")) System.out.println("freebase element!");
 		Set<SummaryGraphEdge> edges = null;
@@ -934,7 +955,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			edges = iGraph.edgesOf(e);
 		}
 		catch (Exception eff) {
-			return new HashSet<Cursor>();
+			return new ArrayList<Cursor>();
 		}
 		Cursor nextCursor = null;
 		for (SummaryGraphEdge edge : edges) {
