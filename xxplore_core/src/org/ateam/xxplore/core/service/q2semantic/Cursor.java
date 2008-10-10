@@ -1,5 +1,6 @@
 package org.ateam.xxplore.core.service.q2semantic;
 
+import java.util.HashSet;
 import java.util.LinkedList;
 
 
@@ -16,6 +17,7 @@ public class Cursor implements Comparable {
 	private SummaryGraphEdge incomingEdge; 
 	
 	private LinkedList<SummaryGraphEdge> m_path;
+//	private HashSet<SummaryGraphEdge> m_path_set;
 	
 	private Cursor m_parent;
 	
@@ -29,7 +31,11 @@ public class Cursor implements Comparable {
 		m_element = element;
 		m_keyword = keyword;
 		LinkedList<SummaryGraphEdge> path = new LinkedList<SummaryGraphEdge>();
-		m_path = getVisitedPath(path, incomingEdge, parent);
+		getVisitedPath();
+//		m_path_set = new HashSet<SummaryGraphEdge>();
+//		for(SummaryGraphEdge edge : m_path) {
+//			m_path_set.add(edge);
+//		}
 	} 
 	
 	/**
@@ -38,16 +44,26 @@ public class Cursor implements Comparable {
 	 * @param parent
 	 * @return
 	 */
-	private LinkedList<SummaryGraphEdge> getVisitedPath(LinkedList<SummaryGraphEdge> path, SummaryGraphEdge edge, Cursor parent){
-		if(edge == null || parent == null) return path;
-		path.addFirst(edge);
-		return getVisitedPath(path, parent.getEdge(), parent.getParent());
+	private void getVisitedPath(){
+		if(m_path == null) m_path = new LinkedList<SummaryGraphEdge>();
+		
+		if(m_parent != null) {
+			m_path.addAll(m_parent.m_path);
+		}
+		
+		if(incomingEdge != null) {
+			m_path.add(incomingEdge);
+		}
+
+		//return getVisitedPath(path, parent.getEdge(), parent.getParent());
 	}
 
 	public boolean hasVisited(SummaryGraphEdge e){
 //		System.out.println(m_path.contains(e));
 //		System.out.println(m_path.size());
-		return m_path.contains(e);
+		return e.equals(incomingEdge); 
+//		return m_path.contains(e);
+//		return m_path_set.contains(e);
 //		for(SummaryGraphEdge edge: m_path)
 //			if(edge.getSource().equals(e)||edge.getTarget().equals(e))
 //			{//System.out.println("aaa");
