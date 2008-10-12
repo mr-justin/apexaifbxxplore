@@ -60,10 +60,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
-	public TreeMap<String, Double> splitRelPool;
+	public TreeMap<Integer, Double> splitRelPool;
 	public int MAX_CACHE_SIZE = 10000000;
 	public int indivSize, propSize = 0;
 	public String dbpath;
+	public BloomFilter bf;
 	
 
 	public String getSubjectType(String pred, String obj)
@@ -109,7 +110,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		elemPool = new TreeMap<String, SummaryGraphElement>();
-		splitRelPool = new TreeMap<String, Double>();
+		splitRelPool = new TreeMap<Integer, Double>();
+		bf = new BloomFilter();
 
 		/*********using berkeleyDb***********/
 //		//preparation
@@ -127,17 +129,13 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		/*************using Lucenemap*******************/
 		//preparation
 		indiv2con = new LuceneMap();
-		indiv2con.openWriter(path, true);
-		firstScan();
-		indiv2con.closeWriter();
+		
+		firstScan(path);
 		//summary graph
-		indiv2con.openSearcher(path);
-		secondScan();
-		indiv2con.closeSearcher();
+		secondScan(path);
 		//schema graph
-		indiv2con.openSearcher(path);
-		thirdScan();
-		indiv2con.closeSearcher();
+		thirdScan(path);
+
 	}
 //	public void initDB(String dbpath) throws Exception
 //	{
@@ -150,8 +148,9 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		indiv2con.closeDB();
 //	}
 	
-	public void firstScan() throws Exception
+	public void firstScan(String path) throws Exception
 	{
+		indiv2con.openWriter(path, true);
 		System.out.println("=======firstScan==========");
 		indivSize = BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource)==null?
 				-1:BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource);
@@ -208,11 +207,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		}
 		br.close();
 		System.out.println("indivSize: "+indivSize+"\tpropSize: "+propSize);
-		
+		indiv2con.closeWriter();
 	}
 	
-	public void secondScan() throws Exception
+	public void secondScan(String path) throws Exception
 	{
+		indiv2con.openSearcher(path);
 		System.out.println("=======secondScan==========");
 		cache = new TreeMap<String, Set<String>>();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
@@ -307,11 +307,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 							summaryGraph.addEdge(p, o, edge2);
 						}
 						//used for split graph into different relation
-						Double score =  splitRelPool.get(str+pred+otr);
+						Integer hashcode = Integer.valueOf(bf.hashRabin(str+pred+otr));
+						Double score =  splitRelPool.get(hashcode);
 						if(score == null)
 							score = Double.valueOf(0);
 						score += 1.0/propSize;
-						splitRelPool.put(str+pred+otr, score);
+						splitRelPool.put(hashcode, score);
 					}		
 				}
 				subjParent.clear();
@@ -360,11 +361,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		System.out.println("=========print summary===========");
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
-
+		indiv2con.closeSearcher();
 	}
 	
-	public void thirdScan() throws Exception
+	public void thirdScan(String path) throws Exception
 	{
+		indiv2con.openSearcher(path);
 		System.out.println("=======thirdScan==========");
 		if(cache == null)
 			cache = new TreeMap<String, Set<String>>();
@@ -466,6 +468,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		print
 		System.out.println("=========print schema===========");
 		outputGraphInfo(summaryGraph);
+		indiv2con.closeSearcher();
 	}
 	
 	public SummaryGraphElement getElemFromUri(String uri)
@@ -518,7 +521,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				{
 					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && domain.getTarget().equals(range.getSource()))
 					{
-						Double score = splitRelPool.get(SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget()));
+						Integer hashcode = bf.hashRabin(SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget()));
+						Double score = splitRelPool.get(hashcode);
 						if(score == null)
 							continue;
 						String uri = SummaryGraphUtil.getResourceUri(domain.getTarget());
