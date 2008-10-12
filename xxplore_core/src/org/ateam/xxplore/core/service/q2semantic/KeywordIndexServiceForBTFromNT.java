@@ -54,7 +54,7 @@ public class KeywordIndexServiceForBTFromNT{
 	private IndexWriter m_indexWriter;
 	private StandardAnalyzer m_analyzer;
 	private IndexSearcher m_searcher;
-
+	private BloomFilter bf;
 
 	private static final String TYPE_FIELD =  "type";
 	//entries use for typing:
@@ -92,7 +92,6 @@ public class KeywordIndexServiceForBTFromNT{
 			//unlock the writing of index
 			IndexReader.unlock(FSDirectory.getDirectory(indexDir)); 
 			m_indexWriter = new IndexWriter(m_IndexDir, m_analyzer, create);
-			m_searcher = new IndexSearcher(m_IndexDir);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -120,9 +119,9 @@ public class KeywordIndexServiceForBTFromNT{
 			//index literal & individual
 			
 			indexDataSourceByLiteralandIndividual(m_indexWriter, ntFn, datasourceURI);
+
 			m_indexWriter.optimize();
 			m_indexWriter.close();
-			
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -310,9 +309,10 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param writer
 	 * @throws Exception
 	 */
-	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, String ntFile, String ds) throws Exception
+	public void indexDataSourceByLiteralandIndividual( IndexWriter writer,  String ntFile, String ds) throws Exception
 	{
 		System.out.println("start indexing by lit and indiv");
+		bf = new BloomFilter();
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		TreeSet<String> litSet = new TreeSet<String>();
 		TreeSet<String> concept = new TreeSet<String>();
@@ -339,7 +339,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(pre!=null && !pre.equals(cur))
 			{
 				if(isIndiv)
-					writeDocument(concept, attrlit, indivSet, writer, ds);
+					writeDocument(concept, attrlit, indivSet, writer,ds);
 				isIndiv = true;
 				concept.clear();
 				concept = new TreeSet<String>();
@@ -379,32 +379,35 @@ public class KeywordIndexServiceForBTFromNT{
 	
 	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, String ds) throws Exception
 	{
+		IndexSearcher searcher = new IndexSearcher(m_IndexDir);
 		for(String con: concept)
 		{
 			con = con.substring(1, con.length()-1);
-			label:
+//			label:
 				for(String attr: attrlit.keySet())
 				{
 					String lit = attrlit.get(attr);
-					int hashcode = (lit+attr+con).hashCode();
+					int hashcode = bf.hashRabin(lit+attr+con);
 					if(indivSet.contains(Integer.valueOf(hashcode)))
 					{
-						writer.flush();
-						TermQuery query = new TermQuery(new Term(HASHCODE_FIELD, String.valueOf(hashcode)));
-						IndexSearcher searcher = new IndexSearcher(m_IndexDir);
-						Hits hits = searcher.search(query);
-//						System.out.println(hits.length()+"\t"+searcher.maxDoc());
-						if(hits != null && hits.length()>0)
-							for(int i=0; i<hits.length(); i++)
-							{
-								Document doc = hits.doc(i);
-								if(doc.get(LITERAL_FIELD).equals(lit) && doc.get(ATTRIBUTE_FIELD).equals(attr) && doc.get(CONCEPT_FIELD).equals(con))
-								{
-//									System.out.println("conflict stoped!");
-									continue label;
-								}
-								System.out.println("conflict passed!");
-							}
+//						writer.flush();
+//						TermQuery query = new TermQuery(new Term(HASHCODE_FIELD, String.valueOf(hashcode)));
+//						IndexReader.unlock(FSDirectory.getDirectory(m_IndexDir)); 
+//						searcher = new IndexSearcher(searcher.getIndexReader().reopen());
+//						Hits hits = searcher.search(query);
+////						System.out.println(hits.length()+"\t"+searcher.maxDoc());
+//						if(hits != null && hits.length()>0)
+//							for(int i=0; i<hits.length(); i++)
+//							{
+//								Document doc = hits.doc(i);
+//								if(doc.get(LITERAL_FIELD).equals(lit) && doc.get(ATTRIBUTE_FIELD).equals(attr) && doc.get(CONCEPT_FIELD).equals(con))
+//								{
+////									System.out.println("conflict stoped!");
+//									continue label;
+//								}
+//								System.out.println("conflict passed!");
+//							}
+						continue;
 					}
 					else
 						indivSet.add(Integer.valueOf(hashcode));
@@ -413,11 +416,12 @@ public class KeywordIndexServiceForBTFromNT{
 					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
 					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
 					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-					doc.add(new Field(HASHCODE_FIELD, String.valueOf(hashcode), Field.Store.NO, Field.Index.UN_TOKENIZED));
+//					doc.add(new Field(HASHCODE_FIELD, String.valueOf(hashcode), Field.Store.NO, Field.Index.UN_TOKENIZED));
 					writer.addDocument(doc);
 					
 				}
 		}
+		searcher.close();
 	}
 
 	/**
