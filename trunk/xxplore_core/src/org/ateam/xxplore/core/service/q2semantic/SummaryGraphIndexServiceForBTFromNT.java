@@ -60,7 +60,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
-	public TreeMap<String, SummaryGraphElement> splitRelPool;
+	public TreeMap<String, Double> splitRelPool;
 	public int MAX_CACHE_SIZE = 10000000;
 	public int indivSize, propSize = 0;
 	public String dbpath;
@@ -109,7 +109,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		elemPool = new TreeMap<String, SummaryGraphElement>();
-		splitRelPool = new TreeMap<String, SummaryGraphElement>();
+		splitRelPool = new TreeMap<String, Double>();
+
 		/*********using berkeleyDb***********/
 //		//preparation
 //		initDB(path);
@@ -306,15 +307,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 							summaryGraph.addEdge(p, o, edge2);
 						}
 						//used for split graph into different relation
-						SummaryGraphElement splitRel =  splitRelPool.get(str+pred+otr);
-						if(splitRel == null)
-							splitRel = new SummaryGraphElement(new ObjectProperty(pred), SummaryGraphElement.RELATION, 0);
-						if(SummaryGraphUtil.getResourceUri(splitRel).equals(pred))
-						{
-							splitRel.setCost(splitRel.getEF()+(1.0/propSize));
-							splitRelPool.put(str+pred+otr, splitRel);
-						}
-						else System.out.println("conflict!");
+						Double score =  splitRelPool.get(str+pred+otr);
+						if(score == null)
+							score = Double.valueOf(0);
+						score += 1.0/propSize;
+						splitRelPool.put(str+pred+otr, score);
 					}		
 				}
 				subjParent.clear();
@@ -360,7 +357,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
 		writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
-		//		System.out.println("=========print summary===========");
+//		System.out.println("=========print summary===========");
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
 
@@ -371,7 +368,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		System.out.println("=======thirdScan==========");
 		if(cache == null)
 			cache = new TreeMap<String, Set<String>>();
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge>summaryGraph = readGraphIndexFromFile(BuildQ2SemanticService.summaryObj);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = readGraphIndexFromFile(BuildQ2SemanticService.summaryObj);
 		TreeMap<String, TreeSet<String>> con2attr = new TreeMap<String, TreeSet<String>>();
 		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
 		String line;
@@ -521,15 +518,15 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				{
 					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && domain.getTarget().equals(range.getSource()))
 					{
-						SummaryGraphElement rel = splitRelPool.get(SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget()));
-						if(rel == null)
+						Double score = splitRelPool.get(SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget()));
+						if(score == null)
 							continue;
-						String uri = ((ObjectProperty)rel.getResource()).getUri();
+						String uri = SummaryGraphUtil.getResourceUri(domain.getTarget());
 						Integer i = relCount.get(uri);
 						if(i==null) i = Integer.valueOf(0);
 						relCount.put(uri, i+1);
 						uri += "("+i.intValue()+")";
-						SummaryGraphElement r = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION, rel.getEF());
+						SummaryGraphElement r = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION, score);
 						splitGraph.addVertex(domain.getSource());
 						splitGraph.addVertex(range.getTarget());
 						splitGraph.addVertex(r);
@@ -543,6 +540,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				}
 			}
 		}
+		relCount.clear();
+		relCount = null;
 		return splitGraph;
 //		for(SummaryGraphElement prop: graph.vertexSet())
 //		{

@@ -53,7 +53,7 @@ public class KeywordIndexServiceForBTFromNT{
 
 	private IndexWriter m_indexWriter;
 	private StandardAnalyzer m_analyzer;
-	private Searcher m_searcher;
+	private IndexSearcher m_searcher;
 
 
 	private static final String TYPE_FIELD =  "type";
@@ -72,6 +72,7 @@ public class KeywordIndexServiceForBTFromNT{
 	private static final String LITERAL_FIELD = "value";
 	private static final String DOMAIN_FIELD = "domain";
 	private static final String RANGE_FIELD = "range";
+	private static final String HASHCODE_FIELD = "hashcode";
 
 	private  String m_IndexDir = null;
 	
@@ -91,6 +92,7 @@ public class KeywordIndexServiceForBTFromNT{
 			//unlock the writing of index
 			IndexReader.unlock(FSDirectory.getDirectory(indexDir)); 
 			m_indexWriter = new IndexWriter(indexDir, m_analyzer, create);
+			m_searcher = new IndexSearcher(m_IndexDir);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -116,10 +118,12 @@ public class KeywordIndexServiceForBTFromNT{
 
 			if(indexSearcher != null) indexSearcher.close();
 			//index literal & individual
-			indexDataSourceByLiteralandIndividual(m_indexWriter, ntFn, datasourceURI);
+			
+			indexDataSourceByLiteralandIndividual(m_indexWriter, m_searcher, ntFn, datasourceURI);
 
 			m_indexWriter.optimize();
 			m_indexWriter.close();
+			m_searcher.close();
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -135,7 +139,7 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param graph
 	 * @throws Exception
 	 */
-	protected  void indexDataSourceByConcept(IndexWriter indexWriter,IndexSearcher searcher, String ds, Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph) throws Exception{
+	protected  void indexDataSourceByConcept(IndexWriter indexWriter, IndexSearcher searcher, String ds, Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph) throws Exception{
 		System.out.println("start indexing by concept");
 
 		Set<SummaryGraphElement> nodes = graph.vertexSet();
@@ -307,13 +311,13 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param writer
 	 * @throws Exception
 	 */
-	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, String ntFile, String ds) throws Exception
+	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, IndexSearcher searcher, String ntFile, String ds) throws Exception
 	{
 		System.out.println("start indexing by lit and indiv");
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		TreeSet<String> litSet = new TreeSet<String>();
 		TreeSet<String> concept = new TreeSet<String>();
-		TreeSet<String> indivSet = new TreeSet<String>();
+		TreeSet<Integer> indivSet = new TreeSet<Integer>();
 		TreeMap<String, String> attrlit = new TreeMap<String, String>();
 		String cur=null, pre=null;
 		String line;
@@ -324,11 +328,7 @@ public class KeywordIndexServiceForBTFromNT{
 		{
 			count++;
 			if(count%10000==0)
-			{
 				System.out.println(count);
-				if(count%5000000==0)
-				System.gc();
-			}
 
 			String[] part = Util4NT.processTripleLine(line);
 			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2)
@@ -340,25 +340,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(pre!=null && !pre.equals(cur))
 			{
 				if(isIndiv)
-					for(String con: concept)
-					{
-						con = con.substring(1, con.length()-1);
-						for(String attr: attrlit.keySet())
-						{
-							String lit = attrlit.get(attr);
-							{
-								if(indivSet.contains(lit.hashCode()+attr.hashCode()+con.hashCode()))
-									continue;
-								indivSet.add(lit.hashCode()+attr.hashCode()+con.hashCode());
-								Document doc = new Document();
-								doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-								doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-								doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
-								doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-								writer.addDocument(doc);
-							}
-						}
-					}
+					writeDocument(concept, attrlit, indivSet, writer, searcher, ds);
 				isIndiv = true;
 				concept.clear();
 				concept = new TreeSet<String>();
@@ -382,25 +364,7 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 //		write the rest
 		if(isIndiv)
-			for(String con: concept)
-			{
-				con = con.substring(1, con.length()-1);
-				for(String attr: attrlit.keySet())
-				{
-					String lit = attrlit.get(attr);
-					{
-						if(indivSet.contains(lit.hashCode()+attr.hashCode()+con.hashCode()))
-							continue;
-						indivSet.add(lit.hashCode()+attr.hashCode()+con.hashCode());
-						Document doc = new Document();
-						doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-						doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-						doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
-						doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-						writer.addDocument(doc);
-					}
-				}
-			}
+			writeDocument(concept, attrlit, indivSet, writer, searcher, ds);
 		indivSet.clear();
 		indivSet = null;
 //		index literal
@@ -411,6 +375,46 @@ public class KeywordIndexServiceForBTFromNT{
 			doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
 			doc.add(new Field(LABEL_FIELD, lit, Field.Store.YES, Field.Index.TOKENIZED));
 			writer.addDocument(doc);
+		}
+	}
+	
+	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, IndexSearcher searcher, String ds) throws Exception
+	{
+		for(String con: concept)
+		{
+			con = con.substring(1, con.length()-1);
+			label:
+				for(String attr: attrlit.keySet())
+				{
+					String lit = attrlit.get(attr);
+					int hashcode = (lit+attr+con).hashCode();
+					if(indivSet.contains(Integer.valueOf(hashcode)))
+					{
+						TermQuery query = new TermQuery(new Term(HASHCODE_FIELD, String.valueOf(hashcode)));
+						Hits hits = searcher.search(query);
+						if(hits != null && hits.length()>0)
+							for(int i=0; i<hits.length(); i++)
+							{
+								Document doc = hits.doc(i);
+								if(doc.get(LITERAL_FIELD).equals(lit) && doc.get(ATTRIBUTE_FIELD).equals(attr) && doc.get(CONCEPT_FIELD).equals(con))
+								{
+									System.out.println("conflict stoped!");
+									continue label;
+								}
+								System.out.println("conflict passed!");
+							}
+					}
+					else
+						indivSet.add(Integer.valueOf(hashcode));
+					Document doc = new Document();
+					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
+					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
+					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(HASHCODE_FIELD, String.valueOf(hashcode), Field.Store.NO, Field.Index.UN_TOKENIZED));
+					writer.addDocument(doc);
+				
+				}
 		}
 	}
 

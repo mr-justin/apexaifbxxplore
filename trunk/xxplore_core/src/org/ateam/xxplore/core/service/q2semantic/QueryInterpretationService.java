@@ -814,7 +814,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			Cursor c = expansionQueue.pollRoundRobinMinCostCursor();
 //			Cursor c = expansionQueue.pollMinCostCursor();
 			// System.out.println(c.getLength());
-			if (c.getLength() < distance) {
+			if (c!=null && c.getLength() < distance) {
 				SummaryGraphElement e = c.getElement();
 				// System.out.println(e.getResource().getClass());
 				String keyword = c.getKeyword();
