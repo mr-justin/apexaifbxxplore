@@ -91,7 +91,7 @@ public class KeywordIndexServiceForBTFromNT{
 		try {
 			//unlock the writing of index
 			IndexReader.unlock(FSDirectory.getDirectory(indexDir)); 
-			m_indexWriter = new IndexWriter(indexDir, m_analyzer, create);
+			m_indexWriter = new IndexWriter(m_IndexDir, m_analyzer, create);
 			m_searcher = new IndexSearcher(m_IndexDir);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -119,11 +119,10 @@ public class KeywordIndexServiceForBTFromNT{
 			if(indexSearcher != null) indexSearcher.close();
 			//index literal & individual
 			
-			indexDataSourceByLiteralandIndividual(m_indexWriter, m_searcher, ntFn, datasourceURI);
-
+			indexDataSourceByLiteralandIndividual(m_indexWriter, ntFn, datasourceURI);
 			m_indexWriter.optimize();
 			m_indexWriter.close();
-			m_searcher.close();
+			
 		}
 		catch (IOException e) {
 			e.printStackTrace();
@@ -311,7 +310,7 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param writer
 	 * @throws Exception
 	 */
-	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, IndexSearcher searcher, String ntFile, String ds) throws Exception
+	public void indexDataSourceByLiteralandIndividual( IndexWriter writer, String ntFile, String ds) throws Exception
 	{
 		System.out.println("start indexing by lit and indiv");
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
@@ -340,7 +339,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(pre!=null && !pre.equals(cur))
 			{
 				if(isIndiv)
-					writeDocument(concept, attrlit, indivSet, writer, searcher, ds);
+					writeDocument(concept, attrlit, indivSet, writer, ds);
 				isIndiv = true;
 				concept.clear();
 				concept = new TreeSet<String>();
@@ -364,7 +363,7 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 //		write the rest
 		if(isIndiv)
-			writeDocument(concept, attrlit, indivSet, writer, searcher, ds);
+			writeDocument(concept, attrlit, indivSet, writer, ds);
 		indivSet.clear();
 		indivSet = null;
 //		index literal
@@ -378,7 +377,7 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 	}
 	
-	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, IndexSearcher searcher, String ds) throws Exception
+	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, String ds) throws Exception
 	{
 		for(String con: concept)
 		{
@@ -390,15 +389,18 @@ public class KeywordIndexServiceForBTFromNT{
 					int hashcode = (lit+attr+con).hashCode();
 					if(indivSet.contains(Integer.valueOf(hashcode)))
 					{
+						writer.flush();
 						TermQuery query = new TermQuery(new Term(HASHCODE_FIELD, String.valueOf(hashcode)));
+						IndexSearcher searcher = new IndexSearcher(m_IndexDir);
 						Hits hits = searcher.search(query);
+//						System.out.println(hits.length()+"\t"+searcher.maxDoc());
 						if(hits != null && hits.length()>0)
 							for(int i=0; i<hits.length(); i++)
 							{
 								Document doc = hits.doc(i);
 								if(doc.get(LITERAL_FIELD).equals(lit) && doc.get(ATTRIBUTE_FIELD).equals(attr) && doc.get(CONCEPT_FIELD).equals(con))
 								{
-									System.out.println("conflict stoped!");
+//									System.out.println("conflict stoped!");
 									continue label;
 								}
 								System.out.println("conflict passed!");
@@ -413,7 +415,7 @@ public class KeywordIndexServiceForBTFromNT{
 					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 					doc.add(new Field(HASHCODE_FIELD, String.valueOf(hashcode), Field.Store.NO, Field.Index.UN_TOKENIZED));
 					writer.addDocument(doc);
-				
+					
 				}
 		}
 	}
