@@ -91,71 +91,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 		if (elements == null)
 			return null;
-
-		// for(Collection<SummaryGraphElement> elemCol: elements.values())
-		// {
-		// for(SummaryGraphElement elem: elemCol)
-		// if(elem instanceof SummaryGraphValueElement)
-		// System.out.println(((SummaryGraphValueElement)elem).getNeighbors()==null);
-		// }
-		// Collection<Map<String,Collection<OWLPredicate>>> results = new
-		// ArrayList<Map<String,Collection<OWLPredicate>>>();
-
-		// for(String keyword: elements.keySet())
-		// {
-		// System.out.println(keyword);
-		// System.out.println(elements.get(keyword).size());
-		// }
 		
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
-//		System.out.println("===============retrieve graph==============");
-//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
-//			this.outputGraphInfo(g);
-//		}
-//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
-//			this.outputGraphInfo(g);
-//		}
-
-//		 for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph:
-//		 sumGraphs)
-//		 {
-////		 System.out.println("===================");
-//		 for(SummaryGraphEdge edge: graph.edgeSet())
-//		 System.out.println(edge.toString());
-//		 }
 
 		getAugmentedSummaryGraphs(sumGraphs, elements);
-
-//		 for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph:
-//			 sumGraphs)
-//			 {
-//		 for(SummaryGraphEdge edge: graph.edgeSet())
-//			 System.out.println(edge.toString());
-//			 }
-//		System.out.println("=================augmented graph=====================");
-//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
-//			this.outputGraphInfo(g);
-//		}
-		
-//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : sumGraphs) {
-//			for(SummaryGraphElement ele : g.vertexSet()) {
-//				System.out.println();
-//				System.out.println("===========================************");
-//				System.out.println( SummaryGraphUtil.getResourceUri(ele) );
-//			}
-//		}
-		
-
-		// for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g: sumGraphs)
-		// System.out.println("==="+g.vertexSet().size()+"\t"+g.edgeSet().size());
-		// System.out.println("============");
-		// System.out.println(sumGraphs.size());
-		// ==============by kaifengxu
-		// resourceGraph = (WeightedPseudograph<SummaryGraphElement,
-		// SummaryGraphEdge>) ((ArrayList)sumGraphs).get(0);
-		
-		// == chenjunquan ==
-//		System.out.println(sumGraphs.size());
 		
 		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
 
@@ -178,65 +117,13 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				target.setTotalScore(target.getEF());
 			else source.setTotalScore(this.DEFAULT_SCORE);
 		}	
-//		for (SummaryGraphElement elem : resourceGraph.vertexSet()) {
-//			if (elem.getMatchingScore() != 0)
-//				elem.setTotalScore(1 / elem.getMatchingScore());
-//			else if(elem.getEF() != 0)
-//				elem.setTotalScore(elem.getEF());
-////			else elem.setTotalScore(DEFAULT_SCORE);
-////				if(elem.getEF() == 0) {
-////					System.out.println("elem.getEF()=========================" + elem.getEF());
-////				}
-//
-//			
-////			if(elem.getTotalScore() == 0) {
-////				System.out.println("elem.getType()==================="+elem.getType());
-////			}
-//			
-//		}
-//		 for(SummaryGraphEdge edge: resourceGraph.edgeSet())
-//			 System.out.println(edge.toString());
-//		 for(SummaryGraphElement elem: resourceGraph.vertexSet())
-//			 System.out.println(SummaryGraphUtil.getResourceUri(elem)+"\t"+elem.getTotalScore());
-//		outputGraphInfo(resourceGraph);
-//		for(SummaryGraphEdge elem: resourceGraph.edgeSet())
-//			System.out.println(elem.toString());
-//		HashSet<SummaryGraphElement> elemSet = new HashSet<SummaryGraphElement>();
-//		for(SummaryGraphEdge edge: resourceGraph.edgeSet())
-//		{
-////			elemSet.add(edge.getSource()); elemSet.add(edge.getTarget());
-//			SummaryGraphElement elem = edge.getSource();
-//			if (elem.getMatchingScore() != 0)
-//				elem.setTotalScore(elem.getEF() + (1 / elem.getMatchingScore()));
-//			else if(elem.getEF() != 0)
-//				elem.setTotalScore(elem.getEF());
-//			else elem.setTotalScore(DEFAULT_SCORE);
-//			elem = edge.getTarget();
-//			if (elem.getMatchingScore() != 0)
-//				elem.setTotalScore(elem.getEF() + (1 / elem.getMatchingScore()));
-//			else if(elem.getEF() != 0)
-//				elem.setTotalScore(elem.getEF());
-//			else elem.setTotalScore(DEFAULT_SCORE);
-//		}
-//		System.out.println("seesee"+elemSet.size()+"\t"+resourceGraph.vertexSet().size());
-		// for(Collection<SummaryGraphElement> elem: elements.values())
-		// {
-		// for(SummaryGraphElement e: resourceGraph.vertexSet())
-		// {
-		// System.out.println(e.getEF()+"\t"+e.getMatchingScore()+"\t"+e.getTotalScore()+"\t"+e.getType());
-		// }
-		// }
-		// for(SummaryGraphEdge edge: resourceGraph.edgeSet())
-		// System.out.println(edge.getSource().getTotalScore()+"\t"+edge.getSource().getType());
-		// System.out.println(resourceGraph.vertexSet().size()+"\t"+resourceGraph.edgeSet().size());
+
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph,elements, distance, k);
-		int count = 0;
-		// == chenjunquan ==
 		
-		for (Subgraph g : subgraphs) {
-			System.out.println("========= Top" + (++count) + "==========");
-			System.out.println(g.toString());
-		}
+//		for (Subgraph g : subgraphs) {
+//			System.out.println("========= Top" + (++count) + "==========");
+//			System.out.println(g.toString());
+//		}
 
 
 		if ((subgraphs == null) || (subgraphs.size() == 0))
@@ -244,19 +131,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		LinkedList<Subgraph> results = new LinkedList<Subgraph>();
 		for (int i = 0; i < k && i < subgraphs.size(); i++)
 			results.add(((List<Subgraph>) subgraphs).get(i));
-		// return resultRefinement((LinkedList<Subgraph>)subgraphs, k);
-		// for (Subgraph g : subgraphs){
-		// Map<String,Collection<OWLPredicate>> query = new HashMap<String,
-		// Collection<OWLPredicate>>();
-		// Collection<QueryGraph> qGraphs = getQuerygraphs(g);{
-		// if(qGraphs == null || qGraphs.size() == 0){
-		// for(QueryGraph qg : qGraphs){
-		// query.put(qg.getDatasource(), computeQuery(qg));
-		// }
-		// }
-		// }
-		// results.add(query);
-		// }
 
 		return results;
 	}
@@ -484,27 +358,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							.getNeighbors();
 					Set<IDataProperty> props = neighbors.keySet();
 					Iterator<IDataProperty> propIter = props.iterator();
-					System.out.println(((Literal)e.getResource()).getLabel());
 					
 					while (propIter.hasNext()) {
 						IDataProperty prop = propIter.next();
-						System.out.println("==="+prop.getUri()+count);
-//						if(prop.getUri().equals("http://www.freebase.com/property/name"))
-//							System.out.println("88888888");
 						SummaryGraphElement pvertex = new SummaryGraphElement(
 								new DataProperty(prop.getUri()+"("+(count++)+")"), SummaryGraphElement.ATTRIBUTE);
 						Collection<INamedConcept> cons = neighbors.get(prop);
 						Iterator<INamedConcept> conIter = cons.iterator();
 						while (conIter.hasNext()) {
 							INamedConcept con = conIter.next();
-							System.out.println("\t"+con.getUri());
 							SummaryGraphElement cvertex = new SummaryGraphElement(
 									con, SummaryGraphElement.CONCEPT);
-							// Emergency.checkPrecondition(graph.containsVertex(cvertex),
-							// "Classvertex must be contained in summary graph:"
-							// + cvertex.toString());
 							
-							// == chenjunquan ==
 							if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)) != null) {
 								cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex));
 							}
@@ -526,60 +391,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							// System.out.println(domain.getSource().getResource().getClass());
 							cvertex.setDatasource(ds);
 							pvertex.setDatasource(ds);
-//							if(graph.containsVertex(cvertex) && graph.containsVertex(pvertex))
-							{
 							graph.addVertex(cvertex);
 							graph.addVertex(pvertex);
-							// System.out.println(pvertex.getMatchingScore()+" \t"+pvertex.getEF());
 							graph.addVertex(e);
 							graph.addEdge(domain.getSource(), domain
 									.getTarget(), domain);
 							graph.addEdge(range.getSource(), range.getTarget(),
 									range);
-							}
 						}
 					}
 				}
-//				if (e instanceof SummaryGraphAttributeElement) {
-////					System.out.println("aaaaaa");
-//					Collection<INamedConcept> cons = ((SummaryGraphAttributeElement) e)
-//							.getNeighborConcepts();
-//					Iterator<INamedConcept> conIter = cons.iterator();
-//					// =============by kaifengxu
-//					String ds = e.getDatasource();
-//					while (conIter.hasNext()) {
-//						INamedConcept con = conIter.next();
-//						SummaryGraphElement cvertex = new SummaryGraphElement(
-//								con, SummaryGraphElement.CONCEPT);
-//						// Emergency.checkPrecondition(graph.containsVertex(cvertex),
-//						// "Classvertex must be contained in summary graph:" +
-//						// cvertex.toString());
-//						
-//						// == chenjunquan ==
-//						if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)) != null) {
-//							cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex));
-//						}
-//						if(vertexMap.get(SummaryGraphUtil.getResourceUri(e)) != null) {
-//							e = vertexMap.get(SummaryGraphUtil.getResourceUri(e));
-//						}
-//						
-//						SummaryGraphEdge domain = new SummaryGraphEdge(cvertex,
-//								(SummaryGraphAttributeElement) e,
-//								SummaryGraphEdge.DOMAIN_EDGE);
-//						// =============by kaifengxu
-//						cvertex.setDatasource(ds);
-//						graph.addVertex(cvertex);
-//						graph.addVertex(e);
-//						graph.addEdge(cvertex,
-//								(SummaryGraphAttributeElement) e, domain);
-//					}
-//				}
-				// System.out.println(e.getDatasource());
-				// by kaifeng xu
 				updateScore(graph, e, m_startingElements);
 			}
-			// System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
-			// System.out.println(count);
 		}
 	}
 
