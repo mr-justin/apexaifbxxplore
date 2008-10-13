@@ -19,6 +19,7 @@ import java.util.Set;
 
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.q2semantic.QueryInterpretationService.Subgraph;
+import org.jgrapht.graph.Pseudograph;
 import org.jgrapht.graph.WeightedPseudograph;
 import org.team.xxplore.core.service.search.datastructure.*;
 import org.xmedia.oms.model.impl.Literal;
@@ -213,7 +214,7 @@ public class SearchQ2SemanticService {
 		System.out.println("Time2:" + (end_time - start_time) );
 		
 		int count = 0;
-		for(WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
+		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
 			SummaryGraphElement from, to;
