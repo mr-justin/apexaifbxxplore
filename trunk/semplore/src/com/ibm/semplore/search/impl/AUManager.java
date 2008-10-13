@@ -11,6 +11,7 @@ package com.ibm.semplore.search.impl;
 import java.io.IOException;
 import java.util.Properties;
 
+import com.ibm.semplore.btc.mapping.MappingIndexReaderFactory;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.search.impl.alu.BinaryInterAU;
 import com.ibm.semplore.search.impl.alu.BinaryInterAU_RS;
@@ -111,7 +112,7 @@ public class AUManager
         return massUnionAU_Score.getResult();
     }
     public DocStream massUnion_Facet(String ds, String type, DocPositionStream relationStream, DocStream subjectStream, DocStream CobjectStream) throws IOException {
-    	if (subjectStream.getLen()>50000) 
+    	if (subjectStream.getLen()>50000 || !MappingIndexReaderFactory.hasMappingIndex(ds + "_"+type+"_facet")) 
     		return massUnion_BV_Facet(relationStream, subjectStream, CobjectStream);
     	else 
     		return massUnion_Mapping_Facet(ds,type,subjectStream,CobjectStream);

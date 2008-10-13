@@ -175,9 +175,9 @@ public class TestGUI extends JFrame{
 		
 		Properties config = Config.readConfigFile(args[0]);
 		Properties indexconfig = new Properties();
-		indexconfig.put(Config.INDEX_PATH, config.get(args[1]));
-		indexconfig.setProperty(Config.THIS_DATA_SOURCE, args[1]);
 		dataSource = args[1];
+		indexconfig.put(Config.INDEX_PATH, config.get(dataSource));
+		indexconfig.setProperty(Config.THIS_DATA_SOURCE, dataSource);
 		
 		XFacetedSearchService searchService = searchFactory
 				.getXFacetedSearchService(indexconfig);

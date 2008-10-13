@@ -22,6 +22,7 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
+import com.ibm.semplore.btc.mapping.MappingIndexReaderFactory;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.CatRelGraph;
 import com.ibm.semplore.model.CompoundCategory;
@@ -158,9 +159,10 @@ public class ForServlet {
 							"instanceList")) {
 				Element item = doc.createElement("instanceList"); // Create
 				// element
-				item.setAttribute("count", Integer.toString(resultSet
-						.getLength()));
+				int resultSetLength = resultSet.getLength();
+				item.setAttribute("count", Integer.toString(resultSetLength));
 				item.setAttribute("time", Long.toString(queryTime));
+				System.out.println("Instance Count: " + resultSetLength);
 				int start = new Integer(map.getNamedItem("start")
 						.getNodeValue()).intValue();
 				int count = new Integer(map.getNamedItem("count")
@@ -212,6 +214,7 @@ public class ForServlet {
 						.getNodeValue()).intValue();
 				int count = new Integer(map.getNamedItem("count")
 						.getNodeValue()).intValue();
+				System.out.println("concept facet: " + map.getNamedItem("count").getNodeValue());
 				int end = start + count;
 				Facet[] facets = resultSet.getCategoryFacets();
 				if (end > facets.length)
@@ -239,6 +242,7 @@ public class ForServlet {
 						.getNodeValue()).intValue();
 				int count = new Integer(map.getNamedItem("count")
 						.getNodeValue()).intValue();
+				System.out.println("relation facet: " + map.getNamedItem("count").getNodeValue());
 				int end = start + count;
 				Facet[] facets = resultSet.getRelationFacets();
 				if (end > facets.length)

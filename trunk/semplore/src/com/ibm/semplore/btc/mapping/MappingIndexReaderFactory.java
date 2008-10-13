@@ -16,6 +16,13 @@ public class MappingIndexReaderFactory {
 	
 	private static HashMap<String, MappingIndexReader> readerPool;
 	
+	public static boolean hasMappingIndex(String file)
+	{
+		if (readerPool==null) return false;
+		else 
+			return new File(mappingIndexLoc.getPath() + File.separatorChar + file).exists();
+	}
+	
 	public static void init(File _mappingIndexLoc) {
 		mappingIndexLoc = _mappingIndexLoc;
 		if (readerPool==null) readerPool = new HashMap<String, MappingIndexReader>();
