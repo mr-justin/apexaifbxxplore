@@ -2,6 +2,7 @@ package org.ateam.xxplore.core.service.q2semantic;
 
 import java.io.IOException;
 import java.util.Set;
+import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -55,7 +56,7 @@ public class LuceneMap {
 		if(writer != null)
 		{
 			Document doc = new Document();
-			doc.add(new Field(KEY_FIELD, key, Field.Store.NO, Field.Index.UN_TOKENIZED));
+			doc.add(new Field(KEY_FIELD, key, Field.Store.YES, Field.Index.UN_TOKENIZED));
 			doc.add(new Field(VALUE_FIELD, data, Field.Store.YES, Field.Index.NO));
 			writer.addDocument(doc);
 		}
@@ -79,6 +80,18 @@ public class LuceneMap {
 		return null;
 	}
 	
+	public int searchNum(String key) throws Exception
+	{
+		if(searcher != null)
+		{
+			Query query = new TermQuery(new Term(KEY_FIELD, key));
+			Hits hits = searcher.search(query);
+			if(hits != null)
+				return hits.length();
+		}
+		return 0;
+	}
+	
 	public void printAllTriples() throws Exception
 	{
 		if(searcher != null)
@@ -86,6 +99,21 @@ public class LuceneMap {
 		{
 			Document doc = searcher.doc(i);
 			System.out.println(doc.get(KEY_FIELD)+" | "+doc.get(VALUE_FIELD));
+		}
+	}
+	
+	public void printAllTriplesNoDuplicated()throws Exception
+	{
+		if(searcher != null)
+		{
+			TreeMap<String, String> output = new TreeMap<String, String>();
+			for(int i=0; i<searcher.maxDoc(); i++)
+			{
+				Document doc = searcher.doc(i);
+				output.put(doc.get(KEY_FIELD), doc.get(VALUE_FIELD));
+			}
+			for(String key: output.keySet())
+				System.out.println(key+" | "+output.get(key));
 		}
 	}
 	
