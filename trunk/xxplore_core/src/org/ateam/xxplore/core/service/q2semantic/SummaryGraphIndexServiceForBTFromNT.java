@@ -54,17 +54,16 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public static String INDIV2CON = "indiv2con";
 	public static double TOP_ELEMENT_SCORE = 2.0, SUBCLASS_ELEMENT_SCORE = 0;
 	
-//	public BerkeleyDB indiv2con;
+	public LuceneMap splitRelPool;
 	public LuceneMap indiv2con;
 	public TreeMap<String, Integer> propCount;
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
-	public TreeMap<Integer, Double> splitRelPool;
 	public int MAX_CACHE_SIZE = 10000000;
 	public int indivSize, propSize = 0;
 	public String dbpath;
-	public BloomFilter bf;
+//	public BloomFilter bf;
 	
 
 	public String getSubjectType(String pred, String obj)
@@ -110,8 +109,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		elemPool = new TreeMap<String, SummaryGraphElement>();
-		splitRelPool = new TreeMap<Integer, Double>();
-		bf = new BloomFilter();
+//		splitRelPool = new TreeMap<Integer, Double>();
+//		bf = new BloomFilter();
 
 		/*********using berkeleyDb***********/
 //		//preparation
@@ -129,6 +128,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		/*************using Lucenemap*******************/
 		//preparation
 		indiv2con = new LuceneMap();
+		splitRelPool = new LuceneMap();
 		
 		firstScan(path);
 		//summary graph
@@ -213,6 +213,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public void secondScan(String path) throws Exception
 	{
 		indiv2con.openSearcher(path);
+		splitRelPool.openWriter(path+"-splitRelPool", true);
 		System.out.println("=======secondScan==========");
 		cache = new TreeMap<String, Set<String>>();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
@@ -256,7 +257,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				if(subjParent == null || subjParent.size()==0)
 				{
 					subjParent = new TreeSet<String>();
-					subjParent.add("top");
+					subjParent.add(NamedConcept.TOP.getUri());
 				}
 				cache.put(subj, subjParent);
 //				System.out.println(obj);
@@ -273,7 +274,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				if(objParent == null || objParent.size()==0)
 				{
 					objParent = new TreeSet<String>();
-					objParent.add("top");
+					objParent.add(NamedConcept.TOP.getUri());
 				}
 				cache.put(obj, objParent);
 				
@@ -307,12 +308,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 							summaryGraph.addEdge(p, o, edge2);
 						}
 						//used for split graph into different relation
-						Integer hashcode = Integer.valueOf(bf.hashRabin(str+pred+otr));
-						Double score =  splitRelPool.get(hashcode);
-						if(score == null)
-							score = Double.valueOf(0);
-						score += 1.0/propSize;
-						splitRelPool.put(hashcode, score);
+//						if(!str.equals("top") && !otr.equals("top"))
+						{
+							String key = str+pred+otr;
+							splitRelPool.put(key, "");
+						}
 					}		
 				}
 				subjParent.clear();
@@ -353,8 +353,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		writer summary graph
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj);
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
-		
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph);
+
+		splitRelPool.closeWriter();
+		splitRelPool.openSearcher(path+"-splitRelPool");
+		splitRelPool.printAllTriplesNoDuplicated();
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph, splitRelPool, propSize);
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
 		writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
@@ -362,6 +365,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		outputGraphInfo(summaryGraph);
 //		construct schema graph
 		indiv2con.closeSearcher();
+		splitRelPool.closeSearcher();
 	}
 	
 	public void thirdScan(String path) throws Exception
@@ -473,7 +477,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	
 	public SummaryGraphElement getElemFromUri(String uri)
 	{
-		if(uri == "top")
+		if(uri.equals(NamedConcept.TOP.getUri()))
 		{
 			SummaryGraphElement elem = getElem(NamedConcept.TOP.getUri(), SummaryGraphElement.CONCEPT);
 			elem.setCost(TOP_ELEMENT_SCORE);
@@ -509,7 +513,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		elemPool.put(type+uri, res);
 		return res;
 	}
-	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph)
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, LuceneMap map, int propSize) throws Exception
 	{
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		TreeMap<String, Integer> relCount = new TreeMap<String, Integer>();
@@ -521,10 +525,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				{
 					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && domain.getTarget().equals(range.getSource()))
 					{
-						Integer hashcode = bf.hashRabin(SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget()));
-						Double score = splitRelPool.get(hashcode);
-						if(score == null)
-							continue;
+						String key = SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget());
+						int num = splitRelPool.searchNum(key);
+						if(num==0) continue;
+//						System.out.println(key+"\t"+num);
+						double score = (double)num/propSize;
 						String uri = SummaryGraphUtil.getResourceUri(domain.getTarget());
 						Integer i = relCount.get(uri);
 						if(i==null) i = Integer.valueOf(0);
