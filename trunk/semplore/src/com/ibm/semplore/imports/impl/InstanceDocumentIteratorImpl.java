@@ -124,23 +124,27 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 				s = dataReader.nextLong();
 			} catch (Exception e) {
 				e.printStackTrace();
-				System.err.println(lineno);
-				error=true;
+				System.err.println((lineno++) + ": subject error");
+				dataReader.nextLine();
+				error = true;
 			}
-				itype = dataReader.next();
-				dataReader.skip(pattern);
-				if (itype.equals(Util4NT.ATTRIBUTE))
-					attr = dataReader.next();
-				else
-					try {
-						p = dataReader.nextLong();
-					} catch (Exception e) {
-						e.printStackTrace();
-						System.err.println(lineno);
-						error=true;
-					}
-				dataReader.skip(pattern);
 			if (error) continue;
+			itype = dataReader.next();
+			dataReader.skip(pattern);
+			if (itype.equals(Util4NT.ATTRIBUTE))
+				attr = dataReader.next();
+			else
+				try {
+					p = dataReader.nextLong();
+				} catch (Exception e) {
+					e.printStackTrace();
+					System.err.println((lineno++) + ": predicate error");
+					dataReader.nextLine();
+					error = true;
+				}
+			if (error) continue;
+			dataReader.skip(pattern);
+
 			obj = null;
 			
 			if (lastID==null) {
