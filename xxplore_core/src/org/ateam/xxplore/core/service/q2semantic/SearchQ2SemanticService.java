@@ -295,6 +295,10 @@ public class SearchQ2SemanticService {
 					graphVertexes.add(getFacet(elem));
 				}
 			}
+			
+			for(GraphEdge edge : graphEdges) {
+				edge.decorationElement.URI = this.removeNum(edge.decorationElement.URI);
+			}
 				
 			result.add(new QueryGraph(null, graphVertexes, graphEdges));
 		}
@@ -306,6 +310,24 @@ public class SearchQ2SemanticService {
 		return result;
 	}
 	
+	protected String removeNum(String line) {
+		if( line.charAt(line.length() - 1) == ')' ) {
+			int pos = line.lastIndexOf('(');
+			if(pos == -1) return line;
+			
+			String num = line.substring(pos + 1,line.length() - 1);
+			
+			try {
+				Integer.parseInt(num);
+			}
+			catch (Exception e) {
+				return line;
+			}
+			
+			return line.substring(0,pos);
+		}
+		return line;
+	}
 	/**
 	 * use to add a member value isVistited.
 	 * @author jqchen
