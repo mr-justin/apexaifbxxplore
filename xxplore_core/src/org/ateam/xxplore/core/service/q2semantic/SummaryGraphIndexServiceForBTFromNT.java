@@ -530,7 +530,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						if(i==null) i = Integer.valueOf(0);
 						relCount.put(uri, i+1);
 						uri += "("+i.intValue()+")";
-						SummaryGraphElement r = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION, score);
+						SummaryGraphElement r = getElem(uri, SummaryGraphElement.RELATION);//new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION, score);
+						r.setCost(score);
 						splitGraph.addVertex(domain.getSource());
 						splitGraph.addVertex(range.getTarget());
 						splitGraph.addVertex(r);
