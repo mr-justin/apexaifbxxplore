@@ -21,6 +21,8 @@ public class Cursor implements Comparable {
 	
 	private Cursor m_parent;
 	
+	private int hashcode;
+	
 	public Cursor(){}
 
 	public Cursor(SummaryGraphElement element, SummaryGraphElement matchingElement, SummaryGraphEdge incomingedge, Cursor parent, String keyword, double cost){
@@ -32,6 +34,12 @@ public class Cursor implements Comparable {
 		m_keyword = keyword;
 		LinkedList<SummaryGraphEdge> path = new LinkedList<SummaryGraphEdge>();
 		getVisitedPath();
+		int code = 0;
+		
+		int code1 = parent == null ? 0 : parent.hashCode();
+		int code2 = incomingEdge == null ? 0 : incomingEdge.hashCode();
+		code += 7*m_matching.hashCode() + 13*(code1 + code2);
+		this.hashcode = code;
 //		m_path_set = new HashSet<SummaryGraphEdge>();
 //		for(SummaryGraphEdge edge : m_path) {
 //			m_path_set.add(edge);
@@ -133,17 +141,26 @@ public class Cursor implements Comparable {
 		if(!(m_matching.equals(other.getMatchingElement()))) {
 			return false;
 		}
+		
+//		if( !(this.m_element.equals(other.m_element))) {
+//			return false;
+//		}
+		// == 可能有问题，因为从开始节点到末节点不止只有一条路径 ==
 		if(!(m_path.equals(other.getPath()))) {
 			return false;
 		}
 		return true;
 	}
+	
+//	private int getHashCode() {
+//		int code = 0;
+//		code += 7*m_matching.hashCode() + 13*m_path.hashCode();
+//		return code;
+//	}
 
 	@Override
 	public int hashCode(){
-		int code = 0;
-		code += 7*m_matching.hashCode() + 13*m_path.hashCode();
-		return code;
+		return this.hashcode;
 	}
 
 	@Override
