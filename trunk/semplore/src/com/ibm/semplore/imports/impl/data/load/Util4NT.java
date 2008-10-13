@@ -153,9 +153,10 @@ public class Util4NT {
 		else System.out.println("null");
 	}
 	public static void main(String[] args) {
-		printTriple(processTripleLine("<a> <b> c."));
+		printTriple(processTripleLine("<a> <b> c ."));
 		printTriple(processTripleLine("<a> <b> \"c.\""));
 		printTriple(processTripleLine("<a> <b> c. ."));
 		printTriple(processTripleLine("<a> <b> \"c.\" ."));
+		printTriple(processTripleLine("<a> <b> \"c\" ."));
 	}
 }
