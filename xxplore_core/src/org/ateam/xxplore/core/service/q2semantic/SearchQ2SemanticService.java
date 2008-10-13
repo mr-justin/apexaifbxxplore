@@ -133,7 +133,8 @@ public class SearchQ2SemanticService {
 		
 		long end_time = System.currentTimeMillis();
 		
-		System.out.println("Time: " + (end_time - start_time));
+		System.out.println();
+		System.out.println("keywordIndex Time: " + (end_time - start_time)/1000.0 + "s");
 		
 		// == chenjunquan ==
 		//if the query string number is one. This scenario will be tackled individually.
@@ -180,26 +181,6 @@ public class SearchQ2SemanticService {
 			return result;
 		}
 		
-	
-		// == chenjunquan ==
-		
-//		KeywordIndexServiceForBT service = new KeywordIndexServiceForBT("d:/freebase-keywordIndex", false);
-//		
-//		Map<String, Collection<SummaryGraphElement>> tmp = service.searchKb(query, prune);
-//		
-//		
-//		elementsMap.putAll(tmp);
-		
-		// == chenjunquan ==
-//		for(String key : elementsMap.keySet()) {
-//			System.out.println("key " + key);
-//			Collection<SummaryGraphElement> tmp = elementsMap.get(key);
-//			for(SummaryGraphElement ele : tmp) {
-//				System.out.println(ele.getDatasource());
-//			}
-//		}
-//		System.out.println(elementsMap.size());
-		//search for topk querygraph
 		QueryInterpretationService inter = new QueryInterpretationService();
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
 		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
@@ -211,9 +192,11 @@ public class SearchQ2SemanticService {
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, mis, distance, topNbGraphs);
 		if(graphs == null) return null;
 		end_time = System.currentTimeMillis();
-		System.out.println("Time2:" + (end_time - start_time) );
 		
-		int count = 0;
+		System.out.println();
+		System.out.println("computeQueries time:" + (end_time - start_time)/1000.0 + "s" );
+		System.out.println();
+		
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
@@ -226,17 +209,10 @@ public class SearchQ2SemanticService {
 			{
 				from = edge.getSource();
 				to = edge.getTarget();
-				System.out.println(SummaryGraphUtil.getResourceUri(from));
-				System.out.println(SummaryGraphUtil.getResourceUri(to));
 				collectEdge(from, to, con2rel, con2attr, rel2con, attr2lit);
 			}
 			
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
-//			System.out.println(con2rel.size()+"\t"+rel2con.size()+"\t"+con2attr.size()+"\t"+attr2lit.size());
-			count ++;
-			if( count == 3 ) {
-				System.out.println("count");
-			}
 			for(Facet f: con2rel.keySet()) {
 				for(Facet r: con2rel.get(f)) {
 					if(rel2con.get(r) != null) {
@@ -452,6 +428,8 @@ public class SearchQ2SemanticService {
 
 		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
 		long end = System.currentTimeMillis();
-		System.out.println("Time consuming: "+(end - start)+" ms");
+		System.out.println();
+		System.out.println("Time consuming: "+(end - start) / 1000.0+" s");
+		System.out.println();
 	}
 }
