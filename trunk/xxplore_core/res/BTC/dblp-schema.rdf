@@ -1,0 +1,535 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+	xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Book">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Person">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#Thing">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Article">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/Document">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#Webpage">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#Class"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#editor">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/publisher">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#chapter_of">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cites">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/publisher">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#in_series">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cites">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#editor">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#in_series">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/publisher">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#isIncludedIn">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cites">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#editor">
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#isIncludedIn">
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#editor">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cites">
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/publisher">
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cites">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#editor">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#article_in_journal">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#at_organization">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#at_organization">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#in_series">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/publisher">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#author">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://www.w3.org/2002/07/owl#sameAs">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/homepage">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Webpage"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/workplaceHomepage">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2002/07/owl#Thing"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+	<range xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Webpage"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#editor">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#volume">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#number">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#ee">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#book_title">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#journal_name">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#month">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/relation">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#isbn">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#pages">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/identifier">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#number">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#ee">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#book_title">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cdrom">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#month">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/relation">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#gMonth">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/identifier">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Masters_Thesis"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#volume">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/identifier">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#ee">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#book_title">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cdrom">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#month">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/relation">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#isbn">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#gMonth">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://xmlns.com/foaf/0.1/name">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Person"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#pages">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#ee">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#book_title">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#chapter">
+	<rdf:type rdf:resource="http://www.w3.org/2002/07/owl#ObjectProperty"/>
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+	<Datatype xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://www.w3.org/2001/XMLSchema#label"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cdrom">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/relation">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#isbn">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Book_Chapter"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#pages">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#number">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/identifier">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#ee">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#book_title">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#cdrom">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/relation">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#gMonth">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#volume">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#journal_name">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#month">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Article"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#book_title">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://xmlns.com/foaf/0.1/Document"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#volume">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://purl.org/dc/elements/1.1/identifier">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#number">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#last_modified_date">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#ee">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#month">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#isbn">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#gMonth">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+<rdf:Description rdf:about="http://lsdis.cs.uga.edu/projects/semdis/opus#year">
+	<domain xmlns="http://www.w3.org/2000/01/rdf-schema#" rdf:resource="http://lsdis.cs.uga.edu/projects/semdis/opus#Doctoral_Dissertation"/>
+</rdf:Description>
+
+</rdf:RDF>
