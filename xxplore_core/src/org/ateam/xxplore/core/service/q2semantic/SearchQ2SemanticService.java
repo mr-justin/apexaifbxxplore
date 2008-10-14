@@ -278,11 +278,11 @@ public class SearchQ2SemanticService {
 				
 			result.add(new QueryGraph(null, graphVertexes, graphEdges));
 		}
-		for(int i=0; i<result.size(); i++)
-		{
-			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
-			result.get(i).print();
-		}
+//		for(int i=0; i<result.size(); i++)
+//		{
+//			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
+//			result.get(i).print();
+//		}
 		return result;
 	}
 	
