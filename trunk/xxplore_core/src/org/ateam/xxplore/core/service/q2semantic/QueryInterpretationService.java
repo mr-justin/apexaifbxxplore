@@ -636,7 +636,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						// if(n.getCost()==0)System.out.println("aaa");
 						if(n.getCost() > max) continue;
 						
-						// 判断这个节点是否被访问过.
 						if (!map.get(keyword).contains(n.getElement())) {
 							
 							expansionQueue.addCursor(n, keyword);
