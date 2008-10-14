@@ -51,7 +51,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger
 			.getLogger(QueryInterpretationService.class);
-	private static double DEFAULT_SCORE = 1000;
+	private static double DEFAULT_SCORE = 0.0;
 
 	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
 
@@ -105,17 +105,30 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		{
 			SummaryGraphElement source = edge.getSource();
 			SummaryGraphElement target = edge.getTarget();
-			if (source.getMatchingScore() != 0)
-				source.setTotalScore(1.0 / source.getMatchingScore());
-			else if(source.getEF() != 0)
-				source.setTotalScore(source.getEF());
-			else source.setTotalScore(this.DEFAULT_SCORE);
 			
-			if (target.getMatchingScore() != 0)
+			if(SummaryGraphUtil.getResourceUri(source).equals("http://lsdis.cs.uga.edu/projects/semdis/opus#Article") ||
+					SummaryGraphUtil.getResourceUri(target).equals("http://lsdis.cs.uga.edu/projects/semdis/opus#Article")) {
+				System.out.println("Hello world!");
+			}
+			if (source.getMatchingScore() != 0) {
+				source.setTotalScore(1.0 / source.getMatchingScore());
+			}
+			else if(source.getEF() != 0) {
+				source.setTotalScore(source.getEF());
+			}
+			else {
+				source.setTotalScore(this.DEFAULT_SCORE);
+			}
+			
+			if (target.getMatchingScore() != 0) {
 				target.setTotalScore(1.0 / target.getMatchingScore());
-			else if(target.getEF() != 0)
+			}
+			else if(target.getEF() != 0) {
 				target.setTotalScore(target.getEF());
-			else source.setTotalScore(this.DEFAULT_SCORE);
+			}
+			else {
+				target.setTotalScore(this.DEFAULT_SCORE);
+			}
 		}	
 
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph,elements, distance, k);
@@ -581,9 +594,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			Map<String, Collection<SummaryGraphElement>> elements,
 			int distance, int k) {
 
+		double max = Double.MAX_VALUE;
 		ExpansionQueue expansionQueue = new ExpansionQueue(elements);
 
 		List<Subgraph> subgraphList = new LinkedList<Subgraph>();
+		
+		List<Subgraph> output_list = new LinkedList<Subgraph>();
 
 		Set<String> keywords = elements.keySet();
 		HashMap<String, HashSet<SummaryGraphElement>> map = new HashMap<String, HashSet<SummaryGraphElement>>();
@@ -594,9 +610,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				// == chenjunquan ==
 				if (set == null) {
 					set = new HashSet<SummaryGraphElement>();
+					map.put(keyword, set);
 				}
 				set.add(element);
-				map.put(keyword, set);
 				// System.out.println(element.getTotalScore()+"\t"+keyword);
 				Cursor cursor = new Cursor(element, element, null, null,
 						keyword, element.getTotalScore());
@@ -608,11 +624,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		while (!expansionQueue.isEmpty()) {
 //			by kaifengxu
 			Cursor c = expansionQueue.pollRoundRobinMinCostCursor();
-//			Cursor c = expansionQueue.pollMinCostCursor();
-			// System.out.println(c.getLength());
+			
 			if (c!=null && c.getLength() < distance) {
 				SummaryGraphElement e = c.getElement();
-				// System.out.println(e.getResource().getClass());
 				String keyword = c.getKeyword();
 				if (e.getCursors() == null)
 					e.initCursorQueues(keywords);
@@ -620,38 +634,47 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 				// add new subgraphs
 				if (e.isConnectingElement()) {
-					// System.out.println("aaa");
-					Set<Set<Cursor>> combinations = e
-							.getNewCursorCombinations();
+					Set<Set<Cursor>> combinations = e.getNewCursorCombinations();
 					if (combinations != null && combinations.size() != 0) {
 						e.addExploredCursorCombinations(combinations);
 						e.clearNewCursorCombinations();
-						subgraphList.addAll(computeSubgraphs(e, combinations));
-//						System.out.println("Top " + subgraphList.size());
+						
+						Collection<Subgraph> sglist = computeSubgraphs(e, combinations);						
+						subgraphList.addAll(sglist);
+						
+						output_list.addAll(sglist);
+						
 						// check for top-k
 						if (subgraphList.size() >= k) {
-//							ArrayList<Subgraph> al = new ArrayList<Subgraph>(subgraphList);
 							Collections.sort(subgraphList);
-//							subgraphList = new LinkedList<Subgraph>(al);
 							
 							for(int i=k; i<subgraphList.size(); i++)
 								subgraphList.remove(i);
-							if (subgraphList.get(k - 1).getCost() < expansionQueue
-									.getApproximateMinCostOfCandidates())
-								return subgraphList;
+							
+							max = subgraphList.get(k-1).getCost();
+//							if (subgraphList.get(k - 1).getCost() < expansionQueue
+//									.getApproximateMinCostOfCandidates()) {
+//							
+//								Collections.sort(output_list);
+//								for(Subgraph sg : output_list) {
+//									System.out.println(sg.toString());
+//								}
+//								return subgraphList;
+//							}
 						}
 					}
 				}
 				else {
-					// System.out.println(e.getTotalScore()+"\t"+e.getType());
-					// System.out.println(expansionQueue.getApproximateMinCostOfCandidates());
-					// add cursors to queue
 					Collection<Cursor> neighbors;
 					neighbors = getNonVisitedNeighbors(iGraph, e, c);
 					// System.out.println(neighbors.size());
 					for (Cursor n : neighbors) {
 						// if(n.getCost()==0)System.out.println("aaa");
+						if(n.getCost() > max) continue;
+						
+						// 判断这个节点是否被访问过.
 						if (!map.get(keyword).contains(n.getElement())) {
+							
 							expansionQueue.addCursor(n, keyword);
 							map.get(keyword).add(n.getElement());
 						}
@@ -660,7 +683,11 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 			}
 		}
-
+		
+		Collections.sort(output_list);
+		for(Subgraph sg : output_list) {
+			System.out.println(sg.toString());
+		}
 		return subgraphList;
 	}
 
@@ -762,11 +789,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			if (edge.getTarget().equals(e)) {
 //				System.out.println(SummaryGraphUtil.getResourceUri(edge.getSource())+"\t"+edge.getSource().getTotalScore());
 				SummaryGraphElement source = edge.getSource();
-				if (!c.hasVisited(edge)) {
+				//if (!c.hasVisited(edge)) {
 					if (edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE) {
 						// update score: (EF/EDF*matchingscore) + mappingScore
-						source.setTotalScore(source.getTotalScore()
-								+ (iGraph.getEdgeWeight(edge)));
+						source.setTotalScore(source.getTotalScore());
 					}
 					nextCursor = new Cursor(source, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
@@ -774,18 +800,17 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							source.getTotalScore() + c.getCost());
 					// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
 					neighbors.add(nextCursor);
-				}
+				//}
 				// else System.out.println("aaa");
 			}
 			// outgoing
 			else if (edge.getSource().equals(e)) {
 //				System.out.println(SummaryGraphUtil.getResourceUri(edge.getTarget())+"\t"+edge.getTarget().getTotalScore());
 				SummaryGraphElement target = edge.getTarget();
-				if (!c.hasVisited(edge)) {
+				//if (!c.hasVisited(edge)) {
 					if (edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE) {
 						// update score: (EF/EDF*matchingscore) + mappingScore
-						target.setTotalScore(target.getTotalScore()
-								+ iGraph.getEdgeWeight(edge));
+						target.setTotalScore(target.getTotalScore());
 					}
 					nextCursor = new Cursor(target, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
@@ -793,7 +818,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							target.getTotalScore() + c.getCost());
 
 					neighbors.add(nextCursor);
-				}
+				//}
 			}
 
 		}
@@ -1123,17 +1148,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		  {
 		   if (m_queues == null || m_queues.size() == 0)
 		    return null;
-//		   PriorityQueue<Cursor>[] curs = new PriorityQueue[m_queues.size()];
-//		   m_queues.toArray(curs);
+		   
 		   int rr = roundRobin;
 		   
-		   while(m_queues.get(roundRobin).isEmpty() && roundRobin != rr-1)
-		    roundRobin = ++roundRobin%m_queues.size();
-		   if(roundRobin == rr-1)
-		    return null;
+		   while(m_queues.get(roundRobin).isEmpty() && roundRobin != rr-1) {
+			   roundRobin = (roundRobin + 1)%m_queues.size();
+		   }
+		   if(roundRobin == rr-1) {
+			   return null;
+		   }
 		   
 		   Cursor cur = m_queues.get(roundRobin).poll();
-		   roundRobin = ++roundRobin%m_queues.size();
+		   roundRobin = (roundRobin + 1)%m_queues.size();
 		   return cur;
 		  }
 		 
