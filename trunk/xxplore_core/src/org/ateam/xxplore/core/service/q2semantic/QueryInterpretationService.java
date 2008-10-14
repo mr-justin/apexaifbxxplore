@@ -189,8 +189,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					hasRange = false;
 					if (node.getType() == SummaryGraphElement.ATTRIBUTE
 							|| node.getType() == SummaryGraphElement.RELATION) {
-						System.out.println(((Property) node.getResource())
-								.getUri());
+						System.out.println(((Property) node.getResource()).getUri());
 						// Set<SummaryGraphEdge> edges = graph.edgesOf(node);
 						// System.out.println(edges.size());
 						for (SummaryGraphEdge edge : graph.edgeSet()) {
