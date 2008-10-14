@@ -56,7 +56,7 @@ public class LuceneMap {
 		if(writer != null)
 		{
 			Document doc = new Document();
-			doc.add(new Field(KEY_FIELD, key, Field.Store.YES, Field.Index.UN_TOKENIZED));
+			doc.add(new Field(KEY_FIELD, key, Field.Store.NO, Field.Index.NO_NORMS));
 			doc.add(new Field(VALUE_FIELD, data, Field.Store.YES, Field.Index.NO));
 			writer.addDocument(doc);
 		}

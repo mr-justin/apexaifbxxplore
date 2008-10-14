@@ -7,14 +7,14 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -52,9 +52,10 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		
 	public static String LABEL= "http://www.w3.org/2001/XMLSchema#label";
 	public static String INDIV2CON = "indiv2con";
+	public static String RELPOOL = "-splitRelPool";
 	public static double TOP_ELEMENT_SCORE = 2.0, SUBCLASS_ELEMENT_SCORE = 0;
 	
-	public LuceneMap splitRelPool;
+	public TreeMap<String, Integer> splitRelPool;
 	public LuceneMap indiv2con;
 	public TreeMap<String, Integer> propCount;
 	public TreeMap<String, Integer> conceptCount;
@@ -63,7 +64,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public int MAX_CACHE_SIZE = 10000000;
 	public int indivSize, propSize = 0;
 	public String dbpath;
-//	public BloomFilter bf;
+	public PrintWriter pw;
 	
 
 	public String getSubjectType(String pred, String obj)
@@ -104,53 +105,37 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		return "";
 	}
 
-	public void buildGraphs(String path) throws Exception
+	public void buildGraphs(String path, boolean bigNT) throws Exception
 	{	
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
 		elemPool = new TreeMap<String, SummaryGraphElement>();
-//		splitRelPool = new TreeMap<Integer, Double>();
-//		bf = new BloomFilter();
 
-		/*********using berkeleyDb***********/
-//		//preparation
-//		initDB(path);
-//		firstScan();
-//		closeDB();
-//		//summary graph
-//		initDB(path);
-//		secondScan();
-//		closeDB();
-//		//schema graph
-//		initDB(path);
-//		thirdScan();
-//		closeDB();
 		/*************using Lucenemap*******************/
-		//preparation
 		indiv2con = new LuceneMap();
-		splitRelPool = new LuceneMap();
+		splitRelPool = new TreeMap<String, Integer>();
+		if(bigNT) 
+			pw = new PrintWriter(new FileWriter(path+RELPOOL));
 		
-		firstScan(path);
+		//preparation true = re-create false = dont create
+		firstScan(path, true);
+		System.gc();
 		//summary graph
-		secondScan(path);
+		secondScan(path, bigNT);
+		System.gc();
 		//schema graph
 		thirdScan(path);
-
+		System.gc();
+		//split graph if necessary
+		if(bigNT) 
+			fourthSplit(path+RELPOOL);
+		System.gc();
 	}
-//	public void initDB(String dbpath) throws Exception
-//	{
-//		this.dbpath = dbpath;
-//		indiv2con = new BerkeleyDB();
-//		indiv2con.openDB(dbpath, INDIV2CON);
-//	}
-//	public void closeDB() throws Exception
-//	{
-//		indiv2con.closeDB();
-//	}
 	
-	public void firstScan(String path) throws Exception
+	public void firstScan(String path, boolean create) throws Exception
 	{
-		indiv2con.openWriter(path, true);
+		if(create)
+			indiv2con.openWriter(path, true);
 		System.out.println("=======firstScan==========");
 		indivSize = BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource)==null?
 				-1:BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource);
@@ -193,7 +178,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			}
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(CONCEPT))
 			{
-				indiv2con.put(subj, obj);
+				if(create)
+					indiv2con.put(subj, obj);
 				Integer i = conceptCount.get(obj);
 				if(i==null) i = Integer.valueOf(0);
 				conceptCount.put(obj, i+1);
@@ -207,24 +193,24 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		}
 		br.close();
 		System.out.println("indivSize: "+indivSize+"\tpropSize: "+propSize);
-		indiv2con.closeWriter();
+		if(create)
+			indiv2con.closeWriter();
 	}
 	
-	public void secondScan(String path) throws Exception
+	public void secondScan(String path, boolean bigNT) throws Exception
 	{
 		indiv2con.openSearcher(path);
-		splitRelPool.openWriter(path+"-splitRelPool", true);
 		System.out.println("=======secondScan==========");
 		cache = new TreeMap<String, Set<String>>();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
 		String line;
-		int count = 0;
+		int count = 0, hits = 0, miss = 0;
 		while((line = br.readLine())!=null)
 		{
 			count++;
 			if(count%10000==0)
-				System.out.println("2nd scan\t"+count+"\tcache:"+cache.size());
+				System.out.println("2nd scan\t"+count+"\tcache:"+cache.size()+"\thits:"+hits+"\tmiss:"+miss);
 			String[] part = Util4NT.processTripleLine(line);
 			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
 				continue;
@@ -238,45 +224,47 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			else obj = part[2].substring(1, part[2].length()-1);
 			if(!subj.startsWith("http") || !pred.startsWith("http"))
 				continue;
-//			if(pred.contains("omasJ96"))System.out.println(obj);
-//			System.out.println(getPredicateType(pred, obj));
-//			add relation between concepts of individuals
-//			if(getSubjectType(pred, obj).equals(INDIVIDUAL))System.out.println( getObjectType(pred, obj)+"\t"+getPredicateType(pred, obj));
+			
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(OBJPROP))
 			{
 				Set<String> subjParent = null, objParent = null;
 				subjParent = cache.get(subj);
-				try {
+				try 
+				{
 					if(subjParent == null || subjParent.size()==0)
+					{
 						subjParent = indiv2con.search(subj);
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-					continue;
-				}
+						miss++;
+					}
+					else hits++;
+				} catch (Exception e) { e.printStackTrace(); continue; }
+				
 				if(subjParent == null || subjParent.size()==0)
 				{
 					subjParent = new TreeSet<String>();
 					subjParent.add(NamedConcept.TOP.getUri());
 				}
-				cache.put(subj, subjParent);
+				if(!cache.containsKey(subj))
+					cache.put(subj, subjParent);
 //				System.out.println(obj);
 				objParent = cache.get(obj);
-				try {
+				try 
+				{
 					if(objParent == null || objParent.size()==0)
+					{
 						objParent = indiv2con.search(obj);
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-					continue;
-				}
+						miss++;
+					}
+					else hits++;
+				} catch (Exception e) { e.printStackTrace(); continue; }
 				
 				if(objParent == null || objParent.size()==0)
 				{
 					objParent = new TreeSet<String>();
 					objParent.add(NamedConcept.TOP.getUri());
 				}
-				cache.put(obj, objParent);
+				if(!cache.containsKey(obj))
+					cache.put(obj, objParent);
 				
 				while(cache.size()>=MAX_CACHE_SIZE)
 					cache.clear();
@@ -285,8 +273,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				{
 					SummaryGraphElement s = getElemFromUri(str);
 					for(String otr: objParent)
-					{//if(o.getEF()==TOP_ELEMENT_SCORE && objParent.size()!=1)System.out.println(objParent.size());
-						
+					{
 						SummaryGraphElement o = getElemFromUri(otr);
 						SummaryGraphElement p = getElem(pred, SummaryGraphElement.RELATION);
 						Integer i = propCount.get(pred);
@@ -295,29 +282,26 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						summaryGraph.addVertex(s);
 						summaryGraph.addVertex(o);
 						summaryGraph.addVertex(p);
-//						if(((Property)p.getResource()).getUri().contains("http://lsdis.cs.uga.edu/projects/semdis/opus#author") && ((NamedConcept)o.getResource()).getUri().contains("Person"))
-//							System.out.println("1");
+
 						SummaryGraphEdge edge1 = new SummaryGraphEdge(s, p, SummaryGraphEdge.DOMAIN_EDGE);
 						SummaryGraphEdge edge2 = new SummaryGraphEdge(p, o, SummaryGraphEdge.RANGE_EDGE);
 						if(!summaryGraph.containsEdge(edge1))
-						{
 							summaryGraph.addEdge(s, p, edge1);
-						}
 						if(!summaryGraph.containsEdge(edge2))
-						{
 							summaryGraph.addEdge(p, o, edge2);
-						}
+						
 						//used for split graph into different relation
-//						if(!str.equals("top") && !otr.equals("top"))
+						String key = str+pred+otr;
+						if(!bigNT)
 						{
-							String key = str+pred+otr;
-							splitRelPool.put(key, "");
+							Integer num = splitRelPool.get(key);
+							if(num == null) num = Integer.valueOf(0);
+							splitRelPool.put(key, num+1);
 						}
+						else pw.println(key);
 					}		
 				}
-				subjParent.clear();
 				subjParent = null;
-				objParent.clear();
 				objParent = null;
 			}
 //			add subclass relation between concepts
@@ -353,19 +337,16 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		writer summary graph
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj);
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF);
-
-		splitRelPool.closeWriter();
-		splitRelPool.openSearcher(path+"-splitRelPool");
-		splitRelPool.printAllTriplesNoDuplicated();
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph, splitRelPool, propSize);
-		System.out.println("write splitted summary graph");
-		writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
-		writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
-//		System.out.println("=========print summary===========");
-//		outputGraphInfo(summaryGraph);
-//		construct schema graph
+//		split summary graph
+		if(!bigNT)
+		{
+			Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph);
+			System.out.println("write splitted summary graph");
+			writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
+			writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
+		}
+		else pw.close();
 		indiv2con.closeSearcher();
-		splitRelPool.closeSearcher();
 	}
 	
 	public void thirdScan(String path) throws Exception
@@ -475,6 +456,36 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		indiv2con.closeSearcher();
 	}
 	
+	public void fourthSplit(String relPool) throws Exception
+	{
+		new LineSortFile(relPool).sortFile();
+		
+		if(splitRelPool == null || splitRelPool.size() != 0)
+			splitRelPool = new TreeMap<String, Integer>();
+		BufferedReader br = new BufferedReader(new FileReader(relPool));
+		String line, oldLine = null;
+		int count = 0, num = 0;
+		while((line = br.readLine())!= null)
+		{
+			if(++count%10000==0)
+				System.out.println("fourth split\t"+count);
+			
+			if(oldLine != null && !oldLine.equals(line))
+			{
+				splitRelPool.put(oldLine, num);
+				num = 0;
+			}
+			num++;
+			oldLine = line;
+		}
+		splitRelPool.put(oldLine, num);
+			
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(readGraphIndexFromFile(BuildQ2SemanticService.summaryObj));
+		System.out.println("write splitted summary graph");
+		writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
+		writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
+	}
+	
 	public SummaryGraphElement getElemFromUri(String uri)
 	{
 		if(uri.equals(NamedConcept.TOP.getUri()))
@@ -513,8 +524,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		elemPool.put(type+uri, res);
 		return res;
 	}
-	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, LuceneMap map, int propSize) throws Exception
-	{
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph) throws Exception
+	{	
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		TreeMap<String, Integer> relCount = new TreeMap<String, Integer>();
 		for(SummaryGraphEdge domain: graph.edgeSet())
@@ -526,16 +537,17 @@ public class SummaryGraphIndexServiceForBTFromNT {
 					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && domain.getTarget().equals(range.getSource()))
 					{
 						String key = SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget());
-						int num = splitRelPool.searchNum(key);
-						if(num==0) continue;
+						Integer num = splitRelPool.get(key);
+						if(num == null) continue;
 //						System.out.println(key+"\t"+num);
-						double score = (double)num/propSize;
+						double score = num.doubleValue()/propSize;
+//						System.out.println(score);
 						String uri = SummaryGraphUtil.getResourceUri(domain.getTarget());
 						Integer i = relCount.get(uri);
 						if(i==null) i = Integer.valueOf(0);
 						relCount.put(uri, i+1);
 						uri += "("+i.intValue()+")";
-						SummaryGraphElement r = getElem(uri, SummaryGraphElement.RELATION);//new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION, score);
+						SummaryGraphElement r = getElem(uri, SummaryGraphElement.RELATION);
 						r.setCost(score);
 						splitGraph.addVertex(domain.getSource());
 						splitGraph.addVertex(range.getTarget());
@@ -553,42 +565,6 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		relCount.clear();
 		relCount = null;
 		return splitGraph;
-//		for(SummaryGraphElement prop: graph.vertexSet())
-//		{
-//			if(prop.getType() == SummaryGraphElement.RELATION)
-//			{
-//				String propUri = ((Property)prop.resource).getUri();
-//				ArrayList<SummaryGraphElement> domainList = new ArrayList<SummaryGraphElement>();
-//				ArrayList<SummaryGraphElement> rangeList = new ArrayList<SummaryGraphElement>();
-//
-//				for(SummaryGraphEdge domain: graph.edgeSet())
-//					if(domain.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE) && prop.equals(domain.getTarget()))
-//						domainList.add(domain.getSource());
-//				for(SummaryGraphEdge range: graph.edgeSet())
-//					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && prop.equals(range.getSource()))
-//						rangeList.add(range.getTarget());
-//				
-//				double totalScore = 0;
-//				for(int i=0; i<domainList.size(); i++)
-//					totalScore += rangeList.size()*domainList.get(i).getEF();
-//				for(int i=0; i<rangeList.size(); i++)
-//					totalScore += domainList.size()*rangeList.get(i).getEF();
-//				
-//				for(int i=0; i<domainList.size(); i++)
-//					for(int j=0; j<rangeList.size(); j++)
-//					{
-//						SummaryGraphElement newProp = getElem(propUri+"("+(i*rangeList.size()+j)+")", SummaryGraphElement.RELATION);
-//						newProp.setCost((domainList.get(i).getEF()+rangeList.get(j).getEF())/totalScore);
-//						splitGraph.addVertex(domainList.get(i));
-//						splitGraph.addVertex(rangeList.get(j));
-//						splitGraph.addVertex(newProp);
-//						SummaryGraphEdge edge1 = new SummaryGraphEdge(domainList.get(i), newProp, SummaryGraphEdge.DOMAIN_EDGE);
-//						SummaryGraphEdge edge2 = new SummaryGraphEdge(newProp, rangeList.get(j), SummaryGraphEdge.RANGE_EDGE);
-//						splitGraph.addEdge(domainList.get(i), newProp, edge1);
-//						splitGraph.addEdge(newProp, rangeList.get(j), edge2);
-//					}
-//			}
-//		}
 	
 	}
 	
