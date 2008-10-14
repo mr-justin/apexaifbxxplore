@@ -25,7 +25,7 @@ public class LineSortFile extends File {
 	
 	private String fileName;
 	
-	private int maxSingleFileSizeInKB = 50 * 1024;
+	private int maxSingleFileSizeInKB = 256 * 1024;
 	private int maxMergeNumberOfFile = 20;
 	
 	private boolean deleteTempFileAfterFinish = true;

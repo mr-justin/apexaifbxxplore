@@ -148,9 +148,9 @@ public class BuildQ2SemanticService {
 	 * @throws Exception
 	 */
 	public static void main(String[] args) throws Exception {
-		if(args.length!=3)
+		if(args.length!=4)
 		{
-			System.err.println("java BuildQ2SemanticService configFilePath(String) removeBlankNode(boolean) sortNTFile(boolean)");
+			System.err.println("java BuildQ2SemanticService configFilePath(String) removeBlankNode(boolean) sortNTFile(boolean) isBigNT(boolean)");
 			return;
 		}
 		long start = System.currentTimeMillis();
@@ -167,12 +167,12 @@ public class BuildQ2SemanticService {
 		
 //		build graphs
 		SummaryGraphIndexServiceForBTFromNT wawa = new SummaryGraphIndexServiceForBTFromNT();
-		wawa.buildGraphs(indexRoot);//db index location
+		wawa.buildGraphs(indexRoot, Boolean.valueOf(args[3]));//db index location
 		
 //		build keywordindex
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = wawa.readGraphIndexFromFile(schemaObj);
 		KeywordIndexServiceForBTFromNT lala = new KeywordIndexServiceForBTFromNT(keywordIndex, true);
-		lala.indexKeywords(source, datasource, graph, null);
+		lala.indexKeywords(source, datasource, graph, null, Boolean.valueOf(args[3]));
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Time customing: "+(end-start)+" ms");
