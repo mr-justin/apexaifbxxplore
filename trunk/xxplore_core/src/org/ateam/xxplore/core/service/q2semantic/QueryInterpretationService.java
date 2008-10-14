@@ -49,8 +49,7 @@ import org.xmedia.oms.query.Variable;
 
 public class QueryInterpretationService implements IQueryInterpretationService {
 
-	private static Logger s_log = Logger
-			.getLogger(QueryInterpretationService.class);
+	private static Logger s_log = Logger.getLogger(QueryInterpretationService.class);
 	private static double DEFAULT_SCORE = 0.0;
 
 	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
@@ -60,7 +59,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private Set<SummaryGraphElement> m_startingElements = new HashSet<SummaryGraphElement>();
 
-	private Map<String, Pseudograph<SummaryGraphElement, SummaryGraphEdge>> m_DsGraphMap = new HashMap<String, Pseudograph<SummaryGraphElement, SummaryGraphEdge>>();
+	private Map<String, Pseudograph<SummaryGraphElement, SummaryGraphEdge>> m_DsGraphMap = 
+		new HashMap<String, Pseudograph<SummaryGraphElement, SummaryGraphEdge>>();
 
 	public void callService(IServiceListener listener, Object... params) {
 		// TODO Auto-generated method stub
@@ -89,8 +89,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			Map<String, Collection<SummaryGraphElement>> elements,
 			MappingIndexService index, int distance, int k) {
 
-		if (elements == null)
+		if (elements == null) {
 			return null;
+		}
 		
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
 
@@ -99,37 +100,43 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
 
 
+		for(SummaryGraphElement ele : resourceGraph.vertexSet()) {
+			if(ele.getMatchingScore() != 0) {
+				ele.setTotalScore(1.0 / ele.getMatchingScore());
+			}
+			else if(ele.getEF() != 0) {
+				ele.setTotalScore(ele.getEF());
+			}
+			else {
+				ele.setTotalScore(this.DEFAULT_SCORE);
+			}
+		}
 		 
-		// by kaifengxu
-		for(SummaryGraphEdge edge: resourceGraph.edgeSet())
-		{
-			SummaryGraphElement source = edge.getSource();
-			SummaryGraphElement target = edge.getTarget();
-			
-			if(SummaryGraphUtil.getResourceUri(source).equals("http://lsdis.cs.uga.edu/projects/semdis/opus#Article") ||
-					SummaryGraphUtil.getResourceUri(target).equals("http://lsdis.cs.uga.edu/projects/semdis/opus#Article")) {
-				System.out.println("Hello world!");
-			}
-			if (source.getMatchingScore() != 0) {
-				source.setTotalScore(1.0 / source.getMatchingScore());
-			}
-			else if(source.getEF() != 0) {
-				source.setTotalScore(source.getEF());
-			}
-			else {
-				source.setTotalScore(this.DEFAULT_SCORE);
-			}
-			
-			if (target.getMatchingScore() != 0) {
-				target.setTotalScore(1.0 / target.getMatchingScore());
-			}
-			else if(target.getEF() != 0) {
-				target.setTotalScore(target.getEF());
-			}
-			else {
-				target.setTotalScore(this.DEFAULT_SCORE);
-			}
-		}	
+//		// by kaifengxu
+//		for(SummaryGraphEdge edge: resourceGraph.edgeSet()){
+//			SummaryGraphElement source = edge.getSource();
+//			SummaryGraphElement target = edge.getTarget();
+//			
+//			if (source.getMatchingScore() != 0) {
+//				source.setTotalScore(1.0 / source.getMatchingScore());
+//			}
+//			else if(source.getEF() != 0) {
+//				source.setTotalScore(source.getEF());
+//			}
+//			else {
+//				source.setTotalScore(this.DEFAULT_SCORE);
+//			}
+//			
+//			if (target.getMatchingScore() != 0) {
+//				target.setTotalScore(1.0 / target.getMatchingScore());
+//			}
+//			else if(target.getEF() != 0) {
+//				target.setTotalScore(target.getEF());
+//			}
+//			else {
+//				target.setTotalScore(this.DEFAULT_SCORE);
+//			}
+//		}	
 
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph,elements, distance, k);
 		
@@ -139,12 +146,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //		}
 
 
-		if ((subgraphs == null) || (subgraphs.size() == 0))
+		if ((subgraphs == null) || (subgraphs.size() == 0)) {
 			return null;
+		}
 		LinkedList<Subgraph> results = new LinkedList<Subgraph>();
-		for (int i = 0; i < k && i < subgraphs.size(); i++)
+		for (int i = 0; i < k && i < subgraphs.size(); i++) {
 			results.add(((List<Subgraph>) subgraphs).get(i));
-
+		}
+		
 		return results;
 	}
 
@@ -260,11 +269,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> retrieveSummaryGraphs(
 			Map<String, Collection<SummaryGraphElement>> elements) {
-		if (elements == null || elements.size() == 0)
+		if (elements == null || elements.size() == 0) {
 			return null;
-		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> result = new ArrayList<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>();
-		Collection<Collection<SummaryGraphElement>> gElements = elements
-				.values();
+		}
+		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> result = 
+			new ArrayList<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>();
+		Collection<Collection<SummaryGraphElement>> gElements = elements.values();
 		// retrieve data source URI
 		Set<String> dsURISet = new HashSet<String>();
 		
@@ -280,10 +290,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			// ============================by kaifengxu
 			if (m_DsGraphMap.containsKey(dsURI))
 				continue;
-			String dsDFileName = SearchQ2SemanticService.summaryObjSet
-			.get(dsURI);// SesameDao.root+dsURI+"-summary.obj";
-			// String dsDFileName =
-			// IndexingDatawebService.getSummaryGraphFilePath(dsURI);
+			String dsDFileName = SearchQ2SemanticService.summaryObjSet.get(dsURI);
 
 			File graphIndex = new File(dsDFileName);
 			ObjectInputStream in;
@@ -294,8 +301,9 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				//					graph = splitSummaryGraph(graph);
 				// System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
 				// ================by kaifengxu
-				for (SummaryGraphElement elem : graph.vertexSet())
+				for (SummaryGraphElement elem : graph.vertexSet()) {
 					elem.setDatasource(dsURI);
+				}
 				result.add(graph);
 				in.close();
 			} catch (FileNotFoundException ex) {
@@ -312,42 +320,27 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 		return result;
 	}
-	
-//	public static void main(String[] args) {
-//		QueryInterpretationService q = new QueryInterpretationService();
-//		SummaryGraphIndexServiceForBTFromNT s = new SummaryGraphIndexServiceForBTFromNT();
-//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = s.readGraphIndexFromFile("D:\\semplore\\summaryObjsRoot\\freebase-summary.obj");
-//		System.out.println("============before");
-//		for(SummaryGraphEdge edge: graph.edgeSet())
-//			System.out.println(edge.toString());
-//		graph = q.splitSummaryGraph(graph);
-//		System.out.println("============after");
-//		for(SummaryGraphEdge edge: graph.edgeSet())
-//			System.out.println(edge.toString());
-//		s.writeSummaryGraph(graph, "D:\\semplore\\summaryObjsRoot\\freebasesplit-summary.obj");
-//	}
 
 	private void updateDsCoverage(String ds) {
 		Integer cover = m_datasources.get(ds);
 		if (cover != null) {
 			cover = new Integer(cover.intValue() + 1);
-		} else
+		} else {
 			m_datasources.put(ds, new Integer(1));
+		}
 	}
 
 	private int getDsCoverage(SummaryGraphElement e) {
 		String ds = e.getDatasource();
-		// System.out.println(ds);
-		// Emergency.checkPrecondition(ds != null,
-		// "No datasource stored for element:" + e);
 		return m_datasources.get(ds).intValue();
 	}
 
 	private void getAugmentedSummaryGraphs(
 			Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs,
 			Map<String, Collection<SummaryGraphElement>> keywords) {
-		if (graphs == null || graphs.size() == 0)
+		if (graphs == null || graphs.size() == 0) {
 			return;
+		}
 		Set<String> keys = keywords.keySet();
 		for (String key : keys) {
 			m_startingElements.addAll(keywords.get(key));
@@ -367,8 +360,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				if (e instanceof SummaryGraphValueElement) {
 					// =============by kaifengxu
 					String ds = e.getDatasource();
-					Map<IDataProperty, Collection<INamedConcept>> neighbors = ((SummaryGraphValueElement) e)
-							.getNeighbors();
+					Map<IDataProperty, Collection<INamedConcept>> neighbors = 
+						((SummaryGraphValueElement) e).getNeighbors();
 					Set<IDataProperty> props = neighbors.keySet();
 					Iterator<IDataProperty> propIter = props.iterator();
 					
@@ -407,10 +400,8 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							graph.addVertex(cvertex);
 							graph.addVertex(pvertex);
 							graph.addVertex(e);
-							graph.addEdge(domain.getSource(), domain
-									.getTarget(), domain);
-							graph.addEdge(range.getSource(), range.getTarget(),
-									range);
+							graph.addEdge(domain.getSource(), domain.getTarget(), domain);
+							graph.addEdge(range.getSource(), range.getTarget(), range);
 						}
 					}
 				}
@@ -448,13 +439,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS));
 		}
 		
-		
-
-		if (mappings.size() == 0) {
-			System.out.println("There is no mapping!");
-			return null;
-		}
-		
 		for (Mapping m : mappings) {
 			SummaryGraphElement source = hm.get(m.getSource());
 			SummaryGraphElement target = hm.get(m.getTarget());
@@ -466,25 +450,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 		return iGraph;
 	}
-	
-//	public void addvertex(Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs,
-//			WeightedPseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph) {
-//		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
-//			
-//			for (SummaryGraphElement v : graph.vertexSet()) {
-//				// if(v.getResource().getClass().toString().contains("org.xmedia.oms.model.impl.Literal"))
-//				// if(v.getResource().toString().contains("catch with a net"))System.out.println(v.getResource().toString());;
-//				iGraph.addVertex(v);
-//			}
-//			for (SummaryGraphEdge e : graph.edgeSet()) {
-//				// if(!graph.vertexSet().contains(e.getSource()) ||
-//				// !graph.vertexSet().contains(e.getTarget()))
-//				// System.err.print("not contain");
-//				iGraph.addEdge(e.getSource(), e.getTarget(), e);
-//			}
-//		}
-//		
-//	}
 
 	public Set<String> getSuggestion(List<String> concept, String ds,
 			MappingIndexService index) throws Exception {
@@ -1134,9 +1099,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		private boolean isEmpty() {
 			if (m_queue.isEmpty())
 				return true;
-//			for (PriorityQueue<Cursor> q : m_queues)
-//				System.out.print(q.size() + "\t");
-//			System.out.println();
 			for (PriorityQueue<Cursor> q : m_queues) {
 				if (!q.isEmpty())
 					return false;
@@ -1219,7 +1181,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				if(q.size()>0)
 				minCost += q.peek().getCost();
 			}
-			// System.out.println("aaa");
 			return minCost;
 		}
 	}
