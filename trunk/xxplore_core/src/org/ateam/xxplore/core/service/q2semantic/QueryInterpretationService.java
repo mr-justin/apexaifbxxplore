@@ -51,6 +51,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger.getLogger(QueryInterpretationService.class);
 	private static double DEFAULT_SCORE = 0.0;
+	private static double EDGE_SCORE = 0.5;
 
 	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
 
@@ -110,6 +111,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			else {
 				ele.setTotalScore(this.DEFAULT_SCORE);
 			}
+			ele.setTotalScore(ele.getTotalScore() + this.EDGE_SCORE);
 		}
 		 
 //		// by kaifengxu
@@ -563,7 +565,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 		List<Subgraph> subgraphList = new LinkedList<Subgraph>();
 		
-		List<Subgraph> output_list = new LinkedList<Subgraph>();
+//		List<Subgraph> output_list = new LinkedList<Subgraph>();
 
 		Set<String> keywords = elements.keySet();
 		HashMap<String, HashSet<SummaryGraphElement>> map = new HashMap<String, HashSet<SummaryGraphElement>>();
@@ -606,7 +608,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						Collection<Subgraph> sglist = computeSubgraphs(e, combinations);						
 						subgraphList.addAll(sglist);
 						
-						output_list.addAll(sglist);
+//						output_list.addAll(sglist);
 						
 						// check for top-k
 						if (subgraphList.size() >= k) {
@@ -647,10 +649,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 		}
 		
-		Collections.sort(output_list);
-		for(Subgraph sg : output_list) {
-			System.out.println(sg.toString());
-		}
+//		Collections.sort(output_list);
+//		for(Subgraph sg : output_list) {
+//			System.out.println(sg.toString());
+//		}
 		return subgraphList;
 	}
 
@@ -753,15 +755,20 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //				System.out.println(SummaryGraphUtil.getResourceUri(edge.getSource())+"\t"+edge.getSource().getTotalScore());
 				SummaryGraphElement source = edge.getSource();
 				//if (!c.hasVisited(edge)) {
-					if (edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE) {
-						// update score: (EF/EDF*matchingscore) + mappingScore
-						source.setTotalScore(source.getTotalScore());
+					if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+						nextCursor = new Cursor(source, c.getMatchingElement(),
+								edge, c, c.getKeyword(),
+								// need to multiply with coverage
+								source.getTotalScore());
+						// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
 					}
-					nextCursor = new Cursor(source, c.getMatchingElement(),
-							edge, c, c.getKeyword(),
-							// need to multiply with coverage
-							source.getTotalScore() + c.getCost());
-					// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
+					else {
+						nextCursor = new Cursor(source, c.getMatchingElement(),
+								edge, c, c.getKeyword(),
+								// need to multiply with coverage
+								source.getTotalScore() + c.getCost());
+						// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
+					}
 					neighbors.add(nextCursor);
 				//}
 				// else System.out.println("aaa");
@@ -771,14 +778,19 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //				System.out.println(SummaryGraphUtil.getResourceUri(edge.getTarget())+"\t"+edge.getTarget().getTotalScore());
 				SummaryGraphElement target = edge.getTarget();
 				//if (!c.hasVisited(edge)) {
-					if (edge.getEdgeLabel() == SummaryGraphEdge.MAPPING_EDGE) {
-						// update score: (EF/EDF*matchingscore) + mappingScore
-						target.setTotalScore(target.getTotalScore());
+
+					if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+						nextCursor = new Cursor(target, c.getMatchingElement(),
+								edge, c, c.getKeyword(),
+								// need to multiply with coverage
+								target.getTotalScore());
 					}
-					nextCursor = new Cursor(target, c.getMatchingElement(),
-							edge, c, c.getKeyword(),
-							// need to multiply with coverage
-							target.getTotalScore() + c.getCost());
+					else {
+						nextCursor = new Cursor(target, c.getMatchingElement(),
+								edge, c, c.getKeyword(),
+								// need to multiply with coverage
+								target.getTotalScore() + c.getCost());
+					}
 
 					neighbors.add(nextCursor);
 				//}
