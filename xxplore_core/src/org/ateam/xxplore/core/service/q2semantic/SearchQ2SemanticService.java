@@ -83,6 +83,11 @@ public class SearchQ2SemanticService {
 		}
 		return res;
 	}
+	
+	
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
+		return this.getPossibleGraphs(keywordList, topNbGraphs, 0.95, 5);
+	}
 
 	/**
 	 * This method returns an ordered list of QueryGraph objects (most suitable at the head of the list) that 
@@ -273,37 +278,19 @@ public class SearchQ2SemanticService {
 			}
 			
 			for(GraphEdge edge : graphEdges) {
-				edge.decorationElement.URI = this.removeNum(edge.decorationElement.URI);
+				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
 			}
 				
 			result.add(new QueryGraph(null, graphVertexes, graphEdges));
 		}
-//		for(int i=0; i<result.size(); i++)
-//		{
-//			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
-//			result.get(i).print();
-//		}
+		for(int i=0; i<result.size(); i++)
+		{
+			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
+			result.get(i).print();
+		}
 		return result;
 	}
-	
-	protected String removeNum(String line) {
-		if( line.charAt(line.length() - 1) == ')' ) {
-			int pos = line.lastIndexOf('(');
-			if(pos == -1) return line;
-			
-			String num = line.substring(pos + 1,line.length() - 1);
-			
-			try {
-				Integer.parseInt(num);
-			}
-			catch (Exception e) {
-				return line;
-			}
-			
-			return line.substring(0,pos);
-		}
-		return line;
-	}
+
 	/**
 	 * use to add a member value isVistited.
 	 * @author jqchen
