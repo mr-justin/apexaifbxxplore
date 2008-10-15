@@ -82,7 +82,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 
 	public String getObjectType(String pred, String obj)
 	{
-		if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]))
+		if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj))
 			return CONCEPT;
 		else if(getPredicateType(pred, obj).equals(OBJPROP))
 			return INDIVIDUAL;
