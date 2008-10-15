@@ -72,7 +72,8 @@ public class KeywordIndexServiceForBTFromNT{
 	private static final String LITERAL_FIELD = "value";
 	private static final String DOMAIN_FIELD = "domain";
 	private static final String RANGE_FIELD = "range";
-	private static final String HASHCODE_FIELD = "hashcode";
+	private static final String HASHCODE_FIELD_1 = "hashcode1";
+	private static final String HASHCODE_FIELD_2 = "hashcode2";
 
 	private  String m_IndexDir = null;
 	
@@ -316,7 +317,6 @@ public class KeywordIndexServiceForBTFromNT{
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		TreeSet<String> litSet = new TreeSet<String>();
 		TreeSet<String> concept = new TreeSet<String>();
-		TreeSet<Integer> indivSet = new TreeSet<Integer>();
 		TreeMap<String, String> attrlit = new TreeMap<String, String>();
 		String cur=null, pre=null;
 		String line;
@@ -339,17 +339,16 @@ public class KeywordIndexServiceForBTFromNT{
 			if(pre!=null && !pre.equals(cur))
 			{
 				if(isIndiv)
-					writeDocument(concept, attrlit, indivSet, writer,ds);
+					writeDocument(concept, attrlit, litSet, writer,ds);
 				isIndiv = true;
 				concept.clear();
-				concept = new TreeSet<String>();
 				attrlit.clear();
-				attrlit = new TreeMap<String, String>();
+				litSet.clear();
 			}
 //			System.out.println("="+part[2]);
 			if(isIndiv)
 			{
-				if(part[1].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[1].equals("http://www.w3.org/2002/07/owl#Class"))
+				if(part[2].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[2].equals("http://www.w3.org/2002/07/owl#Class"))
 					isIndiv = false;
 				else if(part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"))
 					concept.add(part[2]);//<.,..>
@@ -363,21 +362,16 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 //		write the rest
 		if(isIndiv)
-			writeDocument(concept, attrlit, indivSet, writer, ds);
-		indivSet.clear();
-		indivSet = null;
-//		index literal
-		for(String lit: litSet)
-		{
-			Document doc = new Document();
-			doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-			doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
-			doc.add(new Field(LABEL_FIELD, lit, Field.Store.YES, Field.Index.TOKENIZED));
-			writer.addDocument(doc);
-		}
+			writeDocument(concept, attrlit, litSet, writer, ds);
+		concept.clear();
+		concept = null;
+		attrlit.clear();
+		attrlit = null;
+		litSet.clear();
+		litSet = null;
 	}
 	
-	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, String ds) throws Exception
+	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<String> litSet, IndexWriter writer, String ds) throws Exception
 	{
 		IndexSearcher searcher = new IndexSearcher(m_IndexDir);
 		for(String con: concept)
@@ -387,18 +381,36 @@ public class KeywordIndexServiceForBTFromNT{
 				{
 					String lit = attrlit.get(attr);
 					int hashcode = bf.hashRabin(lit+attr+con);
-					if(indivSet.contains(Integer.valueOf(hashcode)))
+					Term term = new Term(HASHCODE_FIELD_1, String.valueOf(hashcode));
+					TermQuery query = new TermQuery(term);
+					Hits hits = searcher.search(query);
+					if(hits != null && hits.length() != 0)
 						continue;
-					else
-						indivSet.add(Integer.valueOf(hashcode));
 					Document doc = new Document();
 					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
 					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
 					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
 					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(HASHCODE_FIELD_1, String.valueOf(hashcode), Field.Store.YES, Field.Index.UN_TOKENIZED));
 					writer.addDocument(doc);
 					
 				}
+		}
+//		index literal
+		for(String lit: litSet)
+		{
+			int hashcode = bf.hashRabin(lit);
+			Term term = new Term(HASHCODE_FIELD_2, String.valueOf(hashcode));
+			TermQuery query = new TermQuery(term);
+			Hits hits = searcher.search(query);
+			if(hits != null && hits.length() != 0)
+				continue;
+			Document doc = new Document();
+			doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+			doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
+			doc.add(new Field(LABEL_FIELD, lit, Field.Store.YES, Field.Index.TOKENIZED));
+			doc.add(new Field(HASHCODE_FIELD_2, String.valueOf(hashcode), Field.Store.YES, Field.Index.UN_TOKENIZED));
+			writer.addDocument(doc);
 		}
 		searcher.close();
 	}

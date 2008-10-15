@@ -71,8 +71,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	{
 		if( (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && obj.equals(BuildQ2SemanticService.rdfsEdge[8])) || pred.equals(BuildQ2SemanticService.rdfsEdge[1]))
 			return CONCEPT;
-		else if( (pred.equals(BuildQ2SemanticService.rdfsEdge[2]) && obj.equals(BuildQ2SemanticService.rdfsEdge[7])) || pred.equals(BuildQ2SemanticService.rdfsEdge[3])
-				|| pred.equals(BuildQ2SemanticService.rdfsEdge[4]))
+		else if( (pred.equals(BuildQ2SemanticService.rdfsEdge[4]) && obj.equals(BuildQ2SemanticService.rdfsEdge[7])) || pred.equals(BuildQ2SemanticService.rdfsEdge[2])
+				|| pred.equals(BuildQ2SemanticService.rdfsEdge[3]))
 			return PROPERTY;
 		else if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) || getPredicateType(pred, obj).equals(OBJPROP) || getPredicateType(pred, obj).equals(DATATYPEPROP))
 			return INDIVIDUAL;
