@@ -423,6 +423,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
 			for(SummaryGraphElement ele : graph.vertexSet()) {
 				String uri = SummaryGraphUtil.getResourceUri(ele);
+				uri = SummaryGraphUtil.removeNum(uri);
 				hm.put(uri, ele);
 				iGraph.addVertex(ele);
 			}
@@ -441,8 +442,11 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 		
 		for (Mapping m : mappings) {
-			SummaryGraphElement source = hm.get(m.getSource());
-			SummaryGraphElement target = hm.get(m.getTarget());
+			String source_uri = SummaryGraphUtil.removeGtOrLs(m.getSource());
+			String target_uri = SummaryGraphUtil.removeGtOrLs(m.getTarget());
+			if(source_uri.equals(target_uri)) continue;
+			SummaryGraphElement source = hm.get(source_uri);
+			SummaryGraphElement target = hm.get(target_uri);
 			
 			if(source != null && target != null) {
 				SummaryGraphEdge edge = new SummaryGraphEdge(source, target, SummaryGraphEdge.MAPPING_EDGE);
