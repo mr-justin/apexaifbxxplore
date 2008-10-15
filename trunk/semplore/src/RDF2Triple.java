@@ -19,6 +19,21 @@ public class RDF2Triple {
 		String part;
 		String line; 
 		while ((part = parser.nextPart())!=null) {
+			if (part.equals("Concepts")) {
+				parser.nextLine("");
+				while (true) {
+					line = parser.nextLine(".");
+					if (line.equals("")) break;
+					int pos = line.indexOf(" :: ");
+					if (pos<0) continue;
+					String i = line.substring(0, pos);
+					String t = line.substring(pos+4);
+					if (t.endsWith(".")) t = t.substring(0, t.length()-1);
+					System.out.println(String.format("<%s>\t%s\t<%s> .", 
+							parser.parseURI(i), "<http://www.w3.org/2000/01/rdf-schema#subClassOf>", parser.parseURI(t)));
+				}
+			}
+			
 			if (part.equals("Instances"))
 				while (true) {
 					line = parser.nextLine(".");
