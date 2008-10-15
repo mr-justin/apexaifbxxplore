@@ -16,5 +16,30 @@ public class SummaryGraphUtil {
 		}
 	}
 	
+	public static String removeNum(String line) {
+		if( line.charAt(line.length() - 1) == ')' ) {
+			int pos = line.lastIndexOf('(');
+			if(pos == -1) return line;
+			
+			String num = line.substring(pos + 1,line.length() - 1);
+			
+			try {
+				Integer.parseInt(num);
+			}
+			catch (Exception e) {
+				return line;
+			}
+			
+			return line.substring(0,pos);
+		}
+		return line;
+	}
 	
+	public static String removeGtOrLs(String line) {
+		if(line == null || line.length() == 0) return line;
+		
+		int begin = line.charAt(0) == '<' ? 1 : 0;
+		int end = line.charAt(line.length() - 1) == '>' ? line.length() - 1 : line.length();
+		return line.substring(begin,end);
+	}
 }
