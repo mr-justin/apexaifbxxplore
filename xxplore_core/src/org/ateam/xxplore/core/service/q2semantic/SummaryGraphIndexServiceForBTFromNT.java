@@ -61,7 +61,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
-	public int MAX_CACHE_SIZE = 10000000;
+	public int MAX_CACHE_SIZE = 1000000; 
 	public int indivSize, propSize = 0;
 	public String dbpath;
 	public PrintWriter pw;
