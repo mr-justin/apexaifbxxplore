@@ -476,18 +476,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(
 				SummaryGraphEdge.class);
 		
-		HashMap<String,Set<SummaryGraphElement>> hm = new HashMap<String, Set<SummaryGraphElement>>();
+		HashMap<String,HashSet<SummaryGraphElement>> hm = new HashMap<String, HashSet<SummaryGraphElement>>();
 		
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
 			for(SummaryGraphElement ele : graph.vertexSet()) {
 				String uri = SummaryGraphUtil.getResourceUri(ele);
 				uri = SummaryGraphUtil.removeNum(uri);
-				Set<SummaryGraphElement> mySet = hm.get(uri);
-				if(mySet == null) {
-					mySet = new HashSet<SummaryGraphElement>();
-					hm.put(uri, mySet);
-				}
-				mySet.add(ele);
+
+				HashSet<SummaryGraphElement> set = hm.get(uri);
+				if(set == null) set = new  HashSet<SummaryGraphElement>();
+				set.add(ele);
+				hm.put(uri, set);
+
 				iGraph.addVertex(ele);
 			}
 			
@@ -503,21 +503,51 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			mappings.addAll(index.searchMappingsForDS(ds,
 					MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS));
 		}
+		HashSet<String> conceptMappings = new HashSet<String>();
+		for (Mapping m : mappings) {
+			String source_uri = SummaryGraphUtil.removeGtOrLs(m.getSource());
+			String target_uri = SummaryGraphUtil.removeGtOrLs(m.getTarget());
+			conceptMappings.add(m.getSourceDsURI()+source_uri+m.getTargetDsURI()+target_uri);
+		}
 		
 		for (Mapping m : mappings) {
 			String source_uri = SummaryGraphUtil.removeGtOrLs(m.getSource());
 			String target_uri = SummaryGraphUtil.removeGtOrLs(m.getTarget());
 //			if(source_uri.equals(target_uri)) continue;
-			Set<SummaryGraphElement> source = hm.get(source_uri);
-			Set<SummaryGraphElement> target = hm.get(target_uri);
+
+			HashSet<SummaryGraphElement> source = hm.get(source_uri);
+			HashSet<SummaryGraphElement> target = hm.get(target_uri);
+
 			
 			if(source != null && target != null) {
-				for(SummaryGraphElement ele1 : source) {
-					for(SummaryGraphElement ele2 : target) {
-						SummaryGraphEdge edge = new SummaryGraphEdge(ele1, ele2, SummaryGraphEdge.MAPPING_EDGE);
-						iGraph.addEdge(ele1, ele2, edge);
+				for(SummaryGraphElement s: source)
+					label1:
+					for(SummaryGraphElement t : target)
+					{
+						label2:
+						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
+						{
+							boolean flag = false;
+							label3:
+							for(SummaryGraphElement sElem: getElem(SummaryGraphEdge.DOMAIN_EDGE, iGraph, s))
+								for(SummaryGraphElement tElem: getElem(SummaryGraphEdge.DOMAIN_EDGE, iGraph, t))
+									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+										{flag = true; break label3;}
+							if(flag)
+							for(SummaryGraphElement sElem: getElem(SummaryGraphEdge.RANGE_EDGE, iGraph, s))
+								for(SummaryGraphElement tElem: getElem(SummaryGraphEdge.RANGE_EDGE, iGraph, t))
+									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+										break label2;
+							//System.out.println("gua le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+							continue label1;
+						}
+						
+						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
+							System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+						SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+						iGraph.addEdge(s, t, edge);
 					}
-				}
+
 			}
 			
 //			if(source != null && target != null) {
@@ -526,6 +556,24 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 //			}
 		}
 		return iGraph;
+	}
+	
+	public List<SummaryGraphElement> getElem(String label, Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph, SummaryGraphElement elem)
+	{
+		ArrayList<SummaryGraphElement> list = null;
+		Set<SummaryGraphEdge> Edges = iGraph.edgesOf(elem);
+		if(Edges != null)
+		{
+			list = new ArrayList<SummaryGraphElement>();
+			for(SummaryGraphEdge edge : Edges)
+			{
+				if(label.equals(SummaryGraphEdge.DOMAIN_EDGE) && edge.getEdgeLabel().equals(label))
+					list.add(edge.getSource());
+				else if(label.equals(SummaryGraphEdge.RANGE_EDGE) && edge.getEdgeLabel().equals(label))
+					list.add(edge.getTarget());
+			}
+		}
+		return list;
 	}
 
 	public Set<String> getSuggestion(List<String> concept, String ds,
