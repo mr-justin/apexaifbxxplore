@@ -72,6 +72,8 @@ public class KeywordIndexServiceForBTFromNT{
 
 	private  String m_IndexDir = null;
 	
+	private static final int MAXSIZE = 100000;
+	
 	/**
 	 * index service
 	 * @param keywordIndexDir
@@ -441,6 +443,8 @@ public class KeywordIndexServiceForBTFromNT{
 		TreeSet<String> litSet = new TreeSet<String>();
 		TreeSet<String> concept = new TreeSet<String>();
 		TreeMap<String, String> attrlit = new TreeMap<String, String>();
+		TreeMap<Integer, String[]> conAttrLit = new TreeMap<Integer, String[]>(); 
+		
 		String cur=null, pre=null;
 		String line;
 
@@ -461,12 +465,24 @@ public class KeywordIndexServiceForBTFromNT{
 
 			if(pre!=null && !pre.equals(cur))
 			{
-				if(isIndiv)
-					writeDocumentForBigNT(concept, attrlit, litSet, writer,ds);
+				if(isIndiv){
+					for(String con: concept)
+					{
+						con = con.substring(1, con.length()-1);
+							for(String attr: attrlit.keySet())
+							{
+								String lit = attrlit.get(attr);
+								int hashcode = bf.hashRabin(lit+attr+con);
+								String[] strs = new String[] {con, attr, lit};
+								conAttrLit.put(hashcode, strs);
+							}
+					}
+					if(conAttrLit.size() >= MAXSIZE || litSet.size() >= MAXSIZE)
+						writeDocumentForBigNT(conAttrLit, litSet, writer, ds, false);
+				}	
 				isIndiv = true;
 				concept.clear();
 				attrlit.clear();
-				litSet.clear();
 			}
 //			System.out.println("="+part[2]);
 			if(isIndiv)
@@ -484,57 +500,69 @@ public class KeywordIndexServiceForBTFromNT{
 			pre = cur;
 		}
 //		write the rest
-		if(isIndiv)
-			writeDocumentForBigNT(concept, attrlit, litSet, writer, ds);
+		if(isIndiv){
+			for(String con: concept)
+			{
+				con = con.substring(1, con.length()-1);
+					for(String attr: attrlit.keySet())
+					{
+						String lit = attrlit.get(attr);
+						int hashcode = bf.hashRabin(lit+attr+con);
+						String[] strs = new String[] {con, attr, lit};
+						conAttrLit.put(hashcode, strs);
+					}
+			}
+			writeDocumentForBigNT(conAttrLit, litSet, writer, ds, false);
+		}	
 		concept.clear();
 		concept = null;
 		attrlit.clear();
 		attrlit = null;
-		litSet.clear();
 		litSet = null;
+		conAttrLit = null;
 	}
 	
-	public void writeDocumentForBigNT(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<String> litSet, IndexWriter writer, String ds) throws Exception
+	public void writeDocumentForBigNT(TreeMap<Integer, String[]> conAttrLit, TreeSet<String> litSet, IndexWriter writer, String ds, boolean isLast) throws Exception
 	{
 		IndexSearcher searcher = new IndexSearcher(m_IndexDir);
-		for(String con: concept)
-		{
-			con = con.substring(1, con.length()-1);
-				for(String attr: attrlit.keySet())
-				{
-					String lit = attrlit.get(attr);
-					int hashcode = bf.hashRabin(lit+attr+con);
-					Term term = new Term(HASHCODE_FIELD_1, String.valueOf(hashcode));
-					TermQuery query = new TermQuery(term);
-					Hits hits = searcher.search(query);
-					if(hits != null && hits.length() != 0)
-						continue;
-					Document doc = new Document();
-					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
-					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-					doc.add(new Field(HASHCODE_FIELD_1, String.valueOf(hashcode), Field.Store.YES, Field.Index.UN_TOKENIZED));
-					writer.addDocument(doc);
-					
-				}
+		if(conAttrLit.size() >= MAXSIZE || isLast == true) {
+			for(Integer hashcode : conAttrLit.keySet()) {
+				String[] strs = conAttrLit.get(hashcode);
+				Term term = new Term(HASHCODE_FIELD_1, String.valueOf(hashcode));
+				TermQuery query = new TermQuery(term);
+				Hits hits = searcher.search(query);
+				if(hits != null && hits.length() != 0)
+					continue;
+				Document doc = new Document();
+				doc.add(new Field(LITERAL_FIELD, strs[2], Field.Store.YES, Field.Index.UN_TOKENIZED));
+				doc.add(new Field(ATTRIBUTE_FIELD, strs[1],Field.Store.YES,Field.Index.NO));
+				doc.add(new Field(CONCEPT_FIELD, strs[0],Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(HASHCODE_FIELD_1, String.valueOf(hashcode), Field.Store.YES, Field.Index.UN_TOKENIZED));
+				writer.addDocument(doc);
+			}
+			conAttrLit.clear();
 		}
+		
 //		index literal
-		for(String lit: litSet)
-		{
-			int hashcode = bf.hashRabin(lit);
-			Term term = new Term(HASHCODE_FIELD_2, String.valueOf(hashcode));
-			TermQuery query = new TermQuery(term);
-			Hits hits = searcher.search(query);
-			if(hits != null && hits.length() != 0)
-				continue;
-			Document doc = new Document();
-			doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-			doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
-			doc.add(new Field(LABEL_FIELD, lit, Field.Store.YES, Field.Index.TOKENIZED));
-			doc.add(new Field(HASHCODE_FIELD_2, String.valueOf(hashcode), Field.Store.YES, Field.Index.UN_TOKENIZED));
-			writer.addDocument(doc);
+		if (litSet.size() >= MAXSIZE || isLast == true) {
+			for (String lit : litSet) {
+				int hashcode = bf.hashRabin(lit);
+				Term term = new Term(HASHCODE_FIELD_2, String.valueOf(hashcode));
+				TermQuery query = new TermQuery(term);
+				Hits hits = searcher.search(query);
+				if (hits != null && hits.length() != 0)
+					continue;
+				Document doc = new Document();
+				doc.add(new Field(DS_FIELD, ds, Field.Store.YES,Field.Index.NO));
+				doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES,Field.Index.NO));
+				doc.add(new Field(LABEL_FIELD, lit, Field.Store.YES,Field.Index.TOKENIZED));
+				doc.add(new Field(HASHCODE_FIELD_2, String.valueOf(hashcode),Field.Store.YES, Field.Index.UN_TOKENIZED));
+				writer.addDocument(doc);
+			}
+			litSet.clear(); 
 		}
+		writer.flush();
 		searcher.close();
 	}
 
