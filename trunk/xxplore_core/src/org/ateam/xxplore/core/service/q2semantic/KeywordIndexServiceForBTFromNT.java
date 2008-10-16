@@ -584,14 +584,14 @@ public class KeywordIndexServiceForBTFromNT{
 		Map<String,Collection<SummaryGraphElement>> result = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			Hits hits = m_searcher.search(clausequery);
-			if ((hits == null) || (hits.length() == 0)){
-				Set<Term> term = new HashSet<Term>();
-				clausequery.extractTerms(term);
-				//if clause query is a term query
-				if(term.size() == 1){
-					hits = m_searcher.search(new FuzzyQuery(term.iterator().next()));
-				}
-			}
+//			if ((hits == null) || (hits.length() == 0)){
+//				Set<Term> term = new HashSet<Term>();
+//				clausequery.extractTerms(term);
+//				//if clause query is a term query
+//				if(term.size() == 1){
+//					hits = m_searcher.search(new FuzzyQuery(term.iterator().next()));
+//				}
+//			}
 
 			if((hits != null) && (hits.length() > 0)){
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
