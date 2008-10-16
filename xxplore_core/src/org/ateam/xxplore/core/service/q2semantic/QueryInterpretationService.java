@@ -476,13 +476,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(
 				SummaryGraphEdge.class);
 		
-		HashMap<String,SummaryGraphElement> hm = new HashMap<String, SummaryGraphElement>();
+		HashMap<String,Set<SummaryGraphElement>> hm = new HashMap<String, Set<SummaryGraphElement>>();
 		
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
 			for(SummaryGraphElement ele : graph.vertexSet()) {
 				String uri = SummaryGraphUtil.getResourceUri(ele);
 				uri = SummaryGraphUtil.removeNum(uri);
-				hm.put(uri, ele);
+				Set<SummaryGraphElement> mySet = hm.get(uri);
+				if(mySet == null) {
+					mySet = new HashSet<SummaryGraphElement>();
+					hm.put(uri, mySet);
+				}
+				mySet.add(ele);
 				iGraph.addVertex(ele);
 			}
 			
@@ -503,13 +508,22 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			String source_uri = SummaryGraphUtil.removeGtOrLs(m.getSource());
 			String target_uri = SummaryGraphUtil.removeGtOrLs(m.getTarget());
 //			if(source_uri.equals(target_uri)) continue;
-			SummaryGraphElement source = hm.get(source_uri);
-			SummaryGraphElement target = hm.get(target_uri);
+			Set<SummaryGraphElement> source = hm.get(source_uri);
+			Set<SummaryGraphElement> target = hm.get(target_uri);
 			
 			if(source != null && target != null) {
-				SummaryGraphEdge edge = new SummaryGraphEdge(source, target, SummaryGraphEdge.MAPPING_EDGE);
-				iGraph.addEdge(source, target, edge);
+				for(SummaryGraphElement ele1 : source) {
+					for(SummaryGraphElement ele2 : target) {
+						SummaryGraphEdge edge = new SummaryGraphEdge(ele1, ele2, SummaryGraphEdge.MAPPING_EDGE);
+						iGraph.addEdge(ele1, ele2, edge);
+					}
+				}
 			}
+			
+//			if(source != null && target != null) {
+//				SummaryGraphEdge edge = new SummaryGraphEdge(source, target, SummaryGraphEdge.MAPPING_EDGE);
+//				iGraph.addEdge(source, target, edge);
+//			}
 		}
 		return iGraph;
 	}
