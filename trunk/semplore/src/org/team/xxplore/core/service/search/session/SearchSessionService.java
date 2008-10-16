@@ -1,5 +1,6 @@
 package org.team.xxplore.core.service.search.session;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -32,6 +33,7 @@ import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
+import com.ibm.semplore.config.Config;
 import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.CompoundCategory;
 import com.ibm.semplore.model.EnumerationCategory;
@@ -152,7 +154,7 @@ public class SearchSessionService {
 			cc.addComponentCategory(SchemaFactoryImpl.getInstance().createKeywordCategory(str));
 			graph.add(cc);	//0
 			graph.setTargetVariable(0);
-			graph.setDataSource(0, "wordnet");
+			graph.setDataSource(0, (String)Config.readDSConfigFile("config"+File.separatorChar+"datasrc.cfg").get("defaultDataSet"));
 			
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
