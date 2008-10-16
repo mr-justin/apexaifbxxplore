@@ -105,7 +105,7 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param schemaGraph
 	 * @param synIndexdir
 	 */
-	public void indexKeywords(String ntFn, String datasourceURI, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemaGraph, String synIndexdir) {
+	public void indexKeywords(String ntFn, String datasourceURI, Pseudograph<SummaryGraphElement, SummaryGraphEdge> schemaGraph, String synIndexdir, boolean bigNT) {
 
 		try {
 			System.out.println("===========keyword index===========");
@@ -119,7 +119,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(indexSearcher != null) indexSearcher.close();
 			//index literal & individual
 			
-			indexDataSourceByLiteralandIndividual(m_indexWriter, ntFn, datasourceURI);
+			indexDataSourceByLiteralandIndividual(m_indexWriter, ntFn, datasourceURI, bigNT);
 
 			m_indexWriter.optimize();
 			m_indexWriter.close();
@@ -302,6 +302,13 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 	}
 
+	public void indexDataSourceByLiteralandIndividual(IndexWriter writer,  String ntFile, String ds, boolean bigNT) throws Exception {
+		if(bigNT)
+			indexDataSourceByLiteralandIndividualForBigNT(writer, ntFile, ds);
+		else
+			indexDataSourceByLiteralandIndividual(writer, ntFile, ds);
+	}
+	
 	/**
 	 * index literal individual
 	 * @param ntFile
@@ -310,7 +317,108 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param writer
 	 * @throws Exception
 	 */
-	public void indexDataSourceByLiteralandIndividual( IndexWriter writer,  String ntFile, String ds) throws Exception
+	public void indexDataSourceByLiteralandIndividual(IndexWriter writer,  String ntFile, String ds) throws Exception {
+		System.out.println("start indexing by lit and indiv");
+		bf = new BloomFilter();
+		BufferedReader br = new BufferedReader(new FileReader(ntFile));
+		TreeSet<String> litSet = new TreeSet<String>();
+		TreeSet<String> concept = new TreeSet<String>();
+		TreeSet<Integer> indivSet = new TreeSet<Integer>();
+		TreeMap<String, String> attrlit = new TreeMap<String, String>();
+		String cur=null, pre=null;
+		String line;
+
+		int count = 0;
+		boolean isIndiv = true;
+		while((line = br.readLine())!=null)
+		{
+			count++;
+			if(count%10000==0)
+				System.out.println(count);
+
+			String[] part = Util4NT.processTripleLine(line);
+			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2)
+				continue;
+//			System.out.println();
+			cur = part[0];
+//			System.out.println(pre+" "+cur);
+
+			if(pre!=null && !pre.equals(cur))
+			{
+				if(isIndiv)
+					writeDocument(concept, attrlit, indivSet, writer,ds);
+				isIndiv = true;
+				concept.clear();
+				concept = new TreeSet<String>();
+				attrlit.clear();
+				attrlit = new TreeMap<String, String>();
+			}
+//			System.out.println("="+part[2]);
+			if(isIndiv)
+			{
+				if(part[1].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[1].equals("http://www.w3.org/2002/07/owl#Class"))
+					isIndiv = false;
+				else if(part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>"))
+					concept.add(part[2]);//<.,..>
+				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
+				{
+					attrlit.put(part[1].substring(1, part[1].length()-1), part[2]);//http...>...
+					litSet.add(part[2]);//...
+				}
+			}
+			pre = cur;
+		}
+//		write the rest
+		if(isIndiv)
+			writeDocument(concept, attrlit, indivSet, writer, ds);
+		indivSet.clear();
+		indivSet = null;
+//		index literal
+		for(String lit: litSet)
+		{
+			Document doc = new Document();
+			doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+			doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
+			doc.add(new Field(LABEL_FIELD, lit, Field.Store.YES, Field.Index.TOKENIZED));
+			writer.addDocument(doc);
+		}
+	}
+	
+	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, String ds) throws Exception
+	{
+		IndexSearcher searcher = new IndexSearcher(m_IndexDir);
+		for(String con: concept)
+		{
+			con = con.substring(1, con.length()-1);
+				for(String attr: attrlit.keySet())
+				{
+					String lit = attrlit.get(attr);
+					int hashcode = bf.hashRabin(lit+attr+con);
+					if(indivSet.contains(Integer.valueOf(hashcode)))
+						continue;
+					else
+						indivSet.add(Integer.valueOf(hashcode));
+					Document doc = new Document();
+					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
+					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
+					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+					writer.addDocument(doc);
+					
+				}
+		}
+		searcher.close();
+	}
+	
+	/**
+	 * index literal individual
+	 * @param ntFile
+	 * @param writeLit
+	 * @param ds
+	 * @param writer
+	 * @throws Exception
+	 */
+	public void indexDataSourceByLiteralandIndividualForBigNT(IndexWriter writer,  String ntFile, String ds) throws Exception
 	{
 		System.out.println("start indexing by lit and indiv");
 		bf = new BloomFilter();
@@ -339,7 +447,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(pre!=null && !pre.equals(cur))
 			{
 				if(isIndiv)
-					writeDocument(concept, attrlit, litSet, writer,ds);
+					writeDocumentForBigNT(concept, attrlit, litSet, writer,ds);
 				isIndiv = true;
 				concept.clear();
 				attrlit.clear();
@@ -362,7 +470,7 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 //		write the rest
 		if(isIndiv)
-			writeDocument(concept, attrlit, litSet, writer, ds);
+			writeDocumentForBigNT(concept, attrlit, litSet, writer, ds);
 		concept.clear();
 		concept = null;
 		attrlit.clear();
@@ -371,7 +479,7 @@ public class KeywordIndexServiceForBTFromNT{
 		litSet = null;
 	}
 	
-	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<String> litSet, IndexWriter writer, String ds) throws Exception
+	public void writeDocumentForBigNT(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<String> litSet, IndexWriter writer, String ds) throws Exception
 	{
 		IndexSearcher searcher = new IndexSearcher(m_IndexDir);
 		for(String con: concept)
