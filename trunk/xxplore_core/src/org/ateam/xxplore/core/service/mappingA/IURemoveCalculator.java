@@ -10,7 +10,11 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.TreeMap;
 
-
+/**
+ * Intersection/Union class mapping with identical-local-name class pairs removed
+ * @author fulinyun
+ *
+ */
 public class IURemoveCalculator {
 
 	public void calculate(String rawClassMap, String sameNameMap, String output) throws Exception {
