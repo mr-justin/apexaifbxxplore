@@ -8,7 +8,7 @@ java -Xmx2g -cp ./bin;./lib/lucene-core-2.3.2.jar;./lib/dsiutils-1.0.5.jar;./lib
 date /t
 time /t
 dir %2\hashdata
-sort -n -S 512m -T d:\users\xrsun\tmp --compress-prog=gzip %2\hashdata | uniq | tee %2\hashdata.sort | wc -l
+sort -u -n -S 512m -T d:\users\xrsun\tmp --compress-prog=gzip %2\hashdata | tee %2\hashdata.sort | wc -l
 date /t
 time /t
 java -Xmx3g -Xms3g -cp ./bin;./lib/lucene-core-2.3.2.jar com.ibm.semplore.test.TestIndex config\%1.cfg 2>&1
