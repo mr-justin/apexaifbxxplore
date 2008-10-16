@@ -20,6 +20,7 @@ public class BerkeleyDB {
 	private Environment myDbEnvironment = null;
 	private Database myDatabase = null;
 	private Cursor myCursor = null;
+	private boolean dup;
 	
 	//refresh the db when buffer is full
 	private int buffer =  10000000, count =0;
@@ -31,7 +32,7 @@ public class BerkeleyDB {
 	 * @param dbName
 	 * @throws Exception
 	 */
-	public void openDB(String envPath, String dbName)throws Exception 
+	public void openDB(String envPath, String dbName, boolean dup)throws Exception 
 	{
 		this.env = envPath;
 		this.name = dbName;
@@ -46,8 +47,9 @@ public class BerkeleyDB {
 		
 		DatabaseConfig dbConfig = new DatabaseConfig();
 		dbConfig.setAllowCreate(true);
-		dbConfig.setSortedDuplicates(true);
+		dbConfig.setSortedDuplicates(dup);
 
+		this.dup = dup;
 		myDatabase = myDbEnvironment.openDatabase(null, dbName, dbConfig);
 		myCursor = myDatabase.openCursor(null, null);
 	}
@@ -63,6 +65,12 @@ public class BerkeleyDB {
 			myDatabase.close();
 		if (myDbEnvironment != null) 
 			myDbEnvironment.close();
+	}
+	
+	public void flush() throws Exception
+	{
+		closeDB();
+		openDB(env, name, dup);
 	}
 
 	/**
@@ -95,7 +103,7 @@ public class BerkeleyDB {
 		if(++count%buffer==0)
 		{
 			closeDB();
-			openDB(env, name);
+			openDB(env, name, dup);
 		}
 		if (myDbEnvironment == null || myDatabase == null || myCursor == null) {
 			System.err.println("DB not open!");
@@ -117,7 +125,7 @@ public class BerkeleyDB {
 		if(--count%buffer==0)
 		{
 			closeDB();
-			openDB(env, name);
+			openDB(env, name, dup);
 		}
 		TreeSet<String> res = null;
 		DatabaseEntry foundKey = new DatabaseEntry(key.getBytes("UTF-8"));
@@ -132,6 +140,7 @@ public class BerkeleyDB {
 			{
 				String dataString = new String(foundData.getData(), "UTF-8");
 				res.add(dataString);
+				if(!dup) return res;
 				// System.out.println("Key | Data : " + keyString + " | " + dataString + "");
 				retVal = myCursor.getNextDup(foundKey, foundData,LockMode.DEFAULT);
 			}
@@ -165,5 +174,16 @@ public class BerkeleyDB {
 
 			System.out.println("K: " + keyString + " | D: " + dataString);
 		}
+	}
+	
+	public static void main(String[] args) throws Exception {
+		BerkeleyDB db = new BerkeleyDB();
+		db.openDB("D:/semplore/berkeley", "db", false);
+		db.put("key1", "data1");
+		db.put("key1", "data2");
+		db.put("key2", "data1");
+		db.put("key2", "data1");
+		db.printAllTriple();
+		db.closeDB();
 	}
 }

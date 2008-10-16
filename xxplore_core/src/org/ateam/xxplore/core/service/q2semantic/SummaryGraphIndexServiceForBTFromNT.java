@@ -64,7 +64,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public int MAX_CACHE_SIZE = 1000000; 
 	public int indivSize, propSize = 0;
 	public String dbpath;
-	public PrintWriter pw;
+	public LuceneMap pw;
 	
 
 	public String getSubjectType(String pred, String obj)
@@ -115,7 +115,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		indiv2con = new LuceneMap();
 		splitRelPool = new TreeMap<String, Integer>();
 		if(bigNT) 
-			pw = new PrintWriter(new FileWriter(path+RELPOOL));
+			pw = new LuceneMap();
 		
 		//preparation true = re-create false = dont create
 		firstScan(path, true);
@@ -199,6 +199,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	
 	public void secondScan(String path, boolean bigNT) throws Exception
 	{
+		if(bigNT) pw.openWriter(path+RELPOOL, true);
 		indiv2con.openSearcher(path);
 		System.out.println("=======secondScan==========");
 		cache = new TreeMap<String, Set<String>>();
@@ -298,7 +299,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 							if(num == null) num = Integer.valueOf(0);
 							splitRelPool.put(key, num+1);
 						}
-						else pw.println(key);
+						else pw.put(key, "");
 					}		
 				}
 				subjParent = null;
@@ -340,12 +341,12 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		split summary graph
 		if(!bigNT)
 		{
-			Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph);
+			Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(summaryGraph, false);
 			System.out.println("write splitted summary graph");
 			writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
 			writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
 		}
-		else pw.close();
+		else pw.closeWriter();
 		indiv2con.closeSearcher();
 	}
 	
@@ -458,32 +459,13 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	
 	public void fourthSplit(String relPool) throws Exception
 	{
-		new LineSortFile(relPool).sortFile();
-		
-		if(splitRelPool == null || splitRelPool.size() != 0)
-			splitRelPool = new TreeMap<String, Integer>();
-		BufferedReader br = new BufferedReader(new FileReader(relPool));
-		String line, oldLine = null;
-		int count = 0, num = 0;
-		while((line = br.readLine())!= null)
-		{
-			if(++count%10000==0)
-				System.out.println("fourth split\t"+count);
-			
-			if(oldLine != null && !oldLine.equals(line))
-			{
-				splitRelPool.put(oldLine, num);
-				num = 0;
-			}
-			num++;
-			oldLine = line;
-		}
-		splitRelPool.put(oldLine, num);
-			
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(readGraphIndexFromFile(BuildQ2SemanticService.summaryObj));
+		System.out.println("=======fourthSplit==========");
+		pw.openSearcher(relPool);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraphSplit = splitSummaryGraph(readGraphIndexFromFile(BuildQ2SemanticService.summaryObj), true);
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(summaryGraphSplit, BuildQ2SemanticService.summaryObj+".split");
 		writeSummaryGraphAsRDF(summaryGraphSplit, BuildQ2SemanticService.summaryRDF+".split");
+		pw.closeSearcher();
 	}
 	
 	public SummaryGraphElement getElemFromUri(String uri)
@@ -524,7 +506,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		elemPool.put(type+uri, res);
 		return res;
 	}
-	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph) throws Exception
+	public Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitSummaryGraph(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph, boolean bigNT) throws Exception
 	{	
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>splitGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		TreeMap<String, Integer> relCount = new TreeMap<String, Integer>();
@@ -537,8 +519,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 					if(range.getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) && domain.getTarget().equals(range.getSource()))
 					{
 						String key = SummaryGraphUtil.getResourceUri(domain.getSource())+SummaryGraphUtil.getResourceUri(domain.getTarget())+SummaryGraphUtil.getResourceUri(range.getTarget());
-						Integer num = splitRelPool.get(key);
-						if(num == null) continue;
+						Integer num;
+						if(bigNT) num = pw.searchNum(key);
+						else num = splitRelPool.get(key);
+						
+						if(num == null || num == 0) continue;
 //						System.out.println(key+"\t"+num);
 						double score = num.doubleValue()/propSize;
 //						System.out.println(score);

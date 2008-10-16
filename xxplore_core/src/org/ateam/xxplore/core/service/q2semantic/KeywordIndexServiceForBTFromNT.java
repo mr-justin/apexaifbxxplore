@@ -4,9 +4,7 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -20,7 +18,6 @@ import java.util.TreeSet;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
-import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
@@ -32,11 +29,9 @@ import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.Hits;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
-import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.TermQuery;
 import org.apache.lucene.store.FSDirectory;
 import org.jgrapht.graph.Pseudograph;
-
 import org.xmedia.oms.model.api.IDataProperty;
 import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -301,13 +296,6 @@ public class KeywordIndexServiceForBTFromNT{
 			}
 		}
 	}
-
-	public void indexDataSourceByLiteralandIndividual(IndexWriter writer,  String ntFile, String ds, boolean bigNT) throws Exception {
-		if(bigNT)
-			indexDataSourceByLiteralandIndividualForBigNT(writer, ntFile, ds);
-		else
-			indexDataSourceByLiteralandIndividual(writer, ntFile, ds);
-	}
 	
 	/**
 	 * index literal individual
@@ -317,13 +305,17 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param writer
 	 * @throws Exception
 	 */
-	public void indexDataSourceByLiteralandIndividual(IndexWriter writer,  String ntFile, String ds) throws Exception {
+
+	public void indexDataSourceByLiteralandIndividual( IndexWriter writer,  String ntFile, String ds, boolean bigNT) throws Exception
+	{
 		System.out.println("start indexing by lit and indiv");
 		bf = new BloomFilter();
 		BufferedReader br = new BufferedReader(new FileReader(ntFile));
 		TreeSet<String> litSet = new TreeSet<String>();
+		TreeSet<Integer> litSetForBigNT = new TreeSet<Integer>();
+		TreeSet<Integer> indivSetForBigNT = new TreeSet<Integer>();
 		TreeSet<String> concept = new TreeSet<String>();
-		TreeSet<Integer> indivSet = new TreeSet<Integer>();
+		TreeSet<String> indivSet = new TreeSet<String>();
 		TreeMap<String, String> attrlit = new TreeMap<String, String>();
 		String cur=null, pre=null;
 		String line;
@@ -346,7 +338,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(pre!=null && !pre.equals(cur))
 			{
 				if(isIndiv)
-					writeDocument(concept, attrlit, indivSet, writer,ds);
+					writeDocument(concept, attrlit, indivSet, indivSetForBigNT, writer,ds, bigNT);
 				isIndiv = true;
 				concept.clear();
 				concept = new TreeSet<String>();
@@ -363,17 +355,31 @@ public class KeywordIndexServiceForBTFromNT{
 				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
 				{
 					attrlit.put(part[1].substring(1, part[1].length()-1), part[2]);//http...>...
-					litSet.add(part[2]);//...
+					if(!bigNT)
+						litSet.add(part[2]);//...
+					else
+					{
+						int key = bf.hashRabin(part[2]);
+						if(litSetForBigNT.contains(key))
+							continue;
+						else litSetForBigNT.add(key);
+						Document doc = new Document();
+						doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+						doc.add(new Field(TYPE_FIELD, LITERAL, Field.Store.YES, Field.Index.NO));
+						doc.add(new Field(LABEL_FIELD, part[2], Field.Store.YES, Field.Index.TOKENIZED));
+						writer.addDocument(doc);
+					}
 				}
 			}
 			pre = cur;
 		}
 //		write the rest
 		if(isIndiv)
-			writeDocument(concept, attrlit, indivSet, writer, ds);
+			writeDocument(concept, attrlit, indivSet,indivSetForBigNT, writer, ds, bigNT);
 		indivSet.clear();
 		indivSet = null;
 //		index literal
+		if(!bigNT)
 		for(String lit: litSet)
 		{
 			Document doc = new Document();
@@ -384,7 +390,7 @@ public class KeywordIndexServiceForBTFromNT{
 		}
 	}
 	
-	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<Integer> indivSet, IndexWriter writer, String ds) throws Exception
+	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<String> indivSet, TreeSet<Integer> indivSetForBigNT, IndexWriter writer, String ds, boolean bigNT) throws Exception
 	{
 		IndexSearcher searcher = new IndexSearcher(m_IndexDir);
 		for(String con: concept)
@@ -393,16 +399,25 @@ public class KeywordIndexServiceForBTFromNT{
 				for(String attr: attrlit.keySet())
 				{
 					String lit = attrlit.get(attr);
-					int hashcode = bf.hashRabin(lit+attr+con);
-					if(indivSet.contains(Integer.valueOf(hashcode)))
-						continue;
+//					int hashcode = bf.hashRabin(lit+attr+con);
+					if(!bigNT)
+					{
+						if(indivSet.contains(lit+attr+con))
+							continue;
+						else indivSet.add(lit+attr+con);
+					}
 					else
-						indivSet.add(Integer.valueOf(hashcode));
+					{
+						int key = bf.hashRabin(lit+attr+con);
+						if(indivSetForBigNT.contains(key))
+							continue;
+						else indivSetForBigNT.add(key);
+					}
 					Document doc = new Document();
 					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.NO));
-					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.NO));
-					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.UN_TOKENIZED));
+					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.UN_TOKENIZED));
+					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.UN_TOKENIZED));
 					writer.addDocument(doc);
 					
 				}
@@ -587,6 +602,7 @@ public class KeywordIndexServiceForBTFromNT{
 					float score = hits.score(i);
 					if(score >= prune){
 						String type = doc.get(TYPE_FIELD);
+//						System.out.println(type);
 						if(type != null && type.equals(LITERAL)){
 //							by chenjunquan
 							ILiteral lit = new Literal(doc.get(LABEL_FIELD));
@@ -716,20 +732,33 @@ public class KeywordIndexServiceForBTFromNT{
 	}
 	
 	public static void main(String[] args) throws Exception, IOException {
-		IndexSearcher searcher = new IndexSearcher("D:\\semplore\\keywordIndexRoot\\dblp-keywordIndex");
-		TermQuery query = new TermQuery(new Term(LABEL_FIELD, "net"));
-		Hits hits = searcher.search(query);
-		for(int i=0; i<hits.length(); i++)
+		IndexSearcher searcher = new IndexSearcher("D:\\semplore\\10.15\\keywordIndexRoot\\swrc-keywordIndex");
+		TreeSet<String> set = new TreeSet<String>();
+		for(int i=0; i<searcher.maxDoc(); i++)
 		{
-			Document doc = hits.doc(i);
-			Enumeration<Field> fields = doc.fields();
-			System.out.println("====="+i);
-			while(fields.hasMoreElements())
-			{
-				Field field = fields.nextElement();
-				System.out.println(field.name());
-				System.out.println("\t"+field.stringValue());
-			}
+			Document doc = searcher.doc(i);
+			if(doc.get(TYPE_FIELD)==null || !doc.get(TYPE_FIELD).equals("concept"))
+				continue;
+//			String line = doc.get(LITERAL_FIELD)+doc.get(ATTRIBUTE_FIELD)+doc.get(CONCEPT_FIELD);
+//			if(line.contains("null"))continue;
+			System.out.println(doc.get(URI_FIELD));
+
 		}
+		
+		
+		//		TermQuery query = new TermQuery(new Term(LABEL_FIELD, "net"));
+//		Hits hits = searcher.search(query);
+//		for(int i=0; i<hits.length(); i++)
+//		{
+//			Document doc = hits.doc(i);
+//			Enumeration<Field> fields = doc.fields();
+//			System.out.println("====="+i);
+//			while(fields.hasMoreElements())
+//			{
+//				Field field = fields.nextElement();
+//				System.out.println(field.name());
+//				System.out.println("\t"+field.stringValue());
+//			}
+//		}
 	}
 }
