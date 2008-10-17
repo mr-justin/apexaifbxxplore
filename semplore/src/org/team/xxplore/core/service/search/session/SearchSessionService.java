@@ -663,7 +663,7 @@ public class SearchSessionService {
 		LinkedList<Concept> cat = new LinkedList<Concept>();
 		
 		if (snippet_str != null) {
-			StringTokenizer tok = new StringTokenizer(snippet_str,"\t");
+			StringTokenizer tok = new StringTokenizer(snippet_str,"\n");
 			while (tok.hasMoreTokens()) {
 				String token = tok.nextToken();
 				String type = Util4NT.checkSnippetType(token);
@@ -673,7 +673,7 @@ public class SearchSessionService {
 				} else if (type==Util4NT.RELATION) {
 					rel.add(new Couple(new Relation("",processed[1],null), new Instance("",processed[2],null)));
 				} else if (type==Util4NT.ATTRIBUTE) {
-					rel.add(new Couple(new Attribute("",processed[1],null), new Litteral("",processed[2],null)));
+					attr.add(new Couple(new Attribute("",processed[1],null), new Litteral("",processed[2],null)));
 				}
 			}
 		}
