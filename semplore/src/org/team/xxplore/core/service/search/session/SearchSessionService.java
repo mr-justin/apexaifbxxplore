@@ -668,12 +668,13 @@ public class SearchSessionService {
 				String token = tok.nextToken();
 				String type = Util4NT.checkSnippetType(token);
 				String[] processed = Util4NT.processTripleLine("<a> "+token);
+				
 				if (type==Util4NT.CATEGORY) {
-					cat.add(new Concept("",processed[2],null));
+					cat.add(new Concept(Util4NT.getDefaultLabel(processed[2]),processed[2],null));
 				} else if (type==Util4NT.RELATION) {
-					rel.add(new Couple(new Relation("",processed[1],null), new Instance("",processed[2],null)));
+					rel.add(new Couple(new Relation(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Instance(Util4NT.getDefaultLabel(processed[2]),processed[2],null)));
 				} else if (type==Util4NT.ATTRIBUTE) {
-					attr.add(new Couple(new Attribute("",processed[1],null), new Litteral("",processed[2],null)));
+					attr.add(new Couple(new Attribute(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Litteral(Util4NT.getDefaultLabel(processed[2]),processed[2],null)));
 				}
 			}
 		}

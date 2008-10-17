@@ -103,6 +103,24 @@ public class Util4NT {
 		Util4NT.ns_att = ns_att;
 	}
 
+    public static String getDefaultLabel(String uri) {
+    	String label = null;
+    	if (uri==null) return "";
+        if (uri.lastIndexOf('#') >= 0) {
+            label = uri.substring(uri.lastIndexOf('#')+1);
+        } else if (uri.lastIndexOf('(') >=0 && uri.lastIndexOf(')') >=0 && uri.lastIndexOf(')')>uri.lastIndexOf('(')) {
+        	label = uri.substring(uri.lastIndexOf('(')+1,uri.lastIndexOf(')'));
+        } else if (uri.lastIndexOf('/') >=0) {
+            label = uri.substring(uri.lastIndexOf('/')+1);
+        } else
+        	label = uri;
+        label = label.replace("_"," ").replace("-"," ").replace("<", " ").replace(">"," ").replace("(", " ").replace(")"," ").trim();
+        if (label.equals(""))
+            label = uri;
+        label = label.replace("_"," ").replace("-"," ").replace("<", " ").replace(">"," ").replace("(", " ").replace(")"," ").trim();
+        return label;
+    }
+	
 	public static String[] processTripleLine(String line) {
 		// Split..java
 		String[] triple = line.replaceAll("\t", " ").split(" ");
