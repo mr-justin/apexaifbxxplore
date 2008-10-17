@@ -662,17 +662,19 @@ public class SearchSessionService {
 		LinkedList<Couple> attr = new LinkedList<Couple>();
 		LinkedList<Concept> cat = new LinkedList<Concept>();
 		
-		StringTokenizer tok = new StringTokenizer(snippet_str,"\t");
-		while (tok.hasMoreTokens()) {
-			String token = tok.nextToken();
-			String type = Util4NT.checkSnippetType(token);
-			String[] processed = Util4NT.processTripleLine("<a> "+token);
-			if (type==Util4NT.CATEGORY) {
-				cat.add(new Concept("",processed[2],null));
-			} else if (type==Util4NT.RELATION) {
-				rel.add(new Couple(new Relation("",processed[1],null), new Instance("",processed[2],null)));
-			} else if (type==Util4NT.ATTRIBUTE) {
-				rel.add(new Couple(new Attribute("",processed[1],null), new Litteral("",processed[2],null)));
+		if (snippet_str != null) {
+			StringTokenizer tok = new StringTokenizer(snippet_str,"\t");
+			while (tok.hasMoreTokens()) {
+				String token = tok.nextToken();
+				String type = Util4NT.checkSnippetType(token);
+				String[] processed = Util4NT.processTripleLine("<a> "+token);
+				if (type==Util4NT.CATEGORY) {
+					cat.add(new Concept("",processed[2],null));
+				} else if (type==Util4NT.RELATION) {
+					rel.add(new Couple(new Relation("",processed[1],null), new Instance("",processed[2],null)));
+				} else if (type==Util4NT.ATTRIBUTE) {
+					rel.add(new Couple(new Attribute("",processed[1],null), new Litteral("",processed[2],null)));
+				}
 			}
 		}
 		return new ArraySnippet(item, rel, attr, cat);
