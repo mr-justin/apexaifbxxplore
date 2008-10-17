@@ -96,44 +96,10 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		
 		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
 
+		getAugmentedSummaryGraphs(sumGraphs, elements);		
 
-
-		getAugmentedSummaryGraphs(sumGraphs, elements);
-		
-//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : sumGraphs) {
-//			Set<String> mySet = new HashSet<String>();
-//			for(SummaryGraphElement ele : graph.vertexSet()) {
-//				mySet.add(ele.getDatasource());
-//			}
-//			System.err.println(mySet.size());
-//		}
-//		ArrayList<SummaryGraphElement> al = new ArrayList<SummaryGraphElement>();
-//		Set<SummaryGraphElement> my_set = new HashSet<SummaryGraphElement>();
-		
-
-		
-//		System.err.println(sumGraphs.size());
-//		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : sumGraphs) {
-//			System.err.println("===»ªÀö·Ö¸ô·û==========");
-//			for(SummaryGraphElement ele : graph.vertexSet() ) {
-//				if(SummaryGraphUtil.getResourceUri(ele).indexOf("http://xmlns.com/foaf/0.1/Person") != -1) {
-//					al.add(ele);
-//					my_set.add(ele);
-//					System.err.println("==========================");
-//					System.err.println(SummaryGraphUtil.getResourceUri(ele));
-//					System.err.println(ele.getDatasource());
-//					System.err.println(ele.getType());
-//					System.err.println(ele.getResource().getClass());
-//				}
-//			}
-//		}
-//		System.err.println(al.get(0).equals(al.get(1)));
-//		System.err.println(my_set.size());
-
-		
 		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
 		
-
 		for(SummaryGraphElement ele : resourceGraph.vertexSet()) {
 			if(ele.getMatchingScore() != 0) {
 				ele.setTotalScore(1.0 / ele.getMatchingScore());
@@ -145,40 +111,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				ele.setTotalScore(this.DEFAULT_SCORE);
 			}
 			ele.setTotalScore(ele.getTotalScore() + this.EDGE_SCORE);
-//			if(SummaryGraphUtil.getResourceUri(ele).indexOf("Person") != -1) {
-//				System.err.println(SummaryGraphUtil.getResourceUri(ele));
-//				System.err.println(ele.getDatasource());
-//			}
 		}
-		 
-		// by kaifengxu
-//		for(SummaryGraphEdge edge: resourceGraph.edgeSet()){
-//			SummaryGraphElement source = edge.getSource();
-//			SummaryGraphElement target = edge.getTarget();
-//			
-//			if (source.getMatchingScore() != 0) {
-//				source.setTotalScore(1.0 / source.getMatchingScore());
-//			}
-//			else if(source.getEF() != 0) {
-//				source.setTotalScore(source.getEF());
-//			}
-//			else {
-//				source.setTotalScore(this.DEFAULT_SCORE);
-//			}
-//			
-//			source.setTotalScore(source.getTotalScore() + this.EDGE_SCORE);
-//			
-//			if (target.getMatchingScore() != 0) {
-//				target.setTotalScore(1.0 / target.getMatchingScore());
-//			}
-//			else if(target.getEF() != 0) {
-//				target.setTotalScore(target.getEF());
-//			}
-//			else {
-//				target.setTotalScore(this.DEFAULT_SCORE);
-//			}
-//			target.setTotalScore(target.getTotalScore() + this.EDGE_SCORE);
-//		}	
 
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph,elements, distance, k);
 		
@@ -340,11 +273,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			try {
 				in = new ObjectInputStream(new FileInputStream(graphIndex));
 				graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>) in.readObject();
-				//					graph = splitSummaryGraph(graph);
-				// System.out.println(graph.vertexSet().size()+"\t"+graph.edgeSet().size());
-				// ================by kaifengxu
-				
-
 				
 				for (SummaryGraphElement elem : graph.vertexSet()) {
 					elem.setDatasource(dsURI);
@@ -360,11 +288,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 			if (graph != null){
 				m_DsGraphMap.put(dsURI, graph);
-//				Set<String> mySet = new HashSet<String>();
-//				for(SummaryGraphElement ele : graph.vertexSet()) {
-//					mySet.add(ele.getDatasource());
-//				}
-//				System.err.println("mySet" + mySet.size());
 			}
 		}
 
@@ -636,30 +559,15 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	private void updateScore(
 			Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph,
 			SummaryGraphElement e, Collection<SummaryGraphElement> keywords) {
+		double score = -1;
+		for (SummaryGraphElement k : keywords) {
+			if (k.equals(e))
+				score = k.getMatchingScore();
+		}
 
 		// == chenjunquan ==
-		
-//		Set<SummaryGraphElement> vertices = graph.vertexSet();
-//		if (vertices != null && vertices.size() > 0) {
-//			for (SummaryGraphElement v : vertices) {
-//				if (v.equals(e)) {
-					// get score as stored in keyword elements
-					double score = -1;
-					for (SummaryGraphElement k : keywords) {
-						if (k.equals(e))
-						score = k.getMatchingScore();
-					}
-					
-					// == chenjunquan ==
-					e.setMatchingScore(score);
-					// score = 1 / (EF/IDF*matchingscore)
-					// v.setTotalScore(1/(v.getEF() * score));
-					// v.setTotalScore(1/(score));
-					// System.out.println(v.getResource());
-					e.applyCoverage(getDsCoverage(e));
-//				}
-//			}
-//		}
+		e.setMatchingScore(score);
+		e.applyCoverage(getDsCoverage(e));
 	}
 
 	// TODO this is not so efficient when graph is huge...
@@ -742,15 +650,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 								subgraphList.remove(i);
 							
 							max = subgraphList.get(k-1).getCost();
-//							if (subgraphList.get(k - 1).getCost() < expansionQueue
-//									.getApproximateMinCostOfCandidates()) {
-//							
-//								Collections.sort(output_list);
-//								for(Subgraph sg : output_list) {
-//									System.out.println(sg.toString());
-//								}
-//								return subgraphList;
-//							}
 						}
 					}
 				}
@@ -773,10 +672,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			}
 		}
 		
-//		Collections.sort(output_list);
-//		for(Subgraph sg : output_list) {
-//			System.out.println(sg.toString());
-//		}
 		return subgraphList;
 	}
 
