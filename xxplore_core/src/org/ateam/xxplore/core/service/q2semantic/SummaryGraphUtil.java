@@ -42,4 +42,16 @@ public class SummaryGraphUtil {
 		int end = line.charAt(line.length() - 1) == '>' ? line.length() - 1 : line.length();
 		return line.substring(begin,end);
 	}
+	
+	public static String getLocalName(String uri) {
+		if( uri.lastIndexOf("#") != -1 ) {
+			return uri.substring(uri.lastIndexOf("#") + 1);
+		}
+		else if(uri.lastIndexOf("/") != -1) {
+			return uri.substring(uri.lastIndexOf("/") + 1);
+		}
+		else {
+			return uri;
+		}
+	}
 }
