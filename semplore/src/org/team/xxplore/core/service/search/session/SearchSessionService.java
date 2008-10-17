@@ -674,7 +674,7 @@ public class SearchSessionService {
 				} else if (type==Util4NT.RELATION) {
 					rel.add(new Couple(new Relation(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Instance(Util4NT.getDefaultLabel(processed[2]),processed[2],null)));
 				} else if (type==Util4NT.ATTRIBUTE) {
-					attr.add(new Couple(new Attribute(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Litteral(Util4NT.getDefaultLabel(processed[2]),processed[2],null)));
+					attr.add(new Couple(new Attribute(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Litteral(processed[2],null,null)));
 				}
 			}
 		}
