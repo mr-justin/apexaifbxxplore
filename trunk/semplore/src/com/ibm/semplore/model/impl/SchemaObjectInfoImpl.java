@@ -8,6 +8,7 @@
  */
 package com.ibm.semplore.model.impl;
 
+import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.SchemaObjectInfo;
 
 /**
@@ -64,21 +65,7 @@ public class SchemaObjectInfoImpl implements SchemaObjectInfo
      * @return
      */
     protected String getDefaultLabel() {
-    	String label = null;
-    	if (uri==null) return "";
-        if (uri.lastIndexOf('#') >= 0) {
-            label = uri.substring(uri.lastIndexOf('#')+1);
-        } else if (uri.lastIndexOf('(') >=0 && uri.lastIndexOf(')') >=0 && uri.lastIndexOf(')')>uri.lastIndexOf('(')) {
-        	label = uri.substring(uri.lastIndexOf('(')+1,uri.lastIndexOf(')'));
-        } else if (uri.lastIndexOf('/') >=0) {
-            label = uri.substring(uri.lastIndexOf('/')+1);
-        } else
-        	label = uri;
-        label = label.replace("_"," ").replace("-"," ").replace("<", " ").replace(">"," ").replace("(", " ").replace(")"," ").trim();
-        if (label.equals(""))
-            label = uri;
-        label = label.replace("_"," ").replace("-"," ").replace("<", " ").replace(">"," ").replace("(", " ").replace(")"," ").trim();
-        return label;
+        return Util4NT.getDefaultLabel(uri);
     }
     
     /**
