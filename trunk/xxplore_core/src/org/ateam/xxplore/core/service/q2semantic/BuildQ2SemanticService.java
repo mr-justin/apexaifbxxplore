@@ -166,13 +166,17 @@ public class BuildQ2SemanticService {
 			new LineSortFile(source).sortFile();
 		
 //		build graphs
-		SummaryGraphIndexServiceForBTFromNT wawa = new SummaryGraphIndexServiceForBTFromNT();
-		wawa.buildGraphs(indexRoot, Boolean.valueOf(args[3]));//db index location
+		SummaryGraphIndexServiceForBTFromNT wawa1 = new SummaryGraphIndexServiceForBTFromNT();
+		wawa1.buildGraphs(indexRoot);//db index location
+		
+//		build splitted-graphs
+		SplitSummaryGraphIndexServiceForBTFromNT wawa2 = new SplitSummaryGraphIndexServiceForBTFromNT();
+		wawa2.buildGraphs(indexRoot);//db index location
 		
 //		build keywordindex
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = wawa.readGraphIndexFromFile(schemaObj);
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = wawa1.readGraphIndexFromFile(schemaObj);
 		KeywordIndexServiceForBTFromNT lala = new KeywordIndexServiceForBTFromNT(keywordIndex, true);
-		lala.indexKeywords(source, datasource, graph, null, Boolean.valueOf(args[3]));
+		lala.indexKeywords(source, datasource, graph, Boolean.valueOf(args[3]));
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Time customing: "+(end-start)+" ms");
