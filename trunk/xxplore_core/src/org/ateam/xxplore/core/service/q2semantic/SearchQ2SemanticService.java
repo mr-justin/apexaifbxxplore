@@ -380,17 +380,17 @@ public class SearchQ2SemanticService {
 		if(elem.getType() == SummaryGraphElement.ATTRIBUTE)
 		{
 			String uri = ((Property)elem.getResource()).getUri();
-			return new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+			return new Relation(SummaryGraphUtil.getLocalName(uri), uri, new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.RELATION)
 		{
 			String uri = ((Property)elem.getResource()).getUri();
-			return new Relation(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+			return new Relation(SummaryGraphUtil.getLocalName(uri), uri, new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.CONCEPT)
 		{
 			String uri = ((NamedConcept)elem.getResource()).getUri();
-			return new Concept(uri.substring(uri.lastIndexOf('/')+1), uri, new Source(elem.getDatasource(),null,0));
+			return new Concept(SummaryGraphUtil.getLocalName(uri), uri, new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.VALUE)
 		{
