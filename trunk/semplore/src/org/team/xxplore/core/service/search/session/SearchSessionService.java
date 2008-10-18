@@ -661,6 +661,7 @@ public class SearchSessionService {
 		LinkedList<Couple> rel = new LinkedList<Couple>();
 		LinkedList<Couple> attr = new LinkedList<Couple>();
 		LinkedList<Concept> cat = new LinkedList<Concept>();
+		String[] labels = new String[3];
 		
 		if (snippet_str != null) {
 			StringTokenizer tok = new StringTokenizer(snippet_str,"\n");
@@ -668,13 +669,19 @@ public class SearchSessionService {
 				String token = tok.nextToken();
 				String type = Util4NT.checkSnippetType(token);
 				String[] processed = Util4NT.processTripleLine("<a> "+token);
+				for (int i = 1; i<=2; i++) {
+					if ((i==1 && type==Util4NT.CATEGORY)||(i==2 && type==Util4NT.ATTRIBUTE)) continue;
+					if (processed[i].startsWith("<")) processed[i] = processed[i].substring(1);
+					if (processed[i].endsWith(">")) processed[i] = processed[i].substring(0, processed[i].length()-1);
+					labels[i] = Util4NT.getDefaultLabel(processed[i]);
+				}
 				
 				if (type==Util4NT.CATEGORY) {
-					cat.add(new Concept(Util4NT.getDefaultLabel(processed[2]),processed[2],null));
+					cat.add(new Concept(labels[2],processed[2],null));
 				} else if (type==Util4NT.RELATION) {
-					rel.add(new Couple(new Relation(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Instance(Util4NT.getDefaultLabel(processed[2]),processed[2],null)));
+					rel.add(new Couple(new Relation(labels[1],processed[1],null), new Instance(labels[2],processed[2],null)));
 				} else if (type==Util4NT.ATTRIBUTE) {
-					attr.add(new Couple(new Attribute(Util4NT.getDefaultLabel(processed[1]),processed[1],null), new Litteral(processed[2],null,null)));
+					attr.add(new Couple(new Attribute(labels[1],processed[1],null), new Litteral(processed[2],null,null)));
 				}
 			}
 		}
