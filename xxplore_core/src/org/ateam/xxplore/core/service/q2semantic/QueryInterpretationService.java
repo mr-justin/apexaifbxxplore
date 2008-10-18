@@ -389,6 +389,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					}
 				}
 				System.out.println("add: "+SummaryGraphUtil.getResourceUri(e)+"\t"+e.getType());
+				e = vertexMap.get(SummaryGraphUtil.getResourceUri(e) + " " + e.getDatasource());
 				updateScore(graph, e, m_startingElements);
 			}
 		}
