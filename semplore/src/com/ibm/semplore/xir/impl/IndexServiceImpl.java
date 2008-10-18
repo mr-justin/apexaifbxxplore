@@ -194,7 +194,8 @@ public class IndexServiceImpl implements IndexService {
 			LinkedList<AttributeValue> attrVals) {
 		HashMap<String,String> attributes = new HashMap<String,String>();
 		for (AttributeValue attrVal:attrVals) {
-			attributes.put(attrVal.getAttribute(), attrVal.getValue());
+			if (!attrVal.getValue().equals(""))
+				attributes.put(attrVal.getAttribute(), attrVal.getValue());
 		}
 		String[] labelProperties = config.getProperty(Config.LABEL,
 				"http://www.w3.org/2000/01/rdf-schema#label").split("[ \t,]");

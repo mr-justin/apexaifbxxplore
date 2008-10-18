@@ -23,7 +23,8 @@ import com.ibm.semplore.xir.impl.AttributeValue;
 import com.ibm.semplore.xir.impl.DocumentImpl;
 
 public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocument {
-
+	protected int tripleCount = 0;
+	
 //	protected ArrayList attributeList = new ArrayList();
 
 	protected ArrayList categoryList = new ArrayList();
@@ -216,11 +217,13 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 			attrSet.add(name);
 			attributes.add(new AttributeValue(name,""));
 		}
+		tripleCount ++;
 	}
 	
 	public void addCategory(Category c, int catLocalID) {
 		categoryList.add(c);
 		categoryWithID.addCategory(c, catLocalID);
+		tripleCount ++;
 	}
 
 	public void addRelation(Relation r, Instance object, int relationLocalID,
@@ -232,6 +235,7 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 //			return;
 //		objIndex.put(object.getURI(), null);
 //		globalObject.addInstance(object, 0); // Need not to concern with the relation.
+		tripleCount ++;
 	}
 
 	public void addInverseRelation(Relation r, Instance subject,
@@ -250,6 +254,11 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 		if (type == Relation.class) return isRelation;
 		if (type == Category.class) return isCategory;
 		throw new Error("wrong type: "+type);
+	}
+
+	@Override
+	public int getTripleCount() {
+		return tripleCount;
 	}
 
 }
