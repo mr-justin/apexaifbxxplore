@@ -350,12 +350,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						IDataProperty prop = propIter.next();
 						SummaryGraphElement pvertex = new SummaryGraphElement(
 								new DataProperty(prop.getUri()+"("+(count++)+")"), SummaryGraphElement.ATTRIBUTE);
+						pvertex.setDatasource(ds);
 						Collection<INamedConcept> cons = neighbors.get(prop);
 						Iterator<INamedConcept> conIter = cons.iterator();
 						while (conIter.hasNext()) {
 							INamedConcept con = conIter.next();
 							SummaryGraphElement cvertex = new SummaryGraphElement(
 									con, SummaryGraphElement.CONCEPT);
+							cvertex.setDatasource(ds);
 							
 							if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex) + " " + cvertex.getDatasource()) != null) {
 								cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)+ " " + cvertex.getDatasource());
