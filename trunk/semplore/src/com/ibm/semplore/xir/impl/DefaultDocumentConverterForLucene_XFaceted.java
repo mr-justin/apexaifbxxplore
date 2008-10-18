@@ -67,6 +67,8 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 				Field.Index.TOKENIZED);
 		field.setBoost(5.0f);
 		doc.add(field);
+		
+		doc.setBoost((float) Math.log(insDoc.getTripleCount()+2));
 
 		// build index of attributes, term=attribute###value
 		LinkedList<AttributeValue> attrVals = insDoc.getAttributes();

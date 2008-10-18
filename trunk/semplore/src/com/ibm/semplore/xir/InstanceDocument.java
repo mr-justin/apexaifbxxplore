@@ -75,4 +75,6 @@ public interface InstanceDocument extends Document {
 	 * @return
 	 */
 	public LinkedList<AttributeValue> getAttributes();
+
+    public int getTripleCount();
 }
