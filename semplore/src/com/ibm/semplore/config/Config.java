@@ -104,6 +104,7 @@ public class Config
         return config;
     }
 
+    private static HashMap<String, HashMap> configs = new HashMap<String, HashMap>();
     /**
      * Read the configuration for datasource and assign value
      * @param filename
@@ -111,10 +112,12 @@ public class Config
      * @throws Exception
      */
     public static HashMap readDSConfigFile(String filename) throws IOException {
+    	HashMap config;
+    	if ((config=configs.get(filename))!=null) return config; 
         BufferedReader in = new BufferedReader(new FileReader(filename));
         String str = null;
         System.err.println("================config begin==================");
-        HashMap config = new HashMap();
+        config = new HashMap();
         int i =0;
         while ((str=in.readLine()) != null) {
             if (str.indexOf('=') < 0) 
@@ -130,6 +133,7 @@ public class Config
         }
         in.close();
         System.err.println("================config end==================");
+        configs.put(filename, config);
         return config;
     }
 

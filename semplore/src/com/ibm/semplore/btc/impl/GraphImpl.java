@@ -137,13 +137,19 @@ public class GraphImpl implements Graph {
 			str += String.format("Node %d: [%s]%s\n", i, getDataSource(i), getNode(i).toString());
 		for (int i=0; i<nodeCount; i++) {
 			Iterator<Edge> itr = getEdges(i);
-			while (itr.hasNext())
+			while (itr.hasNext()) {
+				Edge e = itr.next();
+				if (Math.min(e.getFromNode(), e.getToNode()) < i) continue;
 				str += "Edge: " + itr.next().toString() + "\n";
+			}
 		}
 		for (int i=0; i<nodeCount; i++) {
 			Iterator<Edge> itr = getIEdges(i);
-			while (itr.hasNext())
+			while (itr.hasNext()) {
+				Edge e = itr.next();
+				if (Math.min(e.getFromNode(), e.getToNode()) < i) continue;
 				str += "IEdge: " + itr.next().toString() + "\n";
+			}
 		}
 		return str;
 	}

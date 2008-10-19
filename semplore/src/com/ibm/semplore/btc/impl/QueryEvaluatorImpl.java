@@ -72,9 +72,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	private String targetDataSource;
 	//visited subgraphs' IDs
 	private HashSet<Integer> visited;
+	private int thisSearchID;
 	static private File mappingIndex;
 	static private boolean configed = false;
 
+	static int searchID = 0;
 	static Logger logger = Logger.getLogger(QueryEvaluatorImpl.class);
 	
 	/* (non-Javadoc)
@@ -107,7 +109,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	}
 
 	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception {
-		logger.info("\n"+graph);
+		synchronized(this) {
+			searchID++;
+			thisSearchID = searchID;
+		}
+		logger.info("search "+thisSearchID+"\n"+graph);
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
 		QueryPlanner planner = new QueryPlannerImpl();
@@ -116,6 +122,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	}
 
 	public XFacetedResultSetForMultiDataSources evaluate(Graph graph, HashMap<Integer, DocStream> startCache) throws Exception {
+		synchronized(this) {
+			searchID++;
+			thisSearchID = searchID;
+		}
+		logger.info("search with startCache "+thisSearchID+"\n"+graph);
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
 		QueryPlanner planner = new QueryPlannerImpl();
@@ -158,13 +169,14 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
-					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
+					logger.debug(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
+					logger.info("search "+thisSearchID+ " complete");
 				}
 				else {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					DocStream ans = searcher.evaluate(q, helper); 
-					System.out.println(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
+					logger.debug(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
 					
 					//find the edge that link to its parent
 					DocStream origResult = null;
@@ -182,7 +194,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					time = System.currentTimeMillis();
 					int origLen = ans.getLen();
 					ans = convertID(g.getDataSource()+"_"+parent.getDataSource()+"_index", ans, origResult);
-					System.out.println(String.format("%s(%d)->%s(%d): %dms", 
+					logger.debug(String.format("%s(%d)->%s(%d): %dms", 
 							g.getDataSource(), origLen, 
 							parent.getDataSource(),	ans.getLen(), System.currentTimeMillis()-time));
 					

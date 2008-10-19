@@ -16,6 +16,9 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Properties;
 
+import org.apache.log4j.Logger;
+
+import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.CatRelConstraint;
 import com.ibm.semplore.model.CatRelGraph;
@@ -46,6 +49,7 @@ import com.ibm.semplore.xir.IndexReader;
  */
 public class XFacetedSearchableImpl extends SearchableImpl implements
 		XFacetedSearchable {
+	static Logger logger = Logger.getLogger(XFacetedSearchableImpl.class);
 	/**
 	 * The index reader for accessing instance index.
 	 */
@@ -239,7 +243,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 	public XFacetedResultSet search(XFacetedQuery facetedQuery,
 			SearchHelper searchHelper) throws Exception {
 		final boolean debugTime = false;
-		System.out.println("begin searching...");
+		logger.debug("begin searching...");
 		long time_begin = System.currentTimeMillis();
 
 		// evaluate results of the search target in the query expression
@@ -250,7 +254,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 			resultStream = new MEMDocStream_Score(new int[0], new float[0], 0);
 		long resultTime = System.currentTimeMillis() - time_begin;
 		long time_end = System.currentTimeMillis();
-		if (debugTime) System.out.println("1 compute of result stream: " + (time_end - time_begin)
+		if (debugTime) logger.debug("1 compute of result stream: " + (time_end - time_begin)
 				+ " ms");
 
 		DocPositionStream cat, rel_obj, rel_sbj;
@@ -272,17 +276,17 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		DocStream catStream = AUManager.massUnion_Facet(dataSource, FieldType.CATEGORIES.toString(),cat,
 				(DocStream) resultStream, catDoc);
 		time_end = System.currentTimeMillis();
-		if (debugTime) System.out.println("2 compute category facet stream " + (time_end - time_begin)
+		if (debugTime) logger.debug("2 compute category facet stream " + (time_end - time_begin)
 				+ " ms");
 		DocStream rel_objStream = AUManager.massUnion_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),rel_obj,
 				(DocStream) resultStream, (DocStream) relDoc);
 		time_end = System.currentTimeMillis();
-		if (debugTime) System.out.println("3 compute relation facet stream " + (time_end - time_begin)
+		if (debugTime) logger.debug("3 compute relation facet stream " + (time_end - time_begin)
 				+ " ms");
 		DocStream rel_subStream = AUManager.massUnion_Facet(dataSource,FieldType.RELATIONS.toString(),rel_sbj,
 				(DocStream) resultStream, relDoc);
 		time_end = System.currentTimeMillis();
-		if (debugTime) System.out.println("4 compute invrelation facet stream " + (time_end - time_begin)
+		if (debugTime) logger.debug("4 compute invrelation facet stream " + (time_end - time_begin)
 				+ " ms");
 		long facetTime = System.currentTimeMillis() - time_begin - resultTime;
 
@@ -299,7 +303,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				rel_subStream, insIndexReader,10);
 		
 		time_end = System.currentTimeMillis();
-		if (debugTime) System.out.println("5 sort facet streams " + (time_end - time_begin)
+		if (debugTime) logger.debug("5 sort facet streams " + (time_end - time_begin)
 				+ " ms");
 
 		Facet[] catFacet = resultSet2Facet(catResult);
@@ -330,14 +334,14 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		// traverse.next();
 
 		time_end = System.currentTimeMillis();
-		if (debugTime) System.out.println("6 facet streams to facet URIs " + (time_end - time_begin)
+		if (debugTime) logger.debug("6 facet streams to facet URIs " + (time_end - time_begin)
 				+ " ms");
 		XFacetedResultSet result = new XFacetedResultSetImpl(resultStream,
 				insIndexReader, catFacet, relFacet, catStream.getLen(),
 				rel_objStream.getLen() + rel_subStream.getLen(), resultTime,
 				facetTime).setSnippetKeyword("");
 		time_end = System.currentTimeMillis();
-		System.out.println("7 searching finished in " + (time_end - time_begin)
+		logger.debug("searching finished in " + (time_end - time_begin)
 				+ " ms");
 		return result;
 	}
@@ -399,7 +403,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				CacheHint cache = (CacheHint) (searchHelper.getHint(
 						SearchHelper.START_CACHE_HINT, new Integer(nodeIndex)));
 				if (cache != null) {// get start cache hint
-					System.out.println("get start cache hint");
+					logger.debug("get start cache hint");
 					return cache.getStream();
 				}
 			}
@@ -419,7 +423,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				CacheHint cache = (CacheHint) (searchHelper.getHint(
 						SearchHelper.CATEGORY_CACHE_HINT, cat));
 				if (cache != null) {// get category cache hint
-					System.out.println("get category cache hint: "
+					logger.debug("get category cache hint: "
 							+ cat.toString());
 					return cache.getStream();
 				}

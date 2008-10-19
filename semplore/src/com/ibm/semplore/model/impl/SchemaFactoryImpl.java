@@ -189,7 +189,7 @@ public class SchemaFactoryImpl implements SchemaFactory
      */
     public Category createUniversalCategory()
     {
-        return new CategoryImpl(Md5_BloomFilter_64bit.HASH_UNIVERSAL_CATEGORY_URI);
+        return new CategoryImpl("<TOP_Category>");
     }
 
     /* (non-Javadoc)
@@ -197,7 +197,7 @@ public class SchemaFactoryImpl implements SchemaFactory
      */
     public Relation createUniversalRelation()
     {
-        return new RelationImpl(Md5_BloomFilter_64bit.HASH_UNIVERSAL_RELATION_URI, false);
+        return new RelationImpl("UNIVERSAL_RELATION", false);
     }
 
 	public KeywordCategory createAttributeKeywordCategory(String attribute, String keyword) {
