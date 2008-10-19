@@ -49,7 +49,7 @@ public class TestSearchAll {
 		System.out.println("=== Init config ===");
 
 		for (Entry<Object, Object> i: config.entrySet()) {
-			if (!"snippet".equals(i.getKey()) && !"mapping".equals(i.getKey())) 
+			if (!"snippet".equals(i.getKey()) && !"mapping".equals(i.getKey())&& !"logging".equals(i.getKey())) 
 				dataSource = (String)i.getKey();
 			Properties indexconfig = new Properties();
 			indexconfig.put(Config.INDEX_PATH, config.get(dataSource));
