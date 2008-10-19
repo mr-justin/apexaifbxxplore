@@ -31,6 +31,10 @@ public class AttributeImpl extends SchemaObjectImpl implements Attribute
         super(ID);
         this.datatype = datatype;
     }
+    protected AttributeImpl(String uri, int datatype) {
+        super(uri);
+        this.datatype = datatype;
+    }
     
     /* (non-Javadoc)
      * @see com.ibm.semplore.model.Attribute#getDatatype()
@@ -40,4 +44,7 @@ public class AttributeImpl extends SchemaObjectImpl implements Attribute
         return datatype;
     }
 
+    public String toString() {
+    	return getURI() + "(" + datatype + ")";
+    }
 }

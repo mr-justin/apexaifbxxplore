@@ -29,9 +29,9 @@ public class TestEvaluator {
 		graph.add(schemaFactory.createUniversalCategory());				//2
 		graph.add(schemaFactory.createUniversalCategory());				//3
 		//Relations
-		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
+		graph.add(schemaFactory.createRelation((
 				"<http://dbpedia.org/property/workInstitutions>")), 1, 0);
-		graph.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(
+		graph.add(schemaFactory.createRelation((
 				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
 		//IEdge
 		graph.addIEdges(new Edge(1,2,null));
@@ -54,7 +54,7 @@ public class TestEvaluator {
 		//use start cache
 		graph = new GraphImpl();
 		//Concepts
-		graph.add(schemaFactory.createCategory(Md5_BloomFilter_64bit.URItoID(
+		graph.add(schemaFactory.createCategory((
 			"<http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings>")));	//0
 		//target
 		graph.setTargetVariable(0);

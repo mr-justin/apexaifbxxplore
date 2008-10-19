@@ -23,6 +23,9 @@ public class InstanceImpl extends SchemaObjectImpl implements Instance
     protected InstanceImpl(long id) {
         super(id);
     }
+    protected InstanceImpl(String uri) {
+        super(uri);
+    }
     
     public boolean equals(Object obj) {
         if (obj instanceof InstanceImpl) {
@@ -36,6 +39,6 @@ public class InstanceImpl extends SchemaObjectImpl implements Instance
     }
     
     public String toString() {
-        return String.valueOf(id);
+        return getURI();
     }
 }

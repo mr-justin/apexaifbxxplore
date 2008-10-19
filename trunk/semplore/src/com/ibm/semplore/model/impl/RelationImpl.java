@@ -26,11 +26,15 @@ public class RelationImpl extends SchemaObjectImpl implements Relation
         super(id);
         this.inverse = inverse;
     }
+    protected RelationImpl(String uri, boolean inverse) {
+        super(uri);
+        this.inverse = inverse;
+    }
     
     public String toString() {
     	if (inverse)
-    		return id+"(inverse)";
-        return String.valueOf(id);
+    		return getURI()+"(inverse)";
+        return getURI();
     }
 
     public boolean isUniversal()

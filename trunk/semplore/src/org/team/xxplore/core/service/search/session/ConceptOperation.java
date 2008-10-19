@@ -19,7 +19,7 @@ public class ConceptOperation implements FacetOperation {
 	@Override
 	public Graph applyTo(Graph graph) {
 		try {
-			Category c = SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(concept.getURI()));
+			Category c = SchemaFactoryImpl.getInstance().createCategory((concept.getURI()));
 			CompoundCategory cc = (CompoundCategory)graph.getNode(graph.getTargetVariable());
 			cc.addComponentCategory(c);
 			return graph;
@@ -32,7 +32,7 @@ public class ConceptOperation implements FacetOperation {
 	@Override
 	public Graph undo(Graph graph) {
 		try {
-			Category c = SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(concept.getURI()));
+			Category c = SchemaFactoryImpl.getInstance().createCategory((concept.getURI()));
 			CompoundCategory cc = (CompoundCategory)graph.getNode(graph.getTargetVariable());
 			cc.removeComponentCategory(c);
 			return graph;

@@ -27,13 +27,19 @@ public abstract class SchemaObjectImpl implements SchemaObject
      * the id of the schema object based on its URI
      */
     protected long id;
+    
+    protected String uri;
             
     /**
      * Create the id of this schema object, based on its id.
      * @param id
      */
     protected SchemaObjectImpl(long id) {
+    	this.uri = String.valueOf(id);
         this.id = id;
+    }
+    protected SchemaObjectImpl(String uri) {
+        this.uri = uri;
     }
     
     /* (non-Javadoc)
@@ -54,4 +60,7 @@ public abstract class SchemaObjectImpl implements SchemaObject
         return id;
     }
     
+    public String getURI() {
+    	return uri;
+    }
 }

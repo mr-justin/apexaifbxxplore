@@ -22,7 +22,7 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 		try {
 			int target = graph.getTargetVariable();
 			originalSource = graph.getDataSource(target);
-			Category c = SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(conceptSuggestion.getURI()));
+			Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
 			CompoundCategory cc = (CompoundCategory)graph.getNode(target);
 			cc.addComponentCategory(c);
 			graph.setDataSource(target, conceptSuggestion.getSource().getName());
@@ -37,7 +37,7 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 	public Graph undo(Graph graph) {
 		try {
 			int target = graph.getTargetVariable();
-			Category c = SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(conceptSuggestion.getURI()));
+			Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
 			CompoundCategory cc = (CompoundCategory)graph.getNode(target);
 			cc.removeComponentCategory(c);
 			graph.setDataSource(target, originalSource);

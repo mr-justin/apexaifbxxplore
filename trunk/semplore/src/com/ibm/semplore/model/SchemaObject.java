@@ -23,6 +23,6 @@ public interface SchemaObject {
      * Returns the URI of this schema object.
      * @return
      */
-//    public String getURI();
+    public String getURI();
         
 }

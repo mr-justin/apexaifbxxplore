@@ -58,12 +58,12 @@ public class ForServlet {
 		if (n != null && !n.getNodeValue().equals("")) {
 			cat.addComponentCategory(schemaFactory.createEnumerationCategory()
 					.addInstanceElement(
-							schemaFactory.createInstance(Md5_BloomFilter_64bit.URItoID(n.getNodeValue()))));
+							schemaFactory.createInstance((n.getNodeValue()))));
 			return cat;
 		}
 		n = map.getNamedItem("conceptConstraint");
 		if (n != null && !n.getNodeValue().equals("")) {
-			cat.addComponentCategory(schemaFactory.createCategory(Md5_BloomFilter_64bit.URItoID(n
+			cat.addComponentCategory(schemaFactory.createCategory((n
 					.getNodeValue())));
 		}
 		n = map.getNamedItem("keyword");
@@ -88,12 +88,12 @@ public class ForServlet {
 			NamedNodeMap map = node.getAttributes();
 			if (map.getNamedItem("inverse").getNodeValue().equals("0")) {
 				graph
-						.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(map.getNamedItem(
+						.add(schemaFactory.createRelation((map.getNamedItem(
 								"relation").getNodeValue())), fromNodeIndex,
 								toNodeIndex);
 			} else {
 				graph
-						.add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID(map.getNamedItem(
+						.add(schemaFactory.createRelation((map.getNamedItem(
 								"relation").getNodeValue())), toNodeIndex,
 								fromNodeIndex);
 			}

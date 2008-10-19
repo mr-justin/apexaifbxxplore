@@ -66,7 +66,7 @@ public class TestSearchForSample extends TestSearch {
 					 searchInstance(schemaFactory.createCatRelGraph()
 					 .add(schemaFactory.createKeywordCategory("paris"))
 					 .add(schemaFactory.createUniversalCategory())
-					 .add(schemaFactory.createRelation(Md5_BloomFilter_64bit.URItoID("<http://www.w3.org/2006/03/wn/wn20/schema/similarTo>"))
+					 .add(schemaFactory.createRelation(("<http://www.w3.org/2006/03/wn/wn20/schema/similarTo>"))
 					 , 0, 1)
 					 ,1);
 

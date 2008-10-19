@@ -21,7 +21,7 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 			int target = graph.getTargetVariable();
 			originalSource = graph.getDataSource(target);
 			graph.add(SchemaFactoryImpl.getInstance().createCompoundCategory(1));	// AND
-			graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(relationSuggestion.getURI())), 
+			graph.add(SchemaFactoryImpl.getInstance().createRelation((relationSuggestion.getURI())), 
 					target, graph.numOfNodes()-1);
 			graph.setTargetVariable(graph.numOfNodes()-1);
 			graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
@@ -36,7 +36,7 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 	public Graph undo(Graph graph) {
 		try {
 			int newTarget = graph.removeRelation(SchemaFactoryImpl.getInstance().
-					createRelation(Md5_BloomFilter_64bit.URItoID(relationSuggestion.getURI())),
+					createRelation((relationSuggestion.getURI())),
 					graph.getTargetVariable());
 			graph.setTargetVariable(newTarget);
 			graph.setDataSource(newTarget, originalSource);
