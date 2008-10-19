@@ -15,6 +15,9 @@ import java.util.Properties;
 import java.util.TreeSet;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
 import com.ibm.semplore.btc.DecomposedGraph;
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.btc.NodeInSubGraph;
@@ -60,8 +63,8 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	SchemaFactory schemaFactory = SchemaFactoryImpl.getInstance();
 
 	QueryConverter4SemploreImpl converter = new QueryConverter4SemploreImpl();
-	Hashtable<String, File> pathOfDataSource;
-	Hashtable<Integer, String> dataSources;
+	static Hashtable<String, File> pathOfDataSource;
+	static Hashtable<Integer, String> dataSources;
 
 	//stores ResultSets inside SubGraphs
 	private HashMap<SubGraph, HashMap<Integer, DocStream>> result;
@@ -69,8 +72,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	private String targetDataSource;
 	//visited subgraphs' IDs
 	private HashSet<Integer> visited;
-	private File mappingIndex;
+	static private File mappingIndex;
+	static private boolean configed = false;
 
+	static Logger logger = Logger.getLogger(QueryEvaluatorImpl.class);
+	
 	/* (non-Javadoc)
 	 * @see com.ibm.semplore.btc.QueryEvaluator#evaluate(com.ibm.semplore.btc.QueryPlanner)
 	 */
@@ -101,6 +107,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	}
 
 	public XFacetedResultSetForMultiDataSources evaluate(Graph graph) throws Exception {
+		logger.info("\n"+graph);
 		QueryDecomposerImpl decomposer = new QueryDecomposerImpl();
 		DecomposedGraph dgraph = decomposer.decompose(graph);
 		QueryPlanner planner = new QueryPlannerImpl();
@@ -237,7 +244,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		return arr;
 	}
 
-	public QueryEvaluatorImpl()  {
+	private QueryEvaluatorImpl()  {
 		
 	}
 	
@@ -247,16 +254,20 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	 * @throws IOException 
 	 */
 	public QueryEvaluatorImpl(File datasrc) throws IOException {
-		HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
-		pathOfDataSource = new Hashtable<String, File>();
-		dataSources = new Hashtable<Integer, String>();
-		for (Object o :config.keySet()) {
-			if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
-			else if (o instanceof String && (config.get(o) instanceof String)) pathOfDataSource.put((String)o, new File((String)config.get(o)));
+		if (!configed ) {
+			configed = true;
+			HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
+			pathOfDataSource = new Hashtable<String, File>();
+			dataSources = new Hashtable<Integer, String>();
+			for (Object o :config.keySet()) {
+				if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
+				else if (o instanceof String && (config.get(o) instanceof String)) pathOfDataSource.put((String)o, new File((String)config.get(o)));
+			}
+			QuerySnippetDB.init(pathOfDataSource.get("snippet").getAbsolutePath());
+			mappingIndex = pathOfDataSource.get("mapping");
+			MappingIndexReaderFactory.init(mappingIndex);
+			PropertyConfigurator.configure(pathOfDataSource.get("logging").toURL());
 		}
-		QuerySnippetDB.init(pathOfDataSource.get("snippet").getAbsolutePath());
-		mappingIndex = pathOfDataSource.get("mapping");
-		MappingIndexReaderFactory.init(mappingIndex);
 	}
 	
 	/* (non-Javadoc)

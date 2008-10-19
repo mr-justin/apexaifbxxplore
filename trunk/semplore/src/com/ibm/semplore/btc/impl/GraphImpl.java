@@ -130,4 +130,21 @@ public class GraphImpl implements Graph {
 	public int removeRelation(Relation rel, int nodeIndex) {
 		return graphs.removeRelation(rel, nodeIndex);
 	}
+	
+	public String toString() {
+		String str = "";
+		for (int i=0; i<nodeCount; i++)
+			str += String.format("Node %d: [%s]%s\n", i, getDataSource(i), getNode(i).toString());
+		for (int i=0; i<nodeCount; i++) {
+			Iterator<Edge> itr = getEdges(i);
+			while (itr.hasNext())
+				str += "Edge: " + itr.next().toString() + "\n";
+		}
+		for (int i=0; i<nodeCount; i++) {
+			Iterator<Edge> itr = getIEdges(i);
+			while (itr.hasNext())
+				str += "IEdge: " + itr.next().toString() + "\n";
+		}
+		return str;
+	}
 }
