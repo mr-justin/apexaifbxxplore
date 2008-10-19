@@ -78,7 +78,7 @@ public class SearchSessionService {
 					CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	// AND
 					if (f instanceof Concept) {
 						Concept c = (Concept)f;
-						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));
+						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createCategory(c.getURI()));
 					} else if (f instanceof Attribute) {
 						Attribute a = (Attribute)f;
 						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createAttributeKeywordCategory(a.getURI(), a.getLabel()));
@@ -86,7 +86,7 @@ public class SearchSessionService {
 						Instance i = (Instance)f;
 						EnumerationCategory ec = SchemaFactoryImpl.getInstance().createEnumerationCategory()
 							.addInstanceElement(SchemaFactoryImpl.getInstance()
-									.createInstance(Md5_BloomFilter_64bit.URItoID(i.getURI())));
+									.createInstance(i.getURI()));
 						cc.addComponentCategory(ec);
 					} else if (f instanceof Litteral) {
 						Litteral l = (Litteral)f;
@@ -98,7 +98,7 @@ public class SearchSessionService {
 				} else {
 					if (f instanceof Concept) {
 						Concept c = (Concept)f;
-						graph.add(SchemaFactoryImpl.getInstance().createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));
+						graph.add(SchemaFactoryImpl.getInstance().createCategory(c.getURI()));
 					} else if (f instanceof Attribute) {
 						Attribute a = (Attribute)f;
 						graph.add(SchemaFactoryImpl.getInstance().createAttributeKeywordCategory(a.getURI(), a.getLabel()));
@@ -106,7 +106,7 @@ public class SearchSessionService {
 						Instance i = (Instance)f;
 						EnumerationCategory ec = SchemaFactoryImpl.getInstance().createEnumerationCategory()
 							.addInstanceElement(SchemaFactoryImpl.getInstance()
-								.createInstance(Md5_BloomFilter_64bit.URItoID(i.getURI())));
+								.createInstance(i.getURI()));
 						graph.add(ec);
 					} else if (f instanceof Litteral) {
 						Litteral l = (Litteral)f;
@@ -121,7 +121,7 @@ public class SearchSessionService {
 				int from = indexMap.get(e.getFromElement());
 				int to = indexMap.get(e.getToElement());
 				Relation rel = (Relation)e.getDecorationElement();
-				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(rel.getURI())), from, to);
+				graph.add(SchemaFactoryImpl.getInstance().createRelation(rel.getURI()), from, to);
 			}
 			
 			int id = SemplorePool.acquire();
@@ -334,7 +334,7 @@ public class SearchSessionService {
 				
 				Graph graph = new GraphImpl();
 				graph.add(SchemaFactoryImpl.getInstance()
-						.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
+						.createCategory(c.getURI()));	//0
 				graph.setTargetVariable(0);
 				graph.setDataSource(0, ds);
 				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
@@ -362,7 +362,7 @@ public class SearchSessionService {
 				Graph graph = new GraphImpl();
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
 				graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
-				graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
+				graph.add(SchemaFactoryImpl.getInstance().createRelation(r.getURI()), 0, 1);
 				graph.setTargetVariable(1);
 				graph.setDataSource(1, ds);
 				HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
@@ -394,7 +394,7 @@ public class SearchSessionService {
 				if (c.getSource().getName().equals(currentDataSource)) {
 					Graph graph = new GraphImpl();
 					graph.add(SchemaFactoryImpl.getInstance()
-							.createCategory(Md5_BloomFilter_64bit.URItoID(c.getURI())));	//0
+							.createCategory(c.getURI()));	//0
 					graph.setTargetVariable(0);
 					graph.setDataSource(0, currentDataSource);
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
@@ -435,7 +435,7 @@ public class SearchSessionService {
 					Graph graph = new GraphImpl();
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
-					graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(r.getURI())), 0, 1);
+					graph.add(SchemaFactoryImpl.getInstance().createRelation(r.getURI()), 0, 1);
 					graph.setTargetVariable(1);
 					graph.setDataSource(1, currentDataSource);
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();

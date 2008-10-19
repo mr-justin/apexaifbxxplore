@@ -58,6 +58,10 @@ public class SchemaFactoryImpl implements SchemaFactory
     {
         return new AttributeImpl(ID, datatype);
     }
+    public Attribute createAttribute(String uri, int datatype)
+    {
+        return new AttributeImpl(uri, datatype);
+    }
 
     /* (non-Javadoc)
      * @see com.ibm.semplore.model.SchemaFactory#createCategory(java.lang.String)
@@ -65,6 +69,10 @@ public class SchemaFactoryImpl implements SchemaFactory
     public Category createCategory(long id)
     {
         return new CategoryImpl(id);
+    }
+    public Category createCategory(String uri)
+    {
+        return new CategoryImpl(uri);
     }
 
     /* (non-Javadoc)
@@ -97,6 +105,10 @@ public class SchemaFactoryImpl implements SchemaFactory
     {
         return new InstanceImpl(id);
     }
+    public Instance createInstance(String uri)
+    {
+        return new InstanceImpl(uri);
+    }
 
     /* (non-Javadoc)
      * @see com.ibm.semplore.model.SchemaFactory#createKeywordCategory(java.lang.String)
@@ -113,6 +125,10 @@ public class SchemaFactoryImpl implements SchemaFactory
     {
         return new RelationImpl(id,false);
     }
+    public Relation createRelation(String uri)
+    {
+        return new RelationImpl(uri,false);
+    }
 
     /* (non-Javadoc)
      * @see com.ibm.semplore.model.SchemaFactory#createInverseRelation(java.lang.String)
@@ -120,6 +136,10 @@ public class SchemaFactoryImpl implements SchemaFactory
     public Relation createInverseRelation(long id)
     {
         return new RelationImpl(id, true);
+    }
+    public Relation createInverseRelation(String uri)
+    {
+        return new RelationImpl(uri, true);
     }
 
     /* (non-Javadoc)

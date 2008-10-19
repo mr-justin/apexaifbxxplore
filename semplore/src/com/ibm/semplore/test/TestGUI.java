@@ -62,8 +62,7 @@ public class TestGUI extends JFrame{
 					 TestSearch.searchInstance(schemaFactory.createCatRelGraph()
 							 .add(schemaFactory.createEnumerationCategory().
 									 addInstanceElement(
-											 schemaFactory.createInstance(
-													 Md5_BloomFilter_64bit.URItoID(input))))
+											 schemaFactory.createInstance(input)))
 							 ,0);
 				}
 				public String getName() {return "search instances by URI";}

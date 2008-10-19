@@ -22,6 +22,7 @@ public interface SchemaFactory {
      * @return
      */
     public Category createCategory(long id);
+    public Category createCategory(String uri);
 
     /**
      * Create the universal category which is comprised of all instances in the ontology.
@@ -83,6 +84,7 @@ public interface SchemaFactory {
      * @return
      */
     public Relation createRelation(long id);
+    public Relation createRelation(String uri);
     
     /**
      * Create an inverse relation of the ID.
@@ -90,6 +92,7 @@ public interface SchemaFactory {
      * @return
      */
     public Relation createInverseRelation(long id);
+    public Relation createInverseRelation(String uri);
 
     /**
      * Create the universal relation which is the super relation of all relations in the ontology.
@@ -106,6 +109,7 @@ public interface SchemaFactory {
      * @return
      */
     public Attribute createAttribute(long ID, int datatype);
+    public Attribute createAttribute(String uri, int datatype);
 
     /**
      * Create an instance based on given id.
@@ -114,6 +118,7 @@ public interface SchemaFactory {
      * @return
      */
     public Instance createInstance(long id);
+    public Instance createInstance(String uri);
 
     /**
      * Create a category-relation-expression of exact the form

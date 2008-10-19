@@ -24,9 +24,11 @@ public class CategoryImpl extends SchemaObjectImpl implements Category
     protected CategoryImpl(long id) {
         super(id);
     }
-    
+    protected CategoryImpl(String uri) {
+    	super(uri);
+    }
     public String toString() {
-        return String.valueOf(id);
+        return getURI();
     }
     
     public int hashCode() {

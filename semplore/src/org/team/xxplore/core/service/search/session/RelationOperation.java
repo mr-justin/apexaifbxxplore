@@ -20,7 +20,7 @@ public class RelationOperation implements FacetOperation {
 		try {
 			int target = graph.getTargetVariable();
 			graph.add(SchemaFactoryImpl.getInstance().createCompoundCategory(1));	// AND
-			graph.add(SchemaFactoryImpl.getInstance().createRelation(Md5_BloomFilter_64bit.URItoID(relation.getURI())), 
+			graph.add(SchemaFactoryImpl.getInstance().createRelation((relation.getURI())), 
 					target, graph.numOfNodes()-1);
 			graph.setTargetVariable(graph.numOfNodes()-1);
 			return graph;
@@ -34,7 +34,7 @@ public class RelationOperation implements FacetOperation {
 	public Graph undo(Graph graph) {
 		try {
 			int newTarget = graph.removeRelation(SchemaFactoryImpl.getInstance().
-					createRelation(Md5_BloomFilter_64bit.URItoID(relation.getURI())),
+					createRelation((relation.getURI())),
 					graph.getTargetVariable());
 			graph.setTargetVariable(newTarget);
 			return graph;
