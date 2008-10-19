@@ -140,7 +140,7 @@ public class GraphImpl implements Graph {
 			while (itr.hasNext()) {
 				Edge e = itr.next();
 				if (Math.min(e.getFromNode(), e.getToNode()) < i) continue;
-				str += "Edge: " + itr.next().toString() + "\n";
+				str += "Edge: " + e.toString() + "\n";
 			}
 		}
 		for (int i=0; i<nodeCount; i++) {
