@@ -8,8 +8,11 @@
  */
 package com.ibm.semplore.model.impl;
 
+import java.security.NoSuchAlgorithmException;
+
 import com.ibm.semplore.model.SchemaObject;
 import com.ibm.semplore.util.MD5Encrypt;
+import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 
 /**
  * @author liu Qiaoling
@@ -39,6 +42,10 @@ public abstract class SchemaObjectImpl implements SchemaObject
         this.id = id;
     }
     protected SchemaObjectImpl(String uri) {
+    	try {
+			this.id = Md5_BloomFilter_64bit.URItoID(uri);
+		} catch (NoSuchAlgorithmException e) {
+		}
         this.uri = uri;
     }
     

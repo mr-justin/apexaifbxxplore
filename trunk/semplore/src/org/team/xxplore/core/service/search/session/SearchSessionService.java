@@ -39,7 +39,6 @@ import com.ibm.semplore.model.CompoundCategory;
 import com.ibm.semplore.model.EnumerationCategory;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 import com.ibm.semplore.xir.DocStream;
 
 import flex.messaging.FlexContext;
