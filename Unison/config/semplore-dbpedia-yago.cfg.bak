@@ -1,5 +1,0 @@
-index_path = index/dbpedia_yago
-result_path = result/result.txt
-memory_size = 512000000
-num_threads = 1
-com.ibm.semplore.search.impl.alu.MassUnionAU.class = com.ibm.semplore.search.impl.alu.MassUnionAU_BV

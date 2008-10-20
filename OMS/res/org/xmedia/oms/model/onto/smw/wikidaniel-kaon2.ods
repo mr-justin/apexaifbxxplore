@@ -1,6 +1,0 @@
-ontology.uri=file:///c:/wikidaniel-20080824.owl
-connection.provider=org.xmedia.oms.adapter.kaon2.persistence.Kaon2ConnectionProvider
-session.factory_class=org.xmedia.oms.adapter.kaon2.persistence.Kaon2SessionFactory
-reasoner.on=false
-resources.location=C:/Dokumente und Einstellungen/Daniel/Eigene Dateien/daniel/studium/Diplomarbeit/Code3/XXplore_core/res
-index.location=C:/Dokumente und Einstellungen/Daniel/Eigene Dateien/daniel/studium/Diplomarbeit/Code3/XXplore_core/res/dawiki
