@@ -672,8 +672,6 @@ public class SearchSessionService {
 				String[] processed = Util4NT.processTripleLine("<a> "+token);
 				for (int i = 1; i<=2; i++) {
 					if ((i==1 && type==Util4NT.CATEGORY)||(i==2 && type==Util4NT.ATTRIBUTE)) continue;
-					if (processed[i].startsWith("<")) processed[i] = processed[i].substring(1);
-					if (processed[i].endsWith(">")) processed[i] = processed[i].substring(0, processed[i].length()-1);
 					labels[i] = Util4NT.getDefaultLabel(processed[i]);
 				}
 				
