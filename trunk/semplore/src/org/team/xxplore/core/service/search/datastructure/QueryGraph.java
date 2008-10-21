@@ -59,6 +59,14 @@ public class QueryGraph implements Query {
 		this.edgeList = edgeList;
 	}
 	
+	public LinkedList<GraphEdge> getMappingList() {
+		return mappingList;
+	}
+
+	public void setMappingList(LinkedList<GraphEdge> mappingList) {
+		this.mappingList = mappingList;
+	}
+
 	public void print()
 	{
 		System.out.println("Target Set:");
