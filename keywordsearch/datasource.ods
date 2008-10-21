@@ -1,9 +1,0 @@
-ontology.uri=tap
-ontology.file.path=D:/DevTools/eclipse-3.2/runtime-xxplore/explore.project/tap.rdf
-ontology.file.name=tap.rdf
-base_ontology.uri=http://tap.stanford.edu/kb/
-language=http://www.x-media-project/rdf/serialization/languages/rdf_xml
-ontology.type=urn:sesame2/repository_types/local/SailRepository/RdfNativeStore
-connection.provider=org.xmedia.accessknow.sesame.persistence.ConnectionProvider
-session.factory_class=org.xmedia.accessknow.sesame.persistence.SesameSessionFactory
-reasoner.on=false

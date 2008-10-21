@@ -1,2 +1,0 @@
-java -jar align.jar %1
-java -Xmx1024M -cp align.jar;lib\kaon2.jar;lib\weka.jar;lib\jwnl.jar;lib\commons-logging.jar edu/unika/aifb/foam/machine/Train %1
