@@ -47,8 +47,8 @@ public class BuildQ2SemanticService {
 	public static HashSet<String> rdfsEdgeSet, conEdgeSet;
 	
 //	statistic from sxr
-	public static int[] instance = new int[]{464843, 1644086, 7517743, 19238235 };
-	public static String[] ds = new String[]{"wordnet", "dblp", "freebase", "dbpedia"};
+	public static int[] instance = new int[]{464843, 1644086, 7517743, 19238235, 14051039, 82702188 };
+	public static String[] ds = new String[]{"wordnet", "dblp", "freebase", "dbpedia", "geonames", "uscensus"};
 	public static HashMap<String, Integer> instNumMap = new HashMap<String, Integer>();
 	
 	/**
