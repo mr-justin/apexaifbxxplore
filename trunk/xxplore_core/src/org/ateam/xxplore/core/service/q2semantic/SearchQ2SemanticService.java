@@ -145,13 +145,14 @@ public class SearchQ2SemanticService {
 		System.out.println("keywordIndex Time: " + (end_time - start_time)/1000.0 + "s");
 		
 		
-		String [] keys = new String[] {
-			"swrc",
-			"semanticweb",
-			"dblp",
-		};
+//		String [] keys = new String[] {
+//			"swrc",
+//			"semanticweb",
+//			"dblp",
+//			""
+//		};
 		
-		QueryInterpretationService inter = new QueryInterpretationService(keys);
+		QueryInterpretationService inter = new QueryInterpretationService(summaryObjSet.keySet());
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
 		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
 		
