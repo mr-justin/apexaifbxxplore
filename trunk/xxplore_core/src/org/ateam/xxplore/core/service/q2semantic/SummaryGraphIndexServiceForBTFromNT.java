@@ -60,11 +60,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Integer> conceptCount;
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
-	public int MAX_CACHE_SIZE = 1000000; 
+	public int MAX_CACHE_SIZE = 10000000; 
 	public int indivSize, propSize = 0;
 	
 
-	public String getSubjectType(String pred, String obj)
+	public static String getSubjectType(String pred, String obj)
 	{
 		if( (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && obj.equals(BuildQ2SemanticService.rdfsEdge[8])) || pred.equals(BuildQ2SemanticService.rdfsEdge[1]))
 			return CONCEPT;
@@ -77,7 +77,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		return "";
 	}
 
-	public String getObjectType(String pred, String obj)
+	public static String getObjectType(String pred, String obj)
 	{
 		if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj))
 			return CONCEPT;
@@ -90,7 +90,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	}
 
 	// for example isEdgeTypeOf(Property.IS_INSTANCE_OF)
-	public String getPredicateType(String pred, String obj)
+	public static String getPredicateType(String pred, String obj)
 	{//System.out.println(obj);
 		if(BuildQ2SemanticService.rdfsEdgeSet.contains(pred))
 			return RDFSPROP;

@@ -25,7 +25,8 @@ import com.ibm.semplore.imports.impl.data.load.Util4NT;
 public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexServiceForBTFromNT {
 
 	public static String GRAPHEDGEPOOL = "-graphEdgePool", OBJPROPPOOL = "-objpropPool", conceptCountObj = "-conceptCount.obj", resultFile = "-result.txt";
-	public static long MAX_OBJPROP_FILESIZE = 1*1024*1024*1024;
+	public static long MAX_OBJPROP_FILESIZE = 1*1024*1024*1024, MAX_GRAPHEDGE_FILESIZE = 50*1024*1024, MIN_GRAPHEDGE_FILESIZE = 10*1024;
+	public static double MIN_OBJPROP_SCORE = 0.000001;
 	public TreeMap<String, Integer> predPool;
 	public TreeMap<String, SummaryGraphElement> elemPool;
 	
@@ -259,7 +260,6 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 	public void thirdScan(String path) throws Exception
 	{
 		System.out.println("=======thirdScan==========");
-		indiv2con.openSearcher(path);
 		BufferedReader root = new BufferedReader(new FileReader(path+resultFile)), br;
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		root.readLine(); root.readLine();
@@ -269,19 +269,24 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 		while((line = root.readLine())!= null)
 		{
 			String pred = line.substring(0, line.indexOf('\t'));
-			System.out.println(++count+" "+pred);
+			System.out.println(++count+" "+pred+" "+elemPool.size());
 			String id = line.substring(line.indexOf('\t')+1);
-			br = new BufferedReader(new FileReader(path+GRAPHEDGEPOOL+File.separator+id));
+			File file = new File(path+GRAPHEDGEPOOL+File.separator+id);
+			if(!file.exists()) continue;
+//			if(file.length() > MAX_GRAPHEDGE_FILESIZE || file.length() < MIN_GRAPHEDGE_FILESIZE) continue;
+			br = new BufferedReader(new FileReader(file));
 			String line2;
 			while((line2=br.readLine())!= null)
 			{
 				String[] part = line2.split("\t");
+				
+//				if(Double.parseDouble(part[3]) < MIN_OBJPROP_SCORE) continue;
+				SummaryGraphElement p = getElem(part[2], SummaryGraphElement.RELATION);
+				p.setCost(Double.parseDouble(part[3]));
 				SummaryGraphElement s = getElem(part[0], SummaryGraphElement.CONCEPT);
 				s.setCost(Double.parseDouble(part[1]));
 				SummaryGraphElement o = getElem(part[4], SummaryGraphElement.CONCEPT);
 				o.setCost(Double.parseDouble(part[5]));
-				SummaryGraphElement p = getElem(part[2], SummaryGraphElement.RELATION);
-				p.setCost(Double.parseDouble(part[3]));
 
 				summaryGraph.addVertex(s);
 				summaryGraph.addVertex(o);
@@ -301,9 +306,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj+".split");
 		writeSummaryGraphAsRDF(summaryGraph, BuildQ2SemanticService.summaryRDF+".split");
-		indiv2con.closeSearcher();
 		outputGraphInfo(summaryGraph);
-		
 	}
 	
 	
@@ -318,7 +321,6 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 				res = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION);
 		}
 		elemPool.put(type+uri, res);
-
 		return res;
 	}
 	
