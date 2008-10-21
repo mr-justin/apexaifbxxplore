@@ -172,8 +172,6 @@ class GraphAdapterFactory {
 					MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS));
 		}
 		for(Mapping mapping : mappings) {
-//			System.out.println(mapping.getSource()+"-"+mapping.getSourceDsURI() +  
-//					"\t" + mapping.getTarget()+"-"+mapping.getTargetDsURI());
 			MappingCell mc1 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getSource()),mapping.getSourceDsURI());
 			MappingCell mc2 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getTarget()),mapping.getTargetDsURI());
 			conceptMappings.add(mc1.datasource + mc1.uri + mc2.datasource + mc2.uri);
@@ -191,14 +189,6 @@ class GraphAdapterFactory {
 				mapping_HM.put(mc2, mc2_set);
 			}
 			mc2_set.add(mc1);
-			
-//			for(MappingCell mc : mapping_HM.keySet()) {
-//				System.out.println(mc.uri);
-//				Set<MappingCell> mc_set = mapping_HM.get(mc);
-//				for(MappingCell mc3 : mc_set) {
-//					System.out.println("\t" + mc3.uri);
-//				}
-//			}
 		}
 	}
 	
@@ -260,9 +250,6 @@ public class GraphAdapter {
 					augmentPart = new AugmentPart();
 					augmentPart_HM.put(ele.getDatasource(), augmentPart);
 				}
-//				if(augmentPart.augmentPart == null) {
-//					augmentPart.augmentPart = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
-//				}
 				
 				if(ele instanceof SummaryGraphValueElement) {
 					SummaryGraphValueElement valueElement = (SummaryGraphValueElement)ele;
@@ -278,19 +265,13 @@ public class GraphAdapter {
 								SummaryGraphUtil.getResourceUri(pvertex), pvertex);
 						
 						for(INamedConcept con : neighbors.get(prop)) {
-//							if(con.getUri().equals("http://www.w3.org/2002/07/owl#Class") ||
-//									con.getUri().equals("http://www.w3.org/2002/07/owl#ObjectProperty")) {
-//								System.err.println(ele.getResource().getLabel() + "\t" + prop.getUri() + "\t");
-//								System.err.println(ele.getDatasource() + "\t" + con.getUri());
-//								continue;
-//							}
 							SummaryGraphElement cvertex = summaryGraph_HM.get(
 									ele.getDatasource()).element_hm.get(con.getUri());
 							
-//							for(String key1 : augmentPart_HM.get(
-//									ele.getDatasource()).element_hm.keySet()) {
-//								System.out.println(key1);
-//							}
+							if(cvertex == null) {
+								System.err.println("cvertex is null!");
+								System.exit(1);
+							}
 							
 							SummaryGraphEdge domain = new SummaryGraphEdge(
 									cvertex, pvertex,
@@ -366,12 +347,12 @@ public class GraphAdapter {
 		Collection<SummaryGraphEdge> edges = new ArrayList<SummaryGraphEdge>();
 		
 		SummaryGraph summaryGraph = summaryGraph_HM.get(ele.getDatasource());
-		if(summaryGraph.summaryGraph.vertexSet().contains(ele)) {
+		if(summaryGraph != null && summaryGraph.summaryGraph.vertexSet().contains(ele)) {
 			edges.addAll(summaryGraph.summaryGraph.edgesOf(ele));
 		}
 		
 		AugmentPart augmentPart = augmentPart_HM.get(ele.getDatasource());
-		if(augmentPart.augmentPart.vertexSet().contains(ele)) {
+		if(augmentPart != null && augmentPart.augmentPart.vertexSet().contains(ele)) {
 			edges.addAll(augmentPart.augmentPart.edgesOf(ele));
 		}
 		return edges;
@@ -381,44 +362,33 @@ public class GraphAdapter {
 	public Collection<SummaryGraphEdge> neighborVertex(
 			SummaryGraphElement ele) {
 		Collection<SummaryGraphEdge> edges = this.getNeighbor(ele);
-//			new ArrayList<SummaryGraphEdge>();
-//		
-//		SummaryGraph summaryGraph = summaryGraph_HM.get(ele.getDatasource());
-//		if(summaryGraph.summaryGraph.vertexSet().contains(ele)) {
-//			edges.addAll(summaryGraph.summaryGraph.edgesOf(ele));
-//		}
-//		
-//		AugmentPart augmentPart = augmentPart_HM.get(ele.getDatasource());
-//		if(augmentPart.augmentPart.vertexSet().contains(ele)) {
-//			edges.addAll(augmentPart.augmentPart.edgesOf(ele));
-//		}
 		
 		String uri = SummaryGraphUtil.getResourceUri(ele);
 		uri = SummaryGraphUtil.removeNum(uri);
 		
 		MappingCell mc = new MappingCell(uri,ele.getDatasource());
-//		System.out.println("===========================");
-//		System.out.println(mc.uri);
-//		System.out.println(mc.datasource);
 		Set<MappingCell> mc2_set = mapping_HM.get(mc);
 		
 		if(mc2_set != null) {
 			for(MappingCell mc2 : mc2_set) {
-				Set<SummaryGraphElement> ele1_set = this.summaryGraph_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
+				Set<SummaryGraphElement> ele1_set = null;
+				if(this.summaryGraph_HM.get(mc.datasource) != null) {
+					ele1_set = this.summaryGraph_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
+				}
 				if(ele1_set == null) {
+					if(this.augmentPart_HM.get(mc.datasource) == null) continue;
 					ele1_set = this.augmentPart_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
 				}
-				Set<SummaryGraphElement> ele2_set = this.summaryGraph_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
+				
+				Set<SummaryGraphElement> ele2_set = null;
+				if(this.summaryGraph_HM.get(mc2.datasource) != null) {
+					ele2_set = this.summaryGraph_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
+				}
 				if(ele2_set == null) {
+					if(this.augmentPart_HM.get(mc2.datasource) == null) continue;
 					ele2_set = this.augmentPart_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
 				}
 				
-//				for(SummaryGraphElement ele1 : ele1_set) {
-//					for(SummaryGraphElement ele2 : ele2_set) {
-//						SummaryGraphEdge edge = new SummaryGraphEdge(ele1,ele2,SummaryGraphEdge.MAPPING_EDGE);
-//						edges.add(edge);
-//					}
-//				}
 				if(ele1_set != null && ele2_set != null) {
 				for(SummaryGraphElement s: ele1_set)
 					label1:
@@ -442,8 +412,13 @@ public class GraphAdapter {
 							continue label1;
 						}
 						
-//						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION) 
-//							System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION) 
+							System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+
+//						System.out.println("chenjunquan is ok!");
+//						System.out.println("mapping " + SummaryGraphUtil.getResourceUri(s) + "\t" +
+//								SummaryGraphUtil.getResourceUri(t));
+						
 						SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
 						edges.add(edge);
 					}
