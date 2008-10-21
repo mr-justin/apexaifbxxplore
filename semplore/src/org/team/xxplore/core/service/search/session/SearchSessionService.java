@@ -36,6 +36,7 @@ import com.ibm.semplore.btc.impl.GraphImpl;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.CompoundCategory;
+import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.EnumerationCategory;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
@@ -69,6 +70,7 @@ public class SearchSessionService {
 			Facet targetNode = qg.getTargetVariable();
 			LinkedList<Facet> nodeList = qg.getVertexList();
 			LinkedList<GraphEdge> edgeList = qg.getEdgeList();
+			LinkedList<GraphEdge> mappingList = qg.getMappingList();
 			Graph graph = new GraphImpl();
 			HashMap<Facet, Integer> indexMap = new HashMap<Facet, Integer>();
 			int index = 0;
@@ -121,6 +123,12 @@ public class SearchSessionService {
 				int to = indexMap.get(e.getToElement());
 				Relation rel = (Relation)e.getDecorationElement();
 				graph.add(SchemaFactoryImpl.getInstance().createRelation(rel.getURI()), from, to);
+			}
+			for (GraphEdge e : mappingList) {
+				Integer from = indexMap.get(e.getFromElement());
+				Integer to = indexMap.get(e.getToElement());
+				if (from != null && to != null)
+					graph.addIEdges(new Edge(from, to, null));
 			}
 			
 			int id = SemplorePool.acquire();
