@@ -24,13 +24,15 @@ public class QueryGraph implements Query {
 		this.edgeList = new LinkedList<GraphEdge>();
 		this.vertexList = new LinkedList<Facet>();
 		this.targetVariable = null;
+		this.mappingList = null;
 	}
 
 	public QueryGraph(Facet targetVariable, LinkedList<Facet> vertexList,
-			LinkedList<GraphEdge> edgeList) {
+			LinkedList<GraphEdge> edgeList, LinkedList<GraphEdge> mappingList) {
 		this.targetVariable = targetVariable;
 		this.vertexList = vertexList;
 		this.edgeList = edgeList;
+		this.mappingList = mappingList;
 	}
 
 	public Facet getTargetVariable() {
