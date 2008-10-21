@@ -114,6 +114,11 @@ class GraphAdapterFactory {
 	private HashMap<String,SummaryGraph> summaryGraph_HM;
 	private HashMap<MappingCell, Set<MappingCell>> mapping_HM;
 	public Set<String> conceptMappings;
+	private ArrayList<Mapping> mappings;
+	
+	public ArrayList<Mapping> getMappings() {
+		return mappings;
+	}
 	
 	public GraphAdapterFactory(Set<String> keys, MappingIndexService index) {
 		summaryGraph_HM = new HashMap<String, SummaryGraph>();
@@ -159,7 +164,7 @@ class GraphAdapterFactory {
 	}
 	
 	public void getMapping(MappingIndexService index,Set<String> keys) {
-		Collection<Mapping> mappings = new ArrayList<Mapping>();
+		mappings = new ArrayList<Mapping>();
 		conceptMappings = new HashSet<String>();
 		
 		for (String ds : keys) {
@@ -211,7 +216,6 @@ public class GraphAdapter {
 	private HashMap<String, AugmentPart> augmentPart_HM;
 	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
 	private Set<String> conceptMappings;
-	
 	
 	
 	private void updateDsCoverage(String ds) {
@@ -415,7 +419,7 @@ public class GraphAdapter {
 //						edges.add(edge);
 //					}
 //				}
-				
+				if(ele1_set != null && ele2_set != null) {
 				for(SummaryGraphElement s: ele1_set)
 					label1:
 					for(SummaryGraphElement t : ele2_set)
@@ -443,6 +447,7 @@ public class GraphAdapter {
 						SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
 						edges.add(edge);
 					}
+				}
 			}
 		}
 		
