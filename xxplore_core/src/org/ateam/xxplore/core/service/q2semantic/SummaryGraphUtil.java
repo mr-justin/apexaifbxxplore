@@ -1,5 +1,6 @@
 package org.ateam.xxplore.core.service.q2semantic;
 
+import org.xmedia.oms.model.impl.DataProperty;
 import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
 
@@ -12,34 +13,15 @@ public class SummaryGraphUtil {
 			return ((Property)ele.getResource()).getUri();
 		}
 		else {
+			if(ele.getResource() instanceof DataProperty) {
+				return ((Property)ele.getResource()).getUri();
+			}
 			return ele.getResource().getLabel();
 		}
 	}
 	
 	public static String removeNum(String line) {
 		return line.replaceFirst("\\u0028.*\\u0029", "");
-//		boolean flag = false;
-//		if(line.charAt(line.length() - 1) == '>') {
-//			flag = true;
-//			line = line.substring(1,line.length()-1);
-//		}
-//		if( line.charAt(line.length() - 1) == ')' ) {
-//			int pos = line.lastIndexOf('(');
-//			if(pos == -1) return line;
-//			
-//			String num = line.substring(pos + 1,line.length() - 1);
-//			
-//			try {
-//				Integer.parseInt(num);
-//			}
-//			catch (Exception e) {
-//				return line;
-//			}
-//			
-//			return line.substring(0,pos);
-//		}
-//		if(flag) line = "<" + line + ">";
-//		return line;
 	}
 	
 	public static String removeGtOrLs(String line) {
