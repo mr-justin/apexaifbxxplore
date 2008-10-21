@@ -546,6 +546,8 @@ public class SearchSessionService {
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
 			ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 			SemplorePool.release(id);
+
+			if (array.size() == 0) return null;
 			
 			SeeAlso seeAlso = new SeeAlso();
 			
