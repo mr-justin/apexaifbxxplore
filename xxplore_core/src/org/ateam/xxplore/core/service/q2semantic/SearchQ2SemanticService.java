@@ -17,6 +17,7 @@ import java.util.PriorityQueue;
 import java.util.Properties;
 import java.util.Set;
 
+import org.ateam.xxplore.core.service.mapping.Mapping;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.q2semantic.QueryInterpretationService.Subgraph;
 import org.jgrapht.graph.Pseudograph;
@@ -65,7 +66,7 @@ public class SearchQ2SemanticService {
 	{
 		List<String> con = new ArrayList<String>();
 		for(Concept c: concept)
-			con.add(c.getURI());
+			con.add("<"+c.getURI()+">");
 		QueryInterpretationService inter = new QueryInterpretationService();
 		MappingIndexService mis = new MappingIndexService();
 		mis.init4Search(mappingIndexRoot);
@@ -73,6 +74,7 @@ public class SearchQ2SemanticService {
 		Collection<Suggestion> res = new PriorityQueue<Suggestion>();
 		for(String str: sugg)
 		{
+			System.out.println(str);
 			String[] part = str.split("\t");
 			if(part.length!=4) continue;
 			String label = part[0].substring(part[0].lastIndexOf('/')+1);
@@ -81,6 +83,7 @@ public class SearchQ2SemanticService {
 			else if(part[3].equals(PredicateMark))
 				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
 		}
+		System.out.println("Total Suggestion: "+res.size());
 		return res;
 	}
 	
@@ -173,7 +176,7 @@ public class SearchQ2SemanticService {
 				
 				LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
 				graphVertexes.add(getFacet(elements.get(i)));
-				QueryGraph queryGraph = new QueryGraph(null,graphVertexes,null);
+				QueryGraph queryGraph = new QueryGraph(null,graphVertexes,null, null);
 				System.out.println("output1: " + elements.get(i).getMatchingScore());
 				result.add(queryGraph);
 			}
@@ -277,17 +280,76 @@ public class SearchQ2SemanticService {
 				}
 			}
 			
-			for(GraphEdge edge : graphEdges) {
-				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
+//			for(GraphEdge edge : graphEdges) {
+//				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
+//			}
+//			================ by kaifengxu
+			LinkedList<GraphEdge> mappingEdges = new LinkedList<GraphEdge>();
+			HashMap<String, Facet> uri2facet = new HashMap<String, Facet>();
+			for(GraphEdge edge: graphEdges)
+			{
+				uri2facet.put(edge.getFromElement().getURI()+edge.getFromElement().getSource().getName(), edge.getFromElement());
+				uri2facet.put(edge.getDecorationElement().getURI()+edge.getDecorationElement().getSource().getName(), edge.getDecorationElement());
+				uri2facet.put(edge.getToElement().getURI()+edge.getToElement().getSource().getName(), edge.getToElement());
 			}
-				
-			result.add(new QueryGraph(null, graphVertexes, graphEdges));
+			if (inter.m_datasources == null || inter.m_datasources.size() == 0)
+				return null;
+			Collection<Mapping> mappings;
+			HashSet<String> delDupMappingEdge = new HashSet<String>();
+			for (String ds : inter.m_datasources.keySet()) {
+				mappings = mis.searchMappingsForDS(ds,
+						MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS);
+				for(Mapping mapping: mappings)
+				{
+					String uriA = mapping.getSource().substring(1, mapping.getSource().length()-1)+mapping.getSourceDsURI();
+					String uriB = mapping.getTarget().substring(1, mapping.getTarget().length()-1)+mapping.getTargetDsURI();
+					Facet mappingA = uri2facet.get(uriA);
+					Facet mappingB = uri2facet.get(uriB);
+					if(mappingA != null && mappingB != null && !delDupMappingEdge.contains(uriA+uriB))
+					{
+						delDupMappingEdge.add(uriA+uriB);
+						mappingEdges.add(new GraphEdge(mappingA, mappingB, null));
+						System.out.println("add mappingedge: "+mappingA.getURI()+"("+mappingA.getSource().getName()+") | "+mappingB.getURI()+"("+mappingB.getSource().getName()+")");
+					}
+				}
+			}
+//			===============================
+			result.add(new QueryGraph(null, graphVertexes, graphEdges, mappingEdges));
 		}
+		
+		
+		for (QueryGraph qg : result) {
+			char current_char = 'a';
+			for (GraphEdge ge : qg.edgeList) {
+				if (ge.getFromElement() instanceof Concept) {
+					Concept con = (Concept) ge.getFromElement();
+					con.variableLetter = String.valueOf(current_char++);
+				}
+				if (ge.getToElement() instanceof Concept) {
+					Concept con = (Concept) ge.getToElement();
+					con.variableLetter = String.valueOf(current_char++);
+				}
+			}
+			for (GraphEdge mapping : qg.mappingList) {
+				if ((mapping.fromElement instanceof Concept)
+						&& mapping.toElement instanceof Concept) {
+					Concept con1 = (Concept) mapping.fromElement;
+					Concept con2 = (Concept) mapping.toElement;
+					if (con1.variableLetter.compareTo(con2.variableLetter) > 0) {
+						con1.variableLetter = con2.variableLetter;
+					} else {
+						con2.variableLetter = con1.variableLetter;
+					}
+				}
+			}
+		}
+
 		for(int i=0; i<result.size(); i++)
 		{
 			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
 			result.get(i).print();
 		}
+		
 		return result;
 	}
 
@@ -321,7 +383,7 @@ public class SearchQ2SemanticService {
 		schemaObjsRoot = root+prop.getProperty("schemaObjsRoot")+File.separator;
 		keywordIndexRoot = root+prop.getProperty("keywordIndexRoot")+File.separator;
 		mappingIndexRoot = root+prop.getProperty("mappingIndexRoot")+File.separator;
-		System.out.println("Root:"+root+"\r\nsummaryObjsRoot:"+summaryObjsRoot+"\r\nschemaObjsRoot:"+schemaObjsRoot+"\r\nkeywordIndexRoot:"+keywordIndexRoot);
+		System.out.println("Root:"+root+"\r\nsummaryObjsRoot:"+summaryObjsRoot+"\r\nschemaObjsRoot:"+schemaObjsRoot+"\r\nkeywordIndexRoot:"+keywordIndexRoot+"\r\nmappingIndexRoot:"+mappingIndexRoot);
 //		add keywordindexes
 		keywordIndexSet = new HashSet<String>();
 		File[] indexes = new File(keywordIndexRoot).listFiles();
@@ -401,10 +463,13 @@ public class SearchQ2SemanticService {
 		return null;
 	}
 	
-	public static void main(String[] args) {
-		if(args.length<6)
+	public static void main(String[] args) throws Exception {
+		if(args.length<3)
 		{
-			System.out.println("SearchQ2SemanticService [path.prop(String)] [top-k(int)] [prune(double)] [distance(int)] [keyword1] [keyword2] ...");
+			if(args.length<6 && args.length>=3)
+				System.out.println("SearchQ2SemanticService [path.prop(String)] [top-k(int)] [prune(double)] [distance(int)] [keyword1] [keyword2] ...");
+			else
+				System.out.println("SearchQ2SemanticService [path.prop(String)] [ds] [con1] [con2]...");
 			return;
 		}
 		long start = System.currentTimeMillis();
@@ -412,8 +477,15 @@ public class SearchQ2SemanticService {
 		
 		for(int i=4; i<args.length; i++)
 			ll.add(args[i]);
-
-		new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
+		if(args.length>=6)
+			new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
+		else
+		{
+			List list = new LinkedList<Concept>();
+			for(int i=2; i<args.length; i++)
+				list.add(new Concept(null, args[i], null));
+			new SearchQ2SemanticService(args[0]).getSuggestion(list, args[1]);
+		}
 		long end = System.currentTimeMillis();
 		System.out.println();
 		System.out.println("Time consuming: "+(end - start) / 1000.0+" s");
