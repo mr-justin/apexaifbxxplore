@@ -58,7 +58,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	
 	public GraphAdapterFactory factory;
 	
-	public QueryInterpretationService(String [] keys) {
+	public QueryInterpretationService(Set<String> keys) {
 		mis = new MappingIndexService();
 		mis.init4Search(SearchQ2SemanticService.mappingIndexRoot);
 		Set<String> keys_set = new HashSet<String>();
@@ -376,7 +376,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 
 		double max = Double.MAX_VALUE;
 		ExpansionQueue expansionQueue = new ExpansionQueue(elements);
-
 		List<Subgraph> subgraphList = new LinkedList<Subgraph>();
 		
 //		List<Subgraph> output_list = new LinkedList<Subgraph>();
