@@ -11,7 +11,7 @@ public class Facet implements Query {
 	// The URI identifies the facet in a unique manner
 	public String URI;
 	// The URL which is in correct form of hyperlink, i.e. starts with http://
-	// if displayURI==null, it means URI is not clickable(eg. blanknode)
+	// if displayURI=="", it means URI is not clickable(eg. blanknode)
 	public String displayURI;
 	// The data source from which originates the facet
 	public Source source;
@@ -24,6 +24,7 @@ public class Facet implements Query {
 	public Facet() {
 		this.label = "";
 		this.URI = "";
+		this.displayURI = "";
 		this.source = new Source();
 		this.resultNb = 0;
 	}
@@ -35,7 +36,7 @@ public class Facet implements Query {
 	 */
 	public Facet(String label, String uri, Source source) {
 		this.label = label;
-		this.URI = uri;
+		setURI(uri);
 		this.source = source;
 	}
 	
@@ -91,6 +92,18 @@ public class Facet implements Query {
 	 */
 	public void setURI(String URI) {
 		this.URI = URI;
+		this.displayURI = "";
+		if (URI.startsWith("<http://")) {
+			URI = URI.substring(1);
+			if (URI.endsWith(">")) {
+				URI = URI.substring(0, URI.length()-1);
+				this.displayURI = URI;
+			}
+		}
+	}
+
+	public String getDisplayURI() {
+		return displayURI;
 	}
 
 	/**
