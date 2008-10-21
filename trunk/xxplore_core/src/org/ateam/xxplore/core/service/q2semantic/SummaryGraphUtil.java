@@ -17,22 +17,29 @@ public class SummaryGraphUtil {
 	}
 	
 	public static String removeNum(String line) {
-		if( line.charAt(line.length() - 1) == ')' ) {
-			int pos = line.lastIndexOf('(');
-			if(pos == -1) return line;
-			
-			String num = line.substring(pos + 1,line.length() - 1);
-			
-			try {
-				Integer.parseInt(num);
-			}
-			catch (Exception e) {
-				return line;
-			}
-			
-			return line.substring(0,pos);
-		}
-		return line;
+		return line.replaceFirst("\\u0028.*\\u0029", "");
+//		boolean flag = false;
+//		if(line.charAt(line.length() - 1) == '>') {
+//			flag = true;
+//			line = line.substring(1,line.length()-1);
+//		}
+//		if( line.charAt(line.length() - 1) == ')' ) {
+//			int pos = line.lastIndexOf('(');
+//			if(pos == -1) return line;
+//			
+//			String num = line.substring(pos + 1,line.length() - 1);
+//			
+//			try {
+//				Integer.parseInt(num);
+//			}
+//			catch (Exception e) {
+//				return line;
+//			}
+//			
+//			return line.substring(0,pos);
+//		}
+//		if(flag) line = "<" + line + ">";
+//		return line;
 	}
 	
 	public static String removeGtOrLs(String line) {
