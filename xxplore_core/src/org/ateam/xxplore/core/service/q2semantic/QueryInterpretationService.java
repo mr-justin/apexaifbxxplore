@@ -47,11 +47,30 @@ import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
 import org.xmedia.oms.query.Variable;
 
+import com.sun.org.apache.xml.internal.serializer.ElemDesc;
+
 public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger.getLogger(QueryInterpretationService.class);
-	private static double DEFAULT_SCORE = 0.0;
-	private static double EDGE_SCORE = 0.5;
+	public static double DEFAULT_SCORE = 0.0;
+	public static double EDGE_SCORE = 0.5;
+	public MappingIndexService mis;
+	
+	public GraphAdapterFactory factory;
+	
+	public QueryInterpretationService(String [] keys) {
+		mis = new MappingIndexService();
+		mis.init4Search(SearchQ2SemanticService.mappingIndexRoot);
+		Set<String> keys_set = new HashSet<String>();
+		for(String key : keys) {
+			keys_set.add(key);
+		}
+		factory = new GraphAdapterFactory(keys_set,mis);
+	}
+	
+	public QueryInterpretationService() {
+		
+	}
 
 	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
 
@@ -85,35 +104,17 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		}
 	}
 	
-
 	public LinkedList<Subgraph> computeQueries(
 			Map<String, Collection<SummaryGraphElement>> elements,
-			MappingIndexService index, int distance, int k) {
+			int distance, int k) {
 
 		if (elements == null) {
 			return null;
 		}
 		
-		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> sumGraphs = retrieveSummaryGraphs(elements);
+		GraphAdapter iGraph = factory.createGraphAdapter(elements);
 
-		getAugmentedSummaryGraphs(sumGraphs, elements);		
-
-		resourceGraph = getIntegratedSummaryGraph(sumGraphs, index);
-		
-		for(SummaryGraphElement ele : resourceGraph.vertexSet()) {
-			if(ele.getMatchingScore() != 0) {
-				ele.setTotalScore(1.0 / ele.getMatchingScore());
-			}
-			else if(ele.getEF() != 0) {
-				ele.setTotalScore(ele.getEF());
-			}
-			else {
-				ele.setTotalScore(this.DEFAULT_SCORE);
-			}
-			ele.setTotalScore(ele.getTotalScore() + this.EDGE_SCORE);
-		}
-
-		Collection<Subgraph> subgraphs = getTopKSubgraphs(resourceGraph,elements, distance, k);
+		Collection<Subgraph> subgraphs = getTopKSubgraphs(iGraph,elements, distance, k);
 		
 		int count = 0;
 		for (Subgraph g : subgraphs) {
@@ -242,58 +243,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return res;
 	}
 
-	private Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> retrieveSummaryGraphs(
-			Map<String, Collection<SummaryGraphElement>> elements) {
-		if (elements == null || elements.size() == 0) {
-			return null;
-		}
-		Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> result = 
-			new ArrayList<Pseudograph<SummaryGraphElement, SummaryGraphEdge>>();
-		Collection<Collection<SummaryGraphElement>> gElements = elements.values();
-		// retrieve data source URI
-		Set<String> dsURISet = new HashSet<String>();
-		
-		for (Collection<SummaryGraphElement> c : gElements) {
-			for (SummaryGraphElement e : c) {
-				String dsURI = e.getDatasource();
-				dsURISet.add(dsURI);
-			}
-		}
-		for(String dsURI : dsURISet) {
-			// store and update ds coverage
-			updateDsCoverage(dsURI);
-			// ============================by kaifengxu
-			if (m_DsGraphMap.containsKey(dsURI))
-				continue;
-			String dsDFileName = SearchQ2SemanticService.summaryObjSet.get(dsURI);
-
-			File graphIndex = new File(dsDFileName);
-			ObjectInputStream in;
-			Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = null;
-			try {
-				in = new ObjectInputStream(new FileInputStream(graphIndex));
-				graph = (Pseudograph<SummaryGraphElement, SummaryGraphEdge>) in.readObject();
-				
-				for (SummaryGraphElement elem : graph.vertexSet()) {
-					elem.setDatasource(dsURI);
-				}
-				result.add(graph);
-				in.close();
-			} catch (FileNotFoundException ex) {
-				ex.printStackTrace();
-			} catch (IOException ex) {
-				ex.printStackTrace();
-			} catch (ClassNotFoundException ex) {
-				ex.printStackTrace();
-			}
-			if (graph != null){
-				m_DsGraphMap.put(dsURI, graph);
-			}
-		}
-
-		return result;
-	}
-
 	private void updateDsCoverage(String ds) {
 		Integer cover = m_datasources.get(ds);
 		if (cover != null) {
@@ -306,179 +255,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	private int getDsCoverage(SummaryGraphElement e) {
 		String ds = e.getDatasource();
 		return m_datasources.get(ds).intValue();
-	}
-
-	private void getAugmentedSummaryGraphs(
-			Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs,
-			Map<String, Collection<SummaryGraphElement>> keywords) {
-		if (graphs == null || graphs.size() == 0) {
-			return;
-		}
-		Set<String> keys = keywords.keySet();
-		for (String key : keys) {
-			m_startingElements.addAll(keywords.get(key));
-		}
-		
-		// == chenjunquan ==
-		HashMap<String, SummaryGraphElement> vertexMap = new HashMap<String, SummaryGraphElement>();
-		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> g : graphs) {
-			for(SummaryGraphElement ele : g.vertexSet()) {
-				vertexMap.put(SummaryGraphUtil.getResourceUri(ele) + " " + ele.getDatasource(), ele);
-			}
-		}
-		// int count = 0;
-		for (Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
-			int count = 0;
-			String graph_ds = null;
-			if(graph.vertexSet().size() != 0) {
-				Iterator<SummaryGraphElement> iter = graph.vertexSet().iterator();
-				graph_ds = iter.next().getDatasource();
-			}
-			else continue;
-			for (SummaryGraphElement e : m_startingElements) {
-				if (e instanceof SummaryGraphValueElement) {
-					// =============by kaifengxu
-					String ds = e.getDatasource();
-					if(!graph_ds.equals(ds)) continue;
-					
-					Map<IDataProperty, Collection<INamedConcept>> neighbors = 
-						((SummaryGraphValueElement) e).getNeighbors();
-					Set<IDataProperty> props = neighbors.keySet();
-					Iterator<IDataProperty> propIter = props.iterator();
-					
-					while (propIter.hasNext()) {
-						IDataProperty prop = propIter.next();
-						SummaryGraphElement pvertex = new SummaryGraphElement(
-								new DataProperty(prop.getUri()+"("+(count++)+")"), SummaryGraphElement.ATTRIBUTE);
-						Collection<INamedConcept> cons = neighbors.get(prop);
-						Iterator<INamedConcept> conIter = cons.iterator();
-						while (conIter.hasNext()) {
-							INamedConcept con = conIter.next();
-							SummaryGraphElement cvertex = new SummaryGraphElement(
-									con, SummaryGraphElement.CONCEPT);
-							
-							if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex) + " " + cvertex.getDatasource()) != null) {
-								cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)+ " " + cvertex.getDatasource());
-							}
-							if(vertexMap.get(SummaryGraphUtil.getResourceUri(pvertex) + " " + pvertex.getDatasource()) != null) {
-								pvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(pvertex)+ " " + cvertex.getDatasource());
-							}
-							if(vertexMap.get(SummaryGraphUtil.getResourceUri(e) + " " + e.getDatasource()) != null) {
-								e = vertexMap.get(SummaryGraphUtil.getResourceUri(e) + " " + e.getDatasource());
-							}
-							
-							
-							SummaryGraphEdge domain = new SummaryGraphEdge(
-									cvertex, pvertex,
-									SummaryGraphEdge.DOMAIN_EDGE);
-							SummaryGraphEdge range = new SummaryGraphEdge(
-									pvertex, (SummaryGraphElement) e,
-									SummaryGraphEdge.RANGE_EDGE);
-							// =============by kaifengxu
-							// System.out.println(domain.getSource().getResource().getClass());
-							cvertex.setDatasource(ds);
-							pvertex.setDatasource(ds);
-							graph.addVertex(cvertex);
-							graph.addVertex(pvertex);
-							graph.addVertex(e);
-							graph.addEdge(domain.getSource(), domain.getTarget(), domain);
-							graph.addEdge(range.getSource(), range.getTarget(), range);
-						}
-					}
-				}
-				System.out.println("add: "+SummaryGraphUtil.getResourceUri(e)+"\t"+e.getType());
-				updateScore(graph, e, m_startingElements);
-			}
-		}
-	}
-
-	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> getIntegratedSummaryGraph(
-			Collection<Pseudograph<SummaryGraphElement, SummaryGraphEdge>> graphs,
-			MappingIndexService index) {
-		
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(
-				SummaryGraphEdge.class);
-		
-		HashMap<String,HashSet<SummaryGraphElement>> hm = new HashMap<String, HashSet<SummaryGraphElement>>();
-		
-		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph : graphs) {
-			for(SummaryGraphElement ele : graph.vertexSet()) {
-				String uri = SummaryGraphUtil.getResourceUri(ele);
-				uri = SummaryGraphUtil.removeNum(uri);
-
-				HashSet<SummaryGraphElement> set = hm.get(uri);
-				if(set == null) set = new  HashSet<SummaryGraphElement>();
-				set.add(ele);
-				hm.put(uri, set);
-
-				iGraph.addVertex(ele);
-			}
-			
-			for(SummaryGraphEdge edge : graph.edgeSet()) {
-				iGraph.addEdge(edge.getSource(), edge.getTarget(), edge);
-			}
-		}
-		
-		if (m_datasources == null || m_datasources.size() == 0)
-			return null;
-		Collection<Mapping> mappings = new ArrayList<Mapping>();
-		for (String ds : m_datasources.keySet()) {
-			mappings.addAll(index.searchMappingsForDS(ds,
-					MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS));
-		}
-		HashSet<String> conceptMappings = new HashSet<String>();
-		for (Mapping m : mappings) {
-			String source_uri = SummaryGraphUtil.removeGtOrLs(m.getSource());
-			String target_uri = SummaryGraphUtil.removeGtOrLs(m.getTarget());
-			conceptMappings.add(m.getSourceDsURI()+source_uri+m.getTargetDsURI()+target_uri);
-		}
-		
-		for (Mapping m : mappings) {
-			String source_uri = SummaryGraphUtil.removeGtOrLs(m.getSource());
-			String target_uri = SummaryGraphUtil.removeGtOrLs(m.getTarget());
-//			if(source_uri.equals(target_uri)) continue;
-
-			HashSet<SummaryGraphElement> source = hm.get(source_uri);
-			HashSet<SummaryGraphElement> target = hm.get(target_uri);
-
-			
-			if(source != null && target != null) {
-				for(SummaryGraphElement s: source)
-					label1:
-					for(SummaryGraphElement t : target)
-					{
-						label2:
-						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
-						{
-							boolean flag = false;
-							label3:
-							for(SummaryGraphElement sElem: getElem(SummaryGraphEdge.DOMAIN_EDGE, iGraph, s))
-								for(SummaryGraphElement tElem: getElem(SummaryGraphEdge.DOMAIN_EDGE, iGraph, t))
-									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
-										{flag = true; break label3;}
-							if(flag)
-							for(SummaryGraphElement sElem: getElem(SummaryGraphEdge.RANGE_EDGE, iGraph, s))
-								for(SummaryGraphElement tElem: getElem(SummaryGraphEdge.RANGE_EDGE, iGraph, t))
-									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
-										break label2;
-							//System.out.println("gua le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
-							continue label1;
-						}
-						
-						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
-							System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
-						SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
-						iGraph.addEdge(s, t, edge);
-					}
-
-			}
-			
-//			if(source != null && target != null) {
-//				SummaryGraphEdge edge = new SummaryGraphEdge(source, target, SummaryGraphEdge.MAPPING_EDGE);
-//				iGraph.addEdge(source, target, edge);
-//			}
-		}
-		return iGraph;
 	}
 	
 	public List<SummaryGraphElement> getElem(String label, Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph, SummaryGraphElement elem)
@@ -594,7 +370,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 
 	private Collection<Subgraph> getTopKSubgraphs(
-			Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph,
+			GraphAdapter iGraph,
 			Map<String, Collection<SummaryGraphElement>> elements,
 			int distance, int k) {
 
@@ -761,23 +537,18 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 
 	private Collection<Cursor> getNonVisitedNeighbors(
-			Pseudograph<SummaryGraphElement, SummaryGraphEdge> iGraph,
+			GraphAdapter iGraph,
 			SummaryGraphElement e, Cursor c) {// System.out.println(c.getLength());
 		Collection<Cursor> neighbors = new ArrayList<Cursor>();
 		// == chenjunquan ==
 		//if(e.getDatasource().equals("freebase")) System.out.println("freebase element!");
-		Set<SummaryGraphEdge> edges = null;
-		try {
-			edges = iGraph.edgesOf(e);
-		}
-		catch (Exception eff) {
-			return new ArrayList<Cursor>();
-		}
+		Collection<SummaryGraphEdge> ele_coll = null;
+		ele_coll = iGraph.neighborVertex(e);
+
 		Cursor nextCursor = null;
-		for (SummaryGraphEdge edge : edges) {
+		for (SummaryGraphEdge edge : ele_coll) {
 			// incoming
-			if (edge.getTarget().equals(e)) {
-//				System.out.println(SummaryGraphUtil.getResourceUri(edge.getSource())+"\t"+edge.getSource().getTotalScore());
+			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
 				//if (!c.hasVisited(edge)) {
 					if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
