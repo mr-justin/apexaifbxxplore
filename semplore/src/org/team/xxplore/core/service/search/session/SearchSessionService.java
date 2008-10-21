@@ -45,7 +45,6 @@ import com.ibm.semplore.xir.DocStream;
 import flex.messaging.FlexContext;
 
 public class SearchSessionService {
-
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
 	 * the best source and respecting the number of result items per page. This ResultPage object

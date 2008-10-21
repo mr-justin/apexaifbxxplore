@@ -61,6 +61,7 @@ public class GraphImpl implements Graph {
 	 */
 	@Override
 	public Graph addIEdges(Edge edge) {
+		System.out.println(edge);
 		iedges.get(edge.getFromNode()).add(edge);
 		iedges.get(edge.getToNode()).add(edge.reverse());
 		return this;
@@ -148,7 +149,7 @@ public class GraphImpl implements Graph {
 			while (itr.hasNext()) {
 				Edge e = itr.next();
 				if (Math.min(e.getFromNode(), e.getToNode()) < i) continue;
-				str += "IEdge: " + itr.next().toString() + "\n";
+				str += "IEdge: " + e.toString() + "\n";
 			}
 		}
 		return str;
