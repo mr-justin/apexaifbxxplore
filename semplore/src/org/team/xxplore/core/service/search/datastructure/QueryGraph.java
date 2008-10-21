@@ -78,7 +78,10 @@ public class QueryGraph implements Query {
 			
 			String subject_str = edge.getFromElement() == null ? "null" : edge.getFromElement().getURI();
 			String object_str = edge.getToElement() == null ? "null" : edge.getToElement().getURI();
-
+			if(edge.getFromElement() instanceof Concept)
+				subject_str += "("+((Concept)edge.getFromElement()).variableLetter+")";
+			if(edge.getToElement() instanceof Concept)
+				object_str += "("+((Concept)edge.getToElement()).variableLetter+")";
 			System.out.println(subject_str+" -> "+edge.getDecorationElement().getURI()+" -> "+object_str);
 			
 		}
