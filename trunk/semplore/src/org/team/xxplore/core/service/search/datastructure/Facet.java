@@ -93,7 +93,7 @@ public class Facet implements Query {
 	public void setURI(String URI) {
 		this.URI = URI;
 		this.displayURI = "";
-		if (URI.startsWith("<http://")) {
+		if (URI!=null && URI.startsWith("<http://")) {
 			URI = URI.substring(1);
 			if (URI.endsWith(">")) {
 				URI = URI.substring(0, URI.length()-1);
