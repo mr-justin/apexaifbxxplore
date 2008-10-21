@@ -10,6 +10,9 @@ public class Facet implements Query {
 	public String label;
 	// The URI identifies the facet in a unique manner
 	public String URI;
+	// The URL which is in correct form of hyperlink, i.e. starts with http://
+	// if displayURI==null, it means URI is not clickable(eg. blanknode)
+	public String displayURI;
 	// The data source from which originates the facet
 	public Source source;
 	// Number of results associated with a facet
