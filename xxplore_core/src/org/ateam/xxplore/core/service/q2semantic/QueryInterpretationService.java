@@ -56,7 +56,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> resourceGraph;
 
 	// store datasources and coverage
-	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
+	public Map<String, Integer> m_datasources = new HashMap<String, Integer>();
 
 	private Set<SummaryGraphElement> m_startingElements = new HashSet<SummaryGraphElement>();
 
@@ -350,14 +350,12 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						IDataProperty prop = propIter.next();
 						SummaryGraphElement pvertex = new SummaryGraphElement(
 								new DataProperty(prop.getUri()+"("+(count++)+")"), SummaryGraphElement.ATTRIBUTE);
-						pvertex.setDatasource(ds);
 						Collection<INamedConcept> cons = neighbors.get(prop);
 						Iterator<INamedConcept> conIter = cons.iterator();
 						while (conIter.hasNext()) {
 							INamedConcept con = conIter.next();
 							SummaryGraphElement cvertex = new SummaryGraphElement(
 									con, SummaryGraphElement.CONCEPT);
-							cvertex.setDatasource(ds);
 							
 							if(vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex) + " " + cvertex.getDatasource()) != null) {
 								cvertex = vertexMap.get(SummaryGraphUtil.getResourceUri(cvertex)+ " " + cvertex.getDatasource());
@@ -389,7 +387,6 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					}
 				}
 				System.out.println("add: "+SummaryGraphUtil.getResourceUri(e)+"\t"+e.getType());
-				e = vertexMap.get(SummaryGraphUtil.getResourceUri(e) + " " + e.getDatasource());
 				updateScore(graph, e, m_startingElements);
 			}
 		}
@@ -509,12 +506,20 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		for (String con : concept) {
 			mapping = index.searchMappings(con, ds,
 					MappingIndexService.SEARCH_SOURCE);
+
 			for (Mapping map : mapping)
-				mappedConcept.put(map.getTarget(), map.getTargetDsURI());
+			{
+				mappedConcept.put(map.getTarget().substring(1, map.getTarget().length()-1), map.getTargetDsURI());
+//				System.out.println("t "+map.getTarget()+" "+map.getTargetDsURI());
+			}
 			mapping = index.searchMappings(con, ds,
 					MappingIndexService.SEARCH_TARGET);
+
 			for (Mapping map : mapping)
-				mappedConcept.put(map.getSource(), map.getSourceDsURI());
+			{
+				mappedConcept.put(map.getSource().substring(1, map.getSource().length()-1), map.getSourceDsURI());
+//				System.out.println("s "+map.getSource()+" "+map.getSourceDsURI());
+			}
 		}
 		SummaryGraphIndexServiceForBTFromNT sss = new SummaryGraphIndexServiceForBTFromNT();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph;
@@ -528,29 +533,27 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			for (SummaryGraphEdge edge : graph.edgeSet()) {
 				SummaryGraphElement source = edge.getSource(), target = edge
 						.getTarget();
-				if (source.getResource() instanceof NamedConcept
-						&& ((NamedConcept) source.getResource()).getUri()
-								.equals(uri)
+				if (source.getResource() instanceof NamedConcept && ((NamedConcept) source.getResource()).getUri().equals(uri)
 						&& target.getType() == SummaryGraphElement.RELATION) {
 					res.add(((NamedConcept) source.getResource()).getUri()
-							+ "\t" + source.getDatasource() + "\t"
-							+ source.getTotalScore() + "\t"
+							+ "\t" + datasource + "\t"
+							+ source.getEF() + "\t"
 							+ SearchQ2SemanticService.ConceptMark);
 					res.add(((Property) target.getResource()).getUri() + "\t"
-							+ target.getDatasource() + "\t"
-							+ target.getTotalScore() + "\t"
+							+ datasource + "\t"
+							+ target.getEF() + "\t"
 							+ SearchQ2SemanticService.PredicateMark);
 				} else if (target.getResource() instanceof NamedConcept
 						&& ((NamedConcept) target.getResource()).getUri()
 								.equals(uri)
 						&& source.getType() == SummaryGraphElement.RELATION) {
 					res.add(((NamedConcept) target.getResource()).getUri()
-							+ "\t" + target.getDatasource() + "\t"
-							+ target.getTotalScore() + "\t"
+							+ "\t" + datasource + "\t"
+							+ target.getEF() + "\t"
 							+ SearchQ2SemanticService.ConceptMark);
 					res.add(((Property) source.getResource()).getUri() + "\t"
-							+ source.getDatasource() + "\t"
-							+ source.getTotalScore() + "\t"
+							+ datasource + "\t"
+							+ source.getEF() + "\t"
 							+ SearchQ2SemanticService.PredicateMark);
 				}
 			}
