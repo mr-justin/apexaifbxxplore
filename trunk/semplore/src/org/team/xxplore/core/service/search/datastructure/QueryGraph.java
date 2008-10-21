@@ -14,6 +14,8 @@ public class QueryGraph implements Query {
 	public LinkedList<Facet> vertexList;
 	// List of edges (GraphEdge objects)
 	public LinkedList<GraphEdge> edgeList;
+	// List of mappings
+	public LinkedList<GraphEdge> mappingList;
 	
 	/**
 	 * Default constructor
