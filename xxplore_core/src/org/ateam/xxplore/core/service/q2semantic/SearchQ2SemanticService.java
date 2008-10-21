@@ -66,7 +66,7 @@ public class SearchQ2SemanticService {
 	{
 		List<String> con = new ArrayList<String>();
 		for(Concept c: concept)
-			con.add("<"+c.getURI()+">");
+			con.add(c.getURI());
 		QueryInterpretationService inter = new QueryInterpretationService();
 		MappingIndexService mis = new MappingIndexService();
 		mis.init4Search(mappingIndexRoot);
@@ -144,60 +144,21 @@ public class SearchQ2SemanticService {
 		System.out.println();
 		System.out.println("keywordIndex Time: " + (end_time - start_time)/1000.0 + "s");
 		
-		// == chenjunquan ==
-		//if the query string number is one. This scenario will be tackled individually.
-		if(keywordList.size() == 1) {
-			ArrayList<SummaryGraphElement> elements = new ArrayList<SummaryGraphElement>();
-			for(Collection<SummaryGraphElement> coll : elementsMap.values()) {
-				for(SummaryGraphElement ele : coll) {
-					elements.add(ele);
-				}
-			}
-			
-			Collections.sort(elements,new Comparator<SummaryGraphElement>() {
-				@Override
-				public int compare(SummaryGraphElement arg0,
-						SummaryGraphElement arg1) {
-					if(arg0.getMatchingScore() - arg1.getMatchingScore() > 0) {
-						return -1;
-					}
-					else if(arg0.getMatchingScore() - arg1.getMatchingScore() < 0) {
-						return 1;
-					}
-					else return 0;
-				}
-			});
-			
-			
-			LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
-
-			//ArrayList<SummaryGraphElement> elements_topk = new ArrayList<SummaryGraphElement>();
-			for(int i=0;i<Math.min(topNbGraphs, elements.size());i++) {
-				
-				LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
-				graphVertexes.add(getFacet(elements.get(i)));
-				QueryGraph queryGraph = new QueryGraph(null,graphVertexes,null, null);
-				System.out.println("output1: " + elements.get(i).getMatchingScore());
-				result.add(queryGraph);
-			}
-			
-			for(int i=0; i<result.size(); i++)
-			{
-				System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
-				result.get(i).print();
-			}
-			return result;
-		}
 		
-		QueryInterpretationService inter = new QueryInterpretationService();
+		String [] keys = new String[] {
+			"swrc",
+			"semanticweb",
+			"dblp",
+		};
+		
+		QueryInterpretationService inter = new QueryInterpretationService(keys);
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
 		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
-		MappingIndexService mis = new MappingIndexService();
-		mis.init4Search(mappingIndexRoot);
+		
 		
 		// == chenjunquan ==
 		start_time = System.currentTimeMillis();
-		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, mis, distance, topNbGraphs);
+		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
 		if(graphs == null) return null;
 		end_time = System.currentTimeMillis();
 		
@@ -280,9 +241,9 @@ public class SearchQ2SemanticService {
 				}
 			}
 			
-//			for(GraphEdge edge : graphEdges) {
-//				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
-//			}
+			for(GraphEdge edge : graphEdges) {
+				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
+			}
 //			================ by kaifengxu
 			LinkedList<GraphEdge> mappingEdges = new LinkedList<GraphEdge>();
 			HashMap<String, Facet> uri2facet = new HashMap<String, Facet>();
@@ -292,27 +253,30 @@ public class SearchQ2SemanticService {
 				uri2facet.put(edge.getDecorationElement().getURI()+edge.getDecorationElement().getSource().getName(), edge.getDecorationElement());
 				uri2facet.put(edge.getToElement().getURI()+edge.getToElement().getSource().getName(), edge.getToElement());
 			}
-			if (inter.m_datasources == null || inter.m_datasources.size() == 0)
-				return null;
+//			if ( == null || inter.factory.getM_datasource().size() == 0)
+//				return null;
 			Collection<Mapping> mappings;
 			HashSet<String> delDupMappingEdge = new HashSet<String>();
-			for (String ds : inter.m_datasources.keySet()) {
-				mappings = mis.searchMappingsForDS(ds,
-						MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS);
-				for(Mapping mapping: mappings)
+//			for (String ds : inter.factory.getM_datasources().keySet()) {
+//				mappings = inter.mis.searchMappingsForDS(ds,
+//						MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS);
+			
+			mappings = inter.factory.getMappings();
+//			System.out.println("aaaa"+mappings.size());
+			for(Mapping mapping: mappings)
+			{
+				String uriA = mapping.getSource()+mapping.getSourceDsURI();
+				String uriB = mapping.getTarget()+mapping.getTargetDsURI();
+				Facet mappingA = uri2facet.get(uriA);
+				Facet mappingB = uri2facet.get(uriB);
+				if(mappingA != null && mappingB != null && !delDupMappingEdge.contains(uriA+uriB))
 				{
-					String uriA = mapping.getSource().substring(1, mapping.getSource().length()-1)+mapping.getSourceDsURI();
-					String uriB = mapping.getTarget().substring(1, mapping.getTarget().length()-1)+mapping.getTargetDsURI();
-					Facet mappingA = uri2facet.get(uriA);
-					Facet mappingB = uri2facet.get(uriB);
-					if(mappingA != null && mappingB != null && !delDupMappingEdge.contains(uriA+uriB))
-					{
-						delDupMappingEdge.add(uriA+uriB);
-						mappingEdges.add(new GraphEdge(mappingA, mappingB, null));
-						System.out.println("add mappingedge: "+mappingA.getURI()+"("+mappingA.getSource().getName()+") | "+mappingB.getURI()+"("+mappingB.getSource().getName()+")");
-					}
+					delDupMappingEdge.add(uriA+uriB);
+					mappingEdges.add(new GraphEdge(mappingA, mappingB, null));
+					System.out.println("add mappingedge: "+mappingA.getURI()+"("+mappingA.getSource().getName()+") | "+mappingB.getURI()+"("+mappingB.getSource().getName()+")");
 				}
 			}
+//			}
 //			===============================
 			result.add(new QueryGraph(null, graphVertexes, graphEdges, mappingEdges));
 		}
@@ -320,28 +284,72 @@ public class SearchQ2SemanticService {
 		
 		for (QueryGraph qg : result) {
 			char current_char = 'a';
-			for (GraphEdge ge : qg.edgeList) {
-				if (ge.getFromElement() instanceof Concept) {
-					Concept con = (Concept) ge.getFromElement();
-					con.variableLetter = String.valueOf(current_char++);
-				}
-				if (ge.getToElement() instanceof Concept) {
-					Concept con = (Concept) ge.getToElement();
-					con.variableLetter = String.valueOf(current_char++);
-				}
-			}
+			HashMap<String, String> letter_hm = new HashMap<String, String>();
+//			for (GraphEdge ge : qg.edgeList) {
+//				if (ge.getFromElement() instanceof Concept) {
+//					Concept con = (Concept) ge.getFromElement();
+//					if( con_hm.get(con.URI) == null ) {
+//						con.variableLetter = String.valueOf(current_char++);
+//						con_hm.put(con.URI, con.variableLetter);
+//					}					
+//					else {
+//						con.variableLetter = con_hm.get(con.URI);
+//					}
+//				}
+//				if (ge.getToElement() instanceof Concept) {
+//					Concept con = (Concept) ge.getFromElement();
+//					if( con_hm.get(con.URI) == null ) {
+//						con.variableLetter = String.valueOf(current_char++);
+//						con_hm.put(con.URI, con.variableLetter);
+//					}					
+//					else {
+//						con.variableLetter = con_hm.get(con.URI);
+//					}
+//				}
+//			}
 			for (GraphEdge mapping : qg.mappingList) {
 				if ((mapping.fromElement instanceof Concept)
 						&& mapping.toElement instanceof Concept) {
 					Concept con1 = (Concept) mapping.fromElement;
 					Concept con2 = (Concept) mapping.toElement;
-					if (con1.variableLetter.compareTo(con2.variableLetter) > 0) {
-						con1.variableLetter = con2.variableLetter;
-					} else {
-						con2.variableLetter = con1.variableLetter;
+					String l = letter_hm.get(con1.URI);
+					if(l == null) l = letter_hm.get(con2.URI);
+					if(l == null) l = String.valueOf(current_char++);
+					con1.variableLetter = l;
+					con2.variableLetter = l;
+					letter_hm.put(con1.URI, l);
+					letter_hm.put(con2.URI, l);
+				}
+			}
+			for (GraphEdge ge : qg.edgeList) {
+				if (ge.getFromElement() instanceof Concept) {
+					Concept con = (Concept) ge.getFromElement();
+					if(con.variableLetter == null)
+					{
+						if( letter_hm.get(con.URI) == null ) {
+							con.variableLetter = String.valueOf(current_char++);
+							letter_hm.put(con.URI, con.variableLetter);
+						}					
+						else {
+							con.variableLetter = letter_hm.get(con.URI);
+						}
+					}
+				}
+				if (ge.getToElement() instanceof Concept) {
+					Concept con = (Concept) ge.getToElement();
+					if(con.variableLetter == null)
+					{
+						if( letter_hm.get(con.URI) == null ) {
+							con.variableLetter = String.valueOf(current_char++);
+							letter_hm.put(con.URI, con.variableLetter);
+						}					
+						else {
+							con.variableLetter = letter_hm.get(con.URI);
+						}
 					}
 				}
 			}
+			
 		}
 
 		for(int i=0; i<result.size(); i++)
@@ -442,17 +450,17 @@ public class SearchQ2SemanticService {
 		if(elem.getType() == SummaryGraphElement.ATTRIBUTE)
 		{
 			String uri = ((Property)elem.getResource()).getUri();
-			return new Relation(SummaryGraphUtil.getLocalName(uri), uri, new Source(elem.getDatasource(),null,0));
+			return new Relation(SummaryGraphUtil.getLocalName(uri), "<"+uri+">", new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.RELATION)
 		{
 			String uri = ((Property)elem.getResource()).getUri();
-			return new Relation(SummaryGraphUtil.getLocalName(uri), uri, new Source(elem.getDatasource(),null,0));
+			return new Relation(SummaryGraphUtil.getLocalName(uri), "<"+uri+">", new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.CONCEPT)
 		{
 			String uri = ((NamedConcept)elem.getResource()).getUri();
-			return new Concept(SummaryGraphUtil.getLocalName(uri), uri, new Source(elem.getDatasource(),null,0));
+			return new Concept(SummaryGraphUtil.getLocalName(uri), "<"+uri+">", new Source(elem.getDatasource(),null,0));
 		}
 		else if(elem.getType() == SummaryGraphElement.VALUE)
 		{
