@@ -52,7 +52,9 @@ public class Edge {
 //    }
     
     public String toString() {
-        return "("+fromNode+"->"+toNode+"#"+rel.toString()+")";
+    	if (rel != null)
+    		return "("+fromNode+"->"+toNode+"#"+rel.toString()+")";
+    	return "("+fromNode+"<=>"+toNode+")";
     }
         
     public Edge reverse() {
