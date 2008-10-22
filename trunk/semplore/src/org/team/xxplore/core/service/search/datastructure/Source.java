@@ -77,4 +77,12 @@ public class Source {
 	public void setResultCount(int resultCount) {
 		this.resultCount = resultCount;
 	}
+	
+	public boolean equals(Object b) {
+		return name.equals(((Source)b).name);
+	}
+	
+	public int hashCode() {
+		return name.hashCode();
+	}
 }
