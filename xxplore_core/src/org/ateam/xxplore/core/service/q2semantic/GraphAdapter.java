@@ -111,10 +111,11 @@ class MappingCell {
 }
 
 class GraphAdapterFactory {
-	private HashMap<String,SummaryGraph> summaryGraph_HM;
+	public HashMap<String,SummaryGraph> summaryGraph_HM;
 	private HashMap<MappingCell, Set<MappingCell>> mapping_HM;
 	public Set<String> conceptMappings;
 	private ArrayList<Mapping> mappings;
+	public Pseudograph<SummaryGraphElement,SummaryGraphEdge> mappingGraph;
 	
 	public ArrayList<Mapping> getMappings() {
 		return mappings;
@@ -125,6 +126,31 @@ class GraphAdapterFactory {
 		mapping_HM = new HashMap<MappingCell, Set<MappingCell>>();
 		this.getSummaryGraphs(keys);
 		this.getMapping(index, keys);
+	}
+	
+	public Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele) {
+		Collection<SummaryGraphEdge> edges = new ArrayList<SummaryGraphEdge>();
+		
+		SummaryGraph summaryGraph = summaryGraph_HM.get(ele.getDatasource());
+		if(summaryGraph != null && summaryGraph.summaryGraph.vertexSet().contains(ele)) {
+			edges.addAll(summaryGraph.summaryGraph.edgesOf(ele));
+		}
+		return edges;
+	}
+	
+	public Collection<SummaryGraphElement> getElement(SummaryGraphElement ele,String type) {
+		Collection<SummaryGraphElement> ele_set = new HashSet<SummaryGraphElement>();
+		
+		Collection<SummaryGraphEdge> edges = this.getNeighbor(ele);
+		
+		for(SummaryGraphEdge edge : edges) {
+			if(edge.equals(type)) {
+				SummaryGraphElement other = edge.getSource().equals(ele) ? edge.getTarget() : edge.getSource();
+				ele_set.add(other);
+			}
+		}
+		
+		return ele_set;
 	}
 	
 	public void getSummaryGraphs(Set<String> keys) {
@@ -166,6 +192,7 @@ class GraphAdapterFactory {
 	public void getMapping(MappingIndexService index,Set<String> keys) {
 		mappings = new ArrayList<Mapping>();
 		conceptMappings = new HashSet<String>();
+		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
 		
 		for (String ds : keys) {
 			mappings.addAll(index.searchMappingsForDS(ds,
@@ -190,10 +217,92 @@ class GraphAdapterFactory {
 			}
 			mc2_set.add(mc1);
 		}
+		
+		for(Mapping mapping : mappings) {
+			MappingCell mc1 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getSource()),mapping.getSourceDsURI());
+			MappingCell mc2 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getTarget()),mapping.getTargetDsURI());
+			
+			Set<MappingCell> mc1_set = mapping_HM.get(mc1);
+			Set<MappingCell> mc2_set = mapping_HM.get(mc2);
+			
+			if(mc1_set != null && mc2_set != null) {
+				for(MappingCell mc11 : mc1_set) {
+					SummaryGraphElement s = this.summaryGraph_HM.get(mc11.datasource).element_hm.get(mc11.uri);
+					label1:
+					for(MappingCell mc22 : mc2_set) {
+						
+						SummaryGraphElement t = this.summaryGraph_HM.get(mc22.datasource).element_hm.get(mc22.uri);
+						
+						if(s != null && t != null) {
+							label2:
+							if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
+							{
+								boolean flag = false;
+								label3:
+								for(SummaryGraphElement sElem: this.getElement(s,SummaryGraphEdge.DOMAIN_EDGE))
+									for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.DOMAIN_EDGE))
+										if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+											{flag = true; break label3;}
+								if(flag)
+								for(SummaryGraphElement sElem: getElement(s,SummaryGraphEdge.RANGE_EDGE))
+									for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.RANGE_EDGE))
+										if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+											break label2;
+								//System.out.println("gua le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+								continue label1;
+							}
+							
+							if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION) 
+								System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+							
+							SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+							mappingGraph.addVertex(s);
+							mappingGraph.addVertex(t);
+							mappingGraph.addEdge(s, t, edge);
+						}
+					}
+				}
+			}					
+		}
+		
+		System.out.println("maping vertex size " + mappingGraph.vertexSet().size());
+		
+//		for(SummaryGraphElement s: ele1_set)
+//			label1:
+//			for(SummaryGraphElement t : ele2_set)
+//			{
+//				label2:
+//				if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
+//				{
+//					boolean flag = false;
+//					label3:
+//					for(SummaryGraphElement sElem: this.getElement(s,SummaryGraphEdge.DOMAIN_EDGE))
+//						for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.DOMAIN_EDGE))
+//							if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+//								{flag = true; break label3;}
+//					if(flag)
+//					for(SummaryGraphElement sElem: getElement(s,SummaryGraphEdge.RANGE_EDGE))
+//						for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.RANGE_EDGE))
+//							if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+//								break label2;
+//					//System.out.println("gua le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+//					continue label1;
+//				}
+//				
+//				if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION) 
+//					System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+//
+////				System.out.println("chenjunquan is ok!");
+////				System.out.println("mapping " + SummaryGraphUtil.getResourceUri(s) + "\t" +
+////						SummaryGraphUtil.getResourceUri(t));
+//				
+//				SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+//				edges.add(edge);
+//			}
 	}
 	
 	public GraphAdapter createGraphAdapter(Map<String, Collection<SummaryGraphElement>> keywords) {
-		GraphAdapter t = new GraphAdapter(this.summaryGraph_HM,this.mapping_HM);
+		GraphAdapter t = new GraphAdapter(this.summaryGraph_HM,this.mapping_HM,this.mappingGraph);
 		t.getAugmentPart(keywords);
 		return t;
 	}
@@ -204,6 +313,7 @@ public class GraphAdapter {
 	private HashMap<String,SummaryGraph> summaryGraph_HM;	
 	private HashMap<MappingCell, Set<MappingCell>> mapping_HM;
 	private HashMap<String, AugmentPart> augmentPart_HM;
+	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> mappingGraph;
 	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
 	private Set<String> conceptMappings;
 	
@@ -223,10 +333,12 @@ public class GraphAdapter {
 	}
 	
 	public GraphAdapter(HashMap<String, SummaryGraph> summaryGraph_HM,
-			HashMap<MappingCell, Set<MappingCell>> mapping_HM) {
+			HashMap<MappingCell, Set<MappingCell>> mapping_HM,
+			Pseudograph<SummaryGraphElement, SummaryGraphEdge> mappingGraph) {
 		super();
 		this.summaryGraph_HM = summaryGraph_HM;
 		this.mapping_HM = mapping_HM;
+		this.mappingGraph = mappingGraph;
 		augmentPart_HM = new HashMap<String, AugmentPart>();
 	}
 
@@ -363,68 +475,76 @@ public class GraphAdapter {
 			SummaryGraphElement ele) {
 		Collection<SummaryGraphEdge> edges = this.getNeighbor(ele);
 		
-		String uri = SummaryGraphUtil.getResourceUri(ele);
-		uri = SummaryGraphUtil.removeNum(uri);
-		
-		MappingCell mc = new MappingCell(uri,ele.getDatasource());
-		Set<MappingCell> mc2_set = mapping_HM.get(mc);
-		
-		if(mc2_set != null) {
-			for(MappingCell mc2 : mc2_set) {
-				Set<SummaryGraphElement> ele1_set = null;
-				if(this.summaryGraph_HM.get(mc.datasource) != null) {
-					ele1_set = this.summaryGraph_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
-				}
-				if(ele1_set == null) {
-					if(this.augmentPart_HM.get(mc.datasource) == null) continue;
-					ele1_set = this.augmentPart_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
-				}
-				
-				Set<SummaryGraphElement> ele2_set = null;
-				if(this.summaryGraph_HM.get(mc2.datasource) != null) {
-					ele2_set = this.summaryGraph_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
-				}
-				if(ele2_set == null) {
-					if(this.augmentPart_HM.get(mc2.datasource) == null) continue;
-					ele2_set = this.augmentPart_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
-				}
-				
-				if(ele1_set != null && ele2_set != null) {
-				for(SummaryGraphElement s: ele1_set)
-					label1:
-					for(SummaryGraphElement t : ele2_set)
-					{
-						label2:
-						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
-						{
-							boolean flag = false;
-							label3:
-							for(SummaryGraphElement sElem: this.getElement(s,SummaryGraphEdge.DOMAIN_EDGE))
-								for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.DOMAIN_EDGE))
-									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
-										{flag = true; break label3;}
-							if(flag)
-							for(SummaryGraphElement sElem: getElement(s,SummaryGraphEdge.RANGE_EDGE))
-								for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.RANGE_EDGE))
-									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
-										break label2;
-							//System.out.println("gua le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
-							continue label1;
-						}
-						
-						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION) 
-							System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
-
-//						System.out.println("chenjunquan is ok!");
-//						System.out.println("mapping " + SummaryGraphUtil.getResourceUri(s) + "\t" +
-//								SummaryGraphUtil.getResourceUri(t));
-						
-						SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
-						edges.add(edge);
-					}
-				}
-			}
+		if(mappingGraph.vertexSet().contains(ele)) {
+			edges.addAll(mappingGraph.edgesOf(ele));
 		}
+		
+//		String uri = SummaryGraphUtil.getResourceUri(ele);
+//		uri = SummaryGraphUtil.removeNum(uri);
+//		
+//		
+//		MappingCell mc = new MappingCell(uri,ele.getDatasource());
+//		if(mc.datasource.equals("dbpedia")) return edges;
+//		
+//		Set<MappingCell> mc2_set = mapping_HM.get(mc);
+//		
+//		if(mc2_set != null) {
+//			for(MappingCell mc2 : mc2_set) {
+//				if(mc2.datasource.equals("dbpedia"));
+//				Set<SummaryGraphElement> ele1_set = null;
+//				if(this.summaryGraph_HM.get(mc.datasource) != null) {
+//					ele1_set = this.summaryGraph_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
+//				}
+//				if(ele1_set == null) {
+//					if(this.augmentPart_HM.get(mc.datasource) == null) continue;
+//					ele1_set = this.augmentPart_HM.get(mc.datasource).no_num_element_hm.get(mc.uri);
+//				}
+//				
+//				Set<SummaryGraphElement> ele2_set = null;
+//				if(this.summaryGraph_HM.get(mc2.datasource) != null) {
+//					ele2_set = this.summaryGraph_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
+//				}
+//				if(ele2_set == null) {
+//					if(this.augmentPart_HM.get(mc2.datasource) == null) continue;
+//					ele2_set = this.augmentPart_HM.get(mc2.datasource).no_num_element_hm.get(mc2.uri);
+//				}
+//				
+//				if(ele1_set != null && ele2_set != null) {
+//				for(SummaryGraphElement s: ele1_set)
+//					label1:
+//					for(SummaryGraphElement t : ele2_set)
+//					{
+//						label2:
+//						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
+//						{
+//							boolean flag = false;
+//							label3:
+//							for(SummaryGraphElement sElem: this.getElement(s,SummaryGraphEdge.DOMAIN_EDGE))
+//								for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.DOMAIN_EDGE))
+//									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+//										{flag = true; break label3;}
+//							if(flag)
+//							for(SummaryGraphElement sElem: getElement(s,SummaryGraphEdge.RANGE_EDGE))
+//								for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.RANGE_EDGE))
+//									if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
+//										break label2;
+//							//System.out.println("gua le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+//							continue label1;
+//						}
+//						
+//						if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION) 
+//							System.out.println("nb le!!!"+SummaryGraphUtil.getResourceUri(s)+"\t"+SummaryGraphUtil.getResourceUri(t));
+//
+////						System.out.println("chenjunquan is ok!");
+////						System.out.println("mapping " + SummaryGraphUtil.getResourceUri(s) + "\t" +
+////								SummaryGraphUtil.getResourceUri(t));
+//						
+//						SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+//						edges.add(edge);
+//					}
+//				}
+//			}
+//		}
 		
 		return edges;
 	}
