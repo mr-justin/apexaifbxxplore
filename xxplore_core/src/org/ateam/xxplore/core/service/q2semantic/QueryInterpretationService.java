@@ -68,6 +68,17 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		factory = new GraphAdapterFactory(keys_set,mis);
 	}
 	
+	public void refreshFactory() {
+		for(SummaryGraph sg : factory.summaryGraph_HM.values()) { 
+			for(SummaryGraphElement ele : sg.summaryGraph.vertexSet()) {
+				ele.cursors = null;
+				ele.m_exploredCursorCombinations = null;
+				ele.m_newCursorCombinations = null;
+				
+			}
+		}
+	}
+	
 	public QueryInterpretationService() {
 		
 	}
@@ -112,6 +123,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 			return null;
 		}
 		
+		this.refreshFactory();
 		GraphAdapter iGraph = factory.createGraphAdapter(elements);
 
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(iGraph,elements, distance, k);
