@@ -128,7 +128,7 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						GraphEdge edge = new GraphEdge(f, new TopFacet(), r);
+						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",new Source()), r);
 						graphEdges.add(edge);
 					}
 				}
@@ -144,7 +144,7 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						GraphEdge edge = new GraphEdge(f, new TopFacet(), a);
+						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",new Source()), a);
 						graphEdges.add(edge);
 					}
 				}
@@ -156,7 +156,7 @@ public class SearchQ2SemanticService {
 			for(Facet fac : rel2con.keySet()) {
 				if(!rel2con.get(fac).isVisited) {
 					for(Facet con : rel2con.get(fac).sf) {
-						graphEdges.add(new GraphEdge(new TopFacet(),con,fac));
+						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",new Source()),con,fac));
 					}
 				}
 			}
@@ -164,7 +164,7 @@ public class SearchQ2SemanticService {
 			for(Facet fac : attr2lit.keySet()) {
 				if(!attr2lit.get(fac).isVisited) {
 					for(Facet lit : attr2lit.get(fac).sf) {
-						graphEdges.add(new GraphEdge(new TopFacet(),lit,fac));
+						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",new Source()),lit,fac));
 					}
 				}
 			}
@@ -276,6 +276,90 @@ public class SearchQ2SemanticService {
 			}
 		}
 	}
+	
+	public Map<String,Collection<SummaryGraphElement>> searchKeyword(String query,double prune) {
+		//search for elements
+		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
+
+		for(String ds : summaryObjSet.keySet()) {
+			String keywordIndex = this.keywordIndexRoot + "/" + ds + "-keywordIndex";
+			System.out.println("keywordIndex " + keywordIndex);
+			Map<String, Collection<SummaryGraphElement>> hm = 
+				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
+
+			for(String key_str : hm.keySet()) {
+				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
+				if(coll == null) {
+					elementsMap.put(key_str, hm.get(key_str));
+				}
+				else {
+					coll.addAll(hm.get(key_str));
+				}
+			}
+		}
+		
+		for(String key : elementsMap.keySet()) {
+			Collection<SummaryGraphElement> t = elementsMap.get(key);
+			System.out.println("=================================");
+			System.out.println(key + " : ");
+			for(SummaryGraphElement ele : t) {
+				System.out.println(SummaryGraphUtil.getResourceUri(ele) + "\t" + ele.getDatasource());
+			}
+			System.out.println();
+			System.out.println();
+			
+		}
+		
+//		for(String keywordIndex: keywordIndexSet) {
+//			System.out.println("keywordIndex " + keywordIndex);
+//			Map<String, Collection<SummaryGraphElement>> hm = 
+//				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
+//
+//			for(String key_str : hm.keySet()) {
+//				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
+//				if(coll == null) {
+//					elementsMap.put(key_str, hm.get(key_str));
+//				}
+//				else {
+//					coll.addAll(hm.get(key_str));
+//				}
+//			}
+//		}
+
+//		Map<String,Collection<SummaryGraphElement>> tmpMap = elementsMap;
+//		elementsMap = new HashMap<String, Collection<SummaryGraphElement>>();
+//		for(String key : tmpMap.keySet()) {
+//			
+//			System.out.println("========================");
+//			for(SummaryGraphElement ele : tmpMap.get(key)) {
+//				boolean flag = false;
+//				if(ele.getType() == SummaryGraphElement.VALUE) {
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals(key.toLowerCase())) {
+//						flag = true;
+//					}	
+//				}
+//				else {
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase())) {
+//						flag = true;
+//					}	
+//				}
+//				
+//				if( flag ) {
+//					System.out.println(ele.getDatasource() + "\t" + SummaryGraphUtil.getResourceUri(ele));
+//					Collection<SummaryGraphElement> coll = elementsMap.get(key);
+//					if(coll == null) {
+//						coll = new HashSet<SummaryGraphElement>();
+//						elementsMap.put(key, coll);
+//					}
+//					coll.add(ele);
+//				}
+//			}
+//			int size = elementsMap.get(key) == null ? 0 : elementsMap.get(key).size();
+//			System.out.println(key + "\t" + size);
+//			System.out.println("==========================");
+//		}
+		return elementsMap;
+	}
 
 	/**
 	 * This method returns an ordered list of QueryGraph objects (most suitable at the head of the list) that 
@@ -302,48 +386,7 @@ public class SearchQ2SemanticService {
 		}
 		query = query.substring(0, query.length()-1);
 				
-		//search for elements
-		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
-		System.out.println("size " + keywordIndexSet.size());
-
-		for(String keywordIndex: keywordIndexSet) {
-			System.out.println("keywordIndex " + keywordIndex);
-			Map<String, Collection<SummaryGraphElement>> hm = 
-				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
-
-			// == chenjunquan ==
-			for(String key_str : hm.keySet()) {
-				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
-				if(coll == null) {
-					elementsMap.put(key_str, hm.get(key_str));
-				}
-				else {
-					coll.addAll(hm.get(key_str));
-				}
-			}
-
-		}
-
-		Map<String,Collection<SummaryGraphElement>> tmpMap = elementsMap;
-		elementsMap = new HashMap<String, Collection<SummaryGraphElement>>();
-		for(String key : tmpMap.keySet()) {
-			
-			System.out.println("========================");
-			for(SummaryGraphElement ele : tmpMap.get(key)) {
-				if( SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase()) ) {
-					System.out.println(ele.getDatasource() + "\t" + SummaryGraphUtil.getResourceUri(ele));
-					Collection<SummaryGraphElement> coll = elementsMap.get(key);
-					if(coll == null) {
-						coll = new HashSet<SummaryGraphElement>();
-						elementsMap.put(key, coll);
-					}
-					coll.add(ele);
-				}
-			}
-			System.out.println(key + "\t" + elementsMap.get(key).size());
-			System.out.println("==========================");
-		}
-				
+		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(query,prune);		
 		
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
 		if(graphs == null) return null;
@@ -515,7 +558,7 @@ public class SearchQ2SemanticService {
 			if(tokens[0].equals("quit")) break;
 			ll.clear();
 			for(int i=0;i<tokens.length;i++)  {
-				ll.add(tokens[i]);
+				ll.add(tokens[i].replace('_', ' '));
 			}
 			s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
 		}
