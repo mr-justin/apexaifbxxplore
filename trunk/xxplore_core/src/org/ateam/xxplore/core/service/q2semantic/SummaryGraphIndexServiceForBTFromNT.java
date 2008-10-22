@@ -655,16 +655,16 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	
 	public static void main(String[] args) {
 		SummaryGraphIndexServiceForBTFromNT s = new SummaryGraphIndexServiceForBTFromNT();
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = s.readGraphIndexFromFile("D:\\semplore\\dblp-schema.obj");
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph1 = s.readGraphIndexFromFile("D:\\semplore\\objbackup\\dblp-schema.obj");
+		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = s.readGraphIndexFromFile("D:\\semplore\\freebase-summary.obj");
+//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph1 = s.readGraphIndexFromFile("D:\\semplore\\objbackup\\dblp-schema.obj");
 //		s.writeSummaryGraphAsRDF(graph, "D:\\semplore\\objbackup\\freebase-schema.rdf");
-		System.out.println(graph.edgeSet().size());
-		System.out.println(graph.vertexSet().size());
-		System.out.println(graph1.edgeSet().size());
-		System.out.println(graph1.vertexSet().size());
+//		System.out.println(graph.edgeSet().size());
+//		System.out.println(graph.vertexSet().size());
+//		System.out.println(graph1.edgeSet().size());
+//		System.out.println(graph1.vertexSet().size());
 //		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = new SummaryGraphIndexServiceForBTFromNT().readGraphIndexFromFile("D:\\semplore\\summaryObjsRoot\\dblp-summary.obj");
-//		for(SummaryGraphEdge edge: graph.edgeSet())
-//			System.out.println(edge.toString());
+		for(SummaryGraphEdge edge: graph.edgeSet())
+			System.out.println(edge.toString());
 //		SummaryGraphIndexServiceForBTFromNT nt = new SummaryGraphIndexServiceForBTFromNT();
 //		String line = "<http://www.freebase.com/resource/%21%21%21wichtiger_Warnhinweis%21%21%21/guid/9202a8c04000641f8000000001dabab9> <http://www.freebase.com/property/name> \"!!!wichtiger Warnhinweis!!!\"@en .";
 //		String[] part = Util4NT.processTripleLine(line);

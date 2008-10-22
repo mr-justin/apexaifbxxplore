@@ -5,6 +5,8 @@ import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
 
 public class SummaryGraphUtil {
+	public static String[] stopWords = {"Property-3A"};
+	
 	public static String getResourceUri(SummaryGraphElement ele) {
 		if(ele.getType() == SummaryGraphElement.CONCEPT) {
 			return  ((NamedConcept)ele.getResource()).getUri();
@@ -21,7 +23,9 @@ public class SummaryGraphUtil {
 	}
 	
 	public static String removeNum(String line) {
-		return line.replaceFirst("\\u0028.*\\u0029", "");
+		String res = line.replaceFirst("\\u0028.*\\u0029", "");
+
+		return res;
 	}
 	
 	public static String removeGtOrLs(String line) {
@@ -33,6 +37,8 @@ public class SummaryGraphUtil {
 	}
 	
 	public static String getLocalName(String uri) {
+		for(String stopWord: stopWords)
+			uri = uri.replaceAll(stopWord, "");
 		if( uri.lastIndexOf("#") != -1 ) {
 			return uri.substring(uri.lastIndexOf("#") + 1);
 		}
