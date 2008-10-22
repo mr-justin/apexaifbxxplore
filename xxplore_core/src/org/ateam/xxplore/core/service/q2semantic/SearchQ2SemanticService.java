@@ -146,11 +146,28 @@ public class SearchQ2SemanticService {
 
 		}
 		
-		for(String key : elementsMap.keySet()) {
-			System.out.println(key + "\t" + elementsMap.get(key).size());
-			for(SummaryGraphElement ele : elementsMap.get(key)) {
-				System.out.println(SummaryGraphUtil.getResourceUri(ele));
+		if(elementsMap.keySet().size() == 1) {
+			
+		}
+		
+		Map<String,Collection<SummaryGraphElement>> tmpMap = elementsMap;
+		elementsMap = new HashMap<String, Collection<SummaryGraphElement>>();
+		for(String key : tmpMap.keySet()) {
+			
+			System.out.println("========================");
+			for(SummaryGraphElement ele : tmpMap.get(key)) {
+				if( SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase()) ) {
+					System.out.println(ele.getDatasource() + "\t" + SummaryGraphUtil.getResourceUri(ele));
+					Collection<SummaryGraphElement> coll = elementsMap.get(key);
+					if(coll == null) {
+						coll = new HashSet<SummaryGraphElement>();
+						elementsMap.put(key, coll);
+					}
+					coll.add(ele);
+				}
 			}
+			System.out.println(key + "\t" + elementsMap.get(key).size());
+			System.out.println("==========================");
 		}
 		
 		//long end_time = System.currentTimeMillis();
@@ -237,6 +254,7 @@ public class SearchQ2SemanticService {
 					}
 				}
 			}
+			
 			
 			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
 			for(SummaryGraphElement elem : qg.vertexSet()) {
