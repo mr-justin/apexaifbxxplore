@@ -84,11 +84,11 @@ public class SearchQ2SemanticService {
 			System.out.println(str);
 			String[] part = str.split("\t");
 			if(part.length!=4) continue;
-			String label = part[0].substring(part[0].lastIndexOf('/')+1);
+			String label = SummaryGraphUtil.getLocalName(part[0]);//part[0].substring(part[0].lastIndexOf('/')+1);
 			if(part[3].equals(ConceptMark))
-				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
+				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
 			else if(part[3].equals(PredicateMark))
-				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), part[0], Double.parseDouble(part[2])));
+				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
 		}
 		System.out.println("Total Suggestion: "+res.size());
 		return res;
@@ -181,12 +181,6 @@ public class SearchQ2SemanticService {
 			for(GraphEdge edge : graphEdges) {
 				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
 				edge.decorationElement.label = SummaryGraphUtil.removeNum(edge.decorationElement.label);
-				if(edge.decorationElement.URI.indexOf("http://semanticweb.org/id/Property-3A") != -1) {
-					edge.decorationElement.URI = edge.decorationElement.URI.replaceFirst("-3A","#");
-					edge.decorationElement.label = edge.decorationElement.label.replaceFirst("Property-3A", "");
-				}
-				
-			
 			}
 //			================ by kaifengxu
 			LinkedList<GraphEdge> mappingEdges = new LinkedList<GraphEdge>();
@@ -274,6 +268,9 @@ public class SearchQ2SemanticService {
 					}
 				}
 			}
+			for(Facet con: qg.vertexList)
+				if(con instanceof Concept)
+					((Concept)con).variableLetter = letter_hm.get(con.URI);
 		}
 	}
 	
