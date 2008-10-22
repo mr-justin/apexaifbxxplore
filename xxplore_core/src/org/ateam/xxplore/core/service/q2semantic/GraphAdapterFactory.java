@@ -130,10 +130,11 @@ public class GraphAdapterFactory {
 			
 			if(mc1_set != null && mc2_set != null) {
 				for(MappingCell mc11 : mc1_set) {
+					if(this.summaryGraph_HM.get(mc11.datasource) == null) continue;
 					SummaryGraphElement s = this.summaryGraph_HM.get(mc11.datasource).element_hm.get(mc11.uri);
 					label1:
 					for(MappingCell mc22 : mc2_set) {
-						
+						if(this.summaryGraph_HM.get(mc22.datasource) == null) continue;
 						SummaryGraphElement t = this.summaryGraph_HM.get(mc22.datasource).element_hm.get(mc22.uri);
 						
 						if(s != null && t != null) {
