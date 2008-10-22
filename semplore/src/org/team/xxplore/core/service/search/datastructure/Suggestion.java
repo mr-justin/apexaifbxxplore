@@ -4,7 +4,7 @@ package org.team.xxplore.core.service.search.datastructure;
  * This class represents a suggestion. That is to say, a facet from another source than the current source
  * @author tpenin
  */
-public class Suggestion implements Comparable{
+public class Suggestion implements Comparable, Query {
 	
 	// Label that will be displayed
 	public String label;
