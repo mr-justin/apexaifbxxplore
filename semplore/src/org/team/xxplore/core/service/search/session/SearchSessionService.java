@@ -227,6 +227,7 @@ public class SearchSessionService {
 			//add relation facets
 			semploreFacets = xres.getRelationFacets();
 			for (int i=0; i<semploreFacets.length; i++) {
+				if (semploreFacets[i].isInverseRelation()) continue;
 				SchemaObjectInfo info = semploreFacets[i].getInfo();
 				Facet facet = new Relation(info.getLabel(), info.getURI(), activeSource);
 				facet.setResultNb(semploreFacets[i].getCount());
