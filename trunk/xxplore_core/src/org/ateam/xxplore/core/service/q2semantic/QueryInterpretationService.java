@@ -69,7 +69,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 	
 	public void refreshFactory() {
-		for(SummaryGraph sg : factory.summaryGraph_HM.values()) { 
+		for(SummaryPart sg : factory.summaryGraph_HM.values()) { 
 			for(SummaryGraphElement ele : sg.summaryGraph.vertexSet()) {
 				ele.cursors = null;
 				ele.m_exploredCursorCombinations = null;
