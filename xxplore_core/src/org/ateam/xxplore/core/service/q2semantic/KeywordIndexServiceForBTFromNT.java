@@ -329,21 +329,9 @@ public class KeywordIndexServiceForBTFromNT{
 				System.out.println(count);
 
 			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
+			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2)
 				continue;
-
-			if(!part[0].startsWith("<") || !part[1].startsWith("<"))
-				continue;
-
-			String subj = part[0].substring(1, part[0].length()-1);
-			String pred = part[1].substring(1, part[1].length()-1);
-			String obj = part[2];
-			if(!obj.startsWith("<"))
-				obj = "";
-			else if(obj.length()>=2) obj = part[2].substring(1, part[2].length()-1);
-			if(!subj.startsWith("http") || !pred.startsWith("http"))
-					continue;
-			
+//			System.out.println();
 			cur = part[0];
 //			System.out.println(pre+" "+cur);
 
@@ -360,9 +348,9 @@ public class KeywordIndexServiceForBTFromNT{
 //			System.out.println("="+part[2]);
 			if(isIndiv)
 			{
-				if(!SummaryGraphIndexServiceForBTFromNT.getSubjectType(pred, obj).equals(SummaryGraphIndexServiceForBTFromNT.INDIVIDUAL))
+				if(part[1].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[1].equals("<http://www.w3.org/2002/07/owl#Class>"))
 					isIndiv = false;
-				else if(SummaryGraphIndexServiceForBTFromNT.getObjectType(pred, obj).equals(SummaryGraphIndexServiceForBTFromNT.CONCEPT))
+				else if(part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>") && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))
 					concept.add(part[2]);//<.,..>
 				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
 				{
