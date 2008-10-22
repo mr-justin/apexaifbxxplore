@@ -26,20 +26,28 @@ public class TestEvaluator {
 		//Concepts
 		graph.add(schemaFactory.createKeywordCategory("ISWC"));	//0
 		graph.add(schemaFactory.createCategory("<http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings>"));				//1
-//		graph.add(schemaFactory.createUniversalCategory());				//2
-//		graph.add(schemaFactory.createUniversalCategory());				//3
+		graph.add(schemaFactory.createCategory("<http://swrc.ontoware.org/ontology#Proceedings>"));				//1
+		graph.add(schemaFactory.createCategory("<http://swrc.ontoware.org/ontology#Topic>"));				//1
+		graph.add(schemaFactory.createCategory("<http://swrc.ontoware.org/ontology#AssistantProfessor>"));				//1
+		
 		//Relations
 		graph.add(schemaFactory.createRelation((
 				"<http://lsdis.cs.uga.edu/projects/semdis/opus#book_title>")), 1, 0);
-//		graph.add(schemaFactory.createRelation((
-//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
+		graph.add(schemaFactory.createRelation((
+		"<http://swrc.ontoware.org/ontology#publication>")), 4, 2);
+		graph.add(schemaFactory.createRelation((
+				"<http://swrc.ontoware.org/ontology#isWorkedOnBy>")), 3, 4);
+		
 		//IEdge
-//		graph.addIEdges(new Edge(1,2,null));
+		graph.addIEdges(new Edge(1,2,null));
 		//target
 		graph.setTargetVariable(1);
 		//datasource
 		graph.setDataSource(0, "dblp");
 		graph.setDataSource(1, "dblp");
+		graph.setDataSource(2, "swrc");
+		graph.setDataSource(3, "swrc");
+		graph.setDataSource(4, "swrc");
 		
 		long time = System.currentTimeMillis();
 		QueryEvaluator eval = new QueryEvaluatorImpl(new File(args[0])); //points to config/datasrc.cfg
