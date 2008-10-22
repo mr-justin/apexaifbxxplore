@@ -98,96 +98,10 @@ public class SearchQ2SemanticService {
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
 		return this.getPossibleGraphs(keywordList, topNbGraphs, 0.95, 5, 0.5);
 	}
-
-	/**
-	 * This method returns an ordered list of QueryGraph objects (most suitable at the head of the list) that 
-	 * are possible semantic interpretations of the ordered list of keywords (first input word at the head of the 
-	 * list) provided as a parameter. The most relevant graphs only are provided, respecting the maximum number of 
-	 * graph condition.
-	 * @param keywordList
-	 * @param topNbGraphs
-	 * @return
-	 */
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
-			double edge_score) {
-		// TODO
-		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
-
-		QueryInterpretationService.EDGE_SCORE = edge_score;
-		
-		String query = "";
-		//merge keywords
-		for(String str: keywordList) {
-			query += "\""+str+"\" ";
-		}
-		query = query.substring(0, query.length()-1);
-				
-		//search for elements
-		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
-		System.out.println("size " + keywordIndexSet.size());
-		
-		long start_time = System.currentTimeMillis();
-		
-		for(String keywordIndex: keywordIndexSet) {
-			System.out.println("keywordIndex " + keywordIndex);
-			Map<String, Collection<SummaryGraphElement>> hm = 
-				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
-
-			// == chenjunquan ==
-			for(String key_str : hm.keySet()) {
-				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
-				if(coll == null) {
-					elementsMap.put(key_str, hm.get(key_str));
-				}
-				else {
-					coll.addAll(hm.get(key_str));
-				}
-			}
-
-		}
-		
-		if(elementsMap.keySet().size() == 1) {
-			
-		}
-		
-		Map<String,Collection<SummaryGraphElement>> tmpMap = elementsMap;
-		elementsMap = new HashMap<String, Collection<SummaryGraphElement>>();
-		for(String key : tmpMap.keySet()) {
-			
-			System.out.println("========================");
-			for(SummaryGraphElement ele : tmpMap.get(key)) {
-				if( SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase()) ) {
-					System.out.println(ele.getDatasource() + "\t" + SummaryGraphUtil.getResourceUri(ele));
-					Collection<SummaryGraphElement> coll = elementsMap.get(key);
-					if(coll == null) {
-						coll = new HashSet<SummaryGraphElement>();
-						elementsMap.put(key, coll);
-					}
-					coll.add(ele);
-				}
-			}
-			System.out.println(key + "\t" + elementsMap.get(key).size());
-			System.out.println("==========================");
-		}
-		
-		//long end_time = System.currentTimeMillis();
-		
-//		System.out.println();
-//		System.out.println("keywordIndex Time: " + (end_time - start_time)/1000.0 + "s");
-		
-		
+	
+	private LinkedList<QueryGraph> getQueryGraphFromTopKResult(LinkedList<Subgraph> graphs) {
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
-		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
-		
-		
-		// == chenjunquan ==
-		//start_time = System.currentTimeMillis();
-		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
-		if(graphs == null) return null;
-		long end_time = System.currentTimeMillis();
-		
-		long computeTime = end_time - start_time;
-		
+
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
@@ -310,8 +224,11 @@ public class SearchQ2SemanticService {
 //			===============================
 			result.add(new QueryGraph(null, graphVertexes, graphEdges, mappingEdges));
 		}
-		
-		
+		this.addVariable(result);
+		return result;
+	}
+	
+	private void addVariable(LinkedList<QueryGraph> result) {
 		for (QueryGraph qg : result) {
 			char current_char = 'a';
 			HashMap<String, String> letter_hm = new HashMap<String, String>();
@@ -357,14 +274,90 @@ public class SearchQ2SemanticService {
 					}
 				}
 			}
-			
+		}
+	}
+
+	/**
+	 * This method returns an ordered list of QueryGraph objects (most suitable at the head of the list) that 
+	 * are possible semantic interpretations of the ordered list of keywords (first input word at the head of the 
+	 * list) provided as a parameter. The most relevant graphs only are provided, respecting the maximum number of 
+	 * graph condition.
+	 * @param keywordList
+	 * @param topNbGraphs
+	 * @return
+	 */
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
+			double edge_score) {
+		// TODO
+		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
+
+		long start_time = System.currentTimeMillis();
+		
+		QueryInterpretationService.EDGE_SCORE = edge_score;
+		
+		String query = "";
+		//merge keywords
+		for(String str: keywordList) {
+			query += "\""+str+"\" ";
+		}
+		query = query.substring(0, query.length()-1);
+				
+		//search for elements
+		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
+		System.out.println("size " + keywordIndexSet.size());
+
+		for(String keywordIndex: keywordIndexSet) {
+			System.out.println("keywordIndex " + keywordIndex);
+			Map<String, Collection<SummaryGraphElement>> hm = 
+				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
+
+			// == chenjunquan ==
+			for(String key_str : hm.keySet()) {
+				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
+				if(coll == null) {
+					elementsMap.put(key_str, hm.get(key_str));
+				}
+				else {
+					coll.addAll(hm.get(key_str));
+				}
+			}
+
 		}
 
-		for(int i=0; i<result.size(); i++)
-		{
+		Map<String,Collection<SummaryGraphElement>> tmpMap = elementsMap;
+		elementsMap = new HashMap<String, Collection<SummaryGraphElement>>();
+		for(String key : tmpMap.keySet()) {
+			
+			System.out.println("========================");
+			for(SummaryGraphElement ele : tmpMap.get(key)) {
+				if( SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase()) ) {
+					System.out.println(ele.getDatasource() + "\t" + SummaryGraphUtil.getResourceUri(ele));
+					Collection<SummaryGraphElement> coll = elementsMap.get(key);
+					if(coll == null) {
+						coll = new HashSet<SummaryGraphElement>();
+						elementsMap.put(key, coll);
+					}
+					coll.add(ele);
+				}
+			}
+			System.out.println(key + "\t" + elementsMap.get(key).size());
+			System.out.println("==========================");
+		}
+				
+		
+		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
+		if(graphs == null) return null;
+		
+		
+		LinkedList<QueryGraph> result = this.getQueryGraphFromTopKResult(graphs);
+		
+		for(int i=0; i<result.size(); i++) {
 			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
 			result.get(i).print();
 		}
+		
+		long end_time = System.currentTimeMillis();		
+		long computeTime = end_time - start_time;
 		
 		System.out.println();
 		System.out.println("computeQueries time:" + computeTime/1000.0 + "s" );
