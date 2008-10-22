@@ -170,13 +170,13 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
 					logger.debug(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
-					logger.info("search "+thisSearchID+ " complete");
+					logger.info("search "+thisSearchID+ " complete: " + targetResult.getLength() + " results");
 				}
 				else {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					DocStream ans = searcher.evaluate(q, helper); 
-					logger.debug(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
+					logger.debug(String.format("%s: %dms => %d", q.getQueryConstraint().toString(), System.currentTimeMillis()-time, ans.getLen()));
 					
 					//find the edge that link to its parent
 					DocStream origResult = null;

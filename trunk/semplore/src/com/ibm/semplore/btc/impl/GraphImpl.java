@@ -61,7 +61,6 @@ public class GraphImpl implements Graph {
 	 */
 	@Override
 	public Graph addIEdges(Edge edge) {
-		System.out.println(edge);
 		iedges.get(edge.getFromNode()).add(edge);
 		iedges.get(edge.getToNode()).add(edge.reverse());
 		return this;
@@ -133,7 +132,7 @@ public class GraphImpl implements Graph {
 	}
 	
 	public String toString() {
-		String str = "";
+		String str = "target = " + targetVariable + "\n";
 		for (int i=0; i<nodeCount; i++)
 			str += String.format("Node %d: [%s]%s\n", i, getDataSource(i), getNode(i).toString());
 		for (int i=0; i<nodeCount; i++) {
