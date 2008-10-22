@@ -61,9 +61,9 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 
 	protected Map<String,Queue<Cursor>> cursors;
 
-	private Set<Set<Cursor>> m_exploredCursorCombinations;
+	public Set<Set<Cursor>> m_exploredCursorCombinations;
 	
-	private Set<Set<Cursor>> m_newCursorCombinations;
+	public Set<Set<Cursor>> m_newCursorCombinations;
 
 	private boolean m_coverageApplied = false; 
 	
