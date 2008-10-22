@@ -51,13 +51,13 @@ public class Facet implements Query {
 	public boolean equals(Object arg0) {
 		// TODO Auto-generated method stub
 		Facet other = (Facet)arg0;
-		return URI.equals(other.getURI());
+		return URI.equals(other.getURI()) && source.equals(other.source);
 	}
 
 	@Override
 	public int hashCode() {
 		// TODO Auto-generated method stub
-		return URI.hashCode();
+		return URI.hashCode() + source.hashCode();
 	}
 	/**
 	 * @return the label
