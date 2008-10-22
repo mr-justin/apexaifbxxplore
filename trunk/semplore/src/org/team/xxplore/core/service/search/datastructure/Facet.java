@@ -40,6 +40,13 @@ public class Facet implements Query {
 		this.source = source;
 	}
 	
+	public Facet(String label, String uri, String displayURI, Source source) {
+		this.label = label;
+		this.URI = uri;
+		this.displayURI = displayURI;
+		this.source = source;
+	}
+	
 	@Override
 	public boolean equals(Object arg0) {
 		// TODO Auto-generated method stub

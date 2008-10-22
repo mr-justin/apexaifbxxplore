@@ -75,7 +75,7 @@ public class SearchSessionService {
 			int index = 0;
 			for (Facet f : nodeList) {
 				if (f.equals(targetNode)) {
-					CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	// AND
+					CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(CompoundCategory.TYPE_AND);
 					if (f instanceof Concept) {
 						Concept c = (Concept)f;
 						cc.addComponentCategory(SchemaFactoryImpl.getInstance().createCategory(c.getURI()));
