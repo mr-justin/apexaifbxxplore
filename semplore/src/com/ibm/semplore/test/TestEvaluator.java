@@ -24,24 +24,22 @@ public class TestEvaluator {
 	public static void main(String[] args) throws Exception {
 		Graph graph = new GraphImpl();
 		//Concepts
-		graph.add(schemaFactory.createKeywordCategory("University"));	//0
-		graph.add(schemaFactory.createUniversalCategory());				//1
-		graph.add(schemaFactory.createUniversalCategory());				//2
-		graph.add(schemaFactory.createUniversalCategory());				//3
+		graph.add(schemaFactory.createKeywordCategory("ISWC"));	//0
+		graph.add(schemaFactory.createCategory("<http://lsdis.cs.uga.edu/projects/semdis/opus#Proceedings>"));				//1
+//		graph.add(schemaFactory.createUniversalCategory());				//2
+//		graph.add(schemaFactory.createUniversalCategory());				//3
 		//Relations
-		graph.add(schemaFactory.createRelation((
-				"<http://dbpedia.org/property/workInstitutions>")), 1, 0);
-		graph.add(schemaFactory.createRelation((
-				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
+//		graph.add(schemaFactory.createRelation((
+//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#book_title>")), 1, 0);
+//		graph.add(schemaFactory.createRelation((
+//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
 		//IEdge
-		graph.addIEdges(new Edge(1,2,null));
+//		graph.addIEdges(new Edge(1,2,null));
 		//target
-		graph.setTargetVariable(3);
+		graph.setTargetVariable(0);
 		//datasource
-		graph.setDataSource(0, "dbpedia");
-		graph.setDataSource(1, "dbpedia");
-		graph.setDataSource(2, "dblp");
-		graph.setDataSource(3, "dblp");
+		graph.setDataSource(0, "dblp");
+		graph.setDataSource(1, "dblp");
 		
 		long time = System.currentTimeMillis();
 		QueryEvaluator eval = new QueryEvaluatorImpl(new File(args[0])); //points to config/datasrc.cfg
@@ -51,6 +49,7 @@ public class TestEvaluator {
 		System.out.println("Total Evaluation time(ms): "+(System.currentTimeMillis()-time));
 		TestSearch.showResultSet(result, null);
 		
+		if (true) return ;
 		//use start cache
 		graph = new GraphImpl();
 		//Concepts

@@ -34,7 +34,7 @@ public class KeywordCategoryImpl implements KeywordCategory
      */
     public String getKeyword()
     {
-        return keyword.toLowerCase();
+        return keyword;
     }
 
     /* (non-Javadoc)
