@@ -248,6 +248,13 @@ public class SearchQ2SemanticService {
 			
 			for(GraphEdge edge : graphEdges) {
 				edge.decorationElement.URI = SummaryGraphUtil.removeNum(edge.decorationElement.URI);
+				edge.decorationElement.label = SummaryGraphUtil.removeNum(edge.decorationElement.label);
+				if(edge.decorationElement.URI.indexOf("http://semanticweb.org/id/Property-3A") != -1) {
+					edge.decorationElement.URI = edge.decorationElement.URI.replaceFirst("-3A","#");
+					edge.decorationElement.label = edge.decorationElement.label.replaceFirst("Property-3A", "");
+				}
+				
+			
 			}
 //			================ by kaifengxu
 			LinkedList<GraphEdge> mappingEdges = new LinkedList<GraphEdge>();
