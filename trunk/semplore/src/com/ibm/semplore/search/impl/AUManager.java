@@ -15,8 +15,10 @@ import com.ibm.semplore.btc.mapping.MappingIndexReaderFactory;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.search.impl.alu.BinaryInterAU;
 import com.ibm.semplore.search.impl.alu.BinaryInterAU_RS;
+import com.ibm.semplore.search.impl.alu.BinaryInterAU_RS_Score;
 import com.ibm.semplore.search.impl.alu.MassUnionAU;
 import com.ibm.semplore.search.impl.alu.MassUnionAU_BV;
+import com.ibm.semplore.search.impl.alu.MassUnionAU_BV_Score;
 import com.ibm.semplore.search.impl.alu.MassUnionAU_BV_XFacet;
 import com.ibm.semplore.search.impl.alu.MassUnionAU_Mapping_XFacet;
 import com.ibm.semplore.xir.DocPositionStream;
@@ -53,13 +55,13 @@ public class AUManager
         String className;
         className = AUconfig.getProperty(Config.BINARY_INTER_AU, BinaryInterAU_RS.class.getName());
         binaryInterAU = (BinaryInterAU)Class.forName(className).newInstance();
-        //binaryInterAU_Score = new BinaryInterAU_RS_Score();
-        binaryInterAU_Score = new BinaryInterAU_RS();
+        binaryInterAU_Score = new BinaryInterAU_RS_Score();
+//        binaryInterAU_Score = new BinaryInterAU_RS();
         
         className = AUconfig.getProperty(Config.MASS_UNION_AU,MassUnionAU_BV.class.getName());
         massUnionAU = (MassUnionAU)Class.forName(className).newInstance();
-//        massUnionAU_Score = new MassUnionAU_BV_Score();
-        massUnionAU_Score = new MassUnionAU_BV();
+        massUnionAU_Score = new MassUnionAU_BV_Score();
+//        massUnionAU_Score = new MassUnionAU_BV();
         
         massUnion_BV_Facet = new MassUnionAU_BV_XFacet();
         
