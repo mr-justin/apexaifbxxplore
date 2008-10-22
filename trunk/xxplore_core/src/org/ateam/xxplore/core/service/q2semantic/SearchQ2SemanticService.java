@@ -15,7 +15,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Properties;
+import java.util.Scanner;
 import java.util.Set;
+
+import javax.swing.JSpinner.ListEditor;
 
 import org.ateam.xxplore.core.service.mapping.Mapping;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
@@ -42,6 +45,7 @@ public class SearchQ2SemanticService {
 	public static HashMap<String, String> summaryObjSet;
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
+	public QueryInterpretationService inter;
 	
 	public SearchQ2SemanticService(){}
 	
@@ -53,6 +57,9 @@ public class SearchQ2SemanticService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		inter = new QueryInterpretationService(summaryObjSet.keySet());
+		
 	}
 	
 	/**
@@ -89,7 +96,7 @@ public class SearchQ2SemanticService {
 	
 	
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
-		return this.getPossibleGraphs(keywordList, topNbGraphs, 0.95, 5);
+		return this.getPossibleGraphs(keywordList, topNbGraphs, 0.95, 5, 0.5);
 	}
 
 	/**
@@ -101,18 +108,20 @@ public class SearchQ2SemanticService {
 	 * @param topNbGraphs
 	 * @return
 	 */
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance) {
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
+			double edge_score) {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 
+		QueryInterpretationService.EDGE_SCORE = edge_score;
+		
 		String query = "";
 		//merge keywords
-		for(String str: keywordList)
+		for(String str: keywordList) {
 			query += "\""+str+"\" ";
+		}
 		query = query.substring(0, query.length()-1);
-		
-		
-//		System.out.println(query);
+				
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 		System.out.println("size " + keywordIndexSet.size());
@@ -120,8 +129,6 @@ public class SearchQ2SemanticService {
 		long start_time = System.currentTimeMillis();
 		
 		for(String keywordIndex: keywordIndexSet) {
-//			if(!keywordIndex.contains("dblp"))
-//				continue;
 			System.out.println("keywordIndex " + keywordIndex);
 			Map<String, Collection<SummaryGraphElement>> hm = 
 				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
@@ -139,33 +146,30 @@ public class SearchQ2SemanticService {
 
 		}
 		
-		long end_time = System.currentTimeMillis();
+		for(String key : elementsMap.keySet()) {
+			System.out.println(key + "\t" + elementsMap.get(key).size());
+			for(SummaryGraphElement ele : elementsMap.get(key)) {
+				System.out.println(SummaryGraphUtil.getResourceUri(ele));
+			}
+		}
 		
-		System.out.println();
-		System.out.println("keywordIndex Time: " + (end_time - start_time)/1000.0 + "s");
+		//long end_time = System.currentTimeMillis();
+		
+//		System.out.println();
+//		System.out.println("keywordIndex Time: " + (end_time - start_time)/1000.0 + "s");
 		
 		
-//		String [] keys = new String[] {
-//			"swrc",
-//			"semanticweb",
-//			"dblp",
-//			""
-//		};
-		
-		QueryInterpretationService inter = new QueryInterpretationService(summaryObjSet.keySet());
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
 		//package the querygraph(Class:WeightedPseudograph) with Class:QueryGraph
 		
 		
 		// == chenjunquan ==
-		start_time = System.currentTimeMillis();
+		//start_time = System.currentTimeMillis();
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
 		if(graphs == null) return null;
-		end_time = System.currentTimeMillis();
+		long end_time = System.currentTimeMillis();
 		
-		System.out.println();
-		System.out.println("computeQueries time:" + (end_time - start_time)/1000.0 + "s" );
-		System.out.println();
+		long computeTime = end_time - start_time;
 		
 		for(Pseudograph<SummaryGraphElement, SummaryGraphEdge> qg: graphs)
 		{
@@ -286,28 +290,6 @@ public class SearchQ2SemanticService {
 		for (QueryGraph qg : result) {
 			char current_char = 'a';
 			HashMap<String, String> letter_hm = new HashMap<String, String>();
-//			for (GraphEdge ge : qg.edgeList) {
-//				if (ge.getFromElement() instanceof Concept) {
-//					Concept con = (Concept) ge.getFromElement();
-//					if( con_hm.get(con.URI) == null ) {
-//						con.variableLetter = String.valueOf(current_char++);
-//						con_hm.put(con.URI, con.variableLetter);
-//					}					
-//					else {
-//						con.variableLetter = con_hm.get(con.URI);
-//					}
-//				}
-//				if (ge.getToElement() instanceof Concept) {
-//					Concept con = (Concept) ge.getFromElement();
-//					if( con_hm.get(con.URI) == null ) {
-//						con.variableLetter = String.valueOf(current_char++);
-//						con_hm.put(con.URI, con.variableLetter);
-//					}					
-//					else {
-//						con.variableLetter = con_hm.get(con.URI);
-//					}
-//				}
-//			}
 			for (GraphEdge mapping : qg.mappingList) {
 				if ((mapping.fromElement instanceof Concept)
 						&& mapping.toElement instanceof Concept) {
@@ -359,6 +341,9 @@ public class SearchQ2SemanticService {
 			result.get(i).print();
 		}
 		
+		System.out.println();
+		System.out.println("computeQueries time:" + computeTime/1000.0 + "s" );
+		System.out.println();
 		return result;
 	}
 
@@ -472,32 +457,49 @@ public class SearchQ2SemanticService {
 		return null;
 	}
 	
+//	public static void main(String[] args) throws Exception {
+////		if(args.length<3)
+////		{
+////			if(args.length<6 && args.length>=3)
+////				System.out.println("SearchQ2SemanticService [path.prop(String)] [top-k(int)] [prune(double)] [distance(int)] [keyword1] [keyword2] ...");
+////			else
+////				System.out.println("SearchQ2SemanticService [path.prop(String)] [ds] [con1] [con2]...");
+////			return;
+////		}
+////		long start = System.currentTimeMillis();
+////		LinkedList<String> ll = new LinkedList<String>();
+////		
+////		for(int i=4; i<args.length; i++)
+////			ll.add(args[i]);
+////		if(args.length>=6)
+////			new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
+////		else
+////		{
+//			List list = new LinkedList<Concept>();
+////			for(int i=2; i<args.length; i++)
+////				list.add(new Concept(null, args[i], null));
+//			new SearchQ2SemanticService(args[0]).getSuggestion(list, args[1]);
+////		}
+////		long end = System.currentTimeMillis();
+////		System.out.println();
+////		System.out.println("Time consuming: "+(end - start) / 1000.0+" s");
+////		System.out.println();
+//	}
+	
 	public static void main(String[] args) throws Exception {
-		if(args.length<3)
-		{
-			if(args.length<6 && args.length>=3)
-				System.out.println("SearchQ2SemanticService [path.prop(String)] [top-k(int)] [prune(double)] [distance(int)] [keyword1] [keyword2] ...");
-			else
-				System.out.println("SearchQ2SemanticService [path.prop(String)] [ds] [con1] [con2]...");
-			return;
-		}
-		long start = System.currentTimeMillis();
+		SearchQ2SemanticService s = new SearchQ2SemanticService(args[0]);
 		LinkedList<String> ll = new LinkedList<String>();
-		
-		for(int i=4; i<args.length; i++)
-			ll.add(args[i]);
-		if(args.length>=6)
-			new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
-		else
-		{
-			List list = new LinkedList<Concept>();
-			for(int i=2; i<args.length; i++)
-				list.add(new Concept(null, args[i], null));
-			new SearchQ2SemanticService(args[0]).getSuggestion(list, args[1]);
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("please input your parameter!");
+			String line = scanner.nextLine();
+			String[] tokens = line.split(" ");
+			if(tokens[0].equals("quit")) break;
+			ll.clear();
+			for(int i=0;i<tokens.length;i++)  {
+				ll.add(tokens[i]);
+			}
+			s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
 		}
-		long end = System.currentTimeMillis();
-		System.out.println();
-		System.out.println("Time consuming: "+(end - start) / 1000.0+" s");
-		System.out.println();
 	}
 }
