@@ -541,6 +541,9 @@ public class SearchSessionService {
 	 * @return the SeeAlso object associated with the result item.
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
+		ResultItem item = new ResultItem();
+		item.setURL(resultItemURL);
+
 		try {
 			if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
@@ -576,6 +579,7 @@ public class SearchSessionService {
 			}
 			seeAlso.setFacetList(ll);
 
+			seeAlso.setResultItem(item);
 			return seeAlso;
 		} catch (Exception e) {
 			e.printStackTrace();
