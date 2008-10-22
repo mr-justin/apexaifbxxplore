@@ -153,14 +153,19 @@ public class SearchSessionService {
 			Keywords k = (Keywords)query;
 			LinkedList<String> wordList = k.getWordList();
 			if (wordList.isEmpty()) return null;
+			String datasource = (String)Config.readDSConfigFile("config"+File.separatorChar+"datasrc.cfg").get("defaultDataSet");
 			Iterator<String> it = wordList.iterator();
 			String str = it.next();
-			for (; it.hasNext(); ) str += " " + it.next();
+			for (; it.hasNext(); ) {
+				String s = it.next();
+				if (s.startsWith("xxds")) datasource = s.substring(4);
+				else str += " " + s;
+			}
 			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	// AND
 			cc.addComponentCategory(SchemaFactoryImpl.getInstance().createKeywordCategory(str));
 			graph.add(cc);	//0
 			graph.setTargetVariable(0);
-			graph.setDataSource(0, (String)Config.readDSConfigFile("config"+File.separatorChar+"datasrc.cfg").get("defaultDataSet"));
+			graph.setDataSource(0, datasource);
 			
 			int id = SemplorePool.acquire();
 			QueryEvaluator eval = SemplorePool.getEvaluator(id);
