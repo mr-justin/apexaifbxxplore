@@ -39,8 +39,8 @@ public class BinaryInterAU_RS extends BinaryInterAU
                 if (stream1.doc() < stream2.doc() && !stream1.skipTo(stream2.doc()))
                     break;
                 if (stream1.doc() == stream2.doc()){
-                //	score[idx] = stream1.score();
-                	score[idx] = 1; 
+                	score[idx] = stream1.score();
+//                	score[idx] = 1; 
                     values[idx++] = stream2.doc();
                     if (!stream1.next())
                         break;
