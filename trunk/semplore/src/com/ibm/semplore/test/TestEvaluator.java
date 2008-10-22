@@ -29,14 +29,14 @@ public class TestEvaluator {
 //		graph.add(schemaFactory.createUniversalCategory());				//2
 //		graph.add(schemaFactory.createUniversalCategory());				//3
 		//Relations
-//		graph.add(schemaFactory.createRelation((
-//				"<http://lsdis.cs.uga.edu/projects/semdis/opus#book_title>")), 1, 0);
+		graph.add(schemaFactory.createRelation((
+				"<http://lsdis.cs.uga.edu/projects/semdis/opus#book_title>")), 1, 0);
 //		graph.add(schemaFactory.createRelation((
 //				"<http://lsdis.cs.uga.edu/projects/semdis/opus#author>")), 3, 2);
 		//IEdge
 //		graph.addIEdges(new Edge(1,2,null));
 		//target
-		graph.setTargetVariable(0);
+		graph.setTargetVariable(1);
 		//datasource
 		graph.setDataSource(0, "dblp");
 		graph.setDataSource(1, "dblp");
