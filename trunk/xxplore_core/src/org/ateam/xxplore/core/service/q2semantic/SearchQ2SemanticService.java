@@ -143,7 +143,7 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",new Source()), r);
+						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",r.getSource()), r);
 						graphEdges.add(edge);
 					}
 				}
@@ -159,7 +159,7 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",new Source()), a);
+						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",a.getSource()), a);
 						graphEdges.add(edge);
 					}
 				}
@@ -171,7 +171,7 @@ public class SearchQ2SemanticService {
 			for(Facet fac : rel2con.keySet()) {
 				if(!rel2con.get(fac).isVisited) {
 					for(Facet con : rel2con.get(fac).sf) {
-						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",new Source()),con,fac));
+						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",fac.getSource()),con,fac));
 					}
 				}
 			}
@@ -179,7 +179,7 @@ public class SearchQ2SemanticService {
 			for(Facet fac : attr2lit.keySet()) {
 				if(!attr2lit.get(fac).isVisited) {
 					for(Facet lit : attr2lit.get(fac).sf) {
-						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",new Source()),lit,fac));
+						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",fac.getSource()),lit,fac));
 					}
 				}
 			}
@@ -345,16 +345,35 @@ public class SearchQ2SemanticService {
 //			System.out.println("========================");
 //			for(SummaryGraphElement ele : tmpMap.get(key)) {
 //				boolean flag = false;
-//				if(ele.getType() == SummaryGraphElement.VALUE) {
-//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals(key.toLowerCase())) {
+////				if(ele.getType() == SummaryGraphElement.VALUE) {
+////					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals(key.toLowerCase())) {
+////						flag = true;
+////					}	
+////				}
+////				else {
+////					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase())) {
+////						flag = true;
+////					}
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals("http://www.freebase.com/property/produced_by")) {
+//						flag = true;	
+//					}
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals("http://www.freebase.com/property/name")) {
 //						flag = true;
-//					}	
-//				}
-//				else {
-//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().endsWith(key.toLowerCase())) {
+//					}
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals("http://www.freebase.com/class/publication")) {
 //						flag = true;
-//					}	
-//				}
+//					}
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals("http://www.freebase.com/class/person")) {
+//						flag = true;
+//					}
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals("http://www.freebase.com/class/company")) {
+//						flag = true;
+//					}
+//					if(SummaryGraphUtil.getResourceUri(ele).toLowerCase().equals("google") && ele.getDatasource().equals("freebase")) {
+//						flag = true;
+//					}
+////				}
+//				
 //				
 //				if( flag ) {
 //					System.out.println(ele.getDatasource() + "\t" + SummaryGraphUtil.getResourceUri(ele));
@@ -382,11 +401,32 @@ public class SearchQ2SemanticService {
 	 * @param topNbGraphs
 	 * @return
 	 */
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList1, int topNbGraphs, double prune, int distance,
 			double edge_score) {
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 
+		LinkedList<String> keywordList = new LinkedList<String>();
+		int [] type = new int[keywordList1.size()];
+		HashMap<Character,Integer> type_hm = new HashMap<Character, Integer>();
+		type_hm.put('a', SummaryGraphElement.ATTRIBUTE);
+		type_hm.put('c', SummaryGraphElement.CONCEPT);
+		type_hm.put('l', SummaryGraphElement.VALUE);
+		type_hm.put('r', SummaryGraphElement.RELATION);
+		
+		int count = 0;
+		for(String item : keywordList1) {
+			if(item.charAt(1) == ':') {
+				type[count++] = type_hm.get(item.charAt(0));
+				keywordList.add(item.substring(2));
+			}
+			else {
+				type[count++] = -1;
+				keywordList.add(item);
+			}
+		}
+		
+		
 		long start_time = System.currentTimeMillis();
 		
 		QueryInterpretationService.EDGE_SCORE = edge_score;
@@ -397,11 +437,35 @@ public class SearchQ2SemanticService {
 			query += "\""+str+"\" ";
 		}
 		query = query.substring(0, query.length()-1);
-				
-		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(query,prune);		
-		if(elementsMap.size()<keywordList.size()) return null;
-		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
 		
+		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(query,prune);
+		if(elementsMap.size()<keywordList.size()) return null;
+		Map<String,Collection<SummaryGraphElement>> elementsMap2 = new HashMap<String, Collection<SummaryGraphElement>>();
+		
+		count = 0;
+		for(String item : keywordList) {
+			for(SummaryGraphElement ele : elementsMap.get(item)) {
+				if( type[count] == -1 || ele.getType() == type[count] ) {
+					Collection<SummaryGraphElement> ele_set = elementsMap2.get(item);
+					if(ele_set == null) {
+						ele_set = new LinkedList<SummaryGraphElement>();
+						elementsMap2.put(item, ele_set);
+					}
+					ele_set.add(ele);
+				}
+			}
+			count ++;
+		}
+		
+		System.out.println("begin elementsMap2 =========");
+		for(String item : elementsMap2.keySet()) {
+			System.out.println(item + ":");
+			for(SummaryGraphElement ele : elementsMap2.get(item)) {
+				System.out.println("\t"+SummaryGraphUtil.getResourceUri(ele));
+			}
+		}
+		
+		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap2, distance, topNbGraphs);
 		if(graphs == null) return null;
 		
 		
@@ -466,8 +530,8 @@ public class SearchQ2SemanticService {
 		File[] schemas = new File(schemaObjsRoot).listFiles();
 		for(File schema: schemas)
 			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
-	
 		inter = new QueryInterpretationService(summaryObjSet.keySet());
+		
 	}
 	
 	
@@ -573,7 +637,7 @@ public class SearchQ2SemanticService {
 			if(tokens[0].equals("quit")) break;
 			ll.clear();
 			for(int i=0;i<tokens.length;i++)  {
-				ll.add(tokens[i].replace('_', ' '));
+				ll.add(tokens[i].replace('|', ' '));
 			}
 			s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
 		}
