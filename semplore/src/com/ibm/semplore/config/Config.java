@@ -20,6 +20,7 @@ import java.util.Properties;
  */
 public class Config
 {
+	public static final String NEED_INVERSE_RELATION_FACETS = "need_inverse_relation_facets";
 //	public static final String TYPE = "type"; //this property is to set the URI denoting type, e.g. "<http://www.w3.org/2004/02/skos/core#subject>", "<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>";
 	public static final String TMP_DIR = "tmp_dir"; 
 	public static final String DATA_FOR_INDEX_DIR = "data_for_index_dir"; 

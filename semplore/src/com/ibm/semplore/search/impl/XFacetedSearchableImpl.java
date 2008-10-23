@@ -9,7 +9,6 @@
 package com.ibm.semplore.search.impl;
 
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -18,7 +17,6 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 
-import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.model.CatRelConstraint;
 import com.ibm.semplore.model.CatRelGraph;
@@ -257,7 +255,10 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		if (debugTime) logger.debug("1 compute of result stream: " + (time_end - time_begin)
 				+ " ms");
 
-		DocPositionStream cat, rel_obj, rel_sbj;
+		DocPositionStream cat;
+		DocPositionStream rel_sbj;
+		DocPositionStream rel_obj=null;
+		boolean needInverseRelationFacets = new Boolean(config.getProperty(Config.NEED_INVERSE_RELATION_FACETS,"true"));
 		// all the categories and relations(Cobjects)
 		DocStream catDoc, relDoc;
 		relDoc = insIndexReader.getDocStream(termFactory
@@ -267,9 +268,11 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		// positionstream(relations)
 		cat = insIndexReader.getDocPositionStream(termFactory.createTerm(
 				FieldType.CATEGORIES.toString(), FieldType.CATEGORIES));
-		rel_obj = insIndexReader.getDocPositionStream(termFactory.createTerm(
+		if (needInverseRelationFacets) {
+			rel_obj = insIndexReader.getDocPositionStream(termFactory.createTerm(
 				FieldType.INVERSERELATIONS.toString(),
 				FieldType.INVERSERELATIONS));
+		}
 		rel_sbj = insIndexReader.getDocPositionStream(termFactory.createTerm(
 				FieldType.RELATIONS.toString(), FieldType.RELATIONS));
 		// mass-union
@@ -278,8 +281,11 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		time_end = System.currentTimeMillis();
 		if (debugTime) logger.debug("2 compute category facet stream " + (time_end - time_begin)
 				+ " ms");
-		DocStream rel_objStream = AUManager.massUnion_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),rel_obj,
+		DocStream rel_objStream=null;
+		if (needInverseRelationFacets) {
+			rel_objStream = AUManager.massUnion_Facet(dataSource,FieldType.INVERSERELATIONS.toString(),rel_obj,
 				(DocStream) resultStream, (DocStream) relDoc);
+		}
 		time_end = System.currentTimeMillis();
 		if (debugTime) logger.debug("3 compute relation facet stream " + (time_end - time_begin)
 				+ " ms");
@@ -297,8 +303,11 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		 * ************************combine relation and inverse relation
 		 * facets*********************
 		 */
-		ResultSetImpl_TopDocs rel_objResult = new ResultSetImpl_TopDocs(
+		ResultSetImpl_TopDocs rel_objResult=null;
+		if (needInverseRelationFacets) {
+			rel_objResult = new ResultSetImpl_TopDocs(
 				rel_objStream, insIndexReader,10);
+		}
 		ResultSetImpl_TopDocs rel_sbjResult = new ResultSetImpl_TopDocs(
 				rel_subStream, insIndexReader,10);
 		
@@ -307,38 +316,44 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 				+ " ms");
 
 		Facet[] catFacet = resultSet2Facet(catResult);
-		Facet[] relFacet_obj = resultSet2Facet(rel_objResult);
 		Facet[] relFacet_sub = resultSet2Facet(rel_sbjResult);
-		Facet[] relFacet = new Facet[relFacet_sub.length + relFacet_obj.length];
-		for (int i = 0, j = 0, k = 0; i < relFacet_sub.length
-				|| j < relFacet_obj.length;) {
-			if (i >= relFacet_sub.length || j < relFacet_obj.length
-					&& relFacet_sub[i].getCount() < relFacet_obj[j].getCount()) {
-				relFacet[k++] = new FacetImpl(relFacet_obj[j].getInfo(),
-						relFacet_obj[j].getCount(), true);
-				j++;
-			} else {
-				relFacet[k++] = relFacet_sub[i];
-				i++;
+		Facet[] relFacet;
+		if (needInverseRelationFacets) {
+			Facet[] relFacet_obj;
+			relFacet_obj = resultSet2Facet(rel_objResult);
+			relFacet = new Facet[relFacet_sub.length + relFacet_obj.length];
+			for (int i = 0, j = 0, k = 0; i < relFacet_sub.length
+			|| j < relFacet_obj.length;) {
+				if (i >= relFacet_sub.length || j < relFacet_obj.length
+				&& relFacet_sub[i].getCount() < relFacet_obj[j].getCount()) {
+					relFacet[k++] = new FacetImpl(relFacet_obj[j].getInfo(),
+					relFacet_obj[j].getCount(), true);
+					j++;
+				} else {
+					relFacet[k++] = relFacet_sub[i];
+					i++;
+				}
 			}
+		} else {
+			relFacet = relFacet_sub;		
 		}
 		/**
 		 * ************************combine relation and inverse relation
 		 * facets*********************
 		 */
 
-		// traverse the result stream in vain for time count
-		// DocStream traverse = (DocStream) resultStream.clone();
-		// traverse.init();
-		// for (int i = 0; i < traverse.getLen(); i++)
-		// traverse.next();
-
 		time_end = System.currentTimeMillis();
 		if (debugTime) logger.debug("6 facet streams to facet URIs " + (time_end - time_begin)
 				+ " ms");
+		int relFacetLen;
+		if (needInverseRelationFacets) {
+			relFacetLen = rel_objStream.getLen() + rel_subStream.getLen();
+		} else {
+			relFacetLen = rel_subStream.getLen();
+		}
 		XFacetedResultSet result = new XFacetedResultSetImpl(resultStream,
 				insIndexReader, catFacet, relFacet, catStream.getLen(),
-				rel_objStream.getLen() + rel_subStream.getLen(), resultTime,
+				relFacetLen, resultTime,
 				facetTime).setSnippetKeyword("");
 		time_end = System.currentTimeMillis();
 		logger.debug("searching finished in " + (time_end - time_begin)
