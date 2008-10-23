@@ -169,7 +169,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					XFacetedQuery q = converter.convertQuery(g);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
-					logger.debug(String.format("%s: %dms", q.getQueryConstraint().toString(), System.currentTimeMillis()-time));
+					logger.debug(String.format("%s: %d+%d ms", q.getQueryConstraint().toString(), targetResult.getResultTime(), targetResult.getFacetTime()));
 					logger.info("search "+thisSearchID+ " complete: " + targetResult.getLength() + " results");
 				}
 				else {
