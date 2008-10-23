@@ -258,7 +258,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		DocPositionStream cat;
 		DocPositionStream rel_sbj;
 		DocPositionStream rel_obj=null;
-		boolean needInverseRelationFacets = new Boolean(config.getProperty(Config.NEED_INVERSE_RELATION_FACETS,"true"));
+		boolean needInverseRelationFacets = new Boolean(config.getProperty(Config.NEED_INVERSE_RELATION_FACETS,"false"));
 		// all the categories and relations(Cobjects)
 		DocStream catDoc, relDoc;
 		relDoc = insIndexReader.getDocStream(termFactory
