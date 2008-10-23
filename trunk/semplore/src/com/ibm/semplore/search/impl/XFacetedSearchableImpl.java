@@ -539,6 +539,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 					continue;
 				} else {
 					checkedEdges.add(ed);
+					checkedEdges.add(ed.reverse());
 					int nextNode;
 					boolean employInverseRelations;
 					if (ed.getFromNode() == node) {
