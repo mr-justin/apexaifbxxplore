@@ -57,9 +57,6 @@ public class SearchQ2SemanticService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		inter = new QueryInterpretationService(summaryObjSet.keySet());
-		
 	}
 	
 	/**
@@ -69,7 +66,7 @@ public class SearchQ2SemanticService {
 	 * @return
 	 * @throws Exception
 	 */
-	public Collection<Suggestion> getSuggestion(List<Concept> concept, String ds) throws Exception
+	public Collection<Suggestion> getSuggestion(List<Concept> concept, String ds, int topK) throws Exception
 	{
 		List<String> con = new ArrayList<String>();
 		for(Concept c: concept)
@@ -78,20 +75,38 @@ public class SearchQ2SemanticService {
 		MappingIndexService mis = new MappingIndexService();
 		mis.init4Search(mappingIndexRoot);
 		Set<String> sugg = inter.getSuggestion(con, ds, mis);
-		Collection<Suggestion> res = new PriorityQueue<Suggestion>();
+		PriorityQueue<Suggestion> res = new PriorityQueue<Suggestion>();
 		for(String str: sugg)
 		{
-			System.out.println(str);
+//			System.out.println(str);
 			String[] part = str.split("\t");
 			if(part.length!=4) continue;
-			String label = SummaryGraphUtil.getLocalName(part[0]);//part[0].substring(part[0].lastIndexOf('/')+1);
+			String label = SummaryGraphUtil.getLocalName(part[0]);
 			if(part[3].equals(ConceptMark))
 				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
 			else if(part[3].equals(PredicateMark))
 				res.add(new RelationSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
 		}
-		System.out.println("Total Suggestion: "+res.size());
-		return res;
+//		System.out.println("Total Suggestion: "+res.size());
+		int conceptK = topK, relationK = topK;
+		LinkedList<Suggestion> ress = new LinkedList<Suggestion>();
+		for(Suggestion sug: res)
+		{
+			if(sug instanceof ConceptSuggestion && conceptK>0)
+			{
+				System.out.println("ConceptSuggestion: "+sug.getURI());
+				ress.add(sug);
+				conceptK--;
+			}
+			else if(sug instanceof RelationSuggestion && relationK>0)
+			{
+				System.out.println("RelationSuggestion: "+sug.getURI());
+				ress.add(sug);
+				relationK--;
+			}
+		}
+		
+		return ress;
 	}
 	
 	
@@ -384,8 +399,9 @@ public class SearchQ2SemanticService {
 		query = query.substring(0, query.length()-1);
 				
 		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(query,prune);		
-		
+		if(elementsMap.size()<keywordList.size()) return null;
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
+		
 		if(graphs == null) return null;
 		
 		
@@ -450,6 +466,8 @@ public class SearchQ2SemanticService {
 		File[] schemas = new File(schemaObjsRoot).listFiles();
 		for(File schema: schemas)
 			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
+	
+		inter = new QueryInterpretationService(summaryObjSet.keySet());
 	}
 	
 	
