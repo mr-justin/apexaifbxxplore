@@ -26,7 +26,7 @@ public class Concept extends Facet {
 	 */
 	public Concept(String label, String uri, Source source) {
 		super(label, uri, source);
-		if (source.getName().equals("dbpedia")) {
+		if (source != null && source.getName().equals("dbpedia")) {
 			if (label.startsWith("wordnet ")) {
 				label = label.substring(8);
 				int pos = label.lastIndexOf(' ');
