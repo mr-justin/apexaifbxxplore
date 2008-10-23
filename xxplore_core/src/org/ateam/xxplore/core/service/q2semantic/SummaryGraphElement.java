@@ -261,8 +261,16 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 			return ((NamedConcept)resource).getUri().equals(((NamedConcept)vertex.getResource()).getUri());
 		else if(resource instanceof Datatype && vertex.getResource() instanceof Datatype)
 			return ((Datatype)resource).getUri().equals(((Datatype)vertex.getResource()).getUri());
-		else if(resource instanceof Property && vertex.getResource() instanceof Property)
-			return ((Property)resource).getUri().equals(((Property)vertex.getResource()).getUri());
+		else if(resource instanceof Property && vertex.getResource() instanceof Property) {
+			
+			String uri1 = ((Property)resource).getUri();
+			String uri2 = ((Property)vertex.getResource()).getUri();
+			
+//			if(uri1.indexOf("(") != -1 || uri2.indexOf("(") != -1) {
+//				return SummaryGraphUtil.removeNum(uri1).equals(SummaryGraphUtil.removeNum(uri2));
+//			}
+			return uri1.equals(uri2);
+		}
 		else if(resource instanceof Literal&& vertex.getResource() instanceof Literal)
 			return ((Literal)resource).getLiteral().equals(((Literal)vertex.getResource()).getLiteral());
 //		if(resource.getClass().equals(vertex.getResource().getClass()))
