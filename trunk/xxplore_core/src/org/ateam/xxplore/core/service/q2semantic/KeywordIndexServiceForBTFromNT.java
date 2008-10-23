@@ -484,13 +484,22 @@ public class KeywordIndexServiceForBTFromNT{
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 
 				result.put(clausequery.toString("label"), res);
-				for(int i = 0; i < hits.length(); i++){
+				int max = 5;
+				for(int i = 0; i < Math.min(hits.length(),max); i++){
+					
 					Document doc = hits.doc(i);
 					float score = hits.score(i);
+					int count = 0;
+					
 					if(score >= prune){
+
 						String type = doc.get(TYPE_FIELD);
 //						System.out.println(type);
 						if(type != null && type.equals(LITERAL)){
+							if( !doc.get(LABEL_FIELD).toLowerCase().equals(
+									clausequery.toString("label").toLowerCase()) ) {
+								continue;
+							}
 //							by chenjunquan
 							ILiteral lit = new Literal(doc.get(LABEL_FIELD));
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
@@ -526,15 +535,25 @@ public class KeywordIndexServiceForBTFromNT{
 //										System.out.println(prop==null);
 //										System.out.println(property);
 										concepts = neighbors.get(prop);
-										if(concepts == null)
+										if(concepts == null){
 											concepts = new HashSet<INamedConcept>();
+											neighbors.put(prop, concepts);
+										}
 										concepts.add(con);
 //										}
 //										System.out.println(((HashSet)concepts).iterator().next());
-										neighbors.put(prop, concepts);
+										
 									}
 								}
 							}
+							System.out.println("================="+doc.get(LABEL_FIELD));
+							for(IDataProperty myP : neighbors.keySet()) {
+								System.out.println("\t"+myP.getUri()+neighbors.get(myP).size());
+								for(INamedConcept t : neighbors.get(myP)){
+									System.out.println("\t\t"+t.getUri());
+								}
+							}
+							System.out.println();
 							vvertex.setNeighbors(neighbors);
 							res.add(vvertex);
 						}
