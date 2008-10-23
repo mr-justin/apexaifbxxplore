@@ -7,10 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
-import org.apache.log4j.Logger;
-
-import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
-
 /**
  * @author xrsun
  *
