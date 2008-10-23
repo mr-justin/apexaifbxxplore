@@ -40,16 +40,16 @@ public class Edge {
         return toString().hashCode();
     }
     
-//    public boolean equals(Object obj) {
-//        if (obj instanceof Edge) {
-//            Edge ed2 = (Edge)obj;
-//            if (ed2.fromNode == this.fromNode && ed2.toNode == this.toNode && ed2.rel.equals(this.rel))
-//                return true;
-//            else
-//                return false;
-//        } else 
-//            return false;
-//    }
+    public boolean equals(Object obj) {
+        if (obj instanceof Edge) {
+            Edge ed2 = (Edge)obj;
+            if (ed2.fromNode == this.fromNode && ed2.toNode == this.toNode && ed2.rel.equals(this.rel))
+                return true;
+            else
+                return false;
+        } else 
+            return false;
+    }
     
     public String toString() {
     	if (rel != null)
