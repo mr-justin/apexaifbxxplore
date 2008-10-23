@@ -19,6 +19,22 @@ public class GraphAdapter {
 	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
 	private Set<String> conceptMappings;
 	
+	public Set<SummaryGraphElement> getElementFromString(String ds,String uri) {
+		Set<SummaryGraphElement> ret_set = new HashSet<SummaryGraphElement>();
+		if(summaryGraph_HM.get(ds) != null) {
+			Set<SummaryGraphElement> tmp = summaryGraph_HM.get(ds).no_num_element_hm.get(uri);
+			if(tmp != null) {
+				ret_set.addAll(tmp);
+			}
+		}
+		if(augmentPart_HM.get(ds) != null) {
+			Set<SummaryGraphElement> tmp = augmentPart_HM.get(ds).no_num_element_hm.get(uri);
+			if(tmp != null) {
+				ret_set.addAll(tmp);
+			}
+		}
+		return ret_set;
+	}
 	
 	private void updateDsCoverage(String ds) {
 		Integer cover = m_datasources.get(ds);
@@ -70,11 +86,16 @@ public class GraphAdapter {
 					augmentPart_HM.get(ele.getDatasource()).element_hm.put(
 							SummaryGraphUtil.getResourceUri(ele), ele);
 					
+					System.out.println("====================================");
+					System.out.println(SummaryGraphUtil.getResourceUri(ele) + "\t" + ele.getDatasource());
+					
 					Map<IDataProperty, Collection<INamedConcept>> neighbors = 
 						valueElement.getNeighbors();
 					for(IDataProperty prop : neighbors.keySet()) {
 						SummaryGraphElement pvertex = new SummaryGraphElement(
 								new DataProperty(prop.getUri()+"("+(count++)+")"), SummaryGraphElement.ATTRIBUTE);
+						
+						System.out.println("\t" + SummaryGraphUtil.getResourceUri(pvertex));
 						augmentPart_HM.get(ele.getDatasource()).element_hm.put(
 								SummaryGraphUtil.getResourceUri(pvertex), pvertex);
 						
@@ -82,6 +103,7 @@ public class GraphAdapter {
 							SummaryGraphElement cvertex = summaryGraph_HM.get(
 									ele.getDatasource()).element_hm.get(con.getUri());
 							
+							System.out.println("\t\t" + SummaryGraphUtil.getResourceUri(cvertex));
 							if(cvertex == null) {
 								System.err.println("cvertex is null!");
 								System.exit(1);
