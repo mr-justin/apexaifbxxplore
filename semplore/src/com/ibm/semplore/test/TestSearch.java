@@ -226,7 +226,7 @@ public abstract class TestSearch {
 					if (catFacets[i].getCount() > 0)
 						System.out.println("catFacet " + (j++) + ": "
 								+ catFacets[i].getInfo().getLabel() + "(~"
-								+ catFacets[i].getCount() + ")");
+								+ catFacets[i].getCount() + ") uri:"+catFacets[i].getInfo().getURI());
 				}
 			}
 			System.out.println();
@@ -245,7 +245,7 @@ public abstract class TestSearch {
 							System.out.print("(inverse)");
 						System.out.println("relFacet " + (j++) + ": "
 								+ relFacets[i].getInfo().getLabel() + "(~"
-								+ relFacets[i].getCount() + ")");
+								+ relFacets[i].getCount() + ") uri:"+relFacets[i].getInfo().getURI());
 					}
 				}
 			}
