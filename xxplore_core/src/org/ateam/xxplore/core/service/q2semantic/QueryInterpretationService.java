@@ -52,7 +52,7 @@ import com.sun.org.apache.xml.internal.serializer.ElemDesc;
 public class QueryInterpretationService implements IQueryInterpretationService {
 
 	private static Logger s_log = Logger.getLogger(QueryInterpretationService.class);
-	public static double DEFAULT_SCORE = 0.0;
+	public static double DEFAULT_SCORE = 2.0;
 	public static double EDGE_SCORE = 0.5;
 	public MappingIndexService mis;
 	
@@ -395,19 +395,23 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		Set<String> keywords = elements.keySet();
 		HashMap<String, HashSet<SummaryGraphElement>> map = new HashMap<String, HashSet<SummaryGraphElement>>();
 		for (String keyword : keywords) {
-			for (SummaryGraphElement element : elements.get(keyword)) {
-				HashSet<SummaryGraphElement> set = map.get(keyword);
-				
-				// == chenjunquan ==
-				if (set == null) {
-					set = new HashSet<SummaryGraphElement>();
-					map.put(keyword, set);
+			for (SummaryGraphElement ele : elements.get(keyword)) {
+				Set<SummaryGraphElement> ele_set = 
+					iGraph.getElementFromString(ele.getDatasource(), SummaryGraphUtil.getResourceUri(ele));
+				for(SummaryGraphElement element : ele_set) {
+					HashSet<SummaryGraphElement> set = map.get(keyword);
+					
+					// == chenjunquan ==
+					if (set == null) {
+						set = new HashSet<SummaryGraphElement>();
+						map.put(keyword, set);
+					}
+					set.add(element);
+					// System.out.println(element.getTotalScore()+"\t"+keyword);
+					Cursor cursor = new Cursor(element, element, null, null,
+							keyword, element.getTotalScore());
+					expansionQueue.addCursor(cursor, keyword);
 				}
-				set.add(element);
-				// System.out.println(element.getTotalScore()+"\t"+keyword);
-				Cursor cursor = new Cursor(element, element, null, null,
-						keyword, element.getTotalScore());
-				expansionQueue.addCursor(cursor, keyword);
 			}
 		}
 
@@ -450,6 +454,13 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					Collection<Cursor> neighbors;
 					neighbors = getNonVisitedNeighbors(iGraph, e, c);
 					// System.out.println(neighbors.size());
+					
+//					for(Cursor n : neighbors) {
+//						
+//						if(SummaryGraphUtil.getResourceUri(n.getElement()).indexOf("produced_by") != -1) {
+//							System.out.println(SummaryGraphUtil.getResourceUri(n.getElement()));
+//						}
+//					}
 					for (Cursor n : neighbors) {
 						// if(n.getCost()==0)System.out.println("aaa");
 						
@@ -555,7 +566,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		//if(e.getDatasource().equals("freebase")) System.out.println("freebase element!");
 		Collection<SummaryGraphEdge> ele_coll = null;
 		ele_coll = iGraph.neighborVertex(e);
-
+		
 		Cursor nextCursor = null;
 		for (SummaryGraphEdge edge : ele_coll) {
 			// incoming
@@ -577,7 +588,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
 					}
 					neighbors.add(nextCursor);
-				//}
+//				}
 				// else System.out.println("aaa");
 			}
 			// outgoing
@@ -600,7 +611,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 					}
 
 					neighbors.add(nextCursor);
-				//}
+//				}
 			}
 
 		}
