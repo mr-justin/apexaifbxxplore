@@ -444,7 +444,7 @@ public class KeywordIndexServiceForBTFromNT{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-					System.out.println(clauseQ.toString());
+					System.out.println("aaa:" + clauseQ.toString());
 					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
@@ -496,10 +496,12 @@ public class KeywordIndexServiceForBTFromNT{
 						String type = doc.get(TYPE_FIELD);
 //						System.out.println(type);
 						if(type != null && type.equals(LITERAL)){
-							if( !doc.get(LABEL_FIELD).toLowerCase().equals(
-									clausequery.toString("label").toLowerCase()) ) {
-								continue;
-							}
+//							if( !doc.get(LABEL_FIELD).toLowerCase().equals(
+//									clausequery.toString("label").toLowerCase()) ) {
+//								System.out.println(doc.get(LABEL_FIELD).toLowerCase() + " != " +
+//										clausequery.toString("label").toLowerCase());
+//								continue;
+//							}
 //							by chenjunquan
 							ILiteral lit = new Literal(doc.get(LABEL_FIELD));
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
