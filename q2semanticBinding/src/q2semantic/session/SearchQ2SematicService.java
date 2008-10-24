@@ -1,13 +1,12 @@
 package q2semantic.session;
 
-import java.io.File;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.ateam.xxplore.core.service.q2semantic.SearchQ2SemanticService;
 import org.team.xxplore.core.service.search.datastructure.Concept;
 import org.team.xxplore.core.service.search.datastructure.QueryGraph;
 import org.team.xxplore.core.service.search.datastructure.Suggestion;
-import org.ateam.xxplore.core.service.q2semantic.SearchQ2SemanticService;
 
 /**
  * Binding class to use the Q2Semantic JAR with BlazeDS. For Flex, this is the true service interface.
@@ -21,17 +20,11 @@ public class SearchQ2SematicService {
 	 * @param topNbGraphs The maximum number of graphs to return
 	 * @return The topNbGraphs first suggested graphs
 	 */
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
-		SearchQ2SemanticService t = new SearchQ2SemanticService();
-		try {
-			t.loadPara("config/path.prop");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Call the service
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) throws Exception {
+		int id = Q2SemanticPool.acquire();
+		SearchQ2SemanticService t = Q2SemanticPool.getEvaluator(id);
 		LinkedList<QueryGraph> chen = t.getPossibleGraphs(keywordList, topNbGraphs);
-		// Return the result
+		Q2SemanticPool.release(id);
 		return chen;
 	}
 	
@@ -42,27 +35,15 @@ public class SearchQ2SematicService {
 	 * @param topk The max number of suggestions to return per category (concept or relation)
 	 * @return The suggestions from other sources
 	 */
-	public Collection<Suggestion> getSuggestion (LinkedList<Concept> conceptList, String sourceName, int topk) {
-		// Real service
-		SearchQ2SemanticService t = new SearchQ2SemanticService();
-		try {
-			t.loadPara("config/path.prop");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		// Call the service
-		Collection<Suggestion> chen = null;
-		try {
-			chen = t.getSuggestion(conceptList, sourceName, topk);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		// Return the result
+	public Collection<Suggestion> getSuggestion (LinkedList<Concept> conceptList, String sourceName, int topk) throws Exception {
+		int id = Q2SemanticPool.acquire();
+		SearchQ2SemanticService t = Q2SemanticPool.getEvaluator(id);
+		Collection<Suggestion> chen = t.getSuggestion(conceptList, sourceName, topk);
+		Q2SemanticPool.release(id);
 		return chen;
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws Exception {
 		q2semantic.session.SearchQ2SematicService serv = new q2semantic.session.SearchQ2SematicService();
 		LinkedList<String> keyword = new LinkedList<String>();
 		keyword.add("yao ming");
