@@ -1,7 +1,9 @@
 package org.ateam.xxplore.core.service.q2semantic;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -46,6 +48,8 @@ public class SearchQ2SemanticService {
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
 	public QueryInterpretationService inter;
+	public String configFilePath;
+	public HashMap<String, String> key_database = new HashMap<String, String>();
 	
 	public SearchQ2SemanticService(){}
 	
@@ -289,26 +293,46 @@ public class SearchQ2SemanticService {
 		}
 	}
 	
-	public Map<String,Collection<SummaryGraphElement>> searchKeyword(String query,double prune) {
+	public Map<String,Collection<SummaryGraphElement>> searchKeyword(LinkedList<QueryToken> queryList,double prune) {
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 
-		for(String ds : summaryObjSet.keySet()) {
-			String keywordIndex = this.keywordIndexRoot + "/" + ds + "-keywordIndex";
-			System.out.println("keywordIndex " + keywordIndex);
-			Map<String, Collection<SummaryGraphElement>> hm = 
-				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
-
-			for(String key_str : hm.keySet()) {
-				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
-				if(coll == null) {
-					elementsMap.put(key_str, hm.get(key_str));
-				}
-				else {
-					coll.addAll(hm.get(key_str));
+		for(QueryToken qt : queryList) {
+			String [] ds = qt.datasource.split(",");
+			for(int i = 0; i < ds.length;i++) {
+				String keywordIndex = this.keywordIndexRoot + "/" + ds[i] + "-keywordIndex";
+				System.out.println("keywordIndex " + keywordIndex);
+				Map<String, Collection<SummaryGraphElement>> hm = 
+					new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(qt.key, prune);
+	
+				for(String key_str : hm.keySet()) {
+					Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
+					if(coll == null) {
+						elementsMap.put(key_str, hm.get(key_str));
+					}
+					else {
+						coll.addAll(hm.get(key_str));
+					}
 				}
 			}
 		}
+		
+//		for(String ds : summaryObjSet.keySet()) {
+//			String keywordIndex = this.keywordIndexRoot + "/" + ds + "-keywordIndex";
+//			System.out.println("keywordIndex " + keywordIndex);
+//			Map<String, Collection<SummaryGraphElement>> hm = 
+//				new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(query, prune);
+//
+//			for(String key_str : hm.keySet()) {
+//				Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
+//				if(coll == null) {
+//					elementsMap.put(key_str, hm.get(key_str));
+//				}
+//				else {
+//					coll.addAll(hm.get(key_str));
+//				}
+//			}
+//		}
 		
 		for(String key : elementsMap.keySet()) {
 			Collection<SummaryGraphElement> t = elementsMap.get(key);
@@ -391,6 +415,16 @@ public class SearchQ2SemanticService {
 //		}
 		return elementsMap;
 	}
+	
+	class QueryToken {
+		public String key;
+		public String datasource;
+		
+		public QueryToken(String key,String datasource) {
+			this.key = key;
+			this.datasource = datasource;
+		}
+	}
 
 	/**
 	 * This method returns an ordered list of QueryGraph objects (most suitable at the head of the list) that 
@@ -401,71 +435,116 @@ public class SearchQ2SemanticService {
 	 * @param topNbGraphs
 	 * @return
 	 */
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList1, int topNbGraphs, double prune, int distance,
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
 			double edge_score) {
+		
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
 
-		LinkedList<String> keywordList = new LinkedList<String>();
-		int [] type = new int[keywordList1.size()];
-		HashMap<Character,Integer> type_hm = new HashMap<Character, Integer>();
-		type_hm.put('a', SummaryGraphElement.ATTRIBUTE);
-		type_hm.put('c', SummaryGraphElement.CONCEPT);
-		type_hm.put('l', SummaryGraphElement.VALUE);
-		type_hm.put('r', SummaryGraphElement.RELATION);
+//		LinkedList<String> keywordList = new LinkedList<String>();
+//		int [] type = new int[keywordList1.size()];
+//		HashMap<Character,Integer> type_hm = new HashMap<Character, Integer>();
+//		type_hm.put('a', SummaryGraphElement.ATTRIBUTE);
+//		type_hm.put('c', SummaryGraphElement.CONCEPT);
+//		type_hm.put('l', SummaryGraphElement.VALUE);
+//		type_hm.put('r', SummaryGraphElement.RELATION);
 		
-		int count = 0;
-		for(String item : keywordList1) {
-			if(item.charAt(1) == ':') {
-				type[count++] = type_hm.get(item.charAt(0));
-				keywordList.add(item.substring(2));
+//		int count = 0;
+//		for(String item : keywordList1) {
+//			if(item.charAt(1) == ':') {
+//				type[count++] = type_hm.get(item.charAt(0));
+//				keywordList.add(item.substring(2));
+//			}
+//			else {
+//				type[count++] = -1;
+//				keywordList.add(item);
+//			}
+//		}
+		
+		LinkedList<QueryToken> queryList = new LinkedList<QueryToken>();
+		for(String line : keywordList) {
+			String tokens[] = line.split(":");
+			if(tokens.length == 2) {
+				QueryToken queryToken = new QueryToken("\"" + tokens[0] + "\"",tokens[1]);
+				queryList.add(queryToken);
 			}
 			else {
-				type[count++] = -1;
-				keywordList.add(item);
+				String all_ds = "";
+				for(String tmp : this.summaryObjSet.keySet()) {
+					all_ds = all_ds + tmp + ",";
+				}
+				all_ds = all_ds.substring(0,all_ds.length() - 1);
+				QueryToken queryToken;
+				
+				if(this.key_database.get(tokens[0]) != null) {
+					 queryToken = new QueryToken("\"" + tokens[0] + "\"",this.key_database.get(tokens[0])); 
+				}
+				else {
+					queryToken = new QueryToken("\"" + tokens[0] + "\"",all_ds);
+				}
+				
+				queryList.add(queryToken);
 			}
 		}
-		
 		
 		long start_time = System.currentTimeMillis();
 		
 		QueryInterpretationService.EDGE_SCORE = edge_score;
 		
-		String query = "";
-		//merge keywords
-		for(String str: keywordList) {
-			query += "\""+str+"\" ";
-		}
-		query = query.substring(0, query.length()-1);
+//		String query = "";
+//		//merge keywords
+//		for(String str: keywordList) {
+//			query += "\""+str+"\" ";
+//		}
+//		query = query.substring(0, query.length()-1);
 		
-		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(query,prune);
+		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(queryList,prune);
 		if(elementsMap.size()<keywordList.size()) return null;
-		Map<String,Collection<SummaryGraphElement>> elementsMap2 = new HashMap<String, Collection<SummaryGraphElement>>();
+//		Map<String,Collection<SummaryGraphElement>> elementsMap2 = new HashMap<String, Collection<SummaryGraphElement>>();
+//		
+//		count = 0;
+//		for(String item : elementsMap.keySet()) {
+//			if(elementsMap == null) {
+//				System.out.println("elementsMap is null!");
+//				
+//			}
+//			if(elementsMap.get(item) == null) {
+//				System.out.println(elementsMap.size() + "\t" + item);
+//				continue;
+//			}
+//			
+//			for(SummaryGraphElement ele : elementsMap.get(item)) {
+//				if( type[count] == -1 || ele.getType() == type[count] ) {
+//					Collection<SummaryGraphElement> ele_set = elementsMap2.get(item);
+//					if(ele_set == null) {
+//						ele_set = new LinkedList<SummaryGraphElement>();
+//						elementsMap2.put(item, ele_set);
+//					}
+//					ele_set.add(ele);
+//				}
+//			}
+//			count ++;
+//		}
+//		
+//		System.out.println("elementsMap size:" + elementsMap.size());
+//		System.out.println("begin elementsMap2 =========");
+//		for(String item : elementsMap2.keySet()) {
+//			System.out.println(item + ":");
+//			for(SummaryGraphElement ele : elementsMap2.get(item)) {
+//				System.out.println("\t"+SummaryGraphUtil.getResourceUri(ele));
+//			}
+//		}
+//		
+//		System.out.println("size of elementsMap2:" + elementsMap2.size());
+//		
+//		for(String key : elementsMap2.keySet()) {
+//			System.out.println(key + ":" + elementsMap2.get(key));
+//			for(SummaryGraphElement ele : elementsMap2.get(key)) {
+//				System.out.println("\t" + SummaryGraphUtil.getResourceUri(ele));
+//			}
+//		}
 		
-		count = 0;
-		for(String item : keywordList) {
-			for(SummaryGraphElement ele : elementsMap.get(item)) {
-				if( type[count] == -1 || ele.getType() == type[count] ) {
-					Collection<SummaryGraphElement> ele_set = elementsMap2.get(item);
-					if(ele_set == null) {
-						ele_set = new LinkedList<SummaryGraphElement>();
-						elementsMap2.put(item, ele_set);
-					}
-					ele_set.add(ele);
-				}
-			}
-			count ++;
-		}
-		
-		System.out.println("begin elementsMap2 =========");
-		for(String item : elementsMap2.keySet()) {
-			System.out.println(item + ":");
-			for(SummaryGraphElement ele : elementsMap2.get(item)) {
-				System.out.println("\t"+SummaryGraphUtil.getResourceUri(ele));
-			}
-		}
-		
-		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap2, distance, topNbGraphs);
+		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
 		if(graphs == null) return null;
 		
 		
@@ -507,6 +586,9 @@ public class SearchQ2SemanticService {
 	
 	public void loadPara(String fn) throws Exception
 	{
+		
+		
+		
 		Properties prop = new Properties();
 		InputStream is = new FileInputStream(fn);
 		prop.load(is);
@@ -515,6 +597,7 @@ public class SearchQ2SemanticService {
 		schemaObjsRoot = root+prop.getProperty("schemaObjsRoot")+File.separator;
 		keywordIndexRoot = root+prop.getProperty("keywordIndexRoot")+File.separator;
 		mappingIndexRoot = root+prop.getProperty("mappingIndexRoot")+File.separator;
+		configFilePath = root + prop.getProperty("key2database");
 		System.out.println("Root:"+root+"\r\nsummaryObjsRoot:"+summaryObjsRoot+"\r\nschemaObjsRoot:"+schemaObjsRoot+"\r\nkeywordIndexRoot:"+keywordIndexRoot+"\r\nmappingIndexRoot:"+mappingIndexRoot);
 //		add keywordindexes
 		keywordIndexSet = new HashSet<String>();
@@ -530,6 +613,22 @@ public class SearchQ2SemanticService {
 		File[] schemas = new File(schemaObjsRoot).listFiles();
 		for(File schema: schemas)
 			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
+		
+		if(new File(this.configFilePath).exists()) {
+			try {
+				BufferedReader br = new BufferedReader(new FileReader(this.configFilePath));
+				String line;
+				while((line = br.readLine()) != null) {
+					String tokens[] = line.split(":");
+					this.key_database.put(tokens[0], tokens[1]);
+				}
+				br.close();
+			}
+			catch (Exception e) {
+				// TODO: handle exception
+			}
+		}
+		
 		inter = new QueryInterpretationService(summaryObjSet.keySet());
 		
 	}
