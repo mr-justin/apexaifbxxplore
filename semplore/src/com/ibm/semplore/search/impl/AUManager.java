@@ -114,7 +114,7 @@ public class AUManager
         return massUnionAU_Score.getResult();
     }
     public DocStream massUnion_Facet(String ds, String type, DocPositionStream relationStream, DocStream subjectStream, DocStream CobjectStream) throws IOException {
-    	if (subjectStream.getLen()>50000 || !MappingIndexReaderFactory.hasMappingIndex(ds + "_"+type+"_facet")) 
+    	if (subjectStream.getLen()>30000 || !MappingIndexReaderFactory.hasMappingIndex(ds + "_"+type+"_facet")) 
     		return massUnion_BV_Facet(relationStream, subjectStream, CobjectStream);
     	else 
     		return massUnion_Mapping_Facet(ds,type,subjectStream,CobjectStream);

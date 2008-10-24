@@ -34,7 +34,6 @@ import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
-import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.CompoundCategory;
@@ -42,12 +41,15 @@ import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.EnumerationCategory;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
+import com.ibm.semplore.util.LRUHashMap;
 import com.ibm.semplore.xir.DocStream;
 
 import flex.messaging.FlexContext;
 
 public class SearchSessionService {
 	static Logger logger = Logger.getLogger(SearchSessionService.class);
+	static LRUHashMap<String, ArraySnippet> snippetCache = new LRUHashMap<String, ArraySnippet>(10000);
+	static LRUHashMap<String, SeeAlso> seealsoCache = new LRUHashMap<String, SeeAlso>(10000);
 
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
@@ -547,6 +549,8 @@ public class SearchSessionService {
 	 * @return the SeeAlso object associated with the result item.
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
+		SeeAlso cached;
+		if ((cached = seealsoCache.get(resultItemURL))!=null) return cached;
 		ResultItem item = new ResultItem();
 		item.setURL(resultItemURL);
 
@@ -586,6 +590,7 @@ public class SearchSessionService {
 			seeAlso.setFacetList(ll);
 
 			seeAlso.setResultItem(item);
+			seealsoCache.put(resultItemURL, seeAlso);
 			return seeAlso;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -651,6 +656,8 @@ public class SearchSessionService {
 	 * @return the ArraySnippet object associated with the result item.
 	 */
 	public ArraySnippet getArraySnippet(String resultItemURL) {
+		ArraySnippet cached;
+		if ((cached = snippetCache.get(resultItemURL))!=null) return cached;
 		try {
 			if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
@@ -671,6 +678,7 @@ public class SearchSessionService {
 			SemplorePool.release(id);
 			
 			ArraySnippet as = this.getSnippet(currentResult.getCurrentDataSource(), resultItemURL, snippet_str);
+			snippetCache.put(resultItemURL, as);
 			return as;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -682,6 +690,7 @@ public class SearchSessionService {
 	private ArraySnippet getSnippet(String dataSource, String resultItemURL, String snippet_str) {
 		ResultItem item = new ResultItem();
 		item.setURL(resultItemURL);
+		Source source = new Source(dataSource, null, 0);
 		LinkedList<Couple> rel = new LinkedList<Couple>();
 		LinkedList<Couple> attr = new LinkedList<Couple>();
 		LinkedList<Concept> cat = new LinkedList<Concept>();
@@ -700,11 +709,11 @@ public class SearchSessionService {
 				}
 				
 				if (type==Util4NT.CATEGORY) {
-					cat.add(new Concept(labels[2],processed[2],null));
+					cat.add(new Concept(labels[2],processed[2],source));
 				} else if (type==Util4NT.RELATION) {
-					rel.add(new Couple(new Relation(labels[1],processed[1],null), new Instance(labels[2],processed[2],null)));
+					rel.add(new Couple(new Relation(labels[1],processed[1],source), new Instance(labels[2],processed[2],source)));
 				} else if (type==Util4NT.ATTRIBUTE) {
-					attr.add(new Couple(new Attribute(labels[1],processed[1],null), new Litteral(processed[2],null,null)));
+					attr.add(new Couple(new Attribute(labels[1],processed[1],source), new Litteral(processed[2],null,source)));
 				}
 				count ++;
 			}

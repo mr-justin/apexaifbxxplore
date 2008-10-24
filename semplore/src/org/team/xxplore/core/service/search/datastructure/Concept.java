@@ -33,11 +33,10 @@ public class Concept extends Facet {
 				label = label.substring(0, pos);
 			} else if (label.startsWith("wikicategory ")) {
 				label = label.substring(13);
-			}
-		}
-		if (uri.indexOf("wn20/schema")>0) {
+			} else 	if (uri.indexOf("wn20/schema")>0) {
 				int pos = label.lastIndexOf(" ");
 				if (pos > 0) label = label.substring(0, pos); 
+			}
 		}
 		this.label = label;
 	}
