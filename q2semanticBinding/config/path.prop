@@ -1,0 +1,9 @@
+//for keywordindex building
+root:\\\\192.168.3.20/semplore
+domain:wordnet
+source:D:/semplore/wordnet.nt
+//for q2semantic service
+summaryObjsRoot:summaryObjsRoot
+schemaObjsRoot:schemaObjsRoot
+keywordIndexRoot:keywordIndexRoot
+mappingIndexRoot:mappingIndex
