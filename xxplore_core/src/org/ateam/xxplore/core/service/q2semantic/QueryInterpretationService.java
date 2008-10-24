@@ -577,7 +577,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						nextCursor = new Cursor(source, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
 								// need to multiply with coverage
-								source.getTotalScore());
+								source.getTotalScore() + c.getCost());
 						// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
 					}
 					else {
@@ -601,7 +601,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 						nextCursor = new Cursor(target, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
 								// need to multiply with coverage
-								target.getTotalScore());
+								target.getTotalScore() + c.getCost());
 					}
 					else {
 						nextCursor = new Cursor(target, c.getMatchingElement(),
