@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
 import org.team.xxplore.core.service.search.datastructure.ArraySnippet;
 import org.team.xxplore.core.service.search.datastructure.Attribute;
 import org.team.xxplore.core.service.search.datastructure.Concept;
@@ -33,6 +34,7 @@ import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
 import com.ibm.semplore.btc.impl.GraphImpl;
+import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 import com.ibm.semplore.config.Config;
 import com.ibm.semplore.imports.impl.data.load.Util4NT;
 import com.ibm.semplore.model.CompoundCategory;
@@ -45,6 +47,8 @@ import com.ibm.semplore.xir.DocStream;
 import flex.messaging.FlexContext;
 
 public class SearchSessionService {
+	static Logger logger = Logger.getLogger(SearchSessionService.class);
+
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
 	 * the best source and respecting the number of result items per page. This ResultPage object
@@ -666,7 +670,7 @@ public class SearchSessionService {
 			String snippet_str = eval.getArraySnippet(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 			SemplorePool.release(id);
 			
-			ArraySnippet as = this.getSnippet(resultItemURL, snippet_str);
+			ArraySnippet as = this.getSnippet(currentResult.getCurrentDataSource(), resultItemURL, snippet_str);
 			return as;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -675,13 +679,14 @@ public class SearchSessionService {
 		return null;
 	}
 	
-	private ArraySnippet getSnippet(String resultItemURL, String snippet_str) {
+	private ArraySnippet getSnippet(String dataSource, String resultItemURL, String snippet_str) {
 		ResultItem item = new ResultItem();
 		item.setURL(resultItemURL);
 		LinkedList<Couple> rel = new LinkedList<Couple>();
 		LinkedList<Couple> attr = new LinkedList<Couple>();
 		LinkedList<Concept> cat = new LinkedList<Concept>();
 		String[] labels = new String[3];
+		int count = 0;
 		
 		if (snippet_str != null) {
 			StringTokenizer tok = new StringTokenizer(snippet_str,"\n");
@@ -701,8 +706,10 @@ public class SearchSessionService {
 				} else if (type==Util4NT.ATTRIBUTE) {
 					attr.add(new Couple(new Attribute(labels[1],processed[1],null), new Litteral(processed[2],null,null)));
 				}
+				count ++;
 			}
 		}
+		logger.info(String.format("getArraySnippet [%s]%s : %d", dataSource, resultItemURL, count));
 		return new ArraySnippet(item, rel, attr, cat);
 	}
 	

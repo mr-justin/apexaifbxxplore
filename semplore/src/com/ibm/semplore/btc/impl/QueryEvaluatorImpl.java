@@ -344,6 +344,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 					continue;
 				}
 			}
+		logger.info(String.format("getSeeAlso [%s]%s : %d", dataSource, URI, arr.size()));
 		return arr;
 	}
 	
