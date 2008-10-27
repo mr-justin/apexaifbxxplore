@@ -15,6 +15,8 @@ import org.jgrapht.graph.Pseudograph;
 
 public class GraphAdapterFactory {
 	public HashMap<String,SummaryPart> summaryGraph_HM;
+	public HashMap<String,Pseudograph<SummaryGraphElement, SummaryGraphEdge>> summaryobj_HM = 
+		new HashMap<String, Pseudograph<SummaryGraphElement,SummaryGraphEdge>>();
 	private HashMap<MappingCell, Set<MappingCell>> mapping_HM;
 	public Set<String> conceptMappings;
 	private ArrayList<Mapping> mappings;
@@ -22,6 +24,10 @@ public class GraphAdapterFactory {
 	
 	public ArrayList<Mapping> getMappings() {
 		return mappings;
+	}
+	
+	public Pseudograph<SummaryGraphElement,SummaryGraphEdge> getObj(String key) {
+		return summaryobj_HM.get(key);
 	}
 	
 	public GraphAdapterFactory(Set<String> keys, MappingIndexService index) {
@@ -63,6 +69,7 @@ public class GraphAdapterFactory {
 				ObjectInputStream obj_input = new ObjectInputStream(new FileInputStream(dsDFileName));
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph_obj = 
 					(Pseudograph<SummaryGraphElement, SummaryGraphEdge>)obj_input.readObject();
+				summaryobj_HM.put(ds, graph_obj);
 				summaryGraph_HM.put(ds, new SummaryPart(graph_obj));
 				
 				for(SummaryGraphElement ele : graph_obj.vertexSet()) {
