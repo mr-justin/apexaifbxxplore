@@ -429,9 +429,18 @@ public class SearchSessionService {
 					FlexContext.getFlexSession().setAttribute("resultHistory", resultHistory);
 					return ret;
 				} else {
+					Graph graph = new GraphImpl();
+					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
+					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
+					graph.addIEdges(new Edge(0, 1, null));
+					graph.setTargetVariable(1);
+					graph.setDataSource(1, c.getSource().getName());
+					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
+					helper.put(0, currentResult.getResultStream());
+	
 					int id = SemplorePool.acquire();
 					QueryEvaluator eval = SemplorePool.getEvaluator(id);
-					XFacetedResultSetForMultiDataSources newResult = eval.evaluate(currentGraph);
+					XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
 					SemplorePool.release(id);
 					
 					ResultPage ret = transform(newResult, 1, nbResultsPerPage);
