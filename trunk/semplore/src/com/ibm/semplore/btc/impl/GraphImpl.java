@@ -153,4 +153,11 @@ public class GraphImpl implements Graph {
 		}
 		return str;
 	}
+
+
+	@Override
+	public int removeIEdge(Edge edge, int nodeIndex) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 }
