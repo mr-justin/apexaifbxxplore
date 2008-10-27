@@ -11,6 +11,7 @@ package com.ibm.semplore.model.impl;
 import java.util.HashSet;
 import java.util.Iterator;
 
+import com.ibm.semplore.model.Category;
 import com.ibm.semplore.model.CompoundCategory;
 import com.ibm.semplore.model.GeneralCategory;
 
@@ -44,7 +45,8 @@ public class CompoundCategoryImpl implements CompoundCategory
      */
     public CompoundCategory addComponentCategory(GeneralCategory cat)
     {
-        components.add(cat);
+    	if (cat instanceof Category && !((Category)cat).isUniversal())
+    		components.add(cat);
         return this;
     }
 

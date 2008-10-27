@@ -73,6 +73,8 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	//visited subgraphs' IDs
 	private HashSet<Integer> visited;
 	private int thisSearchID;
+	private boolean relax;
+	
 	static private File mappingIndex;
 	static private boolean configed = false;
 
@@ -87,7 +89,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		return evaluate(planner, null);
 	}
 
-	protected XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner, HashMap<NodeInSubGraph, DocStream> startCache) throws Exception {
+	private void traverseInit(QueryPlanner planner, HashMap<NodeInSubGraph, DocStream> startCache) {
 		result = new HashMap<SubGraph, HashMap<Integer, DocStream>>();
 		if (startCache!=null) {
 			for (Entry<NodeInSubGraph, DocStream> i: startCache.entrySet()) {
@@ -104,7 +106,15 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		}
 		visited = new HashSet<Integer>();
 		targetResult = null;
+	}
+	protected XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner, HashMap<NodeInSubGraph, DocStream> startCache) throws Exception {
+		traverseInit(planner, startCache);
+		relax = false;
 		planner.startTraverse(new PreVisit(), new PostVisit());
+		if (relax) {
+			traverseInit(planner, startCache);
+			planner.startTraverse(new PreVisit(), new PostVisit());
+		}
 		return new XFacetedResultSetForMultiDataSourcesImpl(targetDataSource, null, targetResult);
 	}
 
@@ -166,14 +176,15 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 				if (parent==null) {
 					//need facet if isRoot
 					targetDataSource = g.getDataSource();
-					XFacetedQuery q = converter.convertQuery(g);
+					XFacetedQuery q = converter.convertQuery(g, relax);
 					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
+					relax = targetResult.getLength() == 0;
 					logger.debug(String.format("%s: %d+%d ms", q.getQueryConstraint().toString(), targetResult.getResultTime(), targetResult.getFacetTime()));
 					logger.info("search "+thisSearchID+ " complete: " + targetResult.getLength() + " results");
 				}
 				else {
-					XFacetedQuery q = converter.convertQuery(g);
+					XFacetedQuery q = converter.convertQuery(g, relax);
 					long time = System.currentTimeMillis();
 					DocStream ans = searcher.evaluate(q, helper); 
 					logger.debug(String.format("%s: %dms => %d", q.getQueryConstraint().toString(), System.currentTimeMillis()-time, ans.getLen()));

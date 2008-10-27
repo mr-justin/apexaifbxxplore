@@ -85,17 +85,18 @@ public class CatRelGraphImpl implements CatRelGraph
     }
 
     public String toString() {
-        StringBuffer res = new StringBuffer();
+        StringBuffer res = new StringBuffer("\n");
         for (int i=0; i<catArray.size(); i++) {
             GeneralCategory cat = catArray.get(i);
-            res.append(cat.toString());
-            res.append(":");
+            res.append(String.format("Node %d: %s\n", i, cat.toString()));
+        }
+        for (int i=0; i<catArray.size(); i++) {
             Iterator it = getEdges(i);
             while (it.hasNext()) {
                 Edge ed = (Edge)it.next();
-                res.append(ed.toString());
+                if (Math.min(ed.getFromNode(), ed.getToNode())<i) continue;
+                res.append(String.format("Edge %d->%d: %s\n", ed.getFromNode(), ed.getToNode(), ed.toString()));
             }
-            res.append("\n");
         }
         return res.toString();
     }
