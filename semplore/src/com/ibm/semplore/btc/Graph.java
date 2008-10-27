@@ -65,10 +65,18 @@ public interface Graph extends CatRelGraph {
 	public String getDataSource(int nodeIndex);
 
 	/**
-     * Remove a relation, given a end node's index, return the other node's index.
+     * Remove a relation, given an end node's index, return the other node's index.
      * @param rel
      * @param nodeIndex
      * @return
      */
     public int removeRelation(Relation rel, int nodeIndex);
+    
+    /**
+     * Remove an IEdge, given an end node's index, return the other node's index.
+     * @param edge
+     * @param nodeIndex
+     * @return
+     */
+    public int removeIEdge(Edge edge, int nodeIndex);
 }

@@ -111,6 +111,7 @@ public class CatRelGraphImpl implements CatRelGraph
 			nodeIndex2 = edge.getFromNode();		
 		rels.remove(edge);
 		this.edgeHash.get(nodeIndex2).remove(edge);
+		// TODO remove the node of nodeIndex
 		return nodeIndex2;
 	}
 }
