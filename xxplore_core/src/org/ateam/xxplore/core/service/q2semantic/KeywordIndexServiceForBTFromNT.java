@@ -432,7 +432,7 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param prune
 	 * @return
 	 */
-	public Map<String,Collection<SummaryGraphElement>> searchKb(String query, double prune){
+	public Map<String,Collection<SummaryGraphElement>> searchKb(int type,String query, double prune){
 		Map<String,Collection<SummaryGraphElement>> ress = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			if (m_searcher ==null){
@@ -445,13 +445,13 @@ public class KeywordIndexServiceForBTFromNT{
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
 					System.out.println("aaa:" + clauseQ.toString());
-					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
+					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(type,clauseQ, prune);
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
 			}
 			//is a phrase or term query 
 			else{
-				ress = searchWithClause(q, prune);
+				ress = searchWithClause(type,q, prune);
 			}
 
 		} catch (IOException e) {
@@ -467,7 +467,7 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param prune
 	 * @return
 	 */
-	private Map<String,Collection<SummaryGraphElement>> searchWithClause(Query clausequery, double prune){
+	private Map<String,Collection<SummaryGraphElement>> searchWithClause(int ele_type,Query clausequery, double prune){
 		Map<String,Collection<SummaryGraphElement>> result = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			Hits hits = m_searcher.search(clausequery);
@@ -484,16 +484,36 @@ public class KeywordIndexServiceForBTFromNT{
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 
 				result.put(clausequery.toString("label"), res);
-				int max = 5;
-				for(int i = 0; i < Math.min(hits.length(),max); i++){
+				int count = 0;
+				for(int i = 0; i < hits.length(); i++){
 					
 					Document doc = hits.doc(i);
 					float score = hits.score(i);
-					int count = 0;
 					
 					if(score >= prune){
 
 						String type = doc.get(TYPE_FIELD);
+						if(ele_type == SummaryGraphElement.VALUE) {
+							if(!type.equals(LITERAL)) continue;
+						}
+						else if(ele_type == SummaryGraphElement.ATTRIBUTE) {
+							if(!type.equals(DATAPROPERTY)) {
+								continue;
+							}
+						}
+						else if(ele_type == SummaryGraphElement.CONCEPT) {
+							if(!type.equals(CONCEPT)) {
+								continue;
+							}
+						}
+						else if(ele_type == SummaryGraphElement.RELATION) {
+							if(!type.equals(OBJECTPROPERTY)) {
+								continue;
+							}
+						}
+						System.out.println("ele_type:" + ele_type + " type" + type);
+						count ++;
+						if(count  > 5 ) break;
 //						System.out.println(type);
 						if(type != null && type.equals(LITERAL)){
 //							if( !doc.get(LABEL_FIELD).toLowerCase().equals(
@@ -611,6 +631,8 @@ public class KeywordIndexServiceForBTFromNT{
 					}
 					else break;
 				}
+				
+				System.out.println("out count:" + count);
 			}
 		}
 
