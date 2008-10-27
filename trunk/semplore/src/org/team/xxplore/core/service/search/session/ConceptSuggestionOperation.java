@@ -5,13 +5,13 @@ import org.team.xxplore.core.service.search.datastructure.ConceptSuggestion;
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.model.Category;
 import com.ibm.semplore.model.CompoundCategory;
+import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 
 public class ConceptSuggestionOperation implements SuggestionOperation {
 
 	private ConceptSuggestion conceptSuggestion;
-	private String originalSource;
+	private Edge iedge;
 	
 	public ConceptSuggestionOperation(ConceptSuggestion cs) {
 		conceptSuggestion = cs;
@@ -20,12 +20,15 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 	@Override
 	public Graph applyTo(Graph graph) {
 		try {
-			int target = graph.getTargetVariable();
-			originalSource = graph.getDataSource(target);
+			int originalTarget = graph.getTargetVariable();
+			String originalSource = graph.getDataSource(originalTarget);
+			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
 			Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
-			CompoundCategory cc = (CompoundCategory)graph.getNode(target);
 			cc.addComponentCategory(c);
-			graph.setDataSource(target, conceptSuggestion.getSource().getName());
+			graph.add(cc);
+			graph.setDataSource(graph.numOfNodes()-1, conceptSuggestion.getSource().getName());
+			iedge = new Edge(originalTarget, graph.numOfNodes()-1, null);
+			graph.addIEdges(iedge);
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -36,11 +39,8 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 	@Override
 	public Graph undo(Graph graph) {
 		try {
-			int target = graph.getTargetVariable();
-			Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
-			CompoundCategory cc = (CompoundCategory)graph.getNode(target);
-			cc.removeComponentCategory(c);
-			graph.setDataSource(target, originalSource);
+			int newTarget = graph.removeIEdge(iedge, graph.getTargetVariable());
+			graph.setTargetVariable(newTarget);
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
