@@ -21,7 +21,6 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 	public Graph applyTo(Graph graph) {
 		try {
 			int originalTarget = graph.getTargetVariable();
-			String originalSource = graph.getDataSource(originalTarget);
 			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
 			Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
 			cc.addComponentCategory(c);
