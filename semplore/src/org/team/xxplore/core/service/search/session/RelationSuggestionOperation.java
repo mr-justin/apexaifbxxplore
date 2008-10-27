@@ -3,13 +3,15 @@ package org.team.xxplore.core.service.search.session;
 import org.team.xxplore.core.service.search.datastructure.RelationSuggestion;
 
 import com.ibm.semplore.btc.Graph;
+import com.ibm.semplore.model.Category;
+import com.ibm.semplore.model.CompoundCategory;
+import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ibm.semplore.util.Md5_BloomFilter_64bit;
 
 public class RelationSuggestionOperation implements SuggestionOperation {
 
 	private RelationSuggestion relationSuggestion;
-	private String originalSource;
+	private Edge iedge;
 	
 	public RelationSuggestionOperation(RelationSuggestion rs) {
 		relationSuggestion = rs;
@@ -19,12 +21,19 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 	public Graph applyTo(Graph graph) {
 		try {
 			int target = graph.getTargetVariable();
-			originalSource = graph.getDataSource(target);
-			graph.add(SchemaFactoryImpl.getInstance().createCompoundCategory(1));	// AND
-			graph.add(SchemaFactoryImpl.getInstance().createRelation((relationSuggestion.getURI())), 
-					target, graph.numOfNodes()-1);
-			graph.setTargetVariable(graph.numOfNodes()-1);
+			Category c = SchemaFactoryImpl.getInstance().createUniversalCategory();
+			graph.add(c);
 			graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
+			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
+			Category c1 = SchemaFactoryImpl.getInstance().createUniversalCategory();
+			cc.addComponentCategory(c1);
+			graph.add(cc);
+			graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
+			iedge = new Edge(target, graph.numOfNodes()-2, null);
+			graph.addIEdges(iedge);
+			graph.add(SchemaFactoryImpl.getInstance().createRelation((relationSuggestion.getURI())), 
+					graph.numOfNodes()-2, graph.numOfNodes()-1);
+			graph.setTargetVariable(graph.numOfNodes()-1);
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -35,11 +44,11 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 	@Override
 	public Graph undo(Graph graph) {
 		try {
-			int newTarget = graph.removeRelation(SchemaFactoryImpl.getInstance().
+			int nodeIdx = graph.removeRelation(SchemaFactoryImpl.getInstance().
 					createRelation((relationSuggestion.getURI())),
 					graph.getTargetVariable());
+			int newTarget = graph.removeIEdge(iedge, nodeIdx);
 			graph.setTargetVariable(newTarget);
-			graph.setDataSource(newTarget, originalSource);
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
