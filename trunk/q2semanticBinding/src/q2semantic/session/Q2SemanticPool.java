@@ -5,7 +5,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import org.ateam.xxplore.core.service.q2semantic.SearchQ2SemanticService;
 
 public class Q2SemanticPool {
-	public static int q2semantic_num = 1;
+	public static int q2semantic_num = 3;
 	public static SearchQ2SemanticService pool [] = new SearchQ2SemanticService[q2semantic_num];
 	public static ReentrantLock [] locks = new ReentrantLock[q2semantic_num];
 	public static Semaphore sem = new Semaphore(q2semantic_num);
@@ -20,6 +20,10 @@ public class Q2SemanticPool {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	public static SearchQ2SemanticService getService(int i) {
+		return pool[i];
 	}
 	
 	public static SearchQ2SemanticService getEvaluator(int i) {
