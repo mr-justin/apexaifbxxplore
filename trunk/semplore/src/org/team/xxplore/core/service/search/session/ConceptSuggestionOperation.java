@@ -20,14 +20,16 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 	@Override
 	public Graph applyTo(Graph graph) {
 		try {
-			int originalTarget = graph.getTargetVariable();
-			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
-			Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
-			cc.addComponentCategory(c);
-			graph.add(cc);
-			graph.setDataSource(graph.numOfNodes()-1, conceptSuggestion.getSource().getName());
-			iedge = new Edge(originalTarget, graph.numOfNodes()-1, null);
-			graph.addIEdges(iedge);
+			if (!graph.getDataSource(graph.getTargetVariable()).equals(conceptSuggestion.getSource().getName())) {
+				int originalTarget = graph.getTargetVariable();
+				CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
+				Category c = SchemaFactoryImpl.getInstance().createCategory((conceptSuggestion.getURI()));
+				cc.addComponentCategory(c);
+				graph.add(cc);
+				graph.setDataSource(graph.numOfNodes()-1, conceptSuggestion.getSource().getName());
+				iedge = new Edge(originalTarget, graph.numOfNodes()-1, null);
+				graph.addIEdges(iedge);
+			}
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
