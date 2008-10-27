@@ -484,31 +484,19 @@ public class SearchSessionService {
 					Graph graph = new GraphImpl();
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
+					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//2
 					graph.addIEdges(new Edge(0, 1, null));
-					graph.setTargetVariable(1);
+					graph.add(SchemaFactoryImpl.getInstance().createRelation(r.getURI()), 1, 2);
+					graph.setTargetVariable(2);
 					graph.setDataSource(0, currentDataSource);
 					graph.setDataSource(1, r.getSource().getName());
+					graph.setDataSource(2, r.getSource().getName());
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 					helper.put(0, currentResult.getResultStream());
 	
 					int id = SemplorePool.acquire();
 					QueryEvaluator eval = SemplorePool.getEvaluator(id);
 					XFacetedResultSetForMultiDataSources newResult = eval.evaluate(graph, helper);
-					SemplorePool.release(id);
-					
-					Graph graph1 = new GraphImpl();
-					graph1.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
-					graph1.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
-					graph1.add(SchemaFactoryImpl.getInstance().createRelation(r.getURI()), 0, 1);
-					graph1.setTargetVariable(1);
-					graph1.setDataSource(0, r.getSource().getName());
-					graph1.setDataSource(1, r.getSource().getName());
-					helper = new HashMap<Integer,DocStream>();
-					helper.put(0, newResult.getResultStream());
-
-					id = SemplorePool.acquire();
-					eval = SemplorePool.getEvaluator(id);
-					newResult = eval.evaluate(currentGraph);
 					SemplorePool.release(id);
 					
 					ResultPage ret = transform(newResult, 1, nbResultsPerPage);
