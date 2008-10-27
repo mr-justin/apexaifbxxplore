@@ -298,7 +298,7 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 
 		// facets
 		ResultSetImpl_TopDocs catResult = new ResultSetImpl_TopDocs(catStream,
-				insIndexReader,10);
+				insIndexReader,10,false);
 		/**
 		 * ************************combine relation and inverse relation
 		 * facets*********************
@@ -306,10 +306,10 @@ public class XFacetedSearchableImpl extends SearchableImpl implements
 		ResultSetImpl_TopDocs rel_objResult=null;
 		if (needInverseRelationFacets) {
 			rel_objResult = new ResultSetImpl_TopDocs(
-				rel_objStream, insIndexReader,10);
+				rel_objStream, insIndexReader,10,false);
 		}
 		ResultSetImpl_TopDocs rel_sbjResult = new ResultSetImpl_TopDocs(
-				rel_subStream, insIndexReader,10);
+				rel_subStream, insIndexReader,10,false);
 		
 		time_end = System.currentTimeMillis();
 		if (debugTime) logger.debug("5 sort facet streams " + (time_end - time_begin)

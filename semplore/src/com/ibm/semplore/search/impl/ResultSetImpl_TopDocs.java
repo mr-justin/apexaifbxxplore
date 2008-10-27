@@ -21,6 +21,8 @@ import com.ibm.semplore.xir.IndexReader;
 
 public class ResultSetImpl_TopDocs implements ResultSet {
 
+	protected boolean normalize = true;
+	
 	protected String keyword = null;
 	
 	protected SchemaFactory schemaFactory = SchemaFactoryImpl.getInstance();
@@ -35,11 +37,12 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 
 	protected ResultSetImpl_TopDocs(DocStream resultStream,
 			IndexReader indexReader) throws Exception {
-		this(resultStream, indexReader, 50);
+		this(resultStream, indexReader, 50, true);
 	}
 
 	protected ResultSetImpl_TopDocs(DocStream resultStream,
-			IndexReader indexReader, int topCount) throws Exception {
+			IndexReader indexReader, int topCount, boolean normalize) throws Exception {
+		this.normalize = normalize;
 		this.resultStream = resultStream;
 		this.indexReader = indexReader;
 		topcount = topCount;
@@ -90,7 +93,10 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 
 	public double getScore(int index) throws Exception {
 		getDocID(index);
-		return topDocs.scoreDocs[index].score / topDocs.scoreDocs[0].score;
+		if (normalize)
+			return topDocs.scoreDocs[index].score / topDocs.scoreDocs[0].score;
+		else 
+			return topDocs.scoreDocs[index].score;
 	}
 
 	public String getSnippet(int index) throws Exception {
