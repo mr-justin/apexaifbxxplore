@@ -20,20 +20,22 @@ public class RelationSuggestionOperation implements SuggestionOperation {
 	@Override
 	public Graph applyTo(Graph graph) {
 		try {
-			int target = graph.getTargetVariable();
-			Category c = SchemaFactoryImpl.getInstance().createUniversalCategory();
-			graph.add(c);
-			graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
-			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
-			Category c1 = SchemaFactoryImpl.getInstance().createUniversalCategory();
-			cc.addComponentCategory(c1);
-			graph.add(cc);
-			graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
-			iedge = new Edge(target, graph.numOfNodes()-2, null);
-			graph.addIEdges(iedge);
-			graph.add(SchemaFactoryImpl.getInstance().createRelation((relationSuggestion.getURI())), 
-					graph.numOfNodes()-2, graph.numOfNodes()-1);
-			graph.setTargetVariable(graph.numOfNodes()-1);
+			if (!graph.getDataSource(graph.getTargetVariable()).equals(relationSuggestion.getSource().getName())) {
+				int target = graph.getTargetVariable();
+				Category c = SchemaFactoryImpl.getInstance().createUniversalCategory();
+				graph.add(c);
+				graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
+				CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	//AND
+				Category c1 = SchemaFactoryImpl.getInstance().createUniversalCategory();
+				cc.addComponentCategory(c1);
+				graph.add(cc);
+				graph.setDataSource(graph.numOfNodes()-1, relationSuggestion.getSource().getName());
+				iedge = new Edge(target, graph.numOfNodes()-2, null);
+				graph.addIEdges(iedge);
+				graph.add(SchemaFactoryImpl.getInstance().createRelation((relationSuggestion.getURI())), 
+						graph.numOfNodes()-2, graph.numOfNodes()-1);
+				graph.setTargetVariable(graph.numOfNodes()-1);
+			}
 			return graph;
 		} catch (Exception e) {
 			e.printStackTrace();
