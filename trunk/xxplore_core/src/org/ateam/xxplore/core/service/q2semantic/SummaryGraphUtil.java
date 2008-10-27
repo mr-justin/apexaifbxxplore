@@ -5,7 +5,7 @@ import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.model.impl.Property;
 
 public class SummaryGraphUtil {
-	public static String[] stopWords = {"Property-3A"};
+	public static String[] stopWords = {"Property-3A","Category-3A"};
 	
 	public static String getResourceUri(SummaryGraphElement ele) {
 		if(ele.getType() == SummaryGraphElement.CONCEPT) {
