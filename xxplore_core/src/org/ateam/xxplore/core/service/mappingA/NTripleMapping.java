@@ -7,12 +7,17 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
+import java.io.Reader;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Properties;
 import java.util.Set;
 import java.util.Map.Entry;
 import java.util.zip.GZIPInputStream;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 import com.ice.tar.TarInputStream;
 
@@ -21,11 +26,14 @@ import com.ice.tar.TarInputStream;
  * @author jqchen
  *
  */
-public class NTripleMapping {	
+public class NTripleMapping {
 	
-	private String inputFile1 = "\\\\Poseidon\\team\\Semantic Search\\BillionTripleData\\dbpedia-v3.nt.tar.gz";
-	private String inputFile2 = "\\\\Poseidon\\team\\Semantic Search\\BillionTripleData\\swetodblp_noblank.gz";
-	private String inputFile3 = "\\\\poseidon\\Team\\Semantic Search\\BillionTripleData\\yago_typeOf.nt";
+	static Logger logger = Logger.getLogger(NTripleMapping.class);
+	
+	private String root_path;
+	private String ntfile_path;
+	private String tempfile_path;
+	private String result_path;
 	
 	private HashSet<String> sprep = null;
 	
@@ -193,7 +201,7 @@ public class NTripleMapping {
 		String line;
 		while ((line = br.readLine()) != null) {
 			count++;
-			if(count % 1000 == 0) System.out.println(inputFile2 + " " + count);
+			if(count % 1000 == 0) System.out.println(gzipFile + " " + count);
 			Statement stmt = getStmt(line);
 			if (stmt == null)
 				continue;
@@ -288,6 +296,9 @@ public class NTripleMapping {
 	}
 	
 	public void output(HashMap<String,String> hm,String filename) throws IOException {
+		File file = new File(filename);
+		if( !file.exists() ) file.createNewFile();
+		
 		PrintWriter pw = new PrintWriter(filename);
 		Set<Entry<String, String>> es = hm.entrySet();
 		for(Entry<String,String> en : es) {
@@ -329,36 +340,36 @@ public class NTripleMapping {
 		return line.substring(pos,pos2+1);
 	}
 	
-	public void getConcept(HashMap<String,String> concepts) throws IOException {
-		BufferedReader br = new BufferedReader(new FileReader(inputFile3));
-		String line;
-		int count = 0;
-		while( (line = br.readLine()) != null) {
-			count ++;
-			if(count % 1000 == 0) System.out.println(inputFile3 + " " + count);
-			String tokens [] = line.split("\t");
-			if(tokens.length >= 3) {
-				String tmp = tokens[2];
-				tmp = tmp.substring(1,tmp.length());
-				int pos = tmp.indexOf("_");
-				
-				//If the token is begin with word
-				if(tmp.toLowerCase().startsWith("wordnet")) {
-					int pos2 = tmp.lastIndexOf("_");
-					tmp = tmp.substring(pos + 1,pos2);
-				}
-				else {
-					tmp = tmp.substring(pos + 1,tmp.length());
-				}
-				tmp = this.trim(tmp,'_');
-				tmp = Stemmer.stemWord(tmp);
-				concepts.put(tmp, tokens[2]);
-				
-			}
-		}
-		br.close();
-		
-	}	
+//	public void getConcept(HashMap<String,String> concepts) throws IOException {
+//		BufferedReader br = new BufferedReader(new FileReader(inputFile3));
+//		String line;
+//		int count = 0;
+//		while( (line = br.readLine()) != null) {
+//			count ++;
+//			if(count % 1000 == 0) System.out.println(inputFile3 + " " + count);
+//			String tokens [] = line.split("\t");
+//			if(tokens.length >= 3) {
+//				String tmp = tokens[2];
+//				tmp = tmp.substring(1,tmp.length());
+//				int pos = tmp.indexOf("_");
+//				
+//				//If the token is begin with word
+//				if(tmp.toLowerCase().startsWith("wordnet")) {
+//					int pos2 = tmp.lastIndexOf("_");
+//					tmp = tmp.substring(pos + 1,pos2);
+//				}
+//				else {
+//					tmp = tmp.substring(pos + 1,tmp.length());
+//				}
+//				tmp = this.trim(tmp,'_');
+//				tmp = Stemmer.stemWord(tmp);
+//				concepts.put(tmp, tokens[2]);
+//				
+//			}
+//		}
+//		br.close();
+//		
+//	}	
 	
 	public void handleToken(String node,HashMap<String,String> concepts,HashMap<String,String> properties) {
 		String prefix_property = "<http://www.freebase.com/property/";
@@ -404,57 +415,112 @@ public class NTripleMapping {
 		return hs;
 	}
 	
-	public static void main(String args[]) throws IOException {
-		NTripleMapping t = new NTripleMapping();
-		t.mappingAll();
-	}
+//	/*
+//	 * the list of dataset which is need to mapping.
+//	 */
+//	private String [][] dataset = new String [][] {
+//			{ "dbpedia","freebase" },
+//			{ "dbpedia","dblp" },
+//			{ "dbpedia","geonames" },
+//			{ "dbpedia","uscensus" },
+//			{ "freebase","dblp" },
+//			{ "freebase","geonames" },
+//			{ "freebase","uscensus" },
+//			{ "dblp","geonames" },
+//			{ "dblp","uscensus" },
+//			{ "geonames","uscensus" },
+//			
+//	};
 	
-	/*
-	 * the list of dataset which is need to mapping.
-	 */
-	private String [][] dataset = new String [][] {
-			{ "dbpedia","freebase" },
-			{ "dbpedia","dblp" },
-			{ "dbpedia","geonames" },
-			{ "dbpedia","uscensus" },
-			{ "freebase","dblp" },
-			{ "freebase","geonames" },
-			{ "freebase","uscensus" },
-			{ "dblp","geonames" },
-			{ "dblp","uscensus" },
-			{ "geonames","uscensus" },
-			
-	};
+//	/**
+//	 * 
+//	 * @param data1 - The first concept or attribute or relation file path.
+//	 * @param data2 - The second concept or attribute or relation file path.
+//	 * @throws IOException
+//	 * 
+//	 */
+//	private void mappingTwo(String data1,String data2) throws IOException {
+//		String filetype [] = new String[] { "concept","attribute","relation" };
+//		
+////		for(int i=0;i<filetype.length;i++) {
+////			File t = new File("d:/");
+////			String outputFile = path + data1 + "_" + data2 + "_" + filetype[i];
+////			HashMap<String,String> hm1 = readHashMap( "Triple/" + data1 + "/" + filetype[i]);
+////			HashMap<String,String> hm2 = readHashMap( "Triple/" + data2 + "/" + filetype[i]);
+////			this.mapping(hm1, hm2, outputFile);
+////		}		
+//	}
 	
-	/**
-	 * 
-	 * @param data1 - The first concept or attribute or relation file path.
-	 * @param data2 - The second concept or attribute or relation file path.
-	 * @throws IOException
-	 * 
-	 */
-	private void mappingTwo(String data1,String data2) throws IOException {
-		String filetype [] = new String[] { "concept","attribute","relation" };
-		
-		for(int i=0;i<filetype.length;i++) {
-			String path = "Triple2/" + data1 + "_" + data2 + "/";
-			File t = new File(path);
-			t.mkdir();
-			String outputFile = path + data1 + "_" + data2 + "_" + filetype[i];
-			HashMap<String,String> hm1 = readHashMap( "Triple/" + data1 + "/" + filetype[i]);
-			HashMap<String,String> hm2 = readHashMap( "Triple/" + data2 + "/" + filetype[i]);
-			this.mapping(hm1, hm2, outputFile);
-		}		
-	}
 	
-	/**
-	 * @throws IOException
-	 */
-	public void mappingAll() throws IOException {
-		for(int i=0;i<dataset.length;i++) {
-			System.out.println(dataset[i][0] + " " + dataset[i][1]);
-			this.mappingTwo(dataset[i][0],dataset[i][1]);
+	public void mapping_Two(String path1,String path2) {
+		logger.info("\nbegin mapping... \n" + path1 + "\n" + path2);
+		try {
+			String filetype[] = new String[] { "concept","attribute","relation"};
+			File t = new File(result_path + "/" + new File(path1).getName() + "_" + new File(path2).getName());
+			if(!t.exists()) {
+				t.mkdir();
+			}
+			for(int i=0;i<filetype.length;i++) {
+				String file1 = path1 + "/" + filetype[i];
+				String file2 = path2 + "/" + filetype[i];
+				HashMap<String,String> hm1 = readHashMap(file1);
+				HashMap<String,String> hm2 = readHashMap(file2);
+				
+				String outputfile = t.getAbsolutePath() + "/" +filetype[i] + "_mapping";
+				this.mapping(hm1, hm2, outputfile);
+			}
 		}
+		catch(Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+	
+//	/**
+//	 * @throws IOException
+//	 */
+//	public void mappingAll() throws IOException {
+//		for(int i=0;i<dataset.length;i++) {
+//			System.out.println(dataset[i][0] + " " + dataset[i][1]);
+//			this.mappingTwo(dataset[i][0],dataset[i][1]);
+//		}
+//	}
+	
+	public void mapping_All() {
+		File temproot = new File(this.tempfile_path);
+		File [] subdir = temproot.listFiles();
+		
+		for(int i=0;i<subdir.length;i++) {
+			for(int j=i+1;j<subdir.length;j++) {
+				File f1 = subdir[i];
+				File f2 = subdir[j];
+				this.mapping_Two(f1.getAbsolutePath(), f2.getAbsolutePath());
+			}
+		}
+	}
+	
+	public void run(String configfilepath) {
+		this.getProperty(configfilepath);
+		
+		File ntfileroot = new File(this.ntfile_path);
+		File filelist [] = ntfileroot.listFiles();
+		
+		File tmppath = new File(this.tempfile_path);
+		if(!tmppath.exists()) {
+			tmppath.mkdir();
+		}
+		
+		try {
+			for(int i=0;i<filelist.length;i++) {
+				this.getSchema(filelist[i]);
+			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		
+		this.mapping_All();
 	}
 	
 	/**
@@ -464,22 +530,48 @@ public class NTripleMapping {
 	 * This method used to read the triple file to find each concept , relation , attribute. And output them to 
 	 * three file.
 	 */
-	public void getSchema() throws IOException {
+	public void getSchema(File ntfile) throws IOException {
 		HashMap<String,String> concept = new HashMap<String,String>();
 		HashMap<String,String> relation = new HashMap<String,String>();
 		HashMap<String,String> attribute = new HashMap<String,String>();
-		
-		String ntfile ="\\\\poseidon\\Team\\Semantic Search\\BillionTripleData\\geonames.dump";
 				
-		this.scanDumpFile(ntfile, concept, relation, attribute);
+		this.scanDumpFile(ntfile.getAbsolutePath(), concept, relation, attribute);
 		
-		String f1 = "Triple/geonames/concept";
-		String f2 = "Triple/geonames/relation";
-		String f3 = "Triple/geonames/attribute";
+		File tmpfilePath = new File(tempfile_path + "/" + ntfile.getName());
+		if( !tmpfilePath.exists() ) {
+			tmpfilePath.mkdir();
+		}
 		
-		this.output(concept,f1);
-		this.output(relation,f2);
-		this.output(concept,f3);
+		String concept_file = tmpfilePath + "/concept";
+		String relation_file = tmpfilePath + "/relation";
+		String attribute_file = tmpfilePath + "/attribute";
 		
+		this.output(concept,concept_file);
+		this.output(relation,relation_file);
+		this.output(attribute,attribute_file);
+	}
+	
+	public void getProperty(String configfilepath) {
+		Properties properties = new Properties();
+		try {
+			properties.load(new FileReader(configfilepath));
+			root_path = properties.getProperty("root_path");
+			ntfile_path = root_path + "/" + properties.getProperty("ntfile_path");
+			tempfile_path = root_path + "/" + properties.getProperty("tempfile_path");
+			result_path = root_path + "/" + properties.getProperty("result_path");
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+	}
+	
+	public static void main(String[] args) throws IOException {
+		if(args.length != 1) {
+			System.out.println("Usage: Give the config file path");
+			System.exit(1);
+		}
+		PropertyConfigurator.configure("config/log4j.conf");
+		new NTripleMapping().run(args[0]);
 	}
 }
