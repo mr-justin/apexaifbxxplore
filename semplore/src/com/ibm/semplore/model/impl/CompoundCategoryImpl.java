@@ -45,7 +45,9 @@ public class CompoundCategoryImpl implements CompoundCategory
      */
     public CompoundCategory addComponentCategory(GeneralCategory cat)
     {
-    	if (!(cat instanceof Category) || !((Category)cat).isUniversal())
+    	//CompoundCategory and UniversalCategory has problem together
+    	//TODO TYPE_OR unresolved
+    	if (type != TYPE_AND || !(cat instanceof Category) || !((Category)cat).isUniversal())
     		components.add(cat);
         return this;
     }
