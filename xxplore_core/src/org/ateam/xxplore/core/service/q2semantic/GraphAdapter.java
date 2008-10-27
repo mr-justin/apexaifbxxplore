@@ -103,12 +103,11 @@ public class GraphAdapter {
 							SummaryGraphElement cvertex = summaryGraph_HM.get(
 									ele.getDatasource()).element_hm.get(con.getUri());
 							
-							System.out.println("\t\t" + SummaryGraphUtil.getResourceUri(cvertex));
 							if(cvertex == null) {
-								System.err.println("cvertex is null!");
-								System.exit(1);
+								continue;
 							}
 							
+							System.out.println("\t\t" + SummaryGraphUtil.getResourceUri(cvertex));
 							SummaryGraphEdge domain = new SummaryGraphEdge(
 									cvertex, pvertex,
 									SummaryGraphEdge.DOMAIN_EDGE);
