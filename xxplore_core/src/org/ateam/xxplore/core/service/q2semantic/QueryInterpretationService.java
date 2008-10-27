@@ -47,6 +47,7 @@ import org.xmedia.oms.query.OWLPredicate;
 import org.xmedia.oms.query.PropertyMemberPredicate;
 import org.xmedia.oms.query.Variable;
 
+import com.ice.tar.tar;
 import com.sun.org.apache.xml.internal.serializer.ElemDesc;
 
 public class QueryInterpretationService implements IQueryInterpretationService {
@@ -116,6 +117,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 	
 	public LinkedList<Subgraph> computeQueries(
+			Set<String> ds_used,
 			Map<String, Collection<SummaryGraphElement>> elements,
 			int distance, int k) {
 
@@ -126,7 +128,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		this.refreshFactory();
 		GraphAdapter iGraph = factory.createGraphAdapter(elements);
 
-		Collection<Subgraph> subgraphs = getTopKSubgraphs(iGraph,elements, distance, k);
+		Collection<Subgraph> subgraphs = getTopKSubgraphs(ds_used,iGraph,elements, distance, k);
 		
 		int count = 0;
 		for (Subgraph g : subgraphs) {
@@ -382,6 +384,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 
 	private Collection<Subgraph> getTopKSubgraphs(
+			Set<String> ds_used,
 			GraphAdapter iGraph,
 			Map<String, Collection<SummaryGraphElement>> elements,
 			int distance, int k) {
@@ -452,7 +455,7 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 				}
 				else {
 					Collection<Cursor> neighbors;
-					neighbors = getNonVisitedNeighbors(iGraph, e, c);
+					neighbors = getNonVisitedNeighbors(ds_used,iGraph, e, c);
 					// System.out.println(neighbors.size());
 					
 //					for(Cursor n : neighbors) {
@@ -559,61 +562,49 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 	}
 
 	private Collection<Cursor> getNonVisitedNeighbors(
+			Set<String> ds_used,
 			GraphAdapter iGraph,
 			SummaryGraphElement e, Cursor c) {// System.out.println(c.getLength());
 		Collection<Cursor> neighbors = new ArrayList<Cursor>();
-		// == chenjunquan ==
-		//if(e.getDatasource().equals("freebase")) System.out.println("freebase element!");
 		Collection<SummaryGraphEdge> ele_coll = null;
 		ele_coll = iGraph.neighborVertex(e);
 		
 		Cursor nextCursor = null;
 		for (SummaryGraphEdge edge : ele_coll) {
-			// incoming
 			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
-				//if (!c.hasVisited(edge)) {
-					if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+					if(ds_used.contains(source.getDatasource())) {
 						nextCursor = new Cursor(source, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								// need to multiply with coverage
 								source.getTotalScore() + c.getCost());
-						// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
+						neighbors.add(nextCursor);
 					}
-					else {
-						nextCursor = new Cursor(source, c.getMatchingElement(),
-								edge, c, c.getKeyword(),
-								// need to multiply with coverage
-								source.getTotalScore() + c.getCost());
-						// if(source.getTotalScore()==0&&source.getType()==0)System.out.println(((NamedConcept)source.getResource()).getUri());
-					}
+				}
+				else {
+					nextCursor = new Cursor(source, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							source.getTotalScore() + c.getCost());
 					neighbors.add(nextCursor);
-//				}
-				// else System.out.println("aaa");
+				}
 			}
-			// outgoing
 			else if (edge.getSource().equals(e)) {
-//				System.out.println(SummaryGraphUtil.getResourceUri(edge.getTarget())+"\t"+edge.getTarget().getTotalScore());
 				SummaryGraphElement target = edge.getTarget();
-				//if (!c.hasVisited(edge)) {
-
-					if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+					if(ds_used.contains(target.getDatasource())) {
 						nextCursor = new Cursor(target, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								// need to multiply with coverage
 								target.getTotalScore() + c.getCost());
+						neighbors.add(nextCursor);
 					}
-					else {
-						nextCursor = new Cursor(target, c.getMatchingElement(),
-								edge, c, c.getKeyword(),
-								// need to multiply with coverage
-								target.getTotalScore() + c.getCost());
-					}
-
+				}
+				else {
+					nextCursor = new Cursor(target, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							target.getTotalScore() + c.getCost());
 					neighbors.add(nextCursor);
-//				}
+				}
 			}
-
 		}
 
 		return neighbors;
