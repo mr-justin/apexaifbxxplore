@@ -434,7 +434,7 @@ public class SearchSessionService {
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
 					graph.addIEdges(new Edge(0, 1, null));
 					graph.setTargetVariable(1);
-					graph.setDataSource(0, c.getSource().getName());
+					graph.setDataSource(0, currentDataSource);
 					graph.setDataSource(1, c.getSource().getName());
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 					helper.put(0, currentResult.getResultStream());
@@ -486,6 +486,7 @@ public class SearchSessionService {
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
 					graph.addIEdges(new Edge(0, 1, null));
 					graph.setTargetVariable(1);
+					graph.setDataSource(0, currentDataSource);
 					graph.setDataSource(1, r.getSource().getName());
 					HashMap<Integer,DocStream> helper = new HashMap<Integer,DocStream>();
 					helper.put(0, currentResult.getResultStream());
