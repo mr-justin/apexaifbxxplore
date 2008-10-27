@@ -9,12 +9,12 @@ import java.util.Iterator;
 import com.ibm.semplore.btc.QueryConverter4Semplore;
 import com.ibm.semplore.btc.SubGraph;
 import com.ibm.semplore.model.CatRelGraph;
+import com.ibm.semplore.model.Category;
 import com.ibm.semplore.model.CompoundCategory;
 import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.GeneralCategory;
 import com.ibm.semplore.model.KeywordCategory;
 import com.ibm.semplore.model.SchemaFactory;
-import com.ibm.semplore.model.impl.CatRelGraphImpl;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
 import com.ibm.semplore.search.SearchFactory;
 import com.ibm.semplore.search.XFacetedQuery;
@@ -32,12 +32,18 @@ public class QueryConverter4SemploreImpl implements QueryConverter4Semplore {
 	 * @see com.ibm.semplore.btc.QueryConverter4Semplore#convertQuery(com.ibm.semplore.btc.SubGraph)
 	 */
 	@Override
-	public XFacetedQuery convertQuery(SubGraph graph) {
+	public XFacetedQuery convertQuery(SubGraph graph, boolean relax) {
 		// Convert KeywordCategory into AttributeKeywordCategory
 		// Assuming target node is not KeywordCategory!
 		HashMap<Integer, GeneralCategory> map = new HashMap<Integer, GeneralCategory>();
-		for (int i=0; i<graph.numOfNodes(); i++)
-			map.put(i, graph.getNode(i));
+		for (int i=0; i<graph.numOfNodes(); i++) {
+			GeneralCategory n = graph.getNode(i);
+			if (relax && n instanceof Category && !((Category)n).isUniversal())
+				map.put(i, schemaFactory.createUniversalCategory());
+			else
+				map.put(i, n);
+			
+		}
 		for (int i=0; i<graph.numOfNodes(); i++) {
 			Iterator<Edge> itr = graph.getEdges(i);
 			while (itr.hasNext()) {
@@ -50,7 +56,10 @@ public class QueryConverter4SemploreImpl implements QueryConverter4Semplore {
 					KeywordCategory to = (KeywordCategory) map.get(ton);
 					CompoundCategory newcat = schemaFactory.createCompoundCategory(CompoundCategory.TYPE_AND);
 					newcat.addComponentCategory(from);
-					newcat.addComponentCategory(schemaFactory.createAttributeKeywordCategory(e.getRelation().getURI(), to.getKeyword()));
+					if (relax)
+						newcat.addComponentCategory(schemaFactory.createKeywordCategory(to.getKeyword()));
+					else
+						newcat.addComponentCategory(schemaFactory.createAttributeKeywordCategory(e.getRelation().getURI(), to.getKeyword()));
 					map.put(fromn, newcat);
 				}
 			}
@@ -72,6 +81,10 @@ public class QueryConverter4SemploreImpl implements QueryConverter4Semplore {
 		query.setSearchTarget(graph.getTargetVariable());
 		query.setResultSpec(searchFactory.createXFacetedResultSpec());
 		return query;
+	}
+
+	protected XFacetedQuery convertQuery(SubGraph graph) {
+		return convertQuery(graph, false);
 	}
 
 }

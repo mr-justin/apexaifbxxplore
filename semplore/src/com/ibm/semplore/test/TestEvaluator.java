@@ -24,26 +24,27 @@ public class TestEvaluator {
 	public static void main(String[] args) throws Exception {
 		Graph graph = new GraphImpl();
 		//Concepts
-		graph.add(schemaFactory.createAttributeKeywordCategory("<http://xmlns.com/foaf/0.1/name>","Rudi Studer"));	//0
-		graph.add(schemaFactory.createCategory("<http://xmlns.com/foaf/0.1/Person>"));
-		graph.add(schemaFactory.createCategory("<http://semanticweb.org/id/Category-3ASemantic_Web_topic>"));
+		graph.add(schemaFactory.createUniversalCategory());
+		graph.add(schemaFactory.createKeywordCategory("Rudi Studer"));	//0
+		graph.add(schemaFactory.createCategory("<http://swrc.ontoware.org/ontology#FullProfesso>"));
+//		graph.add(schemaFactory.createCategory("<http://semanticweb.org/id/Category-3ASemantic_Web_topic>"));
 	
 		//Relations
 		graph.add(schemaFactory.createRelation((
-				"<http://semanticweb.org/id/Property-3AMaintains>")), 1, 2);
-//		graph.add(schemaFactory.createRelation((
-//		"<http://swrc.ontoware.org/ontology#publication>")), 4, 2);
+				"<http://swrc.ontoware.org/ontology#nam>")), 2, 1);
+		graph.add(schemaFactory.createRelation((
+		"<http://swrc.ontoware.org/ontology#publication>")), 2, 0);
 //		graph.add(schemaFactory.createRelation((
 //				"<http://swrc.ontoware.org/ontology#isWorkedOnBy>")), 3, 4);
 		
 		//IEdge
 //		graph.addIEdges(new Edge(1,0,null));
 		//target
-		graph.setTargetVariable(1);
+		graph.setTargetVariable(0);
 		//datasource
-		graph.setDataSource(0, "dblp");
-		graph.setDataSource(1, "semanticweb");
-		graph.setDataSource(2, "semanticweb");
+		graph.setDataSource(0, "swrc");
+		graph.setDataSource(1, "swrc");
+		graph.setDataSource(2, "swrc");
 		
 		long time = System.currentTimeMillis();
 		QueryEvaluator eval = new QueryEvaluatorImpl(new File(args[0])); //points to config/datasrc.cfg
