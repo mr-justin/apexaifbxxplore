@@ -90,7 +90,7 @@ public class ResultSetImpl_TopDocs implements ResultSet {
 
 	public double getScore(int index) throws Exception {
 		getDocID(index);
-		return topDocs.scoreDocs[index].score;
+		return topDocs.scoreDocs[index].score / topDocs.scoreDocs[0].score;
 	}
 
 	public String getSnippet(int index) throws Exception {

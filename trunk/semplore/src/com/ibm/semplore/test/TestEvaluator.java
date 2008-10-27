@@ -25,7 +25,7 @@ public class TestEvaluator {
 		Graph graph = new GraphImpl();
 		//Concepts
 		graph.add(schemaFactory.createUniversalCategory());
-		graph.add(schemaFactory.createKeywordCategory("Rudi Studer"));	//0
+		graph.add(schemaFactory.createKeywordCategory("frank"));	//0
 		graph.add(schemaFactory.createCategory("<http://swrc.ontoware.org/ontology#FullProfesso>"));
 //		graph.add(schemaFactory.createCategory("<http://semanticweb.org/id/Category-3ASemantic_Web_topic>"));
 	

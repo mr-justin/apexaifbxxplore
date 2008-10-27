@@ -43,8 +43,11 @@ public class Edge {
     public boolean equals(Object obj) {
         if (obj instanceof Edge) {
             Edge ed2 = (Edge)obj;
-            if (ed2.fromNode == this.fromNode && ed2.toNode == this.toNode && ed2.rel.equals(this.rel))
-                return true;
+            if (ed2.fromNode == this.fromNode && ed2.toNode == this.toNode) {
+            	if (ed2.rel == null) return this.rel == null;
+            	else if (this.rel == null) return false;
+            	else return ed2.rel.equals(this.rel);
+            }
             else
                 return false;
         } else 

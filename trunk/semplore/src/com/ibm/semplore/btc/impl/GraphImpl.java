@@ -66,6 +66,15 @@ public class GraphImpl implements Graph {
 		return this;
 	}
 
+	@Override
+	public int removeIEdge(Edge edge, int nodeIndex) {
+		iedges.get(edge.getFromNode()).remove(edge);
+		iedges.get(edge.getFromNode()).remove(edge.reverse());
+		iedges.get(edge.getToNode()).remove(edge);
+		iedges.get(edge.getToNode()).remove(edge.reverse());
+		return edge.getFromNode()+edge.getToNode()-nodeIndex;
+	}
+
 	/* (non-Javadoc)
 	 * @see com.ibm.semplore.btc.Graph#getIEdges(int)
 	 */
@@ -154,10 +163,4 @@ public class GraphImpl implements Graph {
 		return str;
 	}
 
-
-	@Override
-	public int removeIEdge(Edge edge, int nodeIndex) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 }
