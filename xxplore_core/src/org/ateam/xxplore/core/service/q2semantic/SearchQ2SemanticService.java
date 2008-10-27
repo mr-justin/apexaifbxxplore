@@ -51,6 +51,9 @@ public class SearchQ2SemanticService {
 	public String configFilePath;
 	public HashMap<String, String> key_database = new HashMap<String, String>();
 	
+	public Map<LinkedList<String>,LinkedList<QueryGraph>> cache = new HashMap<LinkedList<String>, LinkedList<QueryGraph>>();
+	public static final int cache_max_count = 1000;
+	
 	public SearchQ2SemanticService(){}
 	
 	public SearchQ2SemanticService(String fn) {
@@ -75,7 +78,7 @@ public class SearchQ2SemanticService {
 		List<String> con = new ArrayList<String>();
 		for(Concept c: concept)
 			con.add(c.getURI());
-		QueryInterpretationService inter = new QueryInterpretationService();
+		//QueryInterpretationService inter = new QueryInterpretationService();
 		MappingIndexService mis = new MappingIndexService();
 		mis.init4Search(mappingIndexRoot);
 		Set<String> sugg = inter.getSuggestion(con, ds, mis);
@@ -115,7 +118,19 @@ public class SearchQ2SemanticService {
 	
 	
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
-		return this.getPossibleGraphs(keywordList, topNbGraphs, 0.95, 5, 0.5);
+		LinkedList<String> tmp = new LinkedList<String>();
+		for(String k : keywordList) {
+			tmp.add(k.replaceAll("xx", ":"));
+		}
+		LinkedList<QueryGraph> ret = cache.get(keywordList);
+		if(ret != null) return ret;
+		else {
+			ret = this.getPossibleGraphs(tmp, topNbGraphs, 0.95, 5, 0.5);
+			if(cache.size() < cache_max_count) {
+				cache.put(keywordList, ret);
+			}
+		}
+		return ret; 
 	}
 	
 	private LinkedList<QueryGraph> getQueryGraphFromTopKResult(LinkedList<Subgraph> graphs) {
@@ -137,6 +152,8 @@ public class SearchQ2SemanticService {
 			}
 			
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
+			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
+			
 			for(Facet f: con2rel.keySet()) {
 				for(Facet r: con2rel.get(f)) {
 					if(rel2con.get(r) != null) {
@@ -147,7 +164,9 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",r.getSource()), r);
+						Concept top_concept = new Concept("","<TOP_Category>",r.getSource());
+						graphVertexes.add(top_concept);
+						GraphEdge edge = new GraphEdge(f, top_concept, r);
 						graphEdges.add(edge);
 					}
 				}
@@ -163,7 +182,9 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						GraphEdge edge = new GraphEdge(f, new Concept("","<TOP_Category>",a.getSource()), a);
+						Concept top_concept = new Concept("","<TOP_Category>",a.getSource());
+						graphVertexes.add(top_concept);
+						GraphEdge edge = new GraphEdge(f, top_concept, a);
 						graphEdges.add(edge);
 					}
 				}
@@ -175,7 +196,9 @@ public class SearchQ2SemanticService {
 			for(Facet fac : rel2con.keySet()) {
 				if(!rel2con.get(fac).isVisited) {
 					for(Facet con : rel2con.get(fac).sf) {
-						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",fac.getSource()),con,fac));
+						Concept top_concept = new Concept("","<TOP_Category>",fac.getSource());
+						graphVertexes.add(top_concept);
+						graphEdges.add(new GraphEdge(top_concept,con,fac));
 					}
 				}
 			}
@@ -183,13 +206,14 @@ public class SearchQ2SemanticService {
 			for(Facet fac : attr2lit.keySet()) {
 				if(!attr2lit.get(fac).isVisited) {
 					for(Facet lit : attr2lit.get(fac).sf) {
-						graphEdges.add(new GraphEdge(new Concept("","<TOP_Category>",fac.getSource()),lit,fac));
+						Concept top_concept = new Concept("","<TOP_Category>",fac.getSource());
+						graphVertexes.add(top_concept);
+						graphEdges.add(new GraphEdge(top_concept,lit,fac));
 					}
 				}
 			}
 			
 			
-			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
 			for(SummaryGraphElement elem : qg.vertexSet()) {
 				if( elem.getType() == SummaryGraphElement.VALUE ||
 						elem.getType() == SummaryGraphElement.CONCEPT) {
@@ -293,17 +317,18 @@ public class SearchQ2SemanticService {
 		}
 	}
 	
-	public Map<String,Collection<SummaryGraphElement>> searchKeyword(LinkedList<QueryToken> queryList,double prune) {
+	public Map<String,Collection<SummaryGraphElement>> searchKeyword(Set<String> ds_used,LinkedList<QueryToken> queryList,double prune) {
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 
 		for(QueryToken qt : queryList) {
 			String [] ds = qt.datasource.split(",");
 			for(int i = 0; i < ds.length;i++) {
+				ds_used.add(ds[i]);
 				String keywordIndex = this.keywordIndexRoot + "/" + ds[i] + "-keywordIndex";
 				System.out.println("keywordIndex " + keywordIndex);
 				Map<String, Collection<SummaryGraphElement>> hm = 
-					new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(qt.key, prune);
+					new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(qt.type,qt.key, prune);
 	
 				for(String key_str : hm.keySet()) {
 					Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
@@ -316,6 +341,11 @@ public class SearchQ2SemanticService {
 				}
 			}
 		}
+		
+		for(String ds : ds_used) {
+			System.out.print("ds_used:" + ds + " ");
+		}
+		System.out.println();
 		
 //		for(String ds : summaryObjSet.keySet()) {
 //			String keywordIndex = this.keywordIndexRoot + "/" + ds + "-keywordIndex";
@@ -419,10 +449,12 @@ public class SearchQ2SemanticService {
 	class QueryToken {
 		public String key;
 		public String datasource;
+		public int type;
 		
-		public QueryToken(String key,String datasource) {
+		public QueryToken(String key,String datasource,int type) {
 			this.key = key;
 			this.datasource = datasource;
+			this.type = type;
 		}
 	}
 
@@ -443,11 +475,11 @@ public class SearchQ2SemanticService {
 
 //		LinkedList<String> keywordList = new LinkedList<String>();
 //		int [] type = new int[keywordList1.size()];
-//		HashMap<Character,Integer> type_hm = new HashMap<Character, Integer>();
-//		type_hm.put('a', SummaryGraphElement.ATTRIBUTE);
-//		type_hm.put('c', SummaryGraphElement.CONCEPT);
-//		type_hm.put('l', SummaryGraphElement.VALUE);
-//		type_hm.put('r', SummaryGraphElement.RELATION);
+		HashMap<Character,Integer> type_hm = new HashMap<Character, Integer>();
+		type_hm.put('a', SummaryGraphElement.ATTRIBUTE);
+		type_hm.put('c', SummaryGraphElement.CONCEPT);
+		type_hm.put('l', SummaryGraphElement.VALUE);
+		type_hm.put('r', SummaryGraphElement.RELATION);
 		
 //		int count = 0;
 //		for(String item : keywordList1) {
@@ -460,31 +492,37 @@ public class SearchQ2SemanticService {
 //				keywordList.add(item);
 //			}
 //		}
-		
+		Set<String> ds_used = new HashSet<String>();
 		LinkedList<QueryToken> queryList = new LinkedList<QueryToken>();
 		for(String line : keywordList) {
 			String tokens[] = line.split(":");
-			if(tokens.length == 2) {
-				QueryToken queryToken = new QueryToken("\"" + tokens[0] + "\"",tokens[1]);
-				queryList.add(queryToken);
+			QueryToken queryToken = null;
+			if(tokens.length == 2 || (tokens.length == 3 && !tokens[1].equals("*"))) {
+				queryToken = new QueryToken("\"" + tokens[0] + "\"",tokens[1],-1);
+				System.out.println("token first:" + line);
 			}
-			else {
+			else if(tokens.length == 1 || ( tokens.length == 3 && tokens[1].equals("*"))){
 				String all_ds = "";
 				for(String tmp : this.summaryObjSet.keySet()) {
 					all_ds = all_ds + tmp + ",";
 				}
 				all_ds = all_ds.substring(0,all_ds.length() - 1);
-				QueryToken queryToken;
 				
 				if(this.key_database.get(tokens[0]) != null) {
-					 queryToken = new QueryToken("\"" + tokens[0] + "\"",this.key_database.get(tokens[0])); 
+					 queryToken = new QueryToken("\"" + tokens[0] + "\"",this.key_database.get(tokens[0]),-1); 
 				}
 				else {
-					queryToken = new QueryToken("\"" + tokens[0] + "\"",all_ds);
+					queryToken = new QueryToken("\"" + tokens[0] + "\"",all_ds,-1);
 				}
-				
-				queryList.add(queryToken);
+				System.out.println("token second:" + line);
 			}
+			
+			if(tokens.length == 3) {
+				queryToken.type = type_hm.get(tokens[2].charAt(0));
+				System.out.println("token third:" + line);
+			}
+			queryList.add(queryToken);
+
 		}
 		
 		long start_time = System.currentTimeMillis();
@@ -498,7 +536,7 @@ public class SearchQ2SemanticService {
 //		}
 //		query = query.substring(0, query.length()-1);
 		
-		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(queryList,prune);
+		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(ds_used,queryList,prune);
 		if(elementsMap.size()<keywordList.size()) return null;
 //		Map<String,Collection<SummaryGraphElement>> elementsMap2 = new HashMap<String, Collection<SummaryGraphElement>>();
 //		
@@ -544,7 +582,7 @@ public class SearchQ2SemanticService {
 //			}
 //		}
 		
-		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
+		LinkedList<Subgraph> graphs = inter.computeQueries(ds_used,elementsMap, distance, topNbGraphs);
 		if(graphs == null) return null;
 		
 		
@@ -738,7 +776,8 @@ public class SearchQ2SemanticService {
 			for(int i=0;i<tokens.length;i++)  {
 				ll.add(tokens[i].replace('|', ' '));
 			}
-			s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
+			s.getPossibleGraphs(ll, Integer.valueOf(args[1]));
+			//s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
 		}
 	}
 }
