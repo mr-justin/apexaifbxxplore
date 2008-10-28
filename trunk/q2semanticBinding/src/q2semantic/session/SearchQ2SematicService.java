@@ -38,6 +38,11 @@ public class SearchQ2SematicService {
 	public Collection<Suggestion> getSuggestion (LinkedList<Concept> conceptList, String sourceName, int topk) throws Exception {
 		int id = Q2SemanticPool.acquire();
 		SearchQ2SemanticService t = Q2SemanticPool.getEvaluator(id);
+		
+//		for(Concept con : conceptList) {
+//			System.out.println(con.getURI());
+//		}
+		
 		Collection<Suggestion> chen = t.getSuggestion(conceptList, sourceName, topk);
 		Q2SemanticPool.release(id);
 		return chen;
