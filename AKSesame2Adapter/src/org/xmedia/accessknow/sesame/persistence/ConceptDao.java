@@ -8,7 +8,6 @@ import java.util.HashSet;
 import org.openrdf.model.Statement;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
-import org.openrdf.model.Value;
 import org.openrdf.model.impl.URIImpl;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
@@ -21,7 +20,6 @@ import org.xmedia.businessobject.IBusinessObject;
 import org.xmedia.oms.model.api.IConcept;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
-import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IObjectProperty;
 import org.xmedia.oms.model.impl.NamedConcept;
@@ -139,7 +137,9 @@ public class ConceptDao implements IConceptDao {
 						if(!object.equals(RDFS.CLASS) && !object.equals(new URIImpl("http://www.w3.org/2002/07/owl#Class"))){
 
 							concept = Ses2AK.getNamedConcept((Resource)stmt.getObject(), session.getOntology());
-							if(concept != null) types.add(concept);
+							if(concept != null) {
+								types.add(concept);
+							}
 							
 						}
 					}
@@ -167,11 +167,11 @@ public class ConceptDao implements IConceptDao {
 					&& !object.getNamespace().equals(
 							"http://www.w3.org/2002/07/owl#")) {
 				RepositoryResult<Statement> sesResult = conn.getStatements(
-						null, RDF.TYPE, object, session.isReasoningOn());
+						object, RDF.TYPE, RDFS.CLASS, session.isReasoningOn());
 				try {
 					if (sesResult.hasNext()) {
-						concept = Ses2AK.getNamedConcept((URI) sesResult.next()
-								.getObject(), session.getOntology());
+						concept = Ses2AK.getNamedConcept(sesResult.next()
+								.getSubject(), session.getOntology());
 					}
 				} finally {
 					sesResult.close();
@@ -213,6 +213,7 @@ public class ConceptDao implements IConceptDao {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public void delete(IBusinessObject existingBo) throws DatasourceException {
 		// TODO Auto-generated method stub
 
@@ -249,6 +250,7 @@ public class ConceptDao implements IConceptDao {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public IBusinessObject findById(String id) throws DatasourceException {
 		// TODO Auto-generated method stub
 		return null;
@@ -257,6 +259,7 @@ public class ConceptDao implements IConceptDao {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	@SuppressWarnings("unchecked")
 	public Class getBoClass() {
 		return NamedConcept.class;
@@ -265,6 +268,7 @@ public class ConceptDao implements IConceptDao {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public void insert(IBusinessObject newBo) throws DatasourceException {
 //		throw new UnsupportedOperationException("Insert/update unsupported for entities.");
 	}
@@ -272,6 +276,7 @@ public class ConceptDao implements IConceptDao {
 	/**
 	 * @deprecated
 	 */
+	@Deprecated
 	public void update(IBusinessObject existingBo) throws DatasourceException {
 //		throw new UnsupportedOperationException("Insert/update unsupported for entities.");
 
@@ -289,12 +294,14 @@ public class ConceptDao implements IConceptDao {
 				while(stmts.hasNext()) {
 					stmt = stmts.next();
 					
-					if(((URI)stmt.getSubject()).toString().equals(sesConcept.toString())) 
+					if(((URI)stmt.getSubject()).toString().equals(sesConcept.toString())) {
 						continue;
+					}
 				
-				    type = Ses2AK.getNamedConcept((URI)stmt.getSubject(), session.getOntology());
-				    if(type!=null) 
-					  types.add(type);			       
+				    type = Ses2AK.getNamedConcept(stmt.getSubject(), session.getOntology());
+				    if(type!=null) {
+						types.add(type);
+					}			       
 			   }
 			} finally {
 				stmts.close();
