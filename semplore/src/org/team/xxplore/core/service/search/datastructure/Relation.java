@@ -21,6 +21,7 @@ public class Relation extends Facet {
 	 */
 	public Relation(String label, String uri, Source source) {
 		super(label, uri, source);
+		if (label.startsWith("Property 3A")) label = label.substring(11);
 	}
 
 }

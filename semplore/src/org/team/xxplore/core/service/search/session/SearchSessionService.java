@@ -2,6 +2,7 @@ package org.team.xxplore.core.service.search.session;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -47,6 +48,7 @@ import com.ibm.semplore.xir.DocStream;
 import flex.messaging.FlexContext;
 
 public class SearchSessionService {
+	private static final String DS_SEARCH_PREFIX = "xxds"; 
 	static Logger logger = Logger.getLogger(SearchSessionService.class);
 	static LRUHashMap<String, ArraySnippet> snippetCache = new LRUHashMap<String, ArraySnippet>(10000);
 	static LRUHashMap<String, SeeAlso> seealsoCache = new LRUHashMap<String, SeeAlso>(10000);
@@ -164,7 +166,7 @@ public class SearchSessionService {
 			String str = it.next();
 			for (; it.hasNext(); ) {
 				String s = it.next();
-				if (s.startsWith("xxds")) datasource = s.substring(4);
+				if (s.startsWith(DS_SEARCH_PREFIX)) datasource = s.substring(DS_SEARCH_PREFIX.length());
 				else str += " " + s;
 			}
 			CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	// AND
@@ -573,11 +575,6 @@ public class SearchSessionService {
 	 * @return the SeeAlso object associated with the result item.
 	 */
 	public SeeAlso getSeeAlsoItem(String resultItemURL) {
-		SeeAlso cached;
-		if ((cached = seealsoCache.get(resultItemURL))!=null) return cached;
-		ResultItem item = new ResultItem();
-		item.setURL(resultItemURL);
-
 		try {
 			if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
@@ -592,29 +589,8 @@ public class SearchSessionService {
 				}
 			}
 			
-			int id = SemplorePool.acquire();
-			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
-			SemplorePool.release(id);
-
-			if (array.size() == 0) return null;
-			
-			SeeAlso seeAlso = new SeeAlso();
-			
-			LinkedList ll = new LinkedList();
-			for(SchemaObjectInfoForMultiDataSources s : array) {
-				Instance ins = new Instance();
-				ins.setLabel(s.getLabel());
-				Source source = new Source();
-				source.setName(s.getDataSource());
-				ins.setSource(source);
-				ins.setURI(s.getURI());
-				ll.add(ins);
-			}
-			seeAlso.setFacetList(ll);
-
-			seeAlso.setResultItem(item);
-			seealsoCache.put(resultItemURL, seeAlso);
+			SeeAlso seeAlso = 
+				getSeeAlsoItem(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 			return seeAlso;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -622,6 +598,38 @@ public class SearchSessionService {
 		return null;
 	}
 	
+	private SeeAlso getSeeAlsoItem(String currentDataSource, int docID, String resultItemURL) throws InterruptedException {
+		SeeAlso cached;
+		if ((cached = seealsoCache.get(currentDataSource+"$$$"+resultItemURL))!=null) return cached;
+		int id = SemplorePool.acquire();
+		QueryEvaluator eval = SemplorePool.getEvaluator(id);
+		ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso(currentDataSource, docID, resultItemURL);
+		SemplorePool.release(id);
+
+		if (array.size() == 0) return null;
+		
+		SeeAlso seeAlso = new SeeAlso();
+		
+		LinkedList ll = new LinkedList();
+		for(SchemaObjectInfoForMultiDataSources s : array) {
+			Instance ins = new Instance();
+			ins.setLabel(s.getLabel());
+			Source source = new Source();
+			source.setName(s.getDataSource());
+			ins.setSource(source);
+			ins.setURI(s.getURI());
+			ll.add(ins);
+		}
+		seeAlso.setFacetList(ll);
+		
+		ResultItem item = new ResultItem();
+		item.setURL(resultItemURL);
+		seeAlso.setResultItem(item);
+		
+		seealsoCache.put(currentDataSource+"$$$"+resultItemURL, seeAlso);
+		return seeAlso;
+	}
+
 	private ArrayList<ResultItem> getResultList(XFacetedResultSetForMultiDataSources xres) {
 		try {
 			//set active source
@@ -680,8 +688,6 @@ public class SearchSessionService {
 	 * @return the ArraySnippet object associated with the result item.
 	 */
 	public ArraySnippet getArraySnippet(String resultItemURL) {
-		ArraySnippet cached;
-		if ((cached = snippetCache.get(resultItemURL))!=null) return cached;
 		try {
 			if (FlexContext.getFlexSession() == null || FlexContext.getFlexSession().getAttribute("resultHistory") == null) return null;
 			LinkedList<XFacetedResultSetForMultiDataSources> resultHistory = 
@@ -695,15 +701,8 @@ public class SearchSessionService {
 					break;
 				}
 			}
-			
-			int id = SemplorePool.acquire();
-			QueryEvaluator eval = SemplorePool.getEvaluator(id);
-			String snippet_str = eval.getArraySnippet(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
-			SemplorePool.release(id);
-			
-			ArraySnippet as = this.getSnippet(currentResult.getCurrentDataSource(), resultItemURL, snippet_str);
-			snippetCache.put(resultItemURL, as);
-			return as;
+
+			return getArraySnippet(currentResult.getCurrentDataSource(), currentResult.getDocID(index), resultItemURL);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -711,6 +710,21 @@ public class SearchSessionService {
 		return null;
 	}
 	
+	private ArraySnippet getArraySnippet(String ds, int docID,
+			String resultItemURL) throws InterruptedException {
+		ArraySnippet cached;
+		if ((cached = snippetCache.get(ds+"$$$"+resultItemURL))!=null) return cached;
+
+		int id = SemplorePool.acquire();
+		QueryEvaluator eval = SemplorePool.getEvaluator(id);
+		String snippet_str = eval.getArraySnippet(ds, docID, resultItemURL);
+		SemplorePool.release(id);
+		
+		ArraySnippet as = this.getSnippet(ds, resultItemURL, snippet_str);
+		snippetCache.put(ds+"$$$"+resultItemURL, as);
+		return as;
+	}
+
 	private ArraySnippet getSnippet(String dataSource, String resultItemURL, String snippet_str) {
 		ResultItem item = new ResultItem();
 		item.setURL(resultItemURL);
@@ -745,6 +759,40 @@ public class SearchSessionService {
 		logger.info(String.format("getArraySnippet [%s]%s : %d", dataSource, resultItemURL, count));
 		return new ArraySnippet(item, rel, attr, cat);
 	}
+
+	/**
+	 * Search for given keywords in one datasource ds,
+	 * and get the ArraySnippet and SeeAlso of first result
+	 * These will initialize indices of this ds.
+	 * @param keywords
+	 * @param ds
+	 * @throws Exception
+	 */
+	public void testSearchKeywordInDatasource(String keywords, String ds) throws Exception {
+		LinkedList<String> kwords = new LinkedList<String>();
+		kwords.add(keywords);
+		kwords.add(DS_SEARCH_PREFIX + ds);
+		ResultPage rp = search(new Keywords(kwords), 10);
+		if (rp.resultItemList.size()>0) {
+			ResultItem item = rp.resultItemList.getFirst();
+			getSeeAlsoItem(ds, 0, item.getURL());
+			getArraySnippet(ds, 0, item.getURL());
+		}
+	}
+	
+	public void testSearchInitialize() throws Exception {
+		int id = SemplorePool.acquire();
+		QueryEvaluator eval = SemplorePool.getEvaluator(id);
+		Collection<String> dscol = eval.getAvailableDatasources();
+		SemplorePool.release(id);
+		for (String ds : dscol ) {
+			//search for something common
+			testSearchKeywordInDatasource("county", ds); 
+			testSearchKeywordInDatasource("web", ds); 
+			//search for something rare
+			testSearchKeywordInDatasource("abcdef", ds); 
+		}
+	}
 	
 	public static void testSearch(String keywords) throws Exception {
 		LinkedList<String> kwords = new LinkedList<String>();
@@ -770,6 +818,7 @@ public class SearchSessionService {
 	}
 	
 	public static void main(String[] args) throws Exception {
-		testSearch("test");
+		new SearchSessionService().testSearchInitialize();
+//		testSearch("test");
 	}
 }

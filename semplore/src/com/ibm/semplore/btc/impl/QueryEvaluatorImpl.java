@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.RandomAccessFile;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Hashtable;
@@ -385,6 +386,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		eva.setPathOfMappingIndex(new File("."));
 		DocStream result = eva.convertID("dbpedia_dblp_index", doc, null);
 		DebugIndex.printDocStream(indexReader2, result);
+	}
+
+	@Override
+	public Collection<String> getAvailableDatasources() {
+		return dataSources.values();
 	}
 
 }
