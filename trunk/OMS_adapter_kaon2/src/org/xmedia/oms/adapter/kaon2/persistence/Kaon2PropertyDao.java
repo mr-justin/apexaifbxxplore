@@ -364,7 +364,7 @@ class Kaon2PropertyDao extends AbstractKaon2Dao implements IPropertyDao{
 				if (p != null ) {
 					Set<ObjectPropertyRange> objectranges = null; 
 					Set<DataPropertyRange> dataranges = null; 
-					if(p instanceof ObjectProperty){
+					if(p instanceof org.xmedia.oms.model.impl.ObjectProperty){
 						objectranges = onto.getDelegate().createAxiomRequest(ObjectPropertyRange.class).
 						setCondition("objectProperty", p.getDelegate()).getAll();
 					}
