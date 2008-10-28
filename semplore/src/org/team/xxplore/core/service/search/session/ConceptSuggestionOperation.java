@@ -29,6 +29,7 @@ public class ConceptSuggestionOperation implements SuggestionOperation {
 				graph.setDataSource(graph.numOfNodes()-1, conceptSuggestion.getSource().getName());
 				iedge = new Edge(originalTarget, graph.numOfNodes()-1, null);
 				graph.addIEdges(iedge);
+				graph.setTargetVariable(graph.numOfNodes()-1);
 			}
 			return graph;
 		} catch (Exception e) {
