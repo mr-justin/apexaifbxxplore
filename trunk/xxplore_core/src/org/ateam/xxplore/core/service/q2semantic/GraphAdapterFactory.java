@@ -35,6 +35,7 @@ public class GraphAdapterFactory {
 		mapping_HM = new HashMap<MappingCell, Set<MappingCell>>();
 		this.getSummaryGraphs(keys);
 		this.getMapping(index, keys);
+//		this.getSchemaGraphs();
 	}
 	
 	public Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele) {
@@ -62,7 +63,25 @@ public class GraphAdapterFactory {
 		return ele_set;
 	}
 	
+//	public void getSchemaGraphs() {
+//		for(String ds : SearchQ2SemanticService.schemaObjSet.keySet()) {
+//			String dsDFileName = SearchQ2SemanticService.schemaObjSet.get(ds);
+//			try {
+//				ObjectInputStream obj_input = new ObjectInputStream(new FileInputStream(dsDFileName));
+//				Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph_obj = 
+//					(Pseudograph<SummaryGraphElement, SummaryGraphEdge>)obj_input.readObject();
+//				summaryobj_HM.put(ds, graph_obj);
+//				
+//				obj_input.close();
+//			
+//			} catch (Exception e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
+	
 	public void getSummaryGraphs(Set<String> keys) {
+		
 		for(String ds : keys) {
 			String dsDFileName = SearchQ2SemanticService.summaryObjSet.get(ds);
 			try {
