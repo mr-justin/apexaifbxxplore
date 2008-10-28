@@ -289,37 +289,41 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 		return list;
 	}
 
-	public Set<String> getSuggestion(List<String> concept, String ds,
-			MappingIndexService index) throws Exception {
+	public Set<String> getSuggestion(List<String> concept, String ds, MappingIndexService index) throws Exception {
 		HashMap<String, String> mappedConcept = new HashMap<String, String>();
 		Collection<Mapping> mapping;
 		for (String con : concept) {
 			mapping = index.searchMappings(con, ds,
 					MappingIndexService.SEARCH_SOURCE);
+//			mapping = this.factory.getMappings();
 
 			for (Mapping map : mapping)
 			{
-				mappedConcept.put(map.getTarget().substring(1, map.getTarget().length()-1), map.getTargetDsURI());
+				mappedConcept.put(SummaryGraphUtil.removeGtOrLs(map.getTarget()), map.getTargetDsURI());
 //				System.out.println("t "+map.getTarget()+" "+map.getTargetDsURI());
 			}
-			mapping = index.searchMappings(con, ds,
-					MappingIndexService.SEARCH_TARGET);
-
-			for (Mapping map : mapping)
-			{
-				mappedConcept.put(map.getSource().substring(1, map.getSource().length()-1), map.getSourceDsURI());
-//				System.out.println("s "+map.getSource()+" "+map.getSourceDsURI());
-			}
+//			mapping = index.searchMappings(con, ds,
+//					MappingIndexService.SEARCH_TARGET);
+//
+//			for (Mapping map : mapping)
+//			{
+//				mappedConcept.put(SummaryGraphUtil.removeGtOrLs(map.getSource()), map.getSourceDsURI());
+////				System.out.println("s "+map.getSource()+" "+map.getSourceDsURI());
+//			}
 		}
-		SummaryGraphIndexServiceForBTFromNT sss = new SummaryGraphIndexServiceForBTFromNT();
+//		SummaryGraphIndexServiceForBTFromNT sss = new SummaryGraphIndexServiceForBTFromNT();
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph;
 		Set<String> res = new HashSet<String>();
+		HashSet<String> uri_set = new HashSet<String>();
+		
 		for (String uri : mappedConcept.keySet()) {
 			String datasource = mappedConcept.get(uri);
-			String objFile = SearchQ2SemanticService.schemaObjSet
-					.get(datasource);// SesameDao.root +
-										// datasource+"-schema.obj";
-			graph = sss.readGraphIndexFromFile(objFile);
+//			String objFile = SearchQ2SemanticService.schemaObjSet
+//					.get(datasource);// SesameDao.root +
+//										// datasource+"-schema.obj";
+//			graph = sss.readGraphIndexFromFile(objFile);
+			graph = this.factory.getObj(datasource);
+			if(graph == null) continue;
 			for (SummaryGraphEdge edge : graph.edgeSet()) {
 				SummaryGraphElement source = edge.getSource(), target = edge
 						.getTarget();
@@ -329,10 +333,14 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							+ "\t" + datasource + "\t"
 							+ source.getEF() + "\t"
 							+ SearchQ2SemanticService.ConceptMark);
-					res.add(((Property) target.getResource()).getUri() + "\t"
-							+ datasource + "\t"
-							+ target.getEF() + "\t"
-							+ SearchQ2SemanticService.PredicateMark);
+					String tmp = SummaryGraphUtil.removeNum(((Property) target.getResource()).getUri());
+					if(!uri_set.contains(tmp + "\t" + datasource)) {
+						uri_set.add(tmp + "\t" + datasource);
+						res.add(tmp + "\t"
+								+ datasource + "\t"
+								+ target.getEF() + "\t"
+								+ SearchQ2SemanticService.PredicateMark);
+					}
 				} else if (target.getResource() instanceof NamedConcept
 						&& ((NamedConcept) target.getResource()).getUri()
 								.equals(uri)
@@ -341,10 +349,15 @@ public class QueryInterpretationService implements IQueryInterpretationService {
 							+ "\t" + datasource + "\t"
 							+ target.getEF() + "\t"
 							+ SearchQ2SemanticService.ConceptMark);
-					res.add(((Property) source.getResource()).getUri() + "\t"
-							+ datasource + "\t"
-							+ source.getEF() + "\t"
-							+ SearchQ2SemanticService.PredicateMark);
+					
+					String tmp = SummaryGraphUtil.removeNum(((Property) source.getResource()).getUri());
+					if(!uri_set.contains(tmp + "\t" + datasource)) {
+						uri_set.add(tmp + "\t" + datasource);
+						res.add(tmp + "\t"
+								+ datasource + "\t"
+								+ source.getEF() + "\t"
+								+ SearchQ2SemanticService.PredicateMark);
+					}
 				}
 			}
 		}
