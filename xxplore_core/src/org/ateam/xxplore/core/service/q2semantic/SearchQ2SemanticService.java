@@ -50,6 +50,59 @@ public class SearchQ2SemanticService {
 	public QueryInterpretationService inter;
 	public String configFilePath;
 	public HashMap<String, String> key_database = new HashMap<String, String>();
+	private MappingIndexService mis = new MappingIndexService();
+
+	public HashMap<CacheKey,Collection<Suggestion>> cache_suggestion = 
+		new HashMap<CacheKey, Collection<Suggestion>>();
+	public static final int max_cache_num = 100;
+	
+	class CacheKey {
+		public List<Concept> concept;
+		public String ds;
+		public CacheKey(List<Concept> concept, String ds) {
+			super();
+			this.concept = concept;
+			this.ds = ds;
+		}
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + getOuterType().hashCode();
+			result = prime * result
+					+ ((concept == null) ? 0 : concept.hashCode());
+			result = prime * result + ((ds == null) ? 0 : ds.hashCode());
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			CacheKey other = (CacheKey) obj;
+			if (!getOuterType().equals(other.getOuterType()))
+				return false;
+			if (concept == null) {
+				if (other.concept != null)
+					return false;
+			} else if (!concept.equals(other.concept))
+				return false;
+			if (ds == null) {
+				if (other.ds != null)
+					return false;
+			} else if (!ds.equals(other.ds))
+				return false;
+			return true;
+		}
+		private SearchQ2SemanticService getOuterType() {
+			return SearchQ2SemanticService.this;
+		}
+				
+	}
+	
 	
 	public Map<LinkedList<String>,LinkedList<QueryGraph>> cache = new HashMap<LinkedList<String>, LinkedList<QueryGraph>>();
 	public static final int cache_max_count = 1000;
@@ -75,12 +128,16 @@ public class SearchQ2SemanticService {
 	 */
 	public Collection<Suggestion> getSuggestion(List<Concept> concept, String ds, int topK) throws Exception
 	{
+		Collection<Suggestion> ret = cache_suggestion.get(new CacheKey(concept,ds));
+		if(ret != null) {
+			return ret;
+		}
+		
 		List<String> con = new ArrayList<String>();
 		for(Concept c: concept)
 			con.add(c.getURI());
 		//QueryInterpretationService inter = new QueryInterpretationService();
-		MappingIndexService mis = new MappingIndexService();
-		mis.init4Search(mappingIndexRoot);
+		
 		Set<String> sugg = inter.getSuggestion(con, ds, mis);
 		PriorityQueue<Suggestion> res = new PriorityQueue<Suggestion>();
 		for(String str: sugg)
@@ -88,7 +145,7 @@ public class SearchQ2SemanticService {
 //			System.out.println(str);
 			String[] part = str.split("\t");
 			if(part.length!=4) continue;
-			String label = SummaryGraphUtil.getLocalName(part[0]);
+			String label = SummaryGraphUtil.getLocalName(SummaryGraphUtil.removeNum(part[0]));
 			if(part[3].equals(ConceptMark))
 				res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
 			else if(part[3].equals(PredicateMark))
@@ -113,6 +170,10 @@ public class SearchQ2SemanticService {
 			}
 		}
 		
+		if(cache_suggestion.size() < max_cache_num) {
+			cache_suggestion.put(new CacheKey(concept,ds), ress);
+		}
+		
 		return ress;
 	}
 	
@@ -120,6 +181,9 @@ public class SearchQ2SemanticService {
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
 		LinkedList<String> tmp = new LinkedList<String>();
 		for(String k : keywordList) {
+			if( k.charAt(0) == '\"' ) {
+				k = k.substring(0,k.length() - 1);
+			}
 			tmp.add(k.replaceAll("xx", ":"));
 		}
 		LinkedList<QueryGraph> ret = cache.get(keywordList);
@@ -668,6 +732,8 @@ public class SearchQ2SemanticService {
 		}
 		
 		inter = new QueryInterpretationService(summaryObjSet.keySet());
+		
+		mis.init4Search(mappingIndexRoot);
 		
 	}
 	
