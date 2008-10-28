@@ -9,6 +9,7 @@ import org.xmedia.businessobject.IBusinessObject;
 import org.xmedia.oms.model.api.IIndividual;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.INamedConcept;
+import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.impl.NamedIndividual;
 import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.dao.IIndividualDao;
@@ -23,6 +24,7 @@ import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.model.Resource;
+import org.openrdf.model.Value;
 
 /**
  * @author an2548
@@ -67,6 +69,45 @@ public class IndividualDao implements IIndividualDao {
 		} catch(Exception e) {
 			throw new DatasourceException("Error occurred while retrieving all member individuals of the concept "+concept.getUri(), e);
 		}
+	}
+	
+	/* (non-Javadoc)
+	 * @see org.xmedia.oms.persistence.dao.IIndividualDao#findIndividualsByPropery(org.xmedia.oms.model.api.IProperty)
+	 */
+	public Set<IIndividual> findIndividualsByPropery(IProperty property)
+			throws DatasourceException {
+		
+		Set<IIndividual> resultSet = new HashSet<IIndividual>();
+		
+		RepositoryConnection conn = session.getRepositoryConnection();
+		
+		try {
+			
+			RepositoryResult<Statement> sesResult = conn.getStatements(null, 
+					AK2Ses.getProperty(property, session.getValueFactory()), 
+					null, 
+					session.isReasoningOn());
+			
+			while(sesResult.hasNext()){
+				
+				Value object = sesResult.next().getObject();
+				
+				if(object instanceof Resource){
+					resultSet.add(
+						Ses2AK.getNamedIndividual(
+							(Resource)object,
+							session.getOntology()));
+				}
+				
+			}
+			
+		} catch (RepositoryException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+				
+		return resultSet;
 	}
 
 	/* (non-Javadoc)
