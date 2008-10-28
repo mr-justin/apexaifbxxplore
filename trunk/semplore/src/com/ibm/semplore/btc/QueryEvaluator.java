@@ -5,6 +5,7 @@ package com.ibm.semplore.btc;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Hashtable;
 
@@ -78,5 +79,7 @@ public interface QueryEvaluator {
 	 * @return
 	 */
 	public String getArraySnippet(String dataSource, int docID, String URI);
+	
+	public Collection<String> getAvailableDatasources();
 
 }

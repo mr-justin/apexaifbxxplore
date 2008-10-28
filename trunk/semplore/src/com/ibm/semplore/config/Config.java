@@ -127,9 +127,11 @@ public class Config
             String name = str.substring(0,str.indexOf('=')).trim();
             String value = str.substring(str.indexOf('=')+1,str.length()).trim();
             config.put(name, value);
-            config.put(name+".i", i);
-            config.put(i, name);
-            i++;
+            if (!name.equals("mapping") && !name.equals("snippet") && !name.equals("defaultDataSet") && !name.equals("logging")) {
+                config.put(name+".i", i);
+                config.put(i, name);
+                i++;
+            }
             System.err.println(name+" = "+value);
         }
         in.close();
