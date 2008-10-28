@@ -431,7 +431,9 @@ public class SearchSessionService {
 				} else {
 					Graph graph = new GraphImpl();
 					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//0
-					graph.add(SchemaFactoryImpl.getInstance().createUniversalCategory());	//1
+					CompoundCategory cc = SchemaFactoryImpl.getInstance().createCompoundCategory(1);	// AND
+					cc.addComponentCategory(SchemaFactoryImpl.getInstance().createCategory(c.getURI()));
+					graph.add(cc);	//1
 					graph.addIEdges(new Edge(0, 1, null));
 					graph.setTargetVariable(1);
 					graph.setDataSource(0, currentDataSource);
