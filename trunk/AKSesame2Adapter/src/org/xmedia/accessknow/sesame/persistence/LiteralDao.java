@@ -13,14 +13,17 @@ import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.RepositoryResult;
 import org.xmedia.accessknow.sesame.model.SesameOntology;
+import org.xmedia.accessknow.sesame.persistence.converter.AK2Ses;
 import org.xmedia.accessknow.sesame.persistence.converter.Ses2AK;
 import org.xmedia.businessobject.IBusinessObject;
 import org.xmedia.oms.model.api.IDatatype;
 import org.xmedia.oms.model.api.ILiteral;
+import org.xmedia.oms.model.api.IProperty;
 import org.xmedia.oms.model.api.IPropertyMember;
 import org.xmedia.oms.model.api.IResource;
 import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.persistence.DatasourceException;
+import org.xmedia.oms.persistence.ISession;
 import org.xmedia.oms.persistence.PersistenceUtil;
 import org.xmedia.oms.persistence.SessionFactory;
 import org.xmedia.oms.persistence.StatelessSession;
@@ -31,6 +34,51 @@ public class LiteralDao implements ILiteralDao{
 
 //	private static Logger s_log = Logger.getLogger(LiteralDao.class);
 
+	/* (non-Javadoc)
+	 * @see org.xmedia.oms.persistence.dao.IIndividualDao#findLiteralsByPropery(org.xmedia.oms.model.api.IProperty)
+	 */
+	public Set<ILiteral> findLiteralsByPropery(IProperty property)
+			throws DatasourceException {
+		
+		Set<ILiteral> resultSet = new HashSet<ILiteral>();
+		
+		ISession session =  PersistenceUtil.getSessionFactory().getCurrentSession();
+		
+		if(session instanceof SesameSession){
+			
+			RepositoryConnection conn = ((SesameSession)session).getRepositoryConnection();
+			
+			try {
+				
+				RepositoryResult<Statement> sesResult = conn.getStatements(null, 
+						AK2Ses.getProperty(property, ((SesameSession)session).getValueFactory()), 
+						null, 
+						session.isReasoningOn());
+				
+				while(sesResult.hasNext()){
+					
+					Value object = sesResult.next().getObject();
+					
+					if(object instanceof org.openrdf.model.Literal){
+						resultSet.add(
+							(ILiteral)Ses2AK.getObject(
+									object, 
+									session.getOntology()));
+					}
+					
+				}
+				
+			} catch (RepositoryException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}			
+		}
+						
+		return resultSet;
+	}
+	
+	
 	public Set<ILiteral> findMemberIndividuals(IDatatype arg0) throws DatasourceException
 	{
 		StatelessSession session =  (StatelessSession) SessionFactory.getInstance().getCurrentSession();
