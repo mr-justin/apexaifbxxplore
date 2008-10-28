@@ -44,5 +44,21 @@ public class ConnectionProvider implements IConnectionProvider {
 
 		return m_con;
 	}
+	
+	public IKbConnection getConnection(String path) throws DatasourceException {
+		
+		if(m_con == null){
+			
+			try {
+				m_con = new SesameConnection(path);
+			} 
+			catch (RepositoryException e) {
+				e.printStackTrace();
+				throw new DatasourceException();
+			}
+		}
+		
+		return m_con;
+	}
 
 }
