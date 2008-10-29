@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.StringTokenizer;
@@ -733,12 +734,15 @@ public class SearchSessionService {
 		LinkedList<Couple> attr = new LinkedList<Couple>();
 		LinkedList<Concept> cat = new LinkedList<Concept>();
 		String[] labels = new String[3];
+		HashSet<String> set = new HashSet<String>();
 		int count = 0;
 		
 		if (snippet_str != null) {
 			StringTokenizer tok = new StringTokenizer(snippet_str,"\n");
 			while (tok.hasMoreTokens()) {
 				String token = tok.nextToken();
+				if (set.contains(token)) continue;
+				set.add(token);
 				String type = Util4NT.checkSnippetType(token);
 				String[] processed = Util4NT.processTripleLine("<a> "+token);
 				for (int i = 1; i<=2; i++) {
