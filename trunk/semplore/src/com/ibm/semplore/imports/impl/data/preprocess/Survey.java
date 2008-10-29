@@ -24,25 +24,25 @@ import com.ibm.semplore.util.Md5_BloomFilter_128bit;
 public class Survey {
 	static HashSet<String> property = new HashSet<String>();
 	static Md5_BloomFilter_128bit md5;
-	static {
-		 try {
-			md5 = new Md5_BloomFilter_128bit();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+//	static {
+//		 try {
+//			md5 = new Md5_BloomFilter_128bit();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//	}
 	
 	public static void processTripleLine(String line) throws Exception {
 		String[] triple = Util4NT.processTripleLine(line);
 		if (triple == null) return;
 		String type = Util4NT.checkTripleType(triple);
 		if (type == Util4NT.RELATION || type == Util4NT.ATTRIBUTE)
-			if (!md5.set(triple[1]))
-				System.out.println(line);
-//			if (!property.contains(triple[1])) {
-//				property.add(triple[1]);
+//			if (!md5.set(triple[1]))
 //				System.out.println(line);
-//			}
+			if (!property.contains(triple[1])) {
+				property.add(triple[1]);
+				System.out.println(line);
+			}
 	}
 
 	public static void main(String[] args) throws Exception {
