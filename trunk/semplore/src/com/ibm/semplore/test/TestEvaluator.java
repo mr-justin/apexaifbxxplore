@@ -21,7 +21,34 @@ import com.ibm.semplore.xir.DocStream;
 public class TestEvaluator {
 	public static SchemaFactory schemaFactory = SchemaFactoryImpl.getInstance();
 
+	/**
+	 * @param args[0] config/datasrc.cfg
+	 * @param args[1] (optional) specify graph file
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
+		Graph graph;
+		
+		if (args.length==2) {
+			graph = new GraphImpl();
+			graph.load(new File(args[1])); 
+		}
+		else 
+			graph = prepareGraph();
+		
+		QueryEvaluator eval = new QueryEvaluatorImpl(new File(args[0])); //points to config/datasrc.cfg
+
+		long time = System.currentTimeMillis();
+		System.out.println("Begin Evaluation");
+		XFacetedResultSet result = eval.evaluate(graph);
+		System.out.println("Total Evaluation time(ms): "+(System.currentTimeMillis()-time));
+		
+		TestSearch.showResultSet(result, null);
+		
+		System.out.println(String.format("Time stats: %d, %d, %d", result.getResultTime(), result.getFacetTime(), (System.currentTimeMillis()-time)));
+	}
+	
+	private static Graph prepareGraph() {
 		Graph graph = new GraphImpl();
 		//Concepts
 		graph.add(schemaFactory.createUniversalCategory());
@@ -46,30 +73,8 @@ public class TestEvaluator {
 		graph.setDataSource(1, "swrc");
 		graph.setDataSource(2, "swrc");
 		
-		long time = System.currentTimeMillis();
-		QueryEvaluator eval = new QueryEvaluatorImpl(new File(args[0])); //points to config/datasrc.cfg
-
-		System.out.println("Begin Evaluation");
-		XFacetedResultSet result = eval.evaluate(graph);
-		System.out.println("Total Evaluation time(ms): "+(System.currentTimeMillis()-time));
-		TestSearch.showResultSet(result, null);
-		
-		if (true) return ;
-		//use start cache
-		graph = new GraphImpl();
-		//Concepts
-		graph.add(schemaFactory.createCategory((
-			"<http://lsdis.cs.uga.edu/projects/semdis/opus#Article_in_Proceedings>")));	//0
-		//target
-		graph.setTargetVariable(0);
-		//datasource
-		graph.setDataSource(0, "dblp");			
-		HashMap<Integer, DocStream> cache = new HashMap<Integer, DocStream>();
-		cache.put(0, result.getResultStream());
-		result = eval.evaluate(graph, cache);		
-		TestSearch.showResultSet(result, null);		
+		return graph;
 	}
-	
 	
 
 }

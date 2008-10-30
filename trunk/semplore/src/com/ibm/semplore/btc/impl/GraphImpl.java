@@ -3,8 +3,16 @@
  */
 package com.ibm.semplore.btc.impl;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.nio.CharBuffer;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.ibm.semplore.btc.Graph;
 import com.ibm.semplore.model.CatRelGraph;
@@ -163,4 +171,64 @@ public class GraphImpl implements Graph {
 		return str;
 	}
 
+
+	public void load(File file) throws NumberFormatException, IOException {
+		BufferedReader reader = new BufferedReader(new FileReader(file));
+		int target = Integer.MAX_VALUE;
+		String line;
+		while ((line = reader.readLine())!=null) {
+			Matcher m;
+			m = Pattern.compile("^target = (\\d+)$").matcher(line);
+			if (m.matches()) {
+				if (target!=Integer.MAX_VALUE) throw new IOException("Wrong graph format: more than one targets");
+				target = Integer.valueOf(m.group(1));
+				continue;
+			}
+			m = Pattern.compile("^Node (\\d+): \\[(.*)\\](.*)$").matcher(line);
+			if (m.matches()) {
+				int nodeIndex = Integer.valueOf(m.group(1));
+				String ds = m.group(2);
+				String str = m.group(3);
+				if (str.startsWith("KEYWORD OF")) add(schemaFactory.createKeywordCategory(str.substring(11)));
+				else add(schemaFactory.createCategory(str));
+				setDataSource(nodeIndex, ds);
+				continue;
+			}
+			m = Pattern.compile("^Edge: \\((\\d+)->(\\d+)#(.*)\\)$").matcher(line);
+			if (m.matches()) {
+				int from = Integer.valueOf(m.group(1));
+				int to = Integer.valueOf(m.group(2));
+				String uri = m.group(3);
+				add(schemaFactory.createRelation(uri), from, to);
+				continue;
+			}
+			m = Pattern.compile("^IEdge: \\((\\d+)<=>(\\d+)\\)$").matcher(line);
+			if (m.matches()) {
+				int from = Integer.valueOf(m.group(1));
+				int to = Integer.valueOf(m.group(2));
+				addIEdges(new Edge(from,to,null));
+				continue;
+			}
+			throw new IOException("Wrong graph format: " + line);
+		}
+		if (target == Integer.MAX_VALUE) throw new IOException("Wrong graph format: No target");
+		setTargetVariable(target);
+	}
+
+	public static void main(String args[]) throws NumberFormatException, FileNotFoundException, IOException {
+		File file = new File(args[0]);
+		char[] buf = new char[ (int) file.length() ];
+		new FileReader(file).read(buf);
+		Graph g = new GraphImpl();
+		g.load(file);
+		
+		String ans = new String(buf).trim();
+		String out = g.toString().trim();
+		if (!ans.equals(out)) {
+			System.out.println("=== ans ===");
+			System.out.println(ans);
+			System.out.println("=== out ===");
+			System.out.println(out);
+		}
+	}
 }
