@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -36,6 +37,29 @@ import org.xmedia.oms.model.impl.Property;
  * This class is the Q2Semantic service API that can be called by the search engine interface
  * @author tpenin
  */
+
+class evalTime {
+	public long span_Time;
+	public long compute_Time;
+	
+	public evalTime() {
+		span_Time = 0;
+		compute_Time = 0;
+	}
+}
+
+class evalStruct {
+	public LinkedList<String> ll;
+	public long keyTime;
+	public long topkTime;
+	public long keyTime1;
+	public long topkTime1;
+	
+	public evalStruct() {
+		ll = new LinkedList<String>();
+	}
+}
+
 public class SearchQ2SemanticService {
 
 	public static String root;
@@ -101,8 +125,7 @@ public class SearchQ2SemanticService {
 			return SearchQ2SemanticService.this;
 		}
 				
-	}
-	
+	}	
 	
 	public Map<LinkedList<String>,LinkedList<QueryGraph>> cache = new HashMap<LinkedList<String>, LinkedList<QueryGraph>>();
 	public static final int cache_max_count = 1000;
@@ -178,7 +201,7 @@ public class SearchQ2SemanticService {
 	}
 	
 	
-	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs,evalTime time) {
 		LinkedList<String> tmp = new LinkedList<String>();
 		for(String k : keywordList) {
 			if( k.charAt(0) == '\"' ) {
@@ -186,15 +209,16 @@ public class SearchQ2SemanticService {
 			}
 			tmp.add(k.replaceAll("xx", ":"));
 		}
-		LinkedList<QueryGraph> ret = cache.get(keywordList);
-		if(ret != null) return ret;
-		else {
-			ret = this.getPossibleGraphs(tmp, topNbGraphs, 0.95, 5, 0.5);
-			if(cache.size() < cache_max_count) {
-				cache.put(keywordList, ret);
-			}
-		}
-		return ret; 
+//		LinkedList<QueryGraph> ret = cache.get(keywordList);
+//		if(ret != null) return ret;
+//		else {
+//			ret = this.getPossibleGraphs(tmp, topNbGraphs, 0.95, 5, 0.5);
+//			if(cache.size() < cache_max_count) {
+//				cache.put(keywordList, ret);
+//			}
+//		}
+		LinkedList<QueryGraph> ret = this.getPossibleGraphs(tmp, topNbGraphs, 0.95, 5, 0.5,time);
+		return ret;
 	}
 	
 	private LinkedList<QueryGraph> getQueryGraphFromTopKResult(LinkedList<Subgraph> graphs) {
@@ -532,7 +556,7 @@ public class SearchQ2SemanticService {
 	 * @return
 	 */
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
-			double edge_score) {
+			double edge_score,evalTime time) {
 		
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
@@ -601,6 +625,9 @@ public class SearchQ2SemanticService {
 //		query = query.substring(0, query.length()-1);
 		
 		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(ds_used,queryList,prune);
+		long end_time = System.currentTimeMillis();
+		time.span_Time = end_time - start_time;
+		
 		if(elementsMap.size()<keywordList.size()) return null;
 //		Map<String,Collection<SummaryGraphElement>> elementsMap2 = new HashMap<String, Collection<SummaryGraphElement>>();
 //		
@@ -646,23 +673,22 @@ public class SearchQ2SemanticService {
 //			}
 //		}
 		
+		
+		start_time = System.currentTimeMillis();
 		LinkedList<Subgraph> graphs = inter.computeQueries(ds_used,elementsMap, distance, topNbGraphs);
 		if(graphs == null) return null;
-		
-		
 		LinkedList<QueryGraph> result = this.getQueryGraphFromTopKResult(graphs);
+		end_time = System.currentTimeMillis();
+		time.compute_Time = end_time - start_time;
 		
 		for(int i=0; i<result.size(); i++) {
 			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
 			result.get(i).print();
 		}
-		
-		long end_time = System.currentTimeMillis();		
-		long computeTime = end_time - start_time;
-		
-		System.out.println();
-		System.out.println("computeQueries time:" + computeTime/1000.0 + "s" );
-		System.out.println();
+
+//		System.out.println();
+//		System.out.println("computeQueries time:" + computeTime/1000.0 + "s" );
+//		System.out.println();
 		return result;
 	}
 
@@ -828,22 +854,95 @@ public class SearchQ2SemanticService {
 ////		System.out.println("Time consuming: "+(end - start) / 1000.0+" s");
 ////		System.out.println();
 //	}
-	
+
 	public static void main(String[] args) throws Exception {
 		SearchQ2SemanticService s = new SearchQ2SemanticService(args[0]);
-		LinkedList<String> ll = new LinkedList<String>();
-		Scanner scanner = new Scanner(System.in);
-		while(true) {
-			System.out.println("please input your parameter!");
-			String line = scanner.nextLine();
-			String[] tokens = line.split(" ");
-			if(tokens[0].equals("quit")) break;
-			ll.clear();
-			for(int i=0;i<tokens.length;i++)  {
-				ll.add(tokens[i].replace('|', ' '));
+		LinkedList<LinkedList<String>> ll_set = new LinkedList<LinkedList<String>>();
+		
+		try {
+			BufferedReader br = new BufferedReader(new FileReader("example.txt"));
+			String line;
+			while((line = br.readLine()) != null) {
+				String tokens[] = line.split("\t");
+				LinkedList<String> ll = new LinkedList<String>();
+				for(int i=0;i<tokens.length;i++) {
+					ll.add(tokens[i]);
+				}
+				ll_set.add(ll);
 			}
-			s.getPossibleGraphs(ll, Integer.valueOf(args[1]));
-			//s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
 		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		ArrayList<evalStruct> evalList = new ArrayList<evalStruct>();
+		
+		try {
+			PrintWriter pw = new PrintWriter("eval.txt");
+			
+		
+		for(LinkedList<String> ll : ll_set) {
+			ArrayList<evalTime> evalTimeList = new ArrayList<evalTime>();
+//			evalStruct es = new evalStruct();
+//			es.ll = ll;
+			
+//			es.keyTime = time.span_Time;
+//			es.topkTime = time.compute_Time;
+			
+//			evalTime total = new evalTime();
+			
+			
+			for(int i=0;i<11;i++) {
+				pw.println(ll.toString());
+				evalTime time = new evalTime();
+				s.getPossibleGraphs(ll, Integer.valueOf(args[1]),time);
+				pw.println(time.span_Time);
+				pw.println(time.compute_Time);
+				pw.println();
+				
+//				total.span_Time += time.span_Time;
+//				total.compute_Time += time.compute_Time;
+			}
+			
+//			es.keyTime1 = total.span_Time / 10;
+//			es.topkTime1 = total.compute_Time / 10;
+//			evalList.add(es);
+			
+			
+		}
+		
+
+
+			pw.close();
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
+
+	
+//	public static void main(String[] args) throws Exception {
+//		SearchQ2SemanticService s = new SearchQ2SemanticService(args[0]);
+//		LinkedList<String> ll = new LinkedList<String>();
+//		Scanner scanner = new Scanner(System.in);
+//		while(true) {
+//			System.out.println("please input your parameter!");
+//			String line = scanner.nextLine();
+//			String[] tokens = line.split("\t");
+//			
+//			for(int t=0;t<5;t++) {
+//				ll.clear();
+//				for(int i=0;i<tokens.length;i++)  {
+//					ll.add(tokens[i].replace('|', ' '));
+//				}
+//				evalTime time = new evalTime();
+//				s.getPossibleGraphs(ll, Integer.valueOf(args[1]),time);
+//				System.err.println("key:" + time.span_Time);
+//				System.err.println("topk:" + time.compute_Time);
+//				System.err.println();
+//			}
+//			//s.getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]), Double.valueOf(args[4]));
+//		}
+//	}
 }
