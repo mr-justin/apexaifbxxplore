@@ -292,6 +292,9 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			MappingIndexReaderFactory.init(mappingIndex);
 			PropertyConfigurator.configure(pathOfDataSource.get("logging").toURL());
 		}
+		loadFacetIndex();
+		loadMappingIndex();
+		loadLuceneIndex();
 	}
 	
 	/* (non-Javadoc)
@@ -330,6 +333,39 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			return null;
 		}
 		return null;
+	}
+
+	private void loadFacetIndex() {
+		for (String s: dataSources.values()) { 
+			try {
+				MappingIndexReaderFactory.getMappingIndexReader(s+"_categories_facet");
+			} catch (Exception e) {}
+			try {
+			MappingIndexReaderFactory.getMappingIndexReader(s+"_relations_facet");
+			} catch (Exception e) {}
+			try {
+			MappingIndexReaderFactory.getMappingIndexReader(s+"_inverserelations_facet");
+			} catch (Exception e) {}
+		}
+	}
+	
+	private void loadMappingIndex() {
+		for (String s: dataSources.values()) 
+			for (String t: dataSources.values()) {
+				if (s!=t) {
+					try {
+						MappingIndexReaderFactory.getMappingIndexReader(s+"_"+t+"_index");
+					} catch (IOException e) {}
+				}
+			}
+	}
+	
+	private void loadLuceneIndex() {	
+		for (String s: dataSources.values()) {
+			try {
+				getSearcher(s);
+			} catch (Exception e) {}
+		}
 	}
 
 	@Override
