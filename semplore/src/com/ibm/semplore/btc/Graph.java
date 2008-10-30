@@ -3,6 +3,9 @@
  */
 package com.ibm.semplore.btc;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Iterator;
 
 import com.ibm.semplore.model.CatRelGraph;
@@ -79,4 +82,13 @@ public interface Graph extends CatRelGraph {
      * @return
      */
     public int removeIEdge(Edge edge, int nodeIndex);
+    
+    /**
+     * Load graph from given file outputed from Graph.toString() 
+     * @param file
+     * @throws FileNotFoundException 
+     * @throws IOException 
+     * @throws NumberFormatException 
+     */
+    public void load(File file) throws FileNotFoundException, NumberFormatException, IOException;
 }
