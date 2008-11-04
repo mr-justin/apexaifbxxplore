@@ -115,7 +115,7 @@ public class SesameRepositoryFactory {
 		return theManager.getSystemRepository();
 	}
 	
-	protected File getRepositoryDir(URI ontologyUri) {
+	public File getRepositoryDir(URI ontologyUri) {
 		
 		return theManager.getRepositoryDir(fsTransduceUri(ontologyUri));
 		

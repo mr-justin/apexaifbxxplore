@@ -303,6 +303,33 @@ public class SesameOntology implements IOntology {
 		}
 		
 	}
+	
+public void export(RDFFormat format, Writer writer) throws OntologyExportException {
+		
+		RepositoryConnection sesConnection = null;
+		try {
+			sesConnection = repository.getConnection();
+			sesConnection.export(Rio.createWriter(format, writer));
+		} catch (RepositoryException e) {
+			throw new OntologyExportException(getUri(), format.toString(), e);
+		} catch (RDFHandlerException e) {
+			throw new OntologyExportException(getUri(), format.toString(), e);
+		} catch (UnsupportedRDFormatException e) {
+			throw new OntologyExportException(getUri(), format.toString(), e);
+		} catch (Exception e) {
+			throw new OntologyExportException(getUri(), format.toString(), e);
+		} finally {
+			if (sesConnection != null) {
+				try {
+					sesConnection.close();
+				} catch (RepositoryException e) {
+					throw new OntologyExportException(getUri(), format.toString(), e);
+				}
+			}
+		}
+		
+	}
+	
 
 	private String getMimeType(String serializationLanguage) throws Exception {
 		
