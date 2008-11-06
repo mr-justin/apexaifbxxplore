@@ -17,6 +17,8 @@ package dataStructure
 		public var vertexList:ArrayCollection;
 		// List of edges (GraphEdge objects)
 		public var edgeList:ArrayCollection;
+		// List representing the mappings (concept-concept and relation-relation)
+		public var mappingList:ArrayCollection;
 		
 		/**
 		 * Default constructor
