@@ -17,6 +17,10 @@ package dataStructure
 		public var source:Source;
 		// The number of results
 		public var resultNb:int;
+		// The URL which is in correct form of hyperlink, i.e. starts with http://
+		// if displayURI=="", it means URI is not clickable(eg. blanknode)
+		public var displayURI:String;
+
 	   
 		/**
 		 * Default constructor
@@ -26,6 +30,7 @@ package dataStructure
 			this.URI = "";
 			this.source = new Source;
 			this.resultNb = 0;
+			this.displayURI = "";
 		}
 	}
 }
