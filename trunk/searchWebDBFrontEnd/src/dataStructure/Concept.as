@@ -9,6 +9,9 @@ package dataStructure
 	[Bindable]
 	public class Concept extends Facet
 	{
+		// Letter identifying the variable associated with this concept (ex: 'x' in '?x relation ?y')
+		public var variableLetter:String;
+		
 		/**
 		 * Default constructor
 		 */
