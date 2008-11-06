@@ -227,7 +227,7 @@ package interfaceElements
 				this.eventHandler.historyBack();
 			} else {
 				// Go to the query composer panel without clearing it to modify the query
-				this.eventHandler.newSearchButtonOnClick();
+				this.eventHandler.newSearchButtonOnClick(true);
 			}
 		}
 		

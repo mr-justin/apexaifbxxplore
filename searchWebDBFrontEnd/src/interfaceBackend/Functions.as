@@ -26,7 +26,7 @@ package interfaceBackend
 				// Get the character
 				var str:String = s.charAt(i);
 				// If it does not match an accepted character, we drop it
-				var pattern:RegExp = /[A-Za-z]/;
+				var pattern:RegExp = /[A-Za-z0-9]/;
 				if(str != " " && str != "\"" && !pattern.test(str))
 					continue;
 				// If it is an opening "
