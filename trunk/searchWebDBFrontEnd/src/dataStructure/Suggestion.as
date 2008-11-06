@@ -9,24 +9,11 @@ package dataStructure
 	 [Bindable]
 	 public class Suggestion
 	 {
-	 	// Label that will be displayed
-		public var label: String;
-		// Source of this facet
-		public var source: Source;
-		// URI of the element
-		public var URI: String;
-		// Confidence of the suggestion
-		public var conf: Number;
-
 		/**
 		 * Default constructor
 		 */
 		public function Suggestion()
 		{
-			this.label = "";
-			this.source = null;
-			this.URI = "";
-			this.conf = 0.0;
 		}
 
 	 }
