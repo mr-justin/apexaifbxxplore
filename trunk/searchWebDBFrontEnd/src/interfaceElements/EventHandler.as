@@ -14,6 +14,8 @@ package interfaceElements
 	import interfaceBackend.SearchEngine;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
+	import mx.utils.ObjectUtil;
 
 	/**
 	 * This class is used to handle all the events that happen on the interface and call the right functions
@@ -74,6 +76,10 @@ package interfaceElements
          * @param queryGraphList The ordered list of query graphs proposed by the backend
          */
         public function getPossibleGraphs_answer(queryGraphList:ArrayCollection) : void {
+        	if(initialSearchView == null) {
+				Alert.show("Your session seems to have expired. Please try refreshing the page.");
+				return;
+			}
         	// Call the initial search view
         	this.initialSearchView.setQueryGraphList(queryGraphList);
         }
@@ -83,6 +89,10 @@ package interfaceElements
          * @param suggestionList The ordered list of suggestions proposed by the backend
          */
         public function getSuggestionsInOtherSource_answer(suggestionList:ArrayCollection) : void {
+        	if(suggestionList == null) {
+				Alert.show("Your session seems to have expired. Please try refreshing the page.");
+				return;
+			}
         	// Display the suggestions
 			this.refineView.addFacets(suggestionList);
         }
@@ -92,6 +102,10 @@ package interfaceElements
          * @param resultPage The first result page
          */
         public function search_answer(resultPage:ResultPage) : void {
+        	if(resultPage == null) {
+				Alert.show("Your session seems to have expired. Please try refreshing the page.");
+				return;
+			}
 			// 1. Display the results
 			this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
 			// 2. Display the facets
@@ -105,6 +119,10 @@ package interfaceElements
          * @param resultPage The result page
          */
         public function getPage_answer(resultPage:ResultPage) : void {
+        	if(resultPage == null) {
+				Alert.show("Your session seems to have expired. Please try refreshing the page.");
+				return;
+			}
         	// Since the facets did not change, we just need to display the page
         	this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
         }
@@ -114,6 +132,10 @@ package interfaceElements
          * @param resultPage The result page
          */
         public function refine_answer(resultPage:ResultPage) : void {
+        	if(resultPage == null) {
+				Alert.show("Your session seems to have expired. Please try refreshing the page.");
+				return;
+			}
         	// 1. Display the results
 			this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
 			// 2. Display the facets
@@ -127,6 +149,10 @@ package interfaceElements
          * @param resultPage The result page
          */
         public function undoLastRefinement_answer(resultPage:ResultPage) : void {
+        	if(resultPage == null) {
+				Alert.show("Your session seems to have expired. Please try refreshing the page.");
+				return;
+			}
         	// 1. Display the results
 			this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
 			// 2. Display the facets
@@ -168,16 +194,18 @@ package interfaceElements
         
         /**
 		 * Actions to accomplish if the user presses the "New Search" button in the Search History Bar
+		 * @param modifyQuery Set to true if the query needs to be modified. If false, it is for a new query.
 		 */
-		public function newSearchButtonOnClick() : void { 
+		public function newSearchButtonOnClick(modifyQuery:Boolean) : void { 
 			// 1. Clear the history
 			this.historyView.clear();
 			// 2. Clear the results
 			this.resultView.clear();
 			// 3. Clear the facets
 			this.refineView.clear();
-			// 4. Clear the query composer
-			this.initialSearchView.clear();
+			// 4. Clear the query composer if needed
+			if(!modifyQuery)
+				this.initialSearchView.clear();
 			// 5. Show the state to input a query
 			this.changeStateFunction("queryState");
 		}

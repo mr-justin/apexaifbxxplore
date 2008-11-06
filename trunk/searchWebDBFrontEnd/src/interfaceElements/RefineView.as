@@ -151,7 +151,7 @@ package interfaceElements
 				} else {
 					lnk.label = f.label + " (" + f.source.name + ") ";
 				}
-				lnk.toolTip = lnk.label;
+				lnk.toolTip = f.URI;
 				lnk.percentWidth = 100;
 				lnk.setStyle("textAlign", "left");
 				lnk.setStyle("cornerRadius", 0);

@@ -97,8 +97,8 @@ package interfaceBackend
 				if(obj is Concept)
 					list.addItem(Facet(obj));
 			}
-			// Call Q2Semantic
-			this.ro2.getSuggestion(list, currentSource.name);
+			// Call Q2Semantic for the top 8 concepts and top 8 relation suggestions
+			this.ro2.getSuggestion(list, currentSource.name, 8);
 		}
 		
 		/**

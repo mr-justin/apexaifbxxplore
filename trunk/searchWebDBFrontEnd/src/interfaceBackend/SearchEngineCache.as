@@ -5,6 +5,8 @@ package interfaceBackend
 	import dataStructure.SeeAlso;
 	
 	import mx.collections.ArrayCollection;
+	import mx.controls.Alert;
+	import mx.utils.ObjectUtil;
 	
 	/**
 	 * This class implements a cache for the search engine to limit its exchange with the server to a minimum

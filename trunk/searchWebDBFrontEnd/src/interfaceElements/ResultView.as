@@ -1,12 +1,8 @@
 package interfaceElements
 {
 	import dataStructure.ArraySnippet;
-	import dataStructure.Attribute;
-	import dataStructure.Concept;
 	import dataStructure.Couple;
-	import dataStructure.Instance;
-	import dataStructure.Litteral;
-	import dataStructure.Relation;
+	import dataStructure.Facet;
 	import dataStructure.ResultItem;
 	import dataStructure.ResultPage;
 	import dataStructure.SeeAlso;
@@ -18,11 +14,8 @@ package interfaceElements
 	import mx.containers.Canvas;
 	import mx.containers.HBox;
 	import mx.containers.Panel;
-	import mx.containers.Tile;
 	import mx.containers.VBox;
-	import mx.controls.Alert;
 	import mx.controls.HRule;
-	import mx.controls.Label;
 	import mx.controls.LinkButton;
 	import mx.controls.ProgressBar;
 	import mx.controls.Spacer;
@@ -242,68 +235,67 @@ package interfaceElements
 			// Result canvas
 			var resultCanvas:Canvas = new Canvas;
 			resultCanvas.percentWidth = 100;
+			resultCanvas.horizontalScrollPolicy = "off";
 			// Result layout
 			var resultBox:VBox = new VBox;
 			resultBox.percentWidth = 100;
 			resultBox.setStyle("verticalGap", 0);
-			resultBox.setStyle("paddingRight", 10);
+			resultBox.setStyle("verticalGap", 0);
+			
 			// Title box
 			var titleBox:HBox = new HBox;
 			titleBox.percentWidth = 100;
 			titleBox.height = 24;
 			titleBox.setStyle("verticalAlign", "middle");
 			titleBox.setStyle("horizontalGap", 0);
-			// Snippet box
-			var snippetBox:VBox = new VBox;
-			snippetBox.percentWidth = 100;
-			snippetBox.setStyle("paddingLeft", 8);
-			snippetBox.setStyle("paddingRight", 8);
-			// See also box
-			var seeAlsoBox:VBox = new VBox;
-			seeAlsoBox.percentWidth = 100;
-			// Array snippet box
-			var arraySnippetBox:VBox = new VBox;
-			arraySnippetBox.percentWidth = 100;
+			titleBox.setStyle("paddingRight", 10);
 			// Title button
 			var titleButton:LinkButton = new LinkButton;
 			titleButton.label = r.title;
 			titleButton.setStyle("color", "#0000ff");
-			// Type label
-			var typeLabel:Label = new Label;
-			typeLabel.text = "(" + r.type + ")";
 			// Head space
 			var headSpacer:Spacer = new Spacer;
 			headSpacer.percentWidth = 100;
 			// Score progress bar
 			var scoreBar:ProgressBar = new ProgressBar;
-			scoreBar.width = 100;
+			scoreBar.width = 120;
 			scoreBar.label = "Score: " + (int(r.score*100)).toString();
 			scoreBar.labelPlacement = "left";
 			scoreBar.minimum = 0.0;
 			scoreBar.maximum = 1.0;
 			scoreBar.indeterminate = false;
 			scoreBar.mode = "manual";
-			// Snippet text
-			var snippetText:Text = new Text;
-			snippetText.text = r.snippet;
-			snippetText.percentWidth = 100;
-			// See also button
-			var seeAlsoBtn:LinkButton = new LinkButton;
-			seeAlsoBtn.label = "See also...";
+			// Update the score progress bar
+			scoreBar.setProgress(r.score, 1.0);
+			
+			// Array snippet box
+			var arraySnippetBox:VBox = new VBox;
+			arraySnippetBox.percentWidth = 100;
 			// Array snippet button
 			var arraySnippetBtn:LinkButton = new LinkButton;
-			arraySnippetBtn.label = "Array snippet...";
+			arraySnippetBtn.label = "Description...";
+			
+			// See also box
+			var seeAlsoBox:VBox = new VBox;
+			seeAlsoBox.percentWidth = 100;
+			// See also button
+			var seeAlsoBtn:LinkButton = new LinkButton;
+			seeAlsoBtn.label = "Same As...";
+			
+			// URI of the result item
+			var URIText:Text = new Text;
+			URIText.setStyle("color", "#2a7fff");
+			URIText.setStyle("paddingLeft", 10);
+			URIText.text = r.URL;
 			
 			// Place the elements
-			resultBox.addChild(titleBox);
-			resultBox.addChild(snippetBox);
-			resultBox.addChild(seeAlsoBox);
+			resultBox.addChild(titleBox);	
 			resultBox.addChild(arraySnippetBox);
+			resultBox.addChild(seeAlsoBox);
+			resultBox.addChild(URIText);
 			titleBox.addChild(titleButton);
-			titleBox.addChild(typeLabel);
 			titleBox.addChild(headSpacer);
 			titleBox.addChild(scoreBar);
-			snippetBox.addChild(snippetText);
 			seeAlsoBox.addChild(seeAlsoBtn);
 			arraySnippetBox.addChild(arraySnippetBtn);
 			resultCanvas.addChild(resultBox);
@@ -315,8 +307,6 @@ package interfaceElements
 				resultSeparator.percentWidth = 100;
 				this.resultItemsArea.addChild(resultSeparator);
 			}
-			// Update the score progress bar
-			scoreBar.setProgress(r.score, 1.0);
 			
 			// Add the elements to the lists used to be able to handle the events
 			this.resultItemList.addItem(r);
@@ -366,46 +356,127 @@ package interfaceElements
 			var box:VBox = VBox(btn.parent);
 			// Remove the button
 			box.removeAllChildren();
+			
 			// Change the padding of the box
 			box.setStyle("paddingLeft", 10);
 			box.setStyle("paddingRight", 10);
-			box.setStyle("paddingTop", 10);
-			box.setStyle("paddingBottom", 10);
+			box.setStyle("paddingTop", 5);
+			box.setStyle("paddingBottom", 5);
+			box.setStyle("verticalGap", 0);
 			// Create a nice area to display the information
 			var canvas:Canvas = new Canvas;
 			canvas.percentWidth = 100;
-			canvas.setStyle("borderStyle", "solid");
-			canvas.setStyle("borderThickness", 1);
-			canvas.setStyle("borderColor", "#c0c0c0");
-			var tile:Tile = new Tile;
-			tile.percentWidth = 100;
+			canvas.setStyle("backgroundColor", "#ececec");
+			canvas.horizontalScrollPolicy = "off";
 			box.addChild(canvas);
-			canvas.addChild(tile);
+			// Create a VBox in the canvas
+			var canvasVLayout:VBox = new VBox;
+			canvasVLayout.setStyle("verticalGap", 0);
+			canvas.addChild(canvasVLayout);
 			
-			var lbl3:Label = new Label;
-				lbl3.text = "See Also:";
-				lbl3.setStyle("fontWeight", "bold");
-				tile.addChild(lbl3);
 			// If s is null, we did not get anything
-			
 			if(s == null) {
-				var lbl:Label = new Label;
-				lbl.text = "Sorry, no associated instances were found";
-				tile.addChild(lbl);
+				var sorry:LinkButton = new LinkButton;
+				sorry.label = "Sorry, no associated instance was found";
+				sorry.enabled = false;
+				sorry.setStyle("disabledColor", "#000000");
+				sorry.setStyle("fontStyle", "italic");
+				sorry.setStyle("fontWeight", "normal");
+				canvasVLayout.addChild(sorry);
 			} else {
-				
-				// Add all the instances (to improve)
-				for(var j:int = 0; j < s.getFacetList().length; j++) {
-					var lbl2:Label = new Label;
-					lbl2.text = Instance(s.facetList.getItemAt(j)).label;
-					tile.addChild(lbl2);
+				// Create 2 columns
+				var columnBox1:HBox = new HBox;
+				columnBox1.percentWidth = 100;
+				canvasVLayout.addChild(columnBox1);
+				// Label
+				var titleGroup1:LinkButton = new LinkButton;
+				titleGroup1.label = "See Also";
+				titleGroup1.width = 100;
+				titleGroup1.enabled = false;
+				titleGroup1.setStyle("disabledColor", "#000000");
+				titleGroup1.setStyle("textAlign", "left");
+				columnBox1.addChild(titleGroup1);
+				// Data
+				var dataVBox1:VBox = new VBox;
+				dataVBox1.percentWidth = 100;
+				dataVBox1.setStyle("verticalGap", 0);
+				columnBox1.addChild(dataVBox1);
+				// Add all the instances
+				for(var j:int = 0; j < s.facetList.length; j++) {			
+					var instanceLinkBtn:LinkButton = new LinkButton;
+					instanceLinkBtn.label = Facet(s.facetList.getItemAt(j)).label;
+					instanceLinkBtn.toolTip = Facet(s.facetList.getItemAt(j)).displayURI;
+					// If the URI is non-clickable, disable the button
+					if(instanceLinkBtn.toolTip == "") {
+						instanceLinkBtn.enabled = false;
+						instanceLinkBtn.setStyle("disabledColor", "#000000");
+						instanceLinkBtn.setStyle("fontWeight", "normal");
+					} else {
+						instanceLinkBtn.label = Facet(s.facetList.getItemAt(j)).displayURI;
+						instanceLinkBtn.setStyle("color", "#0000ff");
+					}
+					dataVBox1.addChild(instanceLinkBtn);
 				}
 			}
+			// Button to hide
+			btn.removeEventListener(MouseEvent.MOUSE_DOWN, seeAlsoClicked);
+			btn.setStyle("fontWeight", "normal");
+			btn.label = "(Collapse)";
+			btn.addEventListener(MouseEvent.MOUSE_DOWN, hideSeeAlso);
+			canvasVLayout.addChild(btn);
 			// Reinitialize the pressed index
 			this.pressedIndex = -1;
 		}
-				
 		
+		/**
+		 * Function called when the user wants to collapse a seeAlso
+		 * @param The event raised
+		 */	
+		private function hideSeeAlso(e:MouseEvent) : void {
+			// 1. Find the index of the pressed link
+			this.pressedIndex = this.seeAlsoBtnList.getItemIndex(e.target);
+			// Find the see also button that was pressed
+			var btn:LinkButton = LinkButton(this.seeAlsoBtnList.getItemAt(this.pressedIndex));
+			// Find its parent (VBox)
+			var box:VBox = VBox(btn.parent.parent.parent);
+			// Remove the button
+			box.removeAllChildren();
+			box.setStyle("paddingLeft", 0);
+			box.setStyle("paddingRight", 0);
+			box.setStyle("paddingTop", 0);
+			box.setStyle("paddingBottom", 0);
+			// Change the label
+			btn.label = "Same as...";
+			btn.removeEventListener(MouseEvent.MOUSE_DOWN, hideSeeAlso);
+			btn.setStyle("fontWeight", "bold");
+			btn.addEventListener(MouseEvent.MOUSE_DOWN, seeAlsoClicked);
+			box.addChild(btn);
+		}
+		
+		/**
+		 * Function called when the user wants to collapse an arraySnippet
+		 * @param The event raised
+		 */	
+		private function hideArraySnippet(e:MouseEvent) : void {
+			// 1. Find the index of the pressed link
+			this.pressedIndex = this.arraySnippetBtnList.getItemIndex(e.target);
+			// Find the see also button that was pressed
+			var btn:LinkButton = LinkButton(this.arraySnippetBtnList.getItemAt(this.pressedIndex));
+			// Find its parent (VBox)
+			var box:VBox = VBox(btn.parent.parent.parent);
+			// Remove the button
+			box.removeAllChildren();
+			box.setStyle("paddingLeft", 0);
+			box.setStyle("paddingRight", 0);
+			box.setStyle("paddingTop", 0);
+			box.setStyle("paddingBottom", 0);
+			// Change the label
+			btn.label = "Description...";
+			btn.removeEventListener(MouseEvent.MOUSE_DOWN, hideArraySnippet);
+			btn.setStyle("fontWeight", "bold");
+			btn.addEventListener(MouseEvent.MOUSE_DOWN, arraySnippetClicked);
+			box.addChild(btn);
+		}
 		
 		/**
 		 * Displays an arraySnippet element
@@ -417,106 +488,154 @@ package interfaceElements
 			var box:VBox = VBox(btn.parent);
 			// Remove the button
 			box.removeAllChildren();
+			
 			// Change the padding of the box
 			box.setStyle("paddingLeft", 10);
 			box.setStyle("paddingRight", 10);
-			box.setStyle("paddingTop", 10);
-			box.setStyle("paddingBottom", 10);
-			// If s is null, we did not get anything
-			if(a == null || (a.relation_attribute.length == 0 && a.attribute_value.length == 0 && a.classeList.length == 0)) {
-				// Create a nice area to display the information
-				var canvas:Canvas = new Canvas;
-				canvas.percentWidth = 100;
-				canvas.setStyle("borderStyle", "solid");
-				canvas.setStyle("borderThickness", 1);
-				canvas.setStyle("borderColor", "#c0c0c0");
-				var tile:Tile = new Tile;
-				tile.percentWidth = 100;
-				box.addChild(canvas);
-				canvas.addChild(tile);
+			box.setStyle("paddingTop", 5);
+			box.setStyle("paddingBottom", 5);
+			box.setStyle("verticalGap", 0);
+			// Create a nice area to display the information
+			var canvas:Canvas = new Canvas;
+			canvas.percentWidth = 100;
+			canvas.setStyle("backgroundColor", "#ececec");
+			canvas.horizontalScrollPolicy = "off";
+			box.addChild(canvas);
+			// Create a VBox in the canvas
+			var canvasVLayout:VBox = new VBox;
+			canvasVLayout.setStyle("verticalGap", 0);
+			canvas.addChild(canvasVLayout);
 			
-				var lbl3:Label = new Label;
-				lbl3.text = "Array Snippet:";
-				lbl3.setStyle("fontWeight", "bold");
-				tile.addChild(lbl3);
-
-				var lbl:Label = new Label;
-				lbl.text = "Sorry, no associated information was found";
-				tile.addChild(lbl);
-			} else {	
-				// If we have relations-attribute to display
-				if(a.relation_attribute.length > 0) {
-					// Create a nice area to display the relations
-					var canvasRelation:Canvas = new Canvas;
-					canvasRelation.percentWidth = 100;
-					canvasRelation.setStyle("borderStyle", "solid");
-					canvasRelation.setStyle("borderThickness", 1);
-					canvasRelation.setStyle("borderColor", "#c0c0c0");
-					var tileRelation:Tile = new Tile;
-					tileRelation.percentWidth = 100;
-					canvasRelation.addChild(tileRelation);
-					box.addChild(canvasRelation);
-					// Label
-					var lblRelation:Label = new Label;
-					lblRelation.text = "Relation - Attribute:";
-					lblRelation.setStyle("fontWeight", "bold");
-					tileRelation.addChild(lblRelation);
-					// Add all the relations (to improve)
-					for(var j:int = 0; j < a.relation_attribute.length; j++) {
-						var lblRelation2:Label = new Label;
-						lblRelation2.text = Relation(Couple(a.relation_attribute.getItemAt(j)).element1).label + Attribute(Couple(a.relation_attribute.getItemAt(j)).element2).label;
-						tileRelation.addChild(lblRelation2);
-					}
-				}
-				// If we have attribute-value to display
-				if(a.attribute_value.length > 0) {
-					// Create a nice area to display the attributes
-					var canvasAttribute:Canvas = new Canvas;
-					canvasAttribute.percentWidth = 100;
-					canvasAttribute.setStyle("borderStyle", "solid");
-					canvasAttribute.setStyle("borderThickness", 1);
-					canvasAttribute.setStyle("borderColor", "#c0c0c0");
-					var tileAttribute:Tile = new Tile;
-					tileAttribute.percentWidth = 100;
-					canvasAttribute.addChild(tileAttribute);
-					box.addChild(canvasAttribute);
-					// Label
-					var lblAttribute:Label = new Label;
-					lblAttribute.text = "Attribute - Value:";
-					lblAttribute.setStyle("fontWeight", "bold");
-					tileAttribute.addChild(lblAttribute);
-					// Add all the attributes (to improve)
-					for(var j2:int = 0; j2 < a.attribute_value.length; j2++) {
-						var lblAttribute2:Label = new Label;
-						lblAttribute2.text = Attribute(Couple(a.attribute_value.getItemAt(j2)).element1).label + Litteral(Couple(a.attribute_value.getItemAt(j2)).element2).label;
-						tileAttribute.addChild(lblAttribute2);
-					}
-				}
+			// If a is null, we did not get anything
+			if(a == null || (a.relation_attribute.length == 0 && a.attribute_value.length == 0 && a.classeList.length == 0)) {
+				var sorry:LinkButton = new LinkButton;
+				sorry.label = "Sorry, no description was found";
+				sorry.enabled = false;
+				sorry.setStyle("disabledColor", "#000000");
+				sorry.setStyle("fontStyle", "italic");
+				sorry.setStyle("fontWeight", "normal");
+				canvasVLayout.addChild(sorry);
+			} else {
 				// If we have classes to display
 				if(a.classeList.length > 0) {
-					// Create a nice area to display the classes
-					var canvasClass:Canvas = new Canvas;
-					canvasClass.percentWidth = 100;
-					canvasClass.setStyle("borderStyle", "solid");
-					canvasClass.setStyle("borderThickness", 1);
-					canvasClass.setStyle("borderColor", "#c0c0c0");
-					var tileClass:Tile = new Tile;
-					tileClass.percentWidth = 100;
-					canvasClass.addChild(tileClass);
-					box.addChild(canvasClass);
+					// Create 2 columns
+					var columnBox1:HBox = new HBox;
+					columnBox1.percentWidth = 100;
+					canvasVLayout.addChild(columnBox1);
 					// Label
-					var lblClass:Label = new Label;
-					lblClass.text = "Classe:";
-					lblClass.setStyle("fontWeight", "bold");
-					tileClass.addChild(lblClass);
-					// Add all the classes (to improve)
-					for(var j3:int = 0; j3 < a.attribute_value.length; j3++) {
-						var lblClass2:Label = new Label;
-						lblClass2.text = Concept(Couple(a.classeList.getItemAt(j3)).element1).label;
-						tileClass.addChild(lblClass2);
+					var titleGroup1:LinkButton = new LinkButton;
+					titleGroup1.label = "Class";
+					titleGroup1.width = 100;
+					titleGroup1.enabled = false;
+					titleGroup1.setStyle("disabledColor", "#000000");
+					titleGroup1.setStyle("textAlign", "left");
+					columnBox1.addChild(titleGroup1);
+					// Data
+					var dataVBox1:HBox = new HBox;
+					dataVBox1.percentWidth = 100;
+					dataVBox1.setStyle("verticalAlign", "middle");
+					columnBox1.addChild(dataVBox1);
+					// Add all the classes
+					for(var j3:int = 0; j3 < a.classeList.length; j3++) {			
+						var classLinkBtn:LinkButton = new LinkButton;
+						classLinkBtn.label = Facet(a.classeList.getItemAt(j3)).label;
+						classLinkBtn.toolTip = Facet(a.classeList.getItemAt(j3)).URI;
+						classLinkBtn.enabled = false;
+						classLinkBtn.setStyle("fontWeight", "normal");
+						classLinkBtn.setStyle("disabledColor", "#000000");
+						dataVBox1.addChild(classLinkBtn);
 					}
 				}
+				// If we have relations-attribute or attribute-values to display
+				if(a.relation_attribute.length > 0 || a.attribute_value.length > 0) {
+					// Create 2 columns
+					var columnBox2:HBox = new HBox;
+					columnBox2.percentWidth = 100;
+					canvasVLayout.addChild(columnBox2);
+					// Label
+					var titleGroup2:LinkButton = new LinkButton;
+					titleGroup2.label = "Description";
+					titleGroup2.width = 100;
+					titleGroup2.enabled = false;
+					titleGroup2.setStyle("disabledColor", "#000000");
+					titleGroup2.setStyle("textAlign", "left");
+					columnBox2.addChild(titleGroup2);
+					// Data
+					var dataVBox2:VBox = new VBox;
+					dataVBox2.percentWidth = 100;
+					dataVBox2.setStyle("verticalGap", 0);
+					columnBox2.addChild(dataVBox2);
+					// Add all the attributes
+					for(var j2:int = 0; j2 < a.attribute_value.length; j2++) {
+						var attributeBox:HBox = new HBox;
+						attributeBox.setStyle("horizontalGap", 0);			
+						var attributeLinkBtn:LinkButton = new LinkButton;
+						attributeLinkBtn.label = Facet(Couple(a.attribute_value.getItemAt(j2)).element1).label + ":";
+						attributeLinkBtn.toolTip = Facet(Couple(a.attribute_value.getItemAt(j2)).element1).URI;
+						attributeLinkBtn.setStyle("paddingRight", 0);
+						attributeLinkBtn.enabled = false;
+						attributeLinkBtn.setStyle("disabledColor", "#000000");
+						attributeLinkBtn.setStyle("fontWeight", "normal");
+						var attributeLinkBtn2:LinkButton = new LinkButton;
+						attributeLinkBtn2.label = Facet(Couple(a.attribute_value.getItemAt(j2)).element2).label;
+						attributeLinkBtn2.toolTip = Facet(Couple(a.attribute_value.getItemAt(j2)).element2).displayURI;
+						attributeLinkBtn2.addEventListener(MouseEvent.MOUSE_DOWN, linkClicked);
+						attributeLinkBtn2.setStyle("paddingLeft", 0);
+						// If the URI is non-clickable, disable the button
+						if(attributeLinkBtn2.toolTip == "") {
+							attributeLinkBtn2.enabled = false;
+							attributeLinkBtn2.setStyle("disabledColor", "#000000");
+							attributeLinkBtn2.setStyle("fontWeight", "normal");
+						} else {
+							attributeLinkBtn2.label = Facet(Couple(a.relation_attribute.getItemAt(j)).element2).displayURI;
+							attributeLinkBtn2.setStyle("color", "#0000ff");
+						}
+						if(attributeLinkBtn.label != "wikilink:" && attributeLinkBtn.label != "reference:" && attributeLinkBtn.label != "relatedInstance:") {
+							attributeBox.addChild(attributeLinkBtn);
+							attributeBox.addChild(attributeLinkBtn2);
+							dataVBox2.addChild(attributeBox);
+						}
+					}
+					// Add all the relations
+					for(var j:int = 0; j < a.relation_attribute.length; j++) {
+						var relationBox:HBox = new HBox;
+						relationBox.setStyle("horizontalGap", 0);			
+						var relationLinkBtn:LinkButton = new LinkButton;
+						relationLinkBtn.label = Facet(Couple(a.relation_attribute.getItemAt(j)).element1).label + ":";
+						relationLinkBtn.toolTip = Facet(Couple(a.relation_attribute.getItemAt(j)).element1).URI;
+						relationLinkBtn.setStyle("paddingRight", 0);
+						relationLinkBtn.enabled = false;
+						relationLinkBtn.setStyle("disabledColor", "#000000");
+						relationLinkBtn.setStyle("fontWeight", "normal");
+						var relationLinkBtn2:LinkButton = new LinkButton;
+						relationLinkBtn2.label = Facet(Couple(a.relation_attribute.getItemAt(j)).element2).label;
+						relationLinkBtn2.toolTip = Facet(Couple(a.relation_attribute.getItemAt(j)).element2).displayURI;
+						relationLinkBtn2.addEventListener(MouseEvent.MOUSE_DOWN, linkClicked);
+						relationLinkBtn2.setStyle("paddingLeft", 0);
+						// If the URI is non-clickable, disable the button
+						if(relationLinkBtn2.toolTip == "") {
+							relationLinkBtn2.enabled = false;
+							relationLinkBtn2.setStyle("disabledColor", "#000000");
+							relationLinkBtn2.setStyle("fontWeight", "normal");
+						} else {
+							relationLinkBtn2.label = Facet(Couple(a.relation_attribute.getItemAt(j)).element2).displayURI;
+							relationLinkBtn2.setStyle("color", "#0000ff");
+						}
+						if(relationLinkBtn.label != "wikilink:" && relationLinkBtn.label != "reference:" && relationLinkBtn.label != "relatedInstance:") {
+							relationBox.addChild(relationLinkBtn);
+							relationBox.addChild(relationLinkBtn2);
+							dataVBox2.addChild(relationBox);
+						}
+					}
+				}
+				
 			}
+			// Button to hide
+			btn.removeEventListener(MouseEvent.MOUSE_DOWN, arraySnippetClicked);
+			btn.setStyle("fontWeight", "normal");
+			btn.label = "(Collapse)";
+			btn.addEventListener(MouseEvent.MOUSE_DOWN, hideArraySnippet);
+			canvasVLayout.addChild(btn);
 			// Reinitialize the pressed index
 			this.pressedIndex = -1;
 		}
@@ -530,8 +649,21 @@ package interfaceElements
 			var index:int = this.titleBtnList.getItemIndex(e.target);
 			// 2. Get the corresponding result item
 			var r:ResultItem = ResultItem(this.resultItemList.getItemAt(index));
-			// 3. Open the URL in an other page of the browser
-			goToURL(r.URL);
+			// 3. Remove "<" and ">" from the URL
+			var url:String = r.URL;
+			if(url.length > 2 && url.charAt(0) == "<" && url.charAt(url.length - 1) == ">")
+				url = url.substr(1, url.length - 2);
+			// 4. Open the URL in an other page of the browser
+			goToURL(url);
+		}
+		
+		/**
+		 * Function called when the user clicks a link
+		 * @param e The event raised
+		 */
+		private function linkClicked(e:MouseEvent) : void {
+			// Open the URL in an other page of the browser
+			goToURL(LinkButton(e.target).toolTip);
 		}
 		
 		//open URL passed to this method in a new web page
