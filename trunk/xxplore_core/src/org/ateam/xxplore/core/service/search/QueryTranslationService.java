@@ -5,7 +5,9 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,6 +22,11 @@ import org.ateam.xxplore.core.model.definition.RelationDefinition;
 import org.ateam.xxplore.core.model.definition.ModelDefinition.DefinitionTuple;
 import org.ateam.xxplore.core.service.IService;
 import org.ateam.xxplore.core.service.IServiceListener;
+import org.team.xxplore.core.service.search.datastructure.Concept;
+import org.team.xxplore.core.service.search.datastructure.Facet;
+import org.team.xxplore.core.service.search.datastructure.GraphEdge;
+import org.team.xxplore.core.service.search.datastructure.Litteral;
+import org.team.xxplore.core.service.search.datastructure.QueryGraph;
 import org.xmedia.oms.model.api.IDatatype;
 import org.xmedia.oms.model.api.ILiteral;
 import org.xmedia.oms.model.api.INamedConcept;
@@ -488,6 +495,85 @@ public class QueryTranslationService implements IService {
 		}
 		
 		return triples;
+	}
+	
+	public QueryWrapper translateGraph2SparqlQuery(QueryGraph graph){
+		
+		LinkedList<Facet> vertices = graph.getVertexList();
+		LinkedList<GraphEdge> edges = graph.getEdgeList();
+		ListIterator<Facet> iter = (ListIterator<Facet>) vertices.iterator();
+		ListIterator<GraphEdge> iteredges = (ListIterator<GraphEdge>) edges.iterator();
+		
+		
+		LinkedList<String> vars = new LinkedList<String>();
+		String querystring = new String();
+		String typestring = new String();
+		
+		querystring = "SELECT ";
+		
+		while(iter.hasNext()){
+			Facet vertex = (Facet) iter.next();
+			if(vertex instanceof Concept){
+				String var = ((Concept) vertex).variableLetter;
+				vars.add(var);	
+				querystring += "?"+var +" ";
+				typestring += " ?"+ var +" "+getDelimitedIRI(ExploreEnvironment.IS_INSTANCE_OF_URI)+" "+vertex.getURI()+" . ";
+			}
+		}
+		
+		querystring += " WHERE { ";
+		
+		//type
+		querystring += typestring;
+		
+		//remaining graph pattern
+		
+		while(iteredges.hasNext()){
+			GraphEdge edge = iteredges.next();
+			
+			//FROM
+			Facet vertex = edge.getFromElement();
+			if(vertex instanceof Concept){
+				String var = ((Concept) vertex).variableLetter;
+				querystring += " ?"+var+" ";
+			}else{
+				querystring += " "+vertex.getURI()+" ";
+			}
+			//Relation
+			
+			querystring += " "+edge.getDecorationElement().getURI();
+			
+			//TO
+			Facet vertexTo = edge.getToElement();
+			if(vertexTo instanceof Concept){
+				String var = ((Concept) vertexTo).variableLetter;
+				querystring += " ?"+var+" . ";
+			}else if(vertexTo instanceof Litteral){
+				querystring += " \""+ vertexTo.getURI()+"\" . ";
+			}else{
+				querystring += " "+vertexTo.getURI()+" . ";
+			}
+			
+		}
+		
+		querystring += "}";
+		
+		return new QueryWrapper(querystring,vars.toArray(new String[0]));
+		
+	}
+	
+	public ArrayList<QueryWrapper> translateGraphs2SparqlQueriers(LinkedList<QueryGraph> graphs){
+		
+		ListIterator<QueryGraph> iter = (ListIterator<QueryGraph>) graphs.iterator();
+		ArrayList<QueryWrapper> sparqls = new ArrayList<QueryWrapper>();
+		
+		int i = 0;
+		while(iter.hasNext()){
+			
+			sparqls.add(i,translateGraph2SparqlQuery(iter.next()));
+			i++;
+		}
+		return sparqls;
 	}
 	
 }
