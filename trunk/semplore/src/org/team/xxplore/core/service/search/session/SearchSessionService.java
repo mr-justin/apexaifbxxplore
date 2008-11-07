@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
@@ -50,9 +51,8 @@ import flex.messaging.FlexContext;
 
 public class SearchSessionService {
 	private static final String DS_SEARCH_PREFIX = "xxds"; 
+	private static final int CacheCount = 10000;
 	static Logger logger = Logger.getLogger(SearchSessionService.class);
-	static LRUHashMap<String, ArraySnippet> snippetCache = new LRUHashMap<String, ArraySnippet>(10000);
-	static LRUHashMap<String, SeeAlso> seealsoCache = new LRUHashMap<String, SeeAlso>(10000);
 
 	/**
 	 * This method returns a ResultPage object, representing the first page matching the query for
@@ -564,6 +564,8 @@ public class SearchSessionService {
 		FlexContext.getFlexSession().setAttribute("resultHistory", null);
 		FlexContext.getFlexSession().setAttribute("operationHistory", null);
 		FlexContext.getFlexSession().setAttribute("currentGraph", null);
+		FlexContext.getFlexSession().setAttribute("seeAlsoCache", null);
+		FlexContext.getFlexSession().setAttribute("arraySnippetCache", null);
 	}
 	
 	/**
@@ -601,7 +603,13 @@ public class SearchSessionService {
 	
 	private SeeAlso getSeeAlsoItem(String currentDataSource, int docID, String resultItemURL) throws InterruptedException {
 		SeeAlso cached;
-		if ((cached = seealsoCache.get(currentDataSource+"$$$"+resultItemURL))!=null) return cached;
+		LRUHashMap<String, SeeAlso> cache = 
+			(LRUHashMap<String, SeeAlso>) FlexContext.getFlexSession().getAttribute("seeAlsoCache");
+		if (cache == null) {
+			cache = new LRUHashMap<String, SeeAlso>(CacheCount);
+			FlexContext.getFlexSession().setAttribute("seeAlsoCache", cache);
+		}
+		if ((cached = cache.get(currentDataSource+"$$$"+resultItemURL))!=null) return cached;
 		int id = SemplorePool.acquire();
 		QueryEvaluator eval = SemplorePool.getEvaluator(id);
 		ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso(currentDataSource, docID, resultItemURL);
@@ -627,7 +635,7 @@ public class SearchSessionService {
 		item.setURL(resultItemURL);
 		seeAlso.setResultItem(item);
 		
-		seealsoCache.put(currentDataSource+"$$$"+resultItemURL, seeAlso);
+		cache.put(currentDataSource+"$$$"+resultItemURL, seeAlso);
 		return seeAlso;
 	}
 
@@ -713,8 +721,15 @@ public class SearchSessionService {
 	
 	private ArraySnippet getArraySnippet(String ds, int docID,
 			String resultItemURL) throws InterruptedException {
+		LRUHashMap<String, ArraySnippet> cache = 
+			(LRUHashMap<String, ArraySnippet>) FlexContext.getFlexSession().getAttribute("arraySnippetCache");
+		if (cache == null) {
+			cache = new LRUHashMap<String, ArraySnippet>(CacheCount);
+			FlexContext.getFlexSession().setAttribute("arraySnippetCache", cache);
+		}
+
 		ArraySnippet cached;
-		if ((cached = snippetCache.get(ds+"$$$"+resultItemURL))!=null) return cached;
+		if ((cached = cache.get(ds+"$$$"+resultItemURL))!=null) return cached;
 
 		int id = SemplorePool.acquire();
 		QueryEvaluator eval = SemplorePool.getEvaluator(id);
@@ -722,7 +737,7 @@ public class SearchSessionService {
 		SemplorePool.release(id);
 		
 		ArraySnippet as = this.getSnippet(ds, resultItemURL, snippet_str);
-		snippetCache.put(ds+"$$$"+resultItemURL, as);
+		cache.put(ds+"$$$"+resultItemURL, as);
 		return as;
 	}
 
