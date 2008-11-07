@@ -7,6 +7,9 @@ import java.util.Properties;
 import com.ibm.semplore.config.Config;
 
 /**
+ * Prepare data to store in the mapping index:
+ * convert instances' global ID into lucene's document id
+ * 
  * @author xrsun
  *
  */

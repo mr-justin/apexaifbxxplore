@@ -21,13 +21,21 @@ import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
 /**
+ * Build Snippet Index using BerkeleyDB.
+ * Input format should be triple *sorted* by subject.
+ * In the DB, one record is keeped with one instance in this format:
+ * predicate\tvalue\n
+ * predicate\tvalue\n
+ * ...
+ * 
  * @author xrsun
  * 
  */
 public class BuildSnippetDB {
 
 	/**
-	 * @param args
+	 * @param args[0] location for database
+	 * @param args[1] path to input triple file. Use stdin default.
 	 * @throws DatabaseException
 	 * @throws EnvironmentLockedException
 	 * @throws IOException 

@@ -17,6 +17,14 @@ import java.util.LinkedList;
 import com.ibm.semplore.util.BufferedRandomAccessFile;
 
 /**
+ * MappingIndex is a kind of structure that maps one integer to a set of integers.
+ * Every index contains one index head file and one index data file. The head files  
+ * are read into memory.
+ * 
+ * Currently two implementations are available by switching `twolevel'. If true,
+ * another index of the head index is created and loaded into memory. This must be 
+ * the case when the head index is large to reside in memory. 
+ * 
  * @author xrsun
  * 
  */

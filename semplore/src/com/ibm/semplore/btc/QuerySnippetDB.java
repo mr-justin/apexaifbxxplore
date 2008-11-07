@@ -17,7 +17,7 @@ import com.sleepycat.persist.PrimaryIndex;
 import com.sleepycat.persist.StoreConfig;
 
 /**
- * @author Administrator
+ * @author xrsun
  *
  */
 public class QuerySnippetDB {

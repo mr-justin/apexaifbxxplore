@@ -20,7 +20,6 @@ import com.ibm.semplore.btc.Visit;
  */
 public class DecomposedGraphImpl implements DecomposedGraph {
 	HashMap<Integer, SubGraph> subgraphs = new HashMap<Integer, SubGraph>(); 
-//	ArrayList<SubGraph> subgraphs = new ArrayList<SubGraph>();
 	NodeInSubGraph targetVariable;
 
 	/* (non-Javadoc)
@@ -71,6 +70,11 @@ public class DecomposedGraphImpl implements DecomposedGraph {
 		if (post!=null) post.visit(parent, g);
 	}
 
+	/**
+	 * return the subgraphs that connects to graph g 
+	 * @param g
+	 * @return
+	 */
 	private ArrayList<SubGraph> getEdges(SubGraph g) {
 		ArrayList<SubGraph> arr = new ArrayList<SubGraph>();
 		for (int i=0; i<g.numOfNodes(); i++) {

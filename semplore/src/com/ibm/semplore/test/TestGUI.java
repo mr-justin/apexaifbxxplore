@@ -39,6 +39,8 @@ import com.ibm.semplore.xir.impl.IndexReaderImpl;
 import com.ibm.semplore.xir.impl.TermFactoryImpl;
 
 /**
+ * A GUI utility to test searching index of a particular data set. 
+ * 
  * @author xrsun
  *
  */

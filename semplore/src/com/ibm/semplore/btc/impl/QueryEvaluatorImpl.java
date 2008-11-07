@@ -26,7 +26,6 @@ import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.QueryPlanner;
 import com.ibm.semplore.btc.QuerySnippetDB;
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
-import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSourcesImpl;
 import com.ibm.semplore.btc.SubGraph;
 import com.ibm.semplore.btc.Visit;
 import com.ibm.semplore.btc.XFacetedResultSetForMultiDataSources;
@@ -90,8 +89,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		return evaluate(planner, null);
 	}
 
+	//initialization before evaluation traverse
 	private void traverseInit(QueryPlanner planner, HashMap<NodeInSubGraph, DocStream> startCache) {
 		result = new HashMap<SubGraph, HashMap<Integer, DocStream>>();
+		
+		//put start cache into appropriate nodes
 		if (startCache!=null) {
 			for (Entry<NodeInSubGraph, DocStream> i: startCache.entrySet()) {
 				NodeInSubGraph n = i.getKey();
@@ -108,10 +110,12 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		visited = new HashSet<Integer>();
 		targetResult = null;
 	}
+	
 	protected XFacetedResultSetForMultiDataSources evaluate(QueryPlanner planner, HashMap<NodeInSubGraph, DocStream> startCache) throws Exception {
 		traverseInit(planner, startCache);
 		relax = false;
 		planner.startTraverse(new PreVisit(), new PostVisit());
+		//if previous evaluation gives no result, we try again with relaxed constraints
 		if (relax) {
 			traverseInit(planner, startCache);
 			planner.startTraverse(new PreVisit(), new PostVisit());
@@ -165,20 +169,19 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			try {
 				XFacetedSearchable searcher = getSearcher(g.getDataSource());
 				
-				//pass mapping conditions to SearchHelper
+				//pass start cache to SearchHelper
 				SearchHelper helper = searchFactory.createSearchHelper();
 				HashMap<Integer, DocStream> mappings = result.get(g);
 				for (Entry<Integer, DocStream> i: mappings.entrySet())
 					helper.setHint(SearchHelper.START_CACHE_HINT, i.getKey(), new DocStreamHintImpl(i.getValue()));
-				//after that, mapping conditions can be freed from memory
+				//after that, start cache can be freed from memory
 				mappings = null;
 				result.remove(g); 
 				
 				if (parent==null) {
-					//need facet if isRoot
+					//need to calculate facet if isRoot
 					targetDataSource = g.getDataSource();
 					XFacetedQuery q = converter.convertQuery(g, relax);
-					long time = System.currentTimeMillis();
 					targetResult = searcher.search(q, helper);
 					relax = targetResult.getLength() == 0;
 					logger.debug(String.format("%s: %d+%d ms", q.getQueryConstraint().toString(), targetResult.getResultTime(), targetResult.getFacetTime()));
@@ -210,6 +213,7 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 							g.getDataSource(), origLen, 
 							parent.getDataSource(),	ans.getLen(), System.currentTimeMillis()-time));
 					
+					//put results into parent's start cache
 					parentResults.put(parentNode.getNodeID(), ans);
 
 				}
@@ -219,6 +223,14 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		}
 	}
 	
+	/**
+	 * convert using mapping index one stream to another
+	 * @param file the mapping index
+	 * @param from
+	 * @param to
+	 * @return
+	 * @throws Exception
+	 */
 	private DocStream convertID(String file, DocStream from, DocStream to) throws Exception {
 		MappingIndexReader reader = MappingIndexReaderFactory.getMappingIndexReader(file);
 		
@@ -245,6 +257,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		return resultStream;
 	}
 	
+	/**
+	 * Compute data source facets. Each ds is associated with its result count.
+	 * @return
+	 * @throws Exception
+	 */
 	private HashMap<String, Integer> computeDSFacet() throws Exception {
 		HashMap<String, Integer> arr = new HashMap<String, Integer>();
 		MappingIndexReader reader;
@@ -292,9 +309,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			MappingIndexReaderFactory.init(mappingIndex);
 			PropertyConfigurator.configure(pathOfDataSource.get("logging").toURL());
 		}
-		loadFacetIndex();
-		loadMappingIndex();
-		loadLuceneIndex();
+		
+		//preload indices to speed to first few searches
+//		loadFacetIndex();
+//		loadMappingIndex();
+//		loadLuceneIndex();
 	}
 	
 	/* (non-Javadoc)
@@ -323,18 +342,6 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		mappingIndex = path;
 	}
 	
-	@Override
-	public String getArraySnippet(String dataSource, int docID, String URI) {
-		try {
-			return QuerySnippetDB.getSnippet(dataSource, URI).getData();
-		} catch (DatabaseException e) {
-			e.printStackTrace();
-		} catch (NullPointerException e1) {
-			return null;
-		}
-		return null;
-	}
-
 	private void loadFacetIndex() {
 		for (String s: dataSources.values()) { 
 			try {
@@ -369,6 +376,18 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	}
 
 	@Override
+	public String getArraySnippet(String dataSource, int docID, String URI) {
+		try {
+			return QuerySnippetDB.getSnippet(dataSource, URI).getData();
+		} catch (DatabaseException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e1) {
+			return null;
+		}
+		return null;
+	}
+
+	@Override
 	public ArrayList<SchemaObjectInfoForMultiDataSources> getSeeAlso(
 			String dataSource, int docID, String URI)  {
 		final FieldType[] types = new FieldType[]{FieldType.URI, FieldType.LABEL};
@@ -394,6 +413,11 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 			}
 		logger.info(String.format("getSeeAlso [%s]%s : %d", dataSource, URI, arr.size()));
 		return arr;
+	}
+	
+	@Override
+	public Collection<String> getAvailableDatasources() {
+		return dataSources.values();
 	}
 	
 	public static void main(String[] args) throws Exception {
@@ -422,11 +446,6 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 		eva.setPathOfMappingIndex(new File("."));
 		DocStream result = eva.convertID("dbpedia_dblp_index", doc, null);
 		DebugIndex.printDocStream(indexReader2, result);
-	}
-
-	@Override
-	public Collection<String> getAvailableDatasources() {
-		return dataSources.values();
 	}
 
 }

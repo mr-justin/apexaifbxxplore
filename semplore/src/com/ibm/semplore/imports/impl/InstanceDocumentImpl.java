@@ -23,6 +23,7 @@ import com.ibm.semplore.xir.impl.AttributeValue;
 import com.ibm.semplore.xir.impl.DocumentImpl;
 
 public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocument {
+	/* number of triples associated with current instance */
 	protected int tripleCount = 0;
 	
 //	protected ArrayList attributeList = new ArrayList();
@@ -212,7 +213,11 @@ public class InstanceDocumentImpl extends DocumentImpl implements InstanceDocume
 			attr = attr.substring(1,attr.length()-1);
 		}
 		
+		//one term for this attribute: name###attr
 		attributes.add(new AttributeValue(name, attr));
+		
+		//another term for the attribute: name###
+		//useful when the query only has attribute name
 		if (!attrSet.contains(name)) {
 			attrSet.add(name);
 			attributes.add(new AttributeValue(name,""));

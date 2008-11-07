@@ -51,7 +51,8 @@ public interface Graph extends CatRelGraph {
 	public Iterator<Edge> getIEdges(int nodeIndex);
 	
 	/**
-	 * Set the target variable of the query graph.
+	 * Set the index of target variable of the query graph.
+	 * This node should exist in this graph before calling
 	 * @param nodeIndex
 	 * @throws IndexOutOfBoundsException 
 	 */
@@ -63,8 +64,19 @@ public interface Graph extends CatRelGraph {
 	 */
 	public int getTargetVariable();
 
+	/**
+	 * Set data source related with one node
+	 * @param nodeIndex
+	 * @param ds
+	 * @return
+	 */
 	public Graph setDataSource(int nodeIndex, String ds);
 	
+	/**
+	 * get data source related with one node
+	 * @param nodeIndex
+	 * @return
+	 */
 	public String getDataSource(int nodeIndex);
 
 	/**

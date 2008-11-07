@@ -75,6 +75,7 @@ public class MappingIndexPreparer_ForLucene extends MappingIndexPreparer {
 			}
 			
 		}
+		else throw new Exception("Strategy not implemented, use 3 instead");
 //		dsCollector.close();
 		
 		System.err.println("Time(ms): " + String.valueOf(System.currentTimeMillis()-time_a));
