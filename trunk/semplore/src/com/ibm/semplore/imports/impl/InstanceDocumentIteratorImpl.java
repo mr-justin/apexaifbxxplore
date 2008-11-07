@@ -39,10 +39,6 @@ import com.ibm.semplore.util.TestUnicode;
 public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 	static SchemaFactory factory = SchemaFactoryImpl.getInstance();
 
-	static Config config = new Config();
-
-	// "dbpedia + sample = // sample/tmp/"
-
 	private Scanner dataReader;
 	private int lineno;
 
@@ -56,19 +52,19 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
     protected RandomAccessFile file = null;
 
 	int findRelLocalID(long rel) {
-		return findInFile(config.dir + config.relLocal, rel);
+		return findInFile(Config.dir + Config.relLocal, rel);
 	}
 
 	int findCatLocalID(long cat) {
-		return findInFile(config.dir + config.catLocal, cat);
+		return findInFile(Config.dir + Config.catLocal, cat);
 	}
 
 	int findSubLocalID(long rel, long sub) {
-		return findInFile(config.dir + "RS_" + rel, sub);
+		return findInFile(Config.dir + "RS_" + rel, sub);
 	}
 
 	int findObjLocalID(long rel, long obj) {
-		return findInFile(config.dir + "RO_" + rel, obj);
+		return findInFile(Config.dir + "RO_" + rel, obj);
 	}
 
 	int findInFile(String filename, long rel) {
@@ -87,7 +83,6 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 		try {
 			File f = new File(filename);
 			long len = f.length()/8;
-//			System.out.print("["+len+"]");
 			list = new long[(int)len];
 			for (int i=0; i<len ; i++) {
 				long l = file.readLong();
@@ -96,9 +91,7 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-//		System.out.print(".");
 		idMap.put(filename, list);
-//		System.out.print(".");
 		int j = Arrays.binarySearch(list,rel);
 		if (j<0) return -1; else return j;
 	}

@@ -148,6 +148,9 @@ public class GraphImpl implements Graph {
 		return graphs.removeRelation(rel, nodeIndex);
 	}
 	
+	/* 
+	 * format the graph in a readable format
+	 */
 	public String toString() {
 		String str = "target = " + targetVariable + "\n";
 		for (int i=0; i<nodeCount; i++)
@@ -172,11 +175,16 @@ public class GraphImpl implements Graph {
 	}
 
 
+	/* 
+	 * load the graph from a file generated using GraphImpl.toString()
+	 * @see GraphImpl.toString()
+	 */
 	public void load(File file) throws NumberFormatException, IOException {
 		BufferedReader reader = new BufferedReader(new FileReader(file));
 		int target = Integer.MAX_VALUE;
 		String line;
 		while ((line = reader.readLine())!=null) {
+			if (line.trim().equals("")) continue;
 			Matcher m;
 			m = Pattern.compile("^target = (\\d+)$").matcher(line);
 			if (m.matches()) {

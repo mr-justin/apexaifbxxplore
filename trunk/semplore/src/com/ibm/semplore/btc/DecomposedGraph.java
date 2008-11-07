@@ -24,6 +24,11 @@ public interface DecomposedGraph {
 	 */
 	public Collection<SubGraph> getSubgraphs();
 	
+	/**
+	 * Return the subgraph given its ID
+	 * @param subGraphID
+	 * @return
+	 */
 	public SubGraph getSubGraph(int subGraphID);
 	
 	/**

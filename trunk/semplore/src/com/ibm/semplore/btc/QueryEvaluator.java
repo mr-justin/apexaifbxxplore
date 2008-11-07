@@ -50,11 +50,15 @@ public interface QueryEvaluator {
 			HashMap<Integer, DocStream> startCache) throws Exception;
 
 	/**
-	 * 
-	 * @param map
+	 * Set path of indices
+	 * @param map is a table maps datasource name to location of its index
 	 */
 	public void setPathOfDataSource(Hashtable<String, File> map);
 
+	/**
+	 * Set path of mapping index
+	 * @param path
+	 */
 	public void setPathOfMappingIndex(File path);
 
 	/**
@@ -80,6 +84,10 @@ public interface QueryEvaluator {
 	 */
 	public String getArraySnippet(String dataSource, int docID, String URI);
 	
+	/**
+	 * get datasources that are available in the indices
+	 * @return collection of datasource name
+	 */
 	public Collection<String> getAvailableDatasources();
 
 }

@@ -4,6 +4,12 @@ import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
 
+/**
+ * EntityClass used in SnippetDB
+ * 
+ * @author xrsun
+ *
+ */
 @Entity
 public class InstanceEntityClass {
 	// Primary key is pKey

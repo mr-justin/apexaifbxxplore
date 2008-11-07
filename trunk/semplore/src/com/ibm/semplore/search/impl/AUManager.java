@@ -113,6 +113,12 @@ public class AUManager
         massUnionAU_Score.setParameters(relationStream, subjectStream, CobjStream);
         return massUnionAU_Score.getResult();
     }
+    /**
+     * We employed two different kind of method to speed up facet calculation.
+     * To support calculating facet using mapping index, two more parameters are needed: 
+     * @param ds
+     * @param type
+     */
     public DocStream massUnion_Facet(String ds, String type, DocPositionStream relationStream, DocStream subjectStream, DocStream CobjectStream) throws IOException {
     	if (subjectStream.getLen()>3000 || !MappingIndexReaderFactory.hasMappingIndex(ds + "_"+type+"_facet")) 
     		return massUnion_BV_Facet(relationStream, subjectStream, CobjectStream);

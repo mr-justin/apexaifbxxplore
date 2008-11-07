@@ -28,22 +28,25 @@ public class QueryConverter4SemploreImpl implements QueryConverter4Semplore {
 	SearchFactory searchFactory = SearchFactoryImpl.getInstance();
 	SchemaFactory schemaFactory = SchemaFactoryImpl.getInstance();
 
-	/* (non-Javadoc)
+	/* Task 1: Convert KeywordCategory into AttributeKeywordCategory
+	 *         Assuming target node is not KeywordCategory!
+	 * Task 2: Relax constraints
 	 * @see com.ibm.semplore.btc.QueryConverter4Semplore#convertQuery(com.ibm.semplore.btc.SubGraph)
 	 */
 	@Override
 	public XFacetedQuery convertQuery(SubGraph graph, boolean relax) {
-		// Convert KeywordCategory into AttributeKeywordCategory
-		// Assuming target node is not KeywordCategory!
 		HashMap<Integer, GeneralCategory> map = new HashMap<Integer, GeneralCategory>();
+
+		// prepare the map storing intermediate nodes
 		for (int i=0; i<graph.numOfNodes(); i++) {
 			GeneralCategory n = graph.getNode(i);
 			if (relax && n instanceof Category && !((Category)n).isUniversal())
 				map.put(i, schemaFactory.createUniversalCategory());
 			else
 				map.put(i, n);
-			
 		}
+		
+		// convert node where necessary
 		for (int i=0; i<graph.numOfNodes(); i++) {
 			Iterator<Edge> itr = graph.getEdges(i);
 			while (itr.hasNext()) {
@@ -65,6 +68,7 @@ public class QueryConverter4SemploreImpl implements QueryConverter4Semplore {
 			}
 		}
 
+		// copy the new nodes and original relations into a new CatRelGraph
 		CatRelGraph g = schemaFactory.createCatRelGraph();
 		for (int i=0; i<graph.numOfNodes(); i++) g.add(map.get(i));
 		for (int i=0; i<graph.numOfNodes(); i++) {
@@ -82,9 +86,4 @@ public class QueryConverter4SemploreImpl implements QueryConverter4Semplore {
 		query.setResultSpec(searchFactory.createXFacetedResultSpec());
 		return query;
 	}
-
-	protected XFacetedQuery convertQuery(SubGraph graph) {
-		return convertQuery(graph, false);
-	}
-
 }

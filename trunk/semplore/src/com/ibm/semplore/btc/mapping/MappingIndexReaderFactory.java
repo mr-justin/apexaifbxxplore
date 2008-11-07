@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
+ * A factory creating MappingIndexReader. The index's head will be read in only at the first time.
+ * 
  * @author xrsun
  *
  */

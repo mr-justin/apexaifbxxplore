@@ -67,7 +67,8 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 				Field.Index.TOKENIZED);
 		field.setBoost(5.0f);
 		doc.add(field);
-		
+
+		// give boost to this document, according to triple count
 		doc.setBoost((float) Math.log(insDoc.getTripleCount()+2));
 
 		// build index of attributes, term=attribute###value
@@ -82,6 +83,7 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		for (AttributeValue attrVal:attrVals) {
 			text.append(attrVal.getValue()+" ");
 		}
+		// ... and label
 		text.append(insDoc.getSchemaObjectInfo().getLabel());		
 		doc.add(new Field(FieldType.TEXT.toString(), text.toString(), Field.Store.NO,
 				Field.Index.TOKENIZED));

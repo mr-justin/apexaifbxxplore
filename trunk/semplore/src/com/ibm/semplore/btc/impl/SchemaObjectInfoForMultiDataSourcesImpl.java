@@ -1,4 +1,6 @@
-package com.ibm.semplore.btc;
+package com.ibm.semplore.btc.impl;
+
+import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
 
 /**
  * @author xrsun
