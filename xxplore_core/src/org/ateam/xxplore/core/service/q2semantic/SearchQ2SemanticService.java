@@ -4,13 +4,10 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -21,13 +18,11 @@ import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
 
-import javax.swing.JSpinner.ListEditor;
 
 import org.ateam.xxplore.core.service.mapping.Mapping;
 import org.ateam.xxplore.core.service.mapping.MappingIndexService;
 import org.ateam.xxplore.core.service.q2semantic.QueryInterpretationService.Subgraph;
 import org.jgrapht.graph.Pseudograph;
-import org.jgrapht.graph.WeightedPseudograph;
 import org.team.xxplore.core.service.search.datastructure.*;
 import org.xmedia.oms.model.impl.Literal;
 import org.xmedia.oms.model.impl.NamedConcept;
@@ -198,6 +193,26 @@ public class SearchQ2SemanticService {
 		}
 		
 		return ress;
+	}
+	
+	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
+		LinkedList<String> tmp = new LinkedList<String>();
+		for(String k : keywordList) {
+			if( k.charAt(0) == '\"' ) {
+				k = k.substring(0,k.length() - 1);
+			}
+			tmp.add(k.replaceAll("xx", ":"));
+		}
+//		LinkedList<QueryGraph> ret = cache.get(keywordList);
+//		if(ret != null) return ret;
+//		else {
+//			ret = this.getPossibleGraphs(tmp, topNbGraphs, 0.95, 5, 0.5);
+//			if(cache.size() < cache_max_count) {
+//				cache.put(keywordList, ret);
+//			}
+//		}
+		LinkedList<QueryGraph> ret = this.getPossibleGraphs(tmp, 5, 0.95, 5, 0.5,new evalTime());
+		return ret;
 	}
 	
 	
@@ -413,7 +428,7 @@ public class SearchQ2SemanticService {
 			String [] ds = qt.datasource.split(",");
 			for(int i = 0; i < ds.length;i++) {
 				ds_used.add(ds[i]);
-				String keywordIndex = this.keywordIndexRoot + "/" + ds[i] + "-keywordIndex";
+				String keywordIndex = keywordIndexRoot + "/" + ds[i] + "-keywordIndex";
 				System.out.println("keywordIndex " + keywordIndex);
 				Map<String, Collection<SummaryGraphElement>> hm = 
 					new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(qt.type,qt.key, prune);
@@ -584,6 +599,7 @@ public class SearchQ2SemanticService {
 		LinkedList<QueryToken> queryList = new LinkedList<QueryToken>();
 		for(String line : keywordList) {
 			String tokens[] = line.split(":");
+			
 			QueryToken queryToken = null;
 			if(tokens.length == 2 || (tokens.length == 3 && !tokens[1].equals("*"))) {
 				queryToken = new QueryToken("\"" + tokens[0] + "\"",tokens[1],-1);
@@ -591,7 +607,7 @@ public class SearchQ2SemanticService {
 			}
 			else if(tokens.length == 1 || ( tokens.length == 3 && tokens[1].equals("*"))){
 				String all_ds = "";
-				for(String tmp : this.summaryObjSet.keySet()) {
+				for(String tmp : summaryObjSet.keySet()) {
 					all_ds = all_ds + tmp + ",";
 				}
 				all_ds = all_ds.substring(0,all_ds.length() - 1);
@@ -748,6 +764,7 @@ public class SearchQ2SemanticService {
 				String line;
 				while((line = br.readLine()) != null) {
 					String tokens[] = line.split(":");
+					
 					this.key_database.put(tokens[0], tokens[1]);
 				}
 				br.close();
@@ -826,100 +843,59 @@ public class SearchQ2SemanticService {
 		return null;
 	}
 	
-//	public static void main(String[] args) throws Exception {
-////		if(args.length<3)
-////		{
-////			if(args.length<6 && args.length>=3)
-////				System.out.println("SearchQ2SemanticService [path.prop(String)] [top-k(int)] [prune(double)] [distance(int)] [keyword1] [keyword2] ...");
-////			else
-////				System.out.println("SearchQ2SemanticService [path.prop(String)] [ds] [con1] [con2]...");
-////			return;
-////		}
-////		long start = System.currentTimeMillis();
-////		LinkedList<String> ll = new LinkedList<String>();
-////		
-////		for(int i=4; i<args.length; i++)
-////			ll.add(args[i]);
-////		if(args.length>=6)
-////			new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]));
-////		else
-////		{
-//			List list = new LinkedList<Concept>();
-////			for(int i=2; i<args.length; i++)
-////				list.add(new Concept(null, args[i], null));
-//			new SearchQ2SemanticService(args[0]).getSuggestion(list, args[1]);
-////		}
-////		long end = System.currentTimeMillis();
-////		System.out.println();
-////		System.out.println("Time consuming: "+(end - start) / 1000.0+" s");
-////		System.out.println();
-//	}
-
 	public static void main(String[] args) throws Exception {
-		SearchQ2SemanticService s = new SearchQ2SemanticService(args[0]);
-		LinkedList<LinkedList<String>> ll_set = new LinkedList<LinkedList<String>>();
-		
-		try {
-			BufferedReader br = new BufferedReader(new FileReader("example.txt"));
-			String line;
-			while((line = br.readLine()) != null) {
-				String tokens[] = line.split("\t");
-				LinkedList<String> ll = new LinkedList<String>();
-				for(int i=0;i<tokens.length;i++) {
-					ll.add(tokens[i]);
-				}
-				ll_set.add(ll);
+		Scanner scanner = new Scanner(System.in);
+		while( scanner.hasNext() ) {
+			String line = scanner.nextLine();
+			LinkedList<String> ll = new LinkedList<String>();
+			String tokens [] = line.split(" ");
+			for(int i=0;i<tokens.length;i++) {
+				ll.add(tokens[i]);
 			}
+			new SearchQ2SemanticService(args[0]).getPossibleGraphs(ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), Integer.valueOf(args[3]),Double.valueOf(args[4]),new evalTime());
 		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		ArrayList<evalStruct> evalList = new ArrayList<evalStruct>();
-		
-		try {
-			PrintWriter pw = new PrintWriter("eval.txt");
-			
-		
-		for(LinkedList<String> ll : ll_set) {
-			ArrayList<evalTime> evalTimeList = new ArrayList<evalTime>();
-//			evalStruct es = new evalStruct();
-//			es.ll = ll;
-			
-//			es.keyTime = time.span_Time;
-//			es.topkTime = time.compute_Time;
-			
-//			evalTime total = new evalTime();
-			
-			
-			for(int i=0;i<11;i++) {
-				pw.println(ll.toString());
-				evalTime time = new evalTime();
-				s.getPossibleGraphs(ll, Integer.valueOf(args[1]),time);
-				pw.println(time.span_Time);
-				pw.println(time.compute_Time);
-				pw.println();
-				
-//				total.span_Time += time.span_Time;
-//				total.compute_Time += time.compute_Time;
-			}
-			
-//			es.keyTime1 = total.span_Time / 10;
-//			es.topkTime1 = total.compute_Time / 10;
-//			evalList.add(es);
-			
-			
-		}
-		
-
-
-			pw.close();
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-		
 	}
+
+//	public static void main(String[] args) throws Exception {
+//		SearchQ2SemanticService s = new SearchQ2SemanticService(args[0]);
+//		LinkedList<LinkedList<String>> ll_set = new LinkedList<LinkedList<String>>();
+//		
+//		try {
+//			BufferedReader br = new BufferedReader(new FileReader("input.txt"));
+//			String line;
+//			while((line = br.readLine()) != null) {
+//				String tokens[] = line.split("\t");
+//				LinkedList<String> ll = new LinkedList<String>();
+//				for(int i=0;i<tokens.length;i++) {
+//					ll.add(tokens[i]);
+//				}
+//				ll_set.add(ll);
+//			}
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//		
+//		try {
+//			PrintWriter pw = new PrintWriter("output.txt");
+//			for(LinkedList<String> ll : ll_set) {
+//				pw.println(ll.toString());
+//				for(int i=0;i<11;i++) {
+//					evalTime time = new evalTime();
+//					s.getPossibleGraphs(ll, Integer.valueOf(args[1]),time);
+//					pw.println(time.span_Time + "\t" + time.compute_Time);
+//				}
+//				pw.println("\n\r\n\r");
+//
+//			}
+//			pw.close();
+//		}
+//		catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		
+//	}
 
 	
 //	public static void main(String[] args) throws Exception {
