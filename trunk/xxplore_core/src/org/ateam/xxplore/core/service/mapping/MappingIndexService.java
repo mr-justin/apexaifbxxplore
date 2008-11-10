@@ -131,30 +131,69 @@ public class MappingIndexService {
 		}
 	}
 	
-	public static void main(String[] args) throws Exception {
-		String root_dir = "z:/mapping";
-		File root = new File(root_dir);
-		ArrayList<File> t = new ArrayList();
-		for(File f : root.listFiles()) {
-			if(f.getName().indexOf("_") != -1) {
-				if(f.getName().indexOf("mapping") == -1) {
-					t.add(f);
+	public void runchen() {
+		try {
+			String [] filetype = new String[] { "concept","attribute","relation" };
+			this.init4CreateIndex("d:/mapping_root/mapping_index");
+			
+			String [] mapping_files = new String[] {
+					"semanticweb_swrc",
+					"dblp_semanticweb",
+					"dblp_swrc",
+			};
+			
+			
+			for(int j=0;j<mapping_files.length;j++) {
+				for(int i=0;i<filetype.length;i++) {
+					String[] ds = mapping_files[j].split("_");
+					BufferedReader br = new BufferedReader(
+							new FileReader("d:/mapping_root/" + mapping_files[j] + "/"
+									+filetype[i]+"_mapping"));
+					String line;
+					while((line = br.readLine()) != null) {
+						String tokens[] = line.split("\t");
+						Mapping t = new SchemaMapping(tokens[0],tokens[1],
+								ds[0],ds[1],1);
+						this.indexMappings(t);
+					}
+					br.close();
 				}
 			}
+			this.finishCreateIndex();
 		}
-		
-		System.out.println(t.size());
-		
-		for(File f : t) {
-			System.out.println(f.getName());
-		}
-		
-		
-		MappingIndexService service = new MappingIndexService();
-		service.init4CreateIndex("z:/mapping/index2");
-		service.createIndex(t);
-		service.finishCreateIndex();
+		catch (Exception e) {
+			// TODO: handle exception
+		}		
 	}
+	
+	public static void main(String[] args) {
+		new MappingIndexService().runchen();
+	}
+	
+//	public static void main(String[] args) throws Exception {
+//		String root_dir = "z:/mapping";
+//		File root = new File(root_dir);
+//		ArrayList<File> t = new ArrayList();
+//		for(File f : root.listFiles()) {
+//			if(f.getName().indexOf("_") != -1) {
+//				if(f.getName().indexOf("mapping") == -1) {
+//					t.add(f);
+//				}
+//			}
+//		}
+//		
+//		System.out.println(t.size());
+//		
+//		for(File f : t) {
+//			System.out.println(f.getName());
+//		}
+//		
+//		
+//		MappingIndexService service = new MappingIndexService();
+//		service.init4CreateIndex("z:/mapping/index2");
+//		service.createIndex(t);
+//		service.finishCreateIndex();
+//	}
 
 	public void indexMappings(Mapping mapping){
 
