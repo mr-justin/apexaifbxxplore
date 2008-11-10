@@ -479,7 +479,7 @@ public class KeywordIndexServiceForBTFromNT{
 //					hits = m_searcher.search(new FuzzyQuery(term.iterator().next()));
 //				}
 //			}
-
+			
 			if((hits != null) && (hits.length() > 0)){
 				Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 
