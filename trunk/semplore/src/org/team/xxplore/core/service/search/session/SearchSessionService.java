@@ -49,7 +49,6 @@ import flex.messaging.FlexContext;
 
 public class SearchSessionService {
 	private static final String DS_SEARCH_PREFIX = "xxds"; 
-	private static final int CacheCount = 10000;
 	static Logger logger = Logger.getLogger(SearchSessionService.class);
 
 	/**
@@ -562,8 +561,6 @@ public class SearchSessionService {
 		FlexContext.getFlexSession().setAttribute("resultHistory", null);
 		FlexContext.getFlexSession().setAttribute("operationHistory", null);
 		FlexContext.getFlexSession().setAttribute("currentGraph", null);
-		FlexContext.getFlexSession().setAttribute("seeAlsoCache", null);
-		FlexContext.getFlexSession().setAttribute("arraySnippetCache", null);
 	}
 	
 	/**
