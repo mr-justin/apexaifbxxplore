@@ -7,7 +7,6 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.StringTokenizer;
 import java.util.Map.Entry;
 
@@ -44,7 +43,6 @@ import com.ibm.semplore.model.Edge;
 import com.ibm.semplore.model.EnumerationCategory;
 import com.ibm.semplore.model.SchemaObjectInfo;
 import com.ibm.semplore.model.impl.SchemaFactoryImpl;
-import com.ibm.semplore.util.LRUHashMap;
 import com.ibm.semplore.xir.DocStream;
 
 import flex.messaging.FlexContext;
@@ -602,14 +600,6 @@ public class SearchSessionService {
 	}
 	
 	private SeeAlso getSeeAlsoItem(String currentDataSource, int docID, String resultItemURL) throws InterruptedException {
-		SeeAlso cached;
-		LRUHashMap<String, SeeAlso> cache = 
-			(LRUHashMap<String, SeeAlso>) FlexContext.getFlexSession().getAttribute("seeAlsoCache");
-		if (cache == null) {
-			cache = new LRUHashMap<String, SeeAlso>(CacheCount);
-			FlexContext.getFlexSession().setAttribute("seeAlsoCache", cache);
-		}
-		if ((cached = cache.get(currentDataSource+"$$$"+resultItemURL))!=null) return cached;
 		int id = SemplorePool.acquire();
 		QueryEvaluator eval = SemplorePool.getEvaluator(id);
 		ArrayList<SchemaObjectInfoForMultiDataSources> array = eval.getSeeAlso(currentDataSource, docID, resultItemURL);
@@ -634,8 +624,6 @@ public class SearchSessionService {
 		ResultItem item = new ResultItem();
 		item.setURL(resultItemURL);
 		seeAlso.setResultItem(item);
-		
-		cache.put(currentDataSource+"$$$"+resultItemURL, seeAlso);
 		return seeAlso;
 	}
 
@@ -721,23 +709,12 @@ public class SearchSessionService {
 	
 	private ArraySnippet getArraySnippet(String ds, int docID,
 			String resultItemURL) throws InterruptedException {
-		LRUHashMap<String, ArraySnippet> cache = 
-			(LRUHashMap<String, ArraySnippet>) FlexContext.getFlexSession().getAttribute("arraySnippetCache");
-		if (cache == null) {
-			cache = new LRUHashMap<String, ArraySnippet>(CacheCount);
-			FlexContext.getFlexSession().setAttribute("arraySnippetCache", cache);
-		}
-
-		ArraySnippet cached;
-		if ((cached = cache.get(ds+"$$$"+resultItemURL))!=null) return cached;
-
 		int id = SemplorePool.acquire();
 		QueryEvaluator eval = SemplorePool.getEvaluator(id);
 		String snippet_str = eval.getArraySnippet(ds, docID, resultItemURL);
 		SemplorePool.release(id);
 		
 		ArraySnippet as = this.getSnippet(ds, resultItemURL, snippet_str);
-		cache.put(ds+"$$$"+resultItemURL, as);
 		return as;
 	}
 
