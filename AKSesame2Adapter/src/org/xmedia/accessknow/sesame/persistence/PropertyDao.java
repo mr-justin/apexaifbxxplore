@@ -26,6 +26,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
 import org.openrdf.model.Value;
 import org.openrdf.model.ValueFactory;
+import org.openrdf.model.vocabulary.OWL;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.repository.RepositoryConnection;
@@ -375,6 +376,39 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 		}
 	}
 
+	public IProperty findDatatypePropertyByUri(String uri) throws DatasourceException {
+		try {
+			RepositoryConnection conn = m_session.getRepositoryConnection();
+			RepositoryResult<Statement> sesResult = conn.getStatements(
+					m_session.getValueFactory().createURI(uri), RDF.TYPE,
+					OWL.DATATYPEPROPERTY, true);
+			IProperty res = null;
+			URI sesUri;
+			try {
+				if (sesResult.hasNext()) {
+
+					sesUri = (URI) sesResult.next().getSubject();
+					if (Ses2AK.isObjectProperty(sesUri,
+							m_session.getOntology(), m_session
+									.getRepositoryConnection())) {
+						res = Ses2AK.getObjectProperty(sesUri, m_session
+								.getOntology());
+					} else {
+						res = Ses2AK.getDataProperty(sesUri, m_session
+								.getOntology());
+					}
+				}
+			} finally {
+				sesResult.close();
+			}
+			return res;
+		} catch (RepositoryException e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving a property with a uri "
+							+ uri, e);
+		}
+	}
+	
 	/**
 	 * @deprecated
 	 */
