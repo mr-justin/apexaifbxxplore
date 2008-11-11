@@ -1,5 +1,6 @@
 package com.ibm.semplore.imports.impl.data.preprocess;
 
+import java.io.File;
 import java.io.IOException;
 
 public class FileSort {
@@ -17,6 +18,10 @@ public class FileSort {
 			for (int i = 0; i < fileCount; i++)
 				ts.sort(filename + i, filename + ".n" + i, sort);
 			fm.mergeTriple(filename + ".n", fileCount, oFileName, sort);
+			for (int i = 0; i < fileCount; i++) {
+				new File(filename + i).delete();
+				new File(filename + ".n" + i).delete();
+			}
 			System.out.println("Sort output: " + oFileName);
 			
 		} catch (IOException e) {
@@ -33,6 +38,10 @@ public class FileSort {
 				ps.sort(filename + i, filename + ".n" + i);
 			
 			fm.mergePair(filename + ".n", fileCount, output);
+			for (int i = 0; i < fileCount; i++) {
+				new File(filename + i).delete();
+				new File(filename + ".n" + i).delete();
+			}
 			System.out.println("Sort output: " + output);
 			
 		} catch (IOException e) {
@@ -49,6 +58,10 @@ public class FileSort {
 				ps.sort(filename + i, filename + ".n" + i);
 			
 			fm.mergeHashTuple(filename + ".n", fileCount, output);
+			for (int i = 0; i < fileCount; i++) {
+				new File(filename + i).delete();
+				new File(filename + ".n" + i).delete();
+			}
 			System.out.println("Sort output: " + output);
 			
 		} catch (IOException e) {
