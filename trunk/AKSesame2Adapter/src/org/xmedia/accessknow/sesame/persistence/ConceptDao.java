@@ -9,6 +9,7 @@ import org.openrdf.model.Statement;
 import org.openrdf.model.Resource;
 import org.openrdf.model.URI;
 import org.openrdf.model.impl.URIImpl;
+import org.openrdf.model.vocabulary.OWL;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
 import org.openrdf.repository.RepositoryConnection;
@@ -168,6 +169,7 @@ public class ConceptDao implements IConceptDao {
 							"http://www.w3.org/2002/07/owl#")) {
 				RepositoryResult<Statement> sesResult = conn.getStatements(
 						object, RDF.TYPE, RDFS.CLASS, session.isReasoningOn());
+					
 				try {
 					if (sesResult.hasNext()) {
 						concept = Ses2AK.getNamedConcept(sesResult.next()
@@ -177,6 +179,30 @@ public class ConceptDao implements IConceptDao {
 					sesResult.close();
 				}
 			}
+			
+			//check if owl classes are available also
+			if(concept == null){
+				if (!object.getNamespace().equals(RDFS.NAMESPACE)
+						&& !object.getNamespace().equals(RDF.NAMESPACE)
+						&& !object.getNamespace().equals(
+								"http://www.w3.org/2002/07/owl#")) {
+					RepositoryResult<Statement> sesResult = conn.getStatements(
+							object, RDF.TYPE, OWL.CLASS, session.isReasoningOn());
+						
+					try {
+						if (sesResult.hasNext()) {
+							concept = Ses2AK.getNamedConcept(sesResult.next()
+									.getSubject(), session.getOntology());
+						}
+					} finally {
+						sesResult.close();
+					}
+				}
+			}
+			
+		
+			
+			
 			return concept;
 		} catch (RepositoryException e) {
 			throw new DatasourceException("Error occurred while retrieving a concept with a uri "+uri, e);
