@@ -17,6 +17,7 @@ public void getOneColumn(String inname, String outname, int columnNum){
 			if (!temp.equals(lasttemp)) writer.println(temp);
 			lasttemp = temp;
 		}
+		reader.close();
 		writer.close();
 		}catch(IOException e){
 			e.printStackTrace();

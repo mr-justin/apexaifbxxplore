@@ -46,6 +46,8 @@ public class DataTransForm {
 				writer.writeLong(reader.nextLong());
 			}
 			writer.close();
+			reader.close();
+			new File(inputDir+tempFile.getName()).delete();
 		}
 		}catch (Exception e){
 			e.printStackTrace();

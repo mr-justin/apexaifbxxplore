@@ -59,6 +59,7 @@ public class RelInfoDiv {
 				printInFile(writer);
 			}
 			writer.close();
+			reader.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

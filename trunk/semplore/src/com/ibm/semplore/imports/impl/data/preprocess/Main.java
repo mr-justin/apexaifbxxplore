@@ -46,10 +46,12 @@ public class Main {
 	void sort(String hashdataFile, String oriCat, String oriRel, String oriAtt) throws Exception {
 			FileSort filesort = new FileSort();
 
+//  use GNU sort and uniq instead
 //			filesort.sortHashTuple(hashdataFile, hashdataFile+".sort");
 
 			//for relation
 			filesort.sortTriple(oriRel, RSO, "RSO");
+			new File(oriRel).delete();
 //			unique(RSO + ".temp", RSO);
 			filesort.sortTriple(RSO, ROS, "ROS");
 			
@@ -57,6 +59,7 @@ public class Main {
 			filesort.sortPair(oriCat, oriCat+".temp");
 //			unique(oriCat+".temp", oriCat+".temp1");
 			(new GetOneColumn()).getOneColumn(oriCat+".temp", oriCat, 1);
+			new File(oriCat+".temp").delete();
 //			filesort.sortTriple(oriCat, config.dir + "catTemp", "ORS");
 //			unique(config.dir+"catTemp", config.dir+"uniqued");
 //			filesort.sortTriple(config.dir+"uniqued", config.dir + config.cat, "SRO");
@@ -64,6 +67,7 @@ public class Main {
 			filesort.sortPair(oriAtt, oriAtt+".temp");
 //			unique(oriAtt+".temp", oriAtt+".temp1");
 			(new GetOneColumn()).getOneColumn(oriAtt+".temp", oriAtt, 1);
+			new File(oriAtt+".temp").delete();
 			//for attribute
 //			filesort.sortTriple(oriAtt, config.dir + config.att+"Temp", "SRO");
 //			unique(config.dir+config.att+"Temp", config.dir+config.att);
@@ -72,8 +76,10 @@ public class Main {
 	void genRS_RO_() {
 		RelInfoDiv spl = new RelInfoDiv(RSO, "S_", 1);
 		spl.divide();
+		new File(RSO).delete();
 		spl = new RelInfoDiv(ROS, "O_", 3);
 		spl.divide();
+		new File(ROS).delete();
 	}
 
 	void genCatRel() {
