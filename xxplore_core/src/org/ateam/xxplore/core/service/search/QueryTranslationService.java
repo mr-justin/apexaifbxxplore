@@ -615,6 +615,7 @@ public class QueryTranslationService implements IService {
 						.findDatatypePropertyByUri(uri);
 				if (property != null) {
 					Set<IDatatype> datatypes = ddao.findDatatype(property);
+					if(!datatypes.isEmpty())
 					datatype = (Datatype) datatypes.iterator().next();
 				}
 
