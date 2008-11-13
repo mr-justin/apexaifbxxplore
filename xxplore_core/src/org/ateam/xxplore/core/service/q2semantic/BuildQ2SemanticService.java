@@ -133,10 +133,10 @@ public class BuildQ2SemanticService {
 		datasource = prop.getProperty("domain");
 		indexRoot = root+datasource;
 		source = prop.getProperty("source");
-		summaryObj = root+datasource+"-summary.obj";
-		schemaObj = root+datasource+"-schema.obj";
-		summaryRDF = root+datasource+"-summary.rdf";
-		schemaRDF = root+datasource+"-schema.rdf";
+		summaryObj = root+prop.getProperty("summaryObjsRoot")+File.separator+datasource+"-summary.obj";
+		schemaObj = root+prop.getProperty("schemaObjsRoot")+File.separator+datasource+"-schema.obj";
+		summaryRDF = root+prop.getProperty("summaryObjsRoot")+"-rdf"+File.separator+datasource+"-summary.rdf";
+		schemaRDF = root+prop.getProperty("schemaObjsRoot")+"-rdf"+File.separator+datasource+"-schema.rdf";
 		keywordIndex = root+datasource+"-keywordIndex";
 //		synIndex = root+"apexaifbxxplore\\keywordsearch\\syn_index";
 		System.out.println("Root:"+root+"\r\nDataSource:"+datasource+"\r\nIndexRoot:"+indexRoot+"\r\nFileSource:"+source);
