@@ -147,11 +147,12 @@ public class BuildQ2SemanticService {
 		indexRoot = root+datasource;
 		source = prop.getProperty("source");
 		/* Output File Para */
-		summaryObj = root+datasource+"-summary.obj";
-		schemaObj = root+datasource+"-schema.obj";
-		summaryRDF = root+datasource+"-summary.rdf";
-		schemaRDF = root+datasource+"-schema.rdf";
+		summaryObj = root+prop.getProperty("summaryObjsRoot")+File.separator+datasource+"-summary.obj";
+		schemaObj = root+prop.getProperty("schemaObjsRoot")+File.separator+datasource+"-schema.obj";
+		summaryRDF = root+prop.getProperty("summaryObjsRoot")+"-rdf"+File.separator+datasource+"-summary.rdf";
+		schemaRDF = root+prop.getProperty("schemaObjsRoot")+"-rdf"+File.separator+datasource+"-schema.rdf";
 		keywordIndex = root+datasource+"-keywordIndex";
+
 		System.out.println("Root:"+root+"\r\nDataSource:"+datasource+"\r\nIndexRoot:"+indexRoot+"\r\nFileSource:"+source);
 	}
 	
