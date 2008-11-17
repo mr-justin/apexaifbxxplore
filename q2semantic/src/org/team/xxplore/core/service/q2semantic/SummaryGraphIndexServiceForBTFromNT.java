@@ -71,12 +71,22 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 */
 	public static String getSubjectType(String pred, String obj)
 	{
-		if( (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && obj.equals(BuildQ2SemanticService.rdfsEdge[8])) || pred.equals(BuildQ2SemanticService.rdfsEdge[1]))
+		if( (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && obj.equals(BuildQ2SemanticService.rdfsEdge[8])) || pred.equals(BuildQ2SemanticService.rdfsEdge[1])
+				//condition for freebase
+				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && (obj.equals(BuildQ2SemanticService.rdfsEdge[12]) || obj.equals(BuildQ2SemanticService.rdfsEdge[13])))
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[12]))
 			return CONCEPT;
 		else if( (pred.equals(BuildQ2SemanticService.rdfsEdge[4]) && obj.equals(BuildQ2SemanticService.rdfsEdge[7])) || pred.equals(BuildQ2SemanticService.rdfsEdge[2])
-				|| pred.equals(BuildQ2SemanticService.rdfsEdge[3]))
+				|| pred.equals(BuildQ2SemanticService.rdfsEdge[3])
+				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) 
+						&& (obj.equals(BuildQ2SemanticService.rdfsEdge[7]) || obj.equals(BuildQ2SemanticService.rdfsEdge[9]) || obj.equals(BuildQ2SemanticService.rdfsEdge[10])))
+				//condition for freebase
+				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && obj.equals(BuildQ2SemanticService.rdfsEdge[16]))
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[16])) 
 			return PROPERTY;
-		else if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) || getPredicateType(pred, obj).equals(OBJPROP) || getPredicateType(pred, obj).equals(DATATYPEPROP))
+		else if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) || getPredicateType(pred, obj).equals(OBJPROP) || getPredicateType(pred, obj).equals(DATATYPEPROP)
+				//condition for freebase
+				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && obj.equals(BuildQ2SemanticService.rdfsEdge[17])))
 			return INDIVIDUAL;
 		return "";
 	}
@@ -89,7 +99,9 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 */
 	public static String getObjectType(String pred, String obj)
 	{
-		if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj))
+		if((pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj))
+				//condition for freebase
+				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj)))
 			return CONCEPT;
 		else if(getPredicateType(pred, obj).equals(OBJPROP))
 			return INDIVIDUAL;
@@ -107,7 +119,15 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	// for example isEdgeTypeOf(Property.IS_INSTANCE_OF)
 	public static String getPredicateType(String pred, String obj)
 	{
-		if(BuildQ2SemanticService.rdfsEdgeSet.contains(pred))
+		if(BuildQ2SemanticService.rdfsEdgeSet.contains(pred)
+				//condition for freebase
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[12])
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[14])
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[16])
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[17])
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[18])
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[19])
+				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[20]))
 			return RDFSPROP;
 		else if(obj.startsWith("http"))
 			return OBJPROP;
