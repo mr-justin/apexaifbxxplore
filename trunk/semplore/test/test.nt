@@ -1,0 +1,13 @@
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AParticipant_of> <http://semanticweb.org/id/ESWC2006> .
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AFoaf-3Aphone> "+49 (721) 608 3923/4750"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://semanticweb.org/id/Rudi_Studer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Person> .
+<http://semanticweb.org/id/Rudi_Studer> <http://www.w3.org/2000/01/rdf-schema#label> "Rudi Studer" .
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AName> "Rudi Studer"^^<http://www.w3.org/2001/XMLSchema#string> .
+<http://semanticweb.org/id/Rudi_Studer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://semantic-mediawiki.org/swivt/1.0#Subject> .
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AAffiliation> <http://semanticweb.org/id/AIFB> .
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AMember_of> <http://semanticweb.org/id/AIFB> .
+<http://semanticweb.org/id/Rudi_Studer> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://semanticweb.org/id/Category-3AProfessor> .
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AParticipant_of> <http://semanticweb.org/id/ISWC2006> .
+<http://semanticweb.org/id/Rudi_Studer> <http://semantic-mediawiki.org/swivt/1.0#page> <http://semanticweb.org/wiki/Rudi_Studer> .
+<http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AHomepage> <http://www.aifb.uni-karlsruhe.de/Personen/viewPerson?id_db=57> .
+
