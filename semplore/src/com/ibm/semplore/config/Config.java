@@ -92,7 +92,7 @@ public class Config
         System.out.println("================config begin==================");
         Properties config = new Properties();
         while ((str=in.readLine()) != null) {
-            if (str.indexOf('=') < 0) 
+            if (str.startsWith("#") || str.indexOf('=') < 0) 
                 continue;
             str = str.trim();
             String name = str.substring(0,str.indexOf('=')).trim();
@@ -121,7 +121,7 @@ public class Config
         config = new HashMap();
         int i =0;
         while ((str=in.readLine()) != null) {
-            if (str.indexOf('=') < 0) 
+            if (str.startsWith("#") || str.indexOf('=') < 0) 
                 continue;
             str = str.trim();
             String name = str.substring(0,str.indexOf('=')).trim();
