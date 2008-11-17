@@ -288,7 +288,9 @@ public class KeywordIndexServiceForBTFromNT{
 			{
 				if(part[1].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[1].equals("<http://www.w3.org/2002/07/owl#Class>"))
 					isIndiv = false;
-				else if(part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>") && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))
+				else if((part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>") && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))
+						// for freebase
+						|| ((part[1].equals(BuildQ2SemanticService.rdfsEdge[11]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))))
 					concept.add(part[2]);
 				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
 				{
