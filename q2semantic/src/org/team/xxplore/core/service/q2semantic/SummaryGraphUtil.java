@@ -10,7 +10,7 @@ import org.team.xxplore.core.service.impl.Property;
  *
  */
 public class SummaryGraphUtil {
-	public static String[] stopWords = {"Property-3A","Category-3A"};
+	public static String[] stopWords = {"Property-3A","Category-3A","User-3A"};
 	
 	/**
 	 * Get the uri of a summary graph element.
