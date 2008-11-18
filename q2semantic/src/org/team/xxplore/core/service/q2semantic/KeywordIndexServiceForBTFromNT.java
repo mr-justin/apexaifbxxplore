@@ -141,7 +141,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if (node.getType() == SummaryGraphElement.CONCEPT) 
 			{
 				String uri = ((NamedConcept)node.getResource()).getUri();
-				String label = uri.substring(uri.lastIndexOf('/')+1);
+				String label = SummaryGraphUtil.getLocalName(uri);
 				/* Write Index */
 				Document doc = new Document();
 				doc.add(new Field(TYPE_FIELD, CONCEPT,
@@ -161,7 +161,7 @@ public class KeywordIndexServiceForBTFromNT{
 					{
 						Document dpdoc = new Document();
 						String lab = ((DataProperty)toNode.getResource()).getUri();
-						dpdoc.add(new Field(ATTRIBUTE_FIELD, lab.substring(lab.lastIndexOf('/')+1),
+						dpdoc.add(new Field(ATTRIBUTE_FIELD, SummaryGraphUtil.getLocalName(lab),
 								Field.Store.YES, Field.Index.UN_TOKENIZED));
 						dpdoc.add(new Field(DOMAIN_FIELD, uri, Field.Store.YES,
 								Field.Index.NO));
@@ -172,7 +172,7 @@ public class KeywordIndexServiceForBTFromNT{
 					{
 						Document opdoc = new Document();
 						String lab = ((ObjectProperty)toNode.getResource()).getUri();
-						opdoc.add(new Field(RELATION_FIELD, lab.substring(lab.lastIndexOf('/')+1), Field.Store.YES, Field.Index.UN_TOKENIZED));
+						opdoc.add(new Field(RELATION_FIELD, SummaryGraphUtil.getLocalName(lab), Field.Store.YES, Field.Index.UN_TOKENIZED));
 						/* Domain or Range */
 						if(edge.getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE))
 							opdoc.add(new Field(DOMAIN_FIELD, uri, Field.Store.YES, Field.Index.NO));
@@ -206,7 +206,7 @@ public class KeywordIndexServiceForBTFromNT{
 			if(edge.getType() == SummaryGraphElement.ATTRIBUTE || edge.getType() == SummaryGraphElement.RELATION)
 			{
 				String uri = ((Property)edge.getResource()).getUri();
-				String label = uri.substring(uri.lastIndexOf('/')+1);
+				String label = SummaryGraphUtil.getLocalName(uri);
 				Document doc = new Document();
 				/* relation or attribute */
 				if (edge.getType() == SummaryGraphElement.RELATION)
@@ -288,9 +288,7 @@ public class KeywordIndexServiceForBTFromNT{
 			{
 				if(part[1].equals("<http://www.w3.org/2002/07/owl#ObjectProperty>") || part[1].equals("<http://www.w3.org/2002/07/owl#Class>"))
 					isIndiv = false;
-				else if((part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>") && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))
-						// for freebase
-						|| ((part[1].equals(BuildQ2SemanticService.rdfsEdge[11]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))))
+				else if(part[1].equals("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>") && !BuildQ2SemanticService.rdfsEdgeSet.contains(part[2].substring(1, part[2].length()-1)))
 					concept.add(part[2]);
 				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
 				{
