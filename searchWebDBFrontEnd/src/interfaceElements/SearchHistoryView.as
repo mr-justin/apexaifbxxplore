@@ -230,33 +230,5 @@ package interfaceElements
 				this.eventHandler.newSearchButtonOnClick(true);
 			}
 		}
-		
-		/**
-		 * Prepare a keyword string for display in the history bar
-		 * @param s The string to consider
-		 */
-	/*	private function prepareStringForDisplay(s:String) : String {
-			// Temporary string
-			var acc:String = "";
-			// Browse the string
-			for(var i:int = 0; i < s.length; i++) {
-				// Get the character
-				var str:String = s.charAt(i);
-				// If it does not match an accepted character, we drop it
-				var pattern:RegExp = /[A-Za-z]/;
-				if(str != " " && str != "\"" && !pattern.test(str))
-					continue;
-				// If it is a space
-				if(str == " ") {
-					if(acc.length > 0 && acc.charAt(acc.length - 1) != "") {
-						acc += " ";
-					}
-					continue;
-				}
-				// Else, add the char
-				acc += str;
-			}	
-			return acc;
-		}*/
 	}
 }

@@ -3,7 +3,6 @@ package interfaceElements
 	import dataStructure.Concept;
 	import dataStructure.Facet;
 	import dataStructure.GraphEdge;
-	import dataStructure.Litteral;
 	import dataStructure.QueryGraph;
 	
 	import flash.events.Event;
@@ -11,14 +10,14 @@ package interfaceElements
 	import flash.net.URLLoader;
 	import flash.net.URLRequest;
 	
+	import graphRenderer.GraphRenderer;
+	
 	import interfaceBackend.Functions;
 	
 	import mx.collections.ArrayCollection;
 	import mx.containers.ControlBar;
-	import mx.containers.HBox;
 	import mx.containers.Panel;
 	import mx.containers.VBox;
-	import mx.controls.Alert;
 	import mx.controls.Button;
 	import mx.controls.ComboBox;
 	import mx.controls.DataGrid;
@@ -29,12 +28,9 @@ package interfaceElements
 	import mx.events.FlexEvent;
 	import mx.events.ListEvent;
 	import mx.managers.PopUpManager;
-	import mx.utils.ObjectUtil;
 	
-	import org.un.cava.birdeye.ravis.graphLayout.data.IGraph;
-	import org.un.cava.birdeye.ravis.graphLayout.layout.ILayoutAlgorithm;
-	import org.un.cava.birdeye.ravis.graphLayout.visual.IEdgeRenderer;
-	import org.un.cava.birdeye.ravis.graphLayout.visual.IVisualNode;
+	import render.DynamicDataRenderer;
+	import render.Triple;
 	
 	/**
 	 * Class to handle the initial search view
@@ -80,17 +76,6 @@ package interfaceElements
 		private var graphDrawingZone:VBox;
 		// Data grid to display the mapping information
 		private var mappingDataGrid:DataGrid;
-		
-		// graph datastructure object
-		private var graph:IGraph;
-		// active layouter
-		private var layouter:ILayoutAlgorithm;
-		// edge renderer
-		private var selectedEdgeRenderer:IEdgeRenderer;
-		// root node to start with
-		private var startRoot:IVisualNode;
-		// this is used to display the number of visible items
-		private var itemCount:int = 0;
 		// label to give a feedback to the user
 		private var feedBackLabel:Label;
 		
@@ -110,6 +95,15 @@ package interfaceElements
 		private var txtArea:TextArea;
 		// Ok button
 		private var okButton:Button;
+		
+		// Area to display the graph
+		private var graph:GraphRenderer;
+		// Data renderer
+		private var currentRenderer:DynamicDataRenderer;
+		// Function to populate the graph
+		private var fetcherFunction:Function;
+		// The current query graph
+		private var currentQueryGraph:QueryGraph;
 		
 		/**
 		 * Default constructor
@@ -142,12 +136,28 @@ package interfaceElements
 		}
 		
 		/**
+		 * Initialize the graph component
+		 */
+		private function initGraph() : void {
+			// Initialization of the graph renderer
+			this.graph = new GraphRenderer;
+			this.graphDrawingZone.addChild(this.graph);
+			this.graph.autoLayout = true;
+			this.graph.percentHeight = 100;
+			this.graph.percentWidth = 100;
+			// Initialization of the function used to populate the graph
+			this.fetcherFunction = fetcher;
+			// Set this function in the renderer
+			this.graph.fetcherFunction = this.fetcherFunction;
+		}
+		
+		/**
 		 * Function used to clear the view
 		 */
 		public function clear() : void {
 			// Empty what shall be empty
 			this.initialKeywordInput.text = "";
-			this.graphDrawingZone.removeAllChildren();
+			this.graph.rootURI = null;
 			this.variableComboBox.dataProvider = "";
 			// Reinitialize lists and indexes
 			this.queryGraphList.removeAll();
@@ -205,6 +215,8 @@ package interfaceElements
 				initExampleQueriesPopup();
 			// Set the focus to the keyword field
 			this.initialKeywordInput.setFocus();
+			// Initialization of the graph component
+			initGraph();
 		}
 		
 		/**
@@ -411,12 +423,13 @@ package interfaceElements
 			// NOTE: for the moment, disable the graphical view and display the element in a 'classic' way
 			
 			// 1. Clean the area
-			this.graphDrawingZone.removeAllChildren();
+			//this.graphDrawingZone.removeAllChildren();
 			// 2. Fill the combobox used to select the target variable (litterals shall not be considered)
 			var g:QueryGraph = QueryGraph(this.queryGraphList.getItemAt(index));
 			this.variableList.removeAll();
 			this.variableNameList.removeAll();
 			this.variableLetterList.removeAll();
+			this.variableURIList.removeAll();
 			var asciiIndex:int = 97;
 			for(var i:int = 0; i < g.vertexList.length; i++) {
 				var f:Facet = Facet(g.vertexList.getItemAt(i));
@@ -428,11 +441,35 @@ package interfaceElements
 				}
 			}
 			this.variableComboBox.dataProvider = variableList;
+			// 3. Display the graph if it has at least one element
+			if(g.vertexList.length > 0) {
+				// Store the graph to allow the fetch function to find it
+				this.currentQueryGraph = g;
+				// Find the new root
+				var rootNodeStr:String = Facet(g.vertexList.getItemAt(0)).label;
+				// Handle the case of concepts (since they may have the same label but be distinct + variable)
+				if(g.vertexList.getItemAt(0) is Concept) {
+					// Get the index of its variable
+					var index:int = this.variableURIList.getItemIndex(Facet(g.vertexList.getItemAt(0)).URI);
+					// Get the variable letter
+					var letter:String = String(this.variableLetterList.getItemAt(index));
+					// Change the label
+					rootNodeStr = "?" + letter + " (" + rootNodeStr + ")";
+				} else {
+					rootNodeStr = "'" + rootNodeStr + "'";
+				}
+				// Set it to refresh the graph
+				this.graph.rootURI = rootNodeStr;
+			} else {
+				// Remove the graph
+				this.graph.rootURI = null;
+			}
+			
 			
 			// Temporary code: 'classic' rendering
 			
 			// 3. Set the vertical layout
-			var verticalBox:VBox = new VBox;
+			/*var verticalBox:VBox = new VBox;
 			
 			for(var k:int = 0; k < g.edgeList.length; k++) {
 				// Get the edge
@@ -486,52 +523,65 @@ package interfaceElements
 			}
 			
 			// Register the vertical box
-			this.graphDrawingZone.addChild(verticalBox);
+			this.graphDrawingZone.addChild(verticalBox);*/
 			
 			// End of temporary code
-			
-			/*
-			// 2. Create the graph rendering element
-			var graphCanvas:Canvas = new Canvas;
-			graphCanvas.percentHeight = 100;
-			graphCanvas.percentWidth = 100;
-			graphCanvas.setStyle("horizontalAlign", "center");
-			graphCanvas.setStyle("verticalAlign", "middle");
-			var vgraph:VisualGraph = new VisualGraph;
-			vgraph.percentHeight = 100;
-			vgraph.percentWidth = 100;	
-			vgraph.setStyle("horizontalAlign", "center");
-			vgraph.setStyle("verticalAlign", "middle");
-			vgraph.setStyle("left", 0);
-			vgraph.setStyle("right", 0);
-			vgraph.setStyle("top", 0);
-			vgraph.setStyle("bottom", 0);
-			var itemRendererFactory:ClassFactory = new ClassFactory(SimpleCircleNodeRenderer);
-			vgraph.itemRenderer = itemRendererFactory;
-			var edgeLabelRendererFactory:ClassFactory = new ClassFactory(BaseEdgeLabelRenderer);
-			vgraph.edgeLabelRenderer = edgeLabelRendererFactory;
-			vgraph.visibilityLimitActive = true;
-			this.graphDrawingZone.addChild(graphCanvas);
-			graphCanvas.addChild(vgraph);
-			// 3. Create and initialize the graph with the XML data
-			graph = new Graph("XMLAsDocsGraph", false, getXMLFromQueryGraph(g));
-			// 4. Set the graph in the vgraph object to this one
-			vgraph.graph = graph;
-			// 5. Set the graph layout
-			layouter = new ForceDirectedLayouter(vgraph);
-			layouter.linkLength = 120;
-			vgraph.layouter = layouter;	
-			// 6. Let the graph fit the space
-			layouter.autoFitEnabled = true;
-			vgraph.maxVisibleDistance = 10;
-			// 7. Create and set an EdgeRenderer
-			vgraph.edgeRenderer = new DirectedArrowEdgeRenderer(vgraph.edgeDrawGraphics);
-			// 8. We want to display the edge labels
-			vgraph.displayEdgeLabels = true;
-			// 9. Draw the graph
-			startRoot = graph.nodes[0].vnode;
-			vgraph.currentRootVNode = startRoot;
-			vgraph.draw();*/
+		}
+		
+		/**
+		 * Function automatically called by the graph renderer each time we change the root of the graph
+		 * @param fetchHandler Function from the graph to be called to update it
+		 * @param uri The uri of the root of the graph
+		 * @param index The index of this uri
+		 * @param pageSize The number of elements to be displayed at maximum
+		 */
+		private function fetcher(fetchHandler:Function, uri:String, index:int,pageSize:int) : void {
+			// Create an array of triples to display
+			var list:ArrayCollection = new ArrayCollection;
+			for(var i:int = 0; i < this.currentQueryGraph.edgeList.length; i++) {
+				var e:GraphEdge = GraphEdge(this.currentQueryGraph.edgeList.getItemAt(i));
+				// Get the elements of the edge
+				var fromElementStr:String = Facet(e.fromElement).label;
+				var decorationElementStr:String = Facet(e.decorationElement).label;
+				var toElementStr:String = Facet(e.toElement).label;
+				// Handle the case of concepts (since they may have the same label but be distinct + variable)
+				if(e.fromElement is Concept) {
+					// Get the index of its variable
+					var index:int = this.variableURIList.getItemIndex(e.fromElement.URI);
+					// Get the variable letter
+					var letter:String = String(this.variableLetterList.getItemAt(index));
+					// Change the label
+					fromElementStr = "?" + letter + " (" + fromElementStr + ")";
+				} else {
+					fromElementStr = "'" + fromElementStr + "'";
+				}
+				if(e.toElement is Concept) {
+					// Get the index of its variable
+					var index2:int = this.variableURIList.getItemIndex(e.toElement.URI);			
+					// Get the variable letter
+					var letter2:String = String(this.variableLetterList.getItemAt(index2));
+					// Change the label
+					toElementStr = "?" + letter2 + " (" + toElementStr + ")";
+				} else {
+					toElementStr = "'" + toElementStr + "'";
+				}
+				// Is there already a triple in the array with the same from and to elements? (multiple edges)
+				var found:Boolean = false;
+				for(var j:int = 0; j < list.length; j++) {
+					var triple:Triple = Triple(list.getItemAt(j));
+					if(fromElementStr == triple.subject && toElementStr == triple.object) {
+						list.removeItemAt(j);
+						list.addItem(new Triple(fromElementStr, triple.predicate + "/" + decorationElementStr, toElementStr));
+						found = true;
+						break;
+					}
+				}
+				// If no multiple edge was found, add the new triple
+				if(!found)
+					list.addItem(new Triple(fromElementStr, decorationElementStr, toElementStr));
+			}
+			// Call the fetch function of the renderer
+			fetchHandler.call(this, list.toArray());
 		}
 		
 		/**
