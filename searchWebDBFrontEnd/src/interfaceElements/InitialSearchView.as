@@ -157,7 +157,8 @@ package interfaceElements
 		public function clear() : void {
 			// Empty what shall be empty
 			this.initialKeywordInput.text = "";
-			this.graph.rootURI = null;
+			this.graphDrawingZone.removeAllChildren();
+			initGraph();
 			this.variableComboBox.dataProvider = "";
 			// Reinitialize lists and indexes
 			this.queryGraphList.removeAll();
@@ -216,7 +217,8 @@ package interfaceElements
 			// Set the focus to the keyword field
 			this.initialKeywordInput.setFocus();
 			// Initialization of the graph component
-			initGraph();
+			if(this.graph == null)
+				initGraph();
 		}
 		
 		/**
@@ -460,9 +462,6 @@ package interfaceElements
 				}
 				// Set it to refresh the graph
 				this.graph.rootURI = rootNodeStr;
-			} else {
-				// Remove the graph
-				this.graph.rootURI = null;
 			}
 			
 			
