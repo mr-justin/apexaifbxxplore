@@ -78,10 +78,10 @@ package interfaceElements
         public function getPossibleGraphs_answer(queryGraphList:ArrayCollection) : void {
         	if(initialSearchView == null) {
 				Alert.show("Your session seems to have expired. Please try refreshing the page.");
-				return;
-			}
-        	// Call the initial search view
-        	this.initialSearchView.setQueryGraphList(queryGraphList);
+			} else {
+        		// Call the initial search view to display the graph suggestions
+        		this.initialSearchView.setQueryGraphList(queryGraphList);
+   			}
         }
         
         /**
@@ -91,10 +91,10 @@ package interfaceElements
         public function getSuggestionsInOtherSource_answer(suggestionList:ArrayCollection) : void {
         	if(suggestionList == null) {
 				Alert.show("Your session seems to have expired. Please try refreshing the page.");
-				return;
+			} else {
+        		// Display the suggestions (considered here as a kind of facet)
+				this.refineView.addFacets(suggestionList);
 			}
-        	// Display the suggestions
-			this.refineView.addFacets(suggestionList);
         }
         
         /**
@@ -104,14 +104,14 @@ package interfaceElements
         public function search_answer(resultPage:ResultPage) : void {
         	if(resultPage == null) {
 				Alert.show("Your session seems to have expired. Please try refreshing the page.");
-				return;
+			} else {
+				// 1. Display the results
+				this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
+				// 2. Display the facets
+				this.refineView.addFacets(resultPage.source.facetList);
+				// 3. Get the suggestions (fire an event)
+				this.searchEngine.getSuggestionsInOtherSource(resultPage.source);
 			}
-			// 1. Display the results
-			this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
-			// 2. Display the facets
-			this.refineView.addFacets(resultPage.source.facetList);
-			// 3. Get the suggestions (fire an event)
-			this.searchEngine.getSuggestionsInOtherSource(resultPage.source);
         }
         
         /**
@@ -121,10 +121,10 @@ package interfaceElements
         public function getPage_answer(resultPage:ResultPage) : void {
         	if(resultPage == null) {
 				Alert.show("Your session seems to have expired. Please try refreshing the page.");
-				return;
-			}
-        	// Since the facets did not change, we just need to display the page
-        	this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
+			} else {
+        		// Since the facets did not change, we just need to display the page
+        		this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
+   			}
         }
         
         /**
@@ -134,14 +134,14 @@ package interfaceElements
         public function refine_answer(resultPage:ResultPage) : void {
         	if(resultPage == null) {
 				Alert.show("Your session seems to have expired. Please try refreshing the page.");
-				return;
+			} else {
+	        	// 1. Display the results
+				this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
+				// 2. Display the facets
+				this.refineView.addFacets(resultPage.source.facetList);
+				// 3. Get the suggestions (fire an event)
+				this.searchEngine.getSuggestionsInOtherSource(resultPage.source);
 			}
-        	// 1. Display the results
-			this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
-			// 2. Display the facets
-			this.refineView.addFacets(resultPage.source.facetList);
-			// 3. Get the suggestions (fire an event)
-			this.searchEngine.getSuggestionsInOtherSource(resultPage.source);
         }
         
         /**
@@ -151,14 +151,14 @@ package interfaceElements
         public function undoLastRefinement_answer(resultPage:ResultPage) : void {
         	if(resultPage == null) {
 				Alert.show("Your session seems to have expired. Please try refreshing the page.");
-				return;
+			} else {
+	        	// 1. Display the results
+				this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
+				// 2. Display the facets
+				this.refineView.addFacets(resultPage.source.facetList);
+				// 3. Get the suggestions (fire an event)
+				this.searchEngine.getSuggestionsInOtherSource(resultPage.source);
 			}
-        	// 1. Display the results
-			this.resultView.displayResultPage(resultPage, this.numResultsPerPage);
-			// 2. Display the facets
-			this.refineView.addFacets(resultPage.source.facetList);
-			// 3. Get the suggestions (fire an event)
-			this.searchEngine.getSuggestionsInOtherSource(resultPage.source);
         }
         
         /**
