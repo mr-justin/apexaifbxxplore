@@ -14,6 +14,7 @@ import name.levering.ryan.sparql.parser.ParseException;
 import name.levering.ryan.sparql.parser.SPARQLParser;
 import name.levering.ryan.sparql.parser.model.Node;
 
+import org.omg.CORBA.Environment;
 import org.openrdf.query.Binding;
 import org.openrdf.query.BindingSet;
 import org.openrdf.query.MalformedQueryException;
@@ -35,6 +36,7 @@ import org.xmedia.oms.metaknow.rewrite.ProvenaceGraphNotSupportedException;
 import org.xmedia.oms.metaknow.rewrite.ProvenanceVisitor;
 import org.xmedia.oms.model.api.INamedIndividual;
 import org.xmedia.oms.model.api.IResource;
+import org.xmedia.oms.persistence.KbEnvironment;
 import org.xmedia.oms.query.IQueryEvaluator;
 import org.xmedia.oms.query.IQueryResult;
 import org.xmedia.oms.query.IQueryWrapper;
@@ -100,8 +102,12 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 				String[] variablesNames = new String[results.getBindingNames().size()];
 				variablesNames = results.getBindingNames().toArray(variablesNames);
 				Set<ITuple> tuplesSet = new HashSet<ITuple>();
-
-				while (results.hasNext()) {
+				
+				//TODO: retrieve results in chunks with forward/backward iteration
+				//for now, just limit the max number of triples
+				int counter = 0;
+				while (results.hasNext() && counter < KbEnvironment.MAX_NUMBER_TRIPLES) {
+					counter++;
 					BindingSet aBindingSet = results.next();
 					List<IResource> tuples = new ArrayList<IResource>();
 					List<String> names = new ArrayList<String>();

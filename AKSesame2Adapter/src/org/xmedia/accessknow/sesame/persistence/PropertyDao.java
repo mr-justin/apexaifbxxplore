@@ -205,17 +205,30 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 						m_session.isReasoningOn()).asList());
 
 			}
-
+			
+			//also add datatype properties (the one without range but with Datatype, see BTC schema computation)
+				
+			
 			for (Statement stmt : properties) {
 
 				Resource subject = stmt.getSubject();
 
 				if (subject instanceof URI) {
+						
+					RepositoryResult<Statement> property_datatype = con
+					.getStatements(subject, RDFS.DATATYPE, null, m_session
+							.isReasoningOn());
+					if (property_datatype.hasNext()) {
+						result.add(Ses2AK.getDataProperty((URI) subject,
+								m_session.getOntology()));
+					}
 
+					
+					
 					RepositoryResult<Statement> property_range = con
 							.getStatements(subject, RDFS.RANGE, null, m_session
 									.isReasoningOn());
-
+		
 					if (property_range.hasNext()) {
 
 						Statement property_range_stmt = property_range.next();
@@ -225,12 +238,21 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 							result.add(Ses2AK.getObjectProperty((URI) subject,
 									m_session.getOntology()));
 						} else {
+							//datatypeproperties with range...
 							result.add(Ses2AK.getDataProperty((URI) subject,
 									m_session.getOntology()));
 						}
 					}
+					property_range.close();
+					
 				}
 			}
+			
+			
+			
+			
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
