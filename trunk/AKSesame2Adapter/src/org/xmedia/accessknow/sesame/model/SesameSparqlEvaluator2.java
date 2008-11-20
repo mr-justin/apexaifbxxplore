@@ -99,7 +99,7 @@ public class SesameSparqlEvaluator2 implements IQueryEvaluator {
 				String[] variablesNames = new String[results.getBindingNames().size()];
 				variablesNames = results.getBindingNames().toArray(variablesNames);
 				Set<ITuple> tuplesSet = new HashSet<ITuple>();
-
+								
 				while (results.hasNext()) {
 //					BindingSet aBindingSet = results.next();
 //					List<IResource> tuples = new ArrayList<IResource>();
