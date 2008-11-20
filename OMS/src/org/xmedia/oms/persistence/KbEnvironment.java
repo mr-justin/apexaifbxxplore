@@ -117,5 +117,12 @@ public final class KbEnvironment {
 	
 	public static final String BASE_ADAPTATION_ONTOLOGY_URI = "adaptation.base_ontology.uri";
 
+	/**
+	 * The maximum number of triples returned per query
+	 * Workaround until proper iteration over results is possible
+	 * TODO: backward/forward iteration over results
+	 */
+	public static final int MAX_NUMBER_TRIPLES = 200;
+
 			
 }
