@@ -45,4 +45,20 @@ public class QueryWrapper implements IQueryWrapper {
 		
 		return m_vars; 
 	}
+	
+	public boolean equals(Object otherquerywrapper){
+		
+		try{
+		
+		if(this.getQuery().equals(((QueryWrapper)otherquerywrapper).getQuery())){
+			return true;
+		}
+		
+		return false;
+		}catch(ClassCastException e){
+			return false;
+		}
+				
+	}
+	
 }

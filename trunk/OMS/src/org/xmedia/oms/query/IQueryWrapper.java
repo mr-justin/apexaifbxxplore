@@ -12,4 +12,6 @@ public interface IQueryWrapper {
 	
 	public void setOntology(String uri);
 	
+	public boolean equals(Object otherquerywrapper);
+	
 }
