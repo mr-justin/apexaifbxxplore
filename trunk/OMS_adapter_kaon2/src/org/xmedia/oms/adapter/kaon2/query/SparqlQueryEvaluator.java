@@ -171,4 +171,10 @@ public class SparqlQueryEvaluator implements IQueryEvaluator{
 		return result;
 	}
 
+	@Override
+	public boolean hasResults(IQueryWrapper queryWrapper) throws QueryException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }
