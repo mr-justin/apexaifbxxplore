@@ -6,4 +6,6 @@ public interface IQueryEvaluator {
 	
 	public IQueryResult evaluateWithProvenance(IQueryWrapper query) throws QueryException;
 
+	public boolean hasResults(IQueryWrapper queryWrapper) throws QueryException;
+
 }
