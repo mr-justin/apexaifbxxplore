@@ -476,6 +476,12 @@ public class SesameSerqlEvaluator implements IQueryEvaluator {
 		return m_bindings;
 	}
 
+	@Override
+	public boolean hasResults(IQueryWrapper queryWrapper) throws QueryException {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 	//////////////////////////////////////////
 	
 }

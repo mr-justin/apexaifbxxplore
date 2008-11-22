@@ -49,12 +49,11 @@ import org.xmedia.oms.query.ResourceTuple;
 public class SesameSparqlEvaluator implements IQueryEvaluator {
 
 	/*
-	 * Needed for benchmarking purposes. 
-	 * Please see MetaknowQueryTest for details.
+	 * Needed for benchmarking purposes. Please see MetaknowQueryTest for
+	 * details.
 	 */
 
-	////////////////////////////////////////
-
+	// //////////////////////////////////////
 	private long m_time1;
 
 	private long m_time2;
@@ -72,8 +71,7 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 
 	private ArrayList<String> m_bindings;
 
-	////////////////////////////////////////
-
+	// //////////////////////////////////////
 
 	private SesameOntology ontology = null;
 	private Repository repository = null;
@@ -82,11 +80,11 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 
 	private Map<String, IProvenance> m_processedTripleURIs = new HashMap<String, IProvenance>();
 
+	protected SesameSparqlEvaluator(Repository repository,
+			SesameOntology ontology) throws RepositoryException {
 
-	protected SesameSparqlEvaluator(Repository repository, SesameOntology ontology) throws RepositoryException {
-
-		this.repository  = repository;
-		this.ontology = ontology;	
+		this.repository = repository;
+		this.ontology = ontology;
 
 	}
 
@@ -96,33 +94,40 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		RepositoryConnection conn = null;
 		try {
 			conn = repository.getConnection();
-			TupleQuery compiledQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, query.getQuery());
+			TupleQuery compiledQuery = conn.prepareTupleQuery(
+					QueryLanguage.SPARQL, query.getQuery());
 			TupleQueryResult results = compiledQuery.evaluate();
 			try {
-				String[] variablesNames = new String[results.getBindingNames().size()];
-				variablesNames = results.getBindingNames().toArray(variablesNames);
+				String[] variablesNames = new String[results.getBindingNames()
+						.size()];
+				variablesNames = results.getBindingNames().toArray(
+						variablesNames);
 				Set<ITuple> tuplesSet = new HashSet<ITuple>();
-				
-				//TODO: retrieve results in chunks with forward/backward iteration
-				//for now, just limit the max number of triples
+
+				// TODO: retrieve results in chunks with forward/backward
+				// iteration
+				// for now, just limit the max number of triples
 				int counter = 0;
-				while (results.hasNext() && counter < KbEnvironment.MAX_NUMBER_TRIPLES) {
+				while (results.hasNext()
+						&& counter < KbEnvironment.MAX_NUMBER_TRIPLES) {
 					counter++;
 					BindingSet aBindingSet = results.next();
 					List<IResource> tuples = new ArrayList<IResource>();
 					List<String> names = new ArrayList<String>();
-					for(String aName : variablesNames) {
+					for (String aName : variablesNames) {
 						Binding aBinding = aBindingSet.getBinding(aName);
 						if (aBinding != null) {
 							names.add(aName);
-							tuples.add(Ses2AK.getObject(aBinding.getValue(), ontology));
+							tuples.add(Ses2AK.getObject(aBinding.getValue(),
+									ontology));
 						}
 					}
 
 					if (tuples.size() > 0) {
 						String[] namesAsArray = new String[names.size()];
 						namesAsArray = names.toArray(namesAsArray);
-						tuplesSet.add(new ResourceTuple(tuples.size(), tuples.toArray(), namesAsArray));
+						tuplesSet.add(new ResourceTuple(tuples.size(), tuples
+								.toArray(), namesAsArray));
 					}
 				}
 
@@ -152,28 +157,101 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		return theResult;
 	}
 
-	public IQueryResult evaluateWithProvenance(IQueryWrapper query) throws QueryException {
+	/**
+	 * Evaluates the query, but only until one matching triple is found then
+	 * returns true or false if no triples where found
+	 * 
+	 * @param query
+	 * @return
+	 * @throws QueryException
+	 */
+	public boolean hasResults(IQueryWrapper query) throws QueryException {
+
+		boolean hasresults = false;
+
+		IQueryResult theResult = null;
+		RepositoryConnection conn = null;
+		try {
+			conn = repository.getConnection();
+			TupleQuery compiledQuery = conn.prepareTupleQuery(
+					QueryLanguage.SPARQL, query.getQuery());
+			TupleQueryResult results = compiledQuery.evaluate();
+			try {
+				String[] variablesNames = new String[results.getBindingNames()
+						.size()];
+				variablesNames = results.getBindingNames().toArray(
+						variablesNames);
+				Set<ITuple> tuplesSet = new HashSet<ITuple>();
+
+				int counter = 0;
+				while (results.hasNext() && counter < 1) {
+					counter++;
+					BindingSet aBindingSet = results.next();
+					List<IResource> tuples = new ArrayList<IResource>();
+
+					for (String aName : variablesNames) {
+						Binding aBinding = aBindingSet.getBinding(aName);
+						if (aBinding != null) {
+							tuples.add(Ses2AK.getObject(aBinding.getValue(),
+									ontology));
+						}
+					}
+
+					if (tuples.size() > 0) {
+						hasresults = true;
+						break;
+					}
+				}
+
+			} catch (Exception e) {
+				throw e;
+			} finally {
+				results.close();
+			}
+		} catch (RepositoryException e) {
+			throw new QueryException(query, e);
+		} catch (MalformedQueryException e) {
+			throw new QueryException(query, e);
+		} catch (QueryEvaluationException e) {
+			throw new QueryException(query, e);
+		} catch (Exception e) {
+			throw new QueryException(query, e);
+		} finally {
+			if (conn != null)
+				try {
+					conn.close();
+				} catch (RepositoryException e) {
+					throw new QueryException(query, e);
+				}
+		}
+
+		return hasresults;
+	}
+
+	public IQueryResult evaluateWithProvenance(IQueryWrapper query)
+			throws QueryException {
 
 		/* begin of step 1 */
 		m_timeStart = System.currentTimeMillis();
 
 		IQueryResult result = null;
 		Query provQuery = null;
-		String querystr = query.getQuery(); 
+		String querystr = query.getQuery();
 		try {
 			provQuery = SPARQLParser.parse(new StringReader(querystr));
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
-		if(query == null) return null; 
+		if (query == null)
+			return null;
 
-		//create provenance expression using visitor 
+		// create provenance expression using visitor
 		ProvenanceVisitor pv = new ProvenanceVisitor();
 		((Node) provQuery).jjtAccept(pv);
 		// create augmented query
 		AugmentVisitor av = new AugmentVisitor();
-		//((Node) provQuery).jjtAccept(av);
+		// ((Node) provQuery).jjtAccept(av);
 		String provQueryStr = av.augmentQuery(querystr);
 
 		/* end of step 1 */
@@ -186,22 +264,24 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		try {
 			conn = repository.getConnection();
 
-			//String provQueryStr = QueryFormatter.addURIBrackets(provQuery.toString());
-			TupleQuery compiledQuery = conn.prepareTupleQuery(QueryLanguage.SPARQL, provQueryStr);
+			// String provQueryStr =
+			// QueryFormatter.addURIBrackets(provQuery.toString());
+			TupleQuery compiledQuery = conn.prepareTupleQuery(
+					QueryLanguage.SPARQL, provQueryStr);
 			TupleQueryResult results = compiledQuery.evaluate();
 
 			/* end of step 2 */
-//			m_time2 = System.currentTimeMillis();
-//			m_time2 = m_time2 - m_timeStart;
-
-			//with results, performed query to get provenances 
-			Set<ITuple> tuples = new HashSet<ITuple>(); 
-			String[] variablesNames = new String[results.getBindingNames().size()];
+			// m_time2 = System.currentTimeMillis();
+			// m_time2 = m_time2 - m_timeStart;
+			// with results, performed query to get provenances
+			Set<ITuple> tuples = new HashSet<ITuple>();
+			String[] variablesNames = new String[results.getBindingNames()
+					.size()];
 			variablesNames = results.getBindingNames().toArray(variablesNames);
-			String[] varNamesAndProvenance = new String[variablesNames.length + 1];;
+			String[] varNamesAndProvenance = new String[variablesNames.length + 1];
+			;
 			String[] provVars = av.getUsedVars();
 			List<Binding> provBindings = new ArrayList<Binding>();
-
 
 			/* begin of step 3 and 4 */
 			m_time2 = 0;
@@ -209,11 +289,11 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 			m_time4 = 0;
 
 			m_time3Detailed = new ArrayList<Long>();
-			m_time4Detailed = new ArrayList<Long>();		
+			m_time4Detailed = new ArrayList<Long>();
 			m_bindings = new ArrayList<String>();
 
-
-			//clear the map that is used to store provenances that already have been computed
+			// clear the map that is used to store provenances that already have
+			// been computed
 			m_processedTripleURIs.clear();
 
 			while (results.hasNext()) {
@@ -221,12 +301,10 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 				String help = "";
 
 				BindingSet aBindingSet = results.next();
-				for(String aName : variablesNames) 
-				{
-					if(isProvenanceVariable(provVars, aName))
-					{
+				for (String aName : variablesNames) {
+					if (isProvenanceVariable(provVars, aName)) {
 						provBindings.add(aBindingSet.getBinding(aName));
-						help += ", "+aBindingSet.getBinding(aName).toString();
+						help += ", " + aBindingSet.getBinding(aName).toString();
 					}
 				}
 
@@ -237,14 +315,14 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 
 				m_timeStart = System.currentTimeMillis();
 
-				//merge provenances with provExpression
+				// merge provenances with provExpression
 				@SuppressWarnings("unused")
-				HashMap<String, org.xmedia.oms.metaknow.Provenance> graphProvenances = getGraphProvenances(provBindings, conn);
+				HashMap<String, org.xmedia.oms.metaknow.Provenance> graphProvenances = getGraphProvenances(
+						provBindings, conn);
 
 				@SuppressWarnings("unused")
 				NodeProvenance np = pv.getProvenance();
 				ComplexProvenance prov = null;
-
 
 				/* end of step 3 and begin of stept 4 */
 				m_time3Tmp = System.currentTimeMillis();
@@ -254,36 +332,38 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 				m_timeStart = System.currentTimeMillis();
 
 				try {
-					prov = np.getProvenanceFormula().getProvenance(graphProvenances);
-				}
-				catch (Exception e) {
+					prov = np.getProvenanceFormula().getProvenance(
+							graphProvenances);
+				} catch (Exception e) {
 					continue;
 				}
 
 				if (prov == null)
 					continue;
-				
+
 				m_time4Tmp = System.currentTimeMillis();
 				m_time4Detailed.add(m_time4Tmp - m_timeStart);
 				m_time4 += m_time4Tmp - m_timeStart;
 
 				m_timeStart = System.currentTimeMillis();
 
-				Object[] tuple = new Object[variablesNames.length +1];
+				Object[] tuple = new Object[variablesNames.length + 1];
 
-				for(int i = 0; i < variablesNames.length; i++) {
-					Binding aBinding = aBindingSet.getBinding(variablesNames[i]);
+				for (int i = 0; i < variablesNames.length; i++) {
+					Binding aBinding = aBindingSet
+							.getBinding(variablesNames[i]);
 					if (aBinding != null) {
 						varNamesAndProvenance[i] = variablesNames[i];
-						tuple[i] = Ses2AK.getObject(aBinding.getValue(), ontology);
+						tuple[i] = Ses2AK.getObject(aBinding.getValue(),
+								ontology);
 					}
 				}
 
-				//add prov to last position 
-				tuple[variablesNames.length] = prov; 
-				varNamesAndProvenance[variablesNames.length] = COMBINED_PROVENANCE;				
-				tuples.add(new ResourceTuple(variablesNames.length + 1, tuple, varNamesAndProvenance));
-
+				// add prov to last position
+				tuple[variablesNames.length] = prov;
+				varNamesAndProvenance[variablesNames.length] = COMBINED_PROVENANCE;
+				tuples.add(new ResourceTuple(variablesNames.length + 1, tuple,
+						varNamesAndProvenance));
 
 				m_time2Tmp = System.currentTimeMillis();
 				m_time2 += m_time2Tmp - m_timeStart;
@@ -313,60 +393,85 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		return result;
 	}
 
-
-	private HashMap<String, org.xmedia.oms.metaknow.Provenance> getGraphProvenances(List<Binding> provBindings, RepositoryConnection conn) throws ProvenaceGraphNotSupportedException{
-		if (provBindings == null || provBindings.size() == 0) return null;
+	private HashMap<String, org.xmedia.oms.metaknow.Provenance> getGraphProvenances(
+			List<Binding> provBindings, RepositoryConnection conn)
+			throws ProvenaceGraphNotSupportedException {
+		if (provBindings == null || provBindings.size() == 0)
+			return null;
 
 		HashMap<String, org.xmedia.oms.metaknow.Provenance> graphProvenances = new HashMap<String, org.xmedia.oms.metaknow.Provenance>();
-		for(Binding b : provBindings){
+		for (Binding b : provBindings) {
 
-			/******compute the provenance graph using the uri of the triple (which is the URI of the graph that contains it) ****/
+			/******
+			 * compute the provenance graph using the uri of the triple (which
+			 * is the URI of the graph that contains it)
+			 ****/
 			String tripleGraphUri = b.getValue().toString();
 			String tripleGraphName = b.getName();
 			IProvenance provenance = null;
 
-			//try to retrieve provenances from the cache
+			// try to retrieve provenances from the cache
 			provenance = m_processedTripleURIs.get(tripleGraphUri);
-			
-			if (provenance == null){
+
+			if (provenance == null) {
 				Set<IProvenance> provenances = null;
 				try {
-					//retrieve provenances 
+					// retrieve provenances
 					provenances = getProvenances(tripleGraphUri);
 				} catch (ProvenanceUnknownException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
-				};
-				
-				//assume that there is only one "provenance object" in the provenance graph 
-				//TODO fusion of provenances in case there is more than one!
-				if (provenances != null && provenances.size() == 1){
+				}
+				;
+
+				// assume that there is only one "provenance object" in the
+				// provenance graph
+				// TODO fusion of provenances in case there is more than one!
+				if (provenances != null && provenances.size() == 1) {
 					provenance = provenances.iterator().next();
 					m_processedTripleURIs.put(tripleGraphUri, provenance);
 				}
 			}
 
-			graphProvenances.put("?" + tripleGraphName, (org.xmedia.oms.metaknow.Provenance)provenance);
+			graphProvenances.put("?" + tripleGraphName,
+					(org.xmedia.oms.metaknow.Provenance) provenance);
 		}
 		return graphProvenances;
 	}
 
-	public Set<IProvenance> getProvenances(String reification) throws ProvenanceUnknownException {
+	public Set<IProvenance> getProvenances(String reification)
+			throws ProvenanceUnknownException {
 		Set<IProvenance> provenances = new HashSet<IProvenance>();
-		if (reification == null || reification.length() == 0) return null;
+		if (reification == null || reification.length() == 0)
+			return null;
 		else {
 
 			try {
 
-				IQueryWrapper theQuery = new QueryWrapper(
-						"\nSELECT DISTINCT *" +
-						"\nWHERE {" +
-						"\n<" + reification + "> <" + MetaVocabulary.HAS_PROVENANCE + "> ?provenance ." +
-						"\nOPTIONAL {?provenance <" + MetaVocabulary.AGENT + "> ?" + ProvSparqlVariable.AGENT + " } ." +
-						"\nOPTIONAL {?provenance <" + MetaVocabulary.CONFIDENCE_DEGREE + "> ?" + ProvSparqlVariable.CONFIDENCE + " } ." +
-						"\nOPTIONAL {?provenance <" + MetaVocabulary.CREATION_TIME + "> ?" + ProvSparqlVariable.DATE + " } ." +
-						"\nOPTIONAL {?provenance <" + MetaVocabulary.SOURCE + "> ?" + ProvSparqlVariable.SOURCE + " } ." +
-						"}",
+				IQueryWrapper theQuery = new QueryWrapper("\nSELECT DISTINCT *"
+						+ "\nWHERE {" + "\n<"
+						+ reification
+						+ "> <"
+						+ MetaVocabulary.HAS_PROVENANCE
+						+ "> ?provenance ."
+						+ "\nOPTIONAL {?provenance <"
+						+ MetaVocabulary.AGENT
+						+ "> ?"
+						+ ProvSparqlVariable.AGENT
+						+ " } ."
+						+ "\nOPTIONAL {?provenance <"
+						+ MetaVocabulary.CONFIDENCE_DEGREE
+						+ "> ?"
+						+ ProvSparqlVariable.CONFIDENCE
+						+ " } ."
+						+ "\nOPTIONAL {?provenance <"
+						+ MetaVocabulary.CREATION_TIME
+						+ "> ?"
+						+ ProvSparqlVariable.DATE
+						+ " } ."
+						+ "\nOPTIONAL {?provenance <"
+						+ MetaVocabulary.SOURCE
+						+ "> ?" + ProvSparqlVariable.SOURCE + " } ." + "}",
 						null);
 
 				Set<ITuple> theResult = evaluate(theQuery).getResult();
@@ -374,7 +479,7 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 				if (theResult.size() == 0)
 					return null;
 				else
-					for(ITuple aTuple : theResult)
+					for (ITuple aTuple : theResult)
 						provenances.add(createProvenance(aTuple));
 
 			} catch (QueryException e) {
@@ -386,37 +491,36 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		return provenances;
 	}
 
-
-	private boolean isProvenanceVariable(String[] provnanceVar, String var){
-		if(provnanceVar == null || provnanceVar.length == 0) return false;
-		for(int i = 0; i < provnanceVar.length; i++){
-			if (provnanceVar[i].equals(var)) return true;
+	private boolean isProvenanceVariable(String[] provnanceVar, String var) {
+		if (provnanceVar == null || provnanceVar.length == 0)
+			return false;
+		for (int i = 0; i < provnanceVar.length; i++) {
+			if (provnanceVar[i].equals(var))
+				return true;
 		}
 
-		return false; 
+		return false;
 	}
 
 	private enum ProvSparqlVariable {
 
-		AGENT ("agent"),
-		SOURCE ("source"),
-		CONFIDENCE ("confidence"),
-		DATE ("date");
+		AGENT("agent"), SOURCE("source"), CONFIDENCE("confidence"), DATE("date");
 
 		private final String name;
-		private static Map<String,ProvSparqlVariable> tokenMap;
+		private static Map<String, ProvSparqlVariable> tokenMap;
 
-		private ProvSparqlVariable(String name){
+		private ProvSparqlVariable(String name) {
 			this.name = name.toLowerCase();
-			map(name,this);
+			map(name, this);
 		}
 
-		private void map(String name, ProvSparqlVariable op){
-			if (tokenMap==null) tokenMap = new HashMap<String, ProvSparqlVariable>();
-			tokenMap.put(name,op);
+		private void map(String name, ProvSparqlVariable op) {
+			if (tokenMap == null)
+				tokenMap = new HashMap<String, ProvSparqlVariable>();
+			tokenMap.put(name, op);
 		}
 
-		public static ProvSparqlVariable forName(String name){
+		public static ProvSparqlVariable forName(String name) {
 			return tokenMap.get(name);
 		}
 
@@ -435,7 +539,8 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		for (int i = 0; i < queryResult.getArity(); i++) {
 
 			String value = queryResult.getElementAt(i).getLabel();
-			ProvSparqlVariable variable = ProvSparqlVariable.forName(queryResult.getLabelAt(i).toLowerCase());
+			ProvSparqlVariable variable = ProvSparqlVariable
+					.forName(queryResult.getLabelAt(i).toLowerCase());
 			if (variable != null)
 				switch (variable) {
 				case AGENT:
@@ -445,8 +550,8 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 					confidence = Double.valueOf(value);
 					break;
 				case DATE:
-					//TODO: need to construct a data from the string value 
-					//date = new Date(value.toString());
+					// TODO: need to construct a data from the string value
+					// date = new Date(value.toString());
 					break;
 				case SOURCE:
 					source = ontology.createNamedIndividual(value);
@@ -460,48 +565,56 @@ public class SesameSparqlEvaluator implements IQueryEvaluator {
 		return new Provenance(confidence, agent, source, date);
 	}
 
-	//////////////////////////////////////////
+	// ////////////////////////////////////////
 
 	/**
-	 * Used for benchmarking purposes of evaluateWithProvenance().
-	 * Returns time (in ms) at the specified step. 
+	 * Used for benchmarking purposes of evaluateWithProvenance(). Returns time
+	 * (in ms) at the specified step.
 	 * 
-	 *  @param step - int 
-	 *  
+	 * @param step
+	 *            - int
+	 * 
 	 */
-	public long getTime(int step){
+	public long getTime(int step) {
 
-		switch(step)
-		{
-		case 1: return m_time1;	      	
-		case 2: return m_time2;      
-		case 3: return m_time3;
-		case 4: return m_time4;
-		default: return -1;
+		switch (step) {
+		case 1:
+			return m_time1;
+		case 2:
+			return m_time2;
+		case 3:
+			return m_time3;
+		case 4:
+			return m_time4;
+		default:
+			return -1;
 
 		}
 	}
 
 	/**
-	 * Used for benchmarking purposes of evaluateWithProvenance().
-	 * Returns time (in ms) at the specified step. 
+	 * Used for benchmarking purposes of evaluateWithProvenance(). Returns time
+	 * (in ms) at the specified step.
 	 * 
-	 *  @param step - int 
-	 *  
+	 * @param step
+	 *            - int
+	 * 
 	 */
-	public ArrayList<Long> getTimeDetailed(int step){
+	public ArrayList<Long> getTimeDetailed(int step) {
 
-		switch(step)
-		{
-		case 3: return m_time3Detailed;	      	
-		case 4: return m_time4Detailed;
-		default: return null;                  
+		switch (step) {
+		case 3:
+			return m_time3Detailed;
+		case 4:
+			return m_time4Detailed;
+		default:
+			return null;
 		}
 	}
 
-	public ArrayList<String> getBindings(){
+	public ArrayList<String> getBindings() {
 		return m_bindings;
 	}
 
-	//////////////////////////////////////////
+	// ////////////////////////////////////////
 }
