@@ -109,7 +109,7 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	}
 
 	public void applyCoverage(int coverage){
-		if (!m_coverageApplied) m_totalCost = m_totalCost * coverage; 
+		if (!m_coverageApplied) m_totalCost = m_totalCost / coverage; 
 	}
 	
 	public void setMatchingScore(double score){
