@@ -28,7 +28,7 @@ public class MappingIndexPreparer {
 		throw new Exception("Not Implemented");
 	}
 
-	public MappingIndexPreparer(File datasrc, InputStream input, String ds1, String ds2,
+	public MappingIndexPreparer(String datasrc, InputStream input, String ds1, String ds2,
 			int strategy) {
 		this.input = input;
 		this.strategy = strategy;
@@ -37,7 +37,7 @@ public class MappingIndexPreparer {
 //		this.dsCollector = new DatasourceCollector(new File("."));
 		
 		try {
-			HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
+			HashMap config = Config.readDSConfigFile(datasrc);
 			path_of_ds1 = new File((String)config.get(ds1));
 			path_of_ds2 = new File((String)config.get(ds2));
 			ds1_i = (Integer) config.get(ds1+".i");
@@ -56,7 +56,7 @@ public class MappingIndexPreparer {
 					.println("  strategy: 1->M*log(N); 2->N*log(M); 3->p*log(M)*log(N)");
 			return;
 		}
-		File datasrc = new File(args[0]);
+		String datasrc = args[0];
 		String ds1 = args[1];
 		String ds2 = args[2];
 		int strategy = Integer.parseInt(args[3]);

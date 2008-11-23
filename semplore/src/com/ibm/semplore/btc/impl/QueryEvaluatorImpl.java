@@ -294,17 +294,17 @@ public class QueryEvaluatorImpl implements QueryEvaluator {
 	 * @param datasrc
 	 * @throws IOException 
 	 */
-	public QueryEvaluatorImpl(File datasrc) throws IOException {
+	public QueryEvaluatorImpl(String datasrc) throws IOException {
 		if (!configed ) {
 			configed = true;
-			HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
+			HashMap config = Config.readDSConfigFile(datasrc);
 			pathOfDataSource = new Hashtable<String, File>();
 			dataSources = new Hashtable<Integer, String>();
 			for (Object o :config.keySet()) {
 				if (o instanceof Integer) dataSources.put((Integer)o, (String)config.get(o));
 				else if (o instanceof String && (config.get(o) instanceof String)) pathOfDataSource.put((String)o, new File((String)config.get(o)));
 			}
-			QuerySnippetDB.init(pathOfDataSource.get("snippet").getAbsolutePath());
+			QuerySnippetDB.init(pathOfDataSource.get("snippet"));
 			mappingIndex = pathOfDataSource.get("mapping");
 			MappingIndexReaderFactory.init(mappingIndex);
 			PropertyConfigurator.configure(pathOfDataSource.get("logging").toURL());
