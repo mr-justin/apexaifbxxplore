@@ -113,9 +113,15 @@ public class Config
      * @throws Exception
      */
     public static HashMap readDSConfigFile(String filename) throws IOException {
+		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
+		String path = classLoader.getResource(".").getPath(); //path to classes
+		path = path.substring(0,path.lastIndexOf('/',path.length()-2)); //goto parent folder
+		path = path.replace("%20", " ");
+		path = path+"/config/"+filename;
+
     	HashMap config;
     	if ((config=configs.get(filename))!=null) return config; 
-        BufferedReader in = new BufferedReader(new FileReader(filename));
+        BufferedReader in = new BufferedReader(new FileReader(path));
         String str = null;
         System.err.println("================config begin==================");
         config = new HashMap();

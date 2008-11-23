@@ -29,7 +29,7 @@ public class MappingIndexPreparer_ForLucene extends MappingIndexPreparer {
 	HashMap<Long, Integer> idmap1 = new HashMap<Long, Integer>();
 	HashMap<Long, Integer> idmap2 = new HashMap<Long, Integer>();
 
-	public MappingIndexPreparer_ForLucene(File datasrc, InputStream input, String ds1, String ds2,
+	public MappingIndexPreparer_ForLucene(String datasrc, InputStream input, String ds1, String ds2,
 			int strategy) {
 		super(datasrc, input, ds1, ds2, strategy);
 	}

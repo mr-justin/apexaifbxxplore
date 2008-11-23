@@ -24,15 +24,16 @@ public class QuerySnippetDB {
 	static HashMap<String, PrimaryIndex<String, InstanceEntityClass>> pidxs = null;
 	static File snippetLoc = null;
 
-	public static void init(File datasrc) throws IOException {
-		HashMap config = Config.readDSConfigFile(datasrc.getAbsolutePath());
-		init((String)config.get("snippet"));
-	}
-	public static void init(String snippetloc)  {
-		snippetLoc = new File(snippetloc);
+	public static void init(String datasrc) throws IOException {
+		HashMap config = Config.readDSConfigFile(datasrc);
+		snippetLoc = new File((String)config.get("snippet"));
 		pidxs = new HashMap<String, PrimaryIndex<String,InstanceEntityClass>>();
 	}
 	
+	public static void init(File snippetloc) {
+		snippetLoc = snippetloc;
+		pidxs = new HashMap<String, PrimaryIndex<String,InstanceEntityClass>>();
+	}
 	public static InstanceEntityClass getSnippet(String ds, String uri) throws DatabaseException {
 		PrimaryIndex<String, InstanceEntityClass> pidx = pidxs.get(ds);
 		if (pidx==null)	{
@@ -74,7 +75,7 @@ public class QuerySnippetDB {
 	 */
 	public static void main(String[] args) throws EnvironmentLockedException, DatabaseException, IOException {
 		//must be called at beginning of servlet
-		init(new File("config"+File.separatorChar+"datasrc.cfg"));
+		init("datasrc.cfg");
 		
 //		System.out.println(getSnippet("dbpedia", "<http://dbpedia.org/resource/Epol/Apple>"));
 //		System.out.println(getSnippet("dbpedia", "<http://dbpedia.org/resource/apple>"));
