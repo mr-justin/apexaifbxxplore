@@ -175,7 +175,7 @@ public class QueryInterpretationService {
 		List<Subgraph> subgraphList = new LinkedList<Subgraph>();
 		
 		Set<String> keywords = elements.keySet();
-		HashMap<String, HashSet<SummaryGraphElement>> map = new HashMap<String, HashSet<SummaryGraphElement>>();
+		HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>> map = new HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>>();
 		for (String keyword : keywords) {
 			for (SummaryGraphElement ele : elements.get(keyword)) {
 				Set<SummaryGraphElement> ele_set = 
@@ -185,9 +185,14 @@ public class QueryInterpretationService {
 					
 					if (set == null) {
 						set = new HashSet<SummaryGraphElement>();
-						map.put(keyword, set);
+						map.put(element, set);
 					}
 					set.add(element);
+					
+					System.out.println("Begin Expansion from:");
+					System.out.println(element);
+					System.out.println();
+					
 					Cursor cursor = new Cursor(element, element, null, null,
 							keyword, element.getTotalCost());
 					expansionQueue.addCursor(cursor, keyword);
@@ -200,6 +205,7 @@ public class QueryInterpretationService {
 			
 			if (c!=null && c.getLength() < distance) {
 				SummaryGraphElement e = c.getElement();
+				SummaryGraphElement matchingElement = c.getMatchingElement();
 				String keyword = c.getKeyword();
 				if (e.getCursors() == null)
 					e.initCursorQueues(keywords);
@@ -242,11 +248,11 @@ public class QueryInterpretationService {
 					Collection<Cursor> neighbors;
 					neighbors = getNonVisitedNeighbors(iGraph, e, c);
 					for (Cursor n : neighbors) {						
-						if (!map.get(keyword).contains(n.getElement())) {
+						if (!map.get(matchingElement).contains(n.getElement())) {
 							if(n.getCost() < max) {
 								expansionQueue.addCursor(n, keyword);
 							}
-							map.get(keyword).add(n.getElement());
+							map.get(matchingElement).add(n.getElement());
 						}
 					}
 				}
@@ -367,7 +373,7 @@ public class QueryInterpretationService {
 				this.paths = new LinkedHashSet<SummaryGraphEdge>();
 			}
 			for (SummaryGraphEdge e : paths) {
-				SummaryGraphEdge edge = SummaryGraphUtil.createGraphEdgeWithoutNum(e);
+				SummaryGraphEdge edge = SummaryGraphUtil.getGraphEdgeWithoutNum(e);
 				this.paths.add(edge);
 				addVertex(e.getSource());
 				addVertex(e.getTarget());
@@ -427,7 +433,7 @@ public class QueryInterpretationService {
 		public String toString(){
 			String ret = "cost: " + cost 
 			+ "\n" + "Connecting vertex: " + connectingVertex
-			+ "\n" + "Paths: \n";
+			+ "\n" + "Paths: [EF][MatchingScore][TotalCost]\n";
 			ret += "************\n";
 			for(SummaryGraphEdge edge : paths) {
 				ret += edge.toString() + "\n" + "\n";

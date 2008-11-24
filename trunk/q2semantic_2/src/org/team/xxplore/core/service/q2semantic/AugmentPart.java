@@ -24,7 +24,7 @@ public class AugmentPart {
 		this.no_num_element_hm = new HashMap<String, Set<SummaryGraphElement>>();
 		for(String key : element_hm.keySet()) {
 			String uri = SummaryGraphUtil.removeNum(key);
-			System.out.println("begin");
+			System.out.println("noNum");
 			System.out.println(uri);
 			SummaryGraphElement ele = element_hm.get(key);
 			Set<SummaryGraphElement> ele_set = no_num_element_hm.get(uri);
@@ -34,6 +34,7 @@ public class AugmentPart {
 			}
 			ele_set.add(ele);
 		}
+		System.out.println();
 	}
 	
 	public AugmentPart() {
