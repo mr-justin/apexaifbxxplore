@@ -120,8 +120,9 @@ public class SearchQ2SemanticService {
 		return ress;
 	}
 	
+	// getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance, double edge_score)
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
-		LinkedList<QueryGraph> ret = this.getPossibleGraphs(keywordList, 5, 0.95, 5, 0.5);
+		LinkedList<QueryGraph> ret = this.getPossibleGraphs(keywordList, 5, 0.5, 5, 0.5);
 		return ret;
 	}
 		

@@ -3,7 +3,9 @@ package org.team.xxplore.core.service.q2semantic;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -253,7 +255,7 @@ public class KeywordIndexServiceForBTFromNT{
 		TreeSet<String> indivSet = new TreeSet<String>();
 		TreeSet<Integer> indivSetForBigNT = new TreeSet<Integer>();//no use if bigNT = false
 		TreeSet<String> concept = new TreeSet<String>();
-		TreeMap<String, String> attrlit = new TreeMap<String, String>();
+		TreeMap<String, TreeSet<String>> attrlit = new TreeMap<String, TreeSet<String>>();
 
 		/* variable for scanning */
 		String cur=null, pre=null;
@@ -281,7 +283,7 @@ public class KeywordIndexServiceForBTFromNT{
 				concept.clear();
 				concept = new TreeSet<String>();
 				attrlit.clear();
-				attrlit = new TreeMap<String, String>();
+				attrlit = new TreeMap<String, TreeSet<String>>();
 			}
 			/* scanning within a block */
 			if(isIndiv)
@@ -294,7 +296,14 @@ public class KeywordIndexServiceForBTFromNT{
 					concept.add(part[2]);
 				else if(!part[2].startsWith("<") && (part[1].equals("<http://www.w3.org/2000/01/rdf-schema#label>") || !BuildQ2SemanticService.rdfsEdgeSet.contains(part[1].substring(1, part[1].length()-1))))
 				{
-					attrlit.put(part[1].substring(1, part[1].length()-1), part[2]);
+					String attr = part[1].substring(1, part[1].length()-1);
+					TreeSet<String> lits = attrlit.get(attr);
+					if(lits == null){
+						lits = new TreeSet<String>();
+						attrlit.put(attr, lits);
+					}
+					lits.add(part[2]);
+					
 					if(!bigNT)//index after scanning
 						litSet.add(part[2]);
 					else
@@ -342,31 +351,34 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @param bigNT
 	 * @throws Exception
 	 */
-	public void writeDocument(TreeSet<String> concept, TreeMap<String, String> attrlit, TreeSet<String> indivSet, TreeSet<Integer> indivSetForBigNT, IndexWriter writer, String ds, boolean bigNT) throws Exception
+	public void writeDocument(TreeSet<String> concept, TreeMap<String, TreeSet<String>> attrlit, TreeSet<String> indivSet, TreeSet<Integer> indivSetForBigNT, IndexWriter writer, String ds, boolean bigNT) throws Exception
 	{
 		for(String con: concept)
 		{
 			con = con.substring(1, con.length()-1);
 			for(String attr: attrlit.keySet())
 			{
-				String lit = attrlit.get(attr);
-				if(!bigNT)
-				{
-					if(indivSet.contains(lit+attr+con)) continue;
-					else indivSet.add(lit+attr+con);
+				TreeSet<String> lits = attrlit.get(attr);
+				for(String lit : lits){
+					if(!bigNT)
+					{
+						if(indivSet.contains(lit+attr+con)) continue;
+						else indivSet.add(lit+attr+con);
+					}
+					else
+					{
+						int key = bf.hashRabin(lit+attr+con);
+						if(indivSetForBigNT.contains(key)) continue;
+						else indivSetForBigNT.add(key);
+					}
+					Document doc = new Document();
+					doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
+					doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.UN_TOKENIZED));
+					doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.UN_TOKENIZED));
+					doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.UN_TOKENIZED));
+					writer.addDocument(doc);
 				}
-				else
-				{
-					int key = bf.hashRabin(lit+attr+con);
-					if(indivSetForBigNT.contains(key)) continue;
-					else indivSetForBigNT.add(key);
-				}
-				Document doc = new Document();
-				doc.add(new Field(LITERAL_FIELD, lit, Field.Store.YES, Field.Index.UN_TOKENIZED));
-				doc.add(new Field(ATTRIBUTE_FIELD, attr,Field.Store.YES,Field.Index.UN_TOKENIZED));
-				doc.add(new Field(CONCEPT_FIELD, con,Field.Store.YES, Field.Index.UN_TOKENIZED));
-				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.UN_TOKENIZED));
-				writer.addDocument(doc);
+				
 			}
 		}
 	}
@@ -433,7 +445,9 @@ public class KeywordIndexServiceForBTFromNT{
 						count ++;
 						if(count  > 5 ) break;
 						if(type != null && type.equals(LITERAL)){
-							ILiteral lit = new Literal(doc.get(LABEL_FIELD));
+							String litLabel = doc.get(LABEL_FIELD);
+							if(litLabel.length() > 80) continue;
+							ILiteral lit = new Literal(litLabel);
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
 							vvertex.setMatchingScore(score);
 							vvertex.setDatasource(doc.get(DS_FIELD));
@@ -552,14 +566,42 @@ public class KeywordIndexServiceForBTFromNT{
 	 * @throws IOException
 	 */
 	public static void main(String[] args) throws Exception, IOException {
-		IndexSearcher searcher = new IndexSearcher("D:\\semplore\\10.15\\keywordIndexRoot\\swrc-keywordIndex");
-		for(int i=0; i<searcher.maxDoc(); i++)
-		{
-			Document doc = searcher.doc(i);
-			if(doc.get(TYPE_FIELD)==null || !doc.get(TYPE_FIELD).equals("concept"))
-				continue;
-			System.out.println(doc.get(URI_FIELD));
+		IndexSearcher searcher = new IndexSearcher("D:/BTC/q2semantic_index/keywordIndex/aifbswrc-keywordIndex");
+		
+		Term term = new Term(LABEL_FIELD,"iswc");
+		TermQuery query = new TermQuery(term);
+		Hits hits = searcher.search(query);
+		System.out.println(hits.length());
+		
+		if((hits != null) && (hits.length() > 0)){
+			for(int i = 0; i < hits.length(); i++){
+				Document doc = hits.doc(i);
+				String type = doc.get(TYPE_FIELD);
+				String lit = doc.get(LABEL_FIELD);
+				System.out.println(lit);
+				float score = hits.score(i);
+				System.out.println("score:" + score);
 
+
+				if(type != null && type.equals(LITERAL)){
+					Term term1 = new Term(LITERAL_FIELD,lit);
+					TermQuery query1 = new TermQuery(term1);
+					Hits results = searcher.search(query1);
+					
+					if((results != null) && (results.length() > 0)){
+						for(int j = 0; j < results.length(); j++){
+							Document docu = results.doc(j);
+							if(docu != null){
+								String attr = docu.get(ATTRIBUTE_FIELD);
+								String con = docu.get(CONCEPT_FIELD);
+								System.out.println(attr);
+								System.out.println(con);
+								System.out.println();
+							}
+						}
+					}
+				}
+			}	
 		}
 	}
 }
