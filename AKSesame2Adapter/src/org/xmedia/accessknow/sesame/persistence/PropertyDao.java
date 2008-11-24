@@ -1,26 +1,12 @@
 package org.xmedia.accessknow.sesame.persistence;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ArrayList;
 import java.util.Set;
-import java.util.HashSet;
 
 import org.aifb.xxplore.shared.util.Pair;
-import org.xmedia.businessobject.IBusinessObject;
-import org.xmedia.oms.model.api.IConcept;
-import org.xmedia.oms.model.api.IDataProperty;
-import org.xmedia.oms.model.api.IDatatype;
-import org.xmedia.oms.model.api.INamedConcept;
-import org.xmedia.oms.model.api.INamedIndividual;
-import org.xmedia.oms.model.api.IObjectProperty;
-import org.xmedia.oms.model.api.IProperty;
-import org.xmedia.oms.model.impl.Property;
-import org.xmedia.oms.persistence.DatasourceException;
-import org.xmedia.oms.persistence.dao.IConceptDao;
-import org.xmedia.oms.persistence.dao.IDaoManager;
-import org.xmedia.oms.persistence.dao.IPropertyDao;
-
 import org.openrdf.model.Resource;
 import org.openrdf.model.Statement;
 import org.openrdf.model.URI;
@@ -35,6 +21,19 @@ import org.openrdf.repository.RepositoryResult;
 import org.xmedia.accessknow.sesame.model.SesameOntology;
 import org.xmedia.accessknow.sesame.persistence.converter.AK2Ses;
 import org.xmedia.accessknow.sesame.persistence.converter.Ses2AK;
+import org.xmedia.businessobject.IBusinessObject;
+import org.xmedia.oms.model.api.IConcept;
+import org.xmedia.oms.model.api.IDataProperty;
+import org.xmedia.oms.model.api.IDatatype;
+import org.xmedia.oms.model.api.INamedConcept;
+import org.xmedia.oms.model.api.INamedIndividual;
+import org.xmedia.oms.model.api.IObjectProperty;
+import org.xmedia.oms.model.api.IProperty;
+import org.xmedia.oms.model.impl.Property;
+import org.xmedia.oms.persistence.DatasourceException;
+import org.xmedia.oms.persistence.dao.IConceptDao;
+import org.xmedia.oms.persistence.dao.IDaoManager;
+import org.xmedia.oms.persistence.dao.IPropertyDao;
 
 /**
  * @author an2548
@@ -71,7 +70,7 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 							+ individual.getUri(), e);
 		}
 	}
-
+	
 	public Set<Pair> findPropertiesAndRangesFrom(INamedConcept concept)
 			throws DatasourceException {
 
@@ -205,30 +204,28 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 						m_session.isReasoningOn()).asList());
 
 			}
-			
-			//also add datatype properties (the one without range but with Datatype, see BTC schema computation)
-				
-			
+
+			// also add datatype properties (the one without range but with
+			// Datatype, see BTC schema computation)
+
 			for (Statement stmt : properties) {
 
 				Resource subject = stmt.getSubject();
 
 				if (subject instanceof URI) {
-						
+
 					RepositoryResult<Statement> property_datatype = con
-					.getStatements(subject, RDFS.DATATYPE, null, m_session
-							.isReasoningOn());
+							.getStatements(subject, RDFS.DATATYPE, null,
+									m_session.isReasoningOn());
 					if (property_datatype.hasNext()) {
 						result.add(Ses2AK.getDataProperty((URI) subject,
 								m_session.getOntology()));
 					}
 
-					
-					
 					RepositoryResult<Statement> property_range = con
 							.getStatements(subject, RDFS.RANGE, null, m_session
 									.isReasoningOn());
-		
+
 					if (property_range.hasNext()) {
 
 						Statement property_range_stmt = property_range.next();
@@ -238,21 +235,16 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 							result.add(Ses2AK.getObjectProperty((URI) subject,
 									m_session.getOntology()));
 						} else {
-							//datatypeproperties with range...
+							// datatypeproperties with range...
 							result.add(Ses2AK.getDataProperty((URI) subject,
 									m_session.getOntology()));
 						}
 					}
 					property_range.close();
-					
+
 				}
 			}
-			
-			
-			
-			
-			
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -366,12 +358,13 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 	}
 
 	public IProperty findByUri(String uri) throws DatasourceException {
+
+		URI object = m_session.getValueFactory().createURI(uri);
 		try {
 			RepositoryConnection conn = m_session.getRepositoryConnection();
-			RepositoryResult<Statement> sesResult = conn.getStatements(
-					m_session.getValueFactory().createURI(uri), RDF.TYPE,
-					RDF.PROPERTY, true);
-			IProperty res = null;
+			RepositoryResult<Statement> sesResult = conn.getStatements(object,
+					RDF.TYPE, RDF.PROPERTY, true);
+			IProperty prop = null;
 			URI sesUri;
 			try {
 				if (sesResult.hasNext()) {
@@ -380,17 +373,51 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 					if (Ses2AK.isObjectProperty(sesUri,
 							m_session.getOntology(), m_session
 									.getRepositoryConnection())) {
-						res = Ses2AK.getObjectProperty(sesUri, m_session
+						prop = Ses2AK.getObjectProperty(sesUri, m_session
 								.getOntology());
 					} else {
-						res = Ses2AK.getDataProperty(sesUri, m_session
+						prop = Ses2AK.getDataProperty(sesUri, m_session
 								.getOntology());
 					}
 				}
 			} finally {
 				sesResult.close();
 			}
-			return res;
+
+			// check if owl objectproperty are available also
+			if (prop == null) {
+				RepositoryResult<Statement> sesResult2 = conn.getStatements(
+						object, RDF.TYPE, OWL.OBJECTPROPERTY, m_session
+								.isReasoningOn());
+
+				try {
+					if (sesResult2.hasNext()) {
+						prop = Ses2AK.getProperty(sesResult2.next().getSubject(), m_session.getOntology());
+					}
+				} finally {
+					sesResult2.close();
+				}
+			}
+			
+			//check if owl datatype property
+			// check if owl classes are available also
+			if (prop == null) {
+				RepositoryResult<Statement> sesResult2 = conn.getStatements(
+						object, RDF.TYPE, OWL.DATATYPEPROPERTY, m_session
+								.isReasoningOn());
+
+				try {
+					if (sesResult2.hasNext()) {
+						
+						prop = Ses2AK.getProperty(sesResult2.next().getSubject(), m_session.getOntology());
+					}
+				} finally {
+					sesResult2.close();
+				}
+			}
+
+
+			return prop;
 		} catch (RepositoryException e) {
 			throw new DatasourceException(
 					"Error occurred while retrieving a property with a uri "
@@ -398,7 +425,8 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 		}
 	}
 
-	public IProperty findDatatypePropertyByUri(String uri) throws DatasourceException {
+	public IProperty findDatatypePropertyByUri(String uri)
+			throws DatasourceException {
 		try {
 			RepositoryConnection conn = m_session.getRepositoryConnection();
 			RepositoryResult<Statement> sesResult = conn.getStatements(
@@ -430,7 +458,7 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 							+ uri, e);
 		}
 	}
-	
+
 	/**
 	 * @deprecated
 	 */
@@ -531,9 +559,21 @@ public class PropertyDao extends AbstractDao implements IPropertyDao {
 
 		} catch (Exception e) {
 			throw new DatasourceException(
-					"Error occurred while finding a label by property" + property,
-					e);
+					"Error occurred while finding a label by property"
+							+ property, e);
 		}
+	}
+
+	public String findLabelByUri(String uri) {
+
+		String label = null;
+
+		IProperty prop = findByUri(uri);
+		if (prop != null) {
+			label = findLabel(prop);
+		}
+
+		return label;
 	}
 
 }
