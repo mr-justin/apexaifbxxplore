@@ -390,7 +390,7 @@ public class KeywordIndexServiceForBTFromNT{
 				BooleanClause[] clauses = ((BooleanQuery)q).getClauses();
 				for(int i = 0; i < clauses.length; i++){
 					Query clauseQ = clauses[i].getQuery();
-					System.out.println("aaa:" + clauseQ.toString());
+					System.out.println("searchKB:" + clauseQ.toString());
 					Map<String, Collection<SummaryGraphElement>> partialRes = searchWithClause(clauseQ, prune);
 					if (partialRes != null && partialRes.size() > 0) ress.putAll(partialRes);
 				}
