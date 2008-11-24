@@ -316,6 +316,7 @@ public class SearchQ2SemanticService {
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 
 		for(String qt : queryList) {
+			if(qt.contains(" ")) {qt = "\"" + qt + "\"";}
 			for(String ds : this.summaryObjSet.keySet()) {
 				String keywordIndex = keywordIndexRoot + "/" + ds + "-keywordIndex";
 				System.out.println("keywordIndex " + keywordIndex);
@@ -539,7 +540,7 @@ public class SearchQ2SemanticService {
 			if(str.equals("\"") && opened) {
 				opened = false;
 				// Put the acc string into the list
-				ll.add("\"" + acc + "\"");
+				ll.add(acc);
 				acc = "";
 				continue;
 			}
