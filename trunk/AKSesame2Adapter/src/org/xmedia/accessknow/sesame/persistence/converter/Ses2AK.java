@@ -76,10 +76,10 @@ public class Ses2AK {
 		return akDatatype;
 	}
 
-	public static IProperty getProperty(URI predicate, IOntology itsOntology) {
+	public static IProperty getProperty(Resource resource, IOntology itsOntology) {
 
-		IProperty akProperty = itsOntology.createProperty(predicate.toString());
-		DelegatesManager.setDelegate(akProperty, predicate);
+		IProperty akProperty = itsOntology.createProperty(((URI)resource).toString());
+		DelegatesManager.setDelegate(akProperty, resource);
 
 		return akProperty;
 	}

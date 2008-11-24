@@ -27,11 +27,10 @@ import org.xmedia.oms.model.impl.NamedConcept;
 import org.xmedia.oms.persistence.DatasourceException;
 import org.xmedia.oms.persistence.dao.IConceptDao;
 
-
 public class ConceptDao implements IConceptDao {
 
 	SesameSession session;
-	
+
 	public ConceptDao(SesameSession session) {
 		this.session = session;
 	}
@@ -39,20 +38,22 @@ public class ConceptDao implements IConceptDao {
 	public Set<INamedConcept> findConceptRanges(IObjectProperty property)
 			throws DatasourceException {
 		try {
-			
+
 			Set<INamedConcept> ranges = new HashSet<INamedConcept>();
 
-			RepositoryResult<Statement> stmts = session.getRepositoryConnection().getStatements(
-					AK2Ses.getProperty(property, 
-							session.getValueFactory()), 
-					RDFS.RANGE, null, true);
+			RepositoryResult<Statement> stmts = session
+					.getRepositoryConnection()
+					.getStatements(
+							AK2Ses.getProperty(property, session
+									.getValueFactory()), RDFS.RANGE, null, true);
 			INamedConcept cur;
 			Statement stmt;
 			try {
-				while(stmts.hasNext()) {
+				while (stmts.hasNext()) {
 					stmt = stmts.next();
-					if(stmt.getObject() instanceof URI) {
-						cur = Ses2AK.getNamedConcept((URI)stmt.getObject(), session.getOntology());
+					if (stmt.getObject() instanceof URI) {
+						cur = Ses2AK.getNamedConcept((URI) stmt.getObject(),
+								session.getOntology());
 						ranges.add(cur);
 					}
 				}
@@ -60,8 +61,10 @@ public class ConceptDao implements IConceptDao {
 				stmts.close();
 			}
 			return ranges;
-		} catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all concept ranges of the property "+property.getUri(), e);
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all concept ranges of the property "
+							+ property.getUri(), e);
 		}
 	}
 
@@ -76,17 +79,17 @@ public class ConceptDao implements IConceptDao {
 		try {
 			Set<INamedConcept> domains = new HashSet<INamedConcept>();
 			RepositoryConnection conn = session.getRepositoryConnection();
-			RepositoryResult<Statement> stmts = conn.getStatements(
-					AK2Ses.getProperty(property, 
-							session.getValueFactory()), 
+			RepositoryResult<Statement> stmts = conn.getStatements(AK2Ses
+					.getProperty(property, session.getValueFactory()),
 					RDFS.DOMAIN, null, session.isReasoningOn());
 			INamedConcept cur;
 			Statement stmt;
 			try {
-				while(stmts.hasNext()) {
+				while (stmts.hasNext()) {
 					stmt = stmts.next();
-					if(stmt.getObject() instanceof URI) {
-						cur = Ses2AK.getNamedConcept((URI)stmt.getObject(), session.getOntology());
+					if (stmt.getObject() instanceof URI) {
+						cur = Ses2AK.getNamedConcept((URI) stmt.getObject(),
+								session.getOntology());
 						domains.add(cur);
 					}
 				}
@@ -94,11 +97,13 @@ public class ConceptDao implements IConceptDao {
 				stmts.close();
 			}
 			return domains;
-		} catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all domains of the property "+property.getUri(), e);
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all domains of the property "
+							+ property.getUri(), e);
 		}
 	}
-	
+
 	public Set<IConcept> findEquivalentConcepts(INamedConcept concept)
 			throws DatasourceException {
 		// TODO Auto-generated method stub
@@ -107,7 +112,7 @@ public class ConceptDao implements IConceptDao {
 
 	public Set<IConcept> findSubconcepts(INamedConcept concept)
 			throws DatasourceException {
-		
+
 		return findSubconcepts(concept, session.isReasoningOn());
 	}
 
@@ -120,28 +125,33 @@ public class ConceptDao implements IConceptDao {
 			throws DatasourceException {
 		try {
 			RepositoryConnection conn = session.getRepositoryConnection();
-			Resource sesInd = AK2Ses.getResource(individual, session.getValueFactory());
+			Resource sesInd = AK2Ses.getResource(individual, session
+					.getValueFactory());
 			INamedConcept concept;
 			Set<IConcept> types = new HashSet<IConcept>();
-			RepositoryResult<Statement> stmts = conn.getStatements(sesInd, RDF.TYPE, null, session.isReasoningOn());
+			RepositoryResult<Statement> stmts = conn.getStatements(sesInd,
+					RDF.TYPE, null, session.isReasoningOn());
 			Statement stmt;
-			
+
 			try {
-				while(stmts.hasNext()) {
-					
+				while (stmts.hasNext()) {
+
 					stmt = stmts.next();
-					
-					if(stmt.getObject() instanceof URI) {
 
-						URI object = (URI)stmt.getObject();
+					if (stmt.getObject() instanceof URI) {
 
-						if(!object.equals(RDFS.CLASS) && !object.equals(new URIImpl("http://www.w3.org/2002/07/owl#Class"))){
+						URI object = (URI) stmt.getObject();
 
-							concept = Ses2AK.getNamedConcept((Resource)stmt.getObject(), session.getOntology());
-							if(concept != null) {
+						if (!object.equals(RDFS.CLASS)
+								&& !object.equals(new URIImpl(
+										"http://www.w3.org/2002/07/owl#Class"))) {
+
+							concept = Ses2AK.getNamedConcept((Resource) stmt
+									.getObject(), session.getOntology());
+							if (concept != null) {
 								types.add(concept);
 							}
-							
+
 						}
 					}
 				}
@@ -149,18 +159,19 @@ public class ConceptDao implements IConceptDao {
 				stmts.close();
 			}
 			return types;
-		} 
-		catch(Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all types of an individual with a uri "+individual.getLabel(), e);
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all types of an individual with a uri "
+							+ individual.getLabel(), e);
 		}
 	}
 
-	
 	public INamedConcept findByUri(String uri) throws DatasourceException {
 		try {
 			RepositoryConnection conn = session.getRepositoryConnection();
-			
-			//TODO: should not use create but search for entity that has this URI?
+
+			// TODO: should not use create but search for entity that has this
+			// URI?
 			URI object = session.getValueFactory().createURI(uri);
 			INamedConcept concept = null;
 			if (!object.getNamespace().equals(RDFS.NAMESPACE)
@@ -169,7 +180,7 @@ public class ConceptDao implements IConceptDao {
 							"http://www.w3.org/2002/07/owl#")) {
 				RepositoryResult<Statement> sesResult = conn.getStatements(
 						object, RDF.TYPE, RDFS.CLASS, session.isReasoningOn());
-					
+
 				try {
 					if (sesResult.hasNext()) {
 						concept = Ses2AK.getNamedConcept(sesResult.next()
@@ -179,16 +190,17 @@ public class ConceptDao implements IConceptDao {
 					sesResult.close();
 				}
 			}
-			
-			//check if owl classes are available also
-			if(concept == null){
+
+			// check if owl classes are available also
+			if (concept == null) {
 				if (!object.getNamespace().equals(RDFS.NAMESPACE)
 						&& !object.getNamespace().equals(RDF.NAMESPACE)
 						&& !object.getNamespace().equals(
 								"http://www.w3.org/2002/07/owl#")) {
 					RepositoryResult<Statement> sesResult = conn.getStatements(
-							object, RDF.TYPE, OWL.CLASS, session.isReasoningOn());
-						
+							object, RDF.TYPE, OWL.CLASS, session
+									.isReasoningOn());
+
 					try {
 						if (sesResult.hasNext()) {
 							concept = Ses2AK.getNamedConcept(sesResult.next()
@@ -199,42 +211,54 @@ public class ConceptDao implements IConceptDao {
 					}
 				}
 			}
-			
-		
-			
-			
+
 			return concept;
 		} catch (RepositoryException e) {
-			throw new DatasourceException("Error occurred while retrieving a concept with a uri "+uri, e);
+			throw new DatasourceException(
+					"Error occurred while retrieving a concept with a uri "
+							+ uri, e);
 		}
 	}
-	
-	public String findLabel(INamedConcept concept) throws DatasourceException{
-		
-		try {
-		RepositoryConnection conn = session.getRepositoryConnection();
-		RepositoryResult<Statement> stmts = conn.getStatements(
-				AK2Ses.getResource(concept,session.getValueFactory()), 
-				RDFS.LABEL,
-				null,false);
-		
-		Statement stmt;
+
+	public String findLabelByUri(String uri) {
+
 		String label = null;
-		try {
-			while(stmts.hasNext()) {
-				stmt = stmts.next();
-				label = stmt.getObject().stringValue();
-			}
-		} finally {
-			stmts.close();
-		}		
-		return label;	
+
+		INamedConcept con = findByUri(uri);
+		if (con != null) {
+			label = findLabel(con);
+		}
 		
-	} catch (Exception e) {
-		throw new DatasourceException("Error occurred while finding a label by concept"+concept, e);
+		return label;
 	}
-}
+
 	
+	public String findLabel(INamedConcept concept) throws DatasourceException {
+
+		try {
+			RepositoryConnection conn = session.getRepositoryConnection();
+			RepositoryResult<Statement> stmts = conn.getStatements(AK2Ses
+					.getResource(concept, session.getValueFactory()),
+					RDFS.LABEL, null, false);
+
+			Statement stmt;
+			String label = null;
+			try {
+				while (stmts.hasNext()) {
+					stmt = stmts.next();
+					label = stmt.getObject().stringValue();
+				}
+			} finally {
+				stmts.close();
+			}
+			return label;
+
+		} catch (Exception e) {
+			throw new DatasourceException(
+					"Error occurred while finding a label by concept" + concept,
+					e);
+		}
+	}
 
 	/**
 	 * @deprecated
@@ -245,31 +269,37 @@ public class ConceptDao implements IConceptDao {
 
 	}
 
-	
 	public List<? extends IBusinessObject> findAll() throws DatasourceException {
 		List<INamedConcept> results = new ArrayList<INamedConcept>();
 		try {
-			
+
 			RepositoryConnection conn = session.getRepositoryConnection();
-			
-			List<Statement> sesResult = conn.getStatements(null, RDF.TYPE, RDFS.CLASS, session.isReasoningOn()).asList();
-			sesResult.addAll(conn.getStatements(null, RDF.TYPE, new URIImpl("http://www.w3.org/2002/07/owl#Class"), session.isReasoningOn()).asList());
-						
-			
-				for(Statement stmt : sesResult) {
-					if(stmt.getSubject() instanceof URI) {
-						if((((URI)stmt.getSubject()).getNamespace().equals(RDFS.NAMESPACE))
-								||(((URI)stmt.getSubject()).getNamespace().equals(RDF.NAMESPACE))||
-								(((URI)stmt.getSubject()).getNamespace().equals("http://www.w3.org/2002/07/owl#"))) {
-							continue;
-						}
-						results.add(Ses2AK.getNamedConcept(stmt.getSubject(), session.getOntology()));
+
+			List<Statement> sesResult = conn.getStatements(null, RDF.TYPE,
+					RDFS.CLASS, session.isReasoningOn()).asList();
+			sesResult.addAll(conn.getStatements(null, RDF.TYPE,
+					new URIImpl("http://www.w3.org/2002/07/owl#Class"),
+					session.isReasoningOn()).asList());
+
+			for (Statement stmt : sesResult) {
+				if (stmt.getSubject() instanceof URI) {
+					if ((((URI) stmt.getSubject()).getNamespace()
+							.equals(RDFS.NAMESPACE))
+							|| (((URI) stmt.getSubject()).getNamespace()
+									.equals(RDF.NAMESPACE))
+							|| (((URI) stmt.getSubject()).getNamespace()
+									.equals("http://www.w3.org/2002/07/owl#"))) {
+						continue;
 					}
+					results.add(Ses2AK.getNamedConcept(stmt.getSubject(),
+							session.getOntology()));
 				}
-		} catch(RepositoryException e) {
-			throw new DatasourceException("Error occurred while retrieving all concepts", e);
+			}
+		} catch (RepositoryException e) {
+			throw new DatasourceException(
+					"Error occurred while retrieving all concepts", e);
 		}
-		
+
 		return results;
 	}
 
@@ -296,7 +326,9 @@ public class ConceptDao implements IConceptDao {
 	 */
 	@Deprecated
 	public void insert(IBusinessObject newBo) throws DatasourceException {
-//		throw new UnsupportedOperationException("Insert/update unsupported for entities.");
+		// throw new
+		// UnsupportedOperationException("Insert/update unsupported for entities."
+		// );
 	}
 
 	/**
@@ -304,57 +336,71 @@ public class ConceptDao implements IConceptDao {
 	 */
 	@Deprecated
 	public void update(IBusinessObject existingBo) throws DatasourceException {
-//		throw new UnsupportedOperationException("Insert/update unsupported for entities.");
+		// throw new
+		// UnsupportedOperationException("Insert/update unsupported for entities."
+		// );
 
 	}
 
-	public Set<IConcept> findSubconcepts(INamedConcept concept, boolean includeInferred) throws DatasourceException {
+	public Set<IConcept> findSubconcepts(INamedConcept concept,
+			boolean includeInferred) throws DatasourceException {
 		Set<IConcept> types = new HashSet<IConcept>();
 		try {
 			RepositoryConnection conn = session.getRepositoryConnection();
-			URI sesConcept = (URI)AK2Ses.getResource(concept, session.getValueFactory());
-			RepositoryResult<Statement> stmts = conn.getStatements(null, RDFS.SUBCLASSOF, sesConcept, includeInferred);
+			URI sesConcept = (URI) AK2Ses.getResource(concept, session
+					.getValueFactory());
+			RepositoryResult<Statement> stmts = conn.getStatements(null,
+					RDFS.SUBCLASSOF, sesConcept, includeInferred);
 			Statement stmt;
 			INamedConcept type;
 			try {
-				while(stmts.hasNext()) {
+				while (stmts.hasNext()) {
 					stmt = stmts.next();
-					
-					if(((URI)stmt.getSubject()).toString().equals(sesConcept.toString())) {
+
+					if (((URI) stmt.getSubject()).toString().equals(
+							sesConcept.toString())) {
 						continue;
 					}
-				
-				    type = Ses2AK.getNamedConcept(stmt.getSubject(), session.getOntology());
-				    if(type!=null) {
+
+					type = Ses2AK.getNamedConcept(stmt.getSubject(), session
+							.getOntology());
+					if (type != null) {
 						types.add(type);
-					}			       
-			   }
+					}
+				}
 			} finally {
 				stmts.close();
 			}
 		} catch (Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all subconcepts of the concept "+concept.getUri(), e);
+			throw new DatasourceException(
+					"Error occurred while retrieving all subconcepts of the concept "
+							+ concept.getUri(), e);
 		}
 		return types;
 	}
 
-	public Set<IConcept> findSuperconcepts(INamedConcept concept, boolean includeInferred) throws DatasourceException {
+	public Set<IConcept> findSuperconcepts(INamedConcept concept,
+			boolean includeInferred) throws DatasourceException {
 		Set<IConcept> types = new HashSet<IConcept>();
 		try {
 			RepositoryConnection conn = session.getRepositoryConnection();
-			URI sesConcept = (URI)AK2Ses.getResource(concept, session.getValueFactory());
-			RepositoryResult<Statement> stmts = conn.getStatements(sesConcept, RDFS.SUBCLASSOF, null, includeInferred);
+			URI sesConcept = (URI) AK2Ses.getResource(concept, session
+					.getValueFactory());
+			RepositoryResult<Statement> stmts = conn.getStatements(sesConcept,
+					RDFS.SUBCLASSOF, null, includeInferred);
 			Statement stmt;
 			INamedConcept type;
 			try {
-				while(stmts.hasNext()) {
+				while (stmts.hasNext()) {
 					stmt = stmts.next();
-					if(stmt.getObject() instanceof URI) {
-						if(((URI)stmt.getObject()).toString().equals(sesConcept.toString())) {
+					if (stmt.getObject() instanceof URI) {
+						if (((URI) stmt.getObject()).toString().equals(
+								sesConcept.toString())) {
 							continue;
 						}
-						type = Ses2AK.getNamedConcept((URI)stmt.getObject(), session.getOntology());
-						if(type!=null) {
+						type = Ses2AK.getNamedConcept((URI) stmt.getObject(),
+								session.getOntology());
+						if (type != null) {
 							types.add(type);
 						}
 					}
@@ -363,7 +409,9 @@ public class ConceptDao implements IConceptDao {
 				stmts.close();
 			}
 		} catch (Exception e) {
-			throw new DatasourceException("Error occurred while retrieving all superconcepts of the concept "+concept.getUri(), e);
+			throw new DatasourceException(
+					"Error occurred while retrieving all superconcepts of the concept "
+							+ concept.getUri(), e);
 		}
 		return types;
 	}
