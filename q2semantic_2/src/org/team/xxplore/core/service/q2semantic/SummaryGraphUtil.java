@@ -40,18 +40,24 @@ public class SummaryGraphUtil {
 		return res;
 	}
 	
-	public static SummaryGraphElement createGraphElementWithoutNum(SummaryGraphElement ele){
+	public static SummaryGraphElement getGraphElementWithoutNum(SummaryGraphElement ele){
 		if(ele.getType() == SummaryGraphElement.ATTRIBUTE || ele.getType() == SummaryGraphElement.RELATION){
 			String uri = removeNum(getResourceUri(ele));
 			SummaryGraphElement element = null;
 			if(ele.getType() == SummaryGraphElement.ATTRIBUTE){
 				element = new SummaryGraphElement(new DataProperty(uri), SummaryGraphElement.ATTRIBUTE);
 				element.setDatasource(ele.getDatasource());
+				element.setEF(ele.getEF());
+				element.setTotalCost(ele.getTotalCost());
+				element.setMatchingScore(ele.getMatchingScore());
 				return element;
 			}
 			else {
 				element = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION);
 				element.setDatasource(ele.getDatasource());
+				element.setEF(ele.getEF());
+				element.setTotalCost(ele.getTotalCost());
+				element.setMatchingScore(ele.getMatchingScore());
 				return element;
 			}
 		}
@@ -60,11 +66,11 @@ public class SummaryGraphUtil {
 		}
 	}
 	
-	public static SummaryGraphEdge createGraphEdgeWithoutNum(SummaryGraphEdge edge){
+	public static SummaryGraphEdge getGraphEdgeWithoutNum(SummaryGraphEdge edge){
 		SummaryGraphElement source = edge.getSource();
 		SummaryGraphElement target = edge.getTarget();
-		SummaryGraphElement sourceWithoutNum = createGraphElementWithoutNum(source);
-		SummaryGraphElement targetWithoutNum = createGraphElementWithoutNum(target);
+		SummaryGraphElement sourceWithoutNum = getGraphElementWithoutNum(source);
+		SummaryGraphElement targetWithoutNum = getGraphElementWithoutNum(target);
 		if(sourceWithoutNum.equals(source) && targetWithoutNum.equals(target)){
 			return edge; 
 		}

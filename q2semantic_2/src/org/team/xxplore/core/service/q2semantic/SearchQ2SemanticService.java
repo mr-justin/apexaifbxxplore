@@ -14,6 +14,7 @@ import java.util.PriorityQueue;
 import java.util.Properties;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.impl.Literal;
@@ -496,22 +497,71 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) throws Exception {
 		Scanner scanner = new Scanner(System.in);
+		System.out.println("Please input:");
 		while( scanner.hasNext() ) {
-			System.out.println("Please input:");
+			
 			String line = scanner.nextLine();
-			LinkedList<String> ll = new LinkedList<String>();
-			String tokens [] = line.split(" ");
-			for(int i=0;i<tokens.length;i++) {
-				ll.add(tokens[i]);
-			}
+			LinkedList<String> ll = getKeywordList(line);
+			
 			for(int i=0;i<ll.size();i++) {
 				System.out.println(ll.get(i));
 			}
 			
-			
 			new SearchQ2SemanticService(args[0]).getPossibleGraphs(
 					ll, Integer.valueOf(args[1]), Double.valueOf(args[2]), 
 					Integer.valueOf(args[3]),Double.valueOf(args[4]));
+			
+			System.out.println("\n" + "Please input:");
 		}
+	}
+	
+	public static LinkedList<String> getKeywordList(String line){
+		LinkedList<String> ll = new LinkedList<String>();
+		
+		// Boolean set to true if a " is opened
+		Boolean opened = false;
+		// Temporary string
+		String acc = "";
+		// Browse the string
+		for(int i = 0; i < line.length(); i++) {
+			// Get the character
+			String str = String.valueOf(line.charAt(i));
+			// If it does not match an accepted character, we drop it
+			String pattern = "[A-Za-z0-9]";
+			if(!str.equals(" ") && !str.equals("\"") && !str.matches(pattern))
+				continue;
+			// If it is an opening "
+			if(str.equals("\"") && !opened) {
+				opened = true;
+				continue;
+			}
+			// If it is a closing "
+			if(str.equals("\"") && opened) {
+				opened = false;
+				// Put the acc string into the list
+				ll.add("\"" + acc + "\"");
+				acc = "";
+				continue;
+			}
+			// If it is a space not between "
+			if(str.equals(" ") && !opened) {
+				if(acc != "") {
+					ll.add(acc);
+					acc = "";
+				}
+				continue;
+			}
+			// If it is a space between "
+			if(str.equals(" ") && opened) {
+				acc += " ";
+				continue;
+			}
+			// Else, add the char
+			acc += str;
+		}
+		if(!acc.equals(""))
+			ll.add(acc);	
+		
+		return ll;
 	}
 }
