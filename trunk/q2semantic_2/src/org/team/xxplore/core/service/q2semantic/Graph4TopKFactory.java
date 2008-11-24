@@ -97,15 +97,33 @@ public class Graph4TopKFactory {
 				}
 				summaryGraph_HM.get(ds).getNoNum();
 				
+//				// scoring according to WWW09 paper
+//				for(SummaryGraphElement ele : graph_obj.vertexSet()) {
+//					if(ele.getMatchingScore() != 0) {
+//						if(ele.getEF() == 0)
+//							ele.setTotalCost(1.0 / ele.getMatchingScore());
+//						else
+//							ele.setTotalCost(1.0 / (ele.getMatchingScore()*ele.getEF()));
+//					}
+//					else if(ele.getEF() != 0) {
+//						ele.setTotalCost(1.0 / ele.getEF());
+//					}
+//					else {
+//						ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
+//					}
+//					ele.setTotalCost(ele.getTotalCost() + QueryInterpretationService.EDGE_SCORE);
+//				}
+				
+				// scoring according to ICDE09 paper
 				for(SummaryGraphElement ele : graph_obj.vertexSet()) {
 					if(ele.getMatchingScore() != 0) {
 						if(ele.getEF() == 0)
 							ele.setTotalCost(1.0 / ele.getMatchingScore());
 						else
-							ele.setTotalCost(1.0 / (ele.getMatchingScore()*ele.getEF()));
+							ele.setTotalCost((1.0 - ele.getEF()) / ele.getMatchingScore());
 					}
 					else if(ele.getEF() != 0) {
-						ele.setTotalCost(1.0 / ele.getEF());
+						ele.setTotalCost(1.0 - ele.getEF());
 					}
 					else {
 						ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
