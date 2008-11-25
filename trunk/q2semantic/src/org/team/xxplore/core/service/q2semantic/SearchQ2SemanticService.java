@@ -175,9 +175,6 @@ public class SearchQ2SemanticService {
 				}
 			}
 			
-			
-			// == chenjunquan == 
-			// add null,(relation/attribute),(concept/literal) to the query graph.
 			for(Facet fac : rel2con.keySet()) {
 				if(!rel2con.get(fac).isVisited) {
 					for(Facet con : rel2con.get(fac).sf) {
@@ -219,16 +216,10 @@ public class SearchQ2SemanticService {
 				uri2facet.put(edge.getDecorationElement().getURI()+edge.getDecorationElement().getSource().getName(), edge.getDecorationElement());
 				uri2facet.put(edge.getToElement().getURI()+edge.getToElement().getSource().getName(), edge.getToElement());
 			}
-//			if ( == null || inter.factory.getM_datasource().size() == 0)
-//				return null;
 			Collection<Mapping> mappings;
 			HashSet<String> delDupMappingEdge = new HashSet<String>();
-//			for (String ds : inter.factory.getM_datasources().keySet()) {
-//				mappings = inter.mis.searchMappingsForDS(ds,
-//						MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS);
 			
 			mappings = inter.factory.getMappings();
-//			System.out.println("aaaa"+mappings.size());
 			for(Mapping mapping: mappings)
 			{
 				String uriA = mapping.getSource()+mapping.getSourceDsURI();
@@ -242,8 +233,6 @@ public class SearchQ2SemanticService {
 					System.out.println("add mappingedge: "+mappingA.getURI()+"("+mappingA.getSource().getName()+") | "+mappingB.getURI()+"("+mappingB.getSource().getName()+")");
 				}
 			}
-//			}
-//			===============================
 			result.add(new QueryGraph(null, graphVertexes, graphEdges, mappingEdges));
 		}
 		this.addVariable(result);
@@ -307,7 +296,7 @@ public class SearchQ2SemanticService {
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 
 		for(String qt : queryList) {
-			for(String ds : this.summaryObjSet.keySet()) {
+			for(String ds : summaryObjSet.keySet()) {
 				String keywordIndex = keywordIndexRoot + "/" + ds + "-keywordIndex";
 				System.out.println("keywordIndex " + keywordIndex);
 				Map<String, Collection<SummaryGraphElement>> hm = 
