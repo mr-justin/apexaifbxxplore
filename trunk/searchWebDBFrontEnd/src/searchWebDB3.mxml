@@ -282,7 +282,7 @@
 				<mx:Spacer width="100%" id="spacer1"/>
 				<mx:LinkButton color="#FFFFFF" id="linkbutton1" label="Contact Us" click="Functions.goToEmail('searchWebDB@apex.sjtu.edu.cn')" fontSize="12"/>
             	<mx:LinkButton color="#FFFFFF" id="linkbutton2" label="Help" click="Functions.goToURL('help.html')" fontSize="12"/>
-            	<mx:LinkButton color="#FFFFFF" id="linkbutton3" label="About" click="Alert.show('SearchWebDB - version 0.0.2\n(c) 2008 Apex Data and Knowledge Management Lab - AIFB','About...')" fontSize="12"/>
+            	<mx:LinkButton color="#FFFFFF" id="linkbutton3" label="About" click="Alert.show('SearchWebDB - version 0.0.3\n(c) 2008 Apex Data and Knowledge Management Lab - AIFB','About...')" fontSize="12"/>
 			</mx:HBox>
 		</mx:ApplicationControlBar>
 	</mx:VBox>
