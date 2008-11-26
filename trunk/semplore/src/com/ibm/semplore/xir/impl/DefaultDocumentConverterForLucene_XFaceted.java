@@ -62,10 +62,9 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		}
 
 		// Store label of document
-		Field field = new Field(FieldType.LABEL.toString(), insDoc
-				.getSchemaObjectInfo().getLabel(), Field.Store.COMPRESS,
+		String label = insDoc.getSchemaObjectInfo().getLabel();
+		Field field = new Field(FieldType.LABEL.toString(), label, Field.Store.COMPRESS,
 				Field.Index.TOKENIZED);
-		field.setBoost(5.0f);
 		doc.add(field);
 
 		// give boost to this document, according to triple count
@@ -83,8 +82,11 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		for (AttributeValue attrVal:attrVals) {
 			text.append(attrVal.getValue()+" ");
 		}
-		// ... and label
-		text.append(insDoc.getSchemaObjectInfo().getLabel());		
+		// ... and label with boost(10)
+		label = label + " ";
+		for (int i=0; i<10; i++)
+			text.append(label);
+		
 		doc.add(new Field(FieldType.TEXT.toString(), text.toString(), Field.Store.NO,
 				Field.Index.TOKENIZED));
 
