@@ -161,7 +161,10 @@ public class InstanceDocumentIteratorImpl implements InstanceDocumentIterator {
 					instance.setObjectType(Relation.class);
 				else if (o==Md5_BloomFilter_64bit.HASH_TYPE_INSTANCE)
 					instance.setObjectType(Instance.class);
-				else throw new Error("wrong type hash:"+o);
+				else {
+					System.err.println("wrong type hash:"+o);
+					instance.setObjectType(Instance.class);
+				}
 			}
 			else if (itype.equals(Util4NT.CATEGORY)) {
 				o = dataReader.nextLong();
