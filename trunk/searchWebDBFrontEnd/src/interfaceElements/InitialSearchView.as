@@ -49,10 +49,6 @@ package interfaceElements
 		private var variableList:ArrayCollection;
 		// List of the names of the variables of the graph
 		private var variableNameList:ArrayCollection;
-		// List of the letters of the variables of the graph
-		private var variableLetterList:ArrayCollection;
-		// List of URIs of the variables of the graph
-		private var variableURIList:ArrayCollection;
 		// The index of the graph currently selected
 		private var currentIndex:int;
 		// Text of the query
@@ -126,8 +122,6 @@ package interfaceElements
 			this.queryTxt = "";
 			this.variableList = new ArrayCollection;
 			this.variableNameList = new ArrayCollection;
-			this.variableLetterList = new ArrayCollection;
-			this.variableURIList = new ArrayCollection;
 			this.queryGraphList = new ArrayCollection;
 			this.currentIndex = -1;
 			this.exampleQueriesDescription = new ArrayCollection;
@@ -164,8 +158,6 @@ package interfaceElements
 			this.queryGraphList.removeAll();
 			this.variableList.removeAll();
 			this.variableNameList.removeAll();
-			this.variableLetterList.removeAll();
-			this.variableURIList.removeAll();
 			this.currentIndex = -1;
 			// Gray all the buttons that shall be disabled
 			this.previousGraphButton.enabled = false;
@@ -362,12 +354,6 @@ package interfaceElements
 			this.keywordSearchButton.enabled = true;
 			// If there is at least one suggested graph
 			if(list != null && list.length > 0) {
-				// (hack)
-				if(this.initialKeywordInput.text == "ISWC2008 Rudi") {
-					list.removeItemAt(0);
-				}
-				// (end hack)
-				
 				// 1. Store the list
 				this.queryGraphList = list;
 				// 2. Enable the buttons when needed
@@ -422,28 +408,21 @@ package interfaceElements
 		 * @param index The index of the graph being considered
 		 */
 		private function drawGraph(index:int) : void {
-			// NOTE: for the moment, disable the graphical view and display the element in a 'classic' way
-			
-			// 1. Clean the area
-			//this.graphDrawingZone.removeAllChildren();
-			// 2. Fill the combobox used to select the target variable (litterals shall not be considered)
+			// 1. Fill the combobox used to select the target variable (litterals shall not be considered)
 			var g:QueryGraph = QueryGraph(this.queryGraphList.getItemAt(index));
 			this.variableList.removeAll();
 			this.variableNameList.removeAll();
-			this.variableLetterList.removeAll();
-			this.variableURIList.removeAll();
 			var asciiIndex:int = 97;
 			for(var i:int = 0; i < g.vertexList.length; i++) {
 				var f:Facet = Facet(g.vertexList.getItemAt(i));
-				if(f is Concept && !this.variableLetterList.contains(Concept(f).variableLetter)) {
+				if(f is Concept && !this.variableNameList.contains(f.label)) {
 					this.variableList.addItem("?" + Concept(f).variableLetter + " (" + f.label + ")");
 					this.variableNameList.addItem(f.label);
-					this.variableLetterList.addItem(Concept(f).variableLetter);
-					this.variableURIList.addItem(f.URI);
 				}
 			}
 			this.variableComboBox.dataProvider = variableList;
-			// 3. Display the graph if it has at least one element
+			
+			// 2. Display the graph if it has at least one element
 			if(g.vertexList.length > 0) {
 				// Store the graph to allow the fetch function to find it
 				this.currentQueryGraph = g;
@@ -451,10 +430,8 @@ package interfaceElements
 				var rootNodeStr:String = Facet(g.vertexList.getItemAt(0)).label;
 				// Handle the case of concepts (since they may have the same label but be distinct + variable)
 				if(g.vertexList.getItemAt(0) is Concept) {
-					// Get the index of its variable
-					var index:int = this.variableURIList.getItemIndex(Facet(g.vertexList.getItemAt(0)).URI);
 					// Get the variable letter
-					var letter:String = String(this.variableLetterList.getItemAt(index));
+					var letter:String = Concept(g.vertexList.getItemAt(0)).variableLetter;
 					// Change the label
 					rootNodeStr = "?" + letter + " (" + rootNodeStr + ")";
 				} else {
@@ -463,68 +440,6 @@ package interfaceElements
 				// Set it to refresh the graph
 				this.graph.rootURI = rootNodeStr;
 			}
-			
-			
-			// Temporary code: 'classic' rendering
-			
-			// 3. Set the vertical layout
-			/*var verticalBox:VBox = new VBox;
-			
-			for(var k:int = 0; k < g.edgeList.length; k++) {
-				// Get the edge
-				var e:GraphEdge = GraphEdge(g.edgeList.getItemAt(k));
-				// Get the elements
-				var fromElement:Facet = e.fromElement;
-				var toElement:Facet = e.toElement;
-				var decorationElement:Facet = e.decorationElement;
-				// Create the layout
-				var horizontalBox:HBox = new HBox;
-				var fromLabel:Label = new Label;
-				fromLabel.toolTip = fromElement.URI;
-				fromLabel.setStyle("fontSize", 14);
-				fromLabel.setStyle("fontWeight", "bold");
-				if(fromElement is Concept) {
-					fromLabel.setStyle("color", "#00ad00");
-					// Get the variable letter
-					var letter:String = Concept(fromElement).variableLetter;
-					fromLabel.text = "?" + letter + " (" + fromElement.label + ")";
-				}
-				if(fromElement is Litteral) {
-					fromLabel.setStyle("color", "#ff0000");
-					fromLabel.text = fromElement.label;
-				}
-				var decorationLabel:Label = new Label;
-				decorationLabel.text = decorationElement.label;
-				decorationLabel.toolTip = decorationElement.URI;
-				decorationLabel.setStyle("color", "#0000ff");
-				decorationLabel.setStyle("fontSize", 14);
-				decorationLabel.setStyle("fontWeight", "bold");
-				var toLabel:Label = new Label;
-				toLabel.toolTip = toElement.URI;
-				toLabel.setStyle("fontSize", 14);
-				toLabel.setStyle("fontWeight", "bold");
-				if(toElement is Concept) {
-					toLabel.setStyle("color", "#00ad00");
-					// Get the variable letter
-					var letter2:String = Concept(toElement).variableLetter;
-					toLabel.text = "?" + letter2 + " (" + toElement.label + ")";
-				}
-				if(toElement is Litteral) {
-					toLabel.setStyle("color", "#ff0000");
-					toLabel.text = toElement.label;
-				}
-				// Build the triple representation
-				horizontalBox.addChild(fromLabel);
-				horizontalBox.addChild(decorationLabel);
-				horizontalBox.addChild(toLabel);
-				// Register the HBox
-				verticalBox.addChild(horizontalBox);
-			}
-			
-			// Register the vertical box
-			this.graphDrawingZone.addChild(verticalBox);*/
-			
-			// End of temporary code
 		}
 		
 		/**
@@ -545,20 +460,16 @@ package interfaceElements
 				var toElementStr:String = Facet(e.toElement).label;
 				// Handle the case of concepts (since they may have the same label but be distinct + variable)
 				if(e.fromElement is Concept) {
-					// Get the index of its variable
-					var index:int = this.variableURIList.getItemIndex(e.fromElement.URI);
 					// Get the variable letter
-					var letter:String = String(this.variableLetterList.getItemAt(index));
+					var letter:String = Concept(e.fromElement).variableLetter;
 					// Change the label
 					fromElementStr = "?" + letter + " (" + fromElementStr + ")";
 				} else {
 					fromElementStr = "'" + fromElementStr + "'";
 				}
-				if(e.toElement is Concept) {
-					// Get the index of its variable
-					var index2:int = this.variableURIList.getItemIndex(e.toElement.URI);			
+				if(e.toElement is Concept) {		
 					// Get the variable letter
-					var letter2:String = String(this.variableLetterList.getItemAt(index2));
+					var letter2:String = Concept(e.toElement).variableLetter;
 					// Change the label
 					toElementStr = "?" + letter2 + " (" + toElementStr + ")";
 				} else {
