@@ -34,7 +34,8 @@ public class TestLoad {
 //			String dic_dir = config.getProperty(Config.TMP_DIR);
 				
 			/*****1: revise Util4NT settings according to dataset*****/
-//			Util4NT.setTYPE(config.getProperty(Config.TYPE));// for dbpedia: "<http://www.w3.org/2004/02/skos/core#subject>");
+			String type_p = config.getProperty(Config.TYPE, Util4NT.TYPE);
+			Util4NT.setTYPE(type_p);
 			
 	//		Util4NT.setNameSpace("<http://dbpedia.org/resource/Category:", "<http://dbpedia.org/property/", "<http://dbpedia.org/resource/", "");
 			//for tap

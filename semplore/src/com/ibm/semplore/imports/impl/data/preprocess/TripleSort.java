@@ -25,11 +25,11 @@ public class TripleSort {
 		System.out.println("Reading " + tripleFile + "...");
 		while (rd.hasNext()) {
 //		while ((temp = rd.readLine()) != null) {
+			try {
 			s = rd.nextLong(); p = rd.nextLong(); o = rd.nextLong();
 			count ++;
 			if (count % 50000 == 0) System.out.println(count);
 //			System.out.println(temp);
-			try {
 				arr.add(new TripleURI(s,p,o, sort));
 			}
 			catch (Exception e) {
