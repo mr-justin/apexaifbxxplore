@@ -120,6 +120,11 @@ public class SchemaObjectInfoImpl implements SchemaObjectInfo
     {
     	return id;
     }
+
+	@Override
+	public String getURILocalName() {
+        return Util4NT.getDefaultLabel(uri);
+	}
     
 
 }

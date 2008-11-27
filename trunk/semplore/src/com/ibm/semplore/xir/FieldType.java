@@ -68,6 +68,10 @@ public class FieldType {
      * Field tag for text, for keyword search
      */
     public static final FieldType LABEL = new FieldType("label", FOR.All);
+    /**
+     * Field tag for URI's localname
+     */
+    public static final FieldType URILocal = new FieldType("urilocal", FOR.All);
 	/**
 	 * Field tag for categories for xfacet search.
 	 */

@@ -34,7 +34,7 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 	 * Use this string as term for root SchemaObject
 	 */
 	protected static final String TERM_STR_FOR_ROOT = "root";
-
+	
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -59,6 +59,10 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		} else {
 			doc.add(new Field(FieldType.URI.toString(), insDoc.getURI(),
 					Field.Store.COMPRESS, Field.Index.NO));
+			Field field = new Field(FieldType.URILocal.toString(), 
+					insDoc.getSchemaObjectInfo().getURILocalName(),
+					Field.Store.NO, Field.Index.TOKENIZED);
+			doc.add(field);
 		}
 
 		// Store label of document
@@ -82,10 +86,6 @@ public class DefaultDocumentConverterForLucene_XFaceted implements
 		for (AttributeValue attrVal:attrVals) {
 			text.append(attrVal.getValue()+" ");
 		}
-		// ... and label with boost(10)
-		label = label + " ";
-		for (int i=0; i<10; i++)
-			text.append(label);
 		
 		doc.add(new Field(FieldType.TEXT.toString(), text.toString(), Field.Store.NO,
 				Field.Index.TOKENIZED));

@@ -10,15 +10,16 @@ package com.ibm.semplore.xir.impl;
 
 import java.io.IOException;
 import java.io.StringReader;
+import java.util.HashMap;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
+import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.search.BooleanQuery;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.PhraseQuery;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.Searcher;
 import org.apache.lucene.search.Sort;
@@ -40,21 +41,34 @@ import com.ibm.semplore.xir.IndexService.IndexType;
  */
 public class IndexReaderImpl implements IndexReader {
 
-	protected final org.apache.lucene.index.IndexReader reader;
-	protected final IndexType type;
-	protected final FSDirectory directory;
+	protected org.apache.lucene.index.IndexReader reader;
+	protected IndexType type;
+	protected FSDirectory directory;
+	
+	// search multiple fields with different boosts
+	String fields[];
+	HashMap<String, Float> boosts;
 	
 	public org.apache.lucene.index.IndexReader getReader() {
 		return reader;
 	}
 
+	protected IndexReaderImpl() {
+		fields = new String[] {FieldType.URILocal.toString(), FieldType.LABEL.toString(), FieldType.TEXT.toString()};
+		boosts = new HashMap<String, Float>();
+		boosts.put(FieldType.URILocal.toString(), 10.0f);
+		boosts.put(FieldType.LABEL.toString(), 5.0f);
+		boosts.put(FieldType.TEXT.toString(), 1f);
+	}
 	public IndexReaderImpl(String indexPath, IndexType type) throws IOException {
+		this();
 		reader = org.apache.lucene.index.IndexReader.open(indexPath);
 		this.type = type;
 		directory = null;
 	}
 	
 	public IndexReaderImpl(String indexPath, IndexType type, boolean doDisableLocks) throws IOException {
+		this();
 		directory = FSDirectory.getDirectory(indexPath);
 		directory.setDisableLocks(doDisableLocks);
 		reader = org.apache.lucene.index.IndexReader.open(directory);
@@ -130,7 +144,8 @@ public class IndexReaderImpl implements IndexReader {
         if(term instanceof CompoundTerm || term.getFieldType()==FieldType.TEXT){
             Searcher searcher = new IndexSearcher(reader);
             MemCollector clt = new MemCollector();
-            searcher.search(toLuceneQuery(term), clt);
+            Query q = toLuceneQuery(term);
+            searcher.search(q, clt);
             return new CltDocStream(clt);
            
         }else{ // simple term
@@ -160,7 +175,6 @@ public class IndexReaderImpl implements IndexReader {
 /////////////////////////////////old codes by jackee//////////////////
 
     private Query toLuceneQuery(Term term){
-		
 		if(term instanceof CompoundTerm){
 			BooleanQuery query = new BooleanQuery();
 			CompoundTerm cTerm = (CompoundTerm)term;
@@ -177,11 +191,11 @@ public class IndexReaderImpl implements IndexReader {
 //						if (true) throw new Exception("attribute+value");
 					    Analyzer analyzer = new StandardAnalyzer();
 					    TokenStream tokenstream = analyzer.tokenStream(field, new StringReader(text));
-	  					  PhraseQuery query = new PhraseQuery();
+	  					BooleanQuery query = new BooleanQuery();
+	  					MultiFieldQueryParser q = new MultiFieldQueryParser(fields, analyzer, boosts);
 					    for (Token t = tokenstream.next(); t!=null; t=tokenstream.next()) {
-						    query.add(new org.apache.lucene.index.Term(field, t.termText()));
+						    query.add(q.parse(t.termText()), Occur.MUST);
 					    }
-					    query.setSlop(Integer.MAX_VALUE);				
 					  return query;
 			      } catch (Exception e) {
 						return new TermQuery( 

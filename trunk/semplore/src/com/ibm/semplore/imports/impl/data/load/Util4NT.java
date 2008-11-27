@@ -3,6 +3,9 @@
  */
 package com.ibm.semplore.imports.impl.data.load;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+
 import com.ibm.semplore.util.TestUnicode;
 
 /**
@@ -118,7 +121,11 @@ public class Util4NT {
         if (label.equals(""))
             label = uri;
         label = label.replace("_"," ").replace("-"," ").replace("<", " ").replace(">"," ").replace("(", " ").replace(")"," ").trim();
-        return label;
+        try {
+			return URLDecoder.decode(label, "utf8");
+		} catch (UnsupportedEncodingException e) {
+			return label;
+		}
     }
 	
 	public static String[] processTripleLine(String line) {

@@ -22,6 +22,11 @@ public interface SchemaObjectInfo
      * @return
      */
     public String getURI();
+    
+    /**
+     * @return unescaped local name of URI
+     */
+    public String getURILocalName();
         
     /**
      * Returns the label of this schema object.
