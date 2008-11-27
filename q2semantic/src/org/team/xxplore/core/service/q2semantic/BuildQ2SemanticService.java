@@ -31,32 +31,15 @@ public class BuildQ2SemanticService {
 	
 	/* CONSTANT */
 	public static String[] rdfsEdge = new String[]{
-			"http://www.w3.org/1999/02/22-rdf-syntax-ns#type", 		// 0
-			"http://www.w3.org/2000/01/rdf-schema#subClassOf", 		// 1	
-			"http://www.w3.org/2000/01/rdf-schema#domain",			// 2
-			"http://www.w3.org/2000/01/rdf-schema#range",			// 3
-			"http://www.w3.org/2000/01/rdf-schema#subPropertyOf",	// 4
-			"http://www.w3.org/2000/01/rdf-schema#label",			// 5
-			"http://www.w3.org/2000/01/rdf-schema#comment",			// 6
-			"http://www.w3.org/2002/07/owl#ObjectProperty",			// 7
-			"http://www.w3.org/2002/07/owl#Class", 					// 8
-			
-			"http://www.w3.org/2002/07/owl#DatatypeProperty",		// 9
-			"http://www.w3.org/1999/02/22-rdf-syntax-ns#Property",	// 10
-			
-			"http://www.freebase.org/type/object/type",				// 11
-			"http://www.freebase.org/type/type",					// 12
-			"http://www.freebase.org/freebase/type_profile",		// 13
-			"http://www.freebase.org/type/domian",					// 14	
-			"http://www.freebase.org/freebase/domain_profile", 		// 15
-			"http;//www.freebase.org/type/property", 				// 16	
-			"http://www.freebase.org/common/topic",					// 17
-			"http://www.freebase.org/type/namespace",				// 18
-			"http://www.freebase.org/type/object",					// 19
-			"http://www.freebase.org/freebase"						// 20
-			
-//			"http://www.w3.org/2004/02/skos/core#Concept"
-			};
+			"http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+			"http://www.w3.org/2000/01/rdf-schema#subClassOf",
+			"http://www.w3.org/2000/01/rdf-schema#domain",
+			"http://www.w3.org/2000/01/rdf-schema#range",
+			"http://www.w3.org/2000/01/rdf-schema#subPropertyOf",
+			"http://www.w3.org/2000/01/rdf-schema#label",
+			"http://www.w3.org/2000/01/rdf-schema#comment",
+			"http://www.w3.org/2002/07/owl#ObjectProperty",
+			"http://www.w3.org/2002/07/owl#Class" };
 	private static String[] containerEdge = new String[]{
 			"http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag",
 			"http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq",
@@ -64,10 +47,10 @@ public class BuildQ2SemanticService {
 			"http://www.w3.org/1999/02/22-rdf-syntax-ns#List",
 			"http://www.w3.org/1999/02/22-rdf-syntax-ns#first",
 			"http://www.w3.org/1999/02/22-rdf-syntax-ns#rest",
-			"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil", };
+			"http://www.w3.org/1999/02/22-rdf-syntax-ns#nil" };
 	public static HashSet<String> rdfsEdgeSet, conEdgeSet;
 	
-	/* INSTANCEï¿½ï¿½STATICS FROM SXR */
+	/* INSTANCE¡¡STATICS FROM SXR */
 	public static int[] instance = new int[]{   464843, 1644086,    7517743,  19238235,   14051039,   82702188};
 	public static String[] ds = new String[]{"wordnet",  "dblp", "freebase", "dbpedia", "geonames", "uscensus"};
 	public static HashMap<String, Integer> instNumMap;
@@ -164,12 +147,11 @@ public class BuildQ2SemanticService {
 		indexRoot = root+datasource;
 		source = prop.getProperty("source");
 		/* Output File Para */
-		summaryObj = root+prop.getProperty("summaryObjsRoot")+File.separator+datasource+"-summary.obj";
-		schemaObj = root+prop.getProperty("schemaObjsRoot")+File.separator+datasource+"-schema.obj";
-		summaryRDF = root+prop.getProperty("summaryObjsRoot")+"-rdf"+File.separator+datasource+"-summary.rdf";
-		schemaRDF = root+prop.getProperty("schemaObjsRoot")+"-rdf"+File.separator+datasource+"-schema.rdf";
+		summaryObj = root+datasource+"-summary.obj";
+		schemaObj = root+datasource+"-schema.obj";
+		summaryRDF = root+datasource+"-summary.rdf";
+		schemaRDF = root+datasource+"-schema.rdf";
 		keywordIndex = root+datasource+"-keywordIndex";
-
 		System.out.println("Root:"+root+"\r\nDataSource:"+datasource+"\r\nIndexRoot:"+indexRoot+"\r\nFileSource:"+source);
 	}
 	
@@ -180,9 +162,9 @@ public class BuildQ2SemanticService {
 	 */
 	public static void main(String[] args) throws Exception 
 	{
-		if(args.length!=4)
+		if(args.length!=5)
 		{
-			System.err.println("java BuildQ2SemanticService configFilePath(String) removeBlankNode(boolean) sortNTFile(boolean) isBigNT(boolean)");
+			System.err.println("java BuildQ2SemanticService configFilePath(String) removeBlankNode(boolean) sortNTFile(boolean) isBigNT(boolean) scoring(boolean)");
 			return;
 		}
 		long start = System.currentTimeMillis();
@@ -200,16 +182,16 @@ public class BuildQ2SemanticService {
 		
 		/* build summary and schema graphs */
 		SummaryGraphIndexServiceForBTFromNT graphBuilder = new SummaryGraphIndexServiceForBTFromNT();
-		graphBuilder.buildGraphs(indexRoot);//db index location
+		graphBuilder.buildGraphs(indexRoot, Boolean.parseBoolean(args[4]));//db index location
 		
 		/* build splitted-summary graphs */
 		SplitSummaryGraphIndexServiceForBTFromNT splitGraphBuilder = new SplitSummaryGraphIndexServiceForBTFromNT();
-		splitGraphBuilder.buildGraphs(indexRoot);//db index location
+		splitGraphBuilder.buildGraphs(indexRoot, Boolean.parseBoolean(args[4]));//db index location
 		
 		/* build keywordindex */
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = graphBuilder.readGraphIndexFromFile(schemaObj);
-		KeywordIndexServiceForBTFromNT keywordBuilder = new KeywordIndexServiceForBTFromNT(keywordIndex, true);
-		keywordBuilder.indexKeywords(source, datasource, graph, Boolean.valueOf(args[3]));
+//		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = graphBuilder.readGraphIndexFromFile(schemaObj);
+//		KeywordIndexServiceForBTFromNT keywordBuilder = new KeywordIndexServiceForBTFromNT(keywordIndex, true);
+//		keywordBuilder.indexKeywords(source, datasource, graph, Boolean.valueOf(args[3]));
 		
 		long end = System.currentTimeMillis();
 		System.out.println("Time customing: "+(end-start)+" ms");
