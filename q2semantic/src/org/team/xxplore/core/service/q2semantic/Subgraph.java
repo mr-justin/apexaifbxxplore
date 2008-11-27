@@ -13,6 +13,18 @@ import org.jgrapht.graph.Pseudograph;
 public class Subgraph extends
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>
 		implements Comparable {
+	
+	@Override
+	public Set<SummaryGraphEdge> edgeSet() {
+		// TODO Auto-generated method stub
+		return super.edgeSet();
+	}
+	
+	@Override
+	public Set<SummaryGraphElement> vertexSet() {
+		// TODO Auto-generated method stub
+		return super.vertexSet();
+	}
 
 	private SummaryGraphElement connectingVertex;
 
