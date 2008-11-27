@@ -13,8 +13,7 @@ public class Q2SemanticPool {
 		for(int i = 0; i < q2semantic_num; i++) {
 			locks[i] = new ReentrantLock();
 			try {
-				pool[i] = new SearchQ2SemanticService();
-				pool[i].loadPara("config/path.prop");
+				pool[i] = new SearchQ2SemanticService("config/path.prop");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
