@@ -1,0 +1,32 @@
+Begin Evaluation
+Total Evaluation time(ms): 454
+query time(ms): 141
+facet time(ms): 31
+query results: 2
+result 0: Rudi Studer
+//score:1.0
+//uri:<http://semanticweb.org/id/Rudi_Studer>
+//id:85
+result 1: Rudi Studer
+//score:0.2368614375591278
+//uri:<http://semanticweb.org/wiki/Rudi_Studer>
+//id:10
+
+get result information: 16 ms
+category facets count:
+catFacet 0: Person(~1) uri:<http://xmlns.com/foaf/0.1/Person>
+catFacet 1: Subject(~1) uri:<http://semantic-mediawiki.org/swivt/1.0#Subject>
+catFacet 2: Category 3AProfessor(~1) uri:<http://semanticweb.org/id/Category-3AProfessor>
+
+relation facets count:
+relFacet 0: page(~1) uri:<http://semantic-mediawiki.org/swivt/1.0#page>
+relFacet 1: Property 3AMember of(~1) uri:<http://semanticweb.org/id/Property-3AMember_of>
+relFacet 2: Property 3AAffiliation(~1) uri:<http://semanticweb.org/id/Property-3AAffiliation>
+relFacet 3: Property 3AParticipant of(~1) uri:<http://semanticweb.org/id/Property-3AParticipant_of>
+relFacet 4: Property 3AHomepage(~1) uri:<http://semanticweb.org/id/Property-3AHomepage>
+
+subject relation facets count:
+
+object relation facets count:
+
+Time stats: 141, 31, 485 => 2
