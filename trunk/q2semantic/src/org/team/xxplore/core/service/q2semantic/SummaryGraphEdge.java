@@ -23,11 +23,11 @@ public class SummaryGraphEdge implements Serializable{
 	
 	public SummaryGraphEdge(SummaryGraphElement source, SummaryGraphElement target, String type){
 
-		if (type == RANGE_EDGE) m_edgeLabel = RANGE_EDGE;
-		else if (type == SUBCLASS_EDGE) m_edgeLabel = SUBCLASS_EDGE;
-		else if (type == SUPERCLASS_EDGE) m_edgeLabel = SUPERCLASS_EDGE;
-		else if (type == DOMAIN_EDGE) m_edgeLabel = DOMAIN_EDGE;
-		else if (type == MAPPING_EDGE) m_edgeLabel = MAPPING_EDGE;
+		if (type.equals(RANGE_EDGE)) m_edgeLabel = RANGE_EDGE;
+		else if (type.equals(SUBCLASS_EDGE)) m_edgeLabel = SUBCLASS_EDGE;
+		else if (type.equals(SUPERCLASS_EDGE)) m_edgeLabel = SUPERCLASS_EDGE;
+		else if (type.equals(DOMAIN_EDGE)) m_edgeLabel = DOMAIN_EDGE;
+		else if (type.equals(MAPPING_EDGE)) m_edgeLabel = MAPPING_EDGE;
 
 		m_source = source; 
 		m_target = target;
@@ -54,7 +54,7 @@ public class SummaryGraphEdge implements Serializable{
 	
 	public String toString(){
 		if(getSource() != null && getTarget() != null && getEdgeLabel() != null) 
-			return getSource().toString() + "["+getSource().getEF()+"]["+getSource().getMatchingScore()+"]["+getSource().getTotalScore()+"]" + getEdgeLabel() + " "  + getTarget().toString()+"["+getTarget().getEF()+"]["+getTarget().getMatchingScore()+"]["+getTarget().getTotalScore()+"]";
+			return getSource().toString() + "["+getSource().getEF()+"]["+getSource().getMatchingScore()+"]["+getSource().getTotalCost()+"]" + getEdgeLabel() + " "  + getTarget().toString()+"["+getTarget().getEF()+"]["+getTarget().getMatchingScore()+"]["+getTarget().getTotalCost()+"]";
 		else return super.toString();
 	}
 

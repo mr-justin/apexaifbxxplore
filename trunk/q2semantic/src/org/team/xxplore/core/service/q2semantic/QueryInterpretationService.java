@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -174,7 +175,7 @@ public class QueryInterpretationService {
 		List<Subgraph> subgraphList = new LinkedList<Subgraph>();
 		
 		Set<String> keywords = elements.keySet();
-		HashMap<String, HashSet<SummaryGraphElement>> map = new HashMap<String, HashSet<SummaryGraphElement>>();
+		HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>> map = new HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>>();
 		for (String keyword : keywords) {
 			for (SummaryGraphElement ele : elements.get(keyword)) {
 				Set<SummaryGraphElement> ele_set = 
@@ -184,11 +185,16 @@ public class QueryInterpretationService {
 					
 					if (set == null) {
 						set = new HashSet<SummaryGraphElement>();
-						map.put(keyword, set);
+						map.put(element, set);
 					}
 					set.add(element);
+					
+					System.out.println("Begin Expansion from:");
+					System.out.println(element);
+					System.out.println();
+					
 					Cursor cursor = new Cursor(element, element, null, null,
-							keyword, element.getTotalScore());
+							keyword, element.getTotalCost());
 					expansionQueue.addCursor(cursor, keyword);
 				}
 			}
@@ -199,6 +205,7 @@ public class QueryInterpretationService {
 			
 			if (c!=null && c.getLength() < distance) {
 				SummaryGraphElement e = c.getElement();
+				SummaryGraphElement matchingElement = c.getMatchingElement();
 				String keyword = c.getKeyword();
 				if (e.getCursors() == null)
 					e.initCursorQueues(keywords);
@@ -211,8 +218,20 @@ public class QueryInterpretationService {
 						e.addExploredCursorCombinations(combinations);
 						e.clearNewCursorCombinations();
 						
-						Collection<Subgraph> sglist = computeSubgraphs(e, combinations);						
-						subgraphList.addAll(sglist);
+						Collection<Subgraph> sglist = computeSubgraphs(e, combinations);		
+
+						for(Subgraph sg : sglist) {
+							if(!subgraphList.contains(sg)) {
+								subgraphList.add(sg);
+							}	
+							else {
+								int index = subgraphList.indexOf(sg);
+								Subgraph sgp = subgraphList.get(index);
+								if(sgp.getCost() > sg.getCost()){
+									sgp.setCost(sg.getCost());
+								}
+							}
+						}
 						
 						// check for top-k
 						if (subgraphList.size() >= k) {
@@ -229,11 +248,11 @@ public class QueryInterpretationService {
 					Collection<Cursor> neighbors;
 					neighbors = getNonVisitedNeighbors(iGraph, e, c);
 					for (Cursor n : neighbors) {						
-						if (!map.get(keyword).contains(n.getElement())) {
+						if (!map.get(matchingElement).contains(n.getElement())) {
 							if(n.getCost() < max) {
 								expansionQueue.addCursor(n, keyword);
 							}
-							map.get(keyword).add(n.getElement());
+							map.get(matchingElement).add(n.getElement());
 						}
 					}
 				}
@@ -262,7 +281,11 @@ public class QueryInterpretationService {
 			}
 			Subgraph g = new Subgraph(SummaryGraphEdge.class);
 			g.setCost(cost);
-			g.setPaths(paths);
+			Set<SummaryGraphEdge> allPaths = new LinkedHashSet<SummaryGraphEdge>();
+			for(List<SummaryGraphEdge> list : paths){
+				allPaths.addAll(list);
+			}
+			g.setPaths(allPaths);
 			g.setConnectingElement(connectingElement);
 			subgraphs.add(g);
 		}
@@ -290,13 +313,13 @@ public class QueryInterpretationService {
 				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
 						nextCursor = new Cursor(source, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								source.getTotalScore() + c.getCost());
+								source.getTotalCost() + c.getCost());
 						neighbors.add(nextCursor);
 				}
 				else {
 					nextCursor = new Cursor(source, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
-							source.getTotalScore() + c.getCost());
+							source.getTotalCost() + c.getCost());
 					neighbors.add(nextCursor);
 				}
 			}
@@ -305,13 +328,13 @@ public class QueryInterpretationService {
 				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
 						nextCursor = new Cursor(target, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								target.getTotalScore() + c.getCost());
+								target.getTotalCost() + c.getCost());
 						neighbors.add(nextCursor);
 				}
 				else {
 					nextCursor = new Cursor(target, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
-							target.getTotalScore() + c.getCost());
+							target.getTotalCost() + c.getCost());
 					neighbors.add(nextCursor);
 				}
 			}

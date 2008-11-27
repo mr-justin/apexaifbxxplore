@@ -51,9 +51,9 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 
 	protected IResource resource;
 
-	protected double cost;
+	protected double EF;
 	
-	private double m_totalScore;
+	private double m_totalCost;
 	
 	private double m_matchingScore;
 
@@ -76,17 +76,17 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 		this.type = type;
 	}
 
-	public SummaryGraphElement(IResource resource, int type, double weight) {
+	public SummaryGraphElement(IResource resource, int type, double EF) {
 		this.resource = resource;
 		this.type = type;
-		this.cost = weight;
+		this.EF = EF;
 	}
 
-	public SummaryGraphElement(IResource resource, int type, double score, double weight) {
+	public SummaryGraphElement(IResource resource, int type, double score, double EF) {
 		this.resource = resource;
 		this.type = type;
 		this.m_matchingScore = score;
-		this.cost = weight;
+		this.EF = EF;
 	}
 
 	public int getType(){
@@ -100,16 +100,16 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	public IResource getResource(){
 		return resource;
 	}
-	public void setCost(double weight){
-		this.cost = weight;
+	public void setEF(double EF){
+		this.EF = EF;
 	}
 
 	public double getEF(){
-		return cost;
+		return EF;
 	}
 
 	public void applyCoverage(int coverage){
-		if (!m_coverageApplied) m_totalScore = m_totalScore * coverage; 
+		if (!m_coverageApplied) m_totalCost = m_totalCost / coverage; 
 	}
 	
 	public void setMatchingScore(double score){
@@ -146,12 +146,12 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 		return cursors;
 	}
 
-	public double getTotalScore() {
-		return m_totalScore;
+	public double getTotalCost() {
+		return m_totalCost;
 	}
 
-	public void setTotalScore(double score) {
-		m_totalScore = score;
+	public void setTotalCost(double cost) {
+		m_totalCost = cost;
 	}
 
 	public void initCursorQueues(Set<String> keywords){

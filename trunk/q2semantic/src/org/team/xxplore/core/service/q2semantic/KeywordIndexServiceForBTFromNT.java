@@ -429,7 +429,9 @@ public class KeywordIndexServiceForBTFromNT{
 						count ++;
 						if(count  > 5 ) break;
 						if(type != null && type.equals(LITERAL)){
-							ILiteral lit = new Literal(doc.get(LABEL_FIELD));
+							String litLabel = doc.get(LABEL_FIELD);
+							if(litLabel.length() > 80) continue;
+							ILiteral lit = new Literal(litLabel);
 							SummaryGraphValueElement vvertex = new SummaryGraphValueElement(lit);
 							vvertex.setMatchingScore(score);
 							vvertex.setDatasource(doc.get(DS_FIELD));

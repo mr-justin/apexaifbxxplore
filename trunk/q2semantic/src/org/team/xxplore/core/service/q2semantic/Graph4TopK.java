@@ -173,17 +173,39 @@ public class Graph4TopK {
 		
 		for(AugmentPart ap : augmentPart_HM.values()) {
 			ap.getNoNum();
+			
+//			// scoring according to WWW09 paper
+//			for(SummaryGraphElement ele : ap.augmentPart.vertexSet()) {
+//				if(ele.getMatchingScore() != 0) {
+//					if(ele.getEF() == 0)
+//						ele.setTotalCost(1.0 / ele.getMatchingScore());
+//					else
+//						ele.setTotalCost(1.0 / (ele.getMatchingScore()*ele.getEF()));
+//				}
+//				else if(ele.getEF() != 0) {
+//					ele.setTotalCost(1.0 / ele.getEF());
+//				}
+//				else {
+//					ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
+//				}
+//				ele.setTotalCost(ele.getTotalCost() + QueryInterpretationService.EDGE_SCORE);
+//			}
+			
+			// scoring according to ICDE09 paper
 			for(SummaryGraphElement ele : ap.augmentPart.vertexSet()) {
 				if(ele.getMatchingScore() != 0) {
-					ele.setTotalScore(1.0 / ele.getMatchingScore());
+					if(ele.getEF() == 0)
+						ele.setTotalCost(1.0 / ele.getMatchingScore());
+					else
+						ele.setTotalCost((1.0 - ele.getEF()) / ele.getMatchingScore());
 				}
 				else if(ele.getEF() != 0) {
-					ele.setTotalScore(ele.getEF());
+					ele.setTotalCost(1.0 - ele.getEF());
 				}
 				else {
-					ele.setTotalScore(QueryInterpretationService.DEFAULT_SCORE);
+					ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
 				}
-				ele.setTotalScore(ele.getTotalScore() + QueryInterpretationService.EDGE_SCORE);
+				ele.setTotalCost(ele.getTotalCost() + QueryInterpretationService.EDGE_SCORE);
 			}
 		}
 	}
