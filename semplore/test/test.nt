@@ -10,4 +10,103 @@
 <http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AParticipant_of> <http://semanticweb.org/id/ISWC2006> .
 <http://semanticweb.org/id/Rudi_Studer> <http://semantic-mediawiki.org/swivt/1.0#page> <http://semanticweb.org/wiki/Rudi_Studer> .
 <http://semanticweb.org/id/Rudi_Studer> <http://semanticweb.org/id/Property-3AHomepage> <http://www.aifb.uni-karlsruhe.de/Personen/viewPerson?id_db=57> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/cinematography>	<http://dbpedia.org/resource/James_Van_Trees> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/director>	<http://dbpedia.org/resource/James_Flood> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/distributor>	<http://dbpedia.org/resource/Paramount_Pictures> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/editing>	<http://dbpedia.org/resource/Otho_Lovering> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/id>	"0026982"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/imdbId>	"0026982"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/language>	<http://dbpedia.org/resource/English_language> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/language>	<http://dbpedia.org/resource/German_language> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/music>	<http://dbpedia.org/resource/Frederick_Hollander> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/name>	"Shanghai"@en .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/producer>	<http://dbpedia.org/resource/Walter_Wanger> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/released>	<http://dbpedia.org/resource/20_July> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/runtime>	"75 min"@en .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/starring>	<http://dbpedia.org/resource/Charles_Boyer> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/starring>	<http://dbpedia.org/resource/Loretta_Young> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/title>	"Shanghai"@en .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/writer>	<http://dbpedia.org/resource/Charles_Graham_Baker> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/writer>	<http://dbpedia.org/resource/Gene_Towne> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://dbpedia.org/property/writer>	<http://dbpedia.org/resource/Lynn_Starling> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:American_films> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:English-language_films> .
+<http://dbpedia.org/resource/Shanghai_%28film%29>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:German-language_films> .
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/areaCode>	"21"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/areaLandKm>	"6340"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/areaTotalKm>	"7037"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/areaUrbanKm>	"5299"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/areaWaterKm>	"679"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank1Info>	"157800000000"^^<http://dbpedia.org/units/Dollar>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank1Name>	"- Total"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank2Info>	"US$8,949"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank2Name>	"- Per capita"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank3Info>	"13.3"^^<http://dbpedia.org/units/Percent>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank3Name>	"- Growth"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank4Info>	"0.909"^^<http://www.w3.org/2001/XMLSchema#decimal>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank4Name>	" HDI (2005)"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank5Info>	"\u6CAAA, B, D, E, F,G\n\u6CAAC (outer suburbs)"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank5Name>	<http://dbpedia.org/resource/Licence_plates_of_the_People%27s_Republic_of_China>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank6Info>	<http://dbpedia.org/resource/Magnolia_denudata>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blank6Name>	"City flower"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blankInfo>	"2007 estimate"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/blankName>	<http://dbpedia.org/resource/Gross_domestic_product>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/caption>	<http://dbpedia.org/resource/The_Bund>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/display>	"title"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/elevationM>	"4"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedDate>	"1292"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedDate>	"1854-07-17"^^<http://www.w3.org/2001/XMLSchema#date>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedDate>	"5th - 7th century"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedDate>	<http://dbpedia.org/resource/751>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedTitle>	"- County"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedTitle>	"- Municipality"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedTitle>	"Incorporated\n - Town"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/establishedTitle>	"Settled"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/fullheight>	"200"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/fullwidth>	"2468"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/governmentType>	<http://dbpedia.org/resource/Direct-controlled_municipality>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/height>	"200"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/imageCaption>	"A view of the Pudong skyline"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/imagesize>	"280px"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/latd>	"31"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/latm>	"12"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/latns>	"N"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/lats>	"0"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/leaderName>	<http://dbpedia.org/resource/Han_Zheng>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/leaderName>	<http://dbpedia.org/resource/Yu_Zhengsheng>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/leaderTitle>	" CPC Municipal Sec."@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/leaderTitle>	<http://dbpedia.org/resource/Mayor>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/longd>	"121"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/longew>	"E"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/longm>	"30"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/longs>	"0"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/mapCaption>	"Location of Shanghai Municipality within China"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/mapsize>	"280px"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/nativeName>	"\u4E0A\u6D77\u5E02"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/officialName>	"Municipality of Shanghai"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/parts>	"<br /> 18 districts, 1 county<br />220 towns and villages"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/partsType>	<http://dbpedia.org/resource/Political_divisions_of_China%23County_level>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/partsType>	<http://dbpedia.org/resource/Political_divisions_of_China%23Township_level>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/populationAsOf>	"2007"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/populationDensityKm>	"auto"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/populationTotal>	"18580000"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/postalCode>	"200000 \u2013 202100"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/postalCodeType>	<http://dbpedia.org/resource/Postal_code_of_China>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/subdivisionType>	"Country"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/timezone>	<http://dbpedia.org/resource/China_Standard_Time>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/totalType>	"Municipality"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang1Info>	"Z\u00E5nhae"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang1Info>	"[z\u0251\u0303'he]"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang1Type>	<http://dbpedia.org/resource/Long-short_%28romanization%29>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang1Type>	<http://dbpedia.org/resource/Shanghainese>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang1Type>	<http://dbpedia.org/resource/Standard_Mandarin>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang1Type>	<http://dbpedia.org/resource/Wu_Chinese>
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/translitLang>	"Chinese"@en
+<http://dbpedia.org/resource/Shanghai>	<http://dbpedia.org/property/utcOffset>	"+8"^^<http://www.w3.org/2001/XMLSchema#integer>
+<http://dbpedia.org/resource/Shanghai>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:Cities_in_China>
+<http://dbpedia.org/resource/Shanghai>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:Independent_cities>
+<http://dbpedia.org/resource/Shanghai>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:Metropolitan_areas_of_China>
+<http://dbpedia.org/resource/Shanghai>	<http://www.w3.org/2004/02/skos/core#subject>	<http://dbpedia.org/resource/Category:Shanghai>
+	
+
 

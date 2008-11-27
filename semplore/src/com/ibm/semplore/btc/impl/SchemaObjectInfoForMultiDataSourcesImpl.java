@@ -1,6 +1,7 @@
 package com.ibm.semplore.btc.impl;
 
 import com.ibm.semplore.btc.SchemaObjectInfoForMultiDataSources;
+import com.ibm.semplore.imports.impl.data.load.Util4NT;
 
 /**
  * @author xrsun
@@ -54,6 +55,11 @@ public class SchemaObjectInfoForMultiDataSourcesImpl implements
 	@Override
 	public String getURI() {
 		return URI;
+	}
+
+	@Override
+	public String getURILocalName() {
+        return Util4NT.getDefaultLabel(URI);
 	}
 
 }

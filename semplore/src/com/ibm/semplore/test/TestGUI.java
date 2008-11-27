@@ -187,7 +187,7 @@ public class TestGUI extends JFrame{
 		TestSearch.schemaSearcher = searchService.getSchemaSearchable();
 		TestSearch.searcher = searchService.getXFacetedSearchable();
 		
-		QuerySnippetDB.init(config.getProperty("snippet"));
+		QuerySnippetDB.init("datasrc.cfg");
 		MappingIndexReaderFactory.init(new File(config.getProperty("mapping")));
 	}
 
