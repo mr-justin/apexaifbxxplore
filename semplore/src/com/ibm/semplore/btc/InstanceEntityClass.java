@@ -1,5 +1,6 @@
 package com.ibm.semplore.btc;
 
+import com.ibm.semplore.util.TestUnicode;
 import com.sleepycat.persist.model.Entity;
 import com.sleepycat.persist.model.PrimaryKey;
 
@@ -30,6 +31,6 @@ public class InstanceEntityClass {
 	}
 	
 	public String getData() {
-		return data;
+		return TestUnicode.parse(data);
 	}
 }

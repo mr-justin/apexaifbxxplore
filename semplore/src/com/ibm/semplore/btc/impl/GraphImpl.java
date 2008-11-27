@@ -5,10 +5,11 @@ package com.ibm.semplore.btc.impl;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.CharBuffer;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.regex.Matcher;
@@ -180,7 +181,8 @@ public class GraphImpl implements Graph {
 	 * @see GraphImpl.toString()
 	 */
 	public void load(File file) throws NumberFormatException, IOException {
-		BufferedReader reader = new BufferedReader(new FileReader(file));
+		
+		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file),"utf8"));
 		int target = Integer.MAX_VALUE;
 		String line;
 		while ((line = reader.readLine())!=null) {

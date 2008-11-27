@@ -1,4 +1,10 @@
 package com.ibm.semplore.util;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.StringTokenizer;
 
 
@@ -42,9 +48,12 @@ public class TestUnicode {
 
 	static String ustr = "\\u0442\\u0440\\u0438 \\u0442\\u043E\\u0447\\u043D\\u044B\\u0445 \\u0443\\u0434\\u0430\\u0440\\u0430";
 
-	public static void main(String[] args) {
-		System.out.println(parse(ustr));
-
+	public static void main(String[] args) throws IOException {
+		OutputStreamWriter w = new OutputStreamWriter(new FileOutputStream("output.txt"),"utf8");
+		PrintWriter pw = new PrintWriter(w);
+		pw.println(parse(ustr));
+		pw.println(parse("\"\\u4E0A\\u6D77\\u5E02\"@en "));
+		w.close();
 	}
 
 }
