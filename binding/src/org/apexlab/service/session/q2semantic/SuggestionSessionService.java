@@ -3,10 +3,10 @@ package org.apexlab.service.session.q2semantic;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.apexlab.service.q2semantic.SearchQ2SemanticService;
 import org.apexlab.service.session.datastructure.Concept;
 import org.apexlab.service.session.datastructure.QueryGraph;
 import org.apexlab.service.session.datastructure.Suggestion;
-import org.team.xxplore.core.service.q2semantic.SearchQ2SemanticService;
 
 /**
  * Binding class to use the Q2Semantic JAR with BlazeDS. For Flex, this is the true service interface.
