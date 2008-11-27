@@ -2,7 +2,6 @@ package org.apexlab.service.session.q2semantic;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
-import org.apexlab.service.q2semantic.SearchQ2SemanticService;
 
 public class Q2SemanticPool {
 	public static int q2semantic_num = 2;
