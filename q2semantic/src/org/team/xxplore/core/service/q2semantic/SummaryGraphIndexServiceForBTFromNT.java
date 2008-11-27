@@ -31,8 +31,6 @@ import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.impl.Property;
 
-import com.ibm.semplore.imports.impl.data.load.Util4NT;
-
 /**
  * Build summary and schema graph from nt file
  * @author kaifengxu
