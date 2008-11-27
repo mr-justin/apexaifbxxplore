@@ -7,6 +7,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.LineNumberReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStreamWriter;
@@ -31,6 +32,7 @@ import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.impl.Property;
 
+
 /**
  * Build summary and schema graph from nt file
  * @author kaifengxu
@@ -47,7 +49,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						OBJPROP="objprop", 
 						RDFSPROP="rdfsprop";//predicate type
 		
-	public static String LABEL= "http://www.w3.org/2001/XMLSchema#label";
+	public static String DATATYPE_URI = "http://www.w3.org/2001/XMLSchema#";
+	public static String LABEL= DATATYPE_URI+"label";
 	public static String INDIV2CON = "indiv2con";
 	public static String RELPOOL = "-splitRelPool";
 	public static double TOP_ELEMENT_SCORE = 2.0, SUBCLASS_ELEMENT_SCORE = 0;
@@ -59,7 +62,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
 	public int MAX_CACHE_SIZE = 10000000; //cache of indiv2concepts results
-	public int indivSize, propSize = 0;
+	public int indivSize, propSize = 0, hits = 0;
 	
 	/**
 	 * check condition to get subject type
@@ -69,22 +72,13 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 */
 	public static String getSubjectType(String pred, String obj)
 	{
-		if( (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && obj.equals(BuildQ2SemanticService.rdfsEdge[8])) || pred.equals(BuildQ2SemanticService.rdfsEdge[1])
-				//condition for freebase
-				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && (obj.equals(BuildQ2SemanticService.rdfsEdge[12]) || obj.equals(BuildQ2SemanticService.rdfsEdge[13])))
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[12]))
+		if( (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && obj.equals(BuildQ2SemanticService.rdfsEdge[8])) || pred.equals(BuildQ2SemanticService.rdfsEdge[1]))
 			return CONCEPT;
-		else if( (pred.equals(BuildQ2SemanticService.rdfsEdge[4]) && obj.equals(BuildQ2SemanticService.rdfsEdge[7])) || pred.equals(BuildQ2SemanticService.rdfsEdge[2])
-				|| pred.equals(BuildQ2SemanticService.rdfsEdge[3])
-				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[0]) 
-						&& (obj.equals(BuildQ2SemanticService.rdfsEdge[7]) || obj.equals(BuildQ2SemanticService.rdfsEdge[9]) || obj.equals(BuildQ2SemanticService.rdfsEdge[10])))
-				//condition for freebase
-				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && obj.equals(BuildQ2SemanticService.rdfsEdge[16]))
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[16])) 
+		else if( (pred.equals(BuildQ2SemanticService.rdfsEdge[4]) && obj.equals(BuildQ2SemanticService.rdfsEdge[7]))
+				|| pred.equals(BuildQ2SemanticService.rdfsEdge[2])
+				|| pred.equals(BuildQ2SemanticService.rdfsEdge[3]))
 			return PROPERTY;
-		else if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) || getPredicateType(pred, obj).equals(OBJPROP) || getPredicateType(pred, obj).equals(DATATYPEPROP)
-				//condition for freebase
-				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && obj.equals(BuildQ2SemanticService.rdfsEdge[17])))
+		else if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) || getPredicateType(pred, obj).equals(OBJPROP) || getPredicateType(pred, obj).equals(DATATYPEPROP))
 			return INDIVIDUAL;
 		return "";
 	}
@@ -97,9 +91,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 */
 	public static String getObjectType(String pred, String obj)
 	{
-		if((pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj))
-				//condition for freebase
-				|| (pred.equals(BuildQ2SemanticService.rdfsEdge[11]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj)))
+		if(pred.equals(BuildQ2SemanticService.rdfsEdge[0]) && !BuildQ2SemanticService.rdfsEdgeSet.contains(obj))
 			return CONCEPT;
 		else if(getPredicateType(pred, obj).equals(OBJPROP))
 			return INDIVIDUAL;
@@ -117,19 +109,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	// for example isEdgeTypeOf(Property.IS_INSTANCE_OF)
 	public static String getPredicateType(String pred, String obj)
 	{
-		if(BuildQ2SemanticService.rdfsEdgeSet.contains(pred)
-				//condition for freebase
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[12])
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[14])
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[16])
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[17])
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[18])
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[19])
-				|| pred.startsWith(BuildQ2SemanticService.rdfsEdge[20]))
+		if(BuildQ2SemanticService.rdfsEdgeSet.contains(pred))
 			return RDFSPROP;
 		else if(obj.startsWith("http"))
 			return OBJPROP;
-		else if(obj.equals(""))
+		else if(obj.startsWith("\""))
 			return DATATYPEPROP;
 		return "";
 	}
@@ -139,7 +123,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 * @param path
 	 * @throws Exception
 	 */
-	public void buildGraphs(String path) throws Exception
+	public void buildGraphs(String path, boolean scoring) throws Exception
 	{	
 		propCount = new TreeMap<String, Integer>();
 		conceptCount = new TreeMap<String, Integer>();
@@ -147,13 +131,13 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		indiv2con = new LuceneMap();
 		
 		//preparation
-		firstScan(path);
+		firstScan(path, scoring);
 		System.gc();
 		//summary graph
-		secondScan(path);
+		secondScan(path, scoring);
 		System.gc();
 		//schema graph
-		thirdScan(path);
+		thirdScan(path, scoring);
 		System.gc();
 
 	}
@@ -163,47 +147,41 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 * @param path
 	 * @throws Exception
 	 */
-	public void firstScan(String path) throws Exception
+	public void firstScan(String path, boolean scoring) throws Exception
 	{
 		System.out.println("=======firstScan==========");
 		//open index to prepare for writing
 		indiv2con.openWriter(path, true);
 		//get the instance number if we predefined which will save a lot of memory to maintain a indivSet
-		indivSize = BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource)==null?
-				-1:BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource);
-		TreeSet<String> indivSet = new TreeSet<String>();
+		TreeSet<String> indivSet = null;
+		if(scoring)
+		{
+			indivSize = BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource)==null?
+					-1:BuildQ2SemanticService.instNumMap.get(BuildQ2SemanticService.datasource);
+			if(indivSize == -1)
+				indivSet = new TreeSet<String>();
+		}
 		
-		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
+		LineNumberReader br = new LineNumberReader(new FileReader(BuildQ2SemanticService.source));
 		String line;
-		int count = 0;
 		
 		while((line = br.readLine())!=null)
 		{
-			count++;
-			if(count%10000==0)
-				System.out.println("1st scan\t"+count);
+			if(br.getLineNumber()%10000==0)
+				System.out.println("1st scan\t"+br.getLineNumber());
 
-			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
-				continue;
-
-			if(!part[0].startsWith("<") || !part[1].startsWith("<"))
-				continue;
-
-			String subj = part[0].substring(1, part[0].length()-1);
-			String pred = part[1].substring(1, part[1].length()-1);
+			String[] part = getSubjPredObj(line);
+			if(part==null) continue;
+			String subj = part[0];
+			String pred = part[1];
 			String obj = part[2];
-			if(!obj.startsWith("<"))
-				obj = "";//if obj is not instance, we give it value "" to disable type checking
-			else if(obj.length()>=2) obj = part[2].substring(1, part[2].length()-1);
-			if(!subj.startsWith("http") || !pred.startsWith("http"))
-					continue;
-
-			if(indivSize ==-1 && getSubjectType(pred, obj).equals(INDIVIDUAL))
+			
+			if(scoring && indivSize ==-1 && getSubjectType(pred, obj).equals(INDIVIDUAL))
 				indivSet.add(subj);//calculate instance number
-			if(indivSize ==-1 && getObjectType(pred, obj).equals(INDIVIDUAL))
+			if(scoring && indivSize ==-1 && getObjectType(pred, obj).equals(INDIVIDUAL))
 				indivSet.add(obj);//calculate instance number
-			if(!getPredicateType(pred, obj).equals(RDFSPROP))
+			
+			if(scoring && !getPredicateType(pred, obj).equals(RDFSPROP))
 			{
 				propSize++;
 				Integer n = propCount.get(pred);
@@ -213,13 +191,16 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(CONCEPT))
 			{
 				indiv2con.put(subj, obj);
-				Integer i = conceptCount.get(obj);
-				if(i==null) i = Integer.valueOf(0);
-				conceptCount.put(obj, i+1);//calculate concept frequency
+				if(scoring)
+				{
+					Integer i = conceptCount.get(obj);
+					if(i==null) i = Integer.valueOf(0);
+					conceptCount.put(obj, i+1);//calculate concept frequency
+				}
 			}
 		}
 		//if the instance number is not predefined, then compute it
-		if(indivSize == -1)
+		if(scoring && indivSize == -1)
 		{
 			indivSize = indivSet.size();
 			indivSet.clear();
@@ -236,86 +217,55 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 * @param path
 	 * @throws Exception
 	 */
-	public void secondScan(String path) throws Exception
+	public void secondScan(String path, boolean scoring) throws Exception
 	{
 		System.out.println("=======secondScan==========");
 		indiv2con.openSearcher(path);//open indiv2con index
 		cache = new TreeMap<String, Set<String>>();//cache of indiv-concepts results
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = new Pseudograph<SummaryGraphElement,SummaryGraphEdge>(SummaryGraphEdge.class);
 		
-		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
+		LineNumberReader br = new LineNumberReader(new FileReader(BuildQ2SemanticService.source));
 		String line;
-		int count = 0, hits = 0;//record hits of cache
+		hits = 0;//record hits of cache
 		while((line = br.readLine())!=null)
 		{
-			count++;
-			if(count%10000==0)
-				System.out.println("2nd scan\t"+count+"\tcache:"+cache.size()+"\thits:"+hits);
+			if(br.getLineNumber()%10000==0)
+				System.out.println("2nd scan\t"+br.getLineNumber()+"\tcache:"+cache.size()+"\thits:"+hits);
 			
-			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
-				continue;
-			String subj = part[0].substring(1, part[0].length()-1);
-			String pred = part[1].substring(1, part[1].length()-1);
-
+			String[] part = getSubjPredObj(line);
+			if(part == null) continue;
+			String subj = part[0];
+			String pred = part[1];
 			String obj = part[2];
-			if(!obj.startsWith("<"))
-				obj = "";
-			else obj = part[2].substring(1, part[2].length()-1);
-			if(!subj.startsWith("http") || !pred.startsWith("http"))
-				continue;
-//			add concept-relation-concept into graph
+//			add concept-relation-concepjt into graph
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(OBJPROP))
 			{
 				Set<String> subjParent = null, objParent = null;
-				subjParent = cache.get(subj);//get res from cache
-				try 
-				{
-					if(subjParent == null || subjParent.size()==0)
-						subjParent = indiv2con.search(subj);//do search in index
-					else hits++;
-				} catch (Exception e) { e.printStackTrace(); continue; }
-				
-				if(subjParent == null || subjParent.size()==0)
-				{
-					subjParent = new TreeSet<String>();
-					subjParent.add(NamedConcept.TOP.getUri());//no res in index
-				}
-				if(!cache.containsKey(subj))//update cache
-					cache.put(subj, subjParent);
+				subjParent = getParent(subj, hits);
+				if(subjParent == null) continue;
 
-				objParent = cache.get(obj);//get cache
-				try 
-				{
-					if(objParent == null || objParent.size()==0)
-						objParent = indiv2con.search(obj);//do search
-					else hits++;
-				} catch (Exception e) { e.printStackTrace(); continue; }
-				
-				if(objParent == null || objParent.size()==0)
-				{
-					objParent = new TreeSet<String>();
-					objParent.add(NamedConcept.TOP.getUri());//using top when no res
-				}
-				if(!cache.containsKey(obj))
-					cache.put(obj, objParent);//update cache
-				
-				while(cache.size()>=MAX_CACHE_SIZE)
-					cache.clear();//if cache is full, clear it
+				objParent = getParent(obj, hits);
+				if(objParent == null) continue;
 				
 				for(String str: subjParent)
 				{
-					SummaryGraphElement s = getElemFromUri(str);
+					SummaryGraphElement s = getElemFromUri(str, scoring);
 					for(String otr: objParent)
 					{
-						SummaryGraphElement o = getElemFromUri(otr);
+						SummaryGraphElement o = getElemFromUri(otr, scoring);
 						SummaryGraphElement p = getElem(pred, SummaryGraphElement.RELATION);
-						Integer i = propCount.get(pred);
-						if(i==null) p.setCost(Double.MAX_VALUE);
-						else p.setCost(i.doubleValue()/propSize);
-						summaryGraph.addVertex(s);
-						summaryGraph.addVertex(o);
-						summaryGraph.addVertex(p);
+						if(scoring)
+						{
+							Integer i = propCount.get(pred);
+							if(i==null) p.setCost(Double.MAX_VALUE);
+							else p.setCost(i.doubleValue()/propSize);
+						}
+						if(!summaryGraph.containsVertex(s))
+							summaryGraph.addVertex(s);
+						if(!summaryGraph.containsVertex(o))
+							summaryGraph.addVertex(o);
+						if(!summaryGraph.containsVertex(p))
+							summaryGraph.addVertex(p);
 
 						SummaryGraphEdge edge1 = new SummaryGraphEdge(s, p, SummaryGraphEdge.DOMAIN_EDGE);
 						SummaryGraphEdge edge2 = new SummaryGraphEdge(p, o, SummaryGraphEdge.RANGE_EDGE);
@@ -331,23 +281,14 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //			add subclass relation between concepts
 			else if(pred.equals(BuildQ2SemanticService.rdfsEdge[1]) && getSubjectType(pred, obj).equals(CONCEPT) && getObjectType(pred, obj).equals(CONCEPT))
 			{
-				SummaryGraphElement elem1 = getElem(subj, SummaryGraphElement.CONCEPT);
+				SummaryGraphElement elem1 = getElemFromUri(subj, scoring);
 				if(!summaryGraph.containsVertex(elem1))
-				{
-					Integer i = conceptCount.get(subj);
-					if(i==null) elem1.setCost(Double.MAX_VALUE);
-					else elem1.setCost(i.doubleValue()/indivSize);
 					summaryGraph.addVertex(elem1);
-				}
-				SummaryGraphElement elem2 = getElem(obj, SummaryGraphElement.CONCEPT);
+				SummaryGraphElement elem2 = getElemFromUri(obj, scoring);
 				if(!summaryGraph.containsVertex(elem2))
-				{
-					Integer i = conceptCount.get(obj);
-					if(i==null) elem2.setCost(Double.MAX_VALUE);
-					else elem2.setCost(i.doubleValue()/indivSize);
 					summaryGraph.addVertex(elem2);
-				}
-				summaryGraph.addVertex(SummaryGraphElement.SUBCLASS);
+				if(!summaryGraph.containsVertex(SummaryGraphElement.SUBCLASS))
+					summaryGraph.addVertex(SummaryGraphElement.SUBCLASS);
 				SummaryGraphEdge edge1 = new SummaryGraphEdge(elem1, SummaryGraphElement.SUBCLASS, SummaryGraphEdge.SUBCLASS_EDGE);
 				if(!summaryGraph.containsEdge(edge1))
 					summaryGraph.addEdge(elem1, SummaryGraphElement.SUBCLASS, edge1);
@@ -370,7 +311,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	 * @param path
 	 * @throws Exception
 	 */
-	public void thirdScan(String path) throws Exception
+	public void thirdScan(String path, boolean scoring) throws Exception
 	{
 		System.out.println("=======thirdScan==========");
 		indiv2con.openSearcher(path);
@@ -379,52 +320,29 @@ public class SummaryGraphIndexServiceForBTFromNT {
 //		read the graph from obj file
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge> summaryGraph = readGraphIndexFromFile(BuildQ2SemanticService.summaryObj);
 		TreeMap<String, TreeSet<String>> con2attr = new TreeMap<String, TreeSet<String>>();
-		
-		BufferedReader br = new BufferedReader(new FileReader(BuildQ2SemanticService.source));
+		TreeMap<String, String> attr2datatype = new TreeMap<String, String>();
+		hits = 0;
+		LineNumberReader br = new LineNumberReader(new FileReader(BuildQ2SemanticService.source));
 		String line;
-		int count = 0;
 		while((line = br.readLine())!=null)
 		{
-			count++;
-			if(count%10000==0)
-				System.out.println("3rd scan\t"+count+"\tcache:"+cache.size());
+			if(br.getLineNumber()%10000==0)
+				System.out.println("3rd scan\t"+br.getLineNumber()+"\tcache:"+cache.size()+"\thits:"+hits);
 			
-			String[] part = Util4NT.processTripleLine(line);
-			if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2 || part[2].length()<2)
-				continue;
-			String subj = part[0].substring(1, part[0].length()-1);
-			String pred = part[1].substring(1, part[1].length()-1);
-
+			String[] part = getSubjPredObj(line);
+			if(part == null) continue;
+			String subj = part[0];
+			String pred = part[1];
 			String obj = part[2];
-			if(!obj.startsWith("<"))
-				obj = "";
-			else obj = part[2].substring(1, part[2].length()-1);
-			if(!subj.startsWith("http") || !pred.startsWith("http"))
-				continue;
 			
+//			System.out.println(part[2]);
 //			store attribute between concept and datatype
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(DATATYPEPROP) && getObjectType(pred, obj).equals(LITERAL))
 			{
 				Set<String> cons = null;
-				cons = cache.get(subj);//get cache
-				try {
-					if(cons == null || cons.size()==0)
-						cons = indiv2con.search(subj);//do search
-				} catch (Exception e) {
-					// TODO: handle exception
-					e.printStackTrace();
-					continue;
-				}
+				cons = getParent(subj, hits);
+				if(cons == null) continue;
 				
-				if(cons==null || cons.size()==0)
-				{
-					cons = new TreeSet<String>();
-					cons.add(NamedConcept.TOP.getUri());//if no result
-				}
-				cache.put(subj, cons);//update the cache
-				while(cache.size()>=MAX_CACHE_SIZE)
-					cache.clear();//clear if cache is full
-
 				for(String con: cons)
 				{
 					TreeSet<String> set = con2attr.get(con);
@@ -434,6 +352,14 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				}
 				cons.clear();
 				cons = null;
+				
+				if(line.lastIndexOf('\"')!=-1)
+				{
+					String snippet = line.substring(line.lastIndexOf('\"'));
+					String datatype = snippet.substring(snippet.indexOf('<')+1, snippet.lastIndexOf('>'));
+					if(datatype.startsWith(DATATYPE_URI))
+						attr2datatype.put(pred, datatype);
+				}
 			}
 		}
 		br.close();
@@ -442,18 +368,24 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		{
 			for(String attr: con2attr.get(con))
 			{
-				SummaryGraphElement elem1 = getElem(con, SummaryGraphElement.CONCEPT);
-				Integer i = conceptCount.get(con);
-				if(i==null) elem1.setCost(Double.MAX_VALUE);
-				else elem1.setCost(i.doubleValue()/indivSize);
+				SummaryGraphElement elem1 = getElemFromUri(con, scoring);
 				SummaryGraphElement prop = getElem(attr, SummaryGraphElement.ATTRIBUTE);
-				i = propCount.get(attr);
-				if(i==null) prop.setCost(Double.MAX_VALUE);
-				else prop.setCost(i.doubleValue()/propSize);
-				SummaryGraphElement elem2 = getElem(LABEL, SummaryGraphElement.DATATYPE);
-				summaryGraph.addVertex(elem1);
-				summaryGraph.addVertex(prop);
-				summaryGraph.addVertex(elem2);
+				if(scoring)
+				{
+					Integer i = propCount.get(attr);
+					if(i==null) prop.setCost(Double.MAX_VALUE);
+					else prop.setCost(i.doubleValue()/propSize);
+				}
+				SummaryGraphElement elem2;
+				if(attr2datatype.containsKey(attr))
+					elem2 = getElem(attr2datatype.get(attr), SummaryGraphElement.DATATYPE);
+				else elem2 = getElem(LABEL, SummaryGraphElement.DATATYPE);
+				if(!summaryGraph.containsVertex(elem1))
+					summaryGraph.addVertex(elem1);
+				if(!summaryGraph.containsVertex(prop))
+					summaryGraph.addVertex(prop);
+				if(!summaryGraph.containsVertex(elem2))
+					summaryGraph.addVertex(elem2);
 				SummaryGraphEdge edge1 = new SummaryGraphEdge(elem1, prop, SummaryGraphEdge.DOMAIN_EDGE);
 				if(!summaryGraph.containsEdge(edge1))
 					summaryGraph.addEdge(elem1, prop, edge1);
@@ -465,6 +397,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		
 		con2attr.clear();
 		con2attr = null;
+		attr2datatype.clear();
+		attr2datatype = null;
 		
 		System.out.println("write schema graph");
 //		write schema graph
@@ -473,32 +407,82 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		
 //		print
 		System.out.println("=========print schema===========");
-		outputGraphInfo(summaryGraph);
+//		outputGraphInfo(summaryGraph);
 		indiv2con.closeSearcher();
 	}
 	
+	public String[] getSubjPredObj(String line)
+	{
+		String[] part = Util4NT.processTripleLine(line);
+		if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2)
+			return null;
+
+		if(!part[0].startsWith("<") || !part[1].startsWith("<"))
+			return null;
+
+		part[0] = part[0].substring(1, part[0].length()-1);//remove <>
+		part[1] = part[1].substring(1, part[1].length()-1);//remove <>
+
+		if(!part[2].startsWith("<"))
+		{
+			part[2] = "\""+part[2]+"\"";//if obj is not instance, we give it value "+obj+"
+//			System.out.println(part[2]);
+		}else if(part[2].length()>=2) part[2] = part[2].substring(1, part[2].length()-1);
+		else return null;
+		
+		if(!part[0].startsWith("http") || !part[1].startsWith("http"))
+			return null;
+		return part;
+	}
+	
+	public Set<String> getParent(String uri, int hits)
+	{
+		Set<String> parent = cache.get(uri);//get cache
+		try 
+		{
+			if(parent == null || parent.size()==0)
+				parent = indiv2con.search(uri);//do search
+			else hits++;
+		} catch (Exception e) { e.printStackTrace(); return null; }
+		
+		if(parent == null || parent.size()==0)
+		{
+			parent = new TreeSet<String>();
+			parent.add(NamedConcept.TOP.getUri());//using top when no res
+		}
+		if(!cache.containsKey(uri))
+			cache.put(uri, parent);//update cache
+		
+		while(cache.size()>=MAX_CACHE_SIZE)
+			cache.clear();//if cache is full, clear it
+		return parent;
+	}
 	/**
 	 * get GraphElement from uri which maybe new an element or return an existing one
 	 * @param uri
 	 * @return
 	 */
-	public SummaryGraphElement getElemFromUri(String uri)
+	public SummaryGraphElement getElemFromUri(String uri, boolean scoring)
 	{
 		if(uri.equals(NamedConcept.TOP.getUri()))
 		{
 			SummaryGraphElement elem = getElem(NamedConcept.TOP.getUri(), SummaryGraphElement.CONCEPT);
-			elem.setCost(TOP_ELEMENT_SCORE);
+			if(scoring)
+				elem.setCost(TOP_ELEMENT_SCORE);
 			return elem;
 		}
 		else
 		{
-			double cost;
-			Integer i = conceptCount.get(uri);
-			if(i==null) cost = 0;
-			else cost = i.doubleValue()/indivSize;
-			
 			SummaryGraphElement elem = getElem(uri, SummaryGraphElement.CONCEPT);
-			elem.setCost(cost);
+			
+			if(scoring)
+			{
+				double cost;
+				Integer i = conceptCount.get(uri);
+				if(i==null) cost = Double.MAX_VALUE;
+				else cost = i.doubleValue()/indivSize;
+				elem.setCost(cost);
+			}
 			return elem;
 		}
 	}
