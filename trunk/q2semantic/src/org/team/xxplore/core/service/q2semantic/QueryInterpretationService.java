@@ -32,7 +32,7 @@ public class QueryInterpretationService {
 	
 	public QueryInterpretationService(Set<String> keys) {
 		mis = new MappingIndexService();
-		mis.init4Search(SearchQ2SemanticService.mappingIndexRoot);
+		mis.init4Search(Q2SemanticService.mappingIndexRoot);
 		Set<String> keys_set = new HashSet<String>();
 		for(String key : keys) {
 			keys_set.add(key);
@@ -124,14 +124,14 @@ public class QueryInterpretationService {
 					res.add(((NamedConcept) source.getResource()).getUri()
 							+ "\t" + datasource + "\t"
 							+ source.getEF() + "\t"
-							+ SearchQ2SemanticService.ConceptMark);
+							+ Q2SemanticService.ConceptMark);
 					String tmp = SummaryGraphUtil.removeNum(((Property) target.getResource()).getUri());
 					if(!uri_set.contains(tmp + "\t" + datasource)) {
 						uri_set.add(tmp + "\t" + datasource);
 						res.add(tmp + "\t"
 								+ datasource + "\t"
 								+ target.getEF() + "\t"
-								+ SearchQ2SemanticService.PredicateMark);
+								+ Q2SemanticService.PredicateMark);
 					}
 				} else if (target.getResource() instanceof NamedConcept
 						&& ((NamedConcept) target.getResource()).getUri()
@@ -140,7 +140,7 @@ public class QueryInterpretationService {
 					res.add(((NamedConcept) target.getResource()).getUri()
 							+ "\t" + datasource + "\t"
 							+ target.getEF() + "\t"
-							+ SearchQ2SemanticService.ConceptMark);
+							+ Q2SemanticService.ConceptMark);
 					
 					String tmp = SummaryGraphUtil.removeNum(((Property) source.getResource()).getUri());
 					if(!uri_set.contains(tmp + "\t" + datasource)) {
@@ -148,7 +148,7 @@ public class QueryInterpretationService {
 						res.add(tmp + "\t"
 								+ datasource + "\t"
 								+ source.getEF() + "\t"
-								+ SearchQ2SemanticService.PredicateMark);
+								+ Q2SemanticService.PredicateMark);
 					}
 				}
 			}
