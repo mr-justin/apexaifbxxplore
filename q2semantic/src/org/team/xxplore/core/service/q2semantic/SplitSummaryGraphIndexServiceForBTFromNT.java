@@ -17,8 +17,6 @@ import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
 
-import com.ibm.semplore.imports.impl.data.load.Util4NT;
-
 /**
  * Build split summary graph from nt file
  * @author kaifengxu
