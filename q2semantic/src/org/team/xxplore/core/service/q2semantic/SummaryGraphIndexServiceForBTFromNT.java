@@ -62,7 +62,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 	public TreeMap<String, Set<String>> cache;
 	public TreeMap<String, SummaryGraphElement> elemPool;
 	public int MAX_CACHE_SIZE = 10000000; //cache of indiv2concepts results
-	public int indivSize, propSize = 0, hits = 0;
+	public int indivSize, propSize = 0;
+	public Integer hits = 0;
 	
 	/**
 	 * check condition to get subject type
@@ -241,10 +242,10 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(OBJPROP))
 			{
 				Set<String> subjParent = null, objParent = null;
-				subjParent = getParent(subj, hits);
+				subjParent = getParent(subj);
 				if(subjParent == null) continue;
 
-				objParent = getParent(obj, hits);
+				objParent = getParent(obj);
 				if(objParent == null) continue;
 				
 				for(String str: subjParent)
@@ -340,7 +341,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(DATATYPEPROP) && getObjectType(pred, obj).equals(LITERAL))
 			{
 				Set<String> cons = null;
-				cons = getParent(subj, hits);
+				cons = getParent(subj);
 				if(cons == null) continue;
 				
 				for(String con: cons)
@@ -435,7 +436,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		return part;
 	}
 	
-	public Set<String> getParent(String uri, int hits)
+	public Set<String> getParent(String uri)
 	{
 		Set<String> parent = cache.get(uri);//get cache
 		try 

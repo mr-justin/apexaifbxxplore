@@ -200,10 +200,10 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 				String subj = line.substring(0, line.indexOf('\t'));
 				String obj = line.substring(line.indexOf('\t')+1);
 				Set<String> subjParent = null, objParent = null;
-				subjParent = getParent(subj, hits);
+				subjParent = getParent(subj);
 				if(subjParent == null) continue;
 
-				objParent = getParent(obj, hits);
+				objParent = getParent(obj);
 				if(objParent == null) continue;
 				
 				for(String str: subjParent)
