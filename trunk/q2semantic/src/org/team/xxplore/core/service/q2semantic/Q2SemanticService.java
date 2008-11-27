@@ -3,19 +3,14 @@ package org.team.xxplore.core.service.q2semantic;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.PriorityQueue;
 import java.util.Properties;
-import java.util.Set;
 
 import org.team.xxplore.core.service.mapping.MappingIndexService;
-import org.team.xxplore.core.service.q2semantic.QueryInterpretationService.Subgraph;
 
 
 /**
@@ -35,7 +30,7 @@ public class Q2SemanticService {
 	public static HashMap<String, String> schemaObjSet;
 	public static final String ConceptMark = "c", PredicateMark = "p";
 	public QueryInterpretationService inter;
-	private MappingIndexService mis = new MappingIndexService();
+	public MappingIndexService mis = new MappingIndexService();
 
 	public Q2SemanticService(){}
 	
