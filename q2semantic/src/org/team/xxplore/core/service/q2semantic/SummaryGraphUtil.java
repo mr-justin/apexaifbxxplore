@@ -2,6 +2,7 @@ package org.team.xxplore.core.service.q2semantic;
 
 import org.team.xxplore.core.service.impl.DataProperty;
 import org.team.xxplore.core.service.impl.NamedConcept;
+import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.impl.Property;
 
 /**
@@ -37,6 +38,45 @@ public class SummaryGraphUtil {
 
 		return res;
 	}
+	
+	public static SummaryGraphElement getGraphElementWithoutNum(SummaryGraphElement ele){
+		if(ele.getType() == SummaryGraphElement.ATTRIBUTE || ele.getType() == SummaryGraphElement.RELATION){
+			String uri = removeNum(getResourceUri(ele));
+			SummaryGraphElement element = null;
+			if(ele.getType() == SummaryGraphElement.ATTRIBUTE){
+				element = new SummaryGraphElement(new DataProperty(uri), SummaryGraphElement.ATTRIBUTE);
+				element.setDatasource(ele.getDatasource());
+				element.setEF(ele.getEF());
+				element.setTotalCost(ele.getTotalCost());
+				element.setMatchingScore(ele.getMatchingScore());
+				return element;
+			}
+			else {
+				element = new SummaryGraphElement(new ObjectProperty(uri), SummaryGraphElement.RELATION);
+				element.setDatasource(ele.getDatasource());
+				element.setEF(ele.getEF());
+				element.setTotalCost(ele.getTotalCost());
+				element.setMatchingScore(ele.getMatchingScore());
+				return element;
+			}
+		}
+		else {
+			return ele;
+		}
+	}
+	
+	public static SummaryGraphEdge getGraphEdgeWithoutNum(SummaryGraphEdge edge){
+		SummaryGraphElement source = edge.getSource();
+		SummaryGraphElement target = edge.getTarget();
+		SummaryGraphElement sourceWithoutNum = getGraphElementWithoutNum(source);
+		SummaryGraphElement targetWithoutNum = getGraphElementWithoutNum(target);
+		if(sourceWithoutNum.equals(source) && targetWithoutNum.equals(target)){
+			return edge; 
+		}
+		else {
+			return new SummaryGraphEdge(sourceWithoutNum, targetWithoutNum, edge.getEdgeLabel());
+		}
+	} 
 	
 	/**
 	 * remove the first < or > from a string.

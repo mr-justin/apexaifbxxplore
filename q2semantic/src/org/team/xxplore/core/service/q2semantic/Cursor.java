@@ -142,6 +142,7 @@ public class Cursor implements Comparable {
 	@Override
 	public String toString(){
 		return "cost: " + cost 
+		+ "\n" + "Vertex: " + m_element
 		+ "\n" + "matchingVertex: " + m_matching
 		+ "\n" + "Path: " + m_path
 		+ "\n";

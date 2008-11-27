@@ -1,5 +1,6 @@
 package org.team.xxplore.core.service.q2semantic;
 
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -28,7 +29,7 @@ public class Subgraph extends
 
 	private SummaryGraphElement connectingVertex;
 
-	private Set<List<SummaryGraphEdge>> paths;
+	private Set<SummaryGraphEdge> paths;
 
 	double cost;
 
@@ -36,22 +37,22 @@ public class Subgraph extends
 		super(edgeclass);
 	}
 
-	public Set<List<SummaryGraphEdge>> getPaths() {
+	public Set<SummaryGraphEdge> getPaths() {
 		return paths;
 	}
 
-	public void setPaths(Set<List<SummaryGraphEdge>> paths) {
+	public void setPaths(Set<SummaryGraphEdge> paths) {
 		if (paths == null || paths.size() == 0)
 			return;
-		this.paths = paths;
-		for (List<SummaryGraphEdge> path : paths) {
-			if (path.size() == 0)
-				continue;
-			for (SummaryGraphEdge e : path) {
-				addVertex(e.getSource());
-				addVertex(e.getTarget());
-				addEdge(e.getSource(), e.getTarget(), e);
-			}
+		if(this.paths == null){
+			this.paths = new LinkedHashSet<SummaryGraphEdge>();
+		}
+		for (SummaryGraphEdge e : paths) {
+			SummaryGraphEdge edge = SummaryGraphUtil.getGraphEdgeWithoutNum(e);
+			this.paths.add(edge);
+			addVertex(e.getSource());
+			addVertex(e.getTarget());
+			addEdge(e.getSource(), e.getTarget(), e);
 		}
 	}
 
@@ -107,14 +108,12 @@ public class Subgraph extends
 	public String toString(){
 		String ret = "cost: " + cost 
 		+ "\n" + "Connecting vertex: " + connectingVertex
-		+ "\n" + "Paths: \n";
-		for(List<SummaryGraphEdge>path :paths) {
-			ret += "************\n";
-			for(SummaryGraphEdge edge : path) {
-				ret += edge.toString() + "\n";
-			}
-			ret +="************\n";
+		+ "\n" + "Paths: [EF][MatchingScore][TotalCost]\n";
+		ret += "************\n";
+		for(SummaryGraphEdge edge : paths) {
+			ret += edge.toString() + "\n" + "\n";
 		}
+		ret +="************\n";
 		return ret;
 	}	
 }

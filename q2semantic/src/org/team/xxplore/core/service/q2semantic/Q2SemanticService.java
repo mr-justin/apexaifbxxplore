@@ -47,6 +47,7 @@ public class Q2SemanticService {
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 
 		for(String qt : queryList) {
+			if(qt.contains(" ")) {qt = "\"" + qt + "\"";}
 			for(String ds : summaryObjSet.keySet()) {
 				String keywordIndex = keywordIndexRoot + "/" + ds + "-keywordIndex";
 				System.out.println("keywordIndex " + keywordIndex);

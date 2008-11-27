@@ -258,8 +258,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						if(scoring)
 						{
 							Integer i = propCount.get(pred);
-							if(i==null) p.setCost(Double.MAX_VALUE);
-							else p.setCost(i.doubleValue()/propSize);
+							if(i==null) p.setEF(Double.MIN_VALUE);
+							else p.setEF(i.doubleValue()/propSize);
 						}
 						if(!summaryGraph.containsVertex(s))
 							summaryGraph.addVertex(s);
@@ -374,8 +374,8 @@ public class SummaryGraphIndexServiceForBTFromNT {
 				if(scoring)
 				{
 					Integer i = propCount.get(attr);
-					if(i==null) prop.setCost(Double.MAX_VALUE);
-					else prop.setCost(i.doubleValue()/propSize);
+					if(i==null) prop.setEF(Double.MIN_VALUE);
+					else prop.setEF(i.doubleValue()/propSize);
 				}
 				SummaryGraphElement elem2;
 				if(attr2datatype.containsKey(attr))
@@ -469,7 +469,7 @@ public class SummaryGraphIndexServiceForBTFromNT {
 		{
 			SummaryGraphElement elem = getElem(NamedConcept.TOP.getUri(), SummaryGraphElement.CONCEPT);
 			if(scoring)
-				elem.setCost(TOP_ELEMENT_SCORE);
+				elem.setEF(TOP_ELEMENT_SCORE);
 			return elem;
 		}
 		else
@@ -478,11 +478,11 @@ public class SummaryGraphIndexServiceForBTFromNT {
 			
 			if(scoring)
 			{
-				double cost;
+				double EF;
 				Integer i = conceptCount.get(uri);
-				if(i==null) cost = Double.MAX_VALUE;
-				else cost = i.doubleValue()/indivSize;
-				elem.setCost(cost);
+				if(i==null) EF = Double.MIN_VALUE;
+				else EF = i.doubleValue()/indivSize;
+				elem.setEF(EF);
 			}
 			return elem;
 		}

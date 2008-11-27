@@ -12,5 +12,5 @@ public interface ISummaryGraphElement extends Serializable {
 	
 	public double getMatchingScore();
 	
-	public double getTotalScore();
+	public double getTotalCost();
 }

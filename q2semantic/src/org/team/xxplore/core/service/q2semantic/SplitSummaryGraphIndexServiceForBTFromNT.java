@@ -235,7 +235,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 					else
 					{
 						Integer j = conceptCount.get(str);
-						if(j==null) sscore = Double.MAX_VALUE;
+						if(j==null) sscore = Double.MIN_VALUE;
 						else sscore = j.doubleValue()/indivSize;
 					}
 					if(otr.equals(NamedConcept.TOP.getUri()))
@@ -243,11 +243,11 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 					else
 					{
 						Integer j = conceptCount.get(otr);
-						if(j==null) oscore = Double.MAX_VALUE;
+						if(j==null) oscore = Double.MIN_VALUE;
 						else oscore = j.doubleValue()/indivSize;
 					}
 					Integer i = triples.get(so);
-					if(i==null) pscore = Double.MAX_VALUE;
+					if(i==null) pscore = Double.MIN_VALUE;
 					else pscore = i.doubleValue()/propSize;
 				}
 				pw.println(str+"\t"+sscore+"\t"+ptr+"\t"+pscore+"\t"+otr+"\t"+oscore);
@@ -291,11 +291,11 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 				
 				if(scoreRestriction && Double.parseDouble(part[3]) < MIN_OBJPROP_SCORE) continue;//score restriction
 				SummaryGraphElement p = getElem(part[2], SummaryGraphElement.RELATION);
-				if(scoring) p.setCost(Double.parseDouble(part[3]));
+				if(scoring) p.setEF(Double.parseDouble(part[3]));
 				SummaryGraphElement s = getElem(part[0], SummaryGraphElement.CONCEPT);
-				if(scoring) s.setCost(Double.parseDouble(part[1]));
+				if(scoring) s.setEF(Double.parseDouble(part[1]));
 				SummaryGraphElement o = getElem(part[4], SummaryGraphElement.CONCEPT);
-				if(scoring) o.setCost(Double.parseDouble(part[5]));
+				if(scoring) o.setEF(Double.parseDouble(part[5]));
 
 				if(!summaryGraph.containsVertex(s))
 					summaryGraph.addVertex(s);
