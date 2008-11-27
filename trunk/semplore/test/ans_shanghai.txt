@@ -1,0 +1,38 @@
+Begin Evaluation
+Total Evaluation time(ms): 454
+query time(ms): 140
+facet time(ms): 32
+query results: 3
+result 0: Shanghai
+//score:1.0
+//uri:<http://dbpedia.org/resource/Shanghai>
+//id:112
+result 1: Shanghai (film)
+//score:0.5271990299224854
+//uri:<http://dbpedia.org/resource/Shanghai_%28film%29>
+//id:11
+result 2: Category:Shanghai
+//score:0.10811292380094528
+//uri:<http://dbpedia.org/resource/Category:Shanghai>
+//id:128
+
+get result information: 16 ms
+category facets count:
+
+relation facets count:
+relFacet 0: subject(~2) uri:<http://www.w3.org/2004/02/skos/core#subject>
+relFacet 1: leaderTitle(~1) uri:<http://dbpedia.org/property/leaderTitle>
+relFacet 2: starring(~1) uri:<http://dbpedia.org/property/starring>
+relFacet 3: blank6Info(~1) uri:<http://dbpedia.org/property/blank6Info>
+relFacet 4: establishedDate(~1) uri:<http://dbpedia.org/property/establishedDate>
+relFacet 5: partsType(~1) uri:<http://dbpedia.org/property/partsType>
+relFacet 6: producer(~1) uri:<http://dbpedia.org/property/producer>
+relFacet 7: language(~1) uri:<http://dbpedia.org/property/language>
+relFacet 8: translitLang1Type(~1) uri:<http://dbpedia.org/property/translitLang1Type>
+relFacet 9: director(~1) uri:<http://dbpedia.org/property/director>
+
+subject relation facets count:
+
+object relation facets count:
+
+Time stats: 140, 32, 485 => 3
