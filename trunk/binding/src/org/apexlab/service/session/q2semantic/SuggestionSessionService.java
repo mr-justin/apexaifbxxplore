@@ -38,20 +38,8 @@ public class SuggestionSessionService {
 		int id = Q2SemanticPool.acquire();
 		SearchQ2SemanticService t = Q2SemanticPool.getEvaluator(id);
 		
-//		for(Concept con : conceptList) {
-//			System.out.println(con.getURI());
-//		}
-		
 		Collection<Suggestion> chen = t.getSuggestion(conceptList, sourceName, topk);
 		Q2SemanticPool.release(id);
 		return chen;
-	}
-	
-	public static void main(String[] args) throws Exception {
-		SearchQ2SemanticService serv = new SearchQ2SemanticService();
-		LinkedList<String> keyword = new LinkedList<String>();
-		keyword.add("yao ming");
-		keyword.add("olympics");
-		serv.getPossibleGraphs(keyword, 10);
-	}
+	}	
 }
