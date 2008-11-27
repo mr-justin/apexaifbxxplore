@@ -1,0 +1,30 @@
+Begin Evaluation
+Total Evaluation time(ms): 485
+query time(ms): 171
+facet time(ms): 32
+query results: 1
+result 0: Shanghai
+//score:1.0
+//uri:<http://dbpedia.org/resource/Shanghai>
+//id:112
+
+get result information: 0 ms
+category facets count:
+
+relation facets count:
+relFacet 0: leaderTitle(~1) uri:<http://dbpedia.org/property/leaderTitle>
+relFacet 1: blank6Info(~1) uri:<http://dbpedia.org/property/blank6Info>
+relFacet 2: establishedDate(~1) uri:<http://dbpedia.org/property/establishedDate>
+relFacet 3: partsType(~1) uri:<http://dbpedia.org/property/partsType>
+relFacet 4: translitLang1Type(~1) uri:<http://dbpedia.org/property/translitLang1Type>
+relFacet 5: caption(~1) uri:<http://dbpedia.org/property/caption>
+relFacet 6: subject(~1) uri:<http://www.w3.org/2004/02/skos/core#subject>
+relFacet 7: governmentType(~1) uri:<http://dbpedia.org/property/governmentType>
+relFacet 8: blank5Name(~1) uri:<http://dbpedia.org/property/blank5Name>
+relFacet 9: postalCodeType(~1) uri:<http://dbpedia.org/property/postalCodeType>
+
+subject relation facets count:
+
+object relation facets count:
+
+Time stats: 171, 32, 500 => 1

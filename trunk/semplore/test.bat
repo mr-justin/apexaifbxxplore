@@ -17,3 +17,6 @@ diff result test\ans_rudi.txt
 java -cp bin;lib\lucene-core-2.3.2.jar;lib\je-3.3.69.jar;lib\log4j-1.2.14.jar com.ibm.semplore.test.TestEvaluator test\query_shanghai.txt > result
 diff result test\ans_shanghai.txt
 
+java -cp bin;lib\lucene-core-2.3.2.jar;lib\je-3.3.69.jar;lib\log4j-1.2.14.jar com.ibm.semplore.test.TestEvaluator test\query_unicode.txt > result
+diff result test\ans_unicode.txt
+
