@@ -83,7 +83,7 @@ public class Graph4TopKFactory {
 	private void getSummaryGraphs(Set<String> keys) {
 		
 		for(String ds : keys) {
-			String dsDFileName = SearchQ2SemanticService.summaryObjSet.get(ds);
+			String dsDFileName = Q2SemanticService.summaryObjSet.get(ds);
 			try {
 				ObjectInputStream obj_input = new ObjectInputStream(new FileInputStream(dsDFileName));
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph_obj = 
