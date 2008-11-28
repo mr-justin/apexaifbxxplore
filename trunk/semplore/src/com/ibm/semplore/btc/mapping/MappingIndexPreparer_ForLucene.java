@@ -64,11 +64,11 @@ public class MappingIndexPreparer_ForLucene extends MappingIndexPreparer {
 				DocStream docs = indexReader1.getDocStream(termFactory.createTerm(String.valueOf(hashid1), FieldType.ID));
 				if (!docs.next()) continue;
 				d1 = docs.doc();
-				System.out.print(d1);
-				System.out.print("\t");
 				docs = indexReader2.getDocStream(termFactory.createTerm(String.valueOf(hashid2), FieldType.ID));
 				if (!docs.next()) continue;
 				d2 = docs.doc();
+				System.out.print(d1);
+				System.out.print("\t");
 				System.out.println(d2);
 //				dsCollector.collect(ds1, d1, ds2_i);
 //				dsCollector.collect(ds2, d2, ds1_i);
