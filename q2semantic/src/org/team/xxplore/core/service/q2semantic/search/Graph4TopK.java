@@ -150,7 +150,7 @@ public class Graph4TopK {
 				}
 				
 				if (ele instanceof SummaryGraphAttributeElement){
-					ele.type = SummaryGraphElement.ATTRIBUTE;
+					ele.setType(SummaryGraphElement.ATTRIBUTE);
 					Collection<INamedConcept> cons = ((SummaryGraphAttributeElement)ele).getNeighborConcepts();	
 					Iterator<INamedConcept> conIter = cons.iterator();
 					String ds = ele.getDatasource();
