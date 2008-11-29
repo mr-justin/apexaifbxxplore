@@ -25,37 +25,16 @@ import com.hp.hpl.jena.vocabulary.RDFS;
  *
  */
 public class KeywordIndexBuilder{
-	/* Constant */
-	private static final String TYPE_FIELD = "type";
-	private static final String CONCEPT = "concept";
-	private static final String LITERAL = "literal";
-	private static final String OBJECTPROPERTY = "objectproperty";
-	private static final String DATAPROPERTY = "dataproperty";
-	
-	private static final String LABEL_FIELD =  "label";
-	private static final String URI_FIELD =  "uri";
-	private static final String DS_FIELD =  "ds";
-	
-	private static final String CONCEPT_FIELD = "concept_field";
-	private static final String ATTRIBUTE_FIELD = "attribute_field";
-	private static final String LITERAL_FIELD = "literal_field";
-	
-	
-	public final String rootPath = "testbuilder";
-	public final String conceptFile = "concept.txt";
-	public final String relationFile = "relation.txt";
-	public final String attributeFile = "attribute.txt";
-	public final String literalOut = "literal.txt";
-	public final String litAttrout = "statement.txt";
-	public final String keywordIndexDir = "keywordIndex";
-	
-	public final float BOOST = 10.0f;
-	
+
+	Parameters para;
 	
 	public static void main(String[] args) {
 		KeywordIndexBuilder builder = new KeywordIndexBuilder();
 		builder.indexKeywords("testbuilder/freebase.nt","test");
-		
+	}
+	
+	public KeywordIndexBuilder(){
+		para = Parameters.getParameters();
 	}
 
 	/**
@@ -66,17 +45,17 @@ public class KeywordIndexBuilder{
 	 * @param synIndexdir
 	 */
 	public void indexKeywords(String ntFn,String ds) {
-		File indexDir = new File(this.rootPath + "/" + keywordIndexDir);
+		File indexDir = new File(para.keywordIndex);
 		if (!indexDir.exists()) {
 			indexDir.mkdirs();
 		}
 		try {
 			StandardAnalyzer analyzer = new StandardAnalyzer();
 			IndexWriter indexWriter = new IndexWriter(indexDir, analyzer,true);
-			indexSchema(indexWriter, ds, this.rootPath + "/" + this.conceptFile, CONCEPT);
-			indexSchema(indexWriter, ds, this.rootPath + "/" + this.attributeFile, DATAPROPERTY);
-			indexSchema(indexWriter, ds, this.rootPath + "/" + this.relationFile, OBJECTPROPERTY);			
-			indexLiteral(indexWriter, ntFn, ds, this.rootPath + "/" + this.literalOut, this.rootPath + "/" + this.litAttrout);
+			indexSchema(indexWriter, ds, para.conceptFile, para.CONCEPT);
+			indexSchema(indexWriter, ds, para.attributeFile, para.DATATYPEPROP);
+			indexSchema(indexWriter, ds, para.relationFile, para.OBJECTPROP);			
+			indexLiteral(indexWriter, ntFn, ds, para.literalOut, para.litAttrOut);
 			indexWriter.optimize();
 			indexWriter.close();
 		} 
@@ -96,12 +75,12 @@ public class KeywordIndexBuilder{
 				label = label.toLowerCase();
 				/* Write Index */
 				Document doc = new Document();
-				doc.add(new Field(TYPE_FIELD, type,	Field.Store.YES, Field.Index.NO));
-				doc.add(new Field(LABEL_FIELD, label.trim(), Field.Store.YES,Field.Index.TOKENIZED));
-				doc.add(new Field(URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
-				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-				doc.setBoost(BOOST);
-				System.out.println(BOOST);
+				doc.add(new Field(para.TYPE_FIELD, type,	Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(para.LABEL_FIELD, label.trim(), Field.Store.YES,Field.Index.TOKENIZED));
+				doc.add(new Field(para.URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+				doc.setBoost(para.BOOST);
+				System.out.println(para.BOOST);
 				indexWriter.addDocument(doc);
 			}
 			br.close();
@@ -143,10 +122,10 @@ public class KeywordIndexBuilder{
 				String literal = tokens[0];
 				String ds = tokens[1];
 				Document doc = new Document();
-				doc.add(new Field(TYPE_FIELD, LITERAL,	Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(para.TYPE_FIELD, para.LITERAL,	Field.Store.YES, Field.Index.NO));
 				System.out.println(literal);
-				doc.add(new Field(LABEL_FIELD, literal.trim(), Field.Store.YES,Field.Index.TOKENIZED));
-				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(para.LABEL_FIELD, literal.trim(), Field.Store.YES,Field.Index.TOKENIZED));
+				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				writer.addDocument(doc);
 			}
 			br.close();
@@ -160,10 +139,10 @@ public class KeywordIndexBuilder{
 				String ds = tokens[3];
 				
 				Document doc = new Document();
-				doc.add(new Field(LITERAL_FIELD, literal, Field.Store.YES, Field.Index.UN_TOKENIZED));
-				doc.add(new Field(CONCEPT_FIELD, concept,	Field.Store.YES, Field.Index.NO));
-				doc.add(new Field(ATTRIBUTE_FIELD, attribute, Field.Store.YES,Field.Index.UN_TOKENIZED));
-				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(para.LITERAL_FIELD, literal, Field.Store.YES, Field.Index.UN_TOKENIZED));
+				doc.add(new Field(para.CONCEPT_FIELD, concept,	Field.Store.YES, Field.Index.NO));
+				doc.add(new Field(para.ATTRIBUTE_FIELD, attribute, Field.Store.YES,Field.Index.UN_TOKENIZED));
+				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				writer.addDocument(doc);
 			}
 			br.close();
@@ -205,7 +184,7 @@ public class KeywordIndexBuilder{
 					break;
 				}
 				String[] part = Util4NT.processTripleLine(line);
-				if(part==null || part[0].startsWith("_:node") || part[0].length()<2 || part[1].length()<2) continue;
+				if(part==null || part[0].length()<2 || part[1].length()<2) continue;
 				cur = part[0];
 				String predicate = part[1];
 				String object = part[2];
