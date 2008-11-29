@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.build;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +12,7 @@ import java.util.HashSet;
 import java.util.Properties;
 
 import org.jgrapht.graph.Pseudograph;
+import org.team.xxplore.core.service.q2semantic.LineSortFile;
 
 /**
  * Service of building summary and schema graph

@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.build;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -12,6 +12,8 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
+import org.team.xxplore.core.service.q2semantic.LineSortFile;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
 
 import com.hp.hpl.jena.vocabulary.OWL;
 import com.hp.hpl.jena.vocabulary.RDF;

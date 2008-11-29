@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.search;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,6 +17,9 @@ import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.Property;
 import org.team.xxplore.core.service.mapping.Mapping;
 import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
 
 /**
  * Implement the topk algorithm.

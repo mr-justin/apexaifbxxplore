@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.build;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -17,6 +17,8 @@ import java.util.TreeSet;
 import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 
 
 /**
@@ -345,6 +347,27 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 			br.close();
 		}
 		root.close();
+		
+		br = new LineNumberReader(new FileReader(path+OBJPROPPOOL+File.separator+"subclass"));
+		while((line = br.readLine())!= null)
+		{
+			String[] part = line.split("\t");
+			SummaryGraphElement s = getElemFromUri(part[0], scoring);
+			SummaryGraphElement o = getElemFromUri(part[4], scoring);
+			if(!summaryGraph.containsVertex(s))
+				summaryGraph.addVertex(s);
+			if(!summaryGraph.containsVertex(o))
+				summaryGraph.addVertex(o);
+			if(!summaryGraph.containsVertex(SummaryGraphElement.SUBCLASS))
+				summaryGraph.addVertex(SummaryGraphElement.SUBCLASS);
+			SummaryGraphEdge edge1 = new SummaryGraphEdge(s, SummaryGraphElement.SUBCLASS, SummaryGraphEdge.SUBCLASS_EDGE);
+			if(!summaryGraph.containsEdge(edge1))
+				summaryGraph.addEdge(s, SummaryGraphElement.SUBCLASS, edge1);
+			SummaryGraphEdge edge2 = new SummaryGraphEdge(SummaryGraphElement.SUBCLASS, o, SummaryGraphEdge.SUPERCLASS_EDGE);
+			if(!summaryGraph.containsEdge(edge2))
+				summaryGraph.addEdge(SummaryGraphElement.SUBCLASS, o,  edge2);
+		}
+		br.close();
 		
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(summaryGraph, BuildQ2SemanticService.summaryObj+".split");

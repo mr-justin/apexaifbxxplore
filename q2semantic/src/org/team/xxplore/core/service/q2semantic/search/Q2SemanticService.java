@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.search;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,6 +14,7 @@ import java.util.Scanner;
 import java.util.Set;
 
 import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 
 
 /**

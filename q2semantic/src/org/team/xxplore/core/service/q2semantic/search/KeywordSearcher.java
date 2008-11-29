@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.search;
 
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,6 +26,9 @@ import org.team.xxplore.core.service.impl.DataProperty;
 import org.team.xxplore.core.service.impl.Literal;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphAttributeElement;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphValueElement;
 
 public class KeywordSearcher {
 	private static final String TYPE_FIELD = "type";

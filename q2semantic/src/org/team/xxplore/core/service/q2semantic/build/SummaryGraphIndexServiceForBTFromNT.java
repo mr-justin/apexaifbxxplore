@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.build;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -31,6 +31,8 @@ import org.team.xxplore.core.service.impl.Datatype;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.impl.Property;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 
 
 /**
