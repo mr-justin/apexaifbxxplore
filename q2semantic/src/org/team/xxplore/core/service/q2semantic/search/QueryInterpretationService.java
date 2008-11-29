@@ -38,7 +38,6 @@ public class QueryInterpretationService {
 	public QueryInterpretationService() {
 		param = Parameters.getParameters();
 		mis = new MappingIndexSearcher(param.mappingIndexRoot);
-		Set<String> keys_set = new HashSet<String>();
 		factory = new Graph4TopKFactory(mis);
 	}
 	
@@ -48,7 +47,7 @@ public class QueryInterpretationService {
 	private void refreshFactory() {
 		for(SummaryPart sg : factory.summaryGraph_HM.values()) { 
 			for(SummaryGraphElement ele : sg.summaryGraph.vertexSet()) {
-				ele.cursors = null;
+				ele.setCursors(null);
 				ele.m_exploredCursorCombinations = null;
 				ele.m_newCursorCombinations = null;			
 			}
