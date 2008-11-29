@@ -92,6 +92,10 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	public int getType(){
 		return type;
 	}
+	
+	public void setType(int type) {
+		this.type = type;
+	}
 
 	public void setResource(IResource resource){
 		this.resource = resource;
@@ -102,6 +106,9 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	}
 	public void setEF(double EF){
 		this.EF = EF;
+	}
+	public void setCursors(Map<String,Queue<Cursor>> cursors) {
+		this.cursors = cursors;
 	}
 
 	public double getEF(){
