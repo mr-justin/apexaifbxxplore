@@ -21,6 +21,11 @@ public class MappingIndexBuilder {
 	private String m_indexDir;
 	private String m_filepath;
 	
+	public static void main(String[] args) {
+		MappingIndexBuilder builder = new MappingIndexBuilder(args[1],args[0]);
+		builder.createIndex();
+	}
+	
 	public MappingIndexBuilder(String mappingIndexDir,String filepath) {
 		m_indexDir = mappingIndexDir;
 		m_filepath = filepath;
@@ -46,7 +51,7 @@ public class MappingIndexBuilder {
 				tokens = line.split("\t");
 				String concept1 = tokens[0];
 				String concept2 = tokens[1];
-				int confidence = Integer.parseInt(tokens[2]);
+				double confidence = Double.parseDouble(tokens[2]);
 				Mapping mapping  = new SchemaMapping(concept1,ds1,concept2,ds2,confidence);
 				this.indexMappings(mapping);
 			}
@@ -60,7 +65,7 @@ public class MappingIndexBuilder {
 		}
 	}
 	
-	public void indexMappings(Mapping mapping){
+	private void indexMappings(Mapping mapping){
 
 		Document doc = new Document();
 		if(mapping.getSource().equals("<http://www.freebase.com/property/contains>")) {
@@ -80,8 +85,5 @@ public class MappingIndexBuilder {
 		} catch (Exception e){
 			e.printStackTrace();
 		}
-
 	}
-	
-	
 }
