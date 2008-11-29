@@ -31,6 +31,7 @@ public class Parameters {
 	public String summaryObjsRoot;
 	public String keywordIndexRoot;
 	public String mappingIndexRoot;
+	public int maxKeywordSearchResult = 5;
 	
 	public HashSet<String> keywordIndexSet;
 	public HashMap<String, String> summaryObjSet;
