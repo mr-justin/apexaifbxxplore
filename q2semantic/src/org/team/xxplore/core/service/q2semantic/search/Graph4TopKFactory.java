@@ -66,8 +66,8 @@ public class Graph4TopKFactory {
 		param = Parameters.getParameters();
 		summaryGraph_HM = new HashMap<String, SummaryPart>();
 		mapping_HM = new HashMap<MappingCell, Set<MappingCell>>();
-		this.getSummaryGraphs(param.getDataSourceSet());
-		this.getMapping(index, param.getDataSourceSet());
+		this.getSummaryGraphs();
+		this.getMapping(index);
 	}
 	
 	private Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele) {
@@ -99,12 +99,15 @@ public class Graph4TopKFactory {
 	 * read the summary graphs.
 	 * @param keys
 	 */
-	private void getSummaryGraphs(Set<String> keys) {
+	private void getSummaryGraphs() {
 		System.out.println("Loading summary graph ... ...");
 		
-		for(String ds : keys) {
+		for(String ds : param.getDataSourceSet()) {
 			String dsDFileName = param.summaryObjSet.get(ds);
+			
+			
 			try {
+				System.out.println("Loading " + dsDFileName);
 				ObjectInputStream obj_input = new ObjectInputStream(new FileInputStream(dsDFileName));
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph_obj = 
 					(Pseudograph<SummaryGraphElement, SummaryGraphEdge>)obj_input.readObject();
@@ -135,6 +138,7 @@ public class Graph4TopKFactory {
 				}
 				
 				obj_input.close();
+				System.out.println("OK!");
 			
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -147,82 +151,35 @@ public class Graph4TopKFactory {
 	 * @param index
 	 * @param keys
 	 */
-	private void getMapping(MappingIndexSearcher index,Set<String> keys) {
-		mappings = new ArrayList<Mapping>();
-		conceptMappings = new HashSet<String>();
-		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
-		
-		for (String ds : keys) {
-			mappings.addAll(index.searchMappingsForDS(ds,
-					MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
-		}
-		for(Mapping mapping : mappings) {
-			MappingCell mc1 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getSource()),mapping.getSourceDsURI());
-			MappingCell mc2 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getTarget()),mapping.getTargetDsURI());
-			conceptMappings.add(mc1.datasource + mc1.uri + mc2.datasource + mc2.uri);
-			
-			Set<MappingCell> mc1_set = mapping_HM.get(mc1);
-			if(mc1_set == null) {
-				mc1_set = new HashSet<MappingCell>();
-				mapping_HM.put(mc1, mc1_set);
-			}
-			mc1_set.add(mc2);
-			
-			Set<MappingCell> mc2_set = mapping_HM.get(mc2);
-			if(mc2_set == null) {
-				mc2_set = new HashSet<MappingCell>();
-				mapping_HM.put(mc2, mc2_set);
-			}
-			mc2_set.add(mc1);
-		}
-		
-		for(Mapping mapping : mappings) {
-			MappingCell mc1 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getSource()),mapping.getSourceDsURI());
-			MappingCell mc2 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getTarget()),mapping.getTargetDsURI());
-			
-			Set<MappingCell> mc1_set = mapping_HM.get(mc1);
-			Set<MappingCell> mc2_set = mapping_HM.get(mc2);
-			
-			if(mc1_set != null && mc2_set != null) {
-				for(MappingCell mc11 : mc1_set) {
-					if(this.summaryGraph_HM.get(mc11.datasource) == null) continue;
-					SummaryGraphElement s = this.summaryGraph_HM.get(mc11.datasource).element_hm.get(mc11.uri);
-					label1:
-					for(MappingCell mc22 : mc2_set) {
-						if(this.summaryGraph_HM.get(mc22.datasource) == null) continue;
-						SummaryGraphElement t = this.summaryGraph_HM.get(mc22.datasource).element_hm.get(mc22.uri);
-						
-						if(s != null && t != null) {
-							label2:
-							if(s.getType()==SummaryGraphElement.RELATION && t.getType()==SummaryGraphElement.RELATION)
-							{
-								boolean flag = false;
-								label3:
-								for(SummaryGraphElement sElem: this.getElement(s,SummaryGraphEdge.DOMAIN_EDGE))
-									for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.DOMAIN_EDGE))
-										if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
-											{flag = true; break label3;}
-								if(flag)
-								for(SummaryGraphElement sElem: getElement(s,SummaryGraphEdge.RANGE_EDGE))
-									for(SummaryGraphElement tElem: getElement(t,SummaryGraphEdge.RANGE_EDGE))
-										if(conceptMappings.contains(sElem.getDatasource()+SummaryGraphUtil.getResourceUri(sElem)+tElem.getDatasource()+SummaryGraphUtil.getResourceUri(tElem)))
-											break label2;
-								continue label1;
-							}
-							
-							
-							SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
-							mappingGraph.addVertex(s);
-							mappingGraph.addVertex(t);
-							mappingGraph.addEdge(s, t, edge);
-						}
-					}
-				}
-			}					
-		}
-		
-		System.out.println("maping vertex size " + mappingGraph.vertexSet().size());
-		
+	private void getMapping(MappingIndexSearcher index) {
+//		System.out.println("Load mapping info ... ...");
+//		mappings = new ArrayList<Mapping>();
+//		conceptMappings = new HashSet<String>();
+//		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
+//		
+//		for (String ds : param.getDataSourceSet()) {
+//			mappings.addAll(index.searchMappingsForDS(ds,MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
+//		}
+//		System.out.println("OK!");
+//		
+//		System.out.println("Create mapping graph ... ...");
+//		for(Mapping mapping : mappings) {
+//			String source = mapping.getSource();
+//			String s_ds = mapping.getSourceDsURI();
+//			String target = mapping.getTarget();
+//			String t_ds = mapping.getTargetDsURI();
+//			
+//			SummaryGraphElement s = this.summaryGraph_HM.get(s_ds).element_hm.get(source);
+//			SummaryGraphElement t = this.summaryGraph_HM.get(t_ds).element_hm.get(target);
+//			SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+//			mappingGraph.addVertex(s);
+//			mappingGraph.addVertex(t);
+//			mappingGraph.addEdge(s, t, edge);
+//			
+//		}
+//		System.out.println("OK!");
+//		System.out.println("maping vertex size " + mappingGraph.vertexSet().size());
+//		
 	}
 	
 	/**
