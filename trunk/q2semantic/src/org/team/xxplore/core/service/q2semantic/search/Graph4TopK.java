@@ -26,11 +26,8 @@ import org.team.xxplore.core.service.q2semantic.SummaryGraphValueElement;
  */
 public class Graph4TopK {
 	private HashMap<String,SummaryPart> summaryGraph_HM;	
-	private HashMap<MappingCell, Set<MappingCell>> mapping_HM;
-	private HashMap<String, AugmentPart> augmentPart_HM;
+	private HashMap<String,AugmentPart> augmentPart_HM;
 	private Pseudograph<SummaryGraphElement, SummaryGraphEdge> mappingGraph;
-	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
-	private Set<String> conceptMappings;
 	
 	private Parameters param;
 	
@@ -57,26 +54,10 @@ public class Graph4TopK {
 		return ret_set;
 	}
 	
-	private void updateDsCoverage(String ds) {
-		Integer cover = m_datasources.get(ds);
-		if (cover != null) {
-			cover = new Integer(cover.intValue() + 1);
-		} else {
-			m_datasources.put(ds, new Integer(1));
-		}
-	}
-	
-	private int getDsCoverage(SummaryGraphElement e) {
-		String ds = e.getDatasource();
-		return m_datasources.get(ds).intValue();
-	}
-	
 	public Graph4TopK(HashMap<String, SummaryPart> summaryGraph_HM,
-			HashMap<MappingCell, Set<MappingCell>> mapping_HM,
 			Pseudograph<SummaryGraphElement, SummaryGraphEdge> mappingGraph) {
 		super();
 		this.summaryGraph_HM = summaryGraph_HM;
-		this.mapping_HM = mapping_HM;
 		this.mappingGraph = mappingGraph;
 		augmentPart_HM = new HashMap<String, AugmentPart>();
 		this.param = Parameters.getParameters();
@@ -90,7 +71,6 @@ public class Graph4TopK {
 		Collection<SummaryGraphElement> start_element = new ArrayList<SummaryGraphElement>();
 		for(Collection<SummaryGraphElement> t : keywords.values()) {
 			for(SummaryGraphElement e : t) {
-				this.updateDsCoverage(e.getDatasource());
 				start_element.add(e);
 			}
 		}
@@ -228,7 +208,6 @@ public class Graph4TopK {
 
 		// == chenjunquan ==
 		e.setMatchingScore(score);
-		e.applyCoverage(getDsCoverage(e));
 	}
 	
 	/**
