@@ -47,12 +47,15 @@ public class MappingIndexBuilder {
 			String ds1 = tokens[0];
 			String ds2 = tokens[1];
 			
+			System.out.println("Data source 1 " + ds1);
+			System.out.println("Data source 2 " + ds2);
+			
 			while((line = br.readLine()) != null) {
 				tokens = line.split("\t");
 				String concept1 = tokens[0];
 				String concept2 = tokens[1];
 				double confidence = Double.parseDouble(tokens[2]);
-				Mapping mapping  = new SchemaMapping(concept1,ds1,concept2,ds2,confidence);
+				Mapping mapping  = new SchemaMapping(concept1,concept2,ds1,ds2,confidence);
 				this.indexMappings(mapping);
 			}
 			
@@ -68,15 +71,14 @@ public class MappingIndexBuilder {
 	private void indexMappings(Mapping mapping){
 
 		Document doc = new Document();
-		if(mapping.getSource().equals("<http://www.freebase.com/property/contains>")) {
-			System.err.println("mapping equals");
-		}
 		doc.add(new Field(SOURCE_FIELD, mapping.getSource(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 		doc.add(new Field(TARGET_FIELD, mapping.getTarget(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 		doc.add(new Field(CONFIDENCE_FIELD, String.valueOf(mapping.getConfidence()), Field.Store.YES, Field.Index.NO));
 		doc.add(new Field(SOURCE_DS_FIELD, mapping.getSourceDsURI(), Field.Store.YES, Field.Index.UN_TOKENIZED));
+		System.out.println(mapping.getSourceDsURI());
 		doc.add(new Field(TARGET_DS_FIELD, mapping.getTargetDsURI(), Field.Store.YES, Field.Index.UN_TOKENIZED));
-
+		System.out.println(mapping.getTargetDsURI());
+		
 		if (mapping instanceof InstanceMapping){
 			doc.add(new Field(MAPPING_FIELD, ((InstanceMapping)mapping).getMapping().toString(), Field.Store.YES, Field.Index.UN_TOKENIZED));
 		}
