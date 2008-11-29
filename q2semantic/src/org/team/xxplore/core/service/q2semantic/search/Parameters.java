@@ -65,6 +65,7 @@ public class Parameters {
 			File[] summaries = new File(summaryObjsRoot).listFiles();
 			for(File summary: summaries)
 				summaryObjSet.put(summary.getName().substring(0, summary.getName().lastIndexOf('-')), summary.getAbsolutePath());		
+			is.close();
 		}
 		catch (Exception e) {
 			e.printStackTrace();
