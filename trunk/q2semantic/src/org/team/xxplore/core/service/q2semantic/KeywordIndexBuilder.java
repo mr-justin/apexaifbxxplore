@@ -74,7 +74,7 @@ public class KeywordIndexBuilder{
 			indexSchema(indexWriter, ds, this.rootPath + "/" + this.conceptFile, CONCEPT);
 			indexSchema(indexWriter, ds, this.rootPath + "/" + this.attributeFile, DATAPROPERTY);
 			indexSchema(indexWriter, ds, this.rootPath + "/" + this.relationFile, OBJECTPROPERTY);			
-//			indexLiteral(indexWriter, ntFn, ds, this.rootPath + "/" + this.literalOut, this.rootPath + "/" + this.litAttrout);
+			indexLiteral(indexWriter, ntFn, ds, this.rootPath + "/" + this.literalOut, this.rootPath + "/" + this.litAttrout);
 			indexWriter.optimize();
 			indexWriter.close();
 		} 

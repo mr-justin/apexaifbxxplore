@@ -27,6 +27,8 @@ public class Graph4TopK {
 	private Map<String, Integer> m_datasources = new HashMap<String, Integer>();
 	private Set<String> conceptMappings;
 	
+	private Parameters param;
+	
 	/**
 	 * Find the element of the graph with the uri of element.
 	 * @param ds
@@ -72,6 +74,7 @@ public class Graph4TopK {
 		this.mapping_HM = mapping_HM;
 		this.mappingGraph = mappingGraph;
 		augmentPart_HM = new HashMap<String, AugmentPart>();
+		this.param = Parameters.getParameters();
 	}
 
 	/**
@@ -203,9 +206,9 @@ public class Graph4TopK {
 					ele.setTotalCost(1.0 - ele.getEF());
 				}
 				else {
-					ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
+					ele.setTotalCost(param.EDGE_SCORE);
 				}
-				ele.setTotalCost(ele.getTotalCost() + QueryInterpretationService.EDGE_SCORE);
+				ele.setTotalCost(ele.getTotalCost() + param.EDGE_SCORE);
 			}
 		}
 	}
