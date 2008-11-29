@@ -1,9 +1,7 @@
-package org.team.xxplore.core.service.q2semantic.search;
+package org.team.xxplore.core.service.q2semantic;
 
 import java.util.LinkedList;
 
-import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
-import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 
 /**
  * 
