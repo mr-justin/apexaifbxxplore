@@ -7,7 +7,6 @@ import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Scanner;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -44,6 +43,12 @@ public class KeywordSearcher {
 	private static final String CONCEPT_FIELD = "concept_field";
 	private static final String ATTRIBUTE_FIELD = "attribute_field";
 	private static final String LITERAL_FIELD = "literal_field";
+	
+	public Parameters param;
+	
+	public KeywordSearcher() {
+		param = Parameters.getParameters();
+	}
 
 	/**
 	 * Search for keyword elements and augment the summary graph.
@@ -87,17 +92,17 @@ public class KeywordSearcher {
 		Map<String,Collection<SummaryGraphElement>> result = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			Hits hits = searcher.search(clausequery);
-			System.out.println(hits.length());
 			Collection<SummaryGraphElement> res = new LinkedHashSet<SummaryGraphElement>();	
 			result.put(clausequery.toString("label"), res);
 
-			for(int i = 0; i < hits.length(); i++){
+			for(int i = 0; i < Math.min(hits.length(),param.maxKeywordSearchResult); i++){
 				Document doc = hits.doc(i);
 				float score = hits.score(i);
+				
+				System.out.println(doc);
+				System.out.println(score);
 
 				if(score >= prune){
-					System.out.println(score);
-					System.out.println(doc);
 					
 					String type = doc.get(TYPE_FIELD);
 
