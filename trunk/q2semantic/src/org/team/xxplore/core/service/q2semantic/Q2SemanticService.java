@@ -32,8 +32,6 @@ public class Q2SemanticService {
 	public QueryInterpretationService inter;
 	public MappingIndexService mis = new MappingIndexService();
 
-	public Q2SemanticService(){}
-	
 	public Q2SemanticService(String fn) {
 		try {
 			this.loadPara(fn);
@@ -41,7 +39,7 @@ public class Q2SemanticService {
 			e.printStackTrace();
 		}
 	}
-	
+		
 	public Map<String,Collection<SummaryGraphElement>> searchKeyword(LinkedList<String> queryList,double prune) {
 		//search for elements
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
@@ -52,7 +50,7 @@ public class Q2SemanticService {
 				String keywordIndex = keywordIndexRoot + "/" + ds + "-keywordIndex";
 				System.out.println("keywordIndex " + keywordIndex);
 				Map<String, Collection<SummaryGraphElement>> hm = 
-					new KeywordIndexServiceForBTFromNT(keywordIndex, false).searchKb(qt, prune);
+					new KeywordSearcher().searchKb(this.keywordIndexRoot,qt, prune);
 	
 				for(String key_str : hm.keySet()) {
 					Collection<SummaryGraphElement> coll = elementsMap.get(key_str);
@@ -101,14 +99,6 @@ public class Q2SemanticService {
 		if(elementsMap.size()<keywordList.size()) return null;
 		
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
-		if(graphs == null) return null;
-//		LinkedList<QueryGraph> result = this.getQueryGraphFromTopKResult(graphs);
-//		
-//		for(int i=0; i<result.size(); i++) {
-//			System.out.println("=============== Top "+(i+1)+" QueryGraph ==============");
-//			result.get(i).print();
-//		}
-
 		return graphs;
 	}
 	
@@ -140,7 +130,14 @@ public class Q2SemanticService {
 			schemaObjSet.put(schema.getName().substring(0, schema.getName().lastIndexOf('-')), schema.getAbsolutePath());
 		
 		inter = new QueryInterpretationService(summaryObjSet.keySet());		
-		mis.init4Search(mappingIndexRoot);
+		mis.init4Search(mappingIndexRoot);	
+	}
+	
+	public static void main(String[] args) {
+		Q2SemanticService qSemanticService = new Q2SemanticService("d:/path.prop");
+		LinkedList<String> keywordList = new LinkedList<String>();
+		qSemanticService.getPossibleGraphs(keywordList, 10, 0.95, 5, 0.5);
 		
 	}
+
 }
