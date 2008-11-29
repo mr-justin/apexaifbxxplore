@@ -1,10 +1,13 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.search;
 
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.graph.Pseudograph;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
 
 /**
  * The result of topk.

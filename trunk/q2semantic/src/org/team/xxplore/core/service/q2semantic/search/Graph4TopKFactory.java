@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.search;
 
 import java.io.FileInputStream;
 import java.io.ObjectInputStream;
@@ -12,6 +12,9 @@ import java.util.Set;
 import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.mapping.Mapping;
 import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
+import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
 
 /**
  * This is a factory to create Graph4TopK

@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.build;
 
 import java.util.Set;
 import java.util.TreeMap;

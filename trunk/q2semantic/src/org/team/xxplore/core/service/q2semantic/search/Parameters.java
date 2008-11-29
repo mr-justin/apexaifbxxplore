@@ -1,4 +1,4 @@
-package org.team.xxplore.core.service.q2semantic;
+package org.team.xxplore.core.service.q2semantic.search;
 
 import java.io.File;
 import java.io.FileInputStream;
