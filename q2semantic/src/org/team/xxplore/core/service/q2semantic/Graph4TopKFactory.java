@@ -11,7 +11,7 @@ import java.util.Set;
 
 import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.mapping.Mapping;
-import org.team.xxplore.core.service.mapping.MappingIndexService;
+import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
 
 /**
  * This is a factory to create Graph4TopK
@@ -19,6 +19,8 @@ import org.team.xxplore.core.service.mapping.MappingIndexService;
  *
  */
 public class Graph4TopKFactory {
+	private Parameters param;
+	
 	public HashMap<String,SummaryPart> summaryGraph_HM;
 	public HashMap<String,Pseudograph<SummaryGraphElement, SummaryGraphEdge>> summaryobj_HM = 
 		new HashMap<String, Pseudograph<SummaryGraphElement,SummaryGraphEdge>>();
@@ -44,11 +46,12 @@ public class Graph4TopKFactory {
 		return summaryobj_HM.get(key);
 	}
 	
-	public Graph4TopKFactory(Set<String> keys, MappingIndexService index) {
+	public Graph4TopKFactory(MappingIndexSearcher index) {
+		param = Parameters.getParameters();
 		summaryGraph_HM = new HashMap<String, SummaryPart>();
 		mapping_HM = new HashMap<MappingCell, Set<MappingCell>>();
-		this.getSummaryGraphs(keys);
-		this.getMapping(index, keys);
+		this.getSummaryGraphs(param.getDataSourceSet());
+		this.getMapping(index, param.getDataSourceSet());
 	}
 	
 	private Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele) {
@@ -81,9 +84,10 @@ public class Graph4TopKFactory {
 	 * @param keys
 	 */
 	private void getSummaryGraphs(Set<String> keys) {
+		System.out.println("Loading summary graph ... ...");
 		
 		for(String ds : keys) {
-			String dsDFileName = Q2SemanticService.summaryObjSet.get(ds);
+			String dsDFileName = param.summaryObjSet.get(ds);
 			try {
 				ObjectInputStream obj_input = new ObjectInputStream(new FileInputStream(dsDFileName));
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph_obj = 
@@ -97,23 +101,6 @@ public class Graph4TopKFactory {
 				}
 				summaryGraph_HM.get(ds).getNoNum();
 				
-//				 scoring according to WWW09 paper
-//				for(SummaryGraphElement ele : graph_obj.vertexSet()) {
-//					if(ele.getMatchingScore() != 0) {
-//						if(ele.getEF() == 0)
-//							ele.setTotalCost(1.0 / ele.getMatchingScore());
-//						else
-//							ele.setTotalCost(1.0 / (ele.getMatchingScore()*ele.getEF()));
-//					}
-//					else if(ele.getEF() != 0) {
-//						ele.setTotalCost(1.0 / ele.getEF());
-//					}
-//					else {
-//						ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
-//					}
-//					ele.setTotalCost(ele.getTotalCost() + QueryInterpretationService.EDGE_SCORE);
-//				}
-				
 				// scoring according to ICDE09 paper
 				for(SummaryGraphElement ele : graph_obj.vertexSet()) {
 					if(ele.getMatchingScore() != 0) {
@@ -126,9 +113,9 @@ public class Graph4TopKFactory {
 						ele.setTotalCost(1.0 - ele.getEF());
 					}
 					else {
-						ele.setTotalCost(QueryInterpretationService.EDGE_SCORE);
+						ele.setTotalCost(param.DEFAULT_SCORE);
 					}
-					ele.setTotalCost(ele.getTotalCost() + QueryInterpretationService.EDGE_SCORE);
+					ele.setTotalCost(ele.getTotalCost() + param.EDGE_SCORE);
 				}
 				
 				obj_input.close();
@@ -144,14 +131,14 @@ public class Graph4TopKFactory {
 	 * @param index
 	 * @param keys
 	 */
-	private void getMapping(MappingIndexService index,Set<String> keys) {
+	private void getMapping(MappingIndexSearcher index,Set<String> keys) {
 		mappings = new ArrayList<Mapping>();
 		conceptMappings = new HashSet<String>();
 		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
 		
 		for (String ds : keys) {
 			mappings.addAll(index.searchMappingsForDS(ds,
-					MappingIndexService.SEARCH_TARGET_AND_SOURCE_DS));
+					MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
 		}
 		for(Mapping mapping : mappings) {
 			MappingCell mc1 = new MappingCell(SummaryGraphUtil.removeGtOrLs(mapping.getSource()),mapping.getSourceDsURI());

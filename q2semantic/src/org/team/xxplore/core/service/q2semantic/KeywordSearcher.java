@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -48,23 +49,24 @@ public class KeywordSearcher {
 	 * @param prune
 	 * @return
 	 */
-	public Map<String,Collection<SummaryGraphElement>> searchKb(String indexDir,String query, double prune){
+	public Map<String,Collection<SummaryGraphElement>> searchKb(String indexDir,List<String> queryList, double prune){
 		Map<String,Collection<SummaryGraphElement>> ress = new LinkedHashMap<String,Collection<SummaryGraphElement>>();
 		try {
 			IndexSearcher searcher = new IndexSearcher(indexDir);
 			StandardAnalyzer analyzer = new StandardAnalyzer();
 			QueryParser parser = new QueryParser("label", analyzer);
-			Query q = parser.parse(query);
-			if(q instanceof BooleanQuery) {
-				BooleanQuery bquery = (BooleanQuery)q;
-				for(BooleanClause clause :  bquery.getClauses()) {
-					System.out.println(clause.getQuery());
-					clause.setOccur(Occur.MUST);
+			for(String query : queryList) {
+				Query q = parser.parse(query);
+				if(q instanceof BooleanQuery) {
+					BooleanQuery bquery = (BooleanQuery)q;
+					for(BooleanClause clause :  bquery.getClauses()) {
+						System.out.println(clause.getQuery());
+						clause.setOccur(Occur.MUST);
+					}
 				}
+				Map<String, Collection<SummaryGraphElement>> tmp = searchWithClause(searcher,q, prune);
+				ress.putAll(tmp);
 			}
-
-			ress = searchWithClause(searcher,q, prune);
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -196,15 +198,5 @@ public class KeywordSearcher {
 	 */
 	private String pruneString(String str) {
 		return str.replaceAll("\"", "");
-	}
-
-	public static void main(String[] args) {
-		KeywordSearcher searcher = new KeywordSearcher();
-		Scanner scanner = new Scanner(System.in);
-		while(true) {
-			System.out.println("Please input a string!");
-			String line = scanner.nextLine();
-			searcher.searchKb("keywordIndex/", line, 0.0);
-		}
 	}
 }
