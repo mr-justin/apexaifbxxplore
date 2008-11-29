@@ -189,7 +189,6 @@ public class BuildQ2SemanticService {
 		splitGraphBuilder.buildGraphs(indexRoot, Boolean.parseBoolean(args[4]));//db index location
 		
 		/* build keywordindex */
-		Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph = graphBuilder.readGraphIndexFromFile(schemaObj);
 		KeywordIndexBuilder keywordBuilder = new KeywordIndexBuilder();
 		keywordBuilder.indexKeywords(BuildQ2SemanticService.keywordIndex, datasource);
 		
