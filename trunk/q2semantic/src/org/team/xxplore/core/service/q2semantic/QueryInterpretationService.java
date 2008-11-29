@@ -16,7 +16,7 @@ import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.Property;
 import org.team.xxplore.core.service.mapping.Mapping;
-import org.team.xxplore.core.service.mapping.MappingIndexService;
+import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
 
 /**
  * Implement the topk algorithm.
@@ -25,20 +25,17 @@ import org.team.xxplore.core.service.mapping.MappingIndexService;
  */
 public class QueryInterpretationService {
 
-	public static double DEFAULT_SCORE = 2.0;
-	public static double EDGE_SCORE = 0.5;
-	
-	public MappingIndexService mis;
+	private Parameters param;
+	public static final String ConceptMark = "c", PredicateMark = "p";
+
+	public MappingIndexSearcher mis;
 	public Graph4TopKFactory factory;
 	
-	public QueryInterpretationService(Set<String> keys) {
-		mis = new MappingIndexService();
-		mis.init4Search(Q2SemanticService.mappingIndexRoot);
+	public QueryInterpretationService() {
+		param = Parameters.getParameters();
+		mis = new MappingIndexSearcher(param.mappingIndexRoot);
 		Set<String> keys_set = new HashSet<String>();
-		for(String key : keys) {
-			keys_set.add(key);
-		}
-		factory = new Graph4TopKFactory(keys_set,mis);
+		factory = new Graph4TopKFactory(mis);
 	}
 	
 	/**
@@ -52,10 +49,6 @@ public class QueryInterpretationService {
 				ele.m_newCursorCombinations = null;			
 			}
 		}
-	}
-	
-	public QueryInterpretationService() {
-		
 	}
 	
 	/**
@@ -98,12 +91,12 @@ public class QueryInterpretationService {
 	}
 
 
-	public Set<String> getSuggestion(List<String> concept, String ds, MappingIndexService index) throws Exception {
+	public Set<String> getSuggestion(List<String> concept, String ds, MappingIndexSearcher index) throws Exception {
 		HashMap<String, String> mappedConcept = new HashMap<String, String>();
 		Collection<Mapping> mapping;
 		for (String con : concept) {
 			mapping = index.searchMappings(con, ds,
-					MappingIndexService.SEARCH_SOURCE);
+					MappingIndexSearcher.SEARCH_SOURCE);
 
 			for (Mapping map : mapping) {
 				mappedConcept.put(SummaryGraphUtil.removeGtOrLs(map.getTarget()), map.getTargetDsURI());
@@ -125,14 +118,14 @@ public class QueryInterpretationService {
 					res.add(((NamedConcept) source.getResource()).getUri()
 							+ "\t" + datasource + "\t"
 							+ source.getEF() + "\t"
-							+ Q2SemanticService.ConceptMark);
+							+ ConceptMark);
 					String tmp = SummaryGraphUtil.removeNum(((Property) target.getResource()).getUri());
 					if(!uri_set.contains(tmp + "\t" + datasource)) {
 						uri_set.add(tmp + "\t" + datasource);
 						res.add(tmp + "\t"
 								+ datasource + "\t"
 								+ target.getEF() + "\t"
-								+ Q2SemanticService.PredicateMark);
+								+ PredicateMark);
 					}
 				} else if (target.getResource() instanceof NamedConcept
 						&& ((NamedConcept) target.getResource()).getUri()
@@ -141,7 +134,7 @@ public class QueryInterpretationService {
 					res.add(((NamedConcept) target.getResource()).getUri()
 							+ "\t" + datasource + "\t"
 							+ target.getEF() + "\t"
-							+ Q2SemanticService.ConceptMark);
+							+ ConceptMark);
 					
 					String tmp = SummaryGraphUtil.removeNum(((Property) source.getResource()).getUri());
 					if(!uri_set.contains(tmp + "\t" + datasource)) {
@@ -149,7 +142,7 @@ public class QueryInterpretationService {
 						res.add(tmp + "\t"
 								+ datasource + "\t"
 								+ source.getEF() + "\t"
-								+ Q2SemanticService.PredicateMark);
+								+ PredicateMark);
 					}
 				}
 			}
