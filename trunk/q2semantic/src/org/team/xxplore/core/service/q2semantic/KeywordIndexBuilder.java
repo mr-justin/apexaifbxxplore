@@ -42,10 +42,12 @@ public class KeywordIndexBuilder{
 	public final String rootPath = "testbuilder";
 	public final String conceptFile = "concept.txt";
 	public final String relationFile = "relation.txt";
-	public final String attributeFile = "attrbute.txt";
+	public final String attributeFile = "attribute.txt";
 	public final String literalOut = "literal.txt";
 	public final String litAttrout = "statement.txt";
 	public final String keywordIndexDir = "keywordIndex";
+	
+	public final float BOOST = 10.0f;
 	
 	
 	public static void main(String[] args) {
@@ -69,11 +71,10 @@ public class KeywordIndexBuilder{
 		try {
 			StandardAnalyzer analyzer = new StandardAnalyzer();
 			IndexWriter indexWriter = new IndexWriter(indexDir, analyzer,true);
-//			indexSchema(indexWriter, ds, this.rootPath + "/" + this.conceptFile, CONCEPT);
-//			indexSchema(indexWriter, ds, this.rootPath + "/" + this.attributeFile, DATAPROPERTY);
-//			indexSchema(indexWriter, ds, this.rootPath + "/" + this.relationFile, OBJECTPROPERTY);
-			
-			indexLiteral(indexWriter, ntFn, ds, this.rootPath + "/" + this.literalOut, this.rootPath + "/" + this.litAttrout);
+			indexSchema(indexWriter, ds, this.rootPath + "/" + this.conceptFile, CONCEPT);
+			indexSchema(indexWriter, ds, this.rootPath + "/" + this.attributeFile, DATAPROPERTY);
+			indexSchema(indexWriter, ds, this.rootPath + "/" + this.relationFile, OBJECTPROPERTY);			
+//			indexLiteral(indexWriter, ntFn, ds, this.rootPath + "/" + this.literalOut, this.rootPath + "/" + this.litAttrout);
 			indexWriter.optimize();
 			indexWriter.close();
 		} 
@@ -94,9 +95,11 @@ public class KeywordIndexBuilder{
 				/* Write Index */
 				Document doc = new Document();
 				doc.add(new Field(TYPE_FIELD, type,	Field.Store.YES, Field.Index.NO));
-				doc.add(new Field(LABEL_FIELD, label, Field.Store.YES,Field.Index.TOKENIZED));
+				doc.add(new Field(LABEL_FIELD, label.trim(), Field.Store.YES,Field.Index.TOKENIZED));
 				doc.add(new Field(URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
+				doc.setBoost(BOOST);
+				System.out.println(BOOST);
 				indexWriter.addDocument(doc);
 			}
 			br.close();
@@ -140,7 +143,7 @@ public class KeywordIndexBuilder{
 				Document doc = new Document();
 				doc.add(new Field(TYPE_FIELD, LITERAL,	Field.Store.YES, Field.Index.NO));
 				System.out.println(literal);
-				doc.add(new Field(LABEL_FIELD, literal, Field.Store.YES,Field.Index.TOKENIZED));
+				doc.add(new Field(LABEL_FIELD, literal.trim(), Field.Store.YES,Field.Index.TOKENIZED));
 				doc.add(new Field(DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				writer.addDocument(doc);
 			}
