@@ -1,19 +1,11 @@
 package org.team.xxplore.core.service.q2semantic.search;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.Scanner;
-import java.util.Set;
 
-import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 
 
@@ -39,9 +31,11 @@ public class Q2SemanticService {
 
 		for(String ds : param.getDataSourceSet()) {
 			String keywordIndex = param.keywordIndexRoot + "/" + ds + "-keywordIndex";
+			System.out.println("Begin keyword search in " + keywordIndex + " ...");
 			Map<String, Collection<SummaryGraphElement>> hm = 
 				new KeywordSearcher().searchKb(keywordIndex,queryList,prune);
 			elementsMap.putAll(hm);
+			System.out.println("OK!");
 		}
 		return elementsMap;
 	}

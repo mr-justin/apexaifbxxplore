@@ -1,7 +1,6 @@
 package org.team.xxplore.core.service.q2semantic.search;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.jgrapht.graph.Pseudograph;
@@ -16,8 +15,13 @@ import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
  */
 public class Subgraph extends
 		Pseudograph<SummaryGraphElement, SummaryGraphEdge>
-		implements Comparable {
+		implements Comparable<Subgraph> {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public Set<SummaryGraphEdge> edgeSet() {
 		// TODO Auto-generated method stub
@@ -75,8 +79,8 @@ public class Subgraph extends
 		return cost;
 	}
 
-	public int compareTo(Object o) {
-		Subgraph other = (Subgraph) o;
+	@Override
+	public int compareTo(Subgraph other) {
 		if (this.cost > other.cost) {
 			return 1;
 		}

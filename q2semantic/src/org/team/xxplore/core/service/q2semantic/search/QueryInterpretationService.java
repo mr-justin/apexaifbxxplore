@@ -147,6 +147,7 @@ public class QueryInterpretationService {
 	 * @param k
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	private Collection<Subgraph> getTopKSubgraphs(
 			Graph4TopK iGraph,
 			Map<String, Collection<SummaryGraphElement>> elements,
