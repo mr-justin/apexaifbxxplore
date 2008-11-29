@@ -41,6 +41,19 @@ public class Graph4TopKFactory {
 	}
 	
 	/**
+	 * TopK will modified some data structures of SummaryPart. This method is used to remove the modification.
+	 */
+	public void refreshFactory() {
+		for(SummaryPart sg : summaryGraph_HM.values()) { 
+			for(SummaryGraphElement ele : sg.summaryGraph.vertexSet()) {
+				ele.setCursors(null);
+				ele.m_exploredCursorCombinations = null;
+				ele.m_newCursorCombinations = null;			
+			}
+		}
+	}
+	
+	/**
 	 * return the summary graph.
 	 * @param key
 	 * @return
@@ -218,7 +231,7 @@ public class Graph4TopKFactory {
 	 * @return
 	 */
 	public Graph4TopK createGraphAdapter(Map<String, Collection<SummaryGraphElement>> keywords) {
-		Graph4TopK t = new Graph4TopK(this.summaryGraph_HM,this.mapping_HM,this.mappingGraph);
+		Graph4TopK t = new Graph4TopK(this.summaryGraph_HM,this.mappingGraph);
 		t.getAugmentPart(keywords);
 		return t;
 	}
