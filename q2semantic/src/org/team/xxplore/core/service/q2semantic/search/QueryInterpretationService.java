@@ -42,19 +42,6 @@ public class QueryInterpretationService {
 	}
 	
 	/**
-	 * TopK will modified some data structures of SummaryPart. This method is used to remove the modification.
-	 */
-	private void refreshFactory() {
-		for(SummaryPart sg : factory.summaryGraph_HM.values()) { 
-			for(SummaryGraphElement ele : sg.summaryGraph.vertexSet()) {
-				ele.setCursors(null);
-				ele.m_exploredCursorCombinations = null;
-				ele.m_newCursorCombinations = null;			
-			}
-		}
-	}
-	
-	/**
 	 * Get the subgraph from keywords.
 	 * @param elements - keyword search result
 	 * @param distance - the max length of topk graph path
@@ -69,9 +56,9 @@ public class QueryInterpretationService {
 			return null;
 		}
 		
-		this.refreshFactory();
 		Graph4TopK iGraph = factory.createGraphAdapter(elements);
-
+		factory.refreshFactory();
+		
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(iGraph,elements, distance, k);
 		
 		int count = 0;
@@ -81,15 +68,14 @@ public class QueryInterpretationService {
 			System.out.println(g.toString());
 		}
 
-
 		if ((subgraphs == null) || (subgraphs.size() == 0)) {
 			return null;
 		}
+		
 		LinkedList<Subgraph> results = new LinkedList<Subgraph>();
 		for (int i = 0; i < k && i < subgraphs.size(); i++) {
 			results.add(((List<Subgraph>) subgraphs).get(i));
 		}
-		
 		return results;
 	}
 
