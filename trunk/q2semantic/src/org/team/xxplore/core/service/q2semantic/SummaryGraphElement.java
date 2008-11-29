@@ -258,7 +258,10 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 		SummaryGraphElement vertex = (SummaryGraphElement)object;
 //		if(vertex.getType() == RELATION || vertex.getType() == ATTRIBUTE) return false;
 		
-		if(vertex.datasource==null || this.datasource==null || !vertex.datasource.equals(this.datasource)) return false;
+		if(vertex.datasource==null || this.datasource==null || !vertex.datasource.equals(this.datasource)) {
+			if (!(vertex.datasource == null && this.datasource == null))
+				return false;
+		}
 		if(resource instanceof NamedConcept && vertex.getResource() instanceof NamedConcept)
 			return ((NamedConcept)resource).getUri().equals(((NamedConcept)vertex.getResource()).getUri());
 		else if(resource instanceof Datatype && vertex.getResource() instanceof Datatype)
