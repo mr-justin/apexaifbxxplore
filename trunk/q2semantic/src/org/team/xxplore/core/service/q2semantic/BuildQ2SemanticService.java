@@ -181,8 +181,8 @@ public class BuildQ2SemanticService {
 			new LineSortFile(source).sortFile();
 		
 		/* build summary and schema graphs */
-		SummaryGraphIndexServiceForBTFromNT graphBuilder = new SummaryGraphIndexServiceForBTFromNT();
-		graphBuilder.buildGraphs(indexRoot, Boolean.parseBoolean(args[4]));//db index location
+//		SummaryGraphIndexServiceForBTFromNT graphBuilder = new SummaryGraphIndexServiceForBTFromNT();
+//		graphBuilder.buildGraphs(indexRoot, Boolean.parseBoolean(args[4]));//db index location
 		
 		/* build splitted-summary graphs */
 		SplitSummaryGraphIndexServiceForBTFromNT splitGraphBuilder = new SplitSummaryGraphIndexServiceForBTFromNT();

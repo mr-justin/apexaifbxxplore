@@ -1,6 +1,5 @@
 package org.team.xxplore.core.service.q2semantic;
 
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -10,6 +9,7 @@ import java.io.LineNumberReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
@@ -29,7 +29,10 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 	public static String GRAPHEDGEPOOL = "-graphEdgePool", 
 						OBJPROPPOOL = "-objpropPool", 
 						conceptCountObj = "-conceptCount.obj", 
-						resultFile = "-result.txt";
+						resultFile = "-result.txt",
+						conFile = "-con.txt",
+						relFile = "-rel.txt",
+						attrFile = "-attr.txt";
 //	file lenth restriction
 	public static long MAX_OBJPROP_FILESIZE = 1*1024*1024*1024, //relation file length restriction for second scan
 						MAX_GRAPHEDGE_FILESIZE = 100*1024*1024, //edge file length restriction for third scan
@@ -38,6 +41,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 	
 	public TreeMap<String, Integer> predPool;
 	public TreeMap<String, SummaryGraphElement> elemPool;
+	
 	
 	/**
 	 * main entry for split summary graph building
@@ -69,6 +73,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 	public void firstScan(String path, boolean scoring) throws Exception
 	{
 		System.out.println("=======firstScan==========");
+		TreeSet<String> conSet = new TreeSet<String>(), relSet = new TreeSet<String>(), attrSet = new TreeSet<String>();
 		indiv2con.openWriter(path, true);
 //		get pre-defined instance number
 		TreeSet<String> indivSet = null;
@@ -105,6 +110,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 				propSize++;
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(CONCEPT))
 			{
+				conSet.add(obj);
 				indiv2con.put(subj, obj);
 				if(scoring)
 				{
@@ -115,6 +121,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 			}
 			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(INDIVIDUAL) && getPredicateType(pred, obj).equals(OBJPROP))
 			{
+				relSet.add(pred);
 				Integer id = predPool.get(pred);
 				if(id == null) 
 				{
@@ -129,7 +136,19 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 					pw.close();
 				}
 			}
+			if(getSubjectType(pred, obj).equals(INDIVIDUAL) && getObjectType(pred, obj).equals(LITERAL) && getPredicateType(pred, obj).equals(DATATYPEPROP))
+			{
+				attrSet.add(pred);
+			}
+			if(pred.equals(BuildQ2SemanticService.rdfsEdge[1]))
+			{
+				File output = new File(path+OBJPROPPOOL+File.separator+"subclass");
+				pw = new PrintWriter(new FileWriter(output, true));
+				pw.println(subj+"\t"+obj);//write relation's subj and obj into file
+				pw.close();
+			}
 		}
+		
 		if(scoring && indivSize ==-1)
 		{
 			indivSize = indivSet.size();
@@ -155,6 +174,18 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 			out.writeObject(conceptCount);
 			out.close();
 		}
+		PrintWriter conPw = new PrintWriter(new FileWriter(path+conFile)),
+		relPw = new PrintWriter(new FileWriter(path+relFile)),
+		attrPw = new PrintWriter(new FileWriter(path+attrFile));
+		for(String con: conSet)
+			conPw.println(con);
+		for(String rel: relSet)
+			relPw.println(rel);
+		for(String attr: attrSet)
+			attrPw.println(attr);
+		conPw.close();
+		relPw.close();
+		attrPw.close();
 		System.out.println("indivSize: "+indivSize+"\tpropSize: "+propSize);
 	}
 	
@@ -186,7 +217,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends SummaryGraphIndexS
 		{
 			String pred = predid.substring(0, predid.indexOf('\t'));
 			String id = predid.substring(predid.indexOf('\t')+1);
-//			System.out.println(root.getLineNumber()+" "+pred+"\tcache:"+cache.size()+"\thits:"+hits);
+			System.out.println(root.getLineNumber()+" "+pred+"\tcache:"+cache.size()+"\thits:"+hits);
 			
 			File file = new File(path+OBJPROPPOOL+File.separator+id);
 			if(file.length() > MAX_OBJPROP_FILESIZE) continue;//skip the relation file whose length is larger than 1G
