@@ -12,5 +12,6 @@
 	<classpathentry kind="lib" path="lib/log4j-1.2.15.jar"/>
 	<classpathentry kind="lib" path="lib/lucene-core-2.3.2.jar"/>
 	<classpathentry kind="lib" path="lib/openrdf-sesame-2.1.3-onejar.jar"/>
+	<classpathentry kind="lib" path="lib/jena.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
