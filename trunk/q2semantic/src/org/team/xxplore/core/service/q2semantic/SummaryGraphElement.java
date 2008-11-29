@@ -16,7 +16,6 @@ import org.team.xxplore.core.service.impl.Literal;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.impl.Property;
-import org.team.xxplore.core.service.q2semantic.search.Cursor;
 
 
 

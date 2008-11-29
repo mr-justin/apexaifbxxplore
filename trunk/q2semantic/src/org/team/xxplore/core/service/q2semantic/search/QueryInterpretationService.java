@@ -17,6 +17,7 @@ import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.Property;
 import org.team.xxplore.core.service.mapping.Mapping;
 import org.team.xxplore.core.service.mapping.MappingIndexSearcher;
+import org.team.xxplore.core.service.q2semantic.Cursor;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
