@@ -38,7 +38,7 @@ public class BuildQ2SemanticService {
 		SplitSummaryGraphIndexServiceForBTFromNT splitGraphBuilder = new SplitSummaryGraphIndexServiceForBTFromNT();
 		splitGraphBuilder.buildGraphs(para.indexRoot, Boolean.parseBoolean(args[3]));// db index location
 		KeywordIndexBuilder keywordBuilder = new KeywordIndexBuilder();
-		keywordBuilder.indexKeywords(para.keywordIndex, para.datasource);
+		keywordBuilder.indexKeywords(para.source, para.datasource);
 
 		long end = System.currentTimeMillis();
 		System.out.println("Time customing: " + (end - start) + " ms");

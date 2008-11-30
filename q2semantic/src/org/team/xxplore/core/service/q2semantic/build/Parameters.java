@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Properties;
 
-import com.hp.hpl.jena.vocabulary.OWL;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
+import org.openrdf.model.vocabulary.OWL;
+import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
 
 public class Parameters {
 	
@@ -52,18 +52,19 @@ public class Parameters {
 	public final long MIN_GRAPHEDGE_FILESIZE = 1*1024; //edge file length restriction for third scan
 
 	public final double MIN_OBJPROP_SCORE = 0.000001; //score restriction for third scan
-	public final double TOP_ELEMENT_SCORE = 2.0, SUBCLASS_ELEMENT_SCORE = 0;
+	public final double TOP_ELEMENT_SCORE = 2.0;
 	public final float BOOST = 10.0f;
 	
 
 	/* edge predefinition */
-	private final String[] conEdges = {RDF.Bag.getURI(), RDF.Seq.getURI(), RDF.Alt.getURI(), 
-			RDF.List.getURI(), RDF.first.getURI(), RDF.rest.getURI(), RDF.nil.getURI()};
+	private final String[] conEdges = {RDF.BAG.stringValue(), RDF.SEQ.stringValue(), RDF.ALT.stringValue(), 
+			RDF.LIST.stringValue(), RDF.FIRST.stringValue(), RDF.REST.stringValue(), RDF.NIL.stringValue()};
 
-	private final String[] rdfsEdges = {RDF.type.getURI(), RDFS.subClassOf.getURI(), RDFS.domain.getURI(),
-			RDFS.range.getURI(), RDFS.subPropertyOf.getURI(), RDFS.label.getURI(), RDFS.comment.getURI(),
-			RDFS.Class.getURI(), OWL.Class.getURI(), OWL.ObjectProperty.getURI(), OWL.DatatypeProperty.getURI(),
-			RDFS.seeAlso.getURI(), RDFS.member.getURI(), RDFS.isDefinedBy.getURI()};
+	private final String[] rdfsEdges = {RDF.TYPE.stringValue(), RDFS.SUBCLASSOF.stringValue(), RDFS.DOMAIN.stringValue(),
+			RDFS.RANGE.stringValue(), RDFS.SUBPROPERTYOF.stringValue(), RDFS.LABEL.stringValue(), RDFS.COMMENT.stringValue(),
+			RDFS.CLASS.stringValue(), OWL.CLASS.stringValue(), OWL.OBJECTPROPERTY.stringValue(), OWL.DATATYPEPROPERTY.stringValue(),
+			RDFS.SEEALSO.stringValue(), RDFS.ISDEFINEDBY.stringValue(), OWL.ONTOLOGY.stringValue(), OWL.ANNOTATIONPROPERTY.stringValue(),
+			RDFS.MEMBER.stringValue(), RDFS.CONTAINER.stringValue()};
 
 	private final String[] dsInsNum = {"wordnet=464843", "dblp=1644086", "freebase=7517743", "dbpedia=19238235",
 			"geonames=14051039", "uscensus=82702188"};

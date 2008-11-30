@@ -12,12 +12,12 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
+import org.openrdf.model.vocabulary.OWL;
+import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
 import org.team.xxplore.core.service.q2semantic.LineSortFile;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
 
-import com.hp.hpl.jena.vocabulary.OWL;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * Building KeywordIndex from graph and nt File
@@ -194,13 +194,13 @@ public class KeywordIndexBuilder{
 					continue;
 				}
 		
-				if(predicate.equals("<" + RDF.type.getURI() + ">")) {
-					if(!object.equals("<" + RDFS.Class.getURI() + ">") &&
-							!object.equals("<" + OWL.Class.getURI() + ">") &&
-							!object.equals("<" + OWL.DatatypeProperty.getURI() + ">") &&
-							!object.equals("<" + OWL.ObjectProperty.getURI() + ">") &&
-							!object.equals("<" + RDFS.Datatype.getURI() + ">") &&
-							!object.equals("<" + RDFS.Literal.getURI() + ">")) {
+				if(predicate.equals("<" + RDF.TYPE.stringValue() + ">")) {
+					if(!object.equals("<" + RDFS.CLASS.stringValue() + ">") &&
+							!object.equals("<" + OWL.CLASS.stringValue() + ">") &&
+							!object.equals("<" + OWL.DATATYPEPROPERTY.stringValue() + ">") &&
+							!object.equals("<" + OWL.DATATYPEPROPERTY.stringValue() + ">") &&
+							!object.equals("<" + RDFS.DATATYPE.stringValue() + ">") &&
+							!object.equals("<" + RDFS.LITERAL.stringValue() + ">")) {
 						type = INSTANCE;
 						concept.add(object.substring(1, object.length() -1));
 					}
@@ -208,10 +208,10 @@ public class KeywordIndexBuilder{
 				}
 				
 				
-				if(!predicate.equals("<" + RDFS.subClassOf.getURI() + ">") &&
-						!predicate.equals("<" + RDFS.subPropertyOf.getURI() + ">") && 
-						!predicate.equals("<" + RDFS.domain.getURI() + ">") &&
-						!predicate.equals("<" + RDFS.range.getURI() + ">") ) {
+				if(!predicate.equals("<" + RDFS.SUBCLASSOF.stringValue() + ">") &&
+						!predicate.equals("<" + RDFS.SUBPROPERTYOF.stringValue() + ">") && 
+						!predicate.equals("<" + RDFS.DOMAIN.stringValue() + ">") &&
+						!predicate.equals("<" + RDFS.RANGE.stringValue() + ">") ) {
 					if(object.charAt(0) != '<') {
 						literal.add(new LitAttr(object,predicate));
 					}
