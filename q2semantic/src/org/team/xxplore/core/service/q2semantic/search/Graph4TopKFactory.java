@@ -27,16 +27,8 @@ public class Graph4TopKFactory {
 	public HashMap<String,SummaryPart> summaryGraph_HM;
 	public HashMap<String,Pseudograph<SummaryGraphElement, SummaryGraphEdge>> summaryobj_HM = 
 		new HashMap<String, Pseudograph<SummaryGraphElement,SummaryGraphEdge>>();
-	private ArrayList<Mapping> mappings;
 	public Pseudograph<SummaryGraphElement,SummaryGraphEdge> mappingGraph;
 	
-	/**
-	 * return the mapping arrayList
-	 * @return
-	 */
-	public ArrayList<Mapping> getMappings() {
-		return mappings;
-	}
 	
 	/**
 	 * TopK will modified some data structures of SummaryPart. This method is used to remove the modification.
@@ -64,32 +56,8 @@ public class Graph4TopKFactory {
 		param = Parameters.getParameters();
 		summaryGraph_HM = new HashMap<String, SummaryPart>();
 		this.getSummaryGraphs();
+		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
 		this.getMapping(index);
-	}
-	
-	private Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele) {
-		Collection<SummaryGraphEdge> edges = new ArrayList<SummaryGraphEdge>();
-		
-		SummaryPart summaryGraph = summaryGraph_HM.get(ele.getDatasource());
-		if(summaryGraph != null && summaryGraph.summaryGraph.vertexSet().contains(ele)) {
-			edges.addAll(summaryGraph.summaryGraph.edgesOf(ele));
-		}
-		return edges;
-	}
-	
-	private Collection<SummaryGraphElement> getElement(SummaryGraphElement ele,String type) {
-		Collection<SummaryGraphElement> ele_set = new HashSet<SummaryGraphElement>();
-		
-		Collection<SummaryGraphEdge> edges = this.getNeighbor(ele);
-		
-		for(SummaryGraphEdge edge : edges) {
-			if(edge.equals(type)) {
-				SummaryGraphElement other = edge.getSource().equals(ele) ? edge.getTarget() : edge.getSource();
-				ele_set.add(other);
-			}
-		}
-		
-		return ele_set;
 	}
 	
 	/**
@@ -150,8 +118,7 @@ public class Graph4TopKFactory {
 	 */
 	private void getMapping(MappingIndexSearcher index) {
 		System.out.println("Load mapping info ... ...");
-		mappings = new ArrayList<Mapping>();
-		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
+		ArrayList<Mapping> mappings = new ArrayList<Mapping>();
 		
 		for (String ds : param.getDataSourceSet()) {
 			mappings.addAll(index.searchMappingsForDS(ds,MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
@@ -165,12 +132,19 @@ public class Graph4TopKFactory {
 			String target = mapping.getTarget();
 			String t_ds = mapping.getTargetDsURI();
 			
-			SummaryGraphElement s = this.summaryGraph_HM.get(s_ds).element_hm.get(source);
-			SummaryGraphElement t = this.summaryGraph_HM.get(t_ds).element_hm.get(target);
-			SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
-			mappingGraph.addVertex(s);
-			mappingGraph.addVertex(t);
-			mappingGraph.addEdge(s, t, edge);
+			
+			SummaryPart sg1 = this.summaryGraph_HM.get(s_ds);
+			SummaryPart sg2 = this.summaryGraph_HM.get(t_ds);
+			if(sg1 != null && sg2 != null) {
+				SummaryGraphElement s = sg1.element_hm.get(source);
+				SummaryGraphElement t = sg2.element_hm.get(target);
+				if(s != null && t != null) {
+					SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+					mappingGraph.addVertex(s);
+					mappingGraph.addVertex(t);
+					mappingGraph.addEdge(s, t, edge);
+				}
+			}
 			
 		}
 		System.out.println("OK!");
