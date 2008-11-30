@@ -31,18 +31,24 @@ public class MappingIndexSearcher {
 	public static final int SEARCH_SOURCE = 0;
 	public static final int SEARCH_TARGET = 1;
 	
+	private boolean dirExist = false;
+	
 	private IndexSearcher m_searcher;
 	
 	public MappingIndexSearcher(String mappingIndexDir) {
-		try {
-			m_searcher = new IndexSearcher(mappingIndexDir);
-		} catch (IOException e) {
-			e.printStackTrace();
+		dirExist = new File(mappingIndexDir).exists();
+		if(dirExist) {
+			try {
+				m_searcher = new IndexSearcher(mappingIndexDir);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
-	public Collection<Mapping> searchMappings(String URI, String dsURI, int type) throws Exception {
+	public Collection<Mapping> searchMappings(String URI, String dsURI, int type) throws Exception {		
 		ArrayList<Mapping> res = new ArrayList<Mapping>();
+		if(!dirExist) return res;
 
 		Query query = new BooleanQuery();
 		if(type == MappingIndexSearcher.SEARCH_SOURCE)
@@ -74,6 +80,9 @@ public class MappingIndexSearcher {
 	
 	public Collection<Mapping> searchMappingsForDS(String dsURI, String type){
 		ArrayList<Mapping> res = new ArrayList<Mapping>();
+		if(!dirExist) {
+			return res;
+		}
 		Query q = null;
 		try {
 			if(type.equals(SEARCH_SOURCE_DS_ONLY)){
