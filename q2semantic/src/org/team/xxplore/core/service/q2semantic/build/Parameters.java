@@ -43,6 +43,7 @@ public class Parameters {
 	public final String DS_FIELD =  "ds";
 	public final String CONCEPT_FIELD = "concept_field";
 	public final String ATTRIBUTE_FIELD = "attribute_field";
+	public final String ATTRIBUTE_FIELD_URI = "attribute_field_uri";
 	public final String LITERAL_FIELD = "literal_field";
 
 	/* size restriction */
