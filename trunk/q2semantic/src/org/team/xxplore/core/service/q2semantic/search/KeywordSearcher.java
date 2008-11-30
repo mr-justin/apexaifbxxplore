@@ -32,8 +32,8 @@ import org.team.xxplore.core.service.q2semantic.SummaryGraphValueElement;
 public class KeywordSearcher {
 	private static final String TYPE_FIELD = "type";
 	private static final String CONCEPT = "concept";
-	private static final String OBJECTPROPERTY = "objectproperty";
-	private static final String DATAPROPERTY = "dataproperty";
+	private static final String OBJECTPROPERTY = "objectprop";
+	private static final String DATAPROPERTY = "datatypeprop";
 	private static final String LITERAL = "literal";
 
 	private static final String LABEL_FIELD = "label";
@@ -42,6 +42,7 @@ public class KeywordSearcher {
 
 	private static final String CONCEPT_FIELD = "concept_field";
 	private static final String ATTRIBUTE_FIELD = "attribute_field";
+	private static final String ATTRIBUTE_FIELD_URI = "attribute_field_uri";
 	private static final String LITERAL_FIELD = "literal_field";
 	
 	public Parameters param;
@@ -105,6 +106,7 @@ public class KeywordSearcher {
 				if(score >= prune){
 					
 					String type = doc.get(TYPE_FIELD);
+					System.out.println("type + " + type);
 
 					if(type == null) {
 						System.err.println("type is null!");
@@ -133,7 +135,7 @@ public class KeywordSearcher {
 							for(int j = 0; j < results.length(); j++){
 								Document docu = results.doc(j);
 								if(docu != null){
-									String property = docu.get(ATTRIBUTE_FIELD);
+									String property = docu.get(ATTRIBUTE_FIELD_URI);
 									if(property==null) continue;
 									DataProperty prop = new DataProperty(property);
 									String concept = docu.get(CONCEPT_FIELD);
