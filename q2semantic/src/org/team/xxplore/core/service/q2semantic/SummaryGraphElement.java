@@ -21,40 +21,18 @@ import org.team.xxplore.core.service.impl.Property;
 
 public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	public static final int CONCEPT = 0;
-
 	public static final int VALUE = 1;
-	
 	public static final int DATATYPE = 5;
-	
 	public static final int ATTRIBUTE = 2;
-
 	public static final int RELATION = 3;
-
-	public static final int DUMMY_VALUE = 4;
-
-	public static final String DUMMY_VALUE_LABEL = "dummy_value";
-	
-	public static final String DUMMY_DATATYPE_LABEL = "dummy_datattype";
-
-	public static final String SUBCLASS_ELEMENT_URI = "http://subclass_uri";
-
-	public static final double SUBCLASS_ELEMENT_DEFAULT_SCORE = 0;
-
-	public static final SummaryGraphElement SUBCLASS = new SummaryGraphElement(
-			new ObjectProperty(SUBCLASS_ELEMENT_URI), RELATION, SUBCLASS_ELEMENT_DEFAULT_SCORE);
 
 	protected IResource resource;
 
 	protected double EF;
-	
 	private double m_totalCost;
-	
 	private double m_matchingScore;
 
 	protected int type;
@@ -62,12 +40,8 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	protected String datasource;
 
 	protected Map<String,Queue<Cursor>> cursors;
-
 	public Set<Set<Cursor>> m_exploredCursorCombinations;
-	
 	public Set<Set<Cursor>> m_newCursorCombinations;
-
-	private boolean m_coverageApplied = false; 
 	
 	public SummaryGraphElement(){}
 
@@ -114,10 +88,6 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	public double getEF(){
 		return EF;
 	}
-
-	public void applyCoverage(int coverage){
-		if (!m_coverageApplied) m_totalCost = m_totalCost / coverage; 
-	}
 	
 	public void setMatchingScore(double score){
 		this.m_matchingScore = score;
@@ -136,7 +106,6 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	}
 	
 	public String toString(){
-//		if(resource != null) return resource.toString();
 		if(resource == null)return null;
 		if(resource instanceof NamedConcept)
 			return ((NamedConcept)resource).getUri();
@@ -261,9 +230,7 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 		if(object == null) return false;
 		if(!(object instanceof SummaryGraphElement)) return false;
 		
-		//need to create unique Relation and Attribute Element 
 		SummaryGraphElement vertex = (SummaryGraphElement)object;
-//		if(vertex.getType() == RELATION || vertex.getType() == ATTRIBUTE) return false;
 		
 		if(vertex.datasource==null || this.datasource==null || !vertex.datasource.equals(this.datasource)) {
 			if (!(vertex.datasource == null && this.datasource == null))
@@ -278,20 +245,14 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 			String uri1 = ((Property)resource).getUri();
 			String uri2 = ((Property)vertex.getResource()).getUri();
 			
-//			if(uri1.indexOf("(") != -1 || uri2.indexOf("(") != -1) {
-//				return SummaryGraphUtil.removeNum(uri1).equals(SummaryGraphUtil.removeNum(uri2));
-//			}
 			return uri1.equals(uri2);
 		}
 		else if(resource instanceof Literal&& vertex.getResource() instanceof Literal)
 			return ((Literal)resource).getLabel().equals(((Literal)vertex.getResource()).getLabel());
-//		if(resource.getClass().equals(vertex.getResource().getClass()))
-//		System.out.println(resource.getClass());
 		return false;
 	}
 	
 	public int hashCode(){
-//		return SummaryGraphUtil.getResourceUri(this).hashCode();
 		return resource.hashCode();
 	}
 
