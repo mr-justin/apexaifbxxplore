@@ -80,7 +80,7 @@ public class KeywordIndexBuilder{
 				doc.add(new Field(para.URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				doc.setBoost(para.BOOST);
-				System.out.println(para.BOOST);
+//				System.out.println(para.BOOST);
 				indexWriter.addDocument(doc);
 			}
 			br.close();
@@ -123,7 +123,7 @@ public class KeywordIndexBuilder{
 				String ds = tokens[1];
 				Document doc = new Document();
 				doc.add(new Field(para.TYPE_FIELD, para.LITERAL,	Field.Store.YES, Field.Index.NO));
-				System.out.println(literal);
+//				System.out.println(literal);
 				doc.add(new Field(para.LABEL_FIELD, literal.trim(), Field.Store.YES,Field.Index.TOKENIZED));
 				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				writer.addDocument(doc);
