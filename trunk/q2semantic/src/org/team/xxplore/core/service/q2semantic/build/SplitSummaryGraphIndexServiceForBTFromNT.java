@@ -14,14 +14,14 @@ import java.util.TreeMap;
 import java.util.TreeSet;
 
 import org.jgrapht.graph.Pseudograph;
+import org.openrdf.model.vocabulary.OWL;
+import org.openrdf.model.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDFS;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 
-import com.hp.hpl.jena.vocabulary.OWL;
-import com.hp.hpl.jena.vocabulary.RDF;
-import com.hp.hpl.jena.vocabulary.RDFS;
 
 /**
  * Build split summary graph from nt file
@@ -55,16 +55,14 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 	 * @return
 	 */
 	public String getSubjectType(String pred, String obj) {
-		if ((pred.equals(RDF.type.getURI()) && (obj.equals(RDFS.Class.getURI()) || obj
-				.equals(OWL.Class.getURI())))
-				|| pred.equals(RDFS.subClassOf.getURI())) {
+		if ((pred.equals(RDF.TYPE.stringValue()) && (obj.equals(RDFS.CLASS.stringValue()) || obj.equals(OWL.CLASS.stringValue())))
+				|| pred.equals(RDFS.SUBCLASSOF.stringValue())) {
 			return para.CONCEPT;
-		} else if ((pred.equals(RDFS.subPropertyOf.getURI()) && (obj
-				.equals(OWL.ObjectProperty) || obj.equals(OWL.DatatypeProperty)))
-				|| pred.equals(RDFS.domain.getURI())
-				|| pred.equals(RDFS.range.getURI())) {
+		} else if ((pred.equals(RDFS.SUBPROPERTYOF.stringValue()) && (obj.equals(OWL.OBJECTPROPERTY.stringValue()) || obj.equals(OWL.DATATYPEPROPERTY.stringValue())))
+				|| pred.equals(RDFS.DOMAIN.stringValue())
+				|| pred.equals(RDFS.RANGE.stringValue())) {
 			return para.PROPERTY;
-		} else if (pred.equals(RDF.type.getURI())
+		} else if (pred.equals(RDF.TYPE.stringValue())
 				|| getPredicateType(pred, obj).equals(para.OBJECTPROP)
 				|| getPredicateType(pred, obj).equals(para.DATATYPEPROP)) {
 			return para.INDIVIDUAL;
@@ -80,7 +78,7 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 	 * @return
 	 */
 	public String getObjectType(String pred, String obj) {
-		if (pred.equals(RDF.type.getURI()) && !para.rdfsEdgeSet.contains(obj)) {
+		if (pred.equals(RDF.TYPE.stringValue()) && !para.rdfsEdgeSet.contains(obj)) {
 			return para.CONCEPT;
 		} else if (getPredicateType(pred, obj).equals(para.OBJECTPROP)) {
 			return para.INDIVIDUAL;
@@ -214,7 +212,9 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 					&& getPredicateType(pred, obj).equals(para.DATATYPEPROP)) {
 				attrSet.add(pred);
 			}
-			if (pred.equals(RDFS.subClassOf)) {
+			if (pred.equals(RDFS.SUBCLASSOF.stringValue())) {
+				conSet.add(subj);
+				conSet.add(obj);
 				File output = new File(para.objPropPool + File.separator + para.SUBCLASS);
 				pw = new PrintWriter(new FileWriter(output, true));
 				pw.println(subj + "\t" + obj);// write relation's subj and obj into file
@@ -457,28 +457,15 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 		while ((line = br.readLine()) != null) {
 			String[] part = line.split("\t");
 			SummaryGraphElement s = getElemFromUri(part[0], scoring);
-			SummaryGraphElement o = getElemFromUri(part[4], scoring);
+			SummaryGraphElement o = getElemFromUri(part[1], scoring);
 			if (!summaryGraph.containsVertex(s))
 				summaryGraph.addVertex(s);
 			if (!summaryGraph.containsVertex(o))
 				summaryGraph.addVertex(o);
-			if (!summaryGraph.containsVertex(SummaryGraphElement.SUBCLASS)) {
-				if (scoring) {
-					SummaryGraphElement.SUBCLASS
-							.setEF(para.SUBCLASS_ELEMENT_SCORE);
-				}
-				summaryGraph.addVertex(SummaryGraphElement.SUBCLASS);
-			}
-			SummaryGraphEdge edge1 = new SummaryGraphEdge(s,
-					SummaryGraphElement.SUBCLASS,
+			SummaryGraphEdge edge = new SummaryGraphEdge(s, o,
 					SummaryGraphEdge.SUBCLASS_EDGE);
-			if (!summaryGraph.containsEdge(edge1))
-				summaryGraph.addEdge(s, SummaryGraphElement.SUBCLASS, edge1);
-			SummaryGraphEdge edge2 = new SummaryGraphEdge(
-					SummaryGraphElement.SUBCLASS, o,
-					SummaryGraphEdge.SUPERCLASS_EDGE);
-			if (!summaryGraph.containsEdge(edge2))
-				summaryGraph.addEdge(SummaryGraphElement.SUBCLASS, o, edge2);
+			if (!summaryGraph.containsEdge(edge))
+				summaryGraph.addEdge(s, o, edge);
 		}
 		br.close();
 

@@ -8,7 +8,8 @@ import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.HashSet;
 
-import com.hp.hpl.jena.vocabulary.RDF;
+import org.openrdf.model.vocabulary.RDF;
+
 
 public class RemoveBlankNode {
 	
@@ -41,7 +42,7 @@ public class RemoveBlankNode {
 				if(bnMeansCollection.contains(parts[0])){
 					pw1.println(line);
 				}
-				else if(parts[1].equals(RDF.type.getURI()) && para.conEdgeSet.contains(parts[2])){
+				else if(parts[1].equals(RDF.TYPE.stringValue()) && para.conEdgeSet.contains(parts[2])){
 					bnMeansCollection.add(parts[0]);
 				}
 			}

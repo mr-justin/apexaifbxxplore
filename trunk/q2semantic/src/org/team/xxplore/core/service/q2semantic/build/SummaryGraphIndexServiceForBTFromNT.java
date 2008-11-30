@@ -102,21 +102,6 @@ public class SummaryGraphIndexServiceForBTFromNT {
 						URI cvertex = new URIImpl(((NamedConcept)node.getResource()).getUri());
 						writer.handleStatement(new StatementImpl(cvertex, RDF.TYPE, OWL.CLASS));
 					}
-					else if (node.equals(SummaryGraphElement.SUBCLASS)){
-						Set<SummaryGraphEdge> edges = graph.edgesOf(node);
-						URI sourceURI = null; 
-						URI targetURI = null;
-						for (SummaryGraphEdge edge : edges){
-							if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)){
-								if(sourceURI instanceof NamedConcept)
-									sourceURI = new URIImpl(((NamedConcept)edge.getSource().getResource()).getUri());
-								if(targetURI instanceof NamedConcept)	
-									targetURI = new URIImpl(((NamedConcept)edge.getTarget().getResource()).getUri());
-							}
-						}
-						if(sourceURI!=null && targetURI!=null)
-							writer.handleStatement(new StatementImpl(sourceURI, RDFS.SUBCLASSOF, targetURI));
-					}
 				}
 			}
 
@@ -159,6 +144,19 @@ public class SummaryGraphIndexServiceForBTFromNT {
 							range = new URIImpl(((INamedConcept)edge.getTarget().getResource()).getUri());
 						if(edge.getTarget().getResource() instanceof Datatype)
 							datatype = new URIImpl(((Datatype)edge.getTarget().getResource()).getUri());
+					}
+					else if (type.equals(SummaryGraphEdge.SUBCLASS_EDGE)){
+						URI sourceURI = null;
+						URI targetURI = null;
+						if(edge.getSource().getResource() instanceof NamedConcept)
+							sourceURI = new URIImpl(((NamedConcept)edge.getSource().getResource()).getUri());
+						if(edge.getTarget().getResource() instanceof NamedConcept)	
+							targetURI = new URIImpl(((NamedConcept)edge.getTarget().getResource()).getUri());
+//						System.out.println("============================wirte subclass"+edge.getSource().getResource().getUri()+"\t"+edge.getTarget().getResource().getUri());
+
+						if(sourceURI!=null && targetURI!=null){
+							writer.handleStatement(new StatementImpl(sourceURI, RDFS.SUBCLASSOF, targetURI));
+						}
 					}
 				
 					if(predicate != null && domain != null)
