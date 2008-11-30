@@ -8,7 +8,7 @@ import java.util.LinkedList;
  * @author jqchen
  *
  */
-public class Cursor implements Comparable {
+public class Cursor implements Comparable<Cursor> {
 
 	private SummaryGraphElement m_matching;
 
@@ -97,8 +97,7 @@ public class Cursor implements Comparable {
 		return m_element;
 	}
 	
-	public int compareTo(Object o) {
-		Cursor other = (Cursor)o;
+	public int compareTo(Cursor other) {
 		if(cost > other.cost) {
 			return 1;
 		}
