@@ -66,7 +66,7 @@ public class Q2SemanticService {
 
 	
 	public static void main(String[] args) {
-		Q2SemanticService qSemanticService = new Q2SemanticService("config/path.prop");
+		Q2SemanticService qSemanticService = new Q2SemanticService("d:/path.prop");
 		LinkedList<String> keywordList = new LinkedList<String>();
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
