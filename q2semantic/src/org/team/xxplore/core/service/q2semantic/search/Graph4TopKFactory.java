@@ -27,8 +27,6 @@ public class Graph4TopKFactory {
 	public HashMap<String,SummaryPart> summaryGraph_HM;
 	public HashMap<String,Pseudograph<SummaryGraphElement, SummaryGraphEdge>> summaryobj_HM = 
 		new HashMap<String, Pseudograph<SummaryGraphElement,SummaryGraphEdge>>();
-	private HashMap<MappingCell, Set<MappingCell>> mapping_HM;
-	public Set<String> conceptMappings;
 	private ArrayList<Mapping> mappings;
 	public Pseudograph<SummaryGraphElement,SummaryGraphEdge> mappingGraph;
 	
@@ -65,7 +63,6 @@ public class Graph4TopKFactory {
 	public Graph4TopKFactory(MappingIndexSearcher index) {
 		param = Parameters.getParameters();
 		summaryGraph_HM = new HashMap<String, SummaryPart>();
-		mapping_HM = new HashMap<MappingCell, Set<MappingCell>>();
 		this.getSummaryGraphs();
 		this.getMapping(index);
 	}
@@ -152,34 +149,33 @@ public class Graph4TopKFactory {
 	 * @param keys
 	 */
 	private void getMapping(MappingIndexSearcher index) {
-//		System.out.println("Load mapping info ... ...");
-//		mappings = new ArrayList<Mapping>();
-//		conceptMappings = new HashSet<String>();
-//		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
-//		
-//		for (String ds : param.getDataSourceSet()) {
-//			mappings.addAll(index.searchMappingsForDS(ds,MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
-//		}
-//		System.out.println("OK!");
-//		
-//		System.out.println("Create mapping graph ... ...");
-//		for(Mapping mapping : mappings) {
-//			String source = mapping.getSource();
-//			String s_ds = mapping.getSourceDsURI();
-//			String target = mapping.getTarget();
-//			String t_ds = mapping.getTargetDsURI();
-//			
-//			SummaryGraphElement s = this.summaryGraph_HM.get(s_ds).element_hm.get(source);
-//			SummaryGraphElement t = this.summaryGraph_HM.get(t_ds).element_hm.get(target);
-//			SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
-//			mappingGraph.addVertex(s);
-//			mappingGraph.addVertex(t);
-//			mappingGraph.addEdge(s, t, edge);
-//			
-//		}
-//		System.out.println("OK!");
-//		System.out.println("maping vertex size " + mappingGraph.vertexSet().size());
-//		
+		System.out.println("Load mapping info ... ...");
+		mappings = new ArrayList<Mapping>();
+		mappingGraph = new Pseudograph<SummaryGraphElement, SummaryGraphEdge>(SummaryGraphEdge.class);
+		
+		for (String ds : param.getDataSourceSet()) {
+			mappings.addAll(index.searchMappingsForDS(ds,MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
+		}
+		System.out.println("OK!");
+		
+		System.out.println("Create mapping graph ... ...");
+		for(Mapping mapping : mappings) {
+			String source = mapping.getSource();
+			String s_ds = mapping.getSourceDsURI();
+			String target = mapping.getTarget();
+			String t_ds = mapping.getTargetDsURI();
+			
+			SummaryGraphElement s = this.summaryGraph_HM.get(s_ds).element_hm.get(source);
+			SummaryGraphElement t = this.summaryGraph_HM.get(t_ds).element_hm.get(target);
+			SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
+			mappingGraph.addVertex(s);
+			mappingGraph.addVertex(t);
+			mappingGraph.addEdge(s, t, edge);
+			
+		}
+		System.out.println("OK!");
+		System.out.println("maping vertex size " + mappingGraph.vertexSet().size());
+		
 	}
 	
 	/**
