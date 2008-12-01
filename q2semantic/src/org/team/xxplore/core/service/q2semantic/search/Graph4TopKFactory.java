@@ -28,6 +28,7 @@ public class Graph4TopKFactory {
 	public HashMap<String,Pseudograph<SummaryGraphElement, SummaryGraphEdge>> summaryobj_HM = 
 		new HashMap<String, Pseudograph<SummaryGraphElement,SummaryGraphEdge>>();
 	public Pseudograph<SummaryGraphElement,SummaryGraphEdge> mappingGraph;
+	public ArrayList<Mapping> mappings;
 	
 	
 	/**
@@ -118,7 +119,7 @@ public class Graph4TopKFactory {
 	 */
 	private void getMapping(MappingIndexSearcher index) {
 		System.out.println("Load mapping info ... ...");
-		ArrayList<Mapping> mappings = new ArrayList<Mapping>();
+		mappings = new ArrayList<Mapping>();
 		
 		for (String ds : param.getDataSourceSet()) {
 			mappings.addAll(index.searchMappingsForDS(ds,MappingIndexSearcher.SEARCH_TARGET_AND_SOURCE_DS));
