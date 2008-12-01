@@ -2,6 +2,8 @@ package org.apexlab.service.session.semplore;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.apexlab.service.config.Config;
+
 import com.ibm.semplore.btc.QueryEvaluator;
 import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 
@@ -15,7 +17,7 @@ public class SemplorePool {
 		for(int i=0;i<semplore_num;i++) {
 			locks[i] = new ReentrantLock();
 			try {
-				pool[i] = new QueryEvaluatorImpl("config/datasrc.cfg");
+				pool[i] = new QueryEvaluatorImpl(Config.CONFIG_PATH + "datasrc" + Config.VERSION + ".cfg");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
