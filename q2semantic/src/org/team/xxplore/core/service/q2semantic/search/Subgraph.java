@@ -1,5 +1,6 @@
 package org.team.xxplore.core.service.q2semantic.search;
 
+import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
@@ -37,7 +38,7 @@ public class Subgraph extends
 	private SummaryGraphElement connectingVertex;
 
 	private Set<SummaryGraphEdge> paths;
-
+	
 	double cost;
 
 	public Subgraph(Class<? extends SummaryGraphEdge> edgeclass) {
@@ -49,14 +50,14 @@ public class Subgraph extends
 	}
 
 	public void setPaths(Set<SummaryGraphEdge> paths) {
-		if (paths == null || paths.size() == 0)
+		if (paths == null)
 			return;
 		if(this.paths == null){
 			this.paths = new LinkedHashSet<SummaryGraphEdge>();
 		}
 		for (SummaryGraphEdge e : paths) {
-			SummaryGraphEdge edge = SummaryGraphUtil.getGraphEdgeWithoutNum(e);
-			this.paths.add(edge);
+//			SummaryGraphEdge edge = SummaryGraphUtil.getGraphEdgeWithoutNum(e);
+			this.paths.add(e);
 			addVertex(e.getSource());
 			addVertex(e.getTarget());
 			addEdge(e.getSource(), e.getTarget(), e);
@@ -114,7 +115,7 @@ public class Subgraph extends
 	@Override
 	public String toString(){
 		String ret = "cost: " + cost 
-		+ "\n" + "Connecting vertex: " + connectingVertex
+		+ "\n" + "Connecting vertex: " + connectingVertex + " type:" + connectingVertex.getType()
 		+ "\n" + "Paths: [EF][MatchingScore][TotalCost]\n";
 		ret += "************\n";
 		for(SummaryGraphEdge edge : paths) {

@@ -13,7 +13,6 @@ public class Parameters {
 	public static Parameters single = null;
 	public static String configFilePath = null;
 	
-	public double DEFAULT_SCORE = 2.0;
 	public double EDGE_SCORE = 0.5;
 	
 	public static void setConfigFilePath(String fn) {

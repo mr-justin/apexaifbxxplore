@@ -99,15 +99,16 @@ public class KeywordSearcher {
 			for(int i = 0; i < Math.min(hits.length(),param.maxKeywordSearchResult); i++){
 				Document doc = hits.doc(i);
 				float score = hits.score(i);
-				
-				System.out.println(doc);
-				System.out.println(score);
 
+				System.out.println();
+				System.out.println();
+				System.out.println(score);
+				System.out.println(doc);
+				
 				if(score >= prune){
 					
 					String type = doc.get(TYPE_FIELD);
-					System.out.println("type + " + type);
-
+					
 					if(type == null) {
 						System.err.println("type is null!");
 						continue;
@@ -183,7 +184,6 @@ public class KeywordSearcher {
 								Document docu = results.doc(j);
 								String concept = docu.get(CONCEPT_FIELD);
 								neighborConcepts.add(new NamedConcept(concept));
-								System.out.println(concept);
 							}
 							pVertex.setNeighborConcepts(neighborConcepts);
 							res.add(pVertex);

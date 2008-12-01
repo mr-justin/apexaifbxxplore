@@ -172,10 +172,6 @@ public class QueryInterpretationService {
 					}
 					set.add(element);
 					
-					System.out.println("Begin Expansion from:");
-					System.out.println(element);
-					System.out.println();
-					
 					Cursor cursor = new Cursor(element, element, null, null,
 							keyword, element.getTotalCost());
 					expansionQueue.addCursor(cursor, keyword);
@@ -225,6 +221,7 @@ public class QueryInterpretationService {
 								subgraphList.remove(i);
 							
 							max = subgraphList.get(k-1).getCost();
+							break; // This is just for this version.
 						}
 					}
 				}
@@ -306,33 +303,33 @@ public class QueryInterpretationService {
 		for (SummaryGraphEdge edge : ele_coll) {
 			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
-				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
 						nextCursor = new Cursor(source, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								source.getTotalCost() + c.getCost());
+								source.getTotalCost() + c.getCost() + param.EDGE_SCORE);
 						neighbors.add(nextCursor);
-				}
-				else {
-					nextCursor = new Cursor(source, c.getMatchingElement(),
-							edge, c, c.getKeyword(),
-							source.getTotalCost() + c.getCost());
-					neighbors.add(nextCursor);
-				}
+//				}
+//				else {
+//					nextCursor = new Cursor(source, c.getMatchingElement(),
+//							edge, c, c.getKeyword(),
+//							source.getTotalCost() + c.getCost());
+//					neighbors.add(nextCursor);
+//				}
 			}
 			else if (edge.getSource().equals(e)) {
 				SummaryGraphElement target = edge.getTarget();
-				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
 						nextCursor = new Cursor(target, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								target.getTotalCost() + c.getCost());
+								target.getTotalCost() + c.getCost() + param.EDGE_SCORE);
 						neighbors.add(nextCursor);
-				}
-				else {
-					nextCursor = new Cursor(target, c.getMatchingElement(),
-							edge, c, c.getKeyword(),
-							target.getTotalCost() + c.getCost());
-					neighbors.add(nextCursor);
-				}
+//				}
+//				else {
+//					nextCursor = new Cursor(target, c.getMatchingElement(),
+//							edge, c, c.getKeyword(),
+//							target.getTotalCost() + c.getCost());
+//					neighbors.add(nextCursor);
+//				}
 			}
 		}
 
@@ -350,8 +347,7 @@ public class QueryInterpretationService {
 		ArrayList<PriorityQueue<Cursor>> m_queues;
 		int roundRobin = 0;
 
-		private ExpansionQueue(
-				Map<String, Collection<SummaryGraphElement>> elements) {
+		private ExpansionQueue(Map<String, Collection<SummaryGraphElement>> elements) {
 			m_queue = new HashMap<String, PriorityQueue<Cursor>>();
 			m_keywords = elements.keySet();
 			m_queues = new ArrayList<PriorityQueue<Cursor>>();
@@ -390,23 +386,22 @@ public class QueryInterpretationService {
 		 * poll cursor from all the queues, use RoundRobin policy.
 		 * @return
 		 */
-		private Cursor pollRoundRobinMinCostCursor()
-		  {
-		   if (m_queues == null || m_queues.size() == 0)
-		    return null;
-		   
-		   int rr = roundRobin;
-		   
-		   while(m_queues.get(roundRobin).isEmpty() && roundRobin != rr-1) {
-			   roundRobin = (roundRobin + 1)%m_queues.size();
-		   }
-		   if(roundRobin == rr-1) {
-			   return null;
-		   }
-		   
-		   Cursor cur = m_queues.get(roundRobin).poll();
-		   roundRobin = (roundRobin + 1)%m_queues.size();
-		   return cur;
-		  }
+		private Cursor pollRoundRobinMinCostCursor() {
+			if (m_queues == null || m_queues.size() == 0)
+				return null;
+
+			int rr = roundRobin;
+
+			while(m_queues.get(roundRobin).isEmpty() && roundRobin != rr-1) {
+				roundRobin = (roundRobin + 1)%m_queues.size();
+			}
+			if(roundRobin == rr-1) {
+				return null;
+			}
+
+			Cursor cur = m_queues.get(roundRobin).poll();
+			roundRobin = (roundRobin + 1)%m_queues.size();
+			return cur;
+		}
 	}
 }

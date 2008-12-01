@@ -74,6 +74,8 @@ public class Graph4TopKFactory {
 				ObjectInputStream obj_input = new ObjectInputStream(new FileInputStream(dsDFileName));
 				Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph_obj = 
 					(Pseudograph<SummaryGraphElement, SummaryGraphEdge>)obj_input.readObject();
+				
+//				SummaryGraphUtil.outputEdges(graph_obj);
 				summaryobj_HM.put(ds, graph_obj);
 				summaryGraph_HM.put(ds, new SummaryPart(graph_obj));
 				
@@ -94,10 +96,6 @@ public class Graph4TopKFactory {
 					else if(ele.getEF() != 0) {
 						ele.setTotalCost(1.0 - ele.getEF());
 					}
-					else {
-						ele.setTotalCost(param.DEFAULT_SCORE);
-					}
-					ele.setTotalCost(ele.getTotalCost() + param.EDGE_SCORE);
 				}
 				
 				obj_input.close();

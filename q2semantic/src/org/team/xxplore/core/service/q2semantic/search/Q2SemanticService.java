@@ -70,13 +70,13 @@ public class Q2SemanticService {
 
 	
 	public static void main(String[] args) {
-		Q2SemanticService qSemanticService = new Q2SemanticService("d:/path.prop");
-		LinkedList<String> keywordList = new LinkedList<String>();
+		Q2SemanticService qSemanticService = new Q2SemanticService(args[0]);
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("Please input the keywords:");
 			String line = scanner.nextLine();
 			String tokens [] = line.split(" ");
+			LinkedList<String> keywordList = new LinkedList<String>();
 			for(int i=0;i<tokens.length;i++) {
 				keywordList.add(tokens[i]);
 			}
