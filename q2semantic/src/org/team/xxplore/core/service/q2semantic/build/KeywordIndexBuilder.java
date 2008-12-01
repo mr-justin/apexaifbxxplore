@@ -142,7 +142,7 @@ public class KeywordIndexBuilder{
 				doc.add(new Field(para.LITERAL_FIELD, literal, Field.Store.YES, Field.Index.UN_TOKENIZED));
 				doc.add(new Field(para.CONCEPT_FIELD, concept,	Field.Store.YES, Field.Index.NO));
 				System.out.println("attribute + " + SummaryGraphUtil.getLocalName(attribute));
-				doc.add(new Field(para.ATTRIBUTE_FIELD, SummaryGraphUtil.getLocalName(attribute), Field.Store.YES,Field.Index.UN_TOKENIZED));
+				doc.add(new Field(para.ATTRIBUTE_FIELD, SummaryGraphUtil.getLocalName(attribute).toLowerCase(), Field.Store.YES,Field.Index.UN_TOKENIZED));
 				doc.add(new Field(para.ATTRIBUTE_FIELD_URI, attribute, Field.Store.YES,Field.Index.NO));
 				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
 				writer.addDocument(doc);
@@ -215,7 +215,7 @@ public class KeywordIndexBuilder{
 						!predicate.equals("<" + RDFS.DOMAIN.stringValue() + ">") &&
 						!predicate.equals("<" + RDFS.RANGE.stringValue() + ">") ) {
 					if(object.charAt(0) != '<') {
-						literal.add(new LitAttr(object,predicate));
+						literal.add(new LitAttr(object,predicate.substring(1,predicate.length() - 1)));
 					}
 				}
 				
