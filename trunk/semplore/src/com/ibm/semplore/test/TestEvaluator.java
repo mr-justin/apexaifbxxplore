@@ -41,7 +41,7 @@ public class TestEvaluator {
 		else 
 			graph = prepareGraph();
 		
-		QueryEvaluator eval = new QueryEvaluatorImpl("datasrc.cfg"); //points to config/datasrc.cfg
+		QueryEvaluator eval = new QueryEvaluatorImpl("config/datasrc.cfg"); //points to config/datasrc.cfg
 
 		long time = System.currentTimeMillis();
 		System.out.println("Begin Evaluation");

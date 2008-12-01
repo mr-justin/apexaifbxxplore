@@ -10,6 +10,8 @@ package com.ibm.semplore.search.impl.alu;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
+
 import com.ibm.semplore.search.impl.MEMDocStream_Score;
 import com.ibm.semplore.util.BitVector;
 import com.ibm.semplore.xir.DocStream;
@@ -21,6 +23,7 @@ import com.ibm.semplore.xir.DocStream;
  */
 public class MassUnionAU_BV_XFacet extends MassUnionAU
 {
+	static Logger logger = Logger.getLogger(MassUnionAU_BV_XFacet.class);
  
     /* (non-Javadoc)
      * @see com.ibm.semplore.search.impl.alu.ArithmeticUnit#getEstimatedResult(int)
@@ -78,13 +81,20 @@ public class MassUnionAU_BV_XFacet extends MassUnionAU
         subjectStream.init();
         relationStream.init();
         CobjStream.init();
+
+        // for evaluation
+        int mapBar[] = new int[11];
+        int mapN = 0;
+
         for (int i=0; i<subjectStream.getLen(); i++, subjectStream.next()) {
             if (!relationStream.skipTo(subjectStream.doc())) 
                 break;
             if (relationStream.doc() != subjectStream.doc()) //can not find?
                 continue;
+        	mapN = 0;
             while(relationStream.hasNextPosition()){
                 int inner = relationStream.nextPosition();
+                mapN ++;
                 try {
                     score[inner]+=1;
                     if(!bv.get(inner)){
@@ -98,7 +108,13 @@ public class MassUnionAU_BV_XFacet extends MassUnionAU
                     throw new IOException(e.getMessage());
                 }
             }
+            if (mapN>=10) mapN = 10;
+            mapBar[mapN] ++;
         }
+
+        String mapS = "";
+        for (int i=0; i<mapBar.length; i++) mapS += mapBar[i] + " ";
+        logger.info("mapping hist: " + mapS);
          
         res = new int[setCount];
     	resScore = new float[setCount];
