@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Scanner;
 import java.util.Set;
 
 import org.apexlab.service.session.datastructure.Concept;
@@ -95,12 +96,22 @@ public class SearchQ2SemanticService {
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
 		//	LinkedList<String> tmp = new LinkedList<String>();
 			LinkedList<Subgraph> ret = q2semanticservice.getPossibleGraphs(keywordList, 5, 0.5, 5, 0.5);
-			return this.getQueryGraphFromTopKResult(ret);
+			
+			LinkedList<QueryGraph> graphs = this.getQueryGraphFromTopKResult(ret);
+			int count = 0;
+			for(QueryGraph graph : graphs) {
+				System.out.println("==============" +  "graph" + (++count) + "==========");
+				graph.print();
+				
+				System.out.println();
+			}
+			return graphs;
 	}
 		
 	private LinkedList<QueryGraph> getQueryGraphFromTopKResult(LinkedList<Subgraph> graphs) {
 		LinkedList<QueryGraph> result = new LinkedList<QueryGraph>();
-
+		if(graphs == null) return result;
+		
 		for(Subgraph qg: graphs)
 		{
 			Set<SummaryGraphEdge> edges = qg.edgeSet();
@@ -355,5 +366,22 @@ public class SearchQ2SemanticService {
 		}
 		System.out.println("Miss matching: "+elem.getType());
 		return null;
+	}
+	
+	public static void main(String[] args) {
+		SearchQ2SemanticService service = new SearchQ2SemanticService("d:/path.prop");
+		
+		Scanner scanner = new Scanner(System.in);
+		while(true) {
+			System.out.println("Please input the keywords:");
+			String line = scanner.nextLine();
+			String tokens [] = line.split(" ");
+			LinkedList<String> keywordList = new LinkedList<String>();
+			for(int i=0;i<tokens.length;i++) {
+				keywordList.add(tokens[i]);
+			}
+			service.getPossibleGraphs(keywordList,5);
+			
+		} 
 	}
 }
