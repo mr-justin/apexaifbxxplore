@@ -190,10 +190,7 @@ public class Graph4TopK {
 				else if(ele.getEF() != 0) {
 					ele.setTotalCost(1.0 - ele.getEF());
 				}
-				else {
-					ele.setTotalCost(param.EDGE_SCORE);
-				}
-				ele.setTotalCost(ele.getTotalCost() + param.EDGE_SCORE);
+//				ele.setTotalCost(ele.getTotalCost() + param.EDGE_SCORE);
 			}
 		}
 	}
