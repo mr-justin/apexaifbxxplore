@@ -18,6 +18,10 @@ public class Q2SemanticService {
 	private Parameters param;
 	
 	private QueryInterpretationService inter;
+	
+	public QueryInterpretationService getInter() {
+		return this.inter;
+	}
 
 	public Q2SemanticService(String fn) {
 		Parameters.setConfigFilePath(fn);
