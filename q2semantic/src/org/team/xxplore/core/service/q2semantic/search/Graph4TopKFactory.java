@@ -5,9 +5,7 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.mapping.Mapping;
@@ -38,8 +36,7 @@ public class Graph4TopKFactory {
 		for(SummaryPart sg : summaryGraph_HM.values()) { 
 			for(SummaryGraphElement ele : sg.summaryGraph.vertexSet()) {
 				ele.setCursors(null);
-				ele.m_exploredCursorCombinations = null;
-				ele.m_newCursorCombinations = null;			
+				ele.setExploredCursorCombinations(null);
 			}
 		}
 	}
