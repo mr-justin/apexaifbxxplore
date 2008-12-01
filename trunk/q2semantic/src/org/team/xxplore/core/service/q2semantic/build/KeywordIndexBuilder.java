@@ -52,9 +52,9 @@ public class KeywordIndexBuilder{
 		try {
 			StandardAnalyzer analyzer = new StandardAnalyzer();
 			IndexWriter indexWriter = new IndexWriter(indexDir, analyzer,true);
-			indexSchema(indexWriter, ds, para.conceptFile, para.CONCEPT);
-			indexSchema(indexWriter, ds, para.attributeFile, para.DATATYPEPROP);
-			indexSchema(indexWriter, ds, para.relationFile, para.OBJECTPROP);			
+			indexSchema(indexWriter, ds, para.conceptFile, para.CONCEPT,para.concept_boost);
+			indexSchema(indexWriter, ds, para.attributeFile, para.DATATYPEPROP,para.attribute_boost);
+			indexSchema(indexWriter, ds, para.relationFile, para.OBJECTPROP,para.relation_boost);			
 			indexLiteral(indexWriter, ntFn, ds, para.literalOut, para.litAttrOut);
 			indexWriter.optimize();
 			indexWriter.close();
@@ -65,13 +65,23 @@ public class KeywordIndexBuilder{
 	}
 	
 
-	protected  void indexSchema(IndexWriter indexWriter, String ds,String file,String type){
+	protected  void indexSchema(IndexWriter indexWriter, String ds,String file,String type,float boost){
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file));
 			String line;
 			while ((line = br.readLine()) != null) {
-				String uri = line;
-				String label = SummaryGraphUtil.getLocalName(uri);
+				String tokens [] = line.split("\t");
+				String uri,label;
+				if(tokens.length == 1) {
+					uri = line;
+					label = SummaryGraphUtil.getLocalName(uri); 
+				}
+				else {
+					uri = tokens[0];
+					label = tokens[1];
+				}
+				
+				
 				label = label.toLowerCase();
 				/* Write Index */
 				Document doc = new Document();
@@ -79,8 +89,7 @@ public class KeywordIndexBuilder{
 				doc.add(new Field(para.LABEL_FIELD, label.trim(), Field.Store.YES,Field.Index.TOKENIZED));
 				doc.add(new Field(para.URI_FIELD, uri, Field.Store.YES, Field.Index.NO));
 				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
-				doc.setBoost(para.BOOST);
-//				System.out.println(para.BOOST);
+				doc.setBoost(boost);
 				indexWriter.addDocument(doc);
 			}
 			br.close();
