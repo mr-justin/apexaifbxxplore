@@ -1,5 +1,6 @@
 package org.team.xxplore.core.service.q2semantic;
 
+import org.jgrapht.graph.Pseudograph;
 import org.team.xxplore.core.service.impl.DataProperty;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.ObjectProperty;
@@ -107,6 +108,12 @@ public class SummaryGraphUtil {
 		}
 		else {
 			return uri;
+		}
+	}
+	
+	public static void outputEdges(Pseudograph<SummaryGraphElement, SummaryGraphEdge> graph) {
+		for(SummaryGraphEdge edge : graph.edgeSet()) {
+			System.out.println(edge.toString());
 		}
 	}
 }

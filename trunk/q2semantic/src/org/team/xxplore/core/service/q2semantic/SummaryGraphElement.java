@@ -188,7 +188,7 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	}
 	
 	public boolean isConnectingElement() {
-		if( type == RELATION && type == ATTRIBUTE ) return false; // Only the concept node will be the connected Element.
+		if( type == RELATION || type == ATTRIBUTE ) return false; // Only the concept node will be the connected Element.
 		if(m_exploredCursorCombinations != null && m_exploredCursorCombinations.size() > 0) return true;
 		
 		if(cursors == null || cursors.size() == 0) return false;
