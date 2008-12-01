@@ -735,6 +735,9 @@ public class SearchSessionService {
 		String[] labels = new String[3];
 		int count = 0;
 		
+		//TODO change this dirty override
+		if (dataSource.equals("dbpedia")) Util4NT.setTYPE("<http://www.w3.org/2004/02/skos/core#subject>");
+		
 		if (snippet_str != null) {
 			StringTokenizer tok = new StringTokenizer(snippet_str,"\n");
 			while (tok.hasMoreTokens()) {
