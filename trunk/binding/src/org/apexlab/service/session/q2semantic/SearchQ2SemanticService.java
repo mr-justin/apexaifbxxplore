@@ -24,11 +24,12 @@ import org.team.xxplore.core.service.impl.Literal;
 import org.team.xxplore.core.service.impl.NamedConcept;
 import org.team.xxplore.core.service.impl.Property;
 import org.team.xxplore.core.service.mapping.Mapping;
-import org.team.xxplore.core.service.q2semantic.Q2SemanticService;
-import org.team.xxplore.core.service.q2semantic.Subgraph;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphEdge;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
 import org.team.xxplore.core.service.q2semantic.SummaryGraphUtil;
+import org.team.xxplore.core.service.q2semantic.search.Q2SemanticService;
+import org.team.xxplore.core.service.q2semantic.search.QueryInterpretationService;
+import org.team.xxplore.core.service.q2semantic.search.Subgraph;
 
 
 /**
@@ -52,7 +53,7 @@ public class SearchQ2SemanticService {
             for(Concept c: concept)
                     con.add(c.getURI());
             
-            Set<String> sugg = q2semanticservice.inter.getSuggestion(con, ds, q2semanticservice.mis);
+            Set<String> sugg = q2semanticservice.getInter().getSuggestion(con, ds, q2semanticservice.getInter().mis);
             PriorityQueue<Suggestion> res = new PriorityQueue<Suggestion>();
             for(String str: sugg)
             {
@@ -60,9 +61,9 @@ public class SearchQ2SemanticService {
                     String[] part = str.split("\t");
                     if(part.length!=4) continue;
                     String label = SummaryGraphUtil.getLocalName(SummaryGraphUtil.removeNum(part[0]));
-                    if(part[3].equals(Q2SemanticService.ConceptMark))
+                    if(part[3].equals(QueryInterpretationService.ConceptMark))
                             res.add(new ConceptSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
-                    else if(part[3].equals(Q2SemanticService.PredicateMark))
+                    else if(part[3].equals(QueryInterpretationService.PredicateMark))
                             res.add(new RelationSuggestion(label, new Source(part[1],null, 0), "<"+part[0]+">", Double.parseDouble(part[2])));
             }
 //          System.out.println("Total Suggestion: "+res.size());
@@ -198,7 +199,7 @@ public class SearchQ2SemanticService {
 			Collection<Mapping> mappings;
 			HashSet<String> delDupMappingEdge = new HashSet<String>();
 			
-			mappings = q2semanticservice.inter.factory.getMappings();
+			mappings = q2semanticservice.getInter().factory.mappings;
 			for(Mapping mapping: mappings)
 			{
 				String uriA = mapping.getSource()+mapping.getSourceDsURI();
