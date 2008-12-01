@@ -3,6 +3,9 @@ package com.ibm.semplore.search.impl.alu;
 import java.io.IOException;
 import java.util.Iterator;
 
+import org.apache.log4j.Logger;
+
+import com.ibm.semplore.btc.impl.QueryEvaluatorImpl;
 import com.ibm.semplore.btc.mapping.MappingIndexReader;
 import com.ibm.semplore.btc.mapping.MappingIndexReaderFactory;
 import com.ibm.semplore.search.impl.MEMDocStream_Score;
@@ -11,6 +14,8 @@ import com.ibm.semplore.xir.DocStream;
 import com.ibm.semplore.xir.FieldType;
 
 public class MassUnionAU_Mapping_XFacet extends MassUnionAU {
+	static Logger logger = Logger.getLogger(MassUnionAU_Mapping_XFacet.class);
+	
     /* (non-Javadoc)
      * @see com.ibm.semplore.search.impl.alu.ArithmeticUnit#getEstimatedResult(int)
      */
@@ -75,10 +80,16 @@ public class MassUnionAU_Mapping_XFacet extends MassUnionAU {
         subjectStream.init();
         CobjStream.init();
         MappingIndexReader reader = MappingIndexReaderFactory.getMappingIndexReader(ds + "_"+type+"_facet");
+        
+        // for evaluation
+        int mapBar[] = new int[11];
+        int mapN = 0;
         for (int i=0; i<subjectStream.getLen(); i++, subjectStream.next()) {
         	Iterator<Integer> itr = reader.getMappings(subjectStream.doc());
+        	mapN = 0;
             while(itr.hasNext()){
                 int inner = itr.next();
+                mapN ++;
                 try {
                     score[inner]+=1;
                     if(!bv.get(inner)){
@@ -92,8 +103,14 @@ public class MassUnionAU_Mapping_XFacet extends MassUnionAU {
                     throw new IOException(e.getMessage());
                 }
             }
+            if (mapN>=10) mapN = 10;
+            mapBar[mapN] ++;
         }
-         
+        
+        String mapS = "";
+        for (int i=0; i<mapBar.length; i++) mapS += mapBar[i] + " ";
+        logger.info("mapping hist: " + mapS);
+        
         res = new int[setCount];
     	resScore = new float[setCount];
         ResultProcedure resP = new ResultProcedure(CobjStream);

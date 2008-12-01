@@ -75,7 +75,7 @@ public class QuerySnippetDB {
 	 */
 	public static void main(String[] args) throws EnvironmentLockedException, DatabaseException, IOException {
 		//must be called at beginning of servlet
-		init("datasrc.cfg");
+		init("config/datasrc.cfg");
 		
 //		System.out.println(getSnippet("dbpedia", "<http://dbpedia.org/resource/Epol/Apple>"));
 //		System.out.println(getSnippet("dbpedia", "<http://dbpedia.org/resource/apple>"));
