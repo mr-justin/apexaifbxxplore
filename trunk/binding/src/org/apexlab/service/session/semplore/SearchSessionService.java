@@ -161,7 +161,7 @@ public class SearchSessionService {
 			Keywords k = (Keywords)query;
 			LinkedList<String> wordList = k.getWordList();
 			if (wordList.isEmpty()) return null;
-			String datasource = (String)Config.readDSConfigFile("config"+File.separatorChar+"datasrc.cfg").get("defaultDataSet");
+			String datasource = (String)Config.readDSConfigFile(org.apexlab.service.config.Config.CONFIG_PATH + "datasrc" + org.apexlab.service.config.Config.VERSION + ".cfg").get("defaultDataSet");
 			Iterator<String> it = wordList.iterator();
 			String str = it.next();
 			for (; it.hasNext(); ) {
