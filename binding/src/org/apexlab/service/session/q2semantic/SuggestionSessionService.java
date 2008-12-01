@@ -22,9 +22,9 @@ public class SuggestionSessionService {
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) throws Exception {
 		int id = Q2SemanticPool.acquire();
 		SearchQ2SemanticService t = Q2SemanticPool.getEvaluator(id);
-		LinkedList<QueryGraph> chen = t.getPossibleGraphs(keywordList, topNbGraphs);
+		LinkedList<QueryGraph> tmp = t.getPossibleGraphs(keywordList, topNbGraphs);
 		Q2SemanticPool.release(id);
-		return chen;
+		return tmp;
 	}
 	
 	/**
