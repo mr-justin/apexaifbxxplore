@@ -141,7 +141,6 @@ public class KeywordIndexBuilder{
 				Document doc = new Document();
 				doc.add(new Field(para.LITERAL_FIELD, literal, Field.Store.YES, Field.Index.UN_TOKENIZED));
 				doc.add(new Field(para.CONCEPT_FIELD, concept,	Field.Store.YES, Field.Index.NO));
-				System.out.println("attribute + " + SummaryGraphUtil.getLocalName(attribute));
 				doc.add(new Field(para.ATTRIBUTE_FIELD, SummaryGraphUtil.getLocalName(attribute).toLowerCase(), Field.Store.YES,Field.Index.UN_TOKENIZED));
 				doc.add(new Field(para.ATTRIBUTE_FIELD_URI, attribute, Field.Store.YES,Field.Index.NO));
 				doc.add(new Field(para.DS_FIELD, ds, Field.Store.YES, Field.Index.NO));
