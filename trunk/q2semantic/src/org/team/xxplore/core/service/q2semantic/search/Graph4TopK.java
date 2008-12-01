@@ -215,18 +215,37 @@ public class Graph4TopK {
 	 * @param ele
 	 * @return
 	 */
-	private Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele) {
+	private Collection<SummaryGraphEdge> getNeighbor(SummaryGraphElement ele,String edgeType) {
 		Collection<SummaryGraphEdge> edges = new ArrayList<SummaryGraphEdge>();
 		
 		SummaryPart summaryGraph = summaryGraph_HM.get(ele.getDatasource());
 		if(summaryGraph != null && summaryGraph.summaryGraph.vertexSet().contains(ele)) {
-			edges.addAll(summaryGraph.summaryGraph.edgesOf(ele));
+			for(SummaryGraphEdge edge : summaryGraph.summaryGraph.edgesOf(ele)) {
+				if(edgeType != null) {
+					if(edge.getEdgeLabel().equals(edgeType)) {
+						edges.add(edge);
+					}
+				}
+				else {
+					edges.add(edge);
+				}
+			}
 		}
 		
 		AugmentPart augmentPart = augmentPart_HM.get(ele.getDatasource());
 		if(augmentPart != null && augmentPart.augmentPart.vertexSet().contains(ele)) {
-			edges.addAll(augmentPart.augmentPart.edgesOf(ele));
+			for(SummaryGraphEdge edge : augmentPart.augmentPart.edgesOf(ele)) {
+				if(edgeType != null) {
+					if(edge.getEdgeLabel().equals(edgeType)) {
+						edges.add(edge);
+					}
+				}
+				else {
+					edges.add(edge);
+				}
+			}
 		}
+		
 		return edges;
 	}
 	
@@ -237,8 +256,8 @@ public class Graph4TopK {
 	 * @return
 	 */
 	public Collection<SummaryGraphEdge> neighborEdges(
-			SummaryGraphElement ele) {
-		Collection<SummaryGraphEdge> edges = this.getNeighbor(ele);
+			SummaryGraphElement ele,String edgeType) {
+		Collection<SummaryGraphEdge> edges = this.getNeighbor(ele,edgeType);
 		
 		if(mappingGraph.vertexSet().contains(ele)) {
 			edges.addAll(mappingGraph.edgesOf(ele));
