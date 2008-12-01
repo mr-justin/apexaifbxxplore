@@ -190,16 +190,17 @@ public class QueryInterpretationService {
 				SummaryGraphElement e = c.getElement();
 				SummaryGraphElement matchingElement = c.getMatchingElement();
 				String keyword = c.getKeyword();
-				if (e.getCursors() == null)
+				if (e.getCursors() == null) {
 					e.initCursorQueues(keywords);
+				}
 				e.addCursor(c, keyword);
+				
 
 				// add new subgraphs
 				if (e.isConnectingElement()) {
-					Set<Set<Cursor>> combinations = e.getNewCursorCombinations();
+					Set<Set<Cursor>> combinations = e.processCursorCombinations(c,keyword);
 					if (combinations != null && combinations.size() != 0) {
 						e.addExploredCursorCombinations(combinations);
-						e.clearNewCursorCombinations();
 						
 						Collection<Subgraph> sglist = computeSubgraphs(e, combinations);		
 
@@ -284,10 +285,22 @@ public class QueryInterpretationService {
 	 */
 	private Collection<Cursor> getNonVisitedNeighbors(
 			Graph4TopK iGraph,
-			SummaryGraphElement e, Cursor c) {// System.out.println(c.getLength());
+			SummaryGraphElement e, Cursor c) {
 		Collection<Cursor> neighbors = new ArrayList<Cursor>();
 		Collection<SummaryGraphEdge> ele_coll = null;
-		ele_coll = iGraph.neighborEdges(e);
+		
+		if(c.getEdge() == null) ele_coll = iGraph.neighborEdges(e, null);
+		else {
+			if( c.getEdge().getEdgeLabel().equals(SummaryGraphEdge.RANGE_EDGE) ) {
+				ele_coll = iGraph.neighborEdges(e,SummaryGraphEdge.DOMAIN_EDGE);
+			}
+			else if(c.getEdge().getEdgeLabel().equals(SummaryGraphEdge.DOMAIN_EDGE)) {
+				ele_coll = iGraph.neighborEdges(e,SummaryGraphEdge.RANGE_EDGE);
+			}
+			else {
+				ele_coll = iGraph.neighborEdges(e,null);
+			}
+		}
 		
 		Cursor nextCursor = null;
 		for (SummaryGraphEdge edge : ele_coll) {
