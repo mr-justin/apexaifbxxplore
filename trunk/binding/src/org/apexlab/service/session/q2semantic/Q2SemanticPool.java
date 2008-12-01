@@ -2,6 +2,8 @@ package org.apexlab.service.session.q2semantic;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.locks.ReentrantLock;
 
+import org.apexlab.service.config.Config;
+
 
 public class Q2SemanticPool {
 	public static int q2semantic_num = 2;
@@ -13,7 +15,7 @@ public class Q2SemanticPool {
 		for(int i = 0; i < q2semantic_num; i++) {
 			locks[i] = new ReentrantLock();
 			try {
-				pool[i] = new SearchQ2SemanticService("config/path.prop");
+				pool[i] = new SearchQ2SemanticService(Config.CONFIG_PATH + "path" + Config.VERSION + ".prop");
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
