@@ -369,7 +369,7 @@ public class SearchQ2SemanticService {
 	}
 	
 	public static void main(String[] args) {
-		SearchQ2SemanticService service = new SearchQ2SemanticService("d:/path.prop");
+		SearchQ2SemanticService service = new SearchQ2SemanticService(args[0]);
 		
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
