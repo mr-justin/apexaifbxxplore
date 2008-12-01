@@ -14,7 +14,6 @@ import org.team.xxplore.core.service.api.IResource;
 import org.team.xxplore.core.service.impl.Datatype;
 import org.team.xxplore.core.service.impl.Literal;
 import org.team.xxplore.core.service.impl.NamedConcept;
-import org.team.xxplore.core.service.impl.ObjectProperty;
 import org.team.xxplore.core.service.impl.Property;
 
 
@@ -40,8 +39,11 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	protected String datasource;
 
 	protected Map<String,Queue<Cursor>> cursors;
-	public Set<Set<Cursor>> m_exploredCursorCombinations;
-	public Set<Set<Cursor>> m_newCursorCombinations;
+	protected Set<Set<Cursor>> m_exploredCursorCombinations;
+	
+	public void setExploredCursorCombinations(Set<Set<Cursor>> exploredCursorCombinations) {
+		this.m_exploredCursorCombinations = exploredCursorCombinations;
+	}
 	
 	public SummaryGraphElement(){}
 
@@ -140,12 +142,9 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	public void addCursor(Cursor cursor, String keyword){
 		Queue<Cursor> q = cursors.get(keyword);
 		q.add(cursor);
-		if(isConnectingElement()){
-			processCursorCombinations(cursor,keyword);
-		}
 	}
 	
-	public void processCursorCombinations(Cursor cursor, String keyword){
+	public HashSet<Set<Cursor>> processCursorCombinations(Cursor cursor, String keyword){
 		int size = cursors.size();
 		int[] guard = new int[size];
 		int i = 0;
@@ -163,12 +162,12 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 				guard[i++] = cursors.get(key).size() - 1;
 			}
 		}
-		m_newCursorCombinations = new HashSet<Set<Cursor>>();
+		HashSet<Set<Cursor>> m_newCursorCombinations = new HashSet<Set<Cursor>>();
 		
 		int[] index = new int[size];
-		for(int p : index) {
-			p = 0;
-		} 
+		for(int j=0;j<index.length;j++) {
+			index[j] = 0;
+		}
 		guard[size-1]++;
 		do {
 			Set<Cursor> combination = new HashSet<Cursor>();
@@ -185,9 +184,11 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 			}
 		}
 		while(index[size-1] < guard[size-1]);
+		return m_newCursorCombinations;
 	}
 	
 	public boolean isConnectingElement() {
+		if( type == RELATION && type == ATTRIBUTE ) return false; // Only the concept node will be the connected Element.
 		if(m_exploredCursorCombinations != null && m_exploredCursorCombinations.size() > 0) return true;
 		
 		if(cursors == null || cursors.size() == 0) return false;
@@ -210,19 +211,6 @@ public class SummaryGraphElement implements Serializable,ISummaryGraphElement {
 	
 	public Set<Set<Cursor>> getExploredCursorCombinations(){
 		return m_exploredCursorCombinations;
-	}
-	
-	/**
-	 * Return only the subgraphs that not have been explored before, i.e. only those 
-	 * that are not in the list of explored subgraphs (getExploredCursorCombinations())
-	 * 
-	 */
-	public Set<Set<Cursor>> getNewCursorCombinations(){
-		return m_newCursorCombinations;
-	}
-	
-	public void clearNewCursorCombinations() {
-		m_newCursorCombinations = null;
 	}
 	
 	public boolean equals(Object object){
