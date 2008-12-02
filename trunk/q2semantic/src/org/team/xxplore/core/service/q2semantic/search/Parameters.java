@@ -14,6 +14,7 @@ public class Parameters {
 	public static String configFilePath = null;
 	
 	public double EDGE_SCORE = 0.5;
+	public double penalty = 1.0;
 	
 	public static void setConfigFilePath(String fn) {
 		configFilePath = fn;
