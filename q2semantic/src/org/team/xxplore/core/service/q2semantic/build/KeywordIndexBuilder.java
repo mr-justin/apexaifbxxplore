@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Enumeration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -12,6 +13,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexWriter;
+import org.apache.lucene.search.IndexSearcher;
 import org.openrdf.model.vocabulary.OWL;
 import org.openrdf.model.vocabulary.RDF;
 import org.openrdf.model.vocabulary.RDFS;
@@ -28,9 +30,23 @@ public class KeywordIndexBuilder{
 
 	Parameters para;
 	
-	public static void main(String[] args) {
-		KeywordIndexBuilder builder = new KeywordIndexBuilder();
-		builder.indexKeywords("testbuilder/freebase.nt","test");
+	public static void main(String[] args) throws Exception, Exception {
+//		KeywordIndexBuilder builder = new KeywordIndexBuilder();
+//		builder.indexKeywords("testbuilder/freebase.nt","test");
+		
+		IndexSearcher searcher = new IndexSearcher("D:/semplore/exported-keywordIndex");
+//		for(int i=0; i<searcher.maxDoc(); i++)
+//		{
+//			Enumeration en = searcher.doc(i).fields();
+//			while(en.hasMoreElements())
+//			{
+//				Field f = (Field)en.nextElement();
+//				System.out.println(f.name()+": "+f.stringValue());
+//			}
+//		}
+//		Query query = new TermQuery(new Term("literal_field", "danielsseite"));
+//		Hits hits = searcher.search(query);
+//		System.out.println(hits.length());
 	}
 	
 	public KeywordIndexBuilder(){
@@ -126,8 +142,12 @@ public class KeywordIndexBuilder{
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 			String line;
-			while((line = br.readLine()) != null) {
+			while((line = br.readLine().trim()) != null) {
 				String[] tokens = line.split("\t");
+				if(tokens.length != 2){
+					System.out.println("guala @ <"+line+">");
+					continue;
+				}
 				String literal = tokens[0];
 				String ds = tokens[1];
 				Document doc = new Document();
@@ -140,8 +160,12 @@ public class KeywordIndexBuilder{
 			br.close();
 			
 			br = new BufferedReader(new FileReader(file2));
-			while((line = br.readLine()) != null) {
+			while((line = br.readLine().trim()) != null) {
 				String[] tokens = line.split("\t");
+				if(tokens.length != 4){
+					System.out.println("guala @ <"+line+">");
+					continue;
+				}
 				String literal = tokens[0];
 				String attribute = tokens[1];
 				String concept = tokens[2];
