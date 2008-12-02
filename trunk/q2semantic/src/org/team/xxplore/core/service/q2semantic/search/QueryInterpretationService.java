@@ -82,11 +82,18 @@ public class QueryInterpretationService {
 
 	public Set<String> getSuggestion(List<String> concept, String ds, MappingIndexSearcher index) {
 		HashMap<String, String> mappedConcept = new HashMap<String, String>();
-		Collection<Mapping> mapping = null;
+		Collection<Mapping> mapping1 = null, mapping2 = null;
+		Collection<Mapping> mapping = new ArrayList<Mapping>();
 		for (String con : concept) {
 			try {
-				mapping = index.searchMappings(con, ds,
+				mapping1 = index.searchMappings(con, ds,
 						MappingIndexSearcher.SEARCH_SOURCE);
+				mapping2 = index.searchMappings(con, ds,
+						MappingIndexSearcher.SEARCH_TARGET);
+				if(mapping1 != null)
+					mapping.addAll(mapping1);
+				if(mapping2 != null)
+					mapping.addAll(mapping1);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -141,6 +148,7 @@ public class QueryInterpretationService {
 				}
 			}
 		}
+		System.out.println("mapping result;");
 		for(String r: res) System.out.println(r);
 		return res;
 	}
