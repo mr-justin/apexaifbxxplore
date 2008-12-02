@@ -1,5 +1,6 @@
 package org.team.xxplore.core.service.q2semantic.search;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -34,11 +35,19 @@ public class Q2SemanticService {
 		Map<String,Collection<SummaryGraphElement>> elementsMap = new HashMap<String,Collection<SummaryGraphElement>>();
 
 		for(String ds : param.getDataSourceSet()) {
+			
 			String keywordIndex = param.keywordIndexRoot + "/" + ds + "-keywordIndex";
 			System.out.println("Begin keyword search in " + keywordIndex + " ...");
 			Map<String, Collection<SummaryGraphElement>> hm = 
 				new KeywordSearcher().searchKb(keywordIndex,queryList,prune);
-			elementsMap.putAll(hm);
+			for(String key : hm.keySet()) {
+				Collection<SummaryGraphElement> coll = elementsMap.get(key);
+				if(coll == null) {
+					coll = new ArrayList<SummaryGraphElement>();
+					elementsMap.put(key, coll);
+				}
+				coll.addAll(hm.get(key));
+			}
 			System.out.println("OK!");
 		}
 		return elementsMap;
@@ -66,13 +75,13 @@ public class Q2SemanticService {
 		for(String key : elementsMap.keySet()) {
 			Collection<SummaryGraphElement> coll = elementsMap.get(key);
 			for(SummaryGraphElement ele : coll) {
-				if( ele.getDatasource().equals("dbpedia") ) {
+				if( ele.getDatasource().equals("freebase") ) {
 					count ++;
 				}
 			}
 		}
 		
-		System.out.println("dbpedia class: " + count);
+		System.out.println("freebase class: " + count);
 		
 		if(elementsMap.size()<keywordList.size()) return null;
 		
