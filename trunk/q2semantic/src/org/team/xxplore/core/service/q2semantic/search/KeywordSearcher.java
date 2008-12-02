@@ -1,5 +1,6 @@
 package org.team.xxplore.core.service.q2semantic.search;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -74,7 +75,14 @@ public class KeywordSearcher {
 					}
 				}
 				Map<String, Collection<SummaryGraphElement>> tmp = searchWithClause(searcher,q, prune);
-				ress.putAll(tmp);
+				for(String key : tmp.keySet()) {
+					Collection<SummaryGraphElement> coll = ress.get(key);
+					if(coll == null) {
+						coll = new ArrayList<SummaryGraphElement>();
+						ress.put(key, coll);
+					}
+					coll.addAll(tmp.get(key));
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
