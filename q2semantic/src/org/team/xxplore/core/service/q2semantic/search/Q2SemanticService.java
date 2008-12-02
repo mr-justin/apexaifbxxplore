@@ -95,14 +95,24 @@ public class Q2SemanticService {
 		Q2SemanticService qSemanticService = new Q2SemanticService(args[0]);
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
-			System.out.println("Please input the keywords:");
-			String line = scanner.nextLine();
-			String tokens [] = line.split(" ");
-			LinkedList<String> keywordList = new LinkedList<String>();
-			for(int i=0;i<tokens.length;i++) {
-				keywordList.add(tokens[i]);
+			if(args.length == 1){
+				System.out.println("Please input the keywords:");
+				String line = scanner.nextLine();
+				String tokens [] = line.split(" ");
+				LinkedList<String> keywordList = new LinkedList<String>();
+				for(int i=0;i<tokens.length;i++) {
+					keywordList.add(tokens[i]);
+				}
+				qSemanticService.getPossibleGraphs(keywordList, 5, 0.95, 5, 0.5);
 			}
-			qSemanticService.getPossibleGraphs(keywordList, 5, 0.95, 5, 0.5);
+			else if(args[1].equals("suggestion")){
+				System.out.println("Please input the concepturi and ds:");
+				String line = scanner.nextLine();
+				ArrayList<String> list = new ArrayList<String>();
+				String[] tokens = line.split(" ");
+				list.add(tokens[0]);
+				qSemanticService.getInter().getSuggestion(list, tokens[1], qSemanticService.getInter().mis);
+			}
 		}
 	}
 
