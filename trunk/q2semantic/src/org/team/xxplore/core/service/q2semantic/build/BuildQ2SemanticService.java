@@ -32,7 +32,9 @@ public class BuildQ2SemanticService {
 			new RemoveBlankNode(para.source, "_:node").removeBlankNode();
 		}
 		if (args[2].equals("true")) {
-			new LineSortFile(para.source).sortFile();
+			LineSortFile lsf = new LineSortFile(para.source);
+			lsf.setDeleteWhenStringRepeated(true);
+			lsf.sortFile();
 		}
 
 		SplitSummaryGraphIndexServiceForBTFromNT splitGraphBuilder = new SplitSummaryGraphIndexServiceForBTFromNT();
