@@ -11,7 +11,7 @@ public class Q2SemanticPool {
 	public static ReentrantLock [] locks = new ReentrantLock[q2semantic_num];
 	public static Semaphore sem = new Semaphore(q2semantic_num);
 	
-	static {
+	public static void init() {
 		for(int i = 0; i < q2semantic_num; i++) {
 			locks[i] = new ReentrantLock();
 			try {
@@ -20,6 +20,10 @@ public class Q2SemanticPool {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	static {
+		init();
 	}
 	
 	public static SearchQ2SemanticService getService(int i) {
