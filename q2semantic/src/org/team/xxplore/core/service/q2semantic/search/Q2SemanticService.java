@@ -80,7 +80,7 @@ public class Q2SemanticService {
 			for(int i=0;i<tokens.length;i++) {
 				keywordList.add(tokens[i]);
 			}
-			qSemanticService.getPossibleGraphs(keywordList, 10, 0.95, 5, 0.5);
+			qSemanticService.getPossibleGraphs(keywordList, 5, 0.95, 5, 0.5);
 		}
 	}
 
