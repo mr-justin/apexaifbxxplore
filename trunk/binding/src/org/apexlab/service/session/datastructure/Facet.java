@@ -51,7 +51,7 @@ public class Facet implements Query {
 	public boolean equals(Object arg0) {
 		// TODO Auto-generated method stub
 		Facet other = (Facet)arg0;
-		return URI.equals(other.getURI()) && source.equals(other.source);
+		return label.equals(other.getLabel()) && URI.equals(other.getURI()) && source.equals(other.getSource());
 	}
 
 	@Override
