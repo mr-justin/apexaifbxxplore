@@ -12,6 +12,9 @@ public class Q2SemanticPool {
 	public static Semaphore sem = new Semaphore(q2semantic_num);
 	
 	public static void init() {
+		System.out.println("Init q2semantic pool ...");
+		long begin = System.currentTimeMillis();
+		
 		for(int i = 0; i < q2semantic_num; i++) {
 			locks[i] = new ReentrantLock();
 			try {
@@ -20,6 +23,10 @@ public class Q2SemanticPool {
 				e.printStackTrace();
 			}
 		}
+		long span = System.currentTimeMillis() - begin;
+		
+		double span_s = span / 1000.0;
+		System.out.println("init ok! time: " + span_s + "s");
 	}
 	
 	static {
