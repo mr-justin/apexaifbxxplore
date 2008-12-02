@@ -55,8 +55,8 @@ public class Parameters {
 	public final double MIN_OBJPROP_SCORE = 0.000001; //score restriction for third scan
 	public final double TOP_ELEMENT_SCORE = 2.0;
 	public final float concept_boost = 10.0f;
-	public final float relation_boost = 5.0f;
-	public final float attribute_boost = 5.0f;
+	public final float relation_boost = 1.0f;
+	public final float attribute_boost = 1.0f;
 	
 
 	/* edge predefinition */
