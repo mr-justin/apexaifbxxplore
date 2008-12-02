@@ -237,7 +237,6 @@ public class QueryInterpretationService {
 						}
 					}
 				}
-
 			}
 		}
 		
@@ -303,33 +302,33 @@ public class QueryInterpretationService {
 		for (SummaryGraphEdge edge : ele_coll) {
 			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
-//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
 						nextCursor = new Cursor(source, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								source.getTotalCost() + c.getCost() + param.EDGE_SCORE);
+								source.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
 						neighbors.add(nextCursor);
-//				}
-//				else {
-//					nextCursor = new Cursor(source, c.getMatchingElement(),
-//							edge, c, c.getKeyword(),
-//							source.getTotalCost() + c.getCost());
-//					neighbors.add(nextCursor);
-//				}
+				}
+				else {
+					nextCursor = new Cursor(source, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							source.getTotalCost() + c.getCost());
+					neighbors.add(nextCursor);
+				}
 			}
 			else if (edge.getSource().equals(e)) {
 				SummaryGraphElement target = edge.getTarget();
-//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
 						nextCursor = new Cursor(target, c.getMatchingElement(),
 								edge, c, c.getKeyword(),
-								target.getTotalCost() + c.getCost() + param.EDGE_SCORE);
+								target.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
 						neighbors.add(nextCursor);
-//				}
-//				else {
-//					nextCursor = new Cursor(target, c.getMatchingElement(),
-//							edge, c, c.getKeyword(),
-//							target.getTotalCost() + c.getCost());
-//					neighbors.add(nextCursor);
-//				}
+				}
+				else {
+					nextCursor = new Cursor(target, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							target.getTotalCost() + c.getCost());
+					neighbors.add(nextCursor);
+				}
 			}
 		}
 
@@ -373,11 +372,13 @@ public class QueryInterpretationService {
 		 * @return
 		 */
 		private boolean isEmpty() {
-			if (m_queue.isEmpty())
+			if (m_queue.isEmpty()) {
 				return true;
+			}
 			for (PriorityQueue<Cursor> q : m_queues) {
-				if (!q.isEmpty())
+				if (!q.isEmpty()) {
 					return false;
+				}
 			}
 			return true;
 		}
@@ -387,8 +388,9 @@ public class QueryInterpretationService {
 		 * @return
 		 */
 		private Cursor pollRoundRobinMinCostCursor() {
-			if (m_queues == null || m_queues.size() == 0)
+			if (m_queues == null || m_queues.size() == 0) {
 				return null;
+			}
 
 			int rr = roundRobin;
 

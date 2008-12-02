@@ -61,6 +61,19 @@ public class Q2SemanticService {
 		
 		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(keywordList,prune);
 		
+		
+		int count = 0;
+		for(String key : elementsMap.keySet()) {
+			Collection<SummaryGraphElement> coll = elementsMap.get(key);
+			for(SummaryGraphElement ele : coll) {
+				if( ele.getDatasource().equals("dbpedia") ) {
+					count ++;
+				}
+			}
+		}
+		
+		System.out.println("dbpedia class: " + count);
+		
 		if(elementsMap.size()<keywordList.size()) return null;
 		
 		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
