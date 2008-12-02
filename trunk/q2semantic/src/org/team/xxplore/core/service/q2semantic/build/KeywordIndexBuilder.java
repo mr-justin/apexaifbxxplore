@@ -127,9 +127,11 @@ public class KeywordIndexBuilder{
 	private void handleBlock(Set<String> concept,Set<LitAttr> literal,String ds,PrintWriter w1,PrintWriter w2) {
 		try {
 			for(LitAttr lit : literal) {
-				w1.println(lit.lit + "\t" + ds);
+				if(lit.lit.trim().equals("")) continue;
+				w1.println(lit.lit.trim() + "\t" + ds);
 				for(String con : concept) {
-					w2.println(lit.lit + "\t" + lit.attr + "\t" + con + "\t" + ds);
+					if(lit.attr.trim().equals("") || con.trim().equals("")) continue;
+					w2.println(lit.lit.trim() + "\t" + lit.attr.trim() + "\t" + con.trim() + "\t" + ds);
 				}
 			}
 		}
@@ -142,7 +144,7 @@ public class KeywordIndexBuilder{
 		try {
 			BufferedReader br = new BufferedReader(new FileReader(file1));
 			String line;
-			while((line = br.readLine().trim()) != null) {
+			while((line = br.readLine()) != null) {
 				String[] tokens = line.split("\t");
 				if(tokens.length != 2){
 					System.out.println("guala @ <"+line+">");
@@ -160,7 +162,7 @@ public class KeywordIndexBuilder{
 			br.close();
 			
 			br = new BufferedReader(new FileReader(file2));
-			while((line = br.readLine().trim()) != null) {
+			while((line = br.readLine()) != null) {
 				String[] tokens = line.split("\t");
 				if(tokens.length != 4){
 					System.out.println("guala @ <"+line+">");
