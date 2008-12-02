@@ -333,13 +333,21 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 					+ File.separator + id));// write edge info into file
 			// System.out.println("search finished! size:"+triples.size());
 			int order = 0;
+			TreeMap<String, Integer> orderPool = new TreeMap<String, Integer>();
 			for (String so : triples.keySet()) {
 				String str = so.substring(0, so.indexOf('\t'));
 				String otr = so.substring(so.indexOf('\t') + 1);
-				String ptr = pred + "(" + order + ")";// split the edge through
-														// different order, for
-														// example name(1) and
-														// name(2) and ...
+				Integer o = orderPool.get(str+">")==null?orderPool.get("<"+otr):orderPool.get(str+">");
+				String ptr = null;
+				if(o==null){
+					ptr = pred + "(" + order + ")";
+					orderPool.put(str+">", order);
+					orderPool.put("<"+otr, order);
+					order++;
+				}
+				else{
+					ptr = pred + "(" + o.intValue() + ")";
+				}
 				double sscore = 0, oscore = 0, pscore = 0;
 				if (scoring) {
 					if (str.equals(NamedConcept.TOP.getUri()))
@@ -368,12 +376,12 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 				}
 				pw.println(str + "\t" + sscore + "\t" + ptr + "\t" + pscore
 						+ "\t" + otr + "\t" + oscore);
-				order++;
 			}
 			pw.close();
 			triples.clear();
 			triples = null;
-
+			orderPool.clear();
+			orderPool = null;
 		}
 		root.close();
 		indiv2con.closeSearcher();

@@ -106,6 +106,9 @@ public class SummaryGraphUtil {
 		else if(uri.lastIndexOf("/") != -1) {
 			return uri.substring(uri.lastIndexOf("/") + 1);
 		}
+		else if(uri.lastIndexOf(":") != -1) {
+			return uri.substring(uri.lastIndexOf(":") + 1);
+		}
 		else {
 			return uri;
 		}
