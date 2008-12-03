@@ -31,6 +31,14 @@ public class Graph4TopK {
 	
 	private Parameters param;
 	
+	public SummaryGraphElement getElement(String ds,String uri) {
+		SummaryGraphElement tmp = null;
+		if(summaryGraph_HM.get(ds) != null) {
+			tmp = summaryGraph_HM.get(ds).element_hm.get(uri);
+		}
+		return tmp;
+	}
+	
 	/**
 	 * Find the element of the graph with the uri of element.
 	 * @param ds
