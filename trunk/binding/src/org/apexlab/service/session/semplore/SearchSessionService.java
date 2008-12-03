@@ -737,6 +737,7 @@ public class SearchSessionService {
 		
 		//TODO change this dirty override
 		if (dataSource.equals("dbpedia")) Util4NT.setTYPE("<http://www.w3.org/2004/02/skos/core#subject>");
+		else Util4NT.setTYPE("<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>");
 		
 		if (snippet_str != null) {
 			StringTokenizer tok = new StringTokenizer(snippet_str,"\n");
