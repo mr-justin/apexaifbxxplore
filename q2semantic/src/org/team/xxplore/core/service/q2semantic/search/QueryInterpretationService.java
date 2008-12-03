@@ -227,7 +227,7 @@ public class QueryInterpretationService {
 								subgraphList.remove(i);
 							
 							max = subgraphList.get(k-1).getCost();
-							break; // This is just for this version.
+							//break; // This is just for this version.
 						}
 					}
 				}
@@ -317,7 +317,7 @@ public class QueryInterpretationService {
 				else {
 					nextCursor = new Cursor(source, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
-							source.getTotalCost() + c.getCost());
+							source.getTotalCost() + c.getCost() + param.EDGE_SCORE);
 					neighbors.add(nextCursor);
 				}
 			}
@@ -332,7 +332,7 @@ public class QueryInterpretationService {
 				else {
 					nextCursor = new Cursor(target, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
-							target.getTotalCost() + c.getCost());
+							target.getTotalCost() + c.getCost() + param.EDGE_SCORE);
 					neighbors.add(nextCursor);
 				}
 			}

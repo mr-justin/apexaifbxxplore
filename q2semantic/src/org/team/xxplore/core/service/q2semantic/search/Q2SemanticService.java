@@ -16,7 +16,7 @@ import org.team.xxplore.core.service.q2semantic.SummaryGraphElement;
  */
 
 public class Q2SemanticService {
-	private Parameters param;
+	public Parameters param;
 	
 	private QueryInterpretationService inter;
 	
@@ -62,14 +62,12 @@ public class Q2SemanticService {
 	 * @param topNbGraphs
 	 * @return
 	 */
-	public LinkedList<Subgraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs, double prune, int distance,
-			double edge_score) {
+	public LinkedList<Subgraph> getPossibleGraphs(LinkedList<String> keywordList) {
 		
 		// TODO
 		// Note: I will certainly have to find a way to serialize this list of graphs to XML... (tpenin)
-		
-		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(keywordList,prune);
-		
+	
+		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(keywordList,param.prune);
 		
 		int count = 0;
 		for(String key : elementsMap.keySet()) {
@@ -85,7 +83,7 @@ public class Q2SemanticService {
 		
 		if(elementsMap.size()<keywordList.size()) return null;
 		
-		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, distance, topNbGraphs);
+		LinkedList<Subgraph> graphs = inter.computeQueries(elementsMap, param.distance, param.topNbGraphs);
 		return graphs;
 	}
 	
@@ -103,7 +101,7 @@ public class Q2SemanticService {
 				for(int i=0;i<tokens.length;i++) {
 					keywordList.add(tokens[i]);
 				}
-				qSemanticService.getPossibleGraphs(keywordList, 5, 0.95, 5, 0.5);
+				qSemanticService.getPossibleGraphs(keywordList);
 			}
 			else if(args[1].equals("suggestion")){
 				System.out.println("Please input the concepturi and ds:");
