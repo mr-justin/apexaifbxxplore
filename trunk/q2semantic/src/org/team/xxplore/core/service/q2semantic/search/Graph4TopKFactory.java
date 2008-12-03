@@ -131,10 +131,12 @@ public class Graph4TopKFactory {
 			
 			SummaryPart sg1 = this.summaryGraph_HM.get(s_ds);
 			SummaryPart sg2 = this.summaryGraph_HM.get(t_ds);
+			//System.out.println(source + "\t" + target);
 			if(sg1 != null && sg2 != null) {
-				SummaryGraphElement s = sg1.element_hm.get(source);
-				SummaryGraphElement t = sg2.element_hm.get(target);
+				SummaryGraphElement s = sg1.element_hm.get(source.substring(1,source.length() - 1));
+				SummaryGraphElement t = sg2.element_hm.get(target.substring(1,target.length() - 1));
 				if(s != null && t != null) {
+					
 					SummaryGraphEdge edge = new SummaryGraphEdge(s, t, SummaryGraphEdge.MAPPING_EDGE);
 					mappingGraph.addVertex(s);
 					mappingGraph.addVertex(t);
