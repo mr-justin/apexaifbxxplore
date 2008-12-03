@@ -15,6 +15,9 @@ public class Parameters {
 	
 	public double EDGE_SCORE = 0.5;
 	public double penalty = 1.0;
+	public double prune = 0.95;
+	public int distance = 5;
+	public int topNbGraphs = 5;
 	
 	public static void setConfigFilePath(String fn) {
 		configFilePath = fn;
