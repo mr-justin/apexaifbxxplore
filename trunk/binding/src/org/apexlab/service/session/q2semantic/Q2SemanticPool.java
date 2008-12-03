@@ -6,7 +6,7 @@ import org.apexlab.service.config.Config;
 
 
 public class Q2SemanticPool {
-	public static int q2semantic_num = 2;
+	public static int q2semantic_num = 1;
 	public static SearchQ2SemanticService pool [] = new SearchQ2SemanticService[q2semantic_num];
 	public static ReentrantLock [] locks = new ReentrantLock[q2semantic_num];
 	public static Semaphore sem = new Semaphore(q2semantic_num);
