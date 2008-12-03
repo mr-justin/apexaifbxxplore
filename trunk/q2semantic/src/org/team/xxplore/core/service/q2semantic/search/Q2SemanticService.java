@@ -69,17 +69,15 @@ public class Q2SemanticService {
 	
 		Map<String, Collection<SummaryGraphElement>> elementsMap = searchKeyword(keywordList,param.prune);
 		
-		int count = 0;
 		for(String key : elementsMap.keySet()) {
+			System.out.println(key);
 			Collection<SummaryGraphElement> coll = elementsMap.get(key);
 			for(SummaryGraphElement ele : coll) {
-				if( ele.getDatasource().equals("freebase") ) {
-					count ++;
-				}
+				System.out.println("\t" + ele.toString() + "\n\t" + ele.getMatchingScore() + "\t"+ ele.getDatasource() + "\t" + ele.getType());
+				System.out.println();
 			}
+			System.out.println("====================");
 		}
-		
-		System.out.println("freebase class: " + count);
 		
 		if(elementsMap.size()<keywordList.size()) return null;
 		

@@ -63,7 +63,7 @@ public class QueryInterpretationService {
 		
 		int count = 0;
 		
-		for (Subgraph g : subgraphs) {
+		for (Subgraph g : subgraphs) {	
 			System.out.println("========= Top" + (++count) + "==========");
 			System.out.println(g.toString());
 		}
@@ -223,8 +223,10 @@ public class QueryInterpretationService {
 						if (subgraphList.size() >= k) {
 							Collections.sort(subgraphList);
 							
-							for(int i=k; i<subgraphList.size(); i++)
-								subgraphList.remove(i);
+							int length = subgraphList.size();
+							for(int i=k; i<length; i++) {
+								subgraphList.remove(subgraphList.size() - 1);
+							}
 							
 							max = subgraphList.get(k-1).getCost();
 							//break; // This is just for this version.
@@ -309,32 +311,30 @@ public class QueryInterpretationService {
 			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
 				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
-						nextCursor = new Cursor(source, c.getMatchingElement(),
-								edge, c, c.getKeyword(),
-								source.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
-						neighbors.add(nextCursor);
+					nextCursor = new Cursor(source, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							source.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
 				}
 				else {
 					nextCursor = new Cursor(source, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
 							source.getTotalCost() + c.getCost() + param.EDGE_SCORE);
-					neighbors.add(nextCursor);
 				}
+				neighbors.add(nextCursor);
 			}
 			else if (edge.getSource().equals(e)) {
 				SummaryGraphElement target = edge.getTarget();
 				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
-						nextCursor = new Cursor(target, c.getMatchingElement(),
-								edge, c, c.getKeyword(),
-								target.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
-						neighbors.add(nextCursor);
+					nextCursor = new Cursor(target, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							target.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
 				}
 				else {
 					nextCursor = new Cursor(target, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
 							target.getTotalCost() + c.getCost() + param.EDGE_SCORE);
-					neighbors.add(nextCursor);
 				}
+				neighbors.add(nextCursor);
 			}
 		}
 

@@ -13,9 +13,9 @@ public class Parameters {
 	public static Parameters single = null;
 	public static String configFilePath = null;
 	
-	public double EDGE_SCORE = 0.5;
-	public double penalty = 1.0;
-	public double prune = 0.95;
+	public double EDGE_SCORE = 2.0;
+	public double penalty = 4.0;
+	public double prune = 0.0;
 	public int distance = 5;
 	public int topNbGraphs = 5;
 	
