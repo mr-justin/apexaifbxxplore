@@ -106,6 +106,8 @@ public class QueryInterpretationService {
 			String datasource = mappedConcept.get(uri);
 			graph = this.factory.getObj(datasource);
 			if(graph == null) continue;
+			
+			if(iGraph.getElement(datasource, uri) != null)
 			for (SummaryGraphEdge edge : graph.edgesOf(iGraph.getElement(datasource, uri))) {
 				SummaryGraphElement source = edge.getSource(), target = edge.getTarget();
 				if (source.getResource() instanceof NamedConcept && ((NamedConcept) source.getResource()).getUri().equals(uri)
@@ -142,7 +144,7 @@ public class QueryInterpretationService {
 				}
 			}
 		}
-		for(String r: res) System.out.println(r);
+//		for(String r: res) System.out.println(r);
 		return res;
 	}
 
