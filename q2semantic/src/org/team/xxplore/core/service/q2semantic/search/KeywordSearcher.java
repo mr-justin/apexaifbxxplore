@@ -70,7 +70,6 @@ public class KeywordSearcher {
 				if(q instanceof BooleanQuery) {
 					BooleanQuery bquery = (BooleanQuery)q;
 					for(BooleanClause clause :  bquery.getClauses()) {
-						System.out.println(clause.getQuery());
 						clause.setOccur(Occur.MUST);
 					}
 				}
@@ -107,11 +106,6 @@ public class KeywordSearcher {
 			for(int i = 0; i < Math.min(hits.length(),param.maxKeywordSearchResult); i++){
 				Document doc = hits.doc(i);
 				float score = hits.score(i);
-
-				System.out.println();
-				System.out.println();
-				System.out.println(score);
-				System.out.println(doc);
 				
 				if(score >= prune){
 					
@@ -133,11 +127,6 @@ public class KeywordSearcher {
 
 						TermQuery query = new TermQuery(term);
 						Hits results = searcher.search(query);
-
-						System.out.println("===========");
-						for(int j=0;j<results.length();j++) {
-							System.out.println(results.doc(j));
-						}
 						
 						Collection<INamedConcept> concepts;// = new HashSet<INamedConcept>();
 						if((results != null) && (results.length() > 0)){
@@ -161,13 +150,13 @@ public class KeywordSearcher {
 						vvertex.setNeighbors(neighbors);
 						res.add(vvertex);
 					}
-					else if(type.equals(CONCEPT)){
-						INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
-						SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
-						cvertex.setMatchingScore(score);
-						cvertex.setDatasource(doc.get(DS_FIELD));
-						res.add(cvertex);
-					}
+//					else if(type.equals(CONCEPT)){
+//						INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
+//						SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
+//						cvertex.setMatchingScore(score);
+//						cvertex.setDatasource(doc.get(DS_FIELD));
+//						res.add(cvertex);
+//					}
 					else if(type.equals(OBJECTPROPERTY)){
 						ObjectProperty objProp = new ObjectProperty(pruneString(doc.get(URI_FIELD)));
 						SummaryGraphElement pvertex = new SummaryGraphElement (objProp,SummaryGraphElement.RELATION);
