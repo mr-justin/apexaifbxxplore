@@ -95,8 +95,8 @@ public class SearchQ2SemanticService {
 	
 	public LinkedList<QueryGraph> getPossibleGraphs(LinkedList<String> keywordList, int topNbGraphs) {
 		//	LinkedList<String> tmp = new LinkedList<String>();
-			LinkedList<Subgraph> ret = q2semanticservice.getPossibleGraphs(keywordList, 5, 0.5, 5, 0.5);
-			
+			q2semanticservice.param.topNbGraphs = topNbGraphs;
+			LinkedList<Subgraph> ret = q2semanticservice.getPossibleGraphs(keywordList);
 			LinkedList<QueryGraph> graphs = this.getQueryGraphFromTopKResult(ret);
 			int count = 0;
 			for(QueryGraph graph : graphs) {
@@ -371,7 +371,7 @@ public class SearchQ2SemanticService {
 	
 	public static void main(String[] args) {
 		SearchQ2SemanticService service = new SearchQ2SemanticService(args[0]);
-		
+		int topk = Integer.parseInt(args[1]);
 		Scanner scanner = new Scanner(System.in);
 		while(true) {
 			System.out.println("Please input the keywords:");
@@ -381,7 +381,7 @@ public class SearchQ2SemanticService {
 			for(int i=0;i<tokens.length;i++) {
 				keywordList.add(tokens[i]);
 			}
-			service.getPossibleGraphs(keywordList,5);
+			service.getPossibleGraphs(keywordList,topk);
 			
 		} 
 	}
