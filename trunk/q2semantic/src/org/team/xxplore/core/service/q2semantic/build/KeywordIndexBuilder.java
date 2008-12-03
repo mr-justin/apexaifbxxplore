@@ -202,7 +202,7 @@ public class KeywordIndexBuilder{
 			String line;
 			
 			int type = CONCEPT;
-			Set<String> concept = new HashSet<String>();		
+			Set<String> concept = new HashSet<String>();
 			Set<LitAttr> literal = new HashSet<LitAttr>();
 			
 			int count = 0;

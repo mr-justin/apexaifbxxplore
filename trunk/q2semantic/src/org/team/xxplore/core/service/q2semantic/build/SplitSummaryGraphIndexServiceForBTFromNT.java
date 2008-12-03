@@ -460,23 +460,25 @@ public class SplitSummaryGraphIndexServiceForBTFromNT extends
 		}
 		root.close();
 
-		br = new LineNumberReader(new FileReader( para.objPropPool
-				+ File.separator + para.SUBCLASS));
-		while ((line = br.readLine()) != null) {
-			String[] part = line.split("\t");
-			SummaryGraphElement s = getElemFromUri(part[0], scoring);
-			SummaryGraphElement o = getElemFromUri(part[1], scoring);
-			if (!summaryGraph.containsVertex(s))
-				summaryGraph.addVertex(s);
-			if (!summaryGraph.containsVertex(o))
-				summaryGraph.addVertex(o);
-			SummaryGraphEdge edge = new SummaryGraphEdge(s, o,
-					SummaryGraphEdge.SUBCLASS_EDGE);
-			if (!summaryGraph.containsEdge(edge))
-				summaryGraph.addEdge(s, o, edge);
+		if(new File( para.objPropPool + File.separator + para.SUBCLASS).exists())
+		{
+			br = new LineNumberReader(new FileReader( para.objPropPool
+					+ File.separator + para.SUBCLASS));
+			while ((line = br.readLine()) != null) {
+				String[] part = line.split("\t");
+				SummaryGraphElement s = getElemFromUri(part[0], scoring);
+				SummaryGraphElement o = getElemFromUri(part[1], scoring);
+				if (!summaryGraph.containsVertex(s))
+					summaryGraph.addVertex(s);
+				if (!summaryGraph.containsVertex(o))
+					summaryGraph.addVertex(o);
+				SummaryGraphEdge edge = new SummaryGraphEdge(s, o,
+						SummaryGraphEdge.SUBCLASS_EDGE);
+				if (!summaryGraph.containsEdge(edge))
+					summaryGraph.addEdge(s, o, edge);
+			}
+			br.close();
 		}
-		br.close();
-
 		System.out.println("write splitted summary graph");
 		writeSummaryGraph(summaryGraph, para.summaryObj);
 		writeSummaryGraphAsRDF(summaryGraph, para.summaryRDF);
