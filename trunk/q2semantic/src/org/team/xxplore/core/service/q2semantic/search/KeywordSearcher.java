@@ -150,13 +150,13 @@ public class KeywordSearcher {
 						vvertex.setNeighbors(neighbors);
 						res.add(vvertex);
 					}
-//					else if(type.equals(CONCEPT)){
-//						INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
-//						SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
-//						cvertex.setMatchingScore(score);
-//						cvertex.setDatasource(doc.get(DS_FIELD));
-//						res.add(cvertex);
-//					}
+					else if(type.equals(CONCEPT)){
+						INamedConcept con = new NamedConcept(pruneString(doc.get(URI_FIELD)));
+						SummaryGraphElement cvertex = new SummaryGraphElement (con,SummaryGraphElement.CONCEPT);
+						cvertex.setMatchingScore(score);
+						cvertex.setDatasource(doc.get(DS_FIELD));
+						res.add(cvertex);
+					}
 					else if(type.equals(OBJECTPROPERTY)){
 						ObjectProperty objProp = new ObjectProperty(pruneString(doc.get(URI_FIELD)));
 						SummaryGraphElement pvertex = new SummaryGraphElement (objProp,SummaryGraphElement.RELATION);

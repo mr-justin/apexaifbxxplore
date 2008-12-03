@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
+import java.util.Queue;
 import java.util.Set;
 
 import org.jgrapht.graph.Pseudograph;
@@ -161,10 +162,11 @@ public class QueryInterpretationService {
 
 		double max = Double.MAX_VALUE;
 		ExpansionQueue expansionQueue = new ExpansionQueue(elements);
-		List<Subgraph> subgraphList = new LinkedList<Subgraph>();
+		ArrayList<Subgraph> subgraphList = new ArrayList<Subgraph>();
 		
 		Set<String> keywords = elements.keySet();
-		HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>> map = new HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>>();
+		HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>> map = 
+			new HashMap<SummaryGraphElement, HashSet<SummaryGraphElement>>();
 		for (String keyword : keywords) {
 			for (SummaryGraphElement ele : elements.get(keyword)) {
 				Set<SummaryGraphElement> ele_set = 
@@ -223,12 +225,30 @@ public class QueryInterpretationService {
 						if (subgraphList.size() >= k) {
 							Collections.sort(subgraphList);
 							
-							int length = subgraphList.size();
-							for(int i=k; i<length; i++) {
-								subgraphList.remove(subgraphList.size() - 1);
+							ArrayList<Subgraph> temp = subgraphList;
+							subgraphList = new ArrayList<Subgraph>();
+							
+							for(int i=0;i<k;i++) {
+								subgraphList.add(temp.get(i));
 							}
 							
-							max = subgraphList.get(k-1).getCost();
+//							for(int i=0;i<temp.size();i++) {
+//								boolean flag = false;
+//								for(int j=0;j<i;j++) {
+//									if(this.isSame(temp.get(i),temp.get(j))) {
+//										flag = true;
+//										break;
+//									}
+//								}
+//								if(!flag) {
+//									subgraphList.add(temp.get(i));
+//									if(subgraphList.size() >= k) {
+//										break;
+//									}
+//								}
+//							}
+							
+							max = subgraphList.get(subgraphList.size() - 1).getCost();
 							//break; // This is just for this version.
 						}
 					}
@@ -250,6 +270,29 @@ public class QueryInterpretationService {
 		
 		return subgraphList;
 	}
+	
+//	private boolean isSame(Subgraph g1,Subgraph g2) {
+//		Map<String, Queue<Cursor>> t1 = g1.getConnectingVertex().getCursors();
+//		Map<String, Queue<Cursor>> t2 = g2.getConnectingVertex().getCursors();
+//		
+//		Set<SummaryGraphElement> s1 = new HashSet<SummaryGraphElement>();
+//		Set<SummaryGraphElement> s2 = new HashSet<SummaryGraphElement>();
+//		for(String key : t1.keySet()) {
+//			Queue<Cursor> q = t1.get(key);
+//			for(Cursor c : q) {
+//				s1.add(c.getMatchingElement());
+//			}
+//		}
+//		
+//		for(String key : t2.keySet()) {
+//			Queue<Cursor> q = t1.get(key);
+//			for(Cursor c : q) {
+//				s2.add(c.getMatchingElement());
+//			}
+//		}
+//		
+//		return s1.equals(s2);
+//	}
 
 	/**
 	 * After the connect vertex is found. Get the subgraphs.
@@ -310,30 +353,30 @@ public class QueryInterpretationService {
 		for (SummaryGraphEdge edge : ele_coll) {
 			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
-				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
-					nextCursor = new Cursor(source, c.getMatchingElement(),
-							edge, c, c.getKeyword(),
-							source.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
-				}
-				else {
+//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
+//					nextCursor = new Cursor(source, c.getMatchingElement(),
+//							edge, c, c.getKeyword(),
+//							source.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
+//				}
+//				else {
 					nextCursor = new Cursor(source, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
 							source.getTotalCost() + c.getCost() + param.EDGE_SCORE);
-				}
+//				}
 				neighbors.add(nextCursor);
 			}
 			else if (edge.getSource().equals(e)) {
 				SummaryGraphElement target = edge.getTarget();
-				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
-					nextCursor = new Cursor(target, c.getMatchingElement(),
-							edge, c, c.getKeyword(),
-							target.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
-				}
-				else {
+//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
+//					nextCursor = new Cursor(target, c.getMatchingElement(),
+//							edge, c, c.getKeyword(),
+//							target.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
+//				}
+//				else {
 					nextCursor = new Cursor(target, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
 							target.getTotalCost() + c.getCost() + param.EDGE_SCORE);
-				}
+//				}
 				neighbors.add(nextCursor);
 			}
 		}
@@ -348,13 +391,11 @@ public class QueryInterpretationService {
 	 */
 	private class ExpansionQueue {
 		Map<String, PriorityQueue<Cursor>> m_queue;
-		Set<String> m_keywords;
 		ArrayList<PriorityQueue<Cursor>> m_queues;
 		int roundRobin = 0;
 
 		private ExpansionQueue(Map<String, Collection<SummaryGraphElement>> elements) {
 			m_queue = new HashMap<String, PriorityQueue<Cursor>>();
-			m_keywords = elements.keySet();
 			m_queues = new ArrayList<PriorityQueue<Cursor>>();
 			for (String k : elements.keySet()) {
 				PriorityQueue<Cursor> q = new PriorityQueue<Cursor>();
