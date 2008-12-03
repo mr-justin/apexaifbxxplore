@@ -35,6 +35,7 @@ public class QueryInterpretationService {
 
 	public MappingIndexSearcher mis;
 	public Graph4TopKFactory factory;
+	public Graph4TopK iGraph;
 	
 	public QueryInterpretationService() {
 		param = Parameters.getParameters();
@@ -57,7 +58,7 @@ public class QueryInterpretationService {
 			return null;
 		}
 		
-		Graph4TopK iGraph = factory.createGraphAdapter(elements);
+		iGraph = factory.createGraphAdapter(elements);
 		factory.refreshFactory();
 		
 		Collection<Subgraph> subgraphs = getTopKSubgraphs(iGraph,elements, distance, k);
@@ -106,8 +107,7 @@ public class QueryInterpretationService {
 			graph = this.factory.getObj(datasource);
 			if(graph == null) continue;
 			for (SummaryGraphEdge edge : graph.edgeSet()) {
-				SummaryGraphElement source = edge.getSource(), target = edge
-						.getTarget();
+				SummaryGraphElement source = edge.getSource(), target = edge.getTarget();
 				if (source.getResource() instanceof NamedConcept && ((NamedConcept) source.getResource()).getUri().equals(uri)
 						&& target.getType() == SummaryGraphElement.RELATION) {
 					res.add(((NamedConcept) source.getResource()).getUri()
@@ -353,30 +353,30 @@ public class QueryInterpretationService {
 		for (SummaryGraphEdge edge : ele_coll) {
 			if(edge.getTarget().equals(e)) {
 				SummaryGraphElement source = edge.getSource();
-//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
-//					nextCursor = new Cursor(source, c.getMatchingElement(),
-//							edge, c, c.getKeyword(),
-//							source.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
-//				}
-//				else {
+				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+					nextCursor = new Cursor(source, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							source.getTotalCost() + c.getCost());
+				}
+				else {
 					nextCursor = new Cursor(source, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
 							source.getTotalCost() + c.getCost() + param.EDGE_SCORE);
-//				}
+				}
 				neighbors.add(nextCursor);
 			}
 			else if (edge.getSource().equals(e)) {
 				SummaryGraphElement target = edge.getTarget();
-//				if (edge.getEdgeLabel().equals(SummaryGraphEdge.SUBCLASS_EDGE)) {
-//					nextCursor = new Cursor(target, c.getMatchingElement(),
-//							edge, c, c.getKeyword(),
-//							target.getTotalCost() + c.getCost() + param.EDGE_SCORE + param.penalty);
-//				}
-//				else {
+				if (edge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE)) {
+					nextCursor = new Cursor(target, c.getMatchingElement(),
+							edge, c, c.getKeyword(),
+							target.getTotalCost() + c.getCost());
+				}
+				else {
 					nextCursor = new Cursor(target, c.getMatchingElement(),
 							edge, c, c.getKeyword(),
 							target.getTotalCost() + c.getCost() + param.EDGE_SCORE);
-//				}
+				}
 				neighbors.add(nextCursor);
 			}
 		}
