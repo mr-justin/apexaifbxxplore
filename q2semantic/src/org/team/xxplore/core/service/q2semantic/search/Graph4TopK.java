@@ -74,7 +74,7 @@ public class Graph4TopK {
 				start_element.add(e);
 			}
 		}
-		int count = 0;
+		int count = 1000;
 		for(String key : keywords.keySet()) {
 			Collection<SummaryGraphElement> coll = keywords.get(key);
 
