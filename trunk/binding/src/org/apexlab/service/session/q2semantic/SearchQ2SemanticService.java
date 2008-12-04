@@ -98,6 +98,7 @@ public class SearchQ2SemanticService {
 			q2semanticservice.param.topNbGraphs = topNbGraphs;
 			LinkedList<Subgraph> ret = q2semanticservice.getPossibleGraphs(keywordList);
 			LinkedList<QueryGraph> graphs = this.getQueryGraphFromTopKResult(ret);
+			
 			int count = 0;
 			for(QueryGraph graph : graphs) {
 				System.out.println("==============" +  "graph" + (++count) + "==========");
@@ -130,7 +131,6 @@ public class SearchQ2SemanticService {
 			LinkedList<GraphEdge> graphEdges = new LinkedList<GraphEdge>();
 			LinkedList<Facet> graphVertexes = new LinkedList<Facet>();
 			
-			int topNO = 0;
 			for(Facet f: con2rel.keySet()) {
 				for(Facet r: con2rel.get(f)) {
 					if(rel2con.get(r) != null) {
@@ -141,7 +141,7 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						Concept top_concept = new Concept(""+topNO++,"<TOP_Category>",r.getSource());
+						Concept top_concept = new Concept("","<TOP_Category>",r.getSource());
 						graphVertexes.add(top_concept);
 						GraphEdge edge = new GraphEdge(f, top_concept, r);
 						graphEdges.add(edge);
@@ -159,7 +159,7 @@ public class SearchQ2SemanticService {
 						}
 					}
 					else {
-						Concept top_concept = new Concept(""+topNO++,"<TOP_Category>",a.getSource());
+						Concept top_concept = new Concept("","<TOP_Category>",a.getSource());
 						graphVertexes.add(top_concept);
 						GraphEdge edge = new GraphEdge(f, top_concept, a);
 						graphEdges.add(edge);
@@ -170,7 +170,7 @@ public class SearchQ2SemanticService {
 			for(Facet fac : rel2con.keySet()) {
 				if(!rel2con.get(fac).isVisited) {
 					for(Facet con : rel2con.get(fac).sf) {
-						Concept top_concept = new Concept(""+topNO++,"<TOP_Category>",fac.getSource());
+						Concept top_concept = new Concept("","<TOP_Category>",fac.getSource());
 						graphVertexes.add(top_concept);
 						graphEdges.add(new GraphEdge(top_concept,con,fac));
 					}
@@ -180,7 +180,7 @@ public class SearchQ2SemanticService {
 			for(Facet fac : attr2lit.keySet()) {
 				if(!attr2lit.get(fac).isVisited) {
 					for(Facet lit : attr2lit.get(fac).sf) {
-						Concept top_concept = new Concept(""+topNO++,"<TOP_Category>",fac.getSource());
+						Concept top_concept = new Concept("","<TOP_Category>",fac.getSource());
 						graphVertexes.add(top_concept);
 						graphEdges.add(new GraphEdge(top_concept,lit,fac));
 					}
@@ -201,29 +201,9 @@ public class SearchQ2SemanticService {
 			}
 //			================ by kaifengxu
 			LinkedList<GraphEdge> mappingEdges = new LinkedList<GraphEdge>();
-			HashMap<String, Facet> uri2facet = new HashMap<String, Facet>();
-			for(GraphEdge edge: graphEdges)
-			{
-				uri2facet.put(edge.getFromElement().getURI()+edge.getFromElement().getSource().getName(), edge.getFromElement());
-				uri2facet.put(edge.getDecorationElement().getURI()+edge.getDecorationElement().getSource().getName(), edge.getDecorationElement());
-				uri2facet.put(edge.getToElement().getURI()+edge.getToElement().getSource().getName(), edge.getToElement());
-			}
-			Collection<Mapping> mappings;
-			HashSet<String> delDupMappingEdge = new HashSet<String>();
-			
-			mappings = q2semanticservice.getInter().factory.mappings;
-			for(Mapping mapping: mappings)
-			{
-				String uriA = mapping.getSource()+mapping.getSourceDsURI();
-				String uriB = mapping.getTarget()+mapping.getTargetDsURI();
-				Facet mappingA = uri2facet.get(uriA);
-				Facet mappingB = uri2facet.get(uriB);
-				if(mappingA != null && mappingB != null && !delDupMappingEdge.contains(uriA+uriB))
-				{
-					delDupMappingEdge.add(uriA+uriB);
-					mappingEdges.add(new GraphEdge(mappingA, mappingB, null));
-					System.out.println("add mappingedge: "+mappingA.getURI()+"("+mappingA.getSource().getName()+") | "+mappingB.getURI()+"("+mappingB.getSource().getName()+")");
-				}
+			for(SummaryGraphEdge mappingEdge: qg.edgeSet()){
+				if(mappingEdge.getEdgeLabel().equals(SummaryGraphEdge.MAPPING_EDGE))
+					mappingEdges.add(new GraphEdge(getFacet(mappingEdge.getSource()), getFacet(mappingEdge.getTarget()), null));
 			}
 			result.add(new QueryGraph(null, graphVertexes, graphEdges, mappingEdges));
 		}
