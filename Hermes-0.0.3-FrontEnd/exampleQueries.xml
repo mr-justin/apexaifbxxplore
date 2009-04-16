@@ -1,0 +1,50 @@
+<exampleQueries>
+	<query>
+		<keywords>project iswc person</keywords>
+		<nlDescription>Get the topic presented by people attending the ISWC conference</nlDescription>
+	</query>
+	<query>
+		<keywords>studer publication</keywords>
+		<nlDescription>Find the publication of Rudi Studer</nlDescription>
+	</query>
+	<query>
+		<keywords>undergraduate topic</keywords>
+		<nlDescription>Find the topic of undergraduate</nlDescription>
+	</query>
+	<query>
+		<keywords>rudi proceedings</keywords>
+		<nlDescription>Find the proceedings of Rudi Studer</nlDescription>
+	</query>
+	<query>
+		<keywords>pinocchio film</keywords>
+		<nlDescription>Find the film pinocchio</nlDescription>
+	</query>
+	<query>
+		<keywords>Boston person inproceedings</keywords>
+		<nlDescription>Find the homepage of Rudi Studer</nlDescription>
+	</query>
+	<query>
+		<keywords>ISWC2008 Rudi</keywords>
+		<nlDescription>Find the publications of Rudi as the organization chair of ISWC 2008</nlDescription>
+	</query>
+	<query>
+		<keywords>company owner "shopping center"</keywords>
+		<nlDescription>Find the owners of shopping center company</nlDescription>
+	</query>
+	<query>
+		<keywords>"Ronny Siebes" InProceedings</keywords>
+		<nlDescription>Find InProceedings of Ronny Siebes</nlDescription>
+	</query>
+	<query>
+		<keywords>tom iswc2008 proceedings</keywords>
+		<nlDescription>Find proceedings of tom about the iswc2008</nlDescription>
+	</query>
+	<query>
+		<keywords>turing award</keywords>
+		<nlDescription>Find the turing award person's work institution</nlDescription>
+	</query>
+	<query>
+		<keywords>american football</keywords>
+		<nlDescription>Find the birth place of american football player</nlDescription>
+	</query>
+</exampleQueries>

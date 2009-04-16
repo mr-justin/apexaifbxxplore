@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute" currentState="queryState" 
+	xmlns:ravis="org.un.cava.birdeye.ravis.graphLayout.visual.*"
+	creationComplete="{
+    				   	/* Ensures that the event handler knows about interface elements */
+    				   	eventHandler.registerComponents(searchHistoryView, resultView, refineView, initialSearchView, searchEngine);
+    				   	/* Pass the remote object to the searchEngine class */
+    				   	searchEngine.setRemoteObjects(SemploreUIService, Q2SemanticUIService);
+    				  }" backgroundGradientAlphas="[1.0, 1.0]" backgroundGradientColors="[#EAEAEA, #FFFFFF]">
+	
+	<!-- Creation of the objects -->
+    <mx:Script><![CDATA[
+    	import interfaceElements.AboutDialog;
+    	import dataStructure.GraphEdge;
+    	import mx.controls.Alert;
+    	import dataStructure.Litteral;
+    	import dataStructure.ArraySnippet;
+    	import dataStructure.Query;
+    	import mx.controls.Label;
+    	import mx.containers.Canvas;
+    	import dataStructure.RelationSuggestion;
+    	import dataStructure.ConceptSuggestion;
+    	import dataStructure.Facet;
+    	import mx.collections.ArrayCollection;
+    	import interfaceElements.InitialSearchView;
+    	import interfaceElements.SearchHistoryView;
+        import interfaceElements.EventHandler;
+        import interfaceElements.ResultView;
+        import interfaceElements.RefineView;
+        import interfaceBackend.SearchEngine;
+    	import dataStructure.Concept;
+    	import dataStructure.Relation;
+    	import dataStructure.QueryGraph;
+    	import dataStructure.Instance;
+    	import dataStructure.Couple;
+    	import dataStructure.Attribute;
+    	import dataStructure.Keywords;
+    	import interfaceBackend.Functions;
+    	
+    	// Erase icon
+    	[Embed(source='../Pictures/back_erase.png')]
+		[Bindable]
+		public var eraseIcon:Class; 
+    	
+    	// To force class compilation into the SWF file
+    	private var att:Attribute;
+    	private var con:Concept;
+    	private var con2:ConceptSuggestion;
+    	private var cou:Couple;
+    	private var ins:Instance;
+    	private var key:Keywords;
+    	private var lit:Litteral;
+    	private var que:QueryGraph;
+    	private var ged:GraphEdge;
+    	private var rel:Relation;
+    	private var rel2:RelationSuggestion;
+    	
+    	// Function that changes the current state
+        public function changeState(stateName:String) : void {
+        	currentState = stateName;
+        }
+
+		// The event handler
+		private var eventHandler:EventHandler = new EventHandler(changeState);
+		// The initial search view
+		private var initialSearchView:InitialSearchView = new InitialSearchView(eraseIcon, eventHandler);
+        // The search history view
+        private var searchHistoryView:SearchHistoryView = new SearchHistoryView(eraseIcon, eventHandler);
+        // The result display view
+        private var resultView:ResultView = new ResultView(eventHandler);
+        // The facet display view
+        private var refineView:RefineView = new RefineView(eventHandler);
+        // The search engine
+        private var searchEngine:SearchEngine = new SearchEngine(eventHandler);
+	]]></mx:Script>
+	
+	<!-- Plug to the Semplore Backend -->
+    <mx:RemoteObject 
+    	id="SemploreUIService" 
+    	destination="SemploreService"
+    	source="org.team.xxplore.core.service.search.session.SearchSessionService"
+    	showBusyCursor="true">
+    	
+    	<mx:method name="search"
+			result="searchEngine.search_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+			
+		<mx:method name="getPage"
+			result="searchEngine.getPage_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+    	
+    	<mx:method name="refine"
+			result="searchEngine.refine_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+			
+		<mx:method name="undoLastRefinement"
+			result="searchEngine.undoLastRefinement_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+			
+		<mx:method name="getSeeAlsoItem"
+			result="searchEngine.getSeeAlsoItem_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+			
+		<mx:method name="getArraySnippet"
+			result="searchEngine.getArraySnippet_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+	
+    </mx:RemoteObject>
+    
+    <!-- Plug to the Q2Semantic backend -->
+    <mx:RemoteObject 
+    	id="Q2SemanticUIService" 
+    	destination="Q2SemanticService"
+    	source="q2semantic.session.SearchQ2SematicService"
+    	showBusyCursor="true">
+		
+		<mx:method name="getPossibleGraphs"
+			result="searchEngine.getPossibleGraphs_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+			
+		<mx:method name="getSuggestion"
+			result="searchEngine.getSuggestionsInOtherSource_answer(event)"
+			fault="searchEngine.serverFailure(event)"/>
+			
+    </mx:RemoteObject>
+	
+	<!-- UI -->
+	<mx:states>
+		<mx:State name="searchState" enterState="searchHistoryView.register(historyBarArea);
+    				   	resultView.register(resultArea, resultItemsVBox, pageNumHBox, resultPanel);
+    				   	refineView.register(refineArea, keywordInput, conceptFacetArea, relationFacetArea, externConceptFacetArea, externRelationFacetArea, goRefineButton);">
+			<mx:AddChild relativeTo="{vbox1}" position="lastChild">
+				<mx:ApplicationControlBar width="100%" cornerRadius="0" fontSize="12" fillAlphas="[1.0, 1.0]" fillColors="[#E6E6E6, #E6E6E6]">
+					<mx:HBox width="100%" height="100%">
+						<mx:HBox id="historyBarArea" horizontalGap="4">
+						</mx:HBox>
+						<mx:Spacer width="100%" minWidth="30"/>
+						<mx:Button label="New Search" click="eventHandler.newSearchButtonOnClick(false)" toolTip="Click to start a new search"/>
+					</mx:HBox>
+				</mx:ApplicationControlBar>
+			</mx:AddChild>
+			<mx:SetStyle target="{vbox1}" name="verticalGap" value="0"/>
+			<mx:AddChild relativeTo="{vbox1}" position="lastChild">
+				<mx:HBox width="100%" height="100%" horizontalGap="0" id="hbox3">
+					<mx:Panel width="240" height="100%" layout="absolute" id="panel1" title="Refine your Query" minWidth="240" fontSize="12" cornerRadius="0" borderColor="#E6E6E6" borderStyle="none" backgroundColor="#E6E6E6">
+						<mx:VBox x="0" y="0" width="100%" height="100%">
+							<mx:Canvas width="100%" height="100%" id="refineCanvas" horizontalScrollPolicy="off">
+								<mx:VBox height="100%" paddingBottom="5" paddingLeft="5" paddingRight="5" paddingTop="5" verticalGap="20" id="refineArea" x="0" y="0" horizontalScrollPolicy="off" width="100%" backgroundColor="#FFFFFF">
+									<mx:VBox maxWidth="194" minWidth="194" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+										<mx:Button label="Keywords" enabled="false" textAlign="left" disabledColor="#000000" fillAlphas="[1.0, 1.0]" fillColors="[#88FF7F, #0CFF00]" borderColor="#000000" width="100%" cornerRadius="0"/>
+										<mx:VBox width="100%" verticalGap="0">
+											<mx:HBox width="100%" horizontalGap="0">
+												<mx:TextInput width="100%" id="keywordInput"/>
+												<mx:Button label="Go" width="50" id="goRefineButton" cornerRadius="0"/>
+											</mx:HBox>
+										</mx:VBox>
+									</mx:VBox>
+									<mx:VBox maxWidth="194" minWidth="194" verticalScrollPolicy="off" horizontalScrollPolicy="off">
+										<mx:Button label="Concepts" width="100%" enabled="false" textAlign="left" disabledColor="#000000" fillAlphas="[1.0, 1.0]" fillColors="[#77AAFF, #3B85FF]" borderColor="#000000" cornerRadius="0"/>
+										<mx:VBox width="100%" verticalGap="0" id="conceptFacetArea">
+										</mx:VBox>
+									</mx:VBox>
+									<mx:VBox maxWidth="194" minWidth="194" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+										<mx:Button label="Relations" width="100%" enabled="false" textAlign="left" disabledColor="#000000" fillAlphas="[1.0, 1.0]" fillColors="[#FFC06E, #FF7E00]" borderColor="#000000" cornerRadius="0"/>
+										<mx:VBox width="100%" verticalGap="0" id="relationFacetArea">
+										</mx:VBox>
+									</mx:VBox>
+									<mx:VBox maxWidth="194" minWidth="194" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+										<mx:Button label="Concepts (Other Sources)" width="100%" enabled="false" textAlign="left" disabledColor="#000000" fillAlphas="[1.0, 1.0]" fillColors="[#77AAFF, #3B85FF]" borderColor="#000000" cornerRadius="0"/>
+										<mx:VBox width="100%" verticalGap="0" id="externConceptFacetArea">
+										</mx:VBox>
+									</mx:VBox>
+									<mx:VBox maxWidth="194" minWidth="194" horizontalScrollPolicy="off" verticalScrollPolicy="off">
+										<mx:Button label="Relations (Other sources)" width="100%" enabled="false" textAlign="left" disabledColor="#000000" fillAlphas="[1.0, 1.0]" fillColors="[#FFC06E, #FF7E00]" borderColor="#000000" cornerRadius="0"/>
+										<mx:VBox width="100%" verticalGap="0" id="externRelationFacetArea">
+										</mx:VBox>
+									</mx:VBox>
+								</mx:VBox>
+							</mx:Canvas>
+						</mx:VBox>
+					</mx:Panel>
+					<mx:VRule height="100%" strokeColor="#8A8A8A"/>
+					<mx:Panel layout="absolute" id="resultPanel" height="100%" title="Browse the Results" width="100%" fontSize="12" cornerRadius="0" borderStyle="none" backgroundColor="#E6E6E6">
+						<mx:VBox x="0" y="0" width="100%" height="100%" verticalGap="2" id="resultArea" backgroundColor="#FFFFFF">
+							<mx:Canvas width="100%" height="100%" horizontalScrollPolicy="off">
+								<mx:VBox width="100%" height="100%" id="resultItemsVBox" verticalScrollPolicy="on" horizontalScrollPolicy="off" backgroundColor="#FFFFFF">
+								</mx:VBox>
+							</mx:Canvas>
+							<mx:HRule width="100%" strokeColor="#848484"/>
+							<mx:Canvas width="100%" height="24">
+								<mx:HBox x="0" y="0" width="100%" height="100%" verticalAlign="middle">
+									<mx:HBox height="100%" id="pageNumHBox" width="100%" horizontalAlign="center">
+									</mx:HBox>
+								</mx:HBox>
+							</mx:Canvas>
+						</mx:VBox>
+					</mx:Panel>
+				</mx:HBox>
+			</mx:AddChild>
+			<mx:AddChild relativeTo="{hbox3}" position="before">
+				<mx:HRule width="100%" strokeColor="#8A8A8A"/>
+			</mx:AddChild>
+		</mx:State>
+		<mx:State name="queryState" enterState="initialSearchView.register(graphDrawingZone, initialKeywordInput, disambiguateButton, 
+												previousGraphButton, nextGraphButton, variableComboBox, 
+												graphSearchButton, keywordSearchButton, feedBackLabel, mappingDataArray, exampleQueriesLinkBtn);">
+			<mx:AddChild relativeTo="{vbox1}" position="lastChild">
+				<mx:Panel layout="absolute" title="Compose your Query" width="100%" height="100%" id="panel2" fontSize="12" cornerRadius="0" borderStyle="none" backgroundColor="#E6E6E6">
+					<mx:HBox width="100%" height="100%" paddingLeft="5" paddingRight="5" paddingBottom="5" paddingTop="5" backgroundColor="#FFFFFF" backgroundAlpha="0.0">
+						<mx:VBox width="100%" height="100%">
+							<mx:HBox width="100%" verticalAlign="middle">
+								<mx:TextInput id="initialKeywordInput" borderStyle="inset" fontSize="12"/>
+								<mx:Button label="Translate" id="disambiguateButton" enabled="false" fontSize="12" toolTip="Translate keywords to structured query"/>
+								<mx:Button label="Search" id="keywordSearchButton" enabled="false" fontSize="12" toolTip="Search using classical keyword search"/>
+								<mx:Spacer width="100%"/>
+								<mx:LinkButton label="Example Queries" color="#003CFF" id="exampleQueriesLinkBtn" click="initialSearchView.createPopUp()" fontSize="12"/>
+							</mx:HBox>
+							<mx:VBox width="100%" height="100%" horizontalAlign="center" verticalAlign="middle" id="graphDrawingZone" backgroundColor="#FFFFFF" borderStyle="inset" borderColor="#B7BABC">
+							</mx:VBox>
+						</mx:VBox>
+						<mx:VBox height="100%" verticalGap="0" width="20%">
+							<mx:Spacer height="28"/>
+							<mx:Label text="Links between data sources" fontWeight="bold" fontSize="12"/>
+							<mx:HRule width="100%"/>
+							<mx:Spacer height="10"/>
+							<mx:DataGrid width="100%" id="mappingDataArray" showHeaders="false" fontSize="12" borderStyle="inset">
+								<mx:columns>
+									<mx:DataGridColumn headerText="" dataField="element1"/>
+									<mx:DataGridColumn headerText="" dataField="element2"/>
+								</mx:columns>
+							</mx:DataGrid>
+							<mx:Spacer height="18"/>
+							<mx:Label id="feedBackLabel" fontWeight="bold" text="Suggestion" fontSize="12"/>
+							<mx:HRule width="100%"/>
+							<mx:Spacer height="10"/>
+							<mx:HBox width="100%">
+								<mx:Button label="&lt; Previous" id="previousGraphButton" enabled="false" width="100%" fontSize="12"/>
+								<mx:Button label="Next &gt;" id="nextGraphButton" enabled="false" width="100%" fontSize="12"/>
+							</mx:HBox>
+							<mx:Spacer height="18"/>
+							<mx:Label text="Result Type" fontWeight="bold" fontSize="12"/>
+							<mx:HRule width="100%"/>
+							<mx:Spacer height="10"/>
+							<mx:ComboBox id="variableComboBox" enabled="false" width="100%" fontSize="12"></mx:ComboBox>
+							<mx:Spacer height="18"/>
+							<mx:Label text="Search" fontWeight="bold" fontSize="12"/>
+							<mx:HRule width="100%"/>
+							<mx:Spacer height="10"/>
+							<mx:Button label="Get Results" id="graphSearchButton" enabled="false" width="100%" fontSize="12"/>
+							<mx:Spacer height="100%"/>
+							<mx:Label text="Legend" fontWeight="bold" fontSize="12"/>
+							<mx:HRule width="100%"/>
+							<mx:Spacer height="10"/>
+							<mx:HBox width="100%">
+								<mx:Canvas width="24" height="18" borderColor="#000000" cornerRadius="2" borderStyle="solid" backgroundColor="#00AD00">
+								</mx:Canvas>
+								<mx:Label text="Concept" fontSize="12"/>
+								<mx:Spacer width="10"/>
+								<mx:Canvas width="24" height="18" cornerRadius="2" borderColor="#000000" borderStyle="solid" backgroundColor="#FF0000">
+								</mx:Canvas>
+								<mx:Label text="Value" fontSize="12"/>
+								<mx:Spacer width="10"/>
+								<mx:Canvas width="24" height="18" cornerRadius="2" borderStyle="solid" borderColor="#000000" backgroundColor="#0000FF">
+								</mx:Canvas>
+								<mx:Label text="Relation" fontSize="12"/>
+							</mx:HBox>
+						</mx:VBox>
+					</mx:HBox>
+				</mx:Panel>
+			</mx:AddChild>
+			<mx:SetStyle target="{vbox1}" name="verticalGap" value="0"/>
+		</mx:State>
+	</mx:states>
+	<mx:VBox x="0" y="0" width="100%" height="100%" id="vbox1">
+		<mx:ApplicationControlBar width="100%" dock="true" verticalAlign="middle" cornerRadius="0" fillAlphas="[1.0, 1.0]" fillColors="[#5A98FF, #3B85FF]" id="applicationcontrolbar1">
+			<mx:HBox width="100%" verticalAlign="middle" id="hbox2">
+				<mx:Image source="@Embed(source='../Pictures/hermes32x32.png')" width="32" height="32"/>
+				<mx:Text text="Hermes" fontSize="16" fontWeight="bold" fontStyle="normal" color="#FFFFFF" alpha="1.0" id="text1" fontFamily="Georgia"/>
+				<mx:Label text="A Travel through Semantics" color="#FFFFFF" fontSize="12" id="label1" fontStyle="italic"/>
+				<mx:Spacer width="100%" id="spacer1"/>
+				<mx:LinkButton color="#FFFFFF" id="linkbutton1" label="Contact Us" click="Functions.goToEmail('searchWebDB@apex.sjtu.edu.cn')" fontSize="12" icon="@Embed(source='../Pictures/contact.png')"/>
+				<mx:LinkButton color="#FFFFFF" id="linkbutton2" label="Help" click="Functions.goToURL('help.html')" fontSize="12" icon="@Embed(source='../Pictures/help.png')"/>
+				<mx:LinkButton color="#FFFFFF" id="linkbutton3" label="About" click="AboutDialog.showAboutDialog(vbox1)" fontSize="12" icon="@Embed(source='../Pictures/about.png')"/>
+			</mx:HBox>
+		</mx:ApplicationControlBar>
+	</mx:VBox>
+	
+</mx:Application>
