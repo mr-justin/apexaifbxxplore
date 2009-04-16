@@ -22,11 +22,13 @@ public class Bz2Reader implements IDataSourceReader {
 
 	@Override
 	public void init() throws Exception {
-		br = new BufferedReader(new InputStreamReader(new CBZip2InputStream(new FileInputStream(fileName))));
+		FileInputStream fis = new FileInputStream(fileName);
 		
 		//read the initial "BZ" mark
-		br.read();
-		br.read();
+		fis.read();
+		fis.read();
+		
+		br = new BufferedReader(new InputStreamReader(new CBZip2InputStream(fis)));
 	}
 
 	@Override
