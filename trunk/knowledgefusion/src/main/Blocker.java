@@ -38,7 +38,7 @@ import basic.IOFactory;
 public class Blocker {
 	
 	public static String workFolder = "/usr/fulinyun/blocker/";
-//	public static String ppjoinFolder = "E:\\User\\fulinyun\\ppjoin\\";
+//	public static String ppjoinFolder = "/usr/fulinyun/ppjoin/";
 	
 	public static void main(String[] args) throws Exception {
 //		findBlock(workFolder+"r0.3sorted.txt", workFolder+"r0.3block.txt");
@@ -88,11 +88,11 @@ public class Blocker {
 //				workFolder+"blockTemp.txt", workFolder+"tempReport.txt");
 //		for (int p = 10; p <= 30; p += 5) for (int n = 10000; n <= 160000; n *= 2) {
 //			prefixBlocking(workFolder+"cheatBasicFeature"+n+".txt.bin", n, p/100.0f, 
-//					workFolder+"blockSpec\\blockP="+p+"n="+n+".txt", workFolder+"report\\blockP="+p+"n="+n+"memSpeed.txt");
+//					workFolder+"blockSpec/blockP="+p+"n="+n+".txt", workFolder+"report/blockP="+p+"n="+n+"memSpeed.txt");
 //		}
 		
-//		for (int p = 10; p <= 30; p += 5) getBlockSizeDistribution(workFolder+"blockSpec\\blockP="+p+"n=160000.txt",
-//				workFolder+"blockSizeDistribution\\blockSizeDistributionP="+p+"n=160000.txt");
+//		for (int p = 10; p <= 30; p += 5) getBlockSizeDistribution(workFolder+"blockSpec/blockP="+p+"n=160000.txt",
+//				workFolder+"blockSizeDistribution/blockSizeDistributionP="+p+"n=160000.txt");
 //		for (int p = 10; p <= 30; p += 5) {
 //			prefixBlocking(workFolder+"cheatBasicFeature.txt.bin", 
 //					Analyzer.countLines(workFolder+"cheatBasicFeature.txt"), p/100.0f, 
@@ -109,14 +109,14 @@ public class Blocker {
 //		}
 		
 //		evaluate(workFolder+"blockP="+p+"translated.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				workFolder+"pr\\blockP="+p+"eval.txt"); 
+//				workFolder+"pr/blockP="+p+"eval.txt"); 
 //		PrintWriter pw = IOFactory.getPrintWriter(Indexer.indexFolder+"pr.txt", true);
 //		pw.println(new Date().toString() + " blockP=0.10-0.30");
 //		pw.close();
 
 //		for (int p = 10; p <= 30; p += 5) {
 //			Clusterer.evaluateWithDomain(workFolder+"blockP="+p+"translated.txt", Indexer.indexFolder+"sameAsID.txt", 
-//					workFolder+"pr\\blockP="+p+"eval.txt");
+//					workFolder+"pr/blockP="+p+"eval.txt");
 //		}
 		
 //		canonicalize(Indexer.indexFolder+"nonNullIndFeature.txt", workFolder+"tempIndex", 
@@ -625,7 +625,7 @@ public class Blocker {
 	// the end of this source file
 
 //	public static String ppIndex = 
-//		"\\\\poseidon\\team\\Semantic Search\\BillionTripleData\\index\\ppIndex";
+//		"smb://poseidon/team/Semantic Search/BillionTripleData/index/ppIndex";
 //	
 //	/**
 //	 * index contains a set of records

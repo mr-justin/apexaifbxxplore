@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 public class PartitionTool {
 
 	public static void main(String[] args) throws Exception {
-		String folder = "D:\\files\\pay as you go matching\\ssjoin-data\\";
+		String folder = "/usr/fulinyun/pay-as-you-go-matching/ssjoin-data/";
 		partition(folder+"trec.raw.txt", 100, 30, folder);
 	}
 	

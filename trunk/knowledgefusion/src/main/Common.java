@@ -23,7 +23,7 @@ import basic.IOFactory;
 
 public class Common {
 
-	public static final String gzFolder = "\\\\poseidon\\team\\semantic search\\BillionTripleData\\gz\\";
+	public static final String gzFolder = "smb://poseidon/team/semantic search/BillionTripleData/gz/";
 	public static final String wordnet = gzFolder+"wordnet.gz"; // 1942887 triples
 	public static final String dblp = gzFolder+"dblp.gz"; // 14936600 triples
 	public static final String dbpedia = gzFolder+"dbpedia.gz"; // 110241463 triples

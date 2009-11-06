@@ -23,7 +23,7 @@ import basic.IOFactory;
  */
 public class ClassMapper {
 
-	public static String workFolder = "e:\\user\\fulinyun\\classCluster\\";
+	public static String workFolder = "/usr/fulinyun/classCluster/";
 	
 	public static void main(String[] args) throws Exception {
 //		collectInstancePre(Indexer.indexFolder+"classIndTemp.txt"); // done

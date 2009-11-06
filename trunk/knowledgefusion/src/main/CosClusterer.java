@@ -16,14 +16,14 @@ import basic.IOFactory;
 
 public class CosClusterer {
 	
-	public static String workFolder = "e:\\user\\fulinyun\\clusterer\\";
-	public static String classFolder = "e:\\user\\fulinyun\\classCluster\\";
+	public static String workFolder = "/usr/fulinyun/clusterer/";
+	public static String classFolder = "/usr/fulinyun/classCluster/";
 	
 	public static void main(String args[]) throws Exception {
 		cluster(Blocker.workFolder+"nonNullIndBlocks0.2&100.txt", workFolder+"cluster0.2&100&2.5.txt", 
 				2, 2.5f, 4);
 		Clusterer.evaluateWithDomain(workFolder+"cluster0.2&100&2.5.txt", Indexer.indexFolder+"sameAsID.txt", 
-				workFolder+"clusterPR\\cluster0.2&100&2.5domainEval.txt");
+				workFolder+"clusterPR/cluster0.2&100&2.5domainEval.txt");
 	}
 	
 	public static void cluster(String input, String output, int ngRadius, float tsn, int maxClusterSize) throws Exception {

@@ -21,7 +21,7 @@ import basic.IOFactory;
 public class Clusterer {
 
 	public static String workFolder = "/usr/fulinyun/clusterer/";
-	public static String classFolder = "e:\\user\\fulinyun\\classCluster\\";
+	public static String classFolder = "/usr/fulinyun/classCluster/";
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -108,7 +108,7 @@ public class Clusterer {
 //		pw.close();
 //		for (int i = 31; i < 40; i++) {
 //			evaluateWithDomain(workFolder+"j0."+i+"sorted.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				workFolder+"clusterPR\\j0."+i+"domainEval.txt");
+//				workFolder+"clusterPR/j0."+i+"domainEval.txt");
 //		}
 		
 //		for (int i = 41; i <= 49; i++) {
@@ -120,7 +120,7 @@ public class Clusterer {
 //		pw.close();
 //		for (int i = 41; i < 50; i++) {
 //			evaluateWithDomain(workFolder+"j0."+i+"sorted.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				workFolder+"clusterPR\\j0."+i+"domainEval.txt");
+//				workFolder+"clusterPR/j0."+i+"domainEval.txt");
 //		}
 		
 //		for (int i = 391; i <= 399; i++) {
@@ -132,7 +132,7 @@ public class Clusterer {
 //		pw.close();
 //		for (int i = 391; i < 399; i++) {
 //			evaluateWithDomain(workFolder+"j0."+i+"sorted.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				workFolder+"clusterPR\\j0."+i+"domainEval.txt");
+//				workFolder+"clusterPR/j0."+i+"domainEval.txt");
 //		} // done
 //		
 //		PrintWriter pw = IOFactory.getPrintWriter(Indexer.indexFolder+"pr.txt", true);
@@ -141,7 +141,7 @@ public class Clusterer {
 //		for (int i = 241; i <= 249; i++) {
 //			cluster(Blocker.workFolder+"prefix0.2&3blockTranslated.txt", workFolder+"cluster"+i/100+"."+i%100+".txt", 2, i/100.0f);
 //			evaluateWithDomain(workFolder+"cluster"+i/100+"."+i%100+".txt", Indexer.indexFolder+"sameAsID.txt", 
-//					workFolder+"clusterPR\\cluster"+i/100+"."+i%100+"domainEval.txt");
+//					workFolder+"clusterPR/cluster"+i/100+"."+i%100+"domainEval.txt");
 //		} // running
 //		jaccardCluster(Blocker.workFolder+"prefix0.2&3blockTranslated.txt", workFolder+"j0.4.txt", 0.4f); // running
 		// sort -n j0.4.txt | uniq > j0.4sorted.txt // done
@@ -149,18 +149,18 @@ public class Clusterer {
 //		pw.println(new Date().toString() + " j=0.4");
 //		pw.close();
 //		evaluateWithDomain(workFolder+"j0.4sorted.txt", Indexer.indexFolder+"sameAsID.txt", 
-//			workFolder+"clusterPR\\j0.4domainEval.txt"); // done
+//			workFolder+"clusterPR/j0.4domainEval.txt"); // done
 //		getClusterDomainDistribution(Indexer.indexFolder+"sameAsID.txt", 
 //				Indexer.indexFolder+"sameAsIDdomainDistribution.txt"); // done
 //		cluster(Blocker.workFolder+"prefix0.2&3blockTranslated.txt", workFolder+"cluster2.5.txt", 2, 2.5f);
 //		evaluateWithDomain(workFolder+"cluster2.5.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				workFolder+"clusterPR\\cluster2.5domainEval.txt");
+//				workFolder+"clusterPR/cluster2.5domainEval.txt");
 //		cluster(Blocker.workFolder+"nonNullIndBlocks0.2&100.txt", workFolder+"cluster0.2&100&2.5.txt", 
 //				2, 2.5f, 4);
 //		evaluateWithDomain(workFolder+"cluster0.2&100&2.5.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				workFolder+"clusterPR\\cluster0.2&100&2.5domainEval.txt"); // running
+//				workFolder+"clusterPR/cluster0.2&100&2.5domainEval.txt"); // running
 //		cluster(Blocker.workFolder+"prefix0.2&3blockTranslated.txt", workFolder+"clusterTemp.txt", 2, 1.1f, 100);
-//		pickThreshold("E:\\user\\fulinyun\\ng.txt", "E:\\user\\fulinyun\\ngFiltered.txt");	// all avg ng = 1.0
+//		pickThreshold("/usr/fulinyun/ng.txt", "/usr/fulinyun/ngFiltered.txt");	// all avg ng = 1.0
 //		int i = 60;
 //			float th = i/10.0f;
 //			cluster(Blocker.workFolder+"keyIndBasicFeatureP=50.txt", workFolder+"clusterBasic"+i+".txt", 
@@ -673,7 +673,7 @@ public class Clusterer {
 			float avgNgv = avgNg(records, currentSet);
 			if (isCompactSet(records, currentSet) && 
 					avgNgv < tsn) {
-//				PrintWriter ng = IOFactory.getPrintWriter("e:\\user\\fulinyun\\ng.txt", true);
+//				PrintWriter ng = IOFactory.getPrintWriter("/usr/fulinyun/ng.txt", true);
 //				ng.println(avgNgv);
 //				ng.close();
 				PrintWriter pw = IOFactory.getPrintWriter(output, true);

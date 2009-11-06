@@ -44,11 +44,11 @@ public class Indexer {
 //		preprocess(indexFolder+"dblp.gz", indexFolder+"dblp.dump"); // done at gaea
 		// sort -S 512m -T . --compress-program=gzip dblp.dump | gzip > dblpPreprocessed.gz // done at gaea
 //		refIndexFromPreprocessed(Cheater.domainDBpedia, indexFolder+"dbpediaPreprocessed.gz", 
-//				lap2indexParts+"\\dbpedia"); // done
+//				lap2indexParts+"/dbpedia"); // done
 //		refIndexFromPreprocessed(Cheater.domainGeonames, indexFolder+"geonamesPreprocessed.gz", 
-//				lap2indexParts+"\\geonames"); // done
+//				lap2indexParts+"/geonames"); // done
 //		refIndexFromPreprocessed(Cheater.domainDblp, indexFolder+"dblpPreprocessed.gz", 
-//				lap2index+"\\dblp"); // done at gaea
+//				lap2index+"/dblp"); // done at gaea
 //		mergeIndex(lap2indexParts, lap2index); // done
 		// copy refIndex subfolders to poseidon
 		// delete refIndex
@@ -956,7 +956,7 @@ public class Indexer {
 //	 * @throws Exception
 //	 */
 //	public static void observeLap1index() throws Exception {
-//		IndexReader ireader = IndexReader.open(lap1index+"\\dbpedia");
+//		IndexReader ireader = IndexReader.open(lap1index+"/dbpedia");
 //		int count = 0;
 ////		System.out.println(ireader.maxDoc());
 ////		for (int i = 0; i < ireader.maxDoc(); i++) {
