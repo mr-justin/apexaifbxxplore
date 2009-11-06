@@ -76,20 +76,20 @@ public class Formatter {
 //		removeEmptyLines(Common.uscensus, Common.gzFolder + "uscensusNoEmptyLines.gz"); // done
 //		removeEmptyLines(Common.foaf, Common.gzFolder + "foafNoEmptyLines.gz"); // done
 		
-//		String workingDir = "\\\\poseidon\\team\\semantic search\\BillionTripleData\\";
+//		String workingDir = "smb://poseidon/team/semantic search/BillionTripleData/";
 //		String dbpedia = "dbpedia-v3.nt.tar.gz";
 //		String dblp = "swetodblp_noblank.gz";
 //		String uscensus = "uscensus.nt.tar.gz";
 //		String geonames = "geonames.warc";
-//		clean(workingDir+dbpedia, workingDir+"gz\\dbpedia.gz");
-//		clean(workingDir+dblp, workingDir+"gz\\dblp.gz");
-//		clean(workingDir+uscensus, workingDir+"gz\\uscensus.gz");
-//		clean(workingDir+geonames, workingDir+"gz\\geonames.gz");
+//		clean(workingDir+dbpedia, workingDir+"gz/dbpedia.gz");
+//		clean(workingDir+dblp, workingDir+"gz/dblp.gz");
+//		clean(workingDir+uscensus, workingDir+"gz/uscensus.gz");
+//		clean(workingDir+geonames, workingDir+"gz/geonames.gz");
 		
 //		String wordnet = "wordnet.nt.tar.gz";
-//		clean(workingDir+wordnet, workingDir+"gz\\wordnet.gz");
+//		clean(workingDir+wordnet, workingDir+"gz/wordnet.gz");
 		
-//		String foaf = "\\\\poseidon\\team\\semantic search\\data\\foaf\\foafNTRIPLE.gz";
-//		clean(foaf, "\\\\poseidon\\team\\semantic search\\data\\foaf\\foaf.gz", 54000000);
+//		String foaf = "smb://poseidon/team/semantic search/data/foaf/foafNTRIPLE.gz";
+//		clean(foaf, "smb://poseidon/team/semantic search/data/foaf/foaf.gz", 54000000);
 	}
 }

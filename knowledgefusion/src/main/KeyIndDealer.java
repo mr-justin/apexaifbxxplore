@@ -31,11 +31,11 @@ import basic.IOFactory;
 public class KeyIndDealer {
 
 	public static String dbpediaSameAs = 
-		"\\\\poseidon\\team\\semantic search\\BillionTripleData\\crude\\dbpedia-v3.equ";
+		"smb://poseidon/team/semantic search/BillionTripleData/crude/dbpedia-v3.equ";
 	public static String geonamesSameAs = 
-		"\\\\poseidon\\team\\semantic search\\BillionTripleData\\crude\\geonames.equ";
+		"smb://poseidon/team/semantic search/BillionTripleData/crude/geonames.equ";
 	public static String dblpSameAs = 
-		"\\\\poseidon\\team\\semantic search\\BillionTripleData\\crude\\swetodblp.equ";
+		"smb://poseidon/team/semantic search/BillionTripleData/crude/swetodblp.equ";
 
 	public static String domainDBpedia = "dbpedia.org";
 	public static String domainGeonames = "sws.geonames.org";
@@ -45,7 +45,7 @@ public class KeyIndDealer {
 //	public static int stdAnsSize = 2318;
 //	public static int r03resultSize = 23359103;
 	public static String keyInd = Indexer.indexFolder+"keyInd.txt";
-	public static String ppjoinFolder = Indexer.indexFolder+"\\ppjoin\\";
+	public static String ppjoinFolder = Indexer.indexFolder+"/ppjoin/";
 		
 	public static void main(String[] args) throws Exception {
 //		extractSameAsByDomain(dbpediaSameAs, domainDBpedia, domainGeonames, 
@@ -126,9 +126,9 @@ public class KeyIndDealer {
 		// sort -n prefixU5gram0.1translated.txt | uniq > prefixU5gram0.1sorted.txt // done
 //		evaluate(Blocker.workFolder+"prefixU5gram0.1sorted.txt", Indexer.indexFolder+"sameAsID.txt"); // done: 37904/11922201
 //		evaluate(Blocker.workFolder+"blockP=25sorted.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				Blocker.workFolder+"pr\\blockP=25eval.txt");
+//				Blocker.workFolder+"pr/blockP=25eval.txt");
 //		evaluate(Blocker.workFolder+"blockP=30sorted.txt", Indexer.indexFolder+"sameAsID.txt", 
-//				Blocker.workFolder+"pr\\blockP=30eval.txt");
+//				Blocker.workFolder+"pr/blockP=30eval.txt");
 
 //		getAvgFeatureLength(Blocker.workFolder+"keyIndBasicFeature.txt");
 //		dumpFeature(Indexer.indexFolder+"nonNullInd.txt", 2560000, Indexer.indexFolder+"nonNullIndFeature.txt");

@@ -34,24 +34,24 @@ public class RDF2NTRIPLE {
 	public static int embedCount = 0;
 	
 //	public static String mball = 
-//		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mball.bz2";
+//		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mball.bz2";
 //	public static String target = 
-//		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mball.relation.nt.gz";
+//		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mball.relation.nt.gz";
 //	public static String attention = 
 //		"http://musicbrainz.org/track/ee56d352-d1f9-4f76-aef4-ef09f2dcaac7";
 	public static String mballgz = 
-		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mballparsable.rdf.gz";
+		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mballparsable.rdf.gz";
 //	public static String mball1gz = 
-//		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mball1.rdf.gz";
+//		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mball1.rdf.gz";
 	
 	public static String rdf = 
-		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mballparsable.rdf.gz";
+		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mballparsable.rdf.gz";
 	public static String instance = 
-		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mball.instance.nt.gz";
+		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mball.instance.nt.gz";
 	public static String attribute = 
-		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mball.attribute.nt.gz";
+		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mball.attribute.nt.gz";
 	public static String relation = 
-		"\\\\poseidon\\team\\semantic search\\data\\musicbrainz\\Rdf data\\mball.relation.nt.gz";
+		"smb://poseidon/team/semantic search/data/musicbrainz/Rdf data/mball.relation.nt.gz";
 
 	public static void main(String[] args) throws Exception {
 //		convert(mball, target);
@@ -386,7 +386,7 @@ public class RDF2NTRIPLE {
 		
 	}
 
-	public static String embedTest = "e:\\user\\fulinyun\\embedTest.xml";
+	public static String embedTest = "/usr/fulinyun/embedTest.xml";
 	
 	public static void test() throws Exception {
 		DefaultHandler handler = new DefaultHandler() {
