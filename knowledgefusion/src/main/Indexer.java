@@ -43,11 +43,11 @@ public class Indexer {
 		// sort -S 512m -T . --compress-program=gzip geonames.dump | gzip > geonamesPreprocessed.gz // running
 //		preprocess(indexFolder+"dblp.gz", indexFolder+"dblp.dump"); // done at gaea
 		// sort -S 512m -T . --compress-program=gzip dblp.dump | gzip > dblpPreprocessed.gz // done at gaea
-//		refIndexFromPreprocessed(Cheater.domainDBpedia, indexFolder+"dbpediaPreprocessed.gz", 
+//		refIndexFromPreprocessed(KeyIndDealer.domainDBpedia, indexFolder+"dbpediaPreprocessed.gz", 
 //				lap2indexParts+"/dbpedia"); // done
-//		refIndexFromPreprocessed(Cheater.domainGeonames, indexFolder+"geonamesPreprocessed.gz", 
+//		refIndexFromPreprocessed(KeyIndDealer.domainGeonames, indexFolder+"geonamesPreprocessed.gz", 
 //				lap2indexParts+"/geonames"); // done
-//		refIndexFromPreprocessed(Cheater.domainDblp, indexFolder+"dblpPreprocessed.gz", 
+//		refIndexFromPreprocessed(KeyIndDealer.domainDblp, indexFolder+"dblpPreprocessed.gz", 
 //				lap2index+"/dblp"); // done at gaea
 //		mergeIndex(lap2indexParts, lap2index); // done
 		// copy refIndex subfolders to poseidon
@@ -393,15 +393,15 @@ public class Indexer {
 	 * Attribute values are tokenized and indexed. URIs with "<rdf:type>from", "<owl:class>from" or 
 	 * "<skos:subject>from" fields (i.e. classes) are also contained in the index.
 	 */ 
-	public static void basicFeatureIndex() throws Exception {
+	public static void basicFeatureIndex(String refFolder, String basicFolder) throws Exception {
 		System.out.println(new Date().toString() + " : start lap 3 indexing");
 		org.apache.lucene.analysis.Analyzer analyzer = new WhitespaceAnalyzer();
-		Directory directory = FSDirectory.getDirectory(basicFeatureIndex);
+		Directory directory = FSDirectory.getDirectory(basicFolder);
 		IndexWriter iwriter = new IndexWriter(directory, analyzer, true, 
 				IndexWriter.MaxFieldLength.UNLIMITED);
 //		iwriter.setRAMBufferSizeMB(1200);
 		iwriter.setMergeFactor(2);
-		IndexReader ireader = IndexReader.open(basicFeatureIndex);
+		IndexReader ireader = IndexReader.open(refFolder);
 		for (int i = 0; i < ireader.maxDoc(); i++) {
 			Document doc = ireader.document(i);
 			List fieldList = doc.getFields();
