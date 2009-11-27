@@ -74,6 +74,18 @@ public class Common {
 
 	/**
 	 * get integers from a string, neighboring integers are separated with a whitespace
+	 * @param line
+	 * @return
+	 */
+	public static int[] getNumsInLine(String line) {
+		String[] parts = line.split(" ");
+		int[] ret = new int[parts.length];
+		for (int i = 0; i < parts.length; i++) ret[i] = Integer.parseInt(parts[i]);
+		return ret;
+	}
+
+	/**
+	 * get integers from a string, neighboring integers are separated with a whitespace
 	 * result array are sorted in ascending order
 	 * @param line
 	 * @return
