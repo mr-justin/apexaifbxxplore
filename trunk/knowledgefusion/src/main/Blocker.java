@@ -233,19 +233,49 @@ public class Blocker {
 	}
 	
 	/**
+	 * compute candidate blocks whose entities all match a keyword based on an existing blocking result
+	 * @param keyword
+	 * @param blockFile
+	 * @param indexFolder
+	 * @param output
+	 * @throws Exception
+	 */
+	public static void computeCandidates(String keyword, String blockFile, 
+			String indexFolder, String output) throws Exception {
+		HashSet<Integer> hits = getKeywordHits(keyword, indexFolder);
+		BufferedReader br = IOFactory.getBufferedReader(blockFile);
+		PrintWriter pw = IOFactory.getPrintWriter(output);
+		for (String line = br.readLine(); line != null; line = br.readLine()) {
+			boolean firstID = true;
+			int[] entityIDs = Common.getNumsInLine(line);
+			for (int i = 0; i < entityIDs.length; i++) if (hits.contains(entityIDs[i])) {
+				if (firstID) {
+					pw.print(entityIDs[i]);
+					firstID = false;
+				} else {
+					pw.print(" " + entityIDs[i]);
+				}
+			}
+			if (!firstID) pw.println();
+		}
+		pw.close();
+		br.close();
+	}
+	
+	/**
 	 * return the IDs of all the entities with keyword as one of its features
 	 * @param keyword
 	 * @param indexFolder
 	 * @return
 	 * @throws Exception
 	 */
-	public static int[] computeCandidates(String keyword, String indexFolder) throws Exception {
+	public static HashSet<Integer> getKeywordHits(String keyword, String indexFolder) throws Exception {
 		IndexReader ireader = IndexReader.open(indexFolder);
 		IndexSearcher isearcher = new IndexSearcher(ireader);
 		TopDocs td = isearcher.search(new TermQuery(new Term("words", keyword)), Integer.MAX_VALUE);
-		int[] ret = new int[td.scoreDocs.length];
+		HashSet<Integer> ret = new HashSet<Integer>();
 		for (int i = 0; i < td.scoreDocs.length; i++) 
-			ret[i] = Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id"));
+			ret.add(Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id")));
 		isearcher.close();
 		ireader.close();
 		return ret;
