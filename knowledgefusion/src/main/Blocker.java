@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.TreeMap;
 
+import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
@@ -229,6 +230,75 @@ public class Blocker {
 //					workFolder+commonName+"PR.txt");
 //		} // done
 //		// pr.txt -> prBlockOped.txt // to do
+	}
+	
+	/**
+	 * return the IDs of all the entities with keyword as one of its features
+	 * @param keyword
+	 * @param indexFolder
+	 * @return
+	 * @throws Exception
+	 */
+	public static int[] computeCandidates(String keyword, String indexFolder) throws Exception {
+		IndexReader ireader = IndexReader.open(indexFolder);
+		IndexSearcher isearcher = new IndexSearcher(ireader);
+		TopDocs td = isearcher.search(new TermQuery(new Term("words", keyword)), Integer.MAX_VALUE);
+		int[] ret = new int[td.scoreDocs.length];
+		for (int i = 0; i < td.scoreDocs.length; i++) 
+			ret[i] = Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id"));
+		isearcher.close();
+		ireader.close();
+		return ret;
+	}
+	
+	/**
+	 * index all features of all entities in the canonicalized input file
+	 * @param input
+	 * @param indexFolder
+	 * @throws Exception
+	 */
+	public static void indexAll(String input, String indexFolder) throws Exception {
+		indexAll(input, Integer.MAX_VALUE, Integer.MAX_VALUE, indexFolder);
+	}
+	
+	/**
+	 * index a certain length of each feature set of the first <lines> entities in the 
+	 * canonicalized input file 
+	 * @param input
+	 * @param lines
+	 * @param maxFeatureLength
+	 * @param indexFolder
+	 * @throws Exception
+	 */
+	public static void indexAll(String input, int lines, int maxFeatureLength, 
+			String indexFolder) throws Exception {
+		BufferedReader br = IOFactory.getBufferedReader(input);
+		Directory dir = FSDirectory.getDirectory(indexFolder);
+		IndexWriter iwriter = new IndexWriter(dir, new WhitespaceAnalyzer(), true, 
+				IndexWriter.MaxFieldLength.UNLIMITED);
+		int lineCount = 0;
+		for (String line = br.readLine(); line != null && lineCount < lines; line = br.readLine()) {
+			try {
+				String[] parts = line.split(" ");
+				int idx = Integer.parseInt(parts[0]);
+				int n = parts.length-1;
+				String tokens = "";
+				for (int j = 1; j <= n && j <= maxFeatureLength; j++) 
+					tokens += " "+parts[j];
+				Document doc = new Document();
+				doc.add(new Field("id", ""+idx, Field.Store.YES, Field.Index.NO));
+				doc.add(new Field("words", tokens, Field.Store.YES, Field.Index.ANALYZED));
+				iwriter.addDocument(doc);
+				lineCount++;
+				if (lineCount%1000 == 0) System.out.println(new Date().toString() + " : " + lineCount);
+			} catch (Exception e) {
+				continue;
+			}
+		}
+		iwriter.optimize();
+		iwriter.close();
+		br.close();
+		dir.close();
 	}
 	
 	public static void getMissingPairs(String blockFile, String sameAsFile, String output) throws Exception {
