@@ -229,7 +229,19 @@ public class Blocker {
 //			Clusterer.evaluateWithDomain(workFolder+commonName+".txt", Indexer.indexFolder+"sameAsID.txt", 
 //					workFolder+commonName+"PR.txt");
 //		} // done
-//		// pr.txt -> prBlockOped.txt // to do
+//		// pr.txt -> prBlockOped.txt // done
+		
+//		indexAll(workFolder+"keyIndBasicFeatureCaned.txt", workFolder+"keyIndBasicFeatureIndex"); // done
+//		prefixBlocking(workFolder+"keyIndBasicFeatureIndex", 1000, workFolder+"keyIndBasicFeatureTh=1000.txt"); // done in 217450 ms
+//		System.out.println(Analyzer.countLines(workFolder+"keyIndBasicFeatureTh=1000.txt")); // 417870 blocks
+//		System.out.println("freqTh\tblockCount\ttime"); // done
+//		for (int i = 1000; i < 11000; i += 1000) {
+//			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt"); // running
+//		} // done
+//		blockSizeAll(workFolder+"keyIndBasicFeatureIndex", workFolder+"blockSizesSearch.txt"); // done
+//		for (int i = 100; i < 1000; i += 100) {
+//			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
+//		} // done
 	}
 	
 	/**
@@ -279,6 +291,64 @@ public class Blocker {
 		isearcher.close();
 		ireader.close();
 		return ret;
+	}
+	
+	/**
+	 * Treat the inverted lists shorter than freqTh as blocks
+	 * @param indexFolder
+	 * @param freqTh
+	 * @param output
+	 * @throws Exception
+	 */
+	public static void prefixBlocking(String indexFolder, int freqTh, String output) throws Exception {
+		long startTime = new Date().getTime();
+		
+		IndexReader ireader = IndexReader.open(indexFolder);
+		IndexSearcher isearcher = new IndexSearcher(ireader);
+		TermEnum te = ireader.terms();
+		PrintWriter pw = IOFactory.getPrintWriter(output);
+		int blockCount = 0;
+		while (te.next()) {
+			TopDocs td = isearcher.search(new TermQuery(te.term()), freqTh+1);
+			
+			// discard blocks with only one individual or of too frequent tokens
+			if (td.scoreDocs.length <= 1 || td.scoreDocs.length > freqTh) continue;
+			
+			pw.print(ireader.document(td.scoreDocs[0].doc).get("id"));
+			for (int i = 1; i < td.scoreDocs.length; i++) {
+				pw.print(" " + ireader.document(td.scoreDocs[i].doc).get("id"));
+			}
+			pw.println();
+			blockCount++;
+//			if (blockCount%1000 == 0) System.out.println(new Date().toString() + " : " + blockCount + " blocks");
+		}
+		pw.close();
+		ireader.close();
+		long time = new Date().getTime()-startTime;
+		System.out.println(freqTh + "\t" + blockCount + "\t" + time); // for speed test
+	}
+
+	/**
+	 * print the size of each block (actually the length of each inverted list in the index)
+	 * @param indexFolder
+	 * @param output
+	 * @throws Exception
+	 */
+	public static void blockSizeAll(String indexFolder, String output) throws Exception {
+		IndexReader ireader = IndexReader.open(indexFolder);
+		IndexSearcher isearcher = new IndexSearcher(ireader);
+		TermEnum te = ireader.terms();
+		PrintWriter pw = IOFactory.getPrintWriter(output);
+		int blockCount = 0;
+		while (te.next()) {
+			TopDocs td = isearcher.search(new TermQuery(te.term()), 999999);
+			pw.println(td.scoreDocs.length);
+			blockCount++;
+			if (blockCount % 10000 == 0) System.out.println(new Date().toString() + " : " + blockCount);
+		}
+		pw.close();
+		isearcher.close();
+		ireader.close();
 	}
 	
 	/**
