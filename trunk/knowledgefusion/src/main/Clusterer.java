@@ -221,21 +221,40 @@ public class Clusterer {
 //		} // done
 //		// pr.txt -> prClusterExtendedCosine.txt // done
 
-		for (int i = 15; i <= 60; i += 5) {
-			float th = i/10.0f;
-			cluster(Blocker.workFolder+"keyIndBasicFeatureOpedP=45.txt", workFolder+"clusterOped"+i+".txt", 
-					2, th, 100, new ISimCal() {
-				public float distance(String[][] features, int i, int j) {
-					return jaccard(features, i, j);
-				}
-			});
-		} // done
-		for (int i = 15; i <= 60; i += 5) {
-			evaluateWithDomain(workFolder+"clusterOped"+i+".txt", Indexer.indexFolder+"sameAsID.txt", 
-					workFolder+"clusterOped"+i+"eval.txt");
-		} // done
+//		for (int i = 15; i <= 60; i += 5) {
+//			float th = i/10.0f;
+//			cluster(Blocker.workFolder+"keyIndBasicFeatureOpedP=45.txt", workFolder+"clusterOped"+i+".txt", 
+//					2, th, 100, new ISimCal() {
+//				public float distance(String[][] features, int i, int j) {
+//					return jaccard(features, i, j);
+//				}
+//			});
+//		} // done
+//		for (int i = 15; i <= 60; i += 5) {
+//			evaluateWithDomain(workFolder+"clusterOped"+i+".txt", Indexer.indexFolder+"sameAsID.txt", 
+//					workFolder+"clusterOped"+i+"eval.txt");
+//		} // done
 		// pr.txt -> prClusterExtendedCosine.txt // done
-
+		System.out.println("blockTh\tsn\trecall\tprecision");
+		for (int j = 1000; j < 6000; j += 1000) {
+			for (int i = 15; i <= 60; i += 5) {
+				float th = i / 10.0f;
+				cluster(Blocker.workFolder + "keyIndBasicFeatureTh="+j+".txt",
+						workFolder + "clusterTh="+j+"sn=" + i + ".txt", 2, th, 100,
+						new ISimCal() {
+							public float distance(String[][] features, int i,
+									int j) {
+								return jaccard(features, i, j);
+							}
+						});
+				
+				System.out.print(j + "\t" + i);
+				
+				evaluateWithDomain(workFolder + "clusterTh="+j+"sn=" + i + ".txt",
+						Indexer.indexFolder + "sameAsID.txt", workFolder
+								+ "clusterTh="+j+"sn=" + i + "eval.txt");
+			}
+		} // to run
 	}
 	
 	public static void getClusterDomainDistribution(String clusterFile,
@@ -389,16 +408,16 @@ public class Clusterer {
 		HashMap<Integer, String> indURI = new HashMap<Integer, String>();
 		BufferedReader br = IOFactory.getBufferedReader(clusterFile);
 		int overlap = 0;
-		int maxClusterSize = 0;
-		int clusterNum = 0;
+//		int maxClusterSize = 0;
+//		int clusterNum = 0;
 		IndexReader ireader = IndexReader.open(Indexer.basicFeatureIndex);
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			int[] docNums = Common.getNumsInLineSorted(line);
 			String[] uris = getURIs(ireader, docNums, indURI);
-			if (docNums.length > maxClusterSize) maxClusterSize = docNums.length;
+//			if (docNums.length > maxClusterSize) maxClusterSize = docNums.length;
 //			System.out.println(docNums.length);
-			clusterNum++;
-			if (clusterNum%100000 == 0) System.out.println(new Date().toString() + " : " + clusterNum);
+//			clusterNum++;
+//			if (clusterNum%100000 == 0) System.out.println(new Date().toString() + " : " + clusterNum);
 			for (int i = 0; i < docNums.length; i++) for (int j = 0; j < i; j++) 
 				if (uris[i].contains(KeyIndDealer.domainDBpedia) && uris[j].contains(KeyIndDealer.domainGeonames) 
 					|| uris[i].contains(KeyIndDealer.domainGeonames) && uris[j].contains(KeyIndDealer.domainDBpedia)
@@ -414,11 +433,13 @@ public class Clusterer {
 			}
 		}
 		br.close();
-		Common.printResult(overlap, stdAns, resSet.size(), output);
-		System.out.println("max cluster size: " + maxClusterSize + " ; #cluster: " + clusterNum);
-		PrintWriter pw = IOFactory.getPrintWriter(output, true);
-		pw.println("max cluster size: " + maxClusterSize + " ; #cluster: " + clusterNum);
-		pw.close();
+//		Common.printResult(overlap, stdAns, resSet.size(), output);
+//		System.out.println("max cluster size: " + maxClusterSize + " ; #cluster: " + clusterNum);
+//		PrintWriter pw = IOFactory.getPrintWriter(output, true);
+//		pw.println("max cluster size: " + maxClusterSize + " ; #cluster: " + clusterNum);
+//		pw.close();
+		int stdSize = Analyzer.countLines(stdAns);
+		System.out.println("\t" + (overlap+0.0)/stdSize + "\t" + (overlap+0.0)/resSet.size());
 	}
 	
 	private static String[] getURIs(IndexReader ireader, int[] docNums, 
@@ -558,18 +579,18 @@ public class Clusterer {
 			ISimCal simCal) throws Exception {
 		new File(output).delete();
 		IDataSourceReader br = IOFactory.getReader(input);
-		int count = 0;
+//		int count = 0;
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			String[] records = line.split(" ");
 //			if (records.length > 10) System.out.println(records.length);
 			int[] docNums = new int[records.length];
 			for (int i = 0; i < records.length; i++) docNums[i] = Integer.parseInt(records[i]);
 			cluster(docNums, output, ngRadius, tsn, maxClusterSize, simCal);
-			count++;
-			if (count%100000 == 0) System.out.println(new Date().toString() + " : " + count + " blocks");
+//			count++;
+//			if (count%100000 == 0) System.out.println(new Date().toString() + " : " + count + " blocks");
 		}
 		br.close();
-		System.out.println(new Date().toString() + " : clustering finished");
+//		System.out.println(new Date().toString() + " : clustering finished");
 	}
 
 	/**
