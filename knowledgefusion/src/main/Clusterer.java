@@ -125,7 +125,7 @@ public class Clusterer {
 		
 //		for (int i = 391; i <= 399; i++) {
 //			jaccardCluster(Blocker.workFolder+"prefix0.2&3blockTranslated.txt", workFolder+"j0."+i+".txt", i/1000.0f);
-//		} // running
+//		} // done
 		// sort -n j0.xxx.txt | uniq > j0.xxxsorted.txt // todo
 //		PrintWriter pw = IOFactory.getPrintWriter(Indexer.indexFolder+"pr.txt", true);
 //		pw.println(new Date().toString() + " j=0.391-0.399");
