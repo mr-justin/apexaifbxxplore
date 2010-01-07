@@ -2,7 +2,6 @@ package main;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +9,9 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Random;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import org.apache.lucene.analysis.WhitespaceAnalyzer;
 import org.apache.lucene.document.Document;
@@ -236,12 +237,69 @@ public class Blocker {
 //		System.out.println(Analyzer.countLines(workFolder+"keyIndBasicFeatureTh=1000.txt")); // 417870 blocks
 //		System.out.println("freqTh\tblockCount\ttime"); // done
 //		for (int i = 1000; i < 11000; i += 1000) {
-//			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt"); // running
+//			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
 //		} // done
 //		blockSizeAll(workFolder+"keyIndBasicFeatureIndex", workFolder+"blockSizesSearch.txt"); // done
 //		for (int i = 100; i < 1000; i += 100) {
 //			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
 //		} // done
+		
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
+		
+	}
+	
+	/**
+	 * record the time cost of incremental blocking
+	 * @param allEntities
+	 * @param allSize
+	 * @param indexFolder
+	 * @param incSize
+	 * @param incNum
+	 * @throws Exception
+	 */
+	public static void incrementalAddEntities(String allEntities, int allSize, String indexFolder, 
+			int incSize, int incNum) throws Exception {
+		TreeSet<Integer> lineNums = new TreeSet<Integer>();
+		Random r = new Random(new Date().getTime());
+		for (int i = 0; i < incNum; i++) {
+			PrintWriter pw = IOFactory.getPrintWriter(workFolder+"inc"+i+".txt");
+			lineNums.clear();
+			for (int j = 0; j < incSize; j++) lineNums.add(r.nextInt(allSize));
+			int lineNum = 0;
+			BufferedReader br = IOFactory.getBufferedReader(allEntities);
+			for (Integer k : lineNums) {
+				for (int l = lineNum; l < k; l++) br.readLine();
+				pw.println(br.readLine());
+				lineNum = k+1;
+			}
+			br.close();
+			pw.close();
+		}
+		System.out.println("incSize: " + incSize + "\tincNum: " + incNum);
+		for (int i = 0; i < incNum; i++) {
+			long startTime = new Date().getTime();
+			addEntitiesIntoIndex(workFolder+"incTestIndex", workFolder+"inc"+i+".txt");
+			long timeCost = new Date().getTime()-startTime;
+			System.out.println(timeCost);
+		}
+	}
+	
+	/**
+	 * add new entities to the original blocking index
+	 * @param originalIndexFolder
+	 * @param newEntities
+	 * @throws Exception
+	 */
+	public static void addEntitiesIntoIndex(String originalIndexFolder, String newEntities) throws Exception {
+		canonicalize(newEntities, workFolder+"tempIndex", workFolder+"tempCaned.txt");
+		indexAll(workFolder+"tempCaned.txt", workFolder+"tempIndex");
+		IndexWriter iwriter = new IndexWriter(originalIndexFolder, new WhitespaceAnalyzer(), false, 
+				IndexWriter.MaxFieldLength.UNLIMITED);
+		iwriter.addIndexesNoOptimize(new Directory[]{FSDirectory.getDirectory(workFolder+"tempIndex")});
+		iwriter.optimize();
+		iwriter.close();
+		new File(workFolder+"tempCaned.txt").delete();
 	}
 	
 	/**
