@@ -257,26 +257,43 @@ public class Clusterer {
 //		} // to cut after j = 1000 finishes - done
 		
 		System.out.println("blockTh\tsn\trecall\tprecision");
-		for (int j = 100; j < 1000; j += 100) {
-			for (int i = 15; i <= 60; i += 5) {
-				float th = i / 10.0f;
-				cluster(Blocker.workFolder + "keyIndBasicFeatureTh="+j+".txt",
-						workFolder + "clusterTh="+j+"sn=" + i + ".txt", 2, th, 100,
-						new ISimCal() {
-							public float distance(String[][] features, int i,
-									int j) {
-								return jaccard(features, i, j);
-							}
-						});
-				
-				System.out.print(j + "\t" + i);
-				
-				evaluateWithDomain(workFolder + "clusterTh="+j+"sn=" + i + ".txt",
-						Indexer.indexFolder + "sameAsID.txt", workFolder
-								+ "clusterTh="+j+"sn=" + i + "eval.txt");
-			}
+//		for (int j = 100; j < 1000; j += 100) {
+//			for (int i = 15; i <= 60; i += 5) {
+//				float th = i / 10.0f;
+//				cluster(Blocker.workFolder + "keyIndBasicFeatureTh="+j+".txt",
+//						workFolder + "clusterTh="+j+"sn=" + i + ".txt", 2, th, 100,
+//						new ISimCal() {
+//							public float distance(String[][] features, int i,
+//									int j) {
+//								return jaccard(features, i, j);
+//							}
+//						});
+//				
+//				System.out.print(j + "\t" + i);
+//				
+//				evaluateWithDomain(workFolder + "clusterTh="+j+"sn=" + i + ".txt",
+//						Indexer.indexFolder + "sameAsID.txt", workFolder
+//								+ "clusterTh="+j+"sn=" + i + "eval.txt");
+//			}
+//		} // cut after 300 20
+
+		int j = 500;
+		for (int i = 15; i <= 60; i += 5) {
+			float th = i / 10.0f;
+			cluster(Blocker.workFolder + "keyIndBasicFeatureTh=" + j + ".txt",
+					workFolder + "clusterTh=" + j + "sn=" + i + ".txt", 2, th,
+					100, new ISimCal() {
+						public float distance(String[][] features, int i, int j) {
+							return jaccard(features, i, j);
+						}
+					});
+
+			System.out.print(j + "\t" + i);
+
+			evaluateWithDomain(workFolder + "clusterTh=" + j + "sn=" + i
+					+ ".txt", Indexer.indexFolder + "sameAsID.txt", workFolder
+					+ "clusterTh=" + j + "sn=" + i + "eval.txt");
 		} // running
-		
 	}
 	
 	public static void getClusterDomainDistribution(String clusterFile,
