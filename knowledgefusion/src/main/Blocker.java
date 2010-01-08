@@ -244,9 +244,27 @@ public class Blocker {
 //			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
 //		} // done
 		
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
+		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
 		
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
+		
+	}
+	
+	public static void classifyTermsAccording2freq(String indexFolder, String outputPrefix) throws Exception {
+		IndexReader ireader = IndexReader.open(indexFolder);
+		TermEnum te = ireader.terms();
+		int blockCount = 0;
+		while (te.next()) {
+			int freq = te.docFreq();
+			PrintWriter pw = IOFactory.getPrintWriter(outputPrefix+freq/100+".txt", true);
+			pw.println(te.term().text() + "\t" + freq);
+			pw.close();
+			blockCount++;
+			if (blockCount%1000000 == 0) System.out.println(blockCount);
+		}
+		ireader.close();
+
 	}
 	
 	/**
