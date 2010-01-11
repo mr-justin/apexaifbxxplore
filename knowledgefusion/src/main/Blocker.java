@@ -244,11 +244,20 @@ public class Blocker {
 //			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
 //		} // done
 		
-		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
+//		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
 		
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 1000, 50); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 2000, 50); // to run
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
+//		
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 300000, 20); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // to run
+//
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
-		
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // to run
+
 	}
 	
 	public static void classifyTermsAccording2freq(String indexFolder, String outputPrefix) throws Exception {
