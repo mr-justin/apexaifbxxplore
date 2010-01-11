@@ -293,7 +293,7 @@ public class Clusterer {
 			evaluateWithDomain(workFolder + "clusterTh=" + j + "sn=" + i
 					+ ".txt", Indexer.indexFolder + "sameAsID.txt", workFolder
 					+ "clusterTh=" + j + "sn=" + i + "eval.txt");
-		} // running
+		} // done
 	}
 	
 	public static void getClusterDomainDistribution(String clusterFile,
