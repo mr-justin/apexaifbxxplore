@@ -306,7 +306,7 @@ public class Blocker {
 		System.out.println("incSize: " + incSize + "\tincNum: " + incNum);
 		for (int i = 0; i < incNum; i++) {
 			long startTime = new Date().getTime();
-			addEntitiesIntoIndex(workFolder+"incTestIndex", workFolder+"inc"+i+".txt");
+			addEntitiesIntoIndex(indexFolder, workFolder+"inc"+i+".txt");
 			long timeCost = new Date().getTime()-startTime;
 			System.out.println(timeCost);
 		}
