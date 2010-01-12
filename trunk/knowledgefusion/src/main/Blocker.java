@@ -240,13 +240,13 @@ public class Blocker {
 //			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
 //		} // done
 //		blockSizeAll(workFolder+"keyIndBasicFeatureIndex", workFolder+"blockSizesSearch.txt"); // done
-//		for (int i = 100; i < 1000; i += 100) {
-//			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
-//		} // done
+		for (int i = 10; i < 100; i += 10) {
+			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
+		} // running
 		
 //		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
 		
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 1000, 50); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 1000, 50); // to run
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 2000, 50); // to run
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
 //		
@@ -304,10 +304,14 @@ public class Blocker {
 			pw.close();
 		}
 		System.out.println("incSize: " + incSize + "\tincNum: " + incNum);
-		for (int i = 0; i < incNum; i++) {
-			long startTime = new Date().getTime();
+		long startTime = new Date().getTime();
+		indexAll(workFolder+"inc0.txt", indexFolder);
+		long timeCost = new Date().getTime()-startTime;
+		System.out.println(timeCost);
+		for (int i = 1; i < incNum; i++) {
+			startTime = new Date().getTime();
 			addEntitiesIntoIndex(indexFolder, workFolder+"inc"+i+".txt");
-			long timeCost = new Date().getTime()-startTime;
+			timeCost = new Date().getTime()-startTime;
 			System.out.println(timeCost);
 		}
 	}
@@ -475,7 +479,7 @@ public class Blocker {
 				doc.add(new Field("words", tokens, Field.Store.YES, Field.Index.ANALYZED));
 				iwriter.addDocument(doc);
 				lineCount++;
-				if (lineCount%1000 == 0) System.out.println(new Date().toString() + " : " + lineCount);
+//				if (lineCount%1000 == 0) System.out.println(new Date().toString() + " : " + lineCount);
 			} catch (Exception e) {
 				continue;
 			}
@@ -571,15 +575,15 @@ public class Blocker {
 				iwriter.addDocument(doc);
 			}
 			lineCount++;
-			if (lineCount % 100 == 0) 
-				System.out.println(new Date().toString() + " : " + lineCount + " lines indexed");
+//			if (lineCount % 100 == 0) 
+//				System.out.println(new Date().toString() + " : " + lineCount + " lines indexed");
 			if (lineCount == maxLineNumber) break;
 		}
-		System.out.println(new Date().toString() + " : " + lineCount + " lines indexed");
+//		System.out.println(new Date().toString() + " : " + lineCount + " lines indexed");
 		br.close();
 		iwriter.optimize();
 		iwriter.close();
-		System.out.println(new Date().toString() + " : indexing finished");
+//		System.out.println(new Date().toString() + " : indexing finished");
 		final IndexReader ireader = IndexReader.open(dir);
 		br = IOFactory.getBufferedReader(input);
 		PrintWriter pw = IOFactory.getPrintWriter(output);
@@ -604,16 +608,16 @@ public class Blocker {
 			for (int i = 1; i < tokens.length; i++) pw.print(" " + tokens[i]);
 			pw.println();
 			lineCount++;
-			if (lineCount%100000 == 0) 
-				System.out.println(new Date().toString() + " : " + lineCount + " lines output");
+//			if (lineCount%100000 == 0) 
+//				System.out.println(new Date().toString() + " : " + lineCount + " lines output");
 		}
-		System.out.println(new Date().toString() + " : " + lineCount + " lines output");
+//		System.out.println(new Date().toString() + " : " + lineCount + " lines output");
 		pw.close();
 		br.close();
 		ireader.close();
 		dir.close();
 		Common.deleteFolder(new File(indexFolder));
-		System.out.println(new Date().toString() + " : canonicalization finished");
+//		System.out.println(new Date().toString() + " : canonicalization finished");
 	}
 	
 	/**
