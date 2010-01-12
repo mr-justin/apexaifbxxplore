@@ -20,8 +20,8 @@ import basic.IOFactory;
 
 public class Clusterer {
 
-	public static String workFolder = "/usr/fulinyun/clusterer/";
-	public static String classFolder = "/usr/fulinyun/classCluster/";
+	public static String workFolder = "/media/disk1/fulinyun/clusterer/";
+//	public static String classFolder = "/home/fulinyun/classCluster/";
 	
 	public static void main(String[] args) throws Exception {
 		
@@ -256,7 +256,7 @@ public class Clusterer {
 //			}
 //		} // to cut after j = 1000 finishes - done
 		
-		System.out.println("blockTh\tsn\trecall\tprecision");
+//		System.out.println("blockTh\tsn\trecall\tprecision");
 		for (int j = 10; j < 100; j += 10) {
 			for (int i = 15; i <= 60; i += 5) {
 				float th = i / 10.0f;
@@ -294,7 +294,112 @@ public class Clusterer {
 //					+ ".txt", Indexer.indexFolder + "sameAsID.txt", workFolder
 //					+ "clusterTh=" + j + "sn=" + i + "eval.txt");
 //		} // done
+
+//		System.out.println("blockTh\tsn\trecall\tprecision");
+//		for (int j = 10; j < 100; j += 10) {
+//			for (int i = 15; i <= 60; i += 5) {
+//				float th = i / 10.0f;
+//				cluster(Blocker.workFolder + "keyIndBasicFeatureTh="+j+".txt",
+//						workFolder + "clusterTh="+j+"sn=" + i + ".txt", 2, th, 100,
+//						new ISimCal() {
+//							public float distance(String[][] features, int i,
+//									int j) {
+//								return jaccard(features, i, j);
+//							}
+//						});
+//				
+//				System.out.print(j + "\t" + i);
+//				
+//				evaluateWithDomain(workFolder + "clusterTh="+j+"sn=" + i + ".txt",
+//						Indexer.indexFolder + "sameAsID.txt", workFolder
+//								+ "clusterTh="+j+"sn=" + i + "eval.txt");
+//			}
+//		} // done
+
+		String[] keywords = {"conflict", "election", "manager"};
+		for (String keyword : keywords) {
+			System.out.println(keyword);
+			System.out.println("method\tth\trecall\tprecision");
+			for (int i = 1; i < 10; i++) {
+				float th = i/10f;
+				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
+				System.out.print("single\t" + th + "\t");
+				clusterWithKeywordSingleTh(keyword, Indexer.basicFeatureIndex, new ISimCal() {
+
+					@Override
+					public float distance(String[][] features, int i, int j) {
+						return jaccard(features, i, j);
+					}
+					
+				}, th, output);
+				evaluateWithDomain(output, Indexer.indexFolder+"sameAsID.txt", 
+						workFolder+"singleKeyword="+keyword+"Th="+i+"eval.txt");
+			}
+			for (int i = 15; i < 65; i += 5) {
+				float tsn = i/10f;
+				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
+				System.out.print("cssn\t" + tsn + "\t");
+				clusterWithKeywordCSSN(keyword, Indexer.basicFeatureIndex, new ISimCal () {
+					@Override
+					public float distance(String[][] features, int i, int j) {
+						return jaccard(features, i, j);
+					}
+					
+				}, tsn, output);
+				evaluateWithDomain(output, Indexer.indexFolder+"sameAsID.txt", 
+						workFolder+"cssnKeyword="+keyword+"Th="+i+"eval.txt");
+			}
+		}
+//		int j = 500;
+//		for (int i = 15; i <= 60; i += 5) {
+//			float th = i / 10.0f;
+//			cluster(Blocker.workFolder + "keyIndBasicFeatureTh=" + j + ".txt",
+//					workFolder + "clusterTh=" + j + "sn=" + i + ".txt", 2, th,
+//					100, new ISimCal() {
+//						public float distance(String[][] features, int i, int j) {
+//							return jaccard(features, i, j);
+//						}
+//					});
+//
+//			System.out.print(j + "\t" + i);
+//
+//			evaluateWithDomain(workFolder + "clusterTh=" + j + "sn=" + i
+//					+ ".txt", Indexer.indexFolder + "sameAsID.txt", workFolder
+//					+ "clusterTh=" + j + "sn=" + i + "eval.txt");
+//		} // done
 		
+	}
+	
+	/**
+	 * implement WWW method
+	 * @param keyword
+	 * @param indexFolder
+	 * @param cal
+	 * @throws Exception
+	 */
+	public static void clusterWithKeywordSingleTh(String keyword, String indexFolder, ISimCal cal, float th, 
+			String output) throws Exception {
+		HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, indexFolder);
+		int[] searchResultArray = new int[searchResult.size()];
+		int index = 0;
+		for (Integer i : searchResult) searchResultArray[index++] = i;
+		clusterWithSingleTh(searchResultArray, output, cal, th);
+	}
+	
+	/**
+	 * cluster within keyword search results
+	 * @param keyword
+	 * @param indexFolder
+	 * @param cal
+	 * @throws Exception
+	 */
+	public static void clusterWithKeywordCSSN(String keyword, String indexFolder, ISimCal cal, float tsn, 
+			String output) throws Exception {
+		HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, indexFolder);
+		int[] searchResultArray = new int[searchResult.size()];
+		int index = 0;
+		for (Integer i : searchResult) searchResultArray[index++] = i;
+		cluster(searchResultArray, output, 2, tsn, Integer.MAX_VALUE, cal);
 	}
 	
 	public static void getClusterDomainDistribution(String clusterFile,
@@ -541,6 +646,16 @@ public class Clusterer {
 		pw.close();
 	}
 
+	private static void clusterWithSingleTh(int[] docNums, String output, ISimCal cal, float th) throws Exception {
+		String[][] basicFeatures = new String[docNums.length][];
+		getBasicFeatures(docNums, basicFeatures);
+		PrintWriter pw = IOFactory.getPrintWriter(output, true);
+		for (int i = 0; i < basicFeatures.length; i++) for (int j = 0; j < i; j++) {
+			if (1-cal.distance(basicFeatures, i, j) > th) pw.println(docNums[i] + " " + docNums[j]);
+		}
+		pw.close();
+	}
+	
 	/**
 	 * extract pairs found by clusterer but are not contained in stdAns and write the result to output
 	 * output need manual labeling

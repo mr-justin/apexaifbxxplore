@@ -19,6 +19,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TermDocs;
 import org.apache.lucene.index.TermEnum;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.TermQuery;
@@ -39,7 +40,7 @@ import basic.IOFactory;
  */
 public class Blocker {
 	
-	public static String workFolder = "/usr/fulinyun/blocker/";
+	public static String workFolder = "/media/disk1/fulinyun/blocker/";
 //	public static String ppjoinFolder = "/usr/fulinyun/ppjoin/";
 	
 	public static void main(String[] args) throws Exception {
@@ -246,8 +247,8 @@ public class Blocker {
 		
 //		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
 		
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 1000, 50); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 2000, 50); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 1000, 50); // done
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 2000, 50); // to run
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
 //		
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 300000, 20); // to run
@@ -372,12 +373,15 @@ public class Blocker {
 	 */
 	public static HashSet<Integer> getKeywordHits(String keyword, String indexFolder) throws Exception {
 		IndexReader ireader = IndexReader.open(indexFolder);
-		IndexSearcher isearcher = new IndexSearcher(ireader);
-		TopDocs td = isearcher.search(new TermQuery(new Term("words", keyword)), Integer.MAX_VALUE);
+		TermDocs td = ireader.termDocs(new Term("words", keyword));
+//		IndexSearcher isearcher = new IndexSearcher(ireader);
+//		TopDocs td = isearcher.search(new TermQuery(new Term("words", keyword)), Integer.MAX_VALUE);
+//		HashSet<Integer> ret = new HashSet<Integer>();
+//		for (int i = 0; i < td.scoreDocs.length; i++) 
+//			ret.add(Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id")));
+//		isearcher.close();
 		HashSet<Integer> ret = new HashSet<Integer>();
-		for (int i = 0; i < td.scoreDocs.length; i++) 
-			ret.add(Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id")));
-		isearcher.close();
+		while (td.next()) ret.add(Integer.parseInt(ireader.document(td.doc()).get("id")));
 		ireader.close();
 		return ret;
 	}
