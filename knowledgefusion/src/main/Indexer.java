@@ -32,7 +32,7 @@ public class Indexer {
 		public boolean accept(int docNum, String feature);
 	}
 
-	public static String indexFolder = "/usr/fulinyun/";
+	public static String indexFolder = "/media/disk1/fulinyun/";
 	public static String refIndex = indexFolder+"refIndex"; // local
 	public static String basicFeatureIndex = indexFolder+"basicFeatureIndex"; // local
 	public static int nonNullIndNum = 11677397;
