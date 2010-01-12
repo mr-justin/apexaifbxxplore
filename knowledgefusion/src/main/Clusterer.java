@@ -325,7 +325,7 @@ public class Clusterer {
 			for (int i = 1; i < 10; i++) {
 				float th = i/10f;
 				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
-				System.out.print("single\t" + th + "\t");
+				System.out.print("single\t" + th);
 				clusterWithKeywordSingleTh(keyword, Indexer.basicFeatureIndex, new ISimCal() {
 
 					@Override
@@ -340,7 +340,7 @@ public class Clusterer {
 			for (int i = 15; i < 65; i += 5) {
 				float tsn = i/10f;
 				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
-				System.out.print("cssn\t" + tsn + "\t");
+				System.out.print("cssn\t" + tsn);
 				clusterWithKeywordCSSN(keyword, Indexer.basicFeatureIndex, new ISimCal () {
 					@Override
 					public float distance(String[][] features, int i, int j) {
