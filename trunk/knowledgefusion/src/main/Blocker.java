@@ -375,15 +375,15 @@ public class Blocker {
 	 */
 	public static HashSet<Integer> getKeywordHits(String keyword, String indexFolder) throws Exception {
 		IndexReader ireader = IndexReader.open(indexFolder);
-		TermDocs td = ireader.termDocs(new Term("words", keyword));
-//		IndexSearcher isearcher = new IndexSearcher(ireader);
-//		TopDocs td = isearcher.search(new TermQuery(new Term("words", keyword)), Integer.MAX_VALUE);
-//		HashSet<Integer> ret = new HashSet<Integer>();
-//		for (int i = 0; i < td.scoreDocs.length; i++) 
-//			ret.add(Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id")));
-//		isearcher.close();
+		IndexSearcher isearcher = new IndexSearcher(ireader);
+		TopDocs td = isearcher.search(new TermQuery(new Term("words", keyword)), ireader.maxDoc());
 		HashSet<Integer> ret = new HashSet<Integer>();
-		while (td.next()) ret.add(Integer.parseInt(ireader.document(td.doc()).get("id")));
+		for (int i = 0; i < td.scoreDocs.length; i++) 
+			ret.add(Integer.parseInt(ireader.document(td.scoreDocs[i].doc).get("id")));
+		isearcher.close();
+//		TermDocs td = ireader.termDocs(new Term("words", keyword));
+//		HashSet<Integer> ret = new HashSet<Integer>();
+//		while (td.next()) ret.add(Integer.parseInt(ireader.document(td.doc()).get("id")));
 		ireader.close();
 		return ret;
 	}
