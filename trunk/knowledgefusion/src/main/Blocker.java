@@ -40,7 +40,8 @@ import basic.IOFactory;
  */
 public class Blocker {
 	
-	public static String workFolder = "/media/disk1/fulinyun/blocker/";
+//	public static String workFolder = "/media/disk1/fulinyun/blocker/";
+	public static String workFolder = "/usr/fulinyun/blocker/";
 //	public static String ppjoinFolder = "/usr/fulinyun/ppjoin/";
 	
 	public static void main(String[] args) throws Exception {
@@ -241,9 +242,9 @@ public class Blocker {
 //			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
 //		} // done
 //		blockSizeAll(workFolder+"keyIndBasicFeatureIndex", workFolder+"blockSizesSearch.txt"); // done
-		for (int i = 10; i < 100; i += 10) {
-			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
-		} // running
+//		for (int i = 10; i < 100; i += 10) {
+//			prefixBlocking(workFolder+"keyIndBasicFeatureIndex", i, workFolder+"keyIndBasicFeatureTh="+i+".txt");
+//		} // running
 		
 //		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
 		
