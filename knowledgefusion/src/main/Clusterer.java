@@ -20,9 +20,9 @@ import basic.IOFactory;
 
 public class Clusterer {
 
-//	public static String workFolder = "/media/disk1/fulinyun/clusterer/"; // for vidi018(192.168.4.18:1) ln -s /media/disk1/fulinyun/ /usr/fulinyun
-//	public static String workFolder = "/home/fulinyun/clusterer/"; // for vidi-004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
-	public static String workFolder = "/usr/fulinyun/clusterer/"; // for hadoop1(192.168.4.148:3)
+//	public static String workFolder = "/media/disk1/fulinyun/clusterer/"; // for root@vidi018(192.168.4.18:1) ln -s /media/disk1/fulinyun/ /usr/fulinyun
+//	public static String workFolder = "/home/fulinyun/clusterer/"; // for root@vidi-004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
+	public static String workFolder = "/usr/fulinyun/clusterer/"; // for fulinyun@hadoop1(192.168.4.148:3)
 
 	public static void main(String[] args) throws Exception {
 		

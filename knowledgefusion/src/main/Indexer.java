@@ -32,9 +32,9 @@ public class Indexer {
 		public boolean accept(int docNum, String feature);
 	}
 
-//	public static String indexFolder = "/media/disk1/fulinyun/"; // for vidi018(192.168.4.18:1) ln -s /media/disk1/fulinyun/ /usr/fulinyun
-//	public static String indexFolder = "/home/fulinyun/"; // for vidi-004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
-	public static String indexFolder = "/usr/fulinyun/"; // for hadoop1(192.168.4.148:3)
+//	public static String indexFolder = "/media/disk1/fulinyun/"; // for root@vidi018(192.168.4.18:1) ln -s /media/disk1/fulinyun/ /usr/fulinyun
+//	public static String indexFolder = "/home/fulinyun/"; // for root@vidi-004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
+	public static String indexFolder = "/usr/fulinyun/"; // for fulinyun@hadoop1(192.168.4.148:3)
 
 	public static String refIndex = indexFolder+"refIndex"; // local
 	public static String basicFeatureIndex = indexFolder+"basicFeatureIndex"; // local
