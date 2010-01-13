@@ -253,13 +253,15 @@ public class Blocker {
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // done
 		
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 300000, 20); // done
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // to run
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // to run
 
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // to run
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // to run
 
+		selectKeyword(workFolder+"keyIndBasicFeatureIndex", Indexer.indexFolder+"sameAsID.txt", 100, 
+				workFolder + "numPairBT100.txt");
 	}
 	
 	public static void classifyTermsAccording2freq(String indexFolder, String outputPrefix) throws Exception {
@@ -363,6 +365,31 @@ public class Blocker {
 		}
 		pw.close();
 		br.close();
+	}
+	
+	/**
+	 * select keywords that cause blocks with at least minPair pairs of sameAs entities
+	 * @param indexFolder
+	 * @param stdAns
+	 * @param minPair
+	 * @throws Exception
+	 */
+	public static void selectKeyword(String indexFolder, String stdAns, 
+			int minPair, String output) throws Exception {
+		IndexReader ireader = IndexReader.open(indexFolder);
+		PrintWriter pw = IOFactory.getPrintWriter(output);
+		TermEnum te = ireader.terms();
+		int blockCount = 0;
+		while (te.next()) {
+			String keyword = te.term().text();
+			HashSet<Integer> block = getKeywordHits(keyword, indexFolder);
+			HashSet<String> stdSet = Common.getFilteredStringSet(stdAns, block);
+			if (stdSet.size() > minPair) pw.println(keyword + "\t" + stdSet.size());
+			blockCount++;
+			if (blockCount%1000000 == 0) System.out.println(blockCount);
+		}
+		ireader.close();
+		pw.close();
 	}
 	
 	/**
