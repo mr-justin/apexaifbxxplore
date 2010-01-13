@@ -21,8 +21,8 @@ import basic.IOFactory;
 public class Clusterer {
 
 //	public static String workFolder = "/media/disk1/fulinyun/clusterer/"; // for vidi018(192.168.4.18)
-//	public static String workFolder = "/home/fulinyun/clusterer/"; // for vidi-004(192.168.4.104)
-	public static String workFolder = "/usr/fulinyun/clusterer/"; // for hadoop1(192.168.4.148)
+	public static String workFolder = "/home/fulinyun/clusterer/"; // for vidi-004(192.168.4.104)
+//	public static String workFolder = "/usr/fulinyun/clusterer/"; // for hadoop1(192.168.4.148)
 
 	
 	public static void main(String[] args) throws Exception {
@@ -318,15 +318,19 @@ public class Clusterer {
 //			}
 //		} // done
 
-		String[] keywords = {"conflict", "election", "manager"};
+		String[] keywords = {"Pacific", "Roman", "elevation"};
 		for (String keyword : keywords) {
 			System.out.println(keyword);
 			System.out.println("method\tth\trecall\tprecision");
+			HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, 
+					Blocker.workFolder+"keyIndBasicFeatureIndex");
 			for (int i = 1; i < 10; i++) {
 				float th = i/10f;
 				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
 				System.out.print("single\t" + th);
-				clusterWithKeywordSingleTh(keyword, Indexer.basicFeatureIndex, new ISimCal() {
+				clusterWithKeywordSingleTh(searchResult, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+						new ISimCal() {
 
 					@Override
 					public float distance(String[][] features, int i, int j) {
@@ -334,22 +338,22 @@ public class Clusterer {
 					}
 					
 				}, th, output);
-				evaluateWithDomain(output, Indexer.indexFolder+"sameAsID.txt", 
-						workFolder+"singleKeyword="+keyword+"Th="+i+"eval.txt");
+				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
 			}
 			for (int i = 15; i < 65; i += 5) {
 				float tsn = i/10f;
 				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
 				System.out.print("cssn\t" + tsn);
-				clusterWithKeywordCSSN(keyword, Indexer.basicFeatureIndex, new ISimCal () {
+				clusterWithKeywordCSSN(searchResult, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+						new ISimCal () {
 					@Override
 					public float distance(String[][] features, int i, int j) {
 						return jaccard(features, i, j);
 					}
 					
 				}, tsn, output);
-				evaluateWithDomain(output, Indexer.indexFolder+"sameAsID.txt", 
-						workFolder+"cssnKeyword="+keyword+"Th="+i+"eval.txt");
+				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
 			}
 		}
 //		int j = 500;
@@ -388,6 +392,14 @@ public class Clusterer {
 		clusterWithSingleTh(searchResultArray, output, cal, th);
 	}
 	
+	public static void clusterWithKeywordSingleTh(HashSet<Integer> searchResult, String indexFolder, ISimCal cal, float th, 
+			String output) throws Exception {
+		int[] searchResultArray = new int[searchResult.size()];
+		int index = 0;
+		for (Integer i : searchResult) searchResultArray[index++] = i;
+		clusterWithSingleTh(searchResultArray, output, cal, th);
+	}
+	
 	/**
 	 * cluster within keyword search results
 	 * @param keyword
@@ -398,6 +410,14 @@ public class Clusterer {
 	public static void clusterWithKeywordCSSN(String keyword, String indexFolder, ISimCal cal, float tsn, 
 			String output) throws Exception {
 		HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, indexFolder);
+		int[] searchResultArray = new int[searchResult.size()];
+		int index = 0;
+		for (Integer i : searchResult) searchResultArray[index++] = i;
+		cluster(searchResultArray, output, 2, tsn, Integer.MAX_VALUE, cal);
+	}
+	
+	public static void clusterWithKeywordCSSN(HashSet<Integer> searchResult, String indexFolder, ISimCal cal, float tsn, 
+			String output) throws Exception {
 		int[] searchResultArray = new int[searchResult.size()];
 		int index = 0;
 		for (Integer i : searchResult) searchResultArray[index++] = i;
@@ -540,6 +560,40 @@ public class Clusterer {
 		br.close();
 		pw.close();
 		ireader.close();
+	}
+	
+	public static void evaluateInBlock(String clusterFile, HashSet<Integer> entitiesInBlock, 
+			String stdAns) throws Exception {
+		if (!new File(clusterFile).exists()) {
+			System.out.println("\t0\t0");
+			return;
+		}
+		HashSet<String> stdSet = Common.getFilteredStringSet(stdAns, entitiesInBlock);
+		HashSet<String> resSet = new HashSet<String>();
+		HashMap<Integer, String> indURI = new HashMap<Integer, String>();
+		BufferedReader br = IOFactory.getBufferedReader(clusterFile);
+		int overlap = 0;
+		IndexReader ireader = IndexReader.open(Indexer.basicFeatureIndex);
+		for (String line = br.readLine(); line != null; line = br.readLine()) {
+			int[] docNums = Common.getNumsInLineSorted(line);
+			String[] uris = getURIs(ireader, docNums, indURI);
+			for (int i = 0; i < docNums.length; i++) for (int j = 0; j < i; j++) 
+				if (uris[i].contains(KeyIndDealer.domainDBpedia) && uris[j].contains(KeyIndDealer.domainGeonames) 
+					|| uris[i].contains(KeyIndDealer.domainGeonames) && uris[j].contains(KeyIndDealer.domainDBpedia)
+					|| uris[i].contains(KeyIndDealer.domainDblp) && uris[j].contains(KeyIndDealer.domainDblp)
+					|| uris[i].contains(KeyIndDealer.domainDBpedia) && uris[j].contains(KeyIndDealer.domainDblp)
+					|| uris[j].contains(KeyIndDealer.domainDblp) && uris[i].contains(KeyIndDealer.domainDBpedia)) {
+				String toTest = docNums[i] + " " + docNums[j];
+				if (stdSet.contains(toTest)) {
+					overlap++;
+					stdSet.remove(toTest); // to avoid duplicate counting
+				}
+				resSet.add(toTest);
+			}
+		}
+		br.close();
+		int stdSize = Analyzer.countLines(stdAns);
+		System.out.println("\t" + (overlap+0.0)/stdSize + "\t" + (overlap+0.0)/resSet.size());
 	}
 	
 	/**

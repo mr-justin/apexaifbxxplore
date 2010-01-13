@@ -41,8 +41,8 @@ import basic.IOFactory;
 public class Blocker {
 	
 //	public static String workFolder = "/media/disk1/fulinyun/blocker/"; // for vidi018(192.168.4.18)
-//	public static String workFolder = "/home/fulinyun/blocker/"; // for vidi004(192.168.4.104)
-	public static String workFolder = "/usr/fulinyun/blocker/"; // for hadoop1(192.168.4.148)
+	public static String workFolder = "/home/fulinyun/blocker/"; // for vidi004(192.168.4.104)
+//	public static String workFolder = "/usr/fulinyun/blocker/"; // for hadoop1(192.168.4.148)
 
 	
 	public static void main(String[] args) throws Exception {

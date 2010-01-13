@@ -33,8 +33,8 @@ public class Indexer {
 	}
 
 //	public static String indexFolder = "/media/disk1/fulinyun/"; // for vidi018(192.168.4.18)
-//	public static String indexFolder = "/home/fulinyun/"; // for vidi-004(192.168.4.104)
-	public static String indexFolder = "/usr/fulinyun/"; // for hadoop1(192.168.4.148)
+	public static String indexFolder = "/home/fulinyun/"; // for vidi-004(192.168.4.104)
+//	public static String indexFolder = "/usr/fulinyun/"; // for hadoop1(192.168.4.148)
 
 	public static String refIndex = indexFolder+"refIndex"; // local
 	public static String basicFeatureIndex = indexFolder+"basicFeatureIndex"; // local
