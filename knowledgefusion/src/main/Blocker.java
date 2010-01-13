@@ -40,10 +40,10 @@ import basic.IOFactory;
  */
 public class Blocker {
 	
-//	public static String workFolder = "/media/disk1/fulinyun/blocker/"; // for vidi018(192.168.4.18) ln -s /media/disk1/fulinyun/ /usr/fulinyun
-//	public static String workFolder = "/home/fulinyun/blocker/"; // for vidi004(192.168.4.104) ln -s /home/fulinyun/ /usr/fulinyun
-	public static String workFolder = "/usr/fulinyun/blocker/"; // for hadoop1(192.168.4.148) 
 
+//	public static String workFolder = "/media/disk1/fulinyun/blocker/"; // for vidi018(192.168.4.18:1) ln -s /media/disk1/fulinyun/ /usr/fulinyun
+//	public static String workFolder = "/home/fulinyun/blocker/"; // for vidi-004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
+	public static String workFolder = "/usr/fulinyun/blocker/"; // for hadoop1(192.168.4.148:3)
 	
 	public static void main(String[] args) throws Exception {
 //		findBlock(workFolder+"r0.3sorted.txt", workFolder+"r0.3block.txt");
@@ -250,16 +250,16 @@ public class Blocker {
 //		classifyTermsAccording2freq(workFolder+"keyIndBasicFeatureIndex", workFolder+"termsFreq/termsFreq="); // done
 		
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 1000, 50); // done
-		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 2000, 50); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // to run
-//		
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 300000, 20); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // to run
-//
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 2000, 50); // done
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // done
+		
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 300000, 20); // done
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // to run
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // to run
+
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // to run
+		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // to run
 
 	}
 	
