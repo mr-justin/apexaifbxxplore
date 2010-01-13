@@ -40,10 +40,9 @@ import basic.IOFactory;
  */
 public class Blocker {
 	
-
 //	public static String workFolder = "/media/disk1/fulinyun/blocker/"; // for vidi018(192.168.4.18:1) ln -s /media/disk1/fulinyun/ /usr/fulinyun
-//	public static String workFolder = "/home/fulinyun/blocker/"; // for vidi-004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
-	public static String workFolder = "/usr/fulinyun/blocker/"; // for hadoop1(192.168.4.148:3)
+//	public static String workFolder = "/home/fulinyun/blocker/"; // for vidi004(192.168.4.104:1) ln -s /home/fulinyun/ /usr/fulinyun
+	public static String workFolder = "/usr/fulinyun/blocker/"; // for hadoop1(192.168.4.148:3) 
 	
 	public static void main(String[] args) throws Exception {
 //		findBlock(workFolder+"r0.3sorted.txt", workFolder+"r0.3block.txt");
