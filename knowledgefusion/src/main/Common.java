@@ -257,5 +257,19 @@ public class Common {
 		}
 		dir.delete();
 	}
+
+	public static HashSet<String> getFilteredStringSet(String input,
+			HashSet<Integer> filter) throws Exception {
+		BufferedReader br = IOFactory.getBufferedReader(input);
+		HashSet<String> ret = new HashSet<String>();
+		for (String line = br.readLine(); line != null; line = br.readLine()) {
+			String[] parts = line.split(" ");
+			int e0 = Integer.parseInt(parts[0]);
+			int e1 = Integer.parseInt(parts[1]);
+			if (filter.contains(e0) && filter.contains(e1))	ret.add(line);
+		}
+		return ret;
+		
+	}
 	
 }
