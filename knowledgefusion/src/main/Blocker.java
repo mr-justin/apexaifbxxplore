@@ -253,15 +253,50 @@ public class Blocker {
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 3000, 50); // done
 		
 //		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 300000, 20); // done
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 400000, 20); // done
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 500000, 20); // done
 
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // to run
-//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // to run
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 4000000, 10); // done
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 5000000, 10); // done
+//		incrementalAddEntities(workFolder+"nonNullIndCaned.txt", 10000000, workFolder+"incExpIndex", 6000000, 10); // done
 
-		selectKeyword(workFolder+"keyIndBasicFeatureIndex", Indexer.indexFolder+"sameAsID.txt", 100, 
-				workFolder + "numPairBT100.txt");
+//		selectKeyword(workFolder+"keyIndBasicFeatureIndex", Indexer.indexFolder+"sameAsID.txt", 0, 
+//				workFolder + "numPairBT0.txt"); // done
+		
+//		String[] keywords = {"District", "West", "Mountain", "del", "La",
+//				"San.2", "Bay", "County", "de.1", "di", "San.1", "Park",
+//				"City", "Mount", "of", "Island", "San", "Lake", "Airport", "de" };
+//		IndexReader ireader = IndexReader.open(workFolder+"keyIndBasicFeatureIndex");
+//		IndexSearcher isearcher = new IndexSearcher(ireader);
+//		for (String keyword : keywords) {
+//			Term t = new Term("words", keyword);
+//			TopDocs td = isearcher.search(new TermQuery(t), ireader.maxDoc());
+//			System.out.println(keyword + "\t" + td.scoreDocs.length);
+//		}
+//		isearcher.close();
+//		ireader.close();
+		
+		getKeywordDf(workFolder+"selectedKeywordsWithStdNum.txt", workFolder+"selectedKeywords.txt", 
+				workFolder+"keyIndBasicFeatureIndex", "words");
+	}
+	
+	public static void getKeywordDf(String input, String output, String indexFolder, 
+			String fieldName) throws Exception {
+		BufferedReader br = IOFactory.getBufferedReader(input);
+		IndexReader ireader = IndexReader.open(indexFolder);
+		IndexSearcher isearcher = new IndexSearcher(ireader);
+		PrintWriter pw = IOFactory.getPrintWriter(output);
+		pw.println("keyword\t#std\tdf");
+		for (String line = br.readLine(); line != null; line = br.readLine()) {
+			String[] parts = line.split("\t");
+			Term t = new Term(fieldName, parts[0]);
+			TopDocs td = isearcher.search(new TermQuery(t), ireader.maxDoc());
+			pw.println(parts[0] + "\t" + parts[1] + "\t" + td.scoreDocs.length);
+		}
+		pw.close();
+		isearcher.close();
+		ireader.close();
+		br.close();
 	}
 	
 	public static void classifyTermsAccording2freq(String indexFolder, String outputPrefix) throws Exception {
@@ -365,31 +400,6 @@ public class Blocker {
 		}
 		pw.close();
 		br.close();
-	}
-	
-	/**
-	 * select keywords that cause blocks with at least minPair pairs of sameAs entities
-	 * @param indexFolder
-	 * @param stdAns
-	 * @param minPair
-	 * @throws Exception
-	 */
-	public static void selectKeyword(String indexFolder, String stdAns, 
-			int minPair, String output) throws Exception {
-		IndexReader ireader = IndexReader.open(indexFolder);
-		PrintWriter pw = IOFactory.getPrintWriter(output);
-		TermEnum te = ireader.terms();
-		int blockCount = 0;
-		while (te.next()) {
-			String keyword = te.term().text();
-			HashSet<Integer> block = getKeywordHits(keyword, indexFolder);
-			HashSet<String> stdSet = Common.getFilteredStringSet(stdAns, block);
-			if (stdSet.size() > minPair) pw.println(keyword + "\t" + stdSet.size());
-			blockCount++;
-			if (blockCount%1000000 == 0) System.out.println(blockCount);
-		}
-		ireader.close();
-		pw.close();
 	}
 	
 	/**
