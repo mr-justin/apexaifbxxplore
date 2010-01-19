@@ -1,10 +1,7 @@
 package main;
 
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.Comparator;
@@ -14,6 +11,8 @@ import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.TermEnum;
+import org.apache.lucene.search.IndexSearcher;
 
 import basic.IDataSourceReader;
 import basic.IOFactory;
@@ -316,8 +315,25 @@ public class Clusterer {
 //								+ "clusterTh="+j+"sn=" + i + "eval.txt");
 //			}
 //		} // done
-
-		String[] keywords = {"Pacific", "Roman", "elevation"};
+		
+/*		selected keywords:
+ * Municipal	205	697
+ * Beach		210	785
+ * Peak			224	701
+ * Castle		282	1079
+ * Mountain		336	1367
+ * Port			192	1003
+ * Union		51	627
+ * Red			52	512
+ * Junction		53	219
+ * Harbor		54	270
+ * Big			55	385
+ * Santo		56	313
+ * 
+*/
+		String[] keywords = { "Municipal", "Beach", "Peak", "Castle", "Mountain",
+				"Port", "Union", "Red", "Junction", "Harbor", "Big",
+				"Santo" };
 		for (String keyword : keywords) {
 			System.out.println(keyword);
 			System.out.println("method\tth\trecall\tprecision");
@@ -354,6 +370,7 @@ public class Clusterer {
 				}, tsn, output);
 				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
 			}
+			System.out.println();
 		}
 //		int j = 500;
 //		for (int i = 15; i <= 60; i += 5) {
