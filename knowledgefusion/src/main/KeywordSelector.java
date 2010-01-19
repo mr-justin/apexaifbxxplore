@@ -79,6 +79,7 @@ public class KeywordSelector {
 		System.out.println(keywordSet.size());
 		
 		PrintWriter pw = IOFactory.getPrintWriter(output);
+		pw.println("keyword\tright\ttotal");
 		count = 0;
 		for (String keyword : keywordSet) {
 			HashSet<Integer> block = Blocker.getKeywordHits(keyword, indexFolder);
