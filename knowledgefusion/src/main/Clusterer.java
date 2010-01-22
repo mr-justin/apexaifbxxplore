@@ -11,8 +11,6 @@ import java.util.HashSet;
 import java.util.TreeSet;
 
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.TermEnum;
-import org.apache.lucene.search.IndexSearcher;
 
 import basic.IDataSourceReader;
 import basic.IOFactory;
@@ -331,47 +329,48 @@ public class Clusterer {
  * Santo		56	313
  * 
 */
-		String[] keywords = { "Municipal", "Beach", "Peak", "Castle", "Mountain",
-				"Port", "Union", "Red", "Junction", "Harbor", "Big",
-				"Santo" };
-		for (String keyword : keywords) {
-			System.out.println(keyword);
-			System.out.println("method\tth\trecall\tprecision");
-			HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, 
-					Blocker.workFolder+"keyIndBasicFeatureIndex");
-			for (int i = 1; i < 10; i++) {
-				float th = i/10f;
-				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
-				System.out.print("single\t" + th);
-				clusterWithKeywordSingleTh(searchResult, 
-						Blocker.workFolder+"keyIndBasicFeatureIndex", 
-						new ISimCal() {
-
-					@Override
-					public float distance(String[][] features, int i, int j) {
-						return jaccard(features, i, j);
-					}
-					
-				}, th, output);
-				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
-			}
-			for (int i = 15; i < 65; i += 5) {
-				float tsn = i/10f;
-				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
-				System.out.print("cssn\t" + tsn);
-				clusterWithKeywordCSSN(searchResult, 
-						Blocker.workFolder+"keyIndBasicFeatureIndex", 
-						new ISimCal () {
-					@Override
-					public float distance(String[][] features, int i, int j) {
-						return jaccard(features, i, j);
-					}
-					
-				}, tsn, output);
-				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
-			}
-			System.out.println();
-		}
+//		String[] keywords = { "Municipal", "Beach", "Peak", "Castle", "Mountain",
+//				"Port", "Union", "Red", "Junction", "Harbor", "Big",
+//				"Santo" };
+//		for (String keyword : keywords) {
+//			System.out.println(keyword);
+//			System.out.println("method\tth\trecall\tprecision");
+//			HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, 
+//					Blocker.workFolder+"keyIndBasicFeatureIndex");
+//			for (int i = 1; i < 10; i++) {
+//				float th = i/10f;
+//				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
+//				System.out.print("single\t" + th);
+//				clusterWithKeywordSingleTh(searchResult, 
+//						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+//						new ISimCal() {
+//
+//					@Override
+//					public float distance(String[][] features, int i, int j) {
+//						return jaccard(features, i, j);
+//					}
+//					
+//				}, th, output);
+//				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
+//			}
+//			for (int i = 15; i < 65; i += 5) {
+//				float tsn = i/10f;
+//				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
+//				System.out.print("cssn\t" + tsn);
+//				clusterWithKeywordCSSN(searchResult, 
+//						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+//						new ISimCal () {
+//					@Override
+//					public float distance(String[][] features, int i, int j) {
+//						return jaccard(features, i, j);
+//					}
+//					
+//				}, tsn, output);
+//				evaluateInBlock(output, searchResult, Indexer.indexFolder+"sameAsID.txt");
+//			}
+//			System.out.println();
+//		}
+		
 //		int j = 500;
 //		for (int i = 15; i <= 60; i += 5) {
 //			float th = i / 10.0f;
@@ -389,7 +388,34 @@ public class Clusterer {
 //					+ ".txt", Indexer.indexFolder + "sameAsID.txt", workFolder
 //					+ "clusterTh=" + j + "sn=" + i + "eval.txt");
 //		} // done
-		
+		findKeywords(workFolder+"selectedKeywords300.txt", 6f);
+
+	}
+	
+	public static void findKeywords(String selectedKeyword, float th) throws Exception {
+		System.out.println("keyword\tansNum\tblockSize\toverlap");
+		BufferedReader br = IOFactory.getBufferedReader(selectedKeyword);
+		for (String line = br.readLine(); line != null; line = br.readLine()) {
+			String[] parts = line.split("\t");
+			String keyword = parts[0];
+//			String ansNum = parts[1];
+//			String blockSize = parts[2];
+			HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, 
+					Blocker.workFolder+"keyIndBasicFeatureIndex");
+			System.out.print(line);
+			clusterWithKeywordCSSN(keyword, Blocker.workFolder+"keyIndBasicFeatureIndex", 
+					new ISimCal() {
+
+				@Override
+				public float distance(String[][] features, int i, int j) {
+					return jaccard(features, i, j);
+				}
+				
+			}, th, workFolder+"clusterKeyword="+keyword+"Sn=6.txt");
+			evaluateInBlock(workFolder + "clusterKeyword="+keyword+"Sn=6.txt", searchResult, 
+					Indexer.indexFolder + "sameAsID.txt");
+		}
+
 	}
 	
 	/**
@@ -609,7 +635,7 @@ public class Clusterer {
 		}
 		br.close();
 		int stdSize = Analyzer.countLines(stdAns);
-		System.out.println("\t" + (overlap+0.0)/stdSize + "\t" + (overlap+0.0)/resSet.size());
+		System.out.println("\t" + overlap);
 	}
 	
 	/**
