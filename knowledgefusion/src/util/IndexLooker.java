@@ -60,9 +60,10 @@ public class IndexLooker {
 			String line = br.readLine();
 			if (line == null) break;
 			String[] parts = line.split(" ");
-			if (generateRefIndexHtml(ireader, Integer.parseInt(parts[0]), 
-					Integer.parseInt(parts[1]), htmlNum, 
-					outputFolder)) htmlNum++;
+			for (int j = 0; j < parts.length; j++) for (int k = j+1; k < parts.length; k++) 
+				if (generateRefIndexHtml(ireader, Integer.parseInt(parts[j]), 
+						Integer.parseInt(parts[k]), htmlNum, 
+						outputFolder)) htmlNum++;
 			if ((i+1) % 100 == 0) System.out.println((i+1)+"");
 		}
 		ireader.close();
