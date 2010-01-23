@@ -40,7 +40,7 @@ public class IndexLooker {
 //		batchGenerateRefIndexHtml(Clusterer.workFolder+"cluster2&1.1domain2label.txt", 0, 5000, 
 //				KeyIndDealer.domainDBpedia, KeyIndDealer.domainGeonames, 
 //				Clusterer.workFolder+"basicDBpediaGeonames2label/");
-		String[] keywords = {"Juan", "San", "Lake", "Region", "Jos\\u00e9", "Bay", "Island", "Central", 
+		String[] keywords = {"Juan", "San", "Lake", "Region", "Jos\\u00E9", "Bay", "Island", "Central", 
 				"La", "di", "48.95", "East", "-", "City", "48.1", "Las"};
 		for (String keyword : keywords) {
 			batchGenerateRefIndexHtml(Clusterer.workFolder+"clusterKeyword="+keyword+"Sn=6.txt", 0, 5000, 
