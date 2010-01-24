@@ -104,6 +104,8 @@ public class IndexLooker {
 		if (num > 0) pw.println("<a href=" + (num-1) + ".html>previous</a>");
 		pw.println("<a href=" + (num+1) + ".html>next</a>");
 		pw.println("<table border=1><tr><td width=50% valign=top>");
+		
+		pw.println(id1+"<br>");
 		pw.println("<b>&lt;<a href=" + uri1.substring(1, uri1.length()-1) + ">" + uri1.substring(1, uri1.length()-1) + 
 				"</a>&gt;</b>");
 		pw.println("<p>");
@@ -119,7 +121,10 @@ public class IndexLooker {
 					);
 			
 		}
+		
 		pw.println("</td><td>");
+		
+		pw.println(id2+"<br>");
 		pw.println("<b>&lt;<a href=" + uri2.substring(1, uri2.length()-1) + ">" + uri2.substring(1, uri2.length()-1) + 
 				"</a>&gt;</b>");
 		pw.println("<p>");
