@@ -40,8 +40,43 @@ public class IndexLooker {
 //		batchGenerateRefIndexHtml(Clusterer.workFolder+"cluster2&1.1domain2label.txt", 0, 5000, 
 //				KeyIndDealer.domainDBpedia, KeyIndDealer.domainGeonames, 
 //				Clusterer.workFolder+"basicDBpediaGeonames2label/");
-		String[] keywords = {"Juan", "San", "Lake", "Region", "Jos\\u00E9", "Bay", "Island", "Central", 
-				"La", "di", "48.95", "East", "-", "City", "48.1", "Las"};
+		String[] keywords = {"An", "Ben", "Cross", "Cruz",
+				"David", "der", "El", "George", "Giorgio", "Hall", "John", "la", "Little", "Mount",
+				"Pietro", "Port", "Santiago", "Spring", "Torre", "Douglas", "Luis", "White", "Maria", 
+				"Pedro", "Robert", "Antonio", "M.", "Carlos", "Juan", "Jos\u00E9"};
+		
+//		An	36	649	1
+//		Ben	29	145	1
+//		Cross	36	230	1
+//		Cruz	39	206	1
+//		David	26	353	1
+//		der	99	471	1
+//		El	173	854	1
+//		George	39	756	1
+//		Giorgio	28	192	1
+//		Hall	43	641	1
+//		John	35	1421	1
+//		la	167	936	1
+//		Little	107	823	1
+//		Mills	55	184	1
+//		Mount	688	2412	1
+//		Pietro	37	229	1
+//		Port	192	1003	1
+//		Santiago	33	194	1
+//		Spring	67	278	1
+//		Torre	40	233	1
+//		Douglas	27	212	2
+//		Luis	27	136	2
+//		White	66	634	2
+//		Maria	55	490	3
+//		Pedro	34	215	3
+//		Robert	25	580	3
+//		Antonio	27	285	4
+//		M.	27	475	5
+//		Carlos	32	170	7
+//		Juan	58	411	7
+//		Jos\u00E9	61	360	9
+
 		for (String keyword : keywords) {
 			batchGenerateRefIndexHtml(Clusterer.workFolder+"clusterKeyword="+keyword+"Sn=6.txt", 0, 5000, 
 					Clusterer.workFolder+keyword+"/");
