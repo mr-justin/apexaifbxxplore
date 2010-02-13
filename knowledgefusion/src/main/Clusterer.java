@@ -388,7 +388,87 @@ public class Clusterer {
 //					+ ".txt", Indexer.indexFolder + "sameAsID.txt", workFolder
 //					+ "clusterTh=" + j + "sn=" + i + "eval.txt");
 //		} // done
-		findKeywords(workFolder+"selectedKeywords300.txt", 6f);
+//		findKeywords(workFolder+"selectedKeywords300.txt", 6f);
+
+/*
+keyword	ansNum	blockSize	overlap
+An	36	649	1
+Ben	29	145	1
+Cross	36	230	1
+Cruz	39	206	1
+David	26	353	1
+der	99	471	1
+El	173	854	1
+George	39	756	1
+Giorgio	28	192	1
+Hall	43	641	1
+John	35	1421	1
+la	167	936	1
+Little	107	823	1
+Mills	55	184	1
+Mount	688	2412	1
+Pietro	37	229	1
+Port	192	1003	1
+Santiago	33	194	1
+Spring	67	278	1
+Torre	40	233	1
+Douglas	27	212	2
+Luis	27	136	2
+White	66	634	2
+Maria	55	490	3
+Pedro	34	215	3
+Robert	25	580	3
+Antonio	27	285	4
+M.	27	475	5
+Carlos	32	170	7
+Juan	58	411	7
+Jos\u00E9	61	360	9
+*/
+		String[][] keywords = { {"Ben", "Cross", "Cruz", "Giorgio",
+				"Mills", "Pietro", "Santiago"}, {"An", "David", "Luis",
+				"Pedro"}, {"der", "Douglas", "Carlos"} };
+		for (String[] keyword : keywords) {
+			System.out.println(keyword);
+			System.out.println("method\tth\trecall\tprecision");
+			HashSet<Integer> totalResult = new HashSet<Integer>();
+			for (String word : keyword) {
+				HashSet<Integer> searchResult = Blocker.getKeywordHits(word, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex");
+				totalResult.addAll(searchResult);
+			}
+			for (int i = 1; i < 10; i++) {
+				float th = i/10f;
+				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
+				System.out.print("single\t" + th);
+				clusterWithKeywordSingleTh(totalResult, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+						new ISimCal() {
+
+					@Override
+					public float distance(String[][] features, int i, int j) {
+						return jaccard(features, i, j);
+					}
+					
+				}, th, output);
+				evaluateInBlock(output, totalResult, Indexer.indexFolder+"sameAsID.txt");
+			}
+			for (int i = 15; i < 65; i += 5) {
+				float tsn = i/10f;
+				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
+				System.out.print("cssn\t" + tsn);
+				clusterWithKeywordCSSN(totalResult, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+						new ISimCal () {
+					@Override
+					public float distance(String[][] features, int i, int j) {
+						return jaccard(features, i, j);
+					}
+					
+				}, tsn, output);
+				evaluateInBlock(output, totalResult, Indexer.indexFolder+"sameAsID.txt");
+			}
+			System.out.println();
+		}
 
 	}
 	
@@ -419,6 +499,28 @@ public class Clusterer {
 	}
 	
 	/**
+	 * implement WWW method within the union of multiple keyword search results
+	 * @param keyword
+	 * @param indexFolder
+	 * @param cal
+	 * @param th
+	 * @param output
+	 * @throws Exception
+	 */
+	public static void clusterWithMultiKeywordsSingleTh(String[] keywords, String indexFolder, ISimCal cal, 
+			float th, String output) throws Exception {
+		HashSet<Integer> totalResults = new HashSet<Integer>();
+		for (String keyword : keywords) {
+			HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, indexFolder);
+			totalResults.addAll(searchResult);
+		}
+		int[] totalResultArray = new int[totalResults.size()];
+		int index = 0;
+		for (Integer i : totalResults) totalResultArray[index++] = i;
+		clusterWithSingleTh(totalResultArray, output, cal, th);
+	}
+	
+	/**
 	 * implement WWW method
 	 * @param keyword
 	 * @param indexFolder
@@ -440,6 +542,28 @@ public class Clusterer {
 		int index = 0;
 		for (Integer i : searchResult) searchResultArray[index++] = i;
 		clusterWithSingleTh(searchResultArray, output, cal, th);
+	}
+	
+	/**
+	 * cluster within the union of multiple keyword searches
+	 * @param keywords
+	 * @param indexFolder
+	 * @param cal
+	 * @param tsn
+	 * @param output
+	 * @throws Exception
+	 */
+	public static void clusterWithMultiKeywordsCSSN(String[] keywords, String indexFolder, ISimCal cal,
+			float tsn, String output) throws Exception {
+		HashSet<Integer> totalResults = new HashSet<Integer>();
+		for (String keyword : keywords) {
+			HashSet<Integer> searchResult = Blocker.getKeywordHits(keyword, indexFolder);
+			totalResults.addAll(searchResult);
+		}
+		int[] totalResultArray = new int[totalResults.size()];
+		int index = 0;
+		for (Integer i : totalResults) totalResultArray[index++] = i;
+		cluster(totalResultArray, output, 2, tsn, Integer.MAX_VALUE, cal);
 	}
 	
 	/**
