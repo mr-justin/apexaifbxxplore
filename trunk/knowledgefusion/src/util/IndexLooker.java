@@ -43,7 +43,7 @@ public class IndexLooker {
 		String[] keywords = {"An", "Ben", "Cross", "Cruz",
 				"David", "der", "El", "George", "Giorgio", "Hall", "John", "la", "Little", "Mount",
 				"Pietro", "Port", "Santiago", "Spring", "Torre", "Douglas", "Luis", "White", "Maria", 
-				"Pedro", "Robert", "Antonio", "M.", "Carlos", "Juan", "Jos\u00E9"};
+				"Pedro", "Robert", "Antonio", "M.", "Carlos", "Juan", "Jos\\u00E9"};
 		
 //		An	36	649	1
 //		Ben	29	145	1
