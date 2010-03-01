@@ -440,31 +440,31 @@ Jos\u00E9	61	360	9
 				float th = i/10f;
 				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
 				System.out.print("single\t" + th);
-//				clusterWithKeywordSingleTh(totalResult, 
-//						Blocker.workFolder+"keyIndBasicFeatureIndex", 
-//						new ISimCal() {
-//
-//					@Override
-//					public float distance(String[][] features, int i, int j) {
-//						return jaccard(features, i, j);
-//					}
-//					
-//				}, th, output);
+				clusterWithKeywordSingleTh(totalResult, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+						new ISimCal() {
+
+					@Override
+					public float distance(String[][] features, int i, int j) {
+						return jaccard(features, i, j);
+					}
+					
+				}, th, output);
 				evaluateInBlock(output, totalResult, Indexer.indexFolder+"sameAsID.txt");
 			}
 			for (int i = 15; i < 65; i += 5) {
 				float tsn = i/10f;
 				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
 				System.out.print("cssn\t" + tsn);
-//				clusterWithKeywordCSSN(totalResult, 
-//						Blocker.workFolder+"keyIndBasicFeatureIndex", 
-//						new ISimCal () {
-//					@Override
-//					public float distance(String[][] features, int i, int j) {
-//						return jaccard(features, i, j);
-//					}
-//					
-//				}, tsn, output);
+				clusterWithKeywordCSSN(totalResult, 
+						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+						new ISimCal () {
+					@Override
+					public float distance(String[][] features, int i, int j) {
+						return jaccard(features, i, j);
+					}
+					
+				}, tsn, output);
 				evaluateInBlock(output, totalResult, Indexer.indexFolder+"sameAsID.txt");
 			}
 			System.out.println();
