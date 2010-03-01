@@ -429,7 +429,7 @@ Jos\u00E9	61	360	9
 				"Pedro"}, {"der", "Douglas", "Carlos"} };
 		for (String[] keyword : keywords) {
 			System.out.println(keyword);
-			System.out.println("method\tth\trecall\tprecision");
+			System.out.println("method\tth\toverlap\tprecision");
 			HashSet<Integer> totalResult = new HashSet<Integer>();
 			for (String word : keyword) {
 				HashSet<Integer> searchResult = Blocker.getKeywordHits(word, 
@@ -440,31 +440,31 @@ Jos\u00E9	61	360	9
 				float th = i/10f;
 				String output = workFolder+"singleKeyword="+keyword+"Th="+i+".txt";
 				System.out.print("single\t" + th);
-				clusterWithKeywordSingleTh(totalResult, 
-						Blocker.workFolder+"keyIndBasicFeatureIndex", 
-						new ISimCal() {
-
-					@Override
-					public float distance(String[][] features, int i, int j) {
-						return jaccard(features, i, j);
-					}
-					
-				}, th, output);
+//				clusterWithKeywordSingleTh(totalResult, 
+//						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+//						new ISimCal() {
+//
+//					@Override
+//					public float distance(String[][] features, int i, int j) {
+//						return jaccard(features, i, j);
+//					}
+//					
+//				}, th, output);
 				evaluateInBlock(output, totalResult, Indexer.indexFolder+"sameAsID.txt");
 			}
 			for (int i = 15; i < 65; i += 5) {
 				float tsn = i/10f;
 				String output = workFolder+"cssnKeyword="+keyword+"Th="+i+".txt";
 				System.out.print("cssn\t" + tsn);
-				clusterWithKeywordCSSN(totalResult, 
-						Blocker.workFolder+"keyIndBasicFeatureIndex", 
-						new ISimCal () {
-					@Override
-					public float distance(String[][] features, int i, int j) {
-						return jaccard(features, i, j);
-					}
-					
-				}, tsn, output);
+//				clusterWithKeywordCSSN(totalResult, 
+//						Blocker.workFolder+"keyIndBasicFeatureIndex", 
+//						new ISimCal () {
+//					@Override
+//					public float distance(String[][] features, int i, int j) {
+//						return jaccard(features, i, j);
+//					}
+//					
+//				}, tsn, output);
 				evaluateInBlock(output, totalResult, Indexer.indexFolder+"sameAsID.txt");
 			}
 			System.out.println();
@@ -735,10 +735,10 @@ Jos\u00E9	61	360	9
 			return;
 		}
 		HashSet<String> stdSet = Common.getFilteredStringSet(stdAns, entitiesInBlock);
-		HashSet<String> resSet = new HashSet<String>();
 		HashMap<Integer, String> indURI = new HashMap<Integer, String>();
 		BufferedReader br = IOFactory.getBufferedReader(clusterFile);
 		int overlap = 0;
+		int ansSize = 0;
 		IndexReader ireader = IndexReader.open(Indexer.basicFeatureIndex);
 		for (String line = br.readLine(); line != null; line = br.readLine()) {
 			int[] docNums = Common.getNumsInLineSorted(line);
@@ -754,12 +754,11 @@ Jos\u00E9	61	360	9
 					overlap++;
 					stdSet.remove(toTest); // to avoid duplicate counting
 				}
-				resSet.add(toTest);
 			}
+			ansSize++;
 		}
 		br.close();
-		int stdSize = Analyzer.countLines(stdAns);
-		System.out.println("\t" + overlap);
+		System.out.println("\t" + overlap + "\t" + (overlap+0.0)/ansSize);
 	}
 	
 	/**
