@@ -1,0 +1,1 @@
+this can be used by AIFB/APEX to develop rich clients like xxplore know / web cliebts like your apps etc.
